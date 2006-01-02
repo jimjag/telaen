@@ -125,7 +125,7 @@ class PHPMailer
      *  Holds PHPMailer version.
      *  @var string
      */
-    var $Version           = "1.72";
+    var $Version           = "1.73";
 
     /**
      * Sets the email address that a reading confirmation will be sent.
@@ -419,15 +419,12 @@ class PHPMailer
      * @return bool
      */
     function MailSend($header, $body) {
-        if (count($this->to) > 0) {
-            $to = $this->AddrFormat($this->to[0]);
-            for ($i = 1; $i < count($this->to); $i++) {
-                $to .= ", " . $this->AddrFormat($this->to[$i]);
-            }
-        } else {
-            $to = "undisclosed-recipients:;";
+        $to = "";
+        for($i = 0; $i < count($this->to); $i++)
+        {
+            if($i != 0) { $to .= ", "; }
+            $to .= $this->to[$i][0];
         }
-
 
         if ($this->Sender != "" && strlen(ini_get("safe_mode"))< 1)
         {
@@ -743,7 +740,7 @@ class PHPMailer
         {
            case "alt":
               // fall through
-           case "alt_attachment":
+           case "alt_attachments":
               $this->AltBody = $this->WrapText($this->AltBody, $this->WordWrap);
               break;
            default:
@@ -778,10 +775,9 @@ class PHPMailer
                 $result .= $this->AddrAppend("To", $this->to);
             else if (count($this->cc) == 0)
                 $result .= $this->HeaderLine("To", "undisclosed-recipients:;");
+            if(count($this->cc) > 0)
+                $result .= $this->AddrAppend("Cc", $this->cc);
         }
-
-        if(count($this->cc) > 0)
-            $result .= $this->AddrAppend("Cc", $this->cc);
 
         $from = array();
         $from[0][0] = trim($this->From);
@@ -1091,9 +1087,12 @@ class PHPMailer
             $this->SetError($this->Lang("file_open") . $path);
             return "";
         }
+        $magic_quotes = get_magic_quotes_runtime();
+        set_magic_quotes_runtime(0);
         $file_buffer = fread($fd, filesize($path));
         $file_buffer = $this->EncodeString($file_buffer, $encoding);
         fclose($fd);
+        set_magic_quotes_runtime($magic_quotes);
 
         return $file_buffer;
     }

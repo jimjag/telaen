@@ -27,7 +27,7 @@
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Andrei Zmievski <andrei@php.net>
  * @package Smarty
- * @version 2.6.7
+ * @version 2.6.11
  */
 
 /* $Id$ */
@@ -232,7 +232,7 @@ class Smarty
                                                                'isset', 'empty',
                                                                'count', 'sizeof',
                                                                'in_array', 'is_array',
-                                                               'true','false'),
+                                                               'true', 'false', 'null'),
                                     'INCLUDE_ANY'     => false,
                                     'PHP_TAGS'        => false,
                                     'MODIFIER_FUNCS'  => array('count'),
@@ -464,7 +464,7 @@ class Smarty
      *
      * @var string
      */
-    var $_version              = '2.6.7';
+    var $_version              = '2.6.11';
 
     /**
      * current template inclusion depth
@@ -1055,9 +1055,12 @@ class Smarty
     {
         if(!isset($name)) {
             return $this->_tpl_vars;
-        }
-        if(isset($this->_tpl_vars[$name])) {
+        } elseif(isset($this->_tpl_vars[$name])) {
             return $this->_tpl_vars[$name];
+        } else {
+            // var non-existant, return valid reference
+            $_tmp = null;
+            return $_tmp;   
         }
     }
 
@@ -1074,6 +1077,10 @@ class Smarty
             return $this->_config[0]['vars'];
         } else if(isset($this->_config[0]['vars'][$name])) {
             return $this->_config[0]['vars'][$name];
+        } else {
+            // var non-existant, return valid reference
+            $_tmp = null;
+            return $_tmp;
         }
     }
 
@@ -1691,8 +1698,8 @@ class Smarty
      */
     function _dequote($string)
     {
-        if (($string{0} == "'" || $string{0} == '"') &&
-            $string{strlen($string)-1} == $string{0})
+        if ((substr($string, 0, 1) == "'" || substr($string, 0, 1) == '"') &&
+            substr($string, -1) == substr($string, 0, 1))
             return substr($string, 1, -1);
         else
             return $string;
@@ -1889,7 +1896,7 @@ class Smarty
 
         if ($this->_cache_including) {
             /* return next set of cache_attrs */
-            $_return =& current($_cache_attrs);
+            $_return = current($_cache_attrs);
             next($_cache_attrs);
             return $_return;
 
