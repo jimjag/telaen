@@ -1,17 +1,17 @@
 <?
 /************************************************************************
-UebiMiau is a GPL'ed software developed by 
+Telaen is a GPL'ed software developed by 
 
- - Aldoir Ventura - aldoir@users.sourceforge.net
- - http://uebimiau.sourceforge.net
+ - The Telaen Group
+ - http://www.telaen.org/
 
-Fell free to contact, send donations or anything to me :-)
-São Paulo - Brasil
+Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
+ by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
 
 
-class UebiMiau_core {
+class Telaen_core {
 
 	var $mail_connection	= 0;
 	var $mail_server		= "localhost";
@@ -923,5 +923,5 @@ class UebiMiau_core {
 	}
 	
 }
-require("./inc/class.uebimiau_mail.php");
+require("./inc/class.telaen_mail.php");
 ?>

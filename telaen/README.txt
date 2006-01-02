@@ -1,17 +1,19 @@
 ----------------------------------------------------
 OVERVIEW
 ----------------------------------------------------
-UebiMiau is a web-based e-mail client written in PHP 
+Telaen is a web-based e-mail client written in PHP 
 It is a free software distributed under GPL terms,
 see www.gnu.org for more informations. You can use or
 redistribute this software, but need preserve the credits
-of author
+of author.
+
+Telaen is based on Uebimiau.
 
 ----------------------------------------------------
 DEVELOPER
 ----------------------------------------------------
 Core Developer: 
-- Aldoir <aldoir@users.sourceforge.net>
+- The Telaen Group (www.telaen.org)
 
 
 ----------------------------------------------------

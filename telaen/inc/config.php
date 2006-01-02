@@ -1,12 +1,12 @@
 <?
 /************************************************************************
-UebiMiau is a GPL'ed software developed by 
+Telaen is a GPL'ed software developed by 
 
- - Aldoir Ventura - aldoir@users.sourceforge.net
- - http://uebimiau.sourceforge.net
+ - The Telaen Group
+ - http://www.telaen.org/
 
-Fell free to contact, send donations or anything to me :-)
-São Paulo - Brasil
+Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
+ by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
 ########################################################################
@@ -30,9 +30,9 @@ umask(0077);
 # ** The Web Server needs write-permission on this folder
 
 # * Unix/Linux users use.
-# /tmp/uebimiau
+# /tmp/telaen
 # * Win32 users
-# c:/winnt/temp/uebimiau
+# c:/winnt/temp/telaen
 
 # NEVER use backslashes (\). Always use forward slashes (/),
 # for all operating systems, INCLUDING Windows
@@ -133,7 +133,7 @@ require("./inc/config.security.php");
 # The default ports are:
 # pop3 -> 110
 # imap -> 143
-# The imap is more fast, but all functions of UebiMiau works with POP3
+# The imap is more fast, but all functions of Telaen works with POP3
 ########################################################################
 
 ########################################################################
@@ -219,8 +219,8 @@ $mail_use_top = no;
 # "X-Mailer" field, footer
 ########################################################################
 
-$appversion = "2.7.8p3";
-$appname = "UebiMiau Webmail";
+$appversion = "1.0.0";
+$appname = "Telaen Webmail";
 
 
 ########################################################################

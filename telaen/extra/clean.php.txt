@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>UebiMiau WebMail</title>
+	<title>Telaen Webmail</title>
 </head>
 
 <body>

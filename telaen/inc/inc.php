@@ -1,18 +1,18 @@
 <?
 /************************************************************************
-UebiMiau is a GPL'ed software developed by 
+Telaen is a GPL'ed software developed by 
 
- - Aldoir Ventura - aldoir@users.sourceforge.net
- - http://uebimiau.sourceforge.net
+ - The Telaen Group
+ - http://www.telaen.org/
 
-Fell free to contact, send donations or anything to me :-)
-São Paulo - Brasil
+Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
+ by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
 @set_time_limit(0);
 
 require("./inc/config.php");
-require("./inc/class.uebimiau.php");
+require("./inc/class.telaen.php");
 require("./inc/lib.php");
 
 if(!preg_match("/[a-z0-9]{32}/",$sid)) $sid = strtolower(md5(uniqid(rand(), true)));
@@ -45,7 +45,7 @@ $sess = $SS->Load();
 if(!array_key_exists("start",$sess)) $sess["start"] = time();
 $start = $sess["start"];
 
-$UM = new UebiMiau();
+$UM = new Telaen();
 
 if(isset($f_pass) && strlen($f_pass) > 0) {
 

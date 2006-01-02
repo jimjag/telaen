@@ -9,7 +9,7 @@ $allow_user_change_language			= yes; //allow users select language
 $default_language					= 5; //index of language, starting with zero
 
 $themes[] = Array(
-	"name" 		=> "UebiMiau Default",
+	"name" 		=> "Telaen Default",
 	"path" 		=> "default"
 );
 

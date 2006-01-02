@@ -1,12 +1,12 @@
 <?
 /************************************************************************
-UebiMiau is a GPL'ed software developed by 
+Telaen is a GPL'ed software developed by 
 
- - Aldoir Ventura - aldoir@users.sourceforge.net
- - http://uebimiau.sourceforge.net
+ - The Telaen Group
+ - http://www.telaen.org/
 
-Fell free to contact, send donations or anything to me :-)
-São Paulo - Brasil
+Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
+ by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
 //defines
@@ -105,8 +105,8 @@ $other	= 	(!$ns4 && !$ns6moz && !$ie4up);
 
 
 if ($other) {
-	$body 	= 	eregi_replace("<base","<uebimiau_base_not_alowed",
-				eregi_replace("<link","<uebimiau_link_not_alowed",
+	$body 	= 	eregi_replace("<base","<telaen_base_not_alowed",
+				eregi_replace("<link","<telaen_link_not_alowed",
 				$body));
 
 	if(eregi("<[ ]*body.*background[ ]*=[ ]*[\"']?([A-Za-z0-9._&?=:/{}%+-]+)[\"']?.*>",$body,$regs))
@@ -116,7 +116,7 @@ if ($other) {
 		$backcolor = " bgcolor=\"".$regs[1]."\"";
 	$smarty->assign("umBackColor",$backcolor);
 
-	$body = eregi_replace("<body","<uebimiau_body_not_alowed",$body);
+	$body = eregi_replace("<body","<telaen_body_not_alowed",$body);
 	$body = eregi_replace("a:(link|visited|hover)",".".uniqid(""),$body);
 	$body = eregi_replace("(body)[ ]?\\{",".".uniqid(""),$body);
 

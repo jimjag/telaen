@@ -1,23 +1,20 @@
 <?
 
 /************************************************************************
-UebiMiau is a GPL'ed software developed by 
+Telaen is a GPL'ed software developed by 
 
- - Aldoir Ventura - aldoir@users.sourceforge.net
- - http://uebimiau.sourceforge.net
+ - The Telaen Group
+ - http://www.telaen.org/
 
-Fell free to contact, send donations or anything to me :-)
-São Paulo - Brasil
-
-Export to VCF:
-Thanks to Vittore Zen <v.zen@tiscalinet.it>
+Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
+ by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
 
 
 function convert2vcf($data) {
 //
-//mapping uebimiau key to vcf key
+//mapping telaen key to vcf key
 //
 
 $ldap_key= array (

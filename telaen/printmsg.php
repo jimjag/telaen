@@ -1,12 +1,12 @@
 <?
 /************************************************************************
-UebiMiau is a GPL'ed software developed by 
+Telaen is a GPL'ed software developed by 
 
- - Aldoir Ventura - aldoir@users.sourceforge.net
- - http://uebimiau.sourceforge.net
+ - The Telaen Group
+ - http://www.telaen.org/
 
-Fell free to contact, send donations or anything to me :-)
-São Paulo - Brasil
+Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
+ by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
 require("./inc/inc.php");
@@ -33,7 +33,7 @@ if(eregi("<[ ]*body[A-Z0-9._&?=:/\"' -]*bgcolor=[\"']?([A-Z0-9#]+)[\"']?[A-Z0-9.
 	$backcolor = " bgcolor=\"".$regs[1]."\"";
 $smarty->assign("umBackColor",$backcolor);
 
-$body = eregi_replace("<body","<uebimiau_body_not_alowed",$body);
+$body = eregi_replace("<body","<telaen_body_not_alowed",$body);
 $body = eregi_replace("a:(link|visited|hover)",".".uniqid(""),$body);
 $body = eregi_replace("(body)[ ]?\\{",".".uniqid(""),$body);
 

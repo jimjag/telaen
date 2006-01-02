@@ -1,5 +1,5 @@
 <?
-class UebiMiau extends UebiMiau_core {
+class Telaen extends Telaen_core {
 
 	var $_autospamfolder	= "TRUE";
 	var $_spamregex		= Array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
@@ -10,7 +10,7 @@ class UebiMiau extends UebiMiau_core {
 	var $_current_folder 	= "";
 	var $CRLF				= "\r\n";
 
-	function UebiMiau() {
+	function Telaen() {
 		require("./inc/class.tnef.php");
 		$this->_tnef = new TNEF();
 		$this->_sid = uniqid("");
