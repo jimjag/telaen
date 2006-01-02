@@ -58,7 +58,9 @@ Client JavaScript      - YES       - To make templates more easy
 PHP                    - YES       - Sure ;)
 Smarty                 - YES       - Bundled with Telaen
                                      but you can use your
-                                     own
+                                     own. Be sure to copy the
+                                     function.um_welcome_message.php
+                                     file to your plugins folder!
 PHPMailer              - YES       - Bundled with Telaen
                                      but you can use your
                                      own
