@@ -113,14 +113,25 @@ if( !is_array($headers)
 				 * still a lot faster than reloading the whole message list.
 				 * We begin with the lowest server-id number and subtract the
 				 * offset. Each time we have a positive hit, increment the
-				 * ubiid variable.
+				 * ubiid variable. Scan through the delarray to find the
+				 * first ID to be deleted.
 				 */
 				array_qsort2($delarray,"msgid","ASC");
-				$firstmsgid = $delarray[0]["msgid"];
+				$delarray_count = count($delarray);
+				$firstid = 0;
+
+				for ($i=0; $i<$delarray_count; $i++) {
+					if ($delarray[$i]["del"]) {
+						$firstid = $delarray[$i]["id"] - 1;
+						break;
+					}
+				}
+				if ($firstid < 0 || $firstid > $delarray_count)
+					$firstid = 0;
+
 				$subtract = 0;
 		
-				$delarray_count = count($delarray);
-				for ($z=$firstid -1 ; $z<$delarray_count; $z++) {
+				for ($z=$firstid; $z<$delarray_count; $z++) {
 					$msgid = $z + 1;	# msgid's always begin with 1, not 0.
 					$ubiid = $delarray[$z]["ubiid"];
 					$myfold = $delarray[$z]["folder"];
@@ -128,16 +139,16 @@ if( !is_array($headers)
 
 					if ($del) {
 						$subtract++;
-						$sess["headers"][$folder_key][$ubiid]["msg"] = $sess["headers"][$folder_key][$ubiid]["msg"] - $subtract;
-						$sess["headers"][$folder_key][$ubiid]["id"] = $sess["headers"][$folder_key][$ubiid]["id"] - $subtract;
+						$sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
+						$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
 						unset ($sess["headers"][$folder_key][$ubiid]);
 					} else {
 						if ($UM->_autospamfolder == "TRUE" && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
-							$sess["headers"][$myfold][$ubiid]["msg"] = $sess["headers"][$myfold][$ubiid]["msg"] - $subtract;
-							$sess["headers"][$myfold][$ubiid]["id"] = $sess["headers"][$myfold][$ubiid]["id"] - $subtract;
+							$sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
+							$sess["headers"][$myfold][$ubiid]["id"] -= $subtract;
 						} else {
-							$sess["headers"][$folder_key][$ubiid]["msg"] = $sess["headers"][$folder_key][$ubiid]["msg"] - $subtract;
-							$sess["headers"][$folder_key][$ubiid]["id"] = $sess["headers"][$folder_key][$ubiid]["id"] - $subtract;
+							$sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
+							$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
 						}
 					}
 				}
