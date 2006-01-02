@@ -1,6 +1,7 @@
 ----------------------------------------------------
 INSTALL
 ----------------------------------------------------
+- Read the README file... really, you should!
 - Unpack the package (.tar.gz or .zip file) into a directory within your web server,
 eg /home/httpd/webmail (*unix) or c:\inetpub\wwwroot\webmail (Win32). 
 

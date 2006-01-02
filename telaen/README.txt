@@ -37,6 +37,7 @@ FEATURES/REQUIREMENTS
 - Personal preferences
 - Send HTML e-mails
 - Quota Limit
+- Auto population of SPAM folder for tagged SPAM messages
 
 * Planned
 - Database support
@@ -55,4 +56,9 @@ Database               - NO        - Manage data in hard disk
 Client Cookies         - OPTIONAL  - Manage session manually
 Client JavaScript      - YES       - To make templates more easy
 PHP                    - YES       - Sure ;)
-
+Smarty                 - YES       - Bundled with Telaen
+                                     but you can use your
+                                     own
+PHPMailer              - YES       - Bundled with Telaen
+                                     but you can use your
+                                     own
