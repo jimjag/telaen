@@ -148,7 +148,7 @@ for($n=0;$n<count($boxes);$n++) {
 
 	if($unread != 0) $unread = "<b>$unread</b>";
 
-	if(ereg("(inbox|sent|trash|spam)",strtolower($entry))) {
+	if(ereg("^(inbox|sent|trash|spam)$",strtolower($entry))) {
 		switch(strtolower($entry)) {
 		case "inbox":
 			$boxname = $inbox_extended;
@@ -194,7 +194,7 @@ $UM->mail_disconnect();
 unset($SS,$UM);
 array_qsort2ic ($system,"name");
 
-$umFolderList = array_merge($system, $personal);
+$umFolderList = array_merge((array)$system, (array)$personal);
 
 
 
