@@ -5,4 +5,8 @@ Telaen TODO List: Pick an issue and have fun!
 
  *) SPAM Detection:
     Make the "spam detection" regex user controllable, not just
-    admin controllable.
+    admin controllable. Likely requires looking at X-Spam-Level
+    email header.
+
+ *) Website:
+    Needs work :)
