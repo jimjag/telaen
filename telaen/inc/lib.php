@@ -91,8 +91,10 @@ function cleanup_dirs ($userfolder, $logout) {
 		
 		
 			if($prefs["empty-trash"]) {
-				if(!$UM->mail_connect()) { redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); exit; }
-				if(!$UM->mail_auth()) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); exit; }
+				if ($UM->mail_protocol == "imap") {
+					if(!$UM->mail_connect()) { redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); exit; }
+					if(!$UM->mail_auth()) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); exit; }
+				}
 				$trash = "trash";
 				if(!is_array($sess["headers"][base64_encode($trash)])) $sess["headers"][base64_encode($trash)] = $UM->mail_list_msgs($trash);
 				$trash = $sess["headers"][base64_encode($trash)];
@@ -103,7 +105,9 @@ function cleanup_dirs ($userfolder, $logout) {
 					}
 					$UM->mail_expunge();
 				}
-				$UM->mail_disconnect();
+				if ($UM->mail_protocol == "imap") {
+					$UM->mail_disconnect();
+				}
 			}
 	
 			if($prefs["empty-spam"]) {
