@@ -26,7 +26,12 @@ Telaen:
  * Enable marking READ messages as either READ or
    UNREAD upon logout. The default is UNREAD. This allows
    users who check their mail with other Email clients
-   to see those messages as "new" and unread. Changes:
+   to see those messages as "new" and unread. SysAdmin can
+   overrule user prefs by setting:
+      $force_unmark_read_overrule;
+      $force_unmark_read_settingyes;
+   in config.php.
+   Changes:
      o en_UK.txt: prf_unmark_read_on_exit
      o preferences.htm
 

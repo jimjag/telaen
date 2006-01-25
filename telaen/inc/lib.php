@@ -47,7 +47,8 @@ function cleanup_dir ($folder) {
 function cleanup_dirs ($userfolder, $logout) {
 	global $UM,$sid,$tid,$lid,$sess,$prefs;
 
-	if($prefs["unmark-read"]) {
+	if ( ($force_unmark_read_overrule && $force_unmark_read_setting) ||
+             ($prefs["unmark-read"] && !$force_unmark_read_overrule) ) {
 		$cleanme = $userfolder."inbox/";
 		cleanup_dir($cleanme);
 	}

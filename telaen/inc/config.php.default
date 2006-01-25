@@ -278,4 +278,15 @@ $default_preferences = Array(
 	"editor_mode_default"		=> "text",	# use "html" or "text" to set default editor. "html" will be used only in IE5+ browsers
 	"refresh_time_default"		=> 10		# after this time, the message list will be refreshed, in minutes
 	);
+
+########################################################################
+# Control whether the SysAdmin overrules the unmark READ messages
+# user preference. To use, set $force_unmark_read_overrule to
+# yes (if you want to overrule whatever the user has set)
+# and set $force_unmark_read_setting to the value you wish
+# to force.
+########################################################################
+
+$force_unmark_read_overrule = yes;
+$force_unmark_read_setting = yes;
 ?>
