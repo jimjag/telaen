@@ -14,7 +14,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 # "X-Mailer" field, footer
 ########################################################################
 
-$appversion = "1.0.0";
+$appversion = "1.0.0-RC1";
 $appname = "Telaen Webmail";
 
 ?>
