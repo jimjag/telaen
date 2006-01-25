@@ -10,6 +10,11 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 *************************************************************************/
 
 ########################################################################
+# Load in the version information
+########################################################################
+require("./inc/version.php");
+
+########################################################################
 #Defaults:
 #1 - Yes/On/True
 #0 - No/Off/False
@@ -19,6 +24,18 @@ define("yes",1);
 define("no",0);
 $themes 	= Array();
 $languages 	= Array();
+
+########################################################################
+# Location of the Smarty template installation.
+# We bundle Smarty, but you can point it to your
+# locally installed version if you like
+########################################################################
+
+define("SMARTY_DIR","./smarty/");
+
+########################################################################
+# Make the default file and directory creation more secure
+########################################################################
 
 umask(0077);
 
@@ -213,15 +230,6 @@ $mailer_type		= "mail";
 ########################################################################
 
 $mail_use_top = no;
-
-########################################################################
-# Name and Version, it's used in many places, like as
-# "X-Mailer" field, footer
-########################################################################
-
-$appversion = "1.0.0";
-$appname = "Telaen Webmail";
-
 
 ########################################################################
 # Add a "footer" to sent mails

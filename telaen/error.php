@@ -15,8 +15,6 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 require("./inc/config.php");
 require("./inc/lib.php");
 
-define("SMARTY_DIR","./smarty/");
-
 require_once(SMARTY_DIR."Smarty.class.php");
 $smarty = new Smarty;
 $smarty->security=true;

@@ -17,9 +17,6 @@ require("./inc/lib.php");
 
 if(!preg_match("/[a-z0-9]{32}/",$sid)) $sid = strtolower(md5(uniqid(rand(), true)));
 
-
-define("SMARTY_DIR","./smarty/");
-
 require_once(SMARTY_DIR."Smarty.class.php");
 $smarty = new Smarty;
 $smarty->security=true;
