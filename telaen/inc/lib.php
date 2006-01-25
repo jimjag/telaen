@@ -47,8 +47,10 @@ function cleanup_dir ($folder) {
 function cleanup_dirs ($userfolder, $logout) {
 	global $UM,$sid,$tid,$lid,$sess,$prefs;
 
-	$cleanme = $userfolder."inbox/";
-	cleanup_dir($cleanme);
+	if($prefs["unmark-read"]) {
+		$cleanme = $userfolder."inbox/";
+		cleanup_dir($cleanme);
+	}
 	$cleanme = $userfolder."_attachments/";
 	cleanup_dir($cleanme);
 	$cleanme = $userfolder."spam/";
@@ -301,6 +303,7 @@ function load_prefs() {
 		$prefs["st-only-read"]  = $st_only_ready_default;
 		$prefs["empty-trash"]   = $empty_trash_default;
 		$prefs["empty-spam"]    = $empty_spam_default;
+		$prefs["unmark-read"]   = $unmark_read_default;
 		$prefs["save-to-sent"]  = $save_to_sent_default;
 		$prefs["sort-by"]       = $sortby_default;
 		$prefs["sort-order"]    = $sortorder_default;

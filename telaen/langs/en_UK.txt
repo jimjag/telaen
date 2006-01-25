@@ -218,6 +218,7 @@ prf_save_to_trash				= When you <b>delete</b> a message, move it to
 prf_save_only_read				= Save only <b>read messages</b> in the 
 prf_empty_on_exit				= <b>Empty</b> trash folder when you logout
 prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Sent items
 prf_save_sent					= Save <b>sent messages</b> in the 
 prf_messages_title				= Messages

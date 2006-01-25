@@ -18,8 +18,17 @@ Telaen:
 
 1.0.0:
 
+ * Fix calculation of timezones.
+
  * Rename of class files and other notices from Uebimiau to
    Telaen.
+
+ * Enable marking READ messages as either READ or
+   UNREAD upon logout. The default is UNREAD. This allows
+   users who check their mail with other Email clients
+   to see those messages as "new" and unread. Changes:
+     o en_UK.txt: prf_unmark_read_on_exit
+     o preferences.htm
 
 ----------------------------------------------------------------
 Uebimiau - the "jimjag" patches:

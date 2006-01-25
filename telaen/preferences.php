@@ -22,6 +22,7 @@ if(isset($f_real_name)) {
 	$myprefs["st-only-read"]	= $f_st_only_read;
 	$myprefs["empty-trash"]		= $f_empty_on_exit;
 	$myprefs["empty-spam"]		= $f_empty_spam_on_exit;
+	$myprefs["unmark-read"]		= $f_unmark_read_on_exit;
 	$myprefs["save-to-sent"]	= $f_save_sent;
 	$myprefs["rpp"]			= $f_rpp;
 	$myprefs["add-sig"]		= $f_add_sig;
@@ -107,6 +108,8 @@ $status = ($prefs["empty-trash"])?" checked":"";
 $smarty->assign("umEmptyTrashOnExit",$status);
 $status = ($prefs["empty-spam"])?" checked":"";
 $smarty->assign("umEmptySpamOnExit",$status);
+$status = ($prefs["unmark-read"])?" checked":"";
+$smarty->assign("umUnmarkReadOnExit",$status);
 $status = ($prefs["save-to-sent"])?" checked":"";
 $smarty->assign("umSaveSent",$status);
 $status = ($prefs["add-sig"])?" checked":"";
