@@ -9,7 +9,7 @@ trash_extended					= Papierkorb
 
 #Navigation texts
 
-previous_text					= Nächste Nachricht
+previous_text					= NŠchste Nachricht
 next_text					= Vorherige Nachricht
 
 # Mail Server Errors
@@ -20,12 +20,12 @@ error_other					= FEHLER: Bitte kontaktiere den Administrator
 
 #Invalid name of mailbox
 
-error_invalid_name				= Ungültiger Ordnername. Gültige Zeichen: A-Z, 0-9, .- und or Leerzeichen
+error_invalid_name				= UngŸltiger Ordnername. GŸltige Zeichen: A-Z, 0-9, .- und or Leerzeichen
 
 
 #Validations when sending mails            ;
 
-error_no_recipients				= Bitte mindestens eine Empfängeradresse angeben
+error_no_recipients				= Bitte mindestens eine EmpfŠngeradresse angeben
 error_compose_invalid_mail1_s	= Diese Email scheint fehlerhaft zu sein
 error_compose_invalid_mail1_p	= Die folgenden Emails scheinen fehlerhaft zu sein
 error_compose_invalid_mail2_s	= FEHLER!
@@ -34,23 +34,23 @@ error_compose_invalid_mail2_p	= FEHLER!
 
 #Confirmation of delete                    ;
 
-confirm_delete					= Möchtest Du diese Nachricht wirklich löschen?
+confirm_delete					= Mšchtest Du diese Nachricht wirklich lšschen?
 
 
 # If the message no have a subject or sender;
 
 no_subject_text					= [Kein Betreff]
 no_sender_text					= [Absender unbekannt]
-no_recipient_text				= [Empfänger unbekannt]
+no_recipient_text				= [EmpfŠnger unbekannt]
 
 
 # If the quota limit was exceeded           ;
 
-quota_exceeded					= Leider ist Dein Speicherplatz erschöpft. Bitte lösche ein paar Emails, bevor Du weitermachst.
+quota_exceeded					= Leider ist Dein Speicherplatz erschšpft. Bitte lšsche ein paar Emails, bevor Du weitermachst.
 quota_usage_info				= Speicherlimit
 quota_usage_used				= verwendet
 quota_usage_of					= von
-quota_usage_avail				= verfügbar
+quota_usage_avail				= verfŸgbar
 
 
 #********************************************************#
@@ -94,7 +94,7 @@ reply_subject_hea				= Betreff:
 # page-specific vars
 [Headers]
 
-key_hea							= Schlüssel
+key_hea							= SchlŸssel
 value_hea						= Wert
 
 [Folders]
@@ -103,7 +103,7 @@ fld_name_hea					= Ordner
 fld_messages_hea				=Nachrichten
 fld_size_hea					= Gr.
 fld_empty_hea					= Leeren
-fld_delete_hea					= Löschen
+fld_delete_hea					= Lšschen
 fld_total					= Gesamt:
 fld_make_new					= Neuen Ordner erstellen
 folders_to					= Ordner von
@@ -112,9 +112,9 @@ folders_to					= Ordner von
 
 messages_to						= Nachrichten von
 no_messages						= Im Augenblick hast Du keine Nachrichten in Deinem Postfach
-delete_selected_mnu				= Markierte löschen
+delete_selected_mnu				= Markierte lšschen
 move_selected_mnu				= Markierte verschieben
-delete_mnu						= Löschen
+delete_mnu						= Lšschen
 move_mnu						= Verschieben
 subject_hea						= Betreff
 from_hea						= Von
@@ -134,8 +134,8 @@ msg_in_the_folder				= im Ordner
 
 
 lgn_title					= Login
-lgn_welcome_msg					= ISM-STUDENT.DE - Internes Email-Tool
-lng_user_email					= E-mail
+lgn_welcome_msg					= Telaen Webmail - http://www.telaen.org
+lng_user_email					= E-Mail
 lng_user_name					= Benutzername
 lng_user_pwd					= Kennwort
 lng_theme					= Thema
@@ -152,23 +152,23 @@ subject_hea					= Betreff:
 address_tip					= Vom Adressbuch
 
 attach_hea					= Dateianhang:
-attch_add_new					= Datei auswählen
+attch_add_new					= Datei auswŠhlen
 attch_name_hea					= Name
 attch_size					= Gr.
 attch_type_hea					= Typ
 attch_dele_hea					= Entfernen
 attch_no_hea					= Kein Dateianhang
 
-add_signature					= Signatur hinzufügen
+add_signature					= Signatur hinzufŸgen
 send_text					= Senden
 
 result_error					= FEHLER: Diese Email konnte nicht versandt werden.
 result_success					= Deine Nachricht wurde erfolgreich verschickt.
 nav_continue					= HIER KLICKEN!
-nav_back					= Zurück
+nav_back					= ZurŸck
 
-up_title 					= Datei hinzufügen
-up_information_text				= Datei auswählen
+up_title 					= Datei hinzufŸgen
+up_information_text				= Datei auswŠhlen
 up_button_text					= Senden
 
 priority_text					= Dringlichkeit
@@ -178,18 +178,18 @@ priority_high					= Hoch
 
 [AdvancedEditor]
 
-adv_warning_text_mode1			= Bitte wähle 
+adv_warning_text_mode1			= Bitte wŠhle 
 adv_warning_text_mode2			= um die Toolbar zu verwenden
 
 adv_type_path					= Setze die URL:
 
 format_paragraph				= Absatzformatierung
-format_h1					= Überschrift 1 <H1>
-format_h2					= Überschrift 2 <H2>
-format_h3					= Überschrift 3 <H3>
-format_h4					= Überschrift 4 <H4>
-format_h5					= Überschrift 5 <H5>
-format_h6					= Überschrift 6 <H6>
+format_h1					= †berschrift 1 <H1>
+format_h2					= †berschrift 2 <H2>
+format_h3					= †berschrift 3 <H3>
+format_h4					= †berschrift 4 <H4>
+format_h5					= †berschrift 5 <H5>
+format_h6					= †berschrift 6 <H6>
 format_pre					= Formatiert <PRE>
 format_clear_all				= Formatierung entfernen
 
@@ -200,10 +200,10 @@ format_color					= Farbe
 format_back					= Hintergrund
 color_red					= Rot
 color_blue					= Blau
-color_green					= Grün
+color_green					= GrŸn
 color_black					= Schwarz
 color_yellow					= Gelb
-color_white					= Weiß
+color_white					= Wei§
 
 view_source					= HTML Quelltext anzeigen
 text_mode					= Text Modus
@@ -217,8 +217,8 @@ priority_text					= Dringlichkeit
 [BadLogin]
 
 bdl_title					= Login Fehler 
-bdl_msg						= Du kannst im Augenblick nicht einloggen, da die Verbindung zu Deinem Email-Provider gestört ist.<br><br>Bitte versuche es in ein paar Minuten noch einmal.
-bdl_back					= Zurück
+bdl_msg						= Du kannst Dich mit dieser Benutzername/Passwort Kombination nicht einloggen.<br><br>Bitte überprüfe die Zugangsdaten und versuche es noch einmal.
+bdl_back					= ZurŸck
 
 
 [Error]
@@ -236,7 +236,7 @@ prf_name					= Name
 prf_reply_to					= Antwortadresse
 prf_time_zone					= Zeitzone
 prf_trash_title					= Papierkorb
-prf_save_to_trash				= Wenn Du eine Nachricht löschst, dann <b>verschiebe</b> diese Mitteilung in den  
+prf_save_to_trash				= Wenn Du eine Nachricht lšschst, dann <b>verschiebe</b> diese Mitteilung in den  
 prf_save_only_read				= Nur <b>gelesene Nachrichten</b> in den Papierkorb verschieben
 prf_empty_on_exit				= <b>Papierkorb leeren</b>, nachdem Du ausgeloggt hast.
 prf_sent_title					= Gesendete Objekte
@@ -245,29 +245,29 @@ prf_messages_title				= Nachrichten
 prf_page_limit					= Max. Nachrichten pro Seite (je weniger, desto schneller der Ladevorgang)
 prf_signature_title				= Signatur
 prf_signature					= Erstelle Deine Signatur
-prf_auto_add_sign				= Signatur allen ausgehenden Nachrichten anhängen
+prf_auto_add_sign				= Signatur allen ausgehenden Nachrichten anhŠngen
 prf_save_button					= Speichern
 prf_display_images				= Bilder in Anlagen in der Email anzeigen
-prf_default_editor_mode				= Editiermodus für neue Emails
+prf_default_editor_mode				= Editiermodus fŸr neue Emails
 prf_default_editor_mode_text			= "Reiner Textmodus"
-prf_default_editor_mode_html			= "Word-ähnlicher HTML editor (nur für IE5 oder höher)"
+prf_default_editor_mode_html			= "Word-Šhnlicher HTML editor (nur fŸr IE5 oder hšher)"
 prf_time_to_refesh				= Inbox alle x Minuten aktualisieren
 
 [Catch]
 
-ctc_title					= Zum Adressbuch hinzufügen
+ctc_title					= Zum Adressbuch hinzufŸgen
 ctc_information					= Nur Emails anzeigen, die auch im Adressbuch sind
 ctc_name					= Name
 ctc_email					= E-mail
 ctc_no_address					= Keine Adresse vorhanden
-ctc_close					= Schließen
+ctc_close					= Schlie§en
 ctc_save					= Speichern
 
 [Readmsg]
 
-next_mnu					= Nächste
+next_mnu					= NŠchste
 previous_mnu					= Vorherige
-back_mnu					= Zurück
+back_mnu					= ZurŸck
 reply_mnu					= Antworten
 reply_all_mnu					= Allen antworten
 forward_mnu					= Weiterleiten
@@ -287,7 +287,7 @@ attch_name_hea					= Name
 attch_force_hea					= Download
 attch_type_hea					= Typ
 attch_size_hea					= Gr.
-catch_address					= Zum Adressbuch hinzufügen
+catch_address					= Zum Adressbuch hinzufŸgen
 
 [Search]
 
@@ -304,7 +304,7 @@ sch_no_results					= Es wurden keine Nachrichten gefunden, die den Suchkriterien
 [QuickAddress]
 
 qad_title 			= Addressbuch
-qad_select_address		= Kontakt wählen
+qad_select_address		= Kontakt wŠhlen
 qad_to				= An
 qad_cc				= Cc
 qad_bcc				= Bcc
@@ -316,11 +316,11 @@ qad_bcc				= Bcc
 adr_title					= Addressbuch
 adr_name					= Name
 adr_email					= E-mail
-adr_street					= Straße
+adr_street					= Stra§e
 adr_city					= Stadt
 adr_state					= Bundesland
 adr_work					= Telefon
-adr_back					= Zurück
+adr_back					= ZurŸck
 adr_save					= Speichern
 
 # list
@@ -334,5 +334,5 @@ adr_new_entry					= Neuer Kontakt
 
 
 addr_saved					= Der Kontakt wurde gespeichert.
-addr_added					= Der Kontakt wurde hinzugefügt.
+addr_added					= Der Kontakt wurde hinzugefŸgt.
 addr_deleted					= Der Kontakt wurde entfernt.
