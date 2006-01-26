@@ -260,7 +260,20 @@ $sess["headers"][$folder_key] = $headers;
 $sess["havespam"] = $UM->havespam;
 $SS->Save($sess);
 
-if ( ($prefs["version"] != $appversion) ||
+/*
+ * If they used a different version (ignoring patchlevel) then
+ * they really should checkout the preferences page, since
+ * they have likely changed.
+ */
+$same_version = true;
+if ($prefs["version"] != $appversion) {
+	list($their_major, $their_minor, $patch_level) = explode('.', $prefs["version"]);
+	list($our_major, $our_minor, $patch_level) = explode('.', $appversion);
+	if (($their_minor != $our_minor) || ($their_major != $our_major)) {
+		$same_version = false;
+	}
+}
+if ( (!$same_version) ||
      ($check_first_login && !$prefs["first-login"]) ) {
 	$prefs["first-login"] = 1;
 	save_prefs($prefs);
