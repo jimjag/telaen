@@ -8,5 +8,3 @@ Telaen TODO List: Pick an issue and have fun!
  *) Website:
     Needs work :)
 
- *) Themes:
- 	Remove Uebimiau images
