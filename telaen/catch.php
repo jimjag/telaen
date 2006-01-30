@@ -24,7 +24,8 @@ if($myfile != "")
 	$addressbook = unserialize(base64_decode($myfile));
 
 function valid_email($thismail) {
-	if (!eregi("([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_]+)", $thismail)) return 0;
+	$valid_regex = '^[-a-z0-9_{|}~!#$+]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)+$';
+	if (!eregi($valid_regex, $thismail)) return 0;
 	global $addressbook,$f_email;
 	for($i=0;$i<count($addressbook);$i++)
 		if(trim($addressbook[$i]["email"]) == trim($thismail)) return 0;
