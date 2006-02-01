@@ -840,9 +840,7 @@ function HTMLFilter($body, $trans_image_path, $block_external_images = false) {
 
 	$add_attr_to_tag = Array(
 		"/^a$/i" =>
-			Array('target'=>'"_blank"',
-				'title'=>'"'._("This link will open in a new window").'"'
-			)
+			Array('target'=>'"_blank"')
 	);
 
 	$trusted = tln_sanitize($body, 

@@ -86,10 +86,6 @@ $body	= 	$email["body"];
 
 $body	=	HTMLFilter($body, "images/trans.gif", $block_external_images);
 
-if($block_external_images) 
-	$body = eregi_replace("(src|background)=([\"]?)(http[s]?:\/\/[a-z0-9~#%@\&:=?+\/\.,_-]+[a-z0-9~#%@\&=?+\/_-]+)([\"]?)","\\1=\\2images/trans.gif\\4 original_url=\"\\3\"",$body);
-
-
 $redir_path = getenv("PHP_SELF")?getenv("PHP_SELF"):$_SERVER["PHP_SELF"];
 if(!$redir_path) $redir_path = $PHP_SELF;
 $redir_path = dirname($redir_path)."/redir.php";
