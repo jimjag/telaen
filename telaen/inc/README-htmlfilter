@@ -1,0 +1,215 @@
+HTMLFILTER
+-----------
+This is a set of PHP routines to make sure that untrusted HTML code is safe
+to display in a browser. This filter was originally developed for
+SquirrelMail, but now has a life of its own.
+
+Maintainer:
+-----------
+Htmlfilter is currently part of Linux@DUKE Mini-projects and is maintained
+by Konstantin Riabitsev <icon@linux.duke.edu>
+
+License
+-------
+Please see COPYING.
+
+Usage
+-----
+This is a library, so check out the comments in htmlfilter.inc and ponder
+the example code in samplefilter.php (which is a blacklist-based filter
+that attempts to prevent attacks and mostly succeeds. I say "mostly" because
+you never know what they may think of next).
+
+
+Comments from the library:
+
+/**
+ * This is the main function and the one you should actually be calling.
+ * There are several variables you should be aware of an which need
+ * special description.
+ *
+ * $tag_list
+ * ----------
+ * This is a simple one-dimentional array of strings, except for the
+ * very first one. The first member should be einter false or true.
+ * In case it's FALSE, the following list will be considered a list of
+ * tags that should be explicitly REMOVED from the body, and all
+ * others that did not match the list will be allowed.  If the first
+ * member is TRUE, then the list is the list of tags that should be
+ * explicitly ALLOWED -- any tag not matching this list will be
+ * discarded.
+ *
+ * Examples:
+ * $tag_list = Array(
+ *                   false,   
+ *                   "blink", 
+ *                   "link",
+ *		     "object",
+ *		     "meta",
+ *                   "marquee",
+ *                   "html"
+ *		            );
+ *
+ * This will allow all tags except for blink, link, object, meta, marquee, 
+ * and html.
+ *
+ * $tag_list = Array(
+ *                   true, 
+ *                   "b", 
+ *                   "a", 
+ *                   "i", 
+ *                   "img", 
+ *                   "strong", 
+ *                   "em", 
+ *                   "p"
+ *                  );
+ *
+ * This will remove all tags from the body except b, a, i, img, strong, em and
+ * p.
+ *
+ * $rm_tags_with_content
+ * ---------------------
+ * This is a simple one-dimentional array of strings, which specifies the
+ * tags to be removed with any and all content between the beginning and
+ * the end of the tag.
+ * Example:
+ * $rm_tags_with_content = Array(
+ *                               "script",
+ *                               "style", 
+ *                               "applet",
+ *                               "embed"
+ *                              );
+ *
+ * This will remove the following structure:
+ * <script>
+ *  window.alert("Isn't cross-site-scripting fun?!");
+ * </script>
+ * 
+ * $self_closing_tags
+ * ------------------
+ * This is a simple one-dimentional array of strings, which specifies which
+ * tags contain no content and should not be forcefully closed if this option
+ * is turned on (see further).
+ * Example:
+ * $self_closing_tags =  Array(
+ *                             "img",
+ *                             "br", 
+ *                             "hr",
+ *                             "input"
+ *                            );    
+ *
+ * $force_tag_closing
+ * ------------------
+ * Set it to true to forcefully close any tags opened within the document.
+ * This is good if you want to take care of people who like to screw up
+ * the pages by leaving unclosed tags like <a>, <b>, <i>, etc.
+ *
+ * $rm_attnames
+ * -------------
+ * Now we come to parameters that are more obscure. This parameter is
+ * a nested array which is used to specify which attributes should be
+ * removed. It goes like so:
+ * 
+ * $rm_attnames = Array(
+ *   "PCRE regex to match tag name" =>
+ *     Array(
+ *           "PCRE regex to match attribute name"
+ *           )
+ *   );
+ *
+ * Example:
+ * $rm_attnames = Array(
+ *   "|.*|" =>
+ *     Array(
+ *           "|target|i",
+ *           "|^on.*|i"  
+ *          )
+ *   );
+ *
+ * This will match all attributes (.*), and specify that all attributes
+ * named "target" and starting with "on" should be removed. This will take
+ * care of the following problem:
+ * <em onmouseover="window.alert('muahahahaha')">
+ * The "onmouseover" will be removed.
+ *
+ * $bad_attvals
+ * ------------
+ * This is where it gets ugly. This is a nested array with many levels.
+ * It goes like so:
+ *
+ * $bad_attvals = Array(
+ *   "pcre regex to match tag name" =>
+ *     Array(
+ *           "pcre regex to match attribute name" =>
+ *             Array(
+ *                   "pcre regex to match attribute value"
+ *                  )
+ *             Array(
+ *                   "pcre regex replace a match from above with"
+ *                  )
+ *          )
+ *   );
+ *
+ * An extensive example:
+ *
+ * $bad_attvals = Array(
+ *   "|.*|" =>
+ *      Array(
+ *            "/^src|background|href|action/i" =>
+ *                Array(
+ *                      Array(
+ *                            "/^([\'\"])\s*\S+script\s*:.*([\'\"])/si"
+ *                            ),
+ *                      Array(
+ *                            "\\1http://veryfunny.com/\\2"
+ *                            )
+ *                      ),
+ *            "/^style/i" =>
+ *                Array(
+ *                      Array(
+ *                            "/expression/si",
+ *                            "/url\(([\'\"])\s*https*:.*([\'\"])\)/si",
+ *                            "/url\(([\'\"])\s*\S+script:.*([\'\"])\)/si"
+ *                           ),
+ *                      Array(
+ *                            "idiocy",
+ *                            "url(\\1http://veryfunny.com/\\2)",
+ *                            "url(\\1http://veryfynny.com/\\2)"
+ *                           )
+ *                      )
+ *            )
+ *  );
+ *
+ * This will take care of nearly all known cross-site scripting exploits,
+ * plus some (see my filter sample at 
+ * http://www.mricon.com/html/phpfilter.html for a working version).
+ *
+ * $add_attr_to_tag
+ * ----------------
+ * This is a useful little feature which lets you add attributes to 
+ * certain tags. It is a nested array as well, but not at all like
+ * the previous one. It goes like so:
+ * 
+ * $add_attr_to_tag = Array(
+ *   "PCRE regex to match tag name" =>
+ *     Array(
+ *           "attribute name"=>'"attribute value"'
+ *          )
+ *   );
+ * 
+ * Note: don't forget quotes around attribute value.
+ * 
+ * Example:
+ * 
+ * $add_attr_to_tag = Array(
+ *   "/^a$/si" => 
+ *     Array(
+ *           'target'=>'"_new"'
+ *          )
+ *   );
+ * 
+ * This will change all <a> tags and add target="_new" to them so all links
+ * open in a new window.
+ *
+ *
+ */

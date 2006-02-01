@@ -11,6 +11,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 
 //defines
 require("./inc/inc.php");
+require("./inc/htmlfilter.php");
 
 if(!isset($ix) || !isset($pag)) redirect("error.php?err=3&sid=$sid&tid=$tid&lid=$lid");
 
@@ -83,6 +84,8 @@ if($ix < (count($mysess)-1)) {
 
 $body	= 	$email["body"];
 
+$body	=	HTMLFilter($body, "images/trans.gif", $block_external_images);
+
 if($block_external_images) 
 	$body = eregi_replace("(src|background)=([\"]?)(http[s]?:\/\/[a-z0-9~#%@\&:=?+\/\.,_-]+[a-z0-9~#%@\&=?+\/_-]+)([\"]?)","\\1=\\2images/trans.gif\\4 original_url=\"\\3\"",$body);
 
@@ -91,7 +94,7 @@ $redir_path = getenv("PHP_SELF")?getenv("PHP_SELF"):$_SERVER["PHP_SELF"];
 if(!$redir_path) $redir_path = $PHP_SELF;
 $redir_path = dirname($redir_path)."/redir.php";
 
-$body = eregi_replace("target=[\"]?[A-Z_]+[\"]?","target=\"blank\"",$body);
+$body = eregi_replace("target=[\"]?[a-zA-Z_]+[\"]?","target=\"blank\"",$body);
 $body = eregi_replace("href=\"http([s]?)://","target=\"_blank\" href=\"$redir_path?http\\1://",$body);
 $body = eregi_replace("href=\"mailto:","target=\"_top\" href=\"newmsg.php?sid=$sid&tid=$tid&lid=$lid&to=",$body);
 
