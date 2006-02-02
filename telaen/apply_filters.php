@@ -86,3 +86,4 @@ if($folder == "inbox" && $allow_filters) {
 	reset($headers);
 }
 ?>
+
