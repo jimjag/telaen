@@ -168,7 +168,6 @@ function tln_getnxtag($body, $offset){
      */
     $pos = tln_skipspace($body, $lt + 1);
     if ($pos >= strlen($body)){
-        // spew("$me: End of body reached.\n");
         return Array(false, false, false, $lt, strlen($body));
     }
     /**
