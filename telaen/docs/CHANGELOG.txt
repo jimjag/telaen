@@ -27,7 +27,13 @@ Telaen:
    moving from 1.0.0 to 1.0.1 will not make it happen, but
    going from 1.0.4 to 1.1.0 will. This therefore sets
    the assumption of what the "API" is :)
-   
+
+ * HTML Emails are now filtered through HTMLFilter,
+   to protect against XSS attacks.
+
+ * We no longer get that weird '1' on the upper left of
+   the message list page.
+
 1.0.0-RC1:
 
  * Fix calculation of timezones.
