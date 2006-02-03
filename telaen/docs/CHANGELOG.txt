@@ -34,6 +34,9 @@ Telaen:
  * We no longer get that weird '1' on the upper left of
    the message list page.
 
+ * Add in a method to adjust for server timezone offsets, if we
+   can't figure out the real offset.
+
 1.0.0-RC1:
 
  * Fix calculation of timezones.

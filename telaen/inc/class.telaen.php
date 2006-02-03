@@ -15,30 +15,30 @@ class Telaen_core {
 
 	var $mail_connection	= 0;
 	var $mail_server		= "localhost";
-	var	$mail_port			= 110;
-	var	$mail_error_msg		= "";
-	var	$mail_user			= "unknown";
-	var	$mail_pass			= "";
-	var	$mail_email			= "unknown@localhost";
-	var	$mail_protocol		= "pop3";
+	var $mail_port			= 110;
+	var $mail_error_msg		= "";
+	var $mail_user			= "unknown";
+	var $mail_pass			= "";
+	var $mail_email			= "unknown@localhost";
+	var $mail_protocol		= "pop3";
 	var $mail_prefix		= "";
 
 	var $allow_scripts		= true;
 	var $use_html			= false;
 	var $charset			= "iso-8859-1";
 	var $timezone			= "+0000";
-	var $debug				= false;
+	var $debug			= false;
 	var $user_folder		= "./";
 	var $temp_folder		= "./";
 	var $timeout			= 10;
 	var $displayimages		= false;
-	var $save_temp_attachs	= true;
+	var $save_temp_attachs		= true;
 	var $current_level		= Array();
 	// internal
 	var $_msgbody			= "";
 	var $_content			= Array();
-	var $_sid				= "";
-	var $_tnef				= "";
+	var $_sid			= "";
+	var $_tnef			= "";
 
 	/*******************/
 
@@ -702,13 +702,16 @@ class Telaen_core {
 	*/
 
 	function build_mime_date($mydate,$timezone = "+0000") {
+		global $server_timezone_offset;
 		if(!ereg("((\\+|-)[0-9]{4})",$timezone)) $timezone = "+0000";
 		if(!$intdate = @strtotime($mydate)) return time();
 		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$timezone,$regs)) $datetimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
 		else $datetimezone = 0;
 		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$this->timezone,$regs)) $usertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
 		else $usertimezone = 0;
-		$diff = $datetimezone+$usertimezone;
+		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$server_timezone_offset,$regs)) $servertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
+		else $servertimezone = 0;
+		$diff = $datetimezone+$usertimezone+servertimezone;
 		return ($intdate+$diff);
 	}
 

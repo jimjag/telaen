@@ -280,6 +280,17 @@ $default_preferences = Array(
 	);
 
 ########################################################################
+# Sometimes, we cannot figure out the correct timezone for the
+# server, as compared to the user. So setting the user timezone
+# to, for example "-0500" when the server is "-0800" results
+# in the mail time display being 3 hours off. To adjust for
+# this, set $server_timezone_offset to the correct
+# adjustment (that is, "-0300") . For most sites, this isn't required.
+########################################################################
+
+$server_timezone_offset = "-0000";
+
+########################################################################
 # Control whether the SysAdmin overrules the unmark READ messages
 # user preference. To use, set $force_unmark_read_overrule to
 # yes (if you want to overrule whatever the user has set)
