@@ -600,6 +600,7 @@ function tln_sanitize($body,
     /**
      * Normalize rm_tags and rm_tags_with_content.
      */
+    $rm_tags = array_shift($tag_list);
     @array_walk($tag_list, 'tln_casenormalize');
     @array_walk($rm_tags_with_content, 'tln_casenormalize');
     @array_walk($self_closing_tags, 'tln_casenormalize');
@@ -608,7 +609,6 @@ function tln_sanitize($body,
      * false  means remove these tags
      * true   means allow these tags
      */
-    $rm_tags = array_shift($tag_list);
     $curpos = 0;
     $open_tags = Array();
     $trusted = "<!-- begin tln_sanitized html -->\n";
