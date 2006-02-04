@@ -124,9 +124,9 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 } else {
 	$why = $SS->CookieState();
 	if (!$sess["auth"]) {
-		redirect_and_exit("./index.php?tid=$tid&lid=$lid&why=$why");
+		redirect_and_exit("index.php?tid=$tid&lid=$lid&why=$why");
 	} else {
-		redirect_and_exit("./index.php?tid=$tid&lid=$lid");
+		redirect_and_exit("index.php?tid=$tid&lid=$lid");
 	}
 }
 $sess["start"] = time();
@@ -190,7 +190,7 @@ if(isset($need_save)) save_prefs($prefs);
 if(!isset($folder) || $folder == "" || strpos($folder,"..") !== false ) 
 	$folder = "inbox";
 elseif (!file_exists($userfolder.$UM->fix_prefix($folder,1))) { 
-	redirect_and_exit("./logout.php?sid=$sid&tid=$tid&lid=$lid"); 
+	redirect_and_exit("logout.php?sid=$sid&tid=$tid&lid=$lid"); 
 }
 
 ?>

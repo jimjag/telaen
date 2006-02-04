@@ -217,10 +217,18 @@ function get_usage_graphic($used,$aval) {
 function redirect_and_exit($location) {
 	global $enable_debug;
 
-	if($enable_debug) {
-		echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$location\">Click here</a> to go to <a href=\"$location\">$location</a></h3><br><br><br><br>");
+	$url = "http";
+	if (!empty($_SERVER['HTTPS'])) {
+		$url .= "s://";
 	} else {
-		Header("Location: $location");
+		$url .= "://";
+	}
+	$url .= $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/' . $location ;
+
+	if($enable_debug) {
+		echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$url\">Click here</a> to go to <a href=\"$url\">$url</a></h3><br><br><br><br>");
+	} else {
+		Header("Location: $url");
         }
         if (ob_get_level()) {
                 @ob_end_flush();
