@@ -14,8 +14,8 @@ require("./inc/inc.php");
 
 function mail_connect() {
 	global $UM,$sid,$tid,$lid;
-	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid\r\n"); }
-	if(!$UM->mail_auth(true)) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)."\r\n"); }
+	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
+	if(!$UM->mail_auth(true)) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 }
 
 $headers = null;
@@ -246,7 +246,7 @@ if( !is_array($headers)
 	$UM->mail_disconnect();
 }
 
-if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid\r\n"); }
+if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid"); }
 
 /*
  * Sort the date and size fields with a natural sort

@@ -85,7 +85,7 @@ $reg_pp    = $prefs["rpp"];
 $start_pos = ($pag-1)*$reg_pp;
 $end_pos   = (($start_pos+$reg_pp) > $nummsg)?$nummsg:$start_pos+$reg_pp;
 
-if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."&sid=$sid&tid=$tid&lid=$lid\r\n");
+if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."&sid=$sid&tid=$tid&lid=$lid");
 
 echo($nocache);
 
