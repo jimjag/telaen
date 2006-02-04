@@ -222,7 +222,9 @@ function redirect_and_exit($location) {
 	} else {
 		Header("Location: $location");
         }
-        @ob_end_flush();
+        if (ob_get_level()) {
+                @ob_end_flush();
+        }
         exit;
 }
 
