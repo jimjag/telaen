@@ -116,8 +116,8 @@ if(isset($tipo) && $tipo == "send") {
 			
 			if($prefs["save-to-sent"]) {
 
-				if(!$UM->mail_connect()) { redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); exit; }
-				if(!$UM->mail_auth(false)) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); exit; }
+				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
+				if(!$UM->mail_auth(false)) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 				$UM->mail_save_message("sent",$mail->FormattedMail,"\\SEEN");
 				unset($sess["headers"][base64_encode("sent")]);
 				$UM->mail_disconnect();

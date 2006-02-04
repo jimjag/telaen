@@ -8,13 +8,14 @@ Telaen is a GPL'ed software developed by
 Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
  by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
-
+ini_set ( 'output_buffering',    2048 );
+ob_start();
 require("./inc/inc.php");
 
 function mail_connect() {
 	global $UM,$sid,$tid,$lid;
-	if(!$UM->mail_connect()) { redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid\r\n"); exit; }
-	if(!$UM->mail_auth(true)) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)."\r\n"); exit; }
+	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid\r\n"); }
+	if(!$UM->mail_auth(true)) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)."\r\n"); }
 }
 
 $headers = null;
@@ -245,7 +246,7 @@ if( !is_array($headers)
 	$UM->mail_disconnect();
 }
 
-if(!is_array($headers = $sess["headers"][$folder_key])) { redirect("error.php?err=3&sid=$sid&tid=$tid&lid=$lid\r\n"); exit; }
+if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid\r\n"); }
 
 /*
  * Sort the date and size fields with a natural sort
@@ -277,7 +278,7 @@ if ( (!$same_version) ||
      ($check_first_login && !$prefs["first-login"]) ) {
 	$prefs["first-login"] = 1;
 	save_prefs($prefs);
-	redirect("preferences.php?sid=$sid&tid=$tid&lid=$lid&folder=".urlencode($folder));
+	redirect_and_exit("preferences.php?sid=$sid&tid=$tid&lid=$lid&folder=".urlencode($folder));
 	exit;
 }
 
@@ -288,10 +289,9 @@ $refreshurl = "messages.php?sid=$sid&tid=$tid&lid=$lid&folder=".urlencode($folde
 
 if (isset($back_to)) {
 	if (count($headers) > $back_to) {
-		redirect("readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$back_to&sid=$sid&tid=$tid&lid=$lid");
-		exit;
+		redirect_and_exit("readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$back_to&sid=$sid&tid=$tid&lid=$lid");
 	}
 }
-redirect("$refreshurl");
+redirect_and_exit("$refreshurl");
 
 ?>

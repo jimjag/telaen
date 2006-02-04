@@ -15,5 +15,5 @@ require("./inc/inc.php");
 cleanup_dirs($userfolder, 1);
 	
 $SS->Kill();
-redirect("./index.php");
+redirect_and_exit("./index.php");
 ?> 

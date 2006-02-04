@@ -13,8 +13,8 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 require("./inc/inc.php");
 
 
-if(!$UM->mail_connect()) redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid\r\n");
-if(!$UM->mail_auth()) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)."\r\n"); exit; }
+if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid\r\n");
+if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)."\r\n"); }
 
 // check and create a new folder
 
@@ -61,7 +61,7 @@ if(isset($empty)) {
 			unset($sess["headers"][base64_encode("trash")]);
 		$SS->Save($sess);
 	}
-	if(isset($goback)) redirect("process.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid");
+	if(isset($goback)) redirect_and_exit("process.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid");
 
 }
 

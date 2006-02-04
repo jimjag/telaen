@@ -55,8 +55,8 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 		$entry = $boxes[$n]["name"];
 		if(!is_array($sess["headers"][base64_encode(strtolower($entry))])) {
 			if(!$UM->mail_connected()) {
-				if(!$UM->mail_connect()) redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid");
-				if(!$UM->mail_auth()) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); exit; }
+				if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid");
+				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 			}
 			$thisbox = $UM->mail_list_msgs($entry);
 			$sess["headers"][base64_encode(strtolower($entry))] = $thisbox;

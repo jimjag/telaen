@@ -15,7 +15,7 @@ require("./folder_list.php");
 $smarty->assign("umUser",$f_user);
 $refreshurl = "process.php?sid=$sid&tid=$tid&lid=$lid&folder=".urlencode($folder)."&pag=$pag&refr=true";
 
-if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect("error.php?err=3&sid=$sid&tid=$tid&lid=$lid"); exit; }
+if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid"); }
 
 $arrow = ($sortorder == "ASC")?"images/arrow_up.gif":"images/arrow_down.gif";
 $arrow = "&nbsp;<img src=$arrow width=8 height=7 border=0 alt=>";
@@ -47,7 +47,7 @@ $timeleft = ($prefs["refresh-time"]-$elapsedtime);
 if($timeleft > 0) {
 	echo("<META HTTP-EQUIV=\"Refresh\" CONTENT=\"".(ceil($timeleft)*60)."; URL=$refreshurl\">");
 } elseif ($prefs["refresh-time"]) {
-	redirect("$refreshurl");
+	redirect_and_exit("$refreshurl");
 }
 
 /* load total size */
@@ -85,7 +85,7 @@ $reg_pp    = $prefs["rpp"];
 $start_pos = ($pag-1)*$reg_pp;
 $end_pos   = (($start_pos+$reg_pp) > $nummsg)?$nummsg:$start_pos+$reg_pp;
 
-if(($start_pos >= $end_pos) && ($pag != 1)) redirect("messages.php?folder=$folder&pag=".($pag-1)."&sid=$sid&tid=$tid&lid=$lid\r\n");
+if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."&sid=$sid&tid=$tid&lid=$lid\r\n");
 
 echo($nocache);
 

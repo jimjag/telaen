@@ -93,8 +93,8 @@ function cleanup_dirs ($userfolder, $logout) {
 		
 			if($prefs["empty-trash"]) {
 				if ($UM->mail_protocol == "imap") {
-					if(!$UM->mail_connect()) { redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); exit; }
-					if(!$UM->mail_auth()) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); exit; }
+					if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
+					if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 				}
 				$trash = "trash";
 				if(!is_array($sess["headers"][base64_encode($trash)])) $sess["headers"][base64_encode($trash)] = $UM->mail_list_msgs($trash);
@@ -112,8 +112,8 @@ function cleanup_dirs ($userfolder, $logout) {
 			}
 	
 			if($prefs["empty-spam"]) {
-				if(!$UM->mail_connect()) { redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); exit; }
-				if(!$UM->mail_auth()) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); exit; }
+				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
+				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 				$trash = "spam";
 				if(!is_array($sess["headers"][base64_encode($trash)])) $sess["headers"][base64_encode($trash)] = $UM->mail_list_msgs($trash);
 				$trash = $sess["headers"][base64_encode($trash)];
@@ -214,14 +214,16 @@ function get_usage_graphic($used,$aval) {
 	return $graph;
 }
 
-function redirect($location) {
+function redirect_and_exit($location) {
 	global $enable_debug;
 
 	if($enable_debug) {
 		echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$location\">Click here</a> to go to <a href=\"$location\">$location</a></h3><br><br><br><br>");
-		exit;
-	} else
+	} else {
 		Header("Location: $location");
+        }
+        @ob_end_flush();
+        exit;
 }
 
 

@@ -13,7 +13,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 require("./inc/inc.php");
 require("./inc/htmlfilter.php");
 
-if(!isset($ix) || !isset($pag)) redirect("error.php?err=3&sid=$sid&tid=$tid&lid=$lid");
+if(!isset($ix) || !isset($pag)) redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid");
 
 $folderkey = base64_encode(strtolower($folder));
 
@@ -34,17 +34,17 @@ if(isset($attachment)) {
 			$root = &$root["attachments"][$item];
 
 	if( !is_array($root) || 
-		!file_exists($root["filename"])) redirect("error.php?err=3&sid=$sid&tid=$tid&lid=$lid");
+		!file_exists($root["filename"])) redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid");
 
 	$result = $UM->_read_file($root["filename"]);
 
 } else {
 	$is_attached = false;
 	$arAttachment = Array();
-	if(!$UM->mail_connect()) { redirect("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); exit; }
-	if(!$UM->mail_auth()) { redirect("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); exit; }
+	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
+	if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 
-	if(!($result = $UM->mail_retr_msg($mail_info,1))) { redirect("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&sid=$sid&tid=$tid&lid=$lid&refr=true"); exit; }
+	if(!($result = $UM->mail_retr_msg($mail_info,1))) { redirect_and_exit("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&sid=$sid&tid=$tid&lid=$lid&refr=true"); }
 	if($UM->mail_set_flag($mail_info,"\\SEEN","+")) {
 		$sess["headers"][$folderkey][$ix] = $mail_info;
 	}
