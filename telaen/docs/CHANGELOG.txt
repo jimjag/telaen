@@ -37,6 +37,14 @@ Telaen:
  * Add in a method to adjust for server timezone offsets, if we
    can't figure out the real offset.
 
+ * Use output buffering within process.php to prevent breakage
+   with redirects.
+
+ * Force exit after all redirects.
+
+ * All redirects are now HTTP/1.1 compliant (ie: the use
+   absolute URLs).
+
 1.0.0-RC1:
 
  * Fix calculation of timezones.
