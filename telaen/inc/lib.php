@@ -216,7 +216,7 @@ function get_usage_graphic($used,$aval) {
 
 function redirect_and_exit($location) {
 	global $enable_debug;
-
+	global $phpver;
 	$url = "http";
 	if (!empty($_SERVER['HTTPS'])) {
 		$url .= "s://";
@@ -230,7 +230,11 @@ function redirect_and_exit($location) {
 	} else {
 		Header("Location: $url");
         }
-        if (ob_get_level()) {
+	if ($phpver >= 4.1) {
+		if (ob_get_level()) {
+                	@ob_end_flush();
+        	}
+        } else {
                 @ob_end_flush();
         }
         exit;
