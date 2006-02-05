@@ -1,8 +1,13 @@
 {config_load file=$umLanguageFile section="QuickAddress"}
-<title>Telaen Webmail - {#qad_title#}</title>
-<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>Telaen Webmail - {#qad_title#}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
+</head>
 <body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
-<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
 {literal}
 <script language=javascript>
 
@@ -145,4 +150,5 @@ function ns_clean() {
 // clean the spaces in selects, its fix width in netscape
 ns_clean();
 </script>
-	
+</body>
+</html>

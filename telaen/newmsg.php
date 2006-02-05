@@ -266,7 +266,7 @@ if(isset($tipo) && $tipo == "send") {
 	function search() {	location = 'search.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid';}
 	function addrpopup(where) {
 		url = 'quick_address.php?sid=$sid&tid=$tid&lid=$lid&where=' + where;
-		mywin = window.open(url,'AddressBook','width=550,height=400,top=200,left=200');
+		mywin = window.open(url,'AddressBook','width=600,height=450,top=150,left=150');
 	}
 	function addresses() { location = 'addressbook.php?sid=$sid&tid=$tid&lid=$lid'; }
 	function prefs() { location = 'preferences.php?sid=$sid&tid=$tid&lid=$lid'; }
