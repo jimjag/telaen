@@ -152,10 +152,10 @@ $UM->charset			= $default_char_set;
 /*
 Don't remove the fallowing lines, or you will be problems with browser's cache 
 */
-Header("Expires: Wed, 11 Nov 1998 11:11:11 GMT\r\n".
-"Cache-Control: no-cache\r\n".
-"Cache-Control: must-revalidate\r\n".
-"Pragma: no-cache");
+Header("Expires: Wed, 11 Nov 1998 11:11:11 GMT");
+Header("Cache-Control: no-cache");
+Header("Cache-Control: must-revalidate");
+Header("Pragma: no-cache");
 
 $nocache = "
 <META HTTP-EQUIV=\"Cache-Control\" CONTENT=\"no-cache\">
