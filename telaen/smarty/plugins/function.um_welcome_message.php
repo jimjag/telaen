@@ -1,4 +1,4 @@
-<?
+<?php
 /*======================================================================*\
     Function: smarty_func_um_welcome_message
     Purpose:  translate system boxes into different languages

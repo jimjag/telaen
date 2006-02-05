@@ -135,3 +135,5 @@ switch ($why) {
 }
 
 $smarty->display("$selected_theme/login.htm");
+
+?>
