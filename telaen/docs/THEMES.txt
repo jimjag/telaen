@@ -1,0 +1,22 @@
+Due to some extra functionality in Telaen compared to Uebimiau,
+even though old UM themes will still work under Telaen, we
+recommend that you update your themes to fold in the new
+capability.
+
+For example, since Telaen is now SPAM aware, the 'messagelist.htm'
+template now has access to a Smarty variable 'umHaveSpam'
+which prints out whether the user has SPAM (and it has
+been moved into their SPAM folder), using the 'have_spam'
+contant from the langs/ file selected. There are
+also new preferences which should be displayed in
+the 'preferences.htm' template as well. Required
+changes will be noted in the CHANGELOG.txt file.
+
+We encourage people to update and revise their old UM
+themes for Telaen. We would be happy to bundle them with
+the official Telaen releases, assuming compatible
+licensing of course.
+
+Thank you for using and supporting Telaen!!
+
+-- Team Telaen.

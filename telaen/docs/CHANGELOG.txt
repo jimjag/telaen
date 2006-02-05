@@ -45,6 +45,8 @@ Telaen:
  * All redirects are now HTTP/1.1 compliant (ie: the use
    absolute URLs).
 
+ * Some HTML cleanups for the default theme.
+
 1.0.0-RC1:
 
  * Fix calculation of timezones.
