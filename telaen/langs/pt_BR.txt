@@ -1,9 +1,13 @@
 # ***** GLOBAL VARS ****** #
+#
+#  Portuguese - Brazilian
+#
 # User-friendly names to system folders
 
 inbox_extended					= Caixa de Entrada
 sent_extended					= Ítens Enviados
 trash_extended					= Lixeira
+spam_extended					= Spam
 
 #Navigation texts
 
@@ -65,6 +69,7 @@ date_format 					= %d/%m/%y %H:%M
 default_char_set				= iso-8859-1
 
 messages_mnu					= Mensagens
+read_menu						= Ler E-Mail(s)
 compose_mnu						= Escrever
 refresh_mnu						= Atualizar
 folders_mnu						= Pastas
@@ -112,8 +117,9 @@ folders_to						= Pastas para
 messages_to						= Mensagens para 
 no_messages						= Nenhuma mensagem na caixa postal 
 
-delete_selected_mnu				= Apagar selecionadas
-move_selected_mnu				= Mover selecionadas para
+delete_selected_mnu					= Apagar selecionadas
+move_selected_to_trash_mnu			= Mover selecionadas para Lixeira
+move_selected_mnu					= Mover selecionadas para
 delete_mnu						= Excluir
 move_mnu						= Mover para
 subject_hea						= Assunto
@@ -121,6 +127,7 @@ from_hea						= De
 to_hea							= Para
 date_hea						= Data
 size_hea						= Tam.
+have_spam						= Você tem Spam (verifique a pasta Spam)
 
 msg_you_have					= Você tem
 msg_message						= mensagem
@@ -139,10 +146,12 @@ lgn_welcome_msg					= Bem Vindo. Por favor informe seus dados
 lng_user_email					= Email
 lng_user_name					= Login
 lng_user_pwd					= Senha
+lng_server					= Servidor
 lng_theme						= Tema
 lng_language						= Idioma
-lng_login_btn					= Acessar &gt;&gt;
-
+lng_login_btn					= Entrar &gt;&gt;
+lng_cookie_not_enabled				= Cookies deve estar ativado
+lng_cookie_not_valid				= Falha na Verificação do Cookie de Segurança
 
 [Newmessage]
 
@@ -170,7 +179,7 @@ nav_back						= Voltar
 
 up_title 						= Adicionar arquivo
 up_information_text				= Selecione o arquivo desejado
-up_button_text					= Enviar
+up_button_text					= Anexar
 
 priority_text					= Prioridade
 priority_low					= Baixa
@@ -231,7 +240,7 @@ err_exit						= Sair
 
 [Preferences]
 
-prf_title 						= Preferencias
+prf_title 						= Preferências
 prf_general_title				= Informações Gerais
 prf_name						= Nome
 prf_reply_to					= Responder para
@@ -240,6 +249,9 @@ prf_trash_title					= Lixeira
 prf_save_to_trash				= Quando eu <b>apagar</b> uma mensagem, guarde uma cópia dela na pasta 
 prf_save_only_read				= Somente salve mensagens <b>que já foram lidas</b> na pasta 
 prf_empty_on_exit				= <b>Limpar</b> a lixeira ao sair
+prf_empty_spam_on_exit				= <b>Limpar</b> a pasta Spam ao sair
+prf_unmark_read_on_exit				= Marcar mensagens LIDAS como NÃO LIDAS ao sair
+
 prf_sent_title					= Ítens Enviados
 prf_save_sent					= Quando eu <b>enviar</b> uma mensagem, guarde uma cópia dela na pasta
 prf_messages_title				= Mensagens
@@ -274,6 +286,7 @@ reply_all_mnu					= Responder a todos
 forward_mnu						= Encaminhar
 headers_mnu						= Cabeçalhos
 move_mnu						= Mover para
+move__to_trash_mnu					= Mover para Lixeira
 delete_mnu						= Excluir
 print_mnu						= Imprimir
 
