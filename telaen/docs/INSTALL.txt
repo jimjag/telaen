@@ -23,3 +23,24 @@ INSTALL
 - Open all the "inc/config*php" files in a text editor; all instructions are
   commented on this file, pay attention on the $temporary_folder variable,
   set it according your above folder name
+
+---------------
+UPGRADING
+---------------
+
+Upgrading should be a painless affair. You can install
+the new tarball or zip file right over the old one. Since
+we do not bundle the "local" config files, just their
+"default" versions (see above, eg: config.php.default),
+your old configuration will be saved.
+
+Sometimes, after upgrading, especially if this is the
+first time you've installed Talean and have previously
+been using Uebimiau, you may be surprised by blank
+pages! This is because there is a mismatch between the
+pre-compiled Smarty templates and the "new" ones.
+To resolve this, delete all the directories in the
+temporary folder that start with '%%': These are the
+precompiled templates. By removing them, you force
+Smarty to re-recompile them again, fixing the blank-page
+problem.

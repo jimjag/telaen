@@ -9,6 +9,10 @@ of author.
 
 Telaen is based on Uebimiau.
 
+We recommend that you read the other documents in
+the docs/ subdirectory, especially the CHANGELOG.txt
+and INSTALL.txt files.
+
 ----------------------------------------------------
 DEVELOPER
 ----------------------------------------------------
