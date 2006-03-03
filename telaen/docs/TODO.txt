@@ -1,5 +1,8 @@
 Telaen TODO List: Pick an issue and have fun!
 
+ *) Cleanup and remove the old nasty Session setup and
+    use PHP sessions.
+
  *) SPAM Detection:
     Make the "spam detection" regex user controllable, not just
     admin controllable. Likely requires looking at X-Spam-Level
