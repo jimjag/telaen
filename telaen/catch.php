@@ -13,7 +13,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 
 
 require("./inc/inc.php");
-if(!isset($ix) || !isset($folder)) redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid");
+if(!isset($ix) || !isset($folder)) redirect_and_exit("error.php?err=3&tid=$tid&lid=$lid");
 
 
 $filename = $userfolder."_infos/addressbook.ucf";
@@ -73,7 +73,6 @@ if(isset($ckaval)) {
 } else {
 
 	$smarty->assign("umLid",$lid);
-	$smarty->assign("umSid",$sid);
 	$smarty->assign("umFolder",$folder);
 	$smarty->assign("umIx",$ix);
 	$smarty->assign("umAvailableAddresses",$aval_count);

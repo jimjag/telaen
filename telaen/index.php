@@ -125,15 +125,6 @@ if($allow_user_change_theme) {
 	$smarty->assign("umThemes",$themsel);
 }
 
-$smarty->assign("umCookieState",$why);
-
-switch ($why) {
-	case 1: $smarty->assign("umCookieNotice", "Cookies must be enabled");
-		break;
-	case 2: $smarty->assign("umCookieNotice", "Cookie Security Check Failed");
-		break;
-}
-
 $smarty->display("$selected_theme/login.htm");
 
 ?>

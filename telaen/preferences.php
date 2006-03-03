@@ -42,13 +42,13 @@ $jssource = "
 
 <script language=\"JavaScript\">
 disbl = false;
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'; }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'}
-function goend() { location = 'logout.php?sid=$sid&tid=$tid&lid=$lid'; }
-function goinbox() { location = 'messages.php?folder=inbox&sid=$sid&tid=$tid&lid=$lid'; }
-function search() { location = 'search.php?sid=$sid&tid=$tid&lid=$lid'; }
-function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&sid=$sid&tid=$tid&lid=$lid';}
-function addresses() { location = 'addressbook.php?sid=$sid&tid=$tid&lid=$lid'; }
+function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
+function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
+function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
+function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
+function search() { location = 'search.php?tid=$tid&lid=$lid'; }
+function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
+function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
 function dis() { 
 	with(document.forms[0]) { 
 		f_st_only_read.disabled = !f_save_trash.checked; 
@@ -62,7 +62,6 @@ function checkDis() { if (disbl) return false; }
 ";
 
 $smarty->assign("umJS",$jssource);
-$smarty->assign("umSid",$sid);
 $smarty->assign("umLid",$lid);
 $smarty->assign("umTid",$tid);
 

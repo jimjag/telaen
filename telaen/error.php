@@ -34,7 +34,6 @@ if($phpver >= 4.1) {
 	extract($_GET);
 }
 
-$smarty->assign("umSid",$sid);
 $smarty->assign("umLid",$lid);
 $smarty->assign("umTid",$tid);
 

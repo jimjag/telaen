@@ -116,8 +116,8 @@ if(isset($tipo) && $tipo == "send") {
 			
 			if($prefs["save-to-sent"]) {
 
-				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
-				if(!$UM->mail_auth(false)) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
+				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&tid=$tid&lid=$lid"); }
+				if(!$UM->mail_auth(false)) { redirect_and_exit("badlogin.php?tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 				$UM->mail_save_message("sent",$mail->FormattedMail,"\\SEEN");
 				unset($sess["headers"][base64_encode("sent")]);
 				$UM->mail_disconnect();
@@ -126,22 +126,21 @@ if(isset($tipo) && $tipo == "send") {
 			}
 		}
 
-	} else die("<script language=\"javascript\">location = 'error.php?err=3&sid=$sid&tid=$tid&lid=$lid';</script>");
+	} else die("<script language=\"javascript\">location = 'error.php?err=3&tid=$tid&lid=$lid';</script>");
 
 	$jssource = "
 	<script language=\"javascript\">
-	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'; }
-	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'}
-	function goend() { location = 'logout.php?sid=$sid&tid=$tid&lid=$lid'; }
-	function goinbox() { location = 'messages.php?folder=inbox&sid=$sid&tid=$tid&lid=$lid'; }
-	function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&sid=$sid&tid=$tid&lid=$lid';}
-	function search() {	location = 'search.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid';}
-	function addresses() { location = 'addressbook.php?sid=$sid&tid=$tid&lid=$lid'; }
-	function prefs() { location = 'preferences.php?sid=$sid&tid=$tid&lid=$lid'; }
+	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
+	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
+	function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
+	function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
+	function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
+	function search() {	location = 'search.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid';}
+	function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
+	function prefs() { location = 'preferences.php?tid=$tid&lid=$lid'; }
 	</script>
 	";
 
-	$smarty->assign("umSid",$sid);
 	$smarty->assign("umLid",$lid);
 	$smarty->assign("umTid",$tid);
 	$smarty->assign("umJS",$jssource);
@@ -176,7 +175,6 @@ if(isset($tipo) && $tipo == "send") {
 
 	$forms = "<input type=hidden name=tipo value=edit>
 	<input type=hidden name=is_html value=\"$js_advanced\">
-	<input type=hidden name=sid value=\"$sid\">
 	<input type=hidden name=lid value=\"$lid\">
 	<input type=hidden name=tid value=\"$tid\">
 	<input type=hidden name=folder value=\"$folder\">
@@ -208,8 +206,8 @@ if(isset($tipo) && $tipo == "send") {
 
 	function upwin(rem) { 
 		mywin = 'upload.php';
-		if (rem != null) mywin += '?rem='+rem+'&sid=$sid&tid=$tid&lid=$lid';
-		else mywin += '?sid=$sid&tid=$tid&lid=$lid';
+		if (rem != null) mywin += '?rem='+rem+'&tid=$tid&lid=$lid';
+		else mywin += '?tid=$tid&lid=$lid';
 		window.open(mywin,'Upload','width=300,height=50,scrollbars=0,menubar=0,status=0'); 
 	}
 
@@ -258,18 +256,18 @@ if(isset($tipo) && $tipo == "send") {
 		}
 	}
 	
-	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'; }
-	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'}
-	function goend() { location = 'logout.php?sid=$sid&tid=$tid&lid=$lid'; }
-	function goinbox() { location = 'messages.php?folder=inbox&sid=$sid&tid=$tid&lid=$lid'; }
-	function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&sid=$sid&tid=$tid&lid=$lid';}
-	function search() {	location = 'search.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid';}
+	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
+	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
+	function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
+	function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
+	function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
+	function search() {	location = 'search.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid';}
 	function addrpopup(where) {
-		url = 'quick_address.php?sid=$sid&tid=$tid&lid=$lid&where=' + where;
+		url = 'quick_address.php?tid=$tid&lid=$lid&where=' + where;
 		mywin = window.open(url,'AddressBook','width=600,height=450,top=150,left=150');
 	}
-	function addresses() { location = 'addressbook.php?sid=$sid&tid=$tid&lid=$lid'; }
-	function prefs() { location = 'preferences.php?sid=$sid&tid=$tid&lid=$lid'; }
+	function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
+	function prefs() { location = 'preferences.php?tid=$tid&lid=$lid'; }
 	function AddAddress(strType,strAddress) {
 		obj = eval('document.composeForm.'+strType);
 		if(obj.value == '') obj.value = strAddress
@@ -335,8 +333,8 @@ if(isset($tipo) && $tipo == "send") {
 
 		if(!eregi("\\ANSWERED",$mail_info["flags"])) {
 
-			if(!$UM->mail_connect()) { die("<script>location = 'error.php?err=1&sid=$sid&tid=$tid&lid=$lid'</script>"); }
-			if(!$UM->mail_auth()) { die("<script>location = 'badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)."'</script>"); }
+			if(!$UM->mail_connect()) { die("<script>location = 'error.php?err=1&tid=$tid&lid=$lid'</script>"); }
+			if(!$UM->mail_auth()) { die("<script>location = 'badlogin.php?tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)."'</script>"); }
 			if($UM->mail_set_flag($mail_info,"\\ANSWERED","+")) {
 				$sess["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
 				$SS->Save($sess);
@@ -348,7 +346,7 @@ if(isset($tipo) && $tipo == "send") {
 
 		$filename = $mail_info["localname"];
 
-		if(!file_exists($filename)) die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&sid=$sid&tid=$tid&lid=$lid&refr=true';</script>");
+		if(!file_exists($filename)) die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&tid=$tid&lid=$lid&refr=true';</script>");
 		$result = $UM->_read_file($filename);
 		
 		$email = $UM->Decode($result);

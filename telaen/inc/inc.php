@@ -10,12 +10,13 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 *************************************************************************/
 
 @set_time_limit(0);
+session_name('telaen');
+session_start();
+$sid = session_id();
 
 require("./inc/config.php");
 require("./inc/class.telaen.php");
 require("./inc/lib.php");
-
-if(!preg_match("/[a-z0-9]{32}/",$sid)) $sid = strtolower(md5(uniqid(rand(), true)));
 
 require_once(SMARTY_DIR."Smarty.class.php");
 $smarty = new Smarty;
@@ -32,9 +33,8 @@ $smarty->assign("umLanguageFile",$selected_language.".txt");
 
 $SS = New Session();
 $SS->temp_folder 	= $temporary_directory;
-$SS->sid 			= $sid;
+$SS->sid 		= $sid;
 $SS->timeout 		= $idle_timeout;
-$SS->enable_cookies = ($enable_cookies && !$enable_debug);
 
 $sess = $SS->Load();
 
@@ -99,12 +99,12 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		break;
 	}
 
-	$UM->mail_email 	= $sess["email"]  			= stripslashes($f_email);
-	$UM->mail_user 		= $sess["user"]   			= stripslashes($f_user);
-	$UM->mail_pass 		= $sess["pass"]   			= stripslashes($f_pass); 
-	$UM->mail_server 	= $sess["server"] 			= stripslashes($f_server); 
+	$UM->mail_email 	= $sess["email"]  		= stripslashes($f_email);
+	$UM->mail_user 		= $sess["user"]   		= stripslashes($f_user);
+	$UM->mail_pass 		= $sess["pass"]   		= stripslashes($f_pass); 
+	$UM->mail_server 	= $sess["server"] 		= stripslashes($f_server); 
 
-	$UM->mail_port 		= $sess["port"] 			= $f_port; 
+	$UM->mail_port 		= $sess["port"] 		= $f_port; 
 	$UM->mail_protocol	= $sess["protocol"] 		= $f_protocol; 
 	$UM->mail_prefix	= $sess["folder_prefix"] 	= $f_prefix; 
 	$refr = 1;
@@ -117,25 +117,20 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$UM->mail_server 	= $f_server  	= $sess["server"];
 	$UM->mail_email  	= $f_email   	= $sess["email"];
 
-	$UM->mail_port 		= $f_port 		= $sess["port"]; 
+	$UM->mail_port 		= $f_port 	= $sess["port"]; 
 	$UM->mail_protocol	= $f_protocol	= $sess["protocol"]; 
 	$UM->mail_prefix	= $f_prefix 	= $sess["folder_prefix"]; 
-
-} else {
-	$why = $SS->CookieState();
-	if (!$sess["auth"]) {
-		redirect_and_exit("index.php?tid=$tid&lid=$lid&why=$why");
-	} else {
-		redirect_and_exit("index.php?tid=$tid&lid=$lid");
-	}
+} else {        
+        redirect_and_exit("./index.php?tid=$tid&lid=$lid");
 }
+
 $sess["start"] = time();
 
 $SS->Save($sess);
 
 $userfolder = $temporary_directory.ereg_replace("[^a-z0-9\._-]","_",strtolower($f_user))."_".strtolower($f_server)."/";
 
-$UM->debug				= $enable_debug;
+$UM->debug			= $enable_debug;
 $UM->use_html			= $allow_html;
 
 $UM->user_folder 		= $userfolder;
@@ -190,7 +185,7 @@ if(isset($need_save)) save_prefs($prefs);
 if(!isset($folder) || $folder == "" || strpos($folder,"..") !== false ) 
 	$folder = "inbox";
 elseif (!file_exists($userfolder.$UM->fix_prefix($folder,1))) { 
-	redirect_and_exit("logout.php?sid=$sid&tid=$tid&lid=$lid"); 
+	redirect_and_exit("logout.php?tid=$tid&lid=$lid"); 
 }
 
 ?>

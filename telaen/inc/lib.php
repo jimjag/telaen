@@ -93,8 +93,8 @@ function cleanup_dirs ($userfolder, $logout) {
 		
 			if($prefs["empty-trash"]) {
 				if ($UM->mail_protocol == "imap") {
-					if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
-					if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
+					if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&tid=$tid&lid=$lid"); }
+					if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 				}
 				$trash = "trash";
 				if(!is_array($sess["headers"][base64_encode($trash)])) $sess["headers"][base64_encode($trash)] = $UM->mail_list_msgs($trash);
@@ -112,8 +112,8 @@ function cleanup_dirs ($userfolder, $logout) {
 			}
 	
 			if($prefs["empty-spam"]) {
-				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
-				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
+				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&tid=$tid&lid=$lid"); }
+				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 				$trash = "spam";
 				if(!is_array($sess["headers"][base64_encode($trash)])) $sess["headers"][base64_encode($trash)] = $UM->mail_list_msgs($trash);
 				$trash = $sess["headers"][base64_encode($trash)];
@@ -259,48 +259,34 @@ class Session {
 	var $temp_folder;
 	var $sid;
 	var $timeout = 0;
-	var $enable_cookies = false;
-
-	function CookieState() {
-		global $ENV_COOKIE;
-		if($this->enable_cookies && $ENV_COOKIE[$this->sid] == "") return 1;
-		if($this->enable_cookies && $ENV_COOKIE[$this->sid] != $this->sid) return 2;
-		return 0;
-	}
-
-	function Load() {
-		global $ENV_COOKIE;
-		$result      = Array();
-		if($this->enable_cookies && $ENV_COOKIE[$this->sid] != $this->sid) return $result;
-		$sessionfile = $this->temp_folder."_sessions/".$this->sid.".usf";
-
-		if(file_exists($sessionfile)) {
-			clearstatcache();
-			$fp = fopen($sessionfile,"rb");
-			$result = fread($fp,filesize($sessionfile));
-			fclose($fp);
-			$result = unserialize(base64_decode($result));
+	var $ss = null;
+	
+	function Session() {
+		global $phpver;
+		if($phpver >= 4.1) {
+			$this->ss = &$_SESSION;
+		} else {
+			$this->ss = &$HTTP_SESSION_VARS;
 		}
-
-		return $result;
+	}
+	function Load() {
+		if(!is_array($this->ss['telaen_sess']))
+			$this->ss['telaen_sess'] = Array();
+		return $this->ss['telaen_sess'];
 	}
 
 	function Save(&$array2save) {
-		$content = base64_encode(serialize($array2save));
-		if(!is_writable($this->temp_folder)) die("<h3>The folder \"".$this->temp_folder."\" is not writtable or does not exist!!!</h3>");
-		$sessiondir = $this->temp_folder."_sessions/";
-		if(!file_exists($sessiondir)) mkdir($sessiondir,0700);
-		$f = fopen("$sessiondir".$this->sid.".usf","wb") or die("<h3>Could not open session file</h3>");
-		fwrite($f,$content);
-		fclose($f);
-		@setcookie ($this->sid, $this->sid, time()+($this->timeout * 60));  
-		return 1;
+		$this->ss['telaen_sess'] = $array2save;
+	}       
 
-	}
 	function Kill() {
-		$sessionfile = $this->temp_folder."_sessions/".$this->sid.".usf";
-		@setcookie ($this->sid, "");
-		return @unlink($sessionfile);
+		global $phpver;
+		@session_destroy();
+		if($phpver >= 4.1) {
+			$_SESSION = Array();
+		} else {
+			$HTTP_SESSION_VARS  = Array();
+		}
 	}
 }
 

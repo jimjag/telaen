@@ -206,24 +206,6 @@ class Telaen extends Telaen_core {
 				mkdir($this->user_folder.$value,0700);
 			}
 		}
-
-
-		$sessiondir = $temporary_directory."_sessions/";
-
-		// Clean old sessions
-		$all=opendir($sessiondir); 
-		while ($file=readdir($all)) { 
-			$thisfile = $sessiondir.$file;
-			if (is_file($thisfile)) {
-				$idle = intval((time()-@filemtime($thisfile))/60);
-				if(($idle_timeout+10) < $idle)
-					@unlink($thisfile);
-			}
-		}
-
-		closedir($all); 
-		unset($all);
-
 	}
 	
 	

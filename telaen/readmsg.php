@@ -13,7 +13,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 require("./inc/inc.php");
 require("./inc/htmlfilter.php");
 
-if(!isset($ix) || !isset($pag)) redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid");
+if(!isset($ix) || !isset($pag)) redirect_and_exit("error.php?err=3&tid=$tid&lid=$lid");
 
 $folderkey = base64_encode(strtolower($folder));
 
@@ -34,17 +34,17 @@ if(isset($attachment)) {
 			$root = &$root["attachments"][$item];
 
 	if( !is_array($root) || 
-		!file_exists($root["filename"])) redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid");
+		!file_exists($root["filename"])) redirect_and_exit("error.php?err=3&tid=$tid&lid=$lid");
 
 	$result = $UM->_read_file($root["filename"]);
 
 } else {
 	$is_attached = false;
 	$arAttachment = Array();
-	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
-	if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
+	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&tid=$tid&lid=$lid"); }
+	if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 
-	if(!($result = $UM->mail_retr_msg($mail_info,1))) { redirect_and_exit("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&sid=$sid&tid=$tid&lid=$lid&refr=true"); }
+	if(!($result = $UM->mail_retr_msg($mail_info,1))) { redirect_and_exit("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&tid=$tid&lid=$lid&refr=true"); }
 	if($UM->mail_set_flag($mail_info,"\\SEEN","+")) {
 		$sess["headers"][$folderkey][$ix] = $mail_info;
 	}
@@ -63,7 +63,7 @@ if($ix > 0) {
 
 	$umHavePrevious 	= 1;
 	$umPreviousSubject 	= $mysess[($ix-1)]["subject"];
-	$umPreviousLink 	= "readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=".($ix-1)."&sid=$sid&tid=$tid&lid=$lid";
+	$umPreviousLink 	= "readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=".($ix-1)."&tid=$tid&lid=$lid";
 
 	$smarty->assign("umHavePrevious",$umHavePrevious);
 	$smarty->assign("umPreviousSubject",$umPreviousSubject);
@@ -74,7 +74,7 @@ if($ix > 0) {
 if($ix < (count($mysess)-1)) {
 	$umHaveNext 	= 1;
 	$umNextSubject 	= $mysess[($ix+1)]["subject"];
-	$umNextLink 	= "readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=".($ix+1)."&sid=$sid&tid=$tid&lid=$lid";
+	$umNextLink 	= "readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=".($ix+1)."&tid=$tid&lid=$lid";
 	$smarty->assign("umHaveNext",$umHaveNext);
 	$smarty->assign("umNextSubject",$umNextSubject);
 	$smarty->assign("umNextLink",$umNextLink);
@@ -92,7 +92,7 @@ $redir_path = dirname($redir_path)."/redir.php";
 
 $body = eregi_replace("target=[\"]?[a-zA-Z_]+[\"]?","target=\"blank\"",$body);
 $body = eregi_replace("href=\"http([s]?)://","target=\"_blank\" href=\"$redir_path?http\\1://",$body);
-$body = eregi_replace("href=\"mailto:","target=\"_top\" href=\"newmsg.php?sid=$sid&tid=$tid&lid=$lid&to=",$body);
+$body = eregi_replace("href=\"mailto:","target=\"_top\" href=\"newmsg.php?tid=$tid&lid=$lid&to=",$body);
 
 $uagent = 	$HTTP_SERVER_VARS["HTTP_USER_AGENT"];
 
@@ -121,7 +121,7 @@ if ($other) {
 
 } elseif($ie4up || $ns6moz) {
 	$sess["currentbody"] = $body;;
-	$body = "<iframe src=\"show_body.php?sid=$sid&tid=$tid&lid=$lid&folder=".htmlspecialchars($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
+	$body = "<iframe src=\"show_body.php?tid=$tid&lid=$lid&folder=".htmlspecialchars($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
 
 } elseif($ns4) {
 	$sess["currentbody"] = $body;;
@@ -137,7 +137,7 @@ $useremail = $sess["email"];
 // from
 $name = $ARFrom[0]["name"];
 $thismail = $ARFrom[0]["mail"];
-$ARFrom[0]["link"] = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&sid=$sid&tid=$tid&lid=$lid";
+$ARFrom[0]["link"] = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&tid=$tid&lid=$lid";
 $ARFrom[0]["title"] = "$name <$thismail>";
 
 $smarty->assign("umFromList",$ARFrom);
@@ -148,7 +148,7 @@ $ARTo = $email["to"];
 for($i=0;$i<count($ARTo);$i++) {
 	$name = $ARTo[$i]["name"];
 	$thismail = $ARTo[$i]["mail"];
-	$link = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&sid=$sid&tid=$tid&lid=$lid";
+	$link = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&tid=$tid&lid=$lid";
 	$ARTo[$i]["link"] = $link;
 	$ARTo[$i]["title"] = "$name <$thismail>";
 	$smarty->assign("umTOList",$ARTo);
@@ -161,7 +161,7 @@ if(count($ARCC) > 0) {
 	for($i=0;$i<count($ARCC);$i++) {
 		$name = $ARCC[$i]["name"];
 		$thismail = $ARCC[$i]["mail"];
-		$link = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&sid=$sid&tid=$tid&lid=$lid";
+		$link = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&tid=$tid&lid=$lid";
 		$ARCC[$i]["link"] = $link;
 		$ARCC[$i]["title"] = "$name <$thismail>";
 	}
@@ -178,30 +178,29 @@ function deletemsg() {
 }
 function reply() { document.msg.submit(); }
 function movemsg() { document.move.submit(); }
-function newmsg() {	location = 'newmsg.php?folder=$folder&pag=$pag&sid=$sid&tid=$tid&lid=$lid'; }
-function headers() { mywin = window.open('headers.php?folder=".urlencode($folder)."&ix=$ix&sid=$sid&tid=$tid&lid=$lid','Headers','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes,resizable=yes'); }
-function catch_addresses() { window.open('catch.php?folder=".urlencode($folder)."&ix=$ix&sid=$sid&tid=$tid&lid=$lid','Catch','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
-function block_addresses() { window.open('block_address.php?folder=".urlencode($folder)."&ix=$ix&sid=$sid&tid=$tid&lid=$lid','Block','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
+function newmsg() {	location = 'newmsg.php?folder=$folder&pag=$pag&tid=$tid&lid=$lid'; }
+function headers() { mywin = window.open('headers.php?folder=".urlencode($folder)."&ix=$ix&tid=$tid&lid=$lid','Headers','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes,resizable=yes'); }
+function catch_addresses() { window.open('catch.php?folder=".urlencode($folder)."&ix=$ix&tid=$tid&lid=$lid','Catch','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
+function block_addresses() { window.open('block_address.php?folder=".urlencode($folder)."&ix=$ix&tid=$tid&lid=$lid','Block','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
 
 function replyall() { with(document.msg) { rtype.value = 'replyall'; submit(); } }
 function forward() { with(document.msg) { rtype.value = 'forward'; submit(); } }
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'; }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'}
-function goend() { location = 'logout.php?sid=$sid&tid=$tid&lid=$lid'; }
-function goinbox() { location = 'messages.php?folder=inbox&sid=$sid&tid=$tid&lid=$lid'; }
-function goback() { location = 'messages.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid&pag=$pag'; }
-function search() { location = 'search.php?sid=$sid&tid=$tid&lid=$lid'; }
-function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&sid=$sid&tid=$tid&lid=$lid';}
-function addresses() { location = 'addressbook.php?sid=$sid&tid=$tid&lid=$lid'; }
-function prefs() { location = 'preferences.php?sid=$sid&tid=$tid&lid=$lid'; }
-function printit() { window.open('printmsg.php?sid=$sid&tid=$tid&lid=$lid&folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=600,heigth=500,scrollbars=1,status=0'); }
-function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&sid=$sid&tid=$tid&lid=$lid&attachment='+attach,'','resizable=1,top=10,left=10,width=600,height=400,scrollbars=1,status=0'); }
+function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
+function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
+function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
+function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
+function goback() { location = 'messages.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid&pag=$pag'; }
+function search() { location = 'search.php?tid=$tid&lid=$lid'; }
+function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
+function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
+function prefs() { location = 'preferences.php?tid=$tid&lid=$lid'; }
+function printit() { window.open('printmsg.php?tid=$tid&lid=$lid&folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=600,heigth=500,scrollbars=1,status=0'); }
+function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&tid=$tid&lid=$lid&attachment='+attach,'','resizable=1,top=10,left=10,width=600,height=400,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
 </script>
 ";
 
 $umDeleteForm = "<input type=hidden name=lid value=$lid>
-<input type=hidden name=sid value=\"$sid\">
 <input type=hidden name=tid value=\"$tid\">
 <input type=hidden name=decision value=move>
 <input type=hidden name=folder value=\"".htmlspecialchars($folder)."\">
@@ -213,7 +212,6 @@ $umDeleteForm = "<input type=hidden name=lid value=$lid>
 
 $umReplyForm = "<form name=msg action=\"newmsg.php\" method=POST>
 <input type=hidden name=rtype value=\"reply\">
-<input type=hidden name=sid value=\"$sid\">
 <input type=hidden name=lid value=\"$lid\">
 <input type=hidden name=tid value=\"$tid\">
 <input type=hidden name=folder value=\"".htmlspecialchars($folder)."\">
@@ -249,7 +247,7 @@ if(count($anexos) > 0) {
 	for($i=0;$i<count($anexos);$i++) {
 
 		$arAttachment[$nIndex] 	= $i;
-		$link1 = "download.php?folder=$folder&ix=$ix&attach=".join(",",$arAttachment)."&sid=$sid&tid=$tid&lid=$lid";
+		$link1 = "download.php?folder=$folder&ix=$ix&attach=".join(",",$arAttachment)."&tid=$tid&lid=$lid";
 		$link2 = "$link1&down=1";
 
 		if(!$anexos[$i]["temp"]) {

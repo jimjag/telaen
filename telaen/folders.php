@@ -13,8 +13,8 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 require("./inc/inc.php");
 
 
-if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid");
-if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
+if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1&tid=$tid&lid=$lid");
+if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 
 // check and create a new folder
 
@@ -61,20 +61,20 @@ if(isset($empty)) {
 			unset($sess["headers"][base64_encode("trash")]);
 		$SS->Save($sess);
 	}
-	if(isset($goback)) redirect_and_exit("process.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid");
+	if(isset($goback)) redirect_and_exit("process.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid");
 
 }
 
 $jssource = "
 <script language=\"JavaScript\">
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'; }
-function refreshlist() { location = 'folders.php?folder=".urlencode($folder)."&sid=$sid&tid=$tid&lid=$lid'}
-function goend() { location = 'logout.php?sid=$sid&tid=$tid&lid=$lid'; }
-function search() { location = 'search.php?sid=$sid&tid=$tid&lid=$lid'; }
-function goinbox() { location = 'messages.php?folder=inbox&sid=$sid&tid=$tid&lid=$lid'; }
-function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&sid=$sid&tid=$tid&lid=$lid';}
-function addresses() { location = 'addressbook.php?sid=$sid&tid=$tid&lid=$lid'; }
-function prefs() { location = 'preferences.php?sid=$sid&tid=$tid&lid=$lid'; }
+function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
+function refreshlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
+function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
+function search() { location = 'search.php?tid=$tid&lid=$lid'; }
+function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
+function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
+function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
+function prefs() { location = 'preferences.php?tid=$tid&lid=$lid'; }
 function create() {
 	strPat = /[^A-Za-z0-9\-]/;
 	frm = document.forms[0];
@@ -93,7 +93,6 @@ function create() {
 $smarty->assign("umJS",$jssource);
 $smarty->assign("umLid",$lid);
 $smarty->assign("umTid",$tid);
-$smarty->assign("umSid",$sid);
 $smarty->assign("umUserEmail",$sess["email"]);
 
 
@@ -142,7 +141,7 @@ for($n=0;$n<count($boxes);$n++) {
 	$delete = "&nbsp;";
 
 	if(!$UM->is_system_folder($entry))
-		$delete = "<a href=\"folders.php?delfolder=$entry&folder=$folder&sid=$sid&tid=$tid&lid=$lid\">OK</a>";
+		$delete = "<a href=\"folders.php?delfolder=$entry&folder=$folder&tid=$tid&lid=$lid\">OK</a>";
 
 	$boxname = $entry;
 
@@ -168,8 +167,8 @@ for($n=0;$n<count($boxes);$n++) {
 		$system[$scounter]["msgs"]      	= count($thisbox)."/$unread";
 		$system[$scounter]["del"]       	= $delete;
 		$system[$scounter]["boxsize"]   	= ceil($boxsize/1024);
-		$system[$scounter]["chlink"] 		= "process.php?folder=".strtolower($entry)."&sid=$sid&tid=$tid&lid=$lid";
-		$system[$scounter]["emptylink"]		= "folders.php?empty=".strtolower($entry)."&folder=".strtolower($entry)."&sid=$sid&tid=$tid&lid=$lid";
+		$system[$scounter]["chlink"] 		= "process.php?folder=".strtolower($entry)."&tid=$tid&lid=$lid";
+		$system[$scounter]["emptylink"]		= "folders.php?empty=".strtolower($entry)."&folder=".strtolower($entry)."&tid=$tid&lid=$lid";
 
 		$scounter++;
 	} else {
@@ -179,8 +178,8 @@ for($n=0;$n<count($boxes);$n++) {
 		$personal[$pcounter]["msgs"]    	= count($thisbox)."/$unread";
 		$personal[$pcounter]["del"]    		= $delete;
 		$personal[$pcounter]["boxsize"]	 	= ceil($boxsize/1024);
-		$personal[$pcounter]["chlink"]  	= "process.php?folder=".urlencode($entry)."&sid=$sid&tid=$tid&lid=$lid";
-		$personal[$pcounter]["emptylink"]	= "folders.php?empty=".urlencode($entry)."&folder=".urlencode($entry)."&sid=$sid&tid=$tid&lid=$lid";
+		$personal[$pcounter]["chlink"]  	= "process.php?folder=".urlencode($entry)."&tid=$tid&lid=$lid";
+		$personal[$pcounter]["emptylink"]	= "folders.php?empty=".urlencode($entry)."&folder=".urlencode($entry)."&tid=$tid&lid=$lid";
 
 		$pcounter++;
 	}

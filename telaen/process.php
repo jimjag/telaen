@@ -14,8 +14,8 @@ require("./inc/inc.php");
 
 function mail_connect() {
 	global $UM,$sid,$tid,$lid;
-	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&sid=$sid&tid=$tid&lid=$lid"); }
-	if(!$UM->mail_auth(true)) { redirect_and_exit("badlogin.php?sid=$sid&tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
+	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1&tid=$tid&lid=$lid"); }
+	if(!$UM->mail_auth(true)) { redirect_and_exit("badlogin.php?tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
 }
 
 $headers = null;
@@ -246,7 +246,7 @@ if( !is_array($headers)
 	$UM->mail_disconnect();
 }
 
-if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("error.php?err=3&sid=$sid&tid=$tid&lid=$lid"); }
+if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("error.php?err=3&tid=$tid&lid=$lid"); }
 
 /*
  * Sort the date and size fields with a natural sort
@@ -278,18 +278,18 @@ if ( (!$same_version) ||
      ($check_first_login && !$prefs["first-login"]) ) {
 	$prefs["first-login"] = 1;
 	save_prefs($prefs);
-	redirect_and_exit("preferences.php?sid=$sid&tid=$tid&lid=$lid&folder=".urlencode($folder));
+	redirect_and_exit("preferences.php?tid=$tid&lid=$lid&folder=".urlencode($folder));
 	exit;
 }
 
 
 if(!isset($pag) || !is_numeric(trim($pag))) $pag = 1;
-$refreshurl = "messages.php?sid=$sid&tid=$tid&lid=$lid&folder=".urlencode($folder)."&pag=$pag";
+$refreshurl = "messages.php?tid=$tid&lid=$lid&folder=".urlencode($folder)."&pag=$pag";
 
 
 if (isset($back_to)) {
 	if (count($headers) > $back_to) {
-		redirect_and_exit("readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$back_to&sid=$sid&tid=$tid&lid=$lid");
+		redirect_and_exit("readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$back_to&tid=$tid&lid=$lid");
 	}
 }
 redirect_and_exit("$refreshurl");
