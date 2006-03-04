@@ -16,27 +16,25 @@ echo($nocache);
 $jsquota = ($exceeded)?"true":"false";
 $jssource = "
 <script language=\"JavaScript\">
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
-function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
-function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
-function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
-function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
-function prefs() { location = 'preferences.php?tid=$tid&lid=$lid'; }
+function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
+function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
+function goend() { location = 'logout.php'; }
+function goinbox() { location = 'messages.php?folder=inbox'; }
+function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
+function addresses() { location = 'addressbook.php'; }
+function prefs() { location = 'preferences.php'; }
 no_quota  = $jsquota;
 quota_msg = '".ereg_replace("'","\\'",$quota_exceeded)."';
 function readmsg(ix,read,folder) {
 	if(!read && no_quota)
 		alert(quota_msg)
 	else
-		location = 'readmsg.php?folder='+folder+'&pag=$pag&ix='+ix+'&tid=$tid&lid=$lid'; 
+		location = 'readmsg.php?folder='+folder+'&pag=$pag&ix='+ix+''; 
 }
 
 </script>
 ";
 
-$smarty->assign("umLid",$lid);
-$smarty->assign("umTid",$tid);
 $smarty->assign("umJS",$jssource);
 
 $smarty->assign("umInputFrom",$srcFrom);
@@ -54,8 +52,8 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 		$entry = $boxes[$n]["name"];
 		if(!is_array($sess["headers"][base64_encode(strtolower($entry))])) {
 			if(!$UM->mail_connected()) {
-				if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1&tid=$tid&lid=$lid");
-				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?tid=$tid&lid=$lid&error=".urlencode($UM->mail_error_msg)); }
+				if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1");
+				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
 			}
 			$thisbox = $UM->mail_list_msgs($entry);
 			$sess["headers"][base64_encode(strtolower($entry))] = $thisbox;
@@ -139,9 +137,9 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 		$read = (eregi("\\SEEN",$headers[$i]["flags"]))?"true":"false";
 
 		$readlink = "javascript:readmsg(".$headers[$i]["ix"].",$read,'".urlencode($headers[$i]["folder"])."')";
-		$composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."&tid=$tid&lid=$lid";
-		$composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&tid=$tid&lid=$lid";
-		$folderlink = "messages.php?folder=".urlencode($headers[$i]["folder"])."&tid=$tid&lid=$lid";
+		$composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."";
+		$composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["to"][0]["name"])."";
+		$folderlink = "messages.php?folder=".urlencode($headers[$i]["folder"])."";
 		
 		$from = $headers[$i]["from"][0]["name"];
 		$to = $headers[$i]["to"][0]["name"];

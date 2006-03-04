@@ -45,7 +45,7 @@ $useremail = $sess["email"];
 // from
 $name = $ARFrom[0]["name"];
 $thismail = $ARFrom[0]["mail"];
-$ARFrom[0]["link"] = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&tid=$tid&lid=$lid";
+$ARFrom[0]["link"] = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail";
 $ARRom[0]["title"] = "$name <$thismail>";
 
 $smarty->assign("umFromList",$ARFrom);
@@ -56,7 +56,7 @@ $ARTo = $email["to"];
 for($i=0;$i<count($ARTo);$i++) {
 	$name = $ARTo[$i]["name"];
 	$thismail = $ARTo[$i]["mail"];
-	$link = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&tid=$tid&lid=$lid";
+	$link = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail";
 	$ARTo[$i]["link"] = $link;
 	$ARTo[$i]["title"] = "$name <$thismail>";
 	$smarty->assign("umTOList",$ARTo);
@@ -69,7 +69,7 @@ if(count($ARCC) > 0) {
 	for($i=0;$i<count($ARCC);$i++) {
 		$name = $ARCC[$i]["name"];
 		$thismail = $ARCC[$i]["mail"];
-		$link = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail&tid=$tid&lid=$lid";
+		$link = "newmsg.php?nameto=".urlencode($name)."&mailto=$thismail";
 		$ARCC[$i]["link"] = $link;
 		$ARCC[$i]["title"] = "$name <$thismail>";
 	}
@@ -90,7 +90,7 @@ $smarty->assign("umHaveAttachments",$haveattachs);
 if(count($anexos) > 0) {
 	for($i=0;$i<count($anexos);$i++) {
 		$safefname = rawurlencode($anexos[$i]["name"]);
-		$link1 = "download.php?folder=$folder&ix=$ix&mnum=$mnum&bound=".base64_encode($anexos[$i]["boundary"])."&part=".$anexos[$i]["part"]."&tid=$tid&lid=$lid";
+		$link1 = "download.php?folder=$folder&ix=$ix&mnum=$mnum&bound=".base64_encode($anexos[$i]["boundary"])."&part=".$anexos[$i]["part"]."";
 		$link2 = "$link1&down=1";
 		$anexos[$i]["normlink"] = "$link1&fname=$safefname";
 		$anexos[$i]["downlink"] = "$link2&fname=$safefname";

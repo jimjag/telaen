@@ -21,6 +21,9 @@ Telaen:
  * Removed old krufty session code to use native PHP session()
    capability.
 
+ * Removed the tid/lid/sid stuff from the URL. Stored in
+   user sessions, as it should be.
+
 1.0.0:
 
  * Revised de.txt and pt_BR.txt files.

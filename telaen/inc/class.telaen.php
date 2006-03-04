@@ -392,7 +392,7 @@ class Telaen_core {
 
 				$thisattach 	= $this->build_attach($header,$body,$boundary,$i);
 				$tree			= array_merge($this->current_level, array($thisattach["index"]));
-				$thisfile 		= "download.php?tid=$tid&lid=$lid&folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
+				$thisfile 		= "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
 				$filename 		= $thisattach["filename"];
 				$cid = preg_replace("/<(.*)\\>/", "\\1", $cid);
 

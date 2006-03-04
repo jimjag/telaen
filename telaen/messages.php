@@ -13,9 +13,9 @@ require("./inc/inc.php");
 require("./folder_list.php");
 
 $smarty->assign("umUser",$f_user);
-$refreshurl = "process.php?tid=$tid&lid=$lid&folder=".urlencode($folder)."&pag=$pag&refr=true";
+$refreshurl = "process.php?folder=".urlencode($folder)."&pag=$pag&refr=true";
 
-if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect_and_exit("error.php?err=3&tid=$tid&lid=$lid"); }
+if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect_and_exit("error.php?err=3"); }
 
 $arrow = ($sortorder == "ASC")?"images/arrow_up.gif":"images/arrow_down.gif";
 $arrow = "&nbsp;<img src=$arrow width=8 height=7 border=0 alt=>";
@@ -85,7 +85,7 @@ $reg_pp    = $prefs["rpp"];
 $start_pos = ($pag-1)*$reg_pp;
 $end_pos   = (($start_pos+$reg_pp) > $nummsg)?$nummsg:$start_pos+$reg_pp;
 
-if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."&tid=$tid&lid=$lid");
+if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
 
 echo($nocache);
 
@@ -98,16 +98,16 @@ function readmsg(ix,read) {
 	if(!read && no_quota)
 		alert(quota_msg)
 	else
-		location = 'readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix='+ix+'&tid=$tid&lid=$lid'; 
+		location = 'readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix='+ix+''; 
 }
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
-function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag&tid=$tid&lid=$lid' }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
+function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
+function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag' }
+function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function delemsg() { document.form1.submit() }
-function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
-function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
-function search() { location = 'search.php?tid=$tid&lid=$lid'; }
-function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
+function goend() { location = 'logout.php'; }
+function goinbox() { location = 'messages.php?folder=inbox'; }
+function search() { location = 'search.php'; }
+function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function movemsg() { 
 	if(no_quota) 
 		alert(quota_msg);
@@ -115,8 +115,8 @@ function movemsg() {
 		with(document.form1) { decision.value = 'move'; submit(); } 
 	}
 }
-function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
-function prefs() { location = 'preferences.php?tid=$tid&lid=$lid'; }
+function addresses() { location = 'addressbook.php'; }
+function prefs() { location = 'preferences.php'; }
 function sel() {
 	with(document.form1) {
 		for(i=0;i<elements.length;i++) {
@@ -132,7 +132,7 @@ sort_order = '$sortorder';
 function sortby(col) {
 	if(col == sort_colum) ord = (sort_order == 'ASC')?'DESC':'ASC';
 	else ord = 'ASC';
-	location = 'process.php?folder=$folder&pag=$pag&sortby='+col+'&sortorder='+ord+'&tid=$tid&lid=$lid';
+	location = 'process.php?folder=$folder&pag=$pag&sortby='+col+'&sortorder='+ord+'';
 }
 
 </script>
@@ -169,8 +169,8 @@ if($nummsg > 0) {
 
 		$read = (eregi("\\SEEN",$headers[$i]["flags"]))?"true":"false";
 		$readlink = "javascript:readmsg($i,$read)";
-		$composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."&tid=$tid&lid=$lid";
-		$composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&tid=$tid&lid=$lid";
+		$composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."";
+		$composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["to"][0]["name"])."";
 
 		$from = $headers[$i]["from"][0]["name"];
 		$to = $headers[$i]["to"][0]["name"];
@@ -238,11 +238,11 @@ default:
 $smarty->assign("umBoxName",$display);
 
 if($nummsg > 0) {
-	if($pag > 1) $smarty->assign("umPreviousLink","messages.php?folder=$folder&pag=".($pag-1)."&tid=$tid&lid=$lid");
+	if($pag > 1) $smarty->assign("umPreviousLink","messages.php?folder=$folder&pag=".($pag-1)."");
 	for($i=1;$i<=ceil($nummsg / $reg_pp);$i++) 
 		if($pag == $i) $navigation .= "$i ";
-		else $navigation .= "<a href=\"messages.php?folder=$folder&pag=$i&tid=$tid&lid=$lid\" class=\"navigation\">$i</a> ";
-	if($end_pos < $nummsg) $smarty->assign("umNextLink","messages.php?folder=$folder&pag=".($pag+1)."&tid=$tid&lid=$lid");
+		else $navigation .= "<a href=\"messages.php?folder=$folder&pag=$i\" class=\"navigation\">$i</a> ";
+	if($end_pos < $nummsg) $smarty->assign("umNextLink","messages.php?folder=$folder&pag=".($pag+1)."");
 	$navigation .= " ($pag/".ceil($nummsg / $reg_pp).")";
 }
 

@@ -22,12 +22,12 @@ foreach($folders as $entry) {
 		}
 		$system[$scounter]["systemname"]    = strtolower($entry);
 		$system[$scounter]["name"]      = $boxname;
-		$system[$scounter]["link"] 	= "process.php?folder=".strtolower($entry)."&tid=$tid&lid=$lid";
+		$system[$scounter]["link"] 	= "process.php?folder=".strtolower($entry)."";
 		$scounter++;
 	} else {
 		$personal[$pcounter]["systemname"]  = $entry;
 		$personal[$pcounter]["name"]    = $boxname;
-		$personal[$pcounter]["link"] 	= "process.php?folder=$entry&tid=$tid&lid=$lid";
+		$personal[$pcounter]["link"] 	= "process.php?folder=$entry";
 		$pcounter++;
 	}
 }

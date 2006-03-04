@@ -17,6 +17,7 @@ $sid = session_id();
 require("./inc/config.php");
 require("./inc/class.telaen.php");
 require("./inc/lib.php");
+require("./inc/preinit.php");
 
 require_once(SMARTY_DIR."Smarty.class.php");
 $smarty = new Smarty;
@@ -26,10 +27,6 @@ $smarty->compile_dir = $temporary_directory;
 $smarty->template_dir =  './themes';
 $smarty->config_dir = './langs';
 $smarty->use_sub_dirs = true;
-//
-$smarty->assign("umMenuTemplate",dirname($PATH_TRANSLATED).$menu_template);
-//$smarty->debugging = false;
-$smarty->assign("umLanguageFile",$selected_language.".txt");
 
 $SS = New Session();
 $SS->temp_folder 	= $temporary_directory;
@@ -41,6 +38,16 @@ $sess = $SS->Load();
 
 if(!array_key_exists("start",$sess)) $sess["start"] = time();
 $start = $sess["start"];
+
+/*
+ * Now load in stored tid and lid, if they exist.
+ * otherwise, we init them and store them
+ */
+require("./inc/user_tl.php");
+//
+$smarty->assign("umMenuTemplate",dirname($PATH_TRANSLATED).$menu_template);
+//$smarty->debugging = false;
+$smarty->assign("umLanguageFile",$selected_language.".txt");
 
 $UM = new Telaen();
 
@@ -121,7 +128,7 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$UM->mail_protocol	= $f_protocol	= $sess["protocol"]; 
 	$UM->mail_prefix	= $f_prefix 	= $sess["folder_prefix"]; 
 } else {        
-        redirect_and_exit("./index.php?tid=$tid&lid=$lid");
+        redirect_and_exit("./index.php");
 }
 
 $sess["start"] = time();
@@ -185,7 +192,7 @@ if(isset($need_save)) save_prefs($prefs);
 if(!isset($folder) || $folder == "" || strpos($folder,"..") !== false ) 
 	$folder = "inbox";
 elseif (!file_exists($userfolder.$UM->fix_prefix($folder,1))) { 
-	redirect_and_exit("logout.php?tid=$tid&lid=$lid"); 
+	redirect_and_exit("logout.php"); 
 }
 
 ?>

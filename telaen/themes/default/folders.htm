@@ -65,9 +65,6 @@
 			{/if}
 			<tr>
 				<form name="form1" action="folders.php" method="POST" onsubmit="return create();">
-				<input type=hidden name=sid value="{$umSid}">
-				<input type=hidden name=lid value="{$umLid}">
-				<input type=hidden name=tid value="{$umTid}">
 				<td class="default" colspan="5">
 				<br>
 					<input type=Text name=newfolder value="" class="textbox"> &nbsp;<input type=button value="{#fld_make_new#}" class=button onClick="create()">

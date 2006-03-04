@@ -26,23 +26,21 @@ array_qsort2ic($addressbook,"name");
 
 $jssource = "
 <script language=\"JavaScript\">
-function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
-function refreshlist() { location = 'addressbook.php?tid=$tid&lid=$lid' }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
-function search() { location = 'search.php?tid=$tid&lid=$lid'; }
-function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
-function emptytrash() {        location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
-function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
-function prefs() { location = 'preferences.php?tid=$tid&lid=$lid'; }
+function goinbox() { location = 'messages.php?folder=inbox'; }
+function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
+function refreshlist() { location = 'addressbook.php' }
+function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
+function search() { location = 'search.php'; }
+function addresses() { location = 'addressbook.php'; }
+function emptytrash() {        location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
+function goend() { location = 'logout.php'; }
+function prefs() { location = 'preferences.php'; }
 
 </script>
 ";
 
-$smarty->assign("umLid",$lid);
-$smarty->assign("umTid",$tid);
 $smarty->assign("umJS",$jssource);
-$smarty->assign("umGoBack","addressbook.php?tid=$tid&lid=$lid");
+$smarty->assign("umGoBack","addressbook.php");
 
 
 switch($opt) {
@@ -148,15 +146,15 @@ switch($opt) {
         default:
 
 
-				$smarty->assign("umNew","addressbook.php?opt=new&tid=$tid&lid=$lid");
+				$smarty->assign("umNew","addressbook.php?opt=new");
 
 				$addresslist = Array();
                 for($i=0;$i<count($addressbook);$i++) {
 						$ind = count($addresslist);
-						$addresslist[$ind]["viewlink"] = "addressbook.php?opt=display&id=$i&tid=$tid&lid=$lid";
-						$addresslist[$ind]["composelink"] = "newmsg.php?nameto=".htmlspecialchars($addressbook[$i]["name"])."&mailto=".htmlspecialchars($addressbook[$i]["email"])."&tid=$tid&lid=$lid";
-						$addresslist[$ind]["editlink"] = "addressbook.php?opt=edit&id=$i&tid=$tid&lid=$lid";
-						$addresslist[$ind]["dellink"] = "addressbook.php?opt=dele&id=$i&tid=$tid&lid=$lid";
+						$addresslist[$ind]["viewlink"] = "addressbook.php?opt=display&id=$i";
+						$addresslist[$ind]["composelink"] = "newmsg.php?nameto=".htmlspecialchars($addressbook[$i]["name"])."&mailto=".htmlspecialchars($addressbook[$i]["email"])."";
+						$addresslist[$ind]["editlink"] = "addressbook.php?opt=edit&id=$i";
+						$addresslist[$ind]["dellink"] = "addressbook.php?opt=dele&id=$i";
 
 						$addresslist[$ind]["name"] = $addressbook[$i]["name"];
 						$addresslist[$ind]["email"] = $addressbook[$i]["email"];

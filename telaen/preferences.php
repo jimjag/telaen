@@ -42,13 +42,13 @@ $jssource = "
 
 <script language=\"JavaScript\">
 disbl = false;
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."&tid=$tid&lid=$lid'; }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."&tid=$tid&lid=$lid'}
-function goend() { location = 'logout.php?tid=$tid&lid=$lid'; }
-function goinbox() { location = 'messages.php?folder=inbox&tid=$tid&lid=$lid'; }
-function search() { location = 'search.php?tid=$tid&lid=$lid'; }
-function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true&tid=$tid&lid=$lid';}
-function addresses() { location = 'addressbook.php?tid=$tid&lid=$lid'; }
+function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
+function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
+function goend() { location = 'logout.php'; }
+function goinbox() { location = 'messages.php?folder=inbox'; }
+function search() { location = 'search.php'; }
+function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
+function addresses() { location = 'addressbook.php'; }
 function dis() { 
 	with(document.forms[0]) { 
 		f_st_only_read.disabled = !f_save_trash.checked; 
@@ -62,8 +62,6 @@ function checkDis() { if (disbl) return false; }
 ";
 
 $smarty->assign("umJS",$jssource);
-$smarty->assign("umLid",$lid);
-$smarty->assign("umTid",$tid);
 
 $aval_rpp = Array(10,20,30,40,50,100,200);
 $sel_rpp = "<select name=f_rpp>\r";

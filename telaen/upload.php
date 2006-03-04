@@ -68,8 +68,6 @@ if (isset($rem) && $rem != "") {
 
 } else {
 
-	$smarty->assign("umLid",$lid);
-	$smarty->assign("umTid",$tid);
 	$smarty->display("$selected_theme/upload-attach.htm");
 
 }
