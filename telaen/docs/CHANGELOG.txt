@@ -16,7 +16,10 @@ CHANGELOG:
 Telaen:
 ----------------------------------------------------------------
 
-1.0.1:
+1.1.0:
+
+ * Fixed bug where show_body was not using the correct
+   charset (since it was removed by HTMLFilter).
 
  * Removed old krufty session code to use native PHP session()
    capability.

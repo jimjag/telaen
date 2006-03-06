@@ -11,7 +11,9 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 
 require("./inc/inc.php");
 if(!isset($folder) || !isset($ix)) die("Expected parameters");
-echo($nocache);
 $body = $sess["currentbody"];
+$meta_charset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" . $default_char_set . "\">";
+echo($nocache);
+echo($meta_charset);
 echo($body);
 ?>
