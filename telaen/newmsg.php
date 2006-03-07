@@ -346,8 +346,11 @@ if(isset($tipo) && $tipo == "send") {
 
 		if(!file_exists($filename)) die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true';</script>");
 		$result = $UM->_read_file($filename);
-		
+
+                $UM->displayimages = $prefs["display-images"];
+                $UM->sanitize = ($sanitize_html || !$allow_scripts);
 		$email = $UM->Decode($result);
+
 		$result = $UM->fetch_structure($result);
 
 

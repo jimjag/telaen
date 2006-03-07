@@ -9,7 +9,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
  by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
-
+require("./inc/htmlfilter.php");
 
 class Telaen_core {
 
@@ -23,7 +23,7 @@ class Telaen_core {
 	var $mail_protocol		= "pop3";
 	var $mail_prefix		= "";
 
-	var $allow_scripts		= true;
+	var $sanitize		= true;
 	var $use_html			= false;
 	var $charset			= "iso-8859-1";
 	var $timezone			= "+0000";
@@ -135,7 +135,9 @@ class Telaen_core {
 	Used to display inline attachments (images) too.
 	*/
 	function add_body($strbody) {
-		if(!$this->allow_scripts) $strbody = $this->filter_scripts($strbody);
+		global $block_external_images;
+		if($this->sanitize)
+			$strbody	=	HTMLFilter($strbody, "images/trans.gif", $block_external_images);
 		if($this->_msgbody == "")
 			$this->_msgbody = $strbody;
 		else
@@ -775,30 +777,6 @@ class Telaen_core {
 			$boundary = preg_replace('/^\"(.*)\"$/', "\\1", $regs[1]);
 			return trim("--$boundary");
 		}
-	}
-
-	/**
-	Aux method for filter_scripts
-	*/
-
-	function _filter_tag($str) {
-		$matches = Array(
-					"'(%[0-9A-Za-z]{2})+'e", 						//unicode
-					"'(\bON\w+)'i",									//events
-					"'(HREF)( *= *[\"\']?\w+SCRIPT *:[^\"\' >]+)'i" //links
-					);
-		$replaces = Array("chr(hexdec('\\1'))","\\1_filtered","\\1_filtered\\2");
-		return stripslashes(preg_replace($matches, $replaces, $str));
-	}
-
-	/**
-	Filter any javascript: used if $allow_scripts is off
-	*/
-
-	function filter_scripts($str) {
-		return preg_replace(
-					Array("'(<\/?\w+[^>]*>)'e","'<SCRIPT[^>]*?>.*?</SCRIPT[^>]*?>'si"), 
-					Array("\$this->_filter_tag('\\1')",""), $str);
 	}
 
 	/**

@@ -11,7 +11,6 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 
 //defines
 require("./inc/inc.php");
-require("./inc/htmlfilter.php");
 
 if(!isset($ix) || !isset($pag)) redirect_and_exit("error.php?err=3");
 
@@ -55,7 +54,7 @@ if(isset($attachment)) {
 echo($nocache);
 
 $UM->displayimages = $prefs["display-images"];
-$UM->allow_scripts = $allow_scripts;
+$UM->sanitize = ($sanitize_html || !$allow_scripts);
 
 $email = $UM->Decode($result);
 
@@ -83,8 +82,6 @@ if($ix < (count($mysess)-1)) {
 
 
 $body	= 	$email["body"];
-
-$body	=	HTMLFilter($body, "images/trans.gif", $block_external_images);
 
 $redir_path = getenv("PHP_SELF")?getenv("PHP_SELF"):$_SERVER["PHP_SELF"];
 if(!$redir_path) $redir_path = $PHP_SELF;

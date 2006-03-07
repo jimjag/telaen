@@ -191,6 +191,7 @@ $UM->mail_disconnect();
 unset($SS,$UM);
 array_qsort2ic ($system,"name");
 
+if (!is_array($personal)) $personal = Array();
 $umFolderList = array_merge((array)$system, (array)$personal);
 
 

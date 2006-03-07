@@ -185,12 +185,14 @@ function redirect_and_exit($location) {
 }
 
 function array_qsort2ic (&$array, $column=0, $order="ASC") {
+	if (!is_array($array)) return;
 	$oper = ($order == "ASC") ? (1) : (-1) ;
 	usort($array, create_function('$a,$b',"return strcasecmp(\$a['$column'],\$b['$column']) * $oper;")); 
 	reset($array);
 }
 
 function array_qsort2 (&$array, $column=0, $order="ASC") {
+	if (!is_array($array)) return;
 	$oper = ($order == "ASC") ? (1) : (-1) ;
 	usort($array, create_function('$a,$b',"return strnatcmp(\$a['$column'],\$b['$column']) * $oper;")); 
 	reset($array);

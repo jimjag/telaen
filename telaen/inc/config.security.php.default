@@ -10,8 +10,11 @@ $allow_html 			= yes;
 
 ########################################################################
 # FILTER javascript (and others scripts) from incoming messages
+##  $allow_script is DEPRECIATED and exists for backward
+##  compatibility only. Instead, use $sanitize_html
 ########################################################################
 $allow_scripts			= no;
+$sanitize_html                  = yes;
 
 
 ########################################################################

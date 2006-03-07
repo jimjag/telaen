@@ -20,7 +20,7 @@ if(!file_exists($mail_info["localname"])) die("File not found");;
 $email = $UM->_read_file($mail_info["localname"]);
 
 $UM->displayimages = $prefs["display-images"];
-$UM->allow_scripts = $allow_scripts;
+$UM->sanitize = ($sanitize_html || !$allow_scripts);
 
 $email = $UM->Decode($email);
 $body = $email["body"];
