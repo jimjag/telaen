@@ -527,8 +527,14 @@ $tmpbody";
 	if(!$show_advanced) $body = stripslashes($body);
 
 	if(!isset($txtarea)) $txtarea = null;
-	$umAdvEdit = ($show_advanced) ? 1 : 0 ;
-	
+	/*
+	 * Force the below to 0. We do not want to
+	 * enable the old HTML editor even when using
+	 * HTML Email.
+	 */
+	// $umAdvEdit = ($show_advanced) ? 1 : 0 ;
+	$umAdvEdit = 0 ;
+
 	$smarty->assign("umBody",$body);
 	$smarty->assign("umTo",$strto);
 	$smarty->assign("umCc",$strcc);
