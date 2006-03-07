@@ -18,6 +18,11 @@ Telaen:
 
 1.1.0:
 
+ * The Advanced HTML Editor is now TinyMCE, which
+   is bundled with Telaen. Changes to the newmsg.htm
+   template file may be required (depending on the
+   template) to fully use this.
+
  * Now, whenever Telaen adds body content (eg: whenever
    we Decode), we choose to sanitize or not. This means
    that messages are sanitized when printed or
