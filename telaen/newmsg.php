@@ -147,7 +147,7 @@ if(isset($tipo) && $tipo == "send") {
 
 }else {
 
-	$priority_level = (!isset($priority) || empty($priority))?3:$priority;
+	$priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority ;
 
 	$uagent = $HTTP_SERVER_VARS["HTTP_USER_AGENT"];
 	$isMac = ereg("Mac",$uagent);
@@ -158,31 +158,34 @@ if(isset($tipo) && $tipo == "send") {
 	$bname = strtoupper($uagent[0]);
 	$bvers = $uagent[1];
 	if(!isset($textmode)) $textmode = null;
-	$show_advanced = (($bname == "MSIE") && (intval($bvers) >= 5) && (!$textmode) && (!$isMac) && (!$isOpera) && ($prefs["editor-mode"] != "text"))?1:0;
+	$show_advanced = ((!$textmode) && ($prefs["editor-mode"] != "text")) ? 1 : 0 ;
 
-	//$show_advanced = 0;
-
-	$js_advanced = ($show_advanced)?"true":"false";
+	$js_advanced = ($show_advanced) ? "true" : "false" ;
 
 	$signature = $prefs["signature"];
 	if($show_advanced) $signature = nl2br($signature);
 
 	$add_sig = $prefs["add-sig"];
 	
-	$umAddSig = ($add_sig)?1:0;
+	$umAddSig = ($add_sig) ? 1 : 0 ;
 
 	$forms = "<input type=hidden name=tipo value=edit>
 	<input type=hidden name=is_html value=\"$js_advanced\">
-	<input type=hidden name=lid value=\"$lid\">
-	<input type=hidden name=tid value=\"$tid\">
 	<input type=hidden name=folder value=\"$folder\">
 	<input type=hidden name=sig value=\"".htmlspecialchars($signature)."\">
 	<input type=hidden name=textmode value=\"$textmode\">
 	";
 
+	$jssource = "";
 
+	if ($show_advanced) {
+		$jssource = "
+	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_mce_gzip.php\"></script>
+	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_init.js\"></script>
+		";
+	}
 
-	$jssource = "
+	$jssource .= "
 	<script language=\"javascript\">
 	bIs_html = $js_advanced;
 	bsig_added = false;
@@ -190,9 +193,8 @@ if(isset($tipo) && $tipo == "send") {
 		with(document.composeForm) {
 			if(bsig_added || sig.value == '') return false;
 			if(cksig.checked) {
-				if(bIs_html) {
-					cur = GetHtml()
-					SetHtml(cur+'<br><br>--<br>'+sig.value);
+				if(bIs_html) {					
+					body.value +='<br><br>--<br>'+sig.value;
 				} else
 					body.value += '\\r\\n\\r\\n--\\r\\n'+sig.value;
 			}
@@ -204,19 +206,18 @@ if(isset($tipo) && $tipo == "send") {
 
 	function upwin(rem) { 
 		mywin = 'upload.php';
-		if (rem != null) mywin += '?rem='+rem+'&&';
-		else mywin += '?&';
+		if (rem != null) mywin += '?rem='+rem+'';
+		else mywin += '';
 		window.open(mywin,'Upload','width=300,height=50,scrollbars=0,menubar=0,status=0'); 
 	}
 
 	function doupload() {
-		if(bIs_html) document.composeForm.body.value = GetHtml();
 		document.composeForm.tipo.value = 'edit';
 		document.composeForm.submit();
 	}
+
 	function textmode() {
 		with(document.composeForm) {
-			if(bIs_html) body.value = GetText();
 			textmode.value = 1;
 			tipo.value = 'edit';
 			submit();
@@ -248,7 +249,6 @@ if(isset($tipo) && $tipo == "send") {
 			alert(errmsg)
 	
 		} else {
-			if(bIs_html) frm.body.value = GetHtml();
 			frm.tipo.value = 'send';
 			frm.submit();
 		}
@@ -490,7 +490,7 @@ $tmpbody";
 			if($show_advanced) $body = "<br><br>--<br>$signature<br><br>$body";
 			else $body = "\r\n\r\n--\r\n$signature\r\n\r\n$body";
 
-	$haveSig = empty($signature)?0:1;
+	$haveSig = empty($signature) ? 0 : 1 ;
 	$smarty->assign("umHaveSignature",$haveSig);
 
 	if(!isset($to)) $to = null;
@@ -527,7 +527,7 @@ $tmpbody";
 	if(!$show_advanced) $body = stripslashes($body);
 
 	if(!isset($txtarea)) $txtarea = null;
-	$umAdvEdit = ($show_advanced)?1:0;
+	$umAdvEdit = ($show_advanced) ? 1 : 0 ;
 	
 	$smarty->assign("umBody",$body);
 	$smarty->assign("umTo",$strto);

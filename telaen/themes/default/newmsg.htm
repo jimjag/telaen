@@ -13,14 +13,6 @@
 
 </head>
 
-{if $umAdvancedEditor eq 1}
-	<div id="hiddenCompose" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
-	<form name="hiddencomposeForm">
-	<textarea name="hiddencomposeFormTextArea">{$umBody|escape:"html"}</textarea>
-	</form>
-	</div>
-{/if}
-
 <body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
 
 <table width="760" border="0" cellspacing="0" cellpadding="2" align="center" bgcolor=white>
@@ -98,14 +90,7 @@
 				<tr>
 					<td class="default">&nbsp;</td>
 					<td class="default">
-					{if $umAdvancedEditor eq 1}
-						{include file="default/advanced-editor.htm"}
-						<div id="hiddenCompose2" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
-							<textarea cols=50 rows=15 name=body>{$umBody|escape:"html"}</textarea>
-						</div>
-					{else}
-						<textarea cols=50 rows=15 name=body>{$umBody|escape:"html"}</textarea>
-					{/if}
+						<textarea cols=50 rows=15 id=body name=body>{$umBody|escape:"html"}</textarea>
 
 					</td>
 				</tr>
