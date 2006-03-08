@@ -142,9 +142,7 @@ if(isset($msg))
 	$smarty->assign("umErrorMessage",$msg);
 
 
-$forms = "<input type=hidden name=lid value=$lid>
-<input type=hidden name=tid value=\"$tid\">
-<input type=hidden name=decision value=delete>
+$forms = "<input type=hidden name=decision value=delete>
 <input type=hidden name=folder value=\"".htmlspecialchars($folder)."\">
 <input type=hidden name=pag value=$pag>
 <input type=hidden name=start_pos value=$start_pos>
@@ -256,7 +254,7 @@ while($entry=$d->read()) {
 		$entry != "." && 
 		substr($entry,0,1) != "_" && 
 		$entry != $folder &&
-		($UM->mail_protocol == "imap" || $entry != "inbox")) {
+		($UM->mail_protocol == "imap" || (($entry != "inbox") && ($entry != "spam"))) {
 		$entry = $UM->fix_prefix($entry,0);
 		switch(strtolower($entry)) {
 		case "inbox":
