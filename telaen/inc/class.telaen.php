@@ -787,7 +787,7 @@ class Telaen_core {
 		}
 		$myarray["status"] = $headers["status"];
 		$myarray["read"] = $headers["x-um-status"];
-		unset($headers)
+		unset($headers);
 		return $myarray;
 
 	}

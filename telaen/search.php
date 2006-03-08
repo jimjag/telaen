@@ -57,7 +57,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 			}
 			$retbox = $UM->mail_list_msgs($entry);
 			$sess["headers"][base64_encode(strtolower($entry))] = $retbox[0];
-			$thisbox = $retbox[0]
+			$thisbox = $retbox[0];
 		} else 
 			$thisbox = $sess["headers"][base64_encode(strtolower($entry))];
 	}

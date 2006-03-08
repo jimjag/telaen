@@ -254,7 +254,7 @@ while($entry=$d->read()) {
 		$entry != "." && 
 		substr($entry,0,1) != "_" && 
 		$entry != $folder &&
-		($UM->mail_protocol == "imap" || (($entry != "inbox") && ($entry != "spam"))) {
+		($UM->mail_protocol == "imap" || (($entry != "inbox") && ($entry != "spam"))) ) {
 		$entry = $UM->fix_prefix($entry,0);
 		switch(strtolower($entry)) {
 		case "inbox":
