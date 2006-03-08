@@ -228,7 +228,7 @@ class Telaen_core {
 					else $decodedheaders[$headname] = $headvalue;
 					$lasthead = $headname;
 				}
-				unset($headers);
+				unset($thisheader);
 			}
 		}
 		unset($headers);
