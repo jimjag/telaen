@@ -18,6 +18,12 @@ Telaen:
 
 1.1.0:
 
+ * Some under-the-hood code improvements.
+
+ * Remove the SPAM folder from the list of
+   "folders that stuff can be moved to by the
+   user."
+
  * The Advanced HTML Editor is now TinyMCE, which
    is bundled with Telaen. Changes to the newmsg.htm
    template file may be required (depending on the
