@@ -536,6 +536,13 @@ class Telaen extends Telaen_core {
 		return 1;
 	}
 
+	/*
+	 * The below returns an 3 element array:
+	 *   $myreturnarray[0] == The message list
+	 *   $myreturnarray[1] == the auto-spam populated list
+	 *   $myreturnarray[2] == return status where:
+	 *     -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
+	 */
 	function mail_list_msgs($boxname = "INBOX", $headers=0) {
 
 
@@ -613,7 +620,7 @@ class Telaen extends Telaen_core {
 					$myreturnarray = Array();
 					$myreturnarray[0] = Array(); 
 					$myreturnarray[1] = Array();
-					$myreturnarray[2] = 0;
+					$myreturnarray[2] = -1;
 					return $myreturnarray;
 				}
 
@@ -667,7 +674,7 @@ class Telaen extends Telaen_core {
 						$myreturnarray = Array();
 						$myreturnarray[0] = Array(); 
 						$myreturnarray[1] = Array();
-						$myreturnarray[2] = 0;
+						$myreturnarray[2] = -1;
 						return $myreturnarray;
 					}
 					while (!feof($this->mail_connection)) {
@@ -893,6 +900,7 @@ class Telaen extends Telaen_core {
 					$headers = $this->_get_headers_from_cache($messagescopy[$j]["localname"]);
 					$headers = $this->decode_header($headers);
 					$messagescopy[$j]["flags"] = strtoupper($headers["x-um-flags"]);
+					unset($headers);
 				}
 				$messagescopy[$j]["folder"] = "inbox";
 
@@ -936,6 +944,7 @@ class Telaen extends Telaen_core {
 					$headers = $this->_get_headers_from_cache($spamcopy[$y]["localname"]);
 					$headers = $this->decode_header($headers);
 					$spamcopy[$y]["flags"] = strtoupper($headers["x-um-flags"]);
+					unset($headers);
 				}
 				$spamcopy[$y]["folder"] = "spam";
 
@@ -946,6 +955,8 @@ class Telaen extends Telaen_core {
 		$myreturnarray[0] = $messagescopy; 
 		$myreturnarray[1] = $spamcopy;
 		$myreturnarray[2] = 1;
+		unset($messagescopy);
+		unset($spamcopy);
 		return $myreturnarray;
 	}
 

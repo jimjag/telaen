@@ -23,7 +23,7 @@
 				 * as we had in our previous messagelist. Only get the new lists if something
 				 * has changed.
 				 */
-				if ($merged_returnarray[2]) {
+				if ($merged_returnarray[2] == 1) {
 					$sess["headers"][base64_encode("inbox")] = $merged_returnarray[0];
 					$sess["headers"][base64_encode("spam")] = $merged_returnarray[1];
 				}
