@@ -96,7 +96,10 @@ function cleanup_dirs ($userfolder, $logout) {
 					if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
 				}
 				$trash = "trash";
-				if(!is_array($sess["headers"][base64_encode($trash)])) $sess["headers"][base64_encode($trash)] = $UM->mail_list_msgs($trash);
+				if(!is_array($sess["headers"][base64_encode($trash)])) {
+					$retbox = $UM->mail_list_msgs($trash);
+					$sess["headers"][base64_encode($trash)] = $retbox[0];
+				}
 				$trash = $sess["headers"][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
@@ -114,7 +117,10 @@ function cleanup_dirs ($userfolder, $logout) {
 				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1"); }
 				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
 				$trash = "spam";
-				if(!is_array($sess["headers"][base64_encode($trash)])) $sess["headers"][base64_encode($trash)] = $UM->mail_list_msgs($trash);
+				if(!is_array($sess["headers"][base64_encode($trash)])) {
+					$retbox = $UM->mail_list_msgs($trash);
+					$sess["headers"][base64_encode($trash)] = $retbox[0];
+				}
 				$trash = $sess["headers"][base64_encode($trash)];
 		
 				if(count($trash) > 0) {

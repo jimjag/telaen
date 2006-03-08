@@ -4,37 +4,35 @@
 	if($quota_limit) {
 		for($n=0;$n<count($boxes);$n++) {
 			$entry = $boxes[$n]["name"];
-			if ($UM->_autospamfolder == "TRUE") {
-				$merged_array = Array();
-				$merged_returnarray = Array();
-				if (strtolower($entry) == "inbox") {
-					/*
-					 * Only process the inbox once for the spam-/inbox folder
-					 */
-					/*
-					 * Sort the arrays and fit them together again.
-					 */
-					$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
-					array_qsort2($merged_array,"msg",$sortorder);
+			$merged_array = Array();
+			$merged_returnarray = Array();
+			if (strtolower($entry) == "inbox") {
+				/*
+				 * Only process the inbox once for the spam-/inbox folder
+				 */
+				/*
+				 * Sort the arrays and fit them together again.
+				 */
+				$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
+				array_qsort2($merged_array,"msg",$sortorder);
 
-					$merged_returnarray = $UM->mail_list_msgs_spamaware("INBOX", $merged_array);
+				$merged_returnarray = $UM->mail_list_msgs("INBOX", $merged_array);
 
-					/*
-					 * Keep the old array if we still got the same messages on the server
-					 * as we had in our previous messagelist. Only get the new lists if something
-					 * has changed.
-					 */
-					if ($merged_returnarray[2]) {
-						$sess["headers"][base64_encode("inbox")] = $merged_returnarray[0];
-						$sess["headers"][base64_encode("spam")] = $merged_returnarray[1];
-					}
-				} elseif (strtolower($entry) == "spam") {
-					;
-				} else {
-					$sess["headers"][base64_encode(strtolower($entry))] = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))]);
+				/*
+				 * Keep the old array if we still got the same messages on the server
+				 * as we had in our previous messagelist. Only get the new lists if something
+				 * has changed.
+				 */
+				if ($merged_returnarray[2]) {
+					$sess["headers"][base64_encode("inbox")] = $merged_returnarray[0];
+					$sess["headers"][base64_encode("spam")] = $merged_returnarray[1];
 				}
-			} else
-				$sess["headers"][base64_encode(strtolower($entry))] = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))]);
+			} elseif (strtolower($entry) == "spam") {
+				;
+			} else {
+				$merged_returnarray = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))]);
+				$sess["headers"][base64_encode(strtolower($entry))] = $merged_returnarray[0];
+			}
 			unset($merged_array);
 			unset($merged_returnarray);
 		}

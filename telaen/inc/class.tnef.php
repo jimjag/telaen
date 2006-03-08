@@ -179,7 +179,7 @@ class TNEF {
 				$this->getx(16, $value); // skip the next 16 bytes (unknown data)
 				array_shift($attachment_data); // eliminate the current (bogus) attachment
 			
-				$this->tnef_decode($value, $attachment_data); // recursively process the attached message
+				$this->do_tnef_decode($value, $attachment_data); // recursively process the attached message
 	
 				break;
 			default:

@@ -106,26 +106,25 @@ for($n=0;$n<count($boxes);$n++) {
 	$unread = 0;
 
 	if(!is_array($sess["headers"][base64_encode(strtolower($entry))])) {
-		if ($UM->_autospamfolder == "TRUE") {
-			$merged_array = Array();
-			$merged_returnarray = Array();
-			if (strtolower($entry) == "inbox") {
-				/*
-				 * Sort the arrays and fit them together again.
-				 */
-				$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
-				array_qsort2($merged_array,"msg",$sortorder);
+		$merged_array = Array();
+		$merged_returnarray = Array();
+		if (strtolower($entry) == "inbox") {
+			/*
+			 * Sort the arrays and fit them together again.
+			 */
+			$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
+			array_qsort2($merged_array,"msg",$sortorder);
 
-				$merged_returnarray = $UM->mail_list_msgs_spamaware("INBOX", $merged_array);
-				$thisbox = $merged_returnarray[0];
-				$sess["headers"][base64_encode("spam")] = $merged_returnarray[1];
-			} elseif (strtolower($entry) == "spam") {
-				;
-			} else {
-				$thisbox = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))]);
-			}
-		} else
-			$thisbox = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))]);
+			$merged_returnarray = $UM->mail_list_msgs("INBOX", $merged_array);
+			$thisbox = $merged_returnarray[0];
+			$sess["headers"][base64_encode("spam")] = $merged_returnarray[1];
+		} elseif (strtolower($entry) == "spam") {
+			;
+		} else {
+			$merged_returnarray = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))]);
+			$thisbox = $merged_returnarray[0];
+		}
+			
 		unset($merged_array);
 		unset($merged_returnarray);
 		$sess["headers"][base64_encode(strtolower($entry))] = $thisbox;

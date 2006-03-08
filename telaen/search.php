@@ -55,8 +55,9 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 				if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1");
 				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
 			}
-			$thisbox = $UM->mail_list_msgs($entry);
-			$sess["headers"][base64_encode(strtolower($entry))] = $thisbox;
+			$retbox = $UM->mail_list_msgs($entry);
+			$sess["headers"][base64_encode(strtolower($entry))] = $retbox[0];
+			$thisbox = $retbox[0]
 		} else 
 			$thisbox = $sess["headers"][base64_encode(strtolower($entry))];
 	}

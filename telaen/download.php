@@ -26,7 +26,7 @@ $arAttachment = explode(",",$attach);
 $attach = $mail_info;
 foreach($arAttachment as $item )
 	if(is_numeric($item))
-		$attach = &$attach["attachments"][$item];
+		$attach = &$attach["attachments"][intval($item)];
 
 if(ereg("\\.\\.",$attach["filename"]) || !file_exists($attach["filename"])) { redirect_and_exit("error.php?err=3"); }
 

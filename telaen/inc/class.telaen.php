@@ -77,6 +77,7 @@ class Telaen_core {
 		$size = ftell($fp); rewind($fp);
 		$result =  preg_replace("/\r?\n/","\r\n",fread($fp,$size)); 
 		fclose($fp);
+		unset($fp); unset($size);
 		return $result;
 	}
 
@@ -188,10 +189,13 @@ class Telaen_core {
 
 			$newresult .= $mystring;
 			$pos = strpos($string,"=?");
-
+			unset($intpos); unset($endpos); unset($charset); unset($enctype); unset($mystring);
 		}
 		$result = $newresult.$string;
+		unset($mystring); unset($newresult); unset($pos);
+		
 		if(ereg("koi8", $subject)) $result = convert_cyr_string($result, "k", "w");
+		unset($subject);
 		return $result;
 
 	}
@@ -213,7 +217,7 @@ class Telaen_core {
 		$decodedheaders = Array();
 		for($i=0;$i<count($headers);$i++) {
 			$thisheader = trim($headers[$i]);
-			if(!empty($thisheader))
+			if(!empty($thisheader)) {
 				if(!ereg("^[A-Z0-9a-z_-]+:",$thisheader))
 					$decodedheaders[$lasthead] .= " ".$thisheader;
 				else {
@@ -224,8 +228,10 @@ class Telaen_core {
 					else $decodedheaders[$headname] = $headvalue;
 					$lasthead = $headname;
 				}
+				unset($headers);
+			}
 		}
-
+		unset($headers);
 		return $decodedheaders;
 	}
 
@@ -259,8 +265,10 @@ class Telaen_core {
 				$temp .= $thischar;
 		}
 
-		if(trim($temp) != "")
+		if(trim($temp) != "") {
 			$armail[] = trim($temp);
+			unset($temp);
+		}
 
 		for($i=0;$i<count($armail);$i++) {
 			$thisPart = trim(eregi_replace("^\"(.*)\"$", "\\1", trim($armail[$i])));
@@ -287,9 +295,72 @@ class Telaen_core {
 				unset($name);unset($email);
 			}
 		}
+		unset($armail); 
+		unset ($thisPart);
 		return $ARfrom;
 	}
 
+	/**
+	Try to extract the first name in a specified field (from, to, cc)
+	In order to guess what is the format (the RFC support 3), it will
+	try different ways to get the name and email
+	*/
+
+	function get_first_of_names($strmail) {
+		$ARfrom = Array();
+		$strmail = stripslashes(ereg_replace("(\t|\r|\n)","",$strmail));
+
+		if(trim($strmail) == "") return $ARfrom;
+
+		$counter = 0;  $inthechar = 0;
+		$chartosplit = ",;"; $protectchar = "\""; $temp = "";
+		$lt = "<"; $gt = ">";
+		$closed = 1;
+
+		if (eregi("[$chartosplit]", $strmail)) {
+			for($i=0;$i<strlen($strmail);$i++) {
+				$thischar = $strmail[$i];
+				if($thischar == $lt && $closed) $closed = 0;
+				if($thischar == $gt && !$closed) $closed = 1;
+				if($thischar == $protectchar) $inthechar = ($inthechar)?0:1;
+				if(!(strpos($chartosplit,$thischar) === false) && !$inthechar && $closed) {
+					$armail = $temp; $temp = "";
+					$i = strlen($strmail);
+				} else 
+					$temp .= $thischar;
+			}
+		} else {
+			$armail = $strmail;
+		}
+
+		$thisPart = trim(eregi_replace("^\"(.*)\"$", "\\1", trim($armail)));
+		if($thisPart != "") {
+			if (eregi("(.*)<(.*)>", $thisPart, $regs)) {
+				$email = trim($regs[2]);
+				$name = trim($regs[1]);
+			} else {
+				if (eregi("([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_]+)((.*))", $thisPart, $regs)) {
+					$email = $regs[1];
+					$name = $regs[2];
+				} else
+					$email = $thisPart;
+			}
+
+			$email = preg_replace("/<(.*)\\>/", "\\1", $email);
+			$name = preg_replace("/\"(.*)\"/", "\\1", trim($name));
+			$name = preg_replace("/\((.*)\)/", "\\1", $name);
+
+			if ($name == "") $name = $email;
+			if ($email == "") $email = $name;
+			$ARfrom[0]["name"] = $this->decode_mime_string($name);
+			$ARfrom[0]["mail"] = $email;
+
+			unset($name);unset($email);
+		}
+		unset($armail); 
+		unset ($thisPart);
+		return $ARfrom;
+	}
 
 	/**
 	Compile a body for multipart/alternative format.
@@ -362,6 +433,15 @@ class Telaen_core {
 			$headers = $this->decode_header($header);
 
 			$ctype = $headers["content-type"];
+
+			/*
+			 * Special case for mac with resource and data fork
+			 * Ignore apple data parts.
+			 */
+			if (eregi("application/applefile",$ctype)) {
+				continue;
+			}
+
 			$cid = $headers["content-id"];
 
 			$Actype = split(";",$headers["content-type"]);
@@ -372,6 +452,13 @@ class Telaen_core {
 			if($rctype == "multipart/alternative") {
 
 				$this->build_alternative_body($ctype,$body);
+
+			} elseif($rctype == "multipart/appledouble") {
+
+				/*
+				 * Special case for mac with resource and data fork
+				 */
+				$this->build_complex_body($ctype,$body);
 
 			} elseif($rctype == "text/plain" && !$is_download) {
 
@@ -393,7 +480,7 @@ class Telaen_core {
 			} elseif($is_download) {
 
 				$thisattach 	= $this->build_attach($header,$body,$boundary,$i);
-				$tree			= array_merge($this->current_level, array($thisattach["index"]));
+				$tree			= array_merge((array)$this->current_level, array($thisattach["index"]));
 				$thisfile 		= "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
 				$filename 		= $thisattach["filename"];
 				$cid = preg_replace("/<(.*)\\>/", "\\1", $cid);
@@ -529,10 +616,10 @@ class Telaen_core {
 
 		$tenc = $headers["content-transfer-encoding"];
 
-		preg_match("/[a-z0-9]+/",$cdisp,$matches);
+		preg_match("/[a-z0-9]+/i",$cdisp,$matches);
 		$content_disposition 	= $matches[0];
 
-		preg_match("/[a-z0-9\/-]+/",$ctype,$matches);
+		preg_match("/[a-z0-9\/-]+/i",$ctype,$matches);
 		$content_type 	= $matches[0];
 
 		$tmp 			= explode("/",$content_type);
@@ -568,7 +655,7 @@ class Telaen_core {
 		$temp_array["index"]				= $nIndex;
 
 		$this->_save_file($temp_array["filename"],$body);
-		
+		unset($body);
 		$this->_content["attachments"][$nIndex] = $temp_array;
 
 		return $temp_array;
@@ -647,7 +734,7 @@ class Telaen_core {
 	Guess all needed information about this mail
 	*/
 	
-	function get_mail_info($header) {
+	function get_mail_info($header, $first="ALL") {
 
 		$myarray = Array();
 		$headers = $this->decode_header($header);
@@ -687,13 +774,20 @@ class Telaen_core {
 
 		$myarray["date"] = $this->build_mime_date($mydate,$mytimezone);
 		$myarray["subject"] = $this->decode_mime_string($headers["subject"]);
-		$myarray["from"] = $this->get_names($headers["from"]);
-		$myarray["to"] = $this->get_names($headers["to"]);
-		$myarray["cc"] = $this->get_names($headers["cc"]);
-		$myarray["reply-to"] = $this->get_names($headers["reply-to"]);
+		if ($first == "FIRST_ONLY") {
+			$myarray["from"] = $this->get_first_of_names($headers["from"]);
+			$myarray["to"] = $this->get_first_of_names($headers["to"]);
+			$myarray["cc"] = $this->get_first_of_names($headers["cc"]);
+			$myarray["reply-to"] = $this->get_first_of_names($headers["reply-to"]);
+		} else {
+			$myarray["from"] = $this->get_names($headers["from"]);
+			$myarray["to"] = $this->get_names($headers["to"]);
+			$myarray["cc"] = $this->get_names($headers["cc"]);
+			$myarray["reply-to"] = $this->get_names($headers["reply-to"]);
+		}
 		$myarray["status"] = $headers["status"];
 		$myarray["read"] = $headers["x-um-status"];
-
+		unset($headers)
 		return $myarray;
 
 	}
@@ -765,6 +859,7 @@ class Telaen_core {
 		$bodypos = strlen($header)+strlen($separador);
 		$body = substr($email,$bodypos,strlen($email)-$bodypos);
 		$ARemail["header"] = $header; $ARemail["body"] = $body;
+		unset($header); unset($body);
 		return $ARemail;
 	}
 
@@ -855,6 +950,7 @@ class Telaen_core {
 			$temp_array["filename"] = $this->user_folder."_attachments/".md5($temp_array["boundary"])."_".$temp_array["name"];
 			$this->_content["attachments"][] = $temp_array;
 			$this->_save_file($temp_array["filename"],$stream);
+			unset($temp_array);
 		}
 		$body = preg_replace($regex, "", $body);
 	}
@@ -883,6 +979,7 @@ class Telaen_core {
 			$this->_content["attachments"][] 	= $temp_array;
 
 			$this->_save_file($temp_array["filename"],$content);
+			unset($temp_array);
 		}
 
 	}
