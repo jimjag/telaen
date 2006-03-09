@@ -902,7 +902,7 @@ class Telaen extends Telaen_core {
 					$messagescopy[$j]["flags"] = strtoupper($headers["x-um-flags"]);
 					unset($headers);
 				}
-				$messagescopy[$j]["folder"] = "inbox";
+				$messagescopy[$j]["folder"] = $boxname;
 
 				$j++;
 			} else {
