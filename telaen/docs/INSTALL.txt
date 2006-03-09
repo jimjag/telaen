@@ -24,6 +24,14 @@ INSTALL
   commented on this file, pay attention on the $temporary_folder variable,
   set it according your above folder name
 
+- Check your installation path by going to the extra/check_install.php
+  file via your browser, eg:
+
+       http://www.telaen.org/telaen/extra/check_install.php
+
+  After running and checking BE SURE TO REMOVE OR RENAME
+  this file to something safe, like check_install.php.txt !!!
+  
 ---------------
 UPGRADING
 ---------------

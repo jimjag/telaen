@@ -18,6 +18,9 @@ Telaen:
 
 1.1.0:
 
+ * Add in extra/check_install.php which performs some
+   simple tests of your installation and setup.
+   
  * No longer require short_open_tag.
 
  * Some under-the-hood code improvements.
