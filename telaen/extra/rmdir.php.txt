@@ -7,8 +7,7 @@
 
 <body>
 
-<?
-
+<?php
 /*
 THis script CLEAN all files/folders created in the folder specified
 

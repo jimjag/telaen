@@ -1,4 +1,4 @@
-<?
+<?php
 class PHPMailer_extra extends PHPMailer {
 
     /**

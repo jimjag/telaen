@@ -1,4 +1,4 @@
-<?
+<?php
 $folders = $sess["folders"];
 $scounter = 0;
 $pcounter = 0;

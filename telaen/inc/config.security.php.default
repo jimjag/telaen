@@ -1,4 +1,4 @@
-<?
+<?php
 ########################################################################
 # Enable visualization of HTML messages
 # *This option afect only incoming messages, the  HTML editor

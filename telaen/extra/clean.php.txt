@@ -6,8 +6,7 @@
 </head>
 
 <body>
-<?
-
+<?php
 /*
 This script remove folders older than $default_days
 */
@@ -79,10 +78,10 @@ if(!isset($daysToSearch)) $daysToSearch = $default_days;
 <form name="form1" action="clean.php" method="POST">
 	<table width="500" border="1" cellspacing="0" cellpadding="0" bordercolorlight="Black" bordercolordark="White">
 		<tr>
-			<td align="right">Dias: &nbsp;</td><td><input type="text" size="2" maxlength="2" name="daysToSearch" value="<?=$daysToSearch?>"><input type=submit value="Atualizar"></td>
+			<td align="right">Dias: &nbsp;</td><td><input type="text" size="2" maxlength="2" name="daysToSearch" value="<?php=$daysToSearch?>"><input type=submit value="Atualizar"></td>
 	</table>
 	<table width="500" border="1" cellspacing="0" cellpadding="0" bordercolorlight="Black" bordercolordark="White">
-<?
+<?php
 $all=opendir($temp_folder);
 $folders_found = false;
 while ($current=readdir($all)) { 
@@ -103,13 +102,12 @@ if (!$folders_found) {
 ?>
 		<tr>
 			<td>Nenhuma pasta inativa</td>
-<?
+<?php
 } else {
 ?>
 		<tr>
 			<td colspan="2"><br><br><input type="submit" name="apagar" value="Apagar"></td>
-<?
-
+<?php
 }
 ?>
 	</table>

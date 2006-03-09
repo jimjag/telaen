@@ -1,5 +1,4 @@
-<?
-
+<?php
 if($folder == "inbox" && $allow_filters) {
 
 	$require_update = false;

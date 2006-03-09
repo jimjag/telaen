@@ -1,4 +1,4 @@
-<?
+<?php
 class Telaen extends Telaen_core {
 
 	var $_autospamfolder	= "TRUE";

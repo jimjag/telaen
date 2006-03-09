@@ -1,5 +1,4 @@
-<?
-
+<?php
 	$sess["last-update"] = time();
 	if($quota_limit) {
 		for($n=0;$n<count($boxes);$n++) {
