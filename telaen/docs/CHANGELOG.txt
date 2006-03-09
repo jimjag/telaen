@@ -18,6 +18,8 @@ Telaen:
 
 1.1.0:
 
+ * No longer require short_open_tag.
+
  * Some under-the-hood code improvements.
 
  * Remove the SPAM folder from the list of
