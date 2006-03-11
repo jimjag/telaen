@@ -197,9 +197,7 @@ function openwin(targetUrl) { window.open(targetUrl); }
 </script>
 ";
 
-$umDeleteForm = "<input type=hidden name=lid value=$lid>
-<input type=hidden name=tid value=\"$tid\">
-<input type=hidden name=decision value=move>
+$umDeleteForm = "<input type=hidden name=decision value=move>
 <input type=hidden name=folder value=\"".htmlspecialchars($folder)."\">
 <input type=hidden name=pag value=$pag>
 <input type=hidden name=start_pos value=$ix>
@@ -209,8 +207,6 @@ $umDeleteForm = "<input type=hidden name=lid value=$lid>
 
 $umReplyForm = "<form name=msg action=\"newmsg.php\" method=POST>
 <input type=hidden name=rtype value=\"reply\">
-<input type=hidden name=lid value=\"$lid\">
-<input type=hidden name=tid value=\"$tid\">
 <input type=hidden name=folder value=\"".htmlspecialchars($folder)."\">
 <input type=hidden name=ix value=\"$ix\">
 </form>
@@ -274,11 +270,14 @@ while($entry=$d->read()) {
 		$entry != "." && 
 		substr($entry,0,1) != "_" && 
 		$entry != $folder &&
-		($UM->mail_protocol == "imap" || $entry != "inbox")) {
+		($UM->mail_protocol == "imap" || ($entry != "inbox" && $entry != "spam"))) {
 		$entry = $UM->fix_prefix($entry,0);
 		switch(strtolower($entry)) {
 		case "inbox":
 			$display = $inbox_extended;
+			break;
+		case "spam":
+			$display = $spam_extended;
 			break;
 		case "sent":
 			$display = $sent_extended;
