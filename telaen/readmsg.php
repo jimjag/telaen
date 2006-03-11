@@ -91,7 +91,7 @@ $body = eregi_replace("target=[\"]?[a-zA-Z_]+[\"]?","target=\"blank\"",$body);
 $body = eregi_replace("href=\"http([s]?)://","target=\"_blank\" href=\"$redir_path?http\\1://",$body);
 $body = eregi_replace("href=\"mailto:","target=\"_top\" href=\"newmsg.php?to=",$body);
 
-$uagent = 	$HTTP_SERVER_VARS["HTTP_USER_AGENT"];
+$uagent = 	$_SERVER["HTTP_USER_AGENT"];
 
 $ns4    = 	(ereg("Mozilla/4",$uagent) && !ereg("MSIE",$uagent) && 
 			!ereg("Gecko",$uagent));

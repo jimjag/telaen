@@ -148,7 +148,7 @@ if(isset($tipo) && $tipo == "send") {
 
 	$priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority ;
 
-	$uagent = $HTTP_SERVER_VARS["HTTP_USER_AGENT"];
+	$uagent = $_SERVER["HTTP_USER_AGENT"];
 	$isMac = ereg("Mac",$uagent);
 	$isOpera = ereg("Opera",$uagent);
 
