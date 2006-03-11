@@ -168,7 +168,7 @@ function redirect_and_exit($location) {
 	global $enable_debug;
 	global $phpver;
 	$url = "http";
-	if (($_SERVER['HTTPS'] == "on") || ($_SERVER['SERVER_PORT']==443)) {
+	if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
 		$url .= "s://";
 	} else {
 		$url .= "://";
