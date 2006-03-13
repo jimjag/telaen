@@ -167,6 +167,7 @@ function get_usage_graphic($used,$aval) {
 function redirect_and_exit($location) {
 	global $enable_debug;
 	global $phpver;
+	global $redirects_use_meta;
 	$url = "http";
 	if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
 		$url .= "s://";
@@ -177,17 +178,31 @@ function redirect_and_exit($location) {
 
 	if($enable_debug) {
 		echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$url\">Click here</a> to go to <a href=\"$url\">$url</a></h3><br><br><br><br>");
+	} elseif ($redirects_use_meta) {
+		echo <<<ENDOFREDIRECT
+<html>
+ <head>
+  <meta http-equiv="refresh" content="0;url=$location">
+  <script language="JavaScript">
+   <!--
+    window.location = "$location"
+   -->
+  </script>
+ </head>
+ <body></body>
+</html>
+ENDOFREDIRECT;
 	} else {
 		Header("Location: $url");
-        }
+	}
 	if ($phpver >= 4.1) {
 		if (ob_get_level()) {
-                	@ob_end_flush();
-        	}
+			@ob_end_flush();
         } else {
                 @ob_end_flush();
         }
-        exit;
+	}
+    exit;
 }
 
 function array_qsort2ic (&$array, $column=0, $order="ASC") {
