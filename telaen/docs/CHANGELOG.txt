@@ -18,6 +18,8 @@ Telaen:
 
 1.1.0:
 
+ * New feature: mark as read/unread on message list
+
  * Fixed problem with possible incorrect redirects. Instead
    of checking that $_SERVER['HTTPS'] is non-empty, we
    check explicitly for it being set to 'on'. The official
