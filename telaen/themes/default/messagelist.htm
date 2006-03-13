@@ -78,8 +78,11 @@
 				{/section}
 				<tr>
 					<td colspan="7" class="default">&nbsp; 
+					<a class="menu" href="javascript:markmsg()">{#mark_selected_mnu#}</a> ::
+					<a class="menu"href="javascript:unmarkmsg()">{#unmark_selected_mnu#}</a> ::
 					<a class="menu" href="javascript:delemsg()">{#delete_selected_mnu#}</a> :: 
-					<a class="menu" href="javascript:movemsg()">{#move_selected_mnu#}</a> 
+					<a class="menu" href="javascript:movemsg()">{#move_selected_mnu#}</a>					
+			
 					<select name="aval_folders">
 						{section name=i loop=$umAvalFolders}
 							<option value="{$umAvalFolders[i].path|escape:"html"}">{$umAvalFolders[i].display|escape:"html"}
