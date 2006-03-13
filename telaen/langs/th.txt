@@ -114,6 +114,8 @@ no_messages						= ไม่มีจดหมายใหม่ถึง คุณ
 
 delete_selected_mnu				= ลบที่เลือก
 move_selected_mnu				= ย้ายไปที่เลือก
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
 delete_mnu						= ลบ
 move_mnu						= ย้ายไป
 subject_hea						= หัวเรื่อง
@@ -238,6 +240,8 @@ prf_trash_title					= ถังขยะ
 prf_save_to_trash				= ตั้งถังขยะไว้ที่ไหน
 prf_save_only_read				= จัดเก็บจดหมายไว้ที่ไหน
 prf_empty_on_exit				= ลบจดหมายจาก Folder หลังจากออกจากระบบ
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= ส่งรายการ
 prf_save_sent					= จัดเก็บจดหมายที่ส่งไว้ที่ :
 prf_messages_title				= ข้อความ

@@ -113,6 +113,8 @@ no_messages					= Inga meddelanden i mappen
 
 delete_selected_mnu				= Ta bort markerade
 move_selected_mnu				= Flytta markerade till
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
 delete_mnu					= Ta bort
 move_mnu					= Flytta till
 subject_hea					= Ämne
@@ -237,6 +239,8 @@ prf_trash_title					= Borttaget
 prf_save_to_trash				= Flytta <b>borttagna</b> meddelanden till mappen <b><!--%UM_TRASH_EXTENDED%--></b>
 prf_save_only_read				= Använd <b>inte</b> mappen <b>&quot;Borttaget&quot;</b> för <b>lästa</b> meddelanden. Ta bort dem direkt. 
 prf_empty_on_exit				= <b>Töm</b> mappen borttaget vid utloggning
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Skickade meddelanden
 prf_save_sent					= Spara en kopia av <b>skickade</b> meddelanden i mappen <b><!--%UM_SENT_EXTENDED%--></b>
 prf_messages_title				= Meddelandeinställningar

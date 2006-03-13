@@ -45,7 +45,7 @@ no_recipient_text				= [Destinatario sconosciuto]
 # If the quota limit was exceeded           ;
 
 quota_exceeded					= Spazio esaurito\Cancellare qualche messaggio per proseguire
-quota_usage_info				= Limite di spazio
+quota_usage_info					= Limite di spazio
 quota_usage_used				= Usato
 quota_usage_of					= di
 quota_usage_avail				= disponibile
@@ -92,7 +92,7 @@ reply_subject_hea				= Oggetto:
 # page-specific vars
 [Headers]
 
-key_hea							= Key
+key_hea						= Key
 value_hea						= Value
 
 [Folders]
@@ -102,43 +102,50 @@ fld_messages_hea				= Messaggi
 fld_size_hea					= Dimensioni
 fld_empty_hea					= Svuota
 fld_delete_hea					= Cancella
-fld_total					= Totale:
+fld_total						= Totale:
 fld_make_new					= Crea nuova cartella
-folders_to					= Sposta cartella
+folders_to						= Sposta cartella
+
 
 [MessageList]
 
-messages_to						= Messaggio per 
-no_messages						= Nessun nuovo messaggio 
+messages_to					= Messaggi per 
+no_messages					= Nessun nuovo messaggio 
 
 delete_selected_mnu				= Cancella selezionato
 move_selected_mnu				= Sposta selezionato in
+move_selected_to_trash_mnu		= Sposta nel cestino
+mark_selected_mnu         			= Segna come letto
+unmark_selected_mnu      			= Segna come non letto
+
 delete_mnu						= Cancella
 move_mnu						= Sposta in
-subject_hea						= Oggetto
-from_hea						= da
-to_hea							= per
+subject_hea					= Oggetto
+from_hea						= Da
+to_hea						= Per
 date_hea						= Data
 size_hea						= Dimesioni
+have_spam						= Hai dello Spam (controlla la cartella Spam)
 
 msg_you_have					= Hai
 msg_message					= messaggio
 msg_messages					= messaggi
 
-msg_more_unread					= non letto
-msg_one_unread					= non visto
-msg_none_unread					= nessun messaggio letto
+msg_more_unread				= non letti
+msg_one_unread					= non letto
+msg_none_unread				= nessun messaggio letto
 msg_in_the_folder				= nella cartella
+
+
 [Login]
 
-
-lgn_title					= Accedi
-lgn_welcome_msg					= Benvenuto, accedi alla tua posta
+lgn_title						= Accedi
+lgn_welcome_msg				= Benvenuto, accedi alla tua posta
 lng_user_email					= E-mail
 lng_user_name					= Username
 lng_user_pwd					= Password
-lng_theme					= Tema
-lng_language					= Language
+lng_theme						= Tema
+lng_language					= Lingua
 lng_login_btn					= Accedi &gt;&gt;
 
 
@@ -148,12 +155,12 @@ to_hea						= Per:
 cc_hea						= Cc:
 bcc_hea						= Bcc:
 subject_hea					= Oggetto:
-address_tip					= Dalla rubrica
+address_tip						= Dalla rubrica
 
-attach_hea					= Allegato:
+attach_hea						= Allegato:
 attch_add_new					= Aggiungi file
 attch_name_hea					= Nome
-attch_size					= Dimesioni
+attch_size						= Dimesioni
 attch_type_hea					= Tipo
 attch_dele_hea					= Cancella
 attch_no_hea					= Nessun allegato
@@ -193,51 +200,51 @@ format_pre					= Formattato <PRE>
 format_clear_all				= Cancella tutto
 
 format_font					= Font
-format_size					= Dim.
+format_size						= Dim.
 
 format_color					= Colore
 format_back					= Sfondo
-color_red					= Rosso
-color_blue					= Blu
-color_green					= Verde
-color_black					= Nero
+color_red						= Rosso
+color_blue						= Blu
+color_green						= Verde
+color_black						= Nero
 color_yellow					= Giallo
-color_white					= Bianco
+color_white						= Bianco
 
 view_source					= Vedi codice HTML
-text_mode					= Visualizzazione testuale
+text_mode						= Visualizzazione testuale
 clear_format					= Visualizzazione standard
-
 priority_text					= Priorità
-
-
 
 
 [BadLogin]
 
-bdl_title					= Errore di Login
+bdl_title						= Errore di Login
 bdl_msg						= Controllare login e password<br><br>Riprovare
-bdl_back					= Torna indietro
+bdl_back						= Torna indietro
 
 
 [Error]
 
-err_title					= Si sono verificati alcuni errori
+err_title						= Si sono verificati alcuni errori
 err_msg						= Errori in login<br><br>Riprovare
 err_system_msg					= Messaggio di sistema: 
-err_exit					= Logout
+err_exit						= Logout
+
 
 [Preferences]
 
-prf_title 					= Preferenza
-prf_general_title				= Informazioni generali
-prf_name					= Nome
+prf_title 						= Preferenze
+prf_general_title					= Informazioni generali
+prf_name						= Nome
 prf_reply_to					= Rispondi a
 prf_time_zone					= Fuso orario
 prf_trash_title					= Cestino
 prf_save_to_trash				= Quando <b>cancelli</b> un messaggio, spostalo in
 prf_save_only_read				= Salva solo <b>i messaggi letti</b> nel
 prf_empty_on_exit				= <b>Svuota</b> il cestino quando esci
+prf_empty_spam_on_exit			= <b>Svuota</b> la cartella spam quando esci
+prf_unmark_read_on_exit			= Reimposta tutti i messaggi come NON letti quando esci 
 prf_sent_title					= Posta inviata
 prf_save_sent					= Salva <b>posta inviata</b> nel
 prf_messages_title				= Messaggi
@@ -247,20 +254,21 @@ prf_signature					= Scrivi la firma
 prf_auto_add_sign				= Aggiungi firma a tutti i messaggi in uscita 
 prf_save_button					= Salva
 prf_display_images				= Mostra immagini allegate
-prf_default_editor_mode				= Editing semplificato
+prf_default_editor_mode			= Editing semplificato
 prf_default_editor_mode_text			= "Modo testuale"
-prf_default_editor_mode_html			= "Modo avanzato (HTML editor --> Solo per IE5 o superiore)"
+prf_default_editor_mode_html			= "Modo avanzato (editor HTML)"
 prf_time_to_refesh				= Refresh dei messaggi (minuti)
+
 
 [Catch]
 
-ctc_title					= Aggiungi alla rubrica
+ctc_title						= Aggiungi alla rubrica
 ctc_information					= Mostra solo le e-mail nella rubrica
-ctc_name					= Nome
-ctc_email					= E-mail
+ctc_name						= Nome
+ctc_email						= E-mail
 ctc_no_address					= Indirizzo non disponibile
-ctc_close					= Chiudi
-ctc_save					= Salva
+ctc_close						= Chiudi
+ctc_save						= Salva
 
 [Readmsg]
 

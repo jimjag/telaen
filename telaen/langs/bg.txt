@@ -114,6 +114,10 @@ no_messages					= Няма съобщения
 
 delete_selected_mnu				= Изтрий избраните
 move_selected_mnu				= Премести избраните в
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+move_selected_to_trash_mnu		= Move selected to Trash
+
 delete_mnu					= Изтрий
 move_mnu					= Премести в
 subject_hea					= Тема
@@ -239,6 +243,8 @@ prf_trash_title					= Кошче за боклук
 prf_save_to_trash				= Премести <b>изтритите</b> съобщения в папка 
 prf_save_only_read				= Запиши само <b>прочетение</b> съобщения в папка 
 prf_empty_on_exit				= <b>Изтрий</b> Кошчето за боклук
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Изпратени съобщения
 prf_save_sent					= Запиши <b>изпратените</b> съобщения в папка
 prf_messages_title				= Съобщения

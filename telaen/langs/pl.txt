@@ -115,6 +115,9 @@ no_messages						= Brak wiadomo¶ci w folderze
 
 delete_selected_mnu				= Usuñ zaznaczone
 move_selected_mnu				= Przenie¶ zaznaczone do
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+
 delete_mnu						= Usuñ
 move_mnu						= Przenie¶ do
 subject_hea						= Temat
@@ -240,6 +243,8 @@ prf_trash_title					= Kosz
 prf_save_to_trash				= Przenie¶ <b>usuniête</b> wiadomo¶ci do foldera
 prf_save_only_read				= Zapisuj tylko <b>przeczytane</b> wiadomo¶ci w folderze
 prf_empty_on_exit				= <b>Opró¿nij</b> kosz przy wyj¶ciu
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Wys³ane wiadomo¶ci
 prf_save_sent					= Zapisz <b>wys³ane</b> wiadomo¶ci w folderze 
 prf_messages_title				= Wiadomo¶ci

@@ -113,6 +113,9 @@ no_messages					= Engin ný skilaboð í
 
 delete_selected_mnu				= Eyða völdum skilaboðum
 move_selected_mnu				= Færa völd skilaboð í 
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+
 delete_mnu					= Eyða
 move_mnu					= Færa í
 subject_hea					= Efni
@@ -238,6 +241,8 @@ prf_trash_title					= Rusl
 prf_save_to_trash				= Þegar skilaboðum er <b>eytt</b>, færa í 
 prf_save_only_read				= Vista aðeins <b>lesin skilaboð</b> í 
 prf_empty_on_exit				= <b>Tæma</b> rusl við útskráningu
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Úthólf
 prf_save_sent					= Vista <b>send skilaboð</b> í 
 prf_messages_title				= Skilaboð

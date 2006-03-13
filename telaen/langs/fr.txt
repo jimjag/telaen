@@ -121,6 +121,9 @@ no_messages					= Aucun message dans le dossier
 
 delete_selected_mnu			= Supprimer la sélection
 move_selected_mnu			= Déplacer la sélection dans
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+
 delete_mnu					= Supprimer
 move_mnu					= Déplacer dans
 subject_hea					= Objet
@@ -244,6 +247,8 @@ prf_trash_title				= Corbeille
 prf_save_to_trash			= Garder une copie des messages <b>supprimés</b> dans le dossier
 prf_save_only_read			= Garder une copie des messages <b>lus</b> dans les dossier
 prf_empty_on_exit			= <b>Vider</b> la corbeille en quittant
+prf_empty_spam_on_exit		= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit		= Reset READ messages as UNREAD when you logout
 prf_sent_title				= Eléments envoyés
 prf_save_sent				= Garder une copie des messages <b>envoyés</b> dans le dossier
 prf_messages_title			= Messages

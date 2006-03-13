@@ -94,16 +94,20 @@ fld_make_new					= Create new folder
 folders_to						= Folders to
 
 [MessageList]
-messages_to						= Messages to 
-no_messages						= No new messages in your 
+messages_to					= Messages to 
+no_messages					= No new messages in your 
 delete_selected_mnu				= Delete selected
-move_selected_to_trash_mnu		= Move selected to Trash
 move_selected_mnu				= Move selected to
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+move_selected_to_trash_mnu		= Move selected to Trash
+
+
 delete_mnu						= Delete
 move_mnu						= Move to
-subject_hea						= Subject
+subject_hea					= Subject
 from_hea						= From
-to_hea							= To
+to_hea						= To
 date_hea						= Date
 size_hea						= Size
 have_spam						= You have Spam (check Spam folder)
@@ -112,10 +116,11 @@ msg_you_have					= You have
 msg_message						= message
 msg_messages					= messages
 
-msg_more_unread					= unread
+msg_more_unread				= unread
 msg_one_unread					= unread
-msg_none_unread					= none read
+msg_none_unread				= none read
 msg_in_the_folder				= in the folder
+
 
 [Login]
 lgn_title						= Login
@@ -229,8 +234,8 @@ prf_auto_add_sign				= Add your signature to all the outgoing messages
 prf_save_button					= Save
 prf_display_images				= Show attached images
 prf_default_editor_mode			= Default edit mode
-prf_default_editor_mode_text	= "Plain text"
-prf_default_editor_mode_html	= "Advanced HTML editor (Only for IE5 or higher)"
+prf_default_editor_mode_text			= "Plain text"
+prf_default_editor_mode_html			= "Advanced HTML editor"
 prf_time_to_refesh				= Automatically check for new mail (minutes)
 
 [Catch]

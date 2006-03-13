@@ -113,6 +113,8 @@ no_messages						= Ingen nye meldinger i din
 
 delete_selected_mnu				= Slett valgte
 move_selected_mnu				= Flytt valgte til
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
 delete_mnu						= Slett
 move_mnu						= Flytt til
 subject_hea						= Tema
@@ -238,6 +240,8 @@ prf_trash_title					= Søppel
 prf_save_to_trash				= Når du <b>sletter</b> en beskjed skal den flyttes til 
 prf_save_only_read				= Lagre bra <b>leste meldinger</b> i 
 prf_empty_on_exit				= <b>Slett</b> mappeinnholdet i slettede elementer når du logger ut
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Sendte elementer
 prf_save_sent					= Lagre <b>sendte beskjeder</b> i 
 prf_messages_title				= Beskjeder

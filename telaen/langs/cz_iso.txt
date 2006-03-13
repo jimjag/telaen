@@ -113,6 +113,10 @@ no_messages						= Nemáte žádnou zprávu v
 
 delete_selected_mnu				= Smazat vybrané
 move_selected_mnu				= Pøesunout vybrané do
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+move_selected_to_trash_mnu		= Move selected to Trash
+
 delete_mnu						= Smazat
 move_mnu						= Pøesunout
 subject_hea						= Pøedmìt
@@ -238,6 +242,8 @@ prf_trash_title					= Smazané složky
 prf_save_to_trash				= Když <b>mažete</b> zprávy, tak pøesouvat do 
 prf_save_only_read				= Ukládat <b>pøeètené zprávy</b> do 
 prf_empty_on_exit				= <b>Smazat</b> pøi odhlášení smazané zprávy
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Poslané zprávy
 prf_save_sent					= Uložit <b>poslané zprávy</b> do 
 prf_messages_title				= Zprávy

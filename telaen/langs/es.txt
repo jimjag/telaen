@@ -114,6 +114,9 @@ no_messages						= No hay nuevos mensajes en su
 
 delete_selected_mnu				= Borrar selecionados
 move_selected_mnu				= Mover selecionados a
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+
 delete_mnu						= Borrar
 move_mnu						= Mover a
 subject_hea						= Asunto
@@ -238,6 +241,8 @@ prf_trash_title					= Papelera
 prf_save_to_trash				= Cuando <b>borre</b> un mensaje, moverlo a la 
 prf_save_only_read				= Guardar sólo <b>mensajes leidos</b> en la 
 prf_empty_on_exit				= <b>Vaciar</b> la Papelera al salir
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Elementos Enviados
 prf_save_sent					= Guardar mensajes <b>enviados</b> en la carpeta
 prf_messages_title				= Mensajes

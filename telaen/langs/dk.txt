@@ -117,6 +117,10 @@ no_messages						= Ingen meddelelser i
 
 delete_selected_mnu				= Slet valgte
 move_selected_mnu				= Flyt valgte til
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+move_selected_to_trash_mnu		= Move selected to Trash
+
 delete_mnu						= Slet
 move_mnu						= Flyt til
 subject_hea						= Emne
@@ -241,6 +245,8 @@ prf_trash_title					= Papirkurv
 prf_save_to_trash				= Når du <b>sletter</b> en meddelelse, flyt til 
 prf_save_only_read				= Gem kun <b>læste meddelelser</b> i 
 prf_empty_on_exit				= <b>Tøm</b> papirkurven når du logger af
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Sendte meddelelser
 prf_save_sent					= Gem <b>sendte meddelelser</b> i
 prf_messages_title				= Meddelelser

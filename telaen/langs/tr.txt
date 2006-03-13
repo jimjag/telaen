@@ -107,6 +107,10 @@ no_messages				= Yeni mesajýnýz yok. Klasör:
 
 delete_selected_mnu			= Ýþaretlileri sil
 move_selected_mnu			= Ýþaretlileri taþý: 
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+move_selected_to_trash_mnu		= Move selected to Trash
+
 delete_mnu				= Sil
 move_mnu				= Taþý:
 subject_hea				= Konu
@@ -232,6 +236,8 @@ prf_trash_title					= Çöp
 prf_save_to_trash				= Bir mesaj <b>silince</b> taþýnacaðý klasör:
 prf_save_only_read				= Sadece <b>okunmuþ mesajlarýn</b> kayýt edileceði klasör:
 prf_empty_on_exit				= Çýkýþ yaptýðým zaman çöp kutusunuz <b>temizle</b>
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Gönderilmiþ öðeler
 prf_save_sent					= <b>Gönderilmiþ mesajlarýn</b> kayýt edileceði klasör: 
 prf_messages_title				= Mesajlar

@@ -114,6 +114,8 @@ no_messages					= Nincs üzenet a következõ mappában:
 
 delete_selected_mnu				= Kijelölt üzenetek törlése
 move_selected_mnu				= Kijelölt üzenetek áthelyezése
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
 delete_mnu					= Törlés
 move_mnu					= Áthelyezés
 subject_hea					= Tárgy
@@ -240,6 +242,8 @@ prf_trash_title					= Kuka
 prf_save_to_trash				= A <b>Törölt</b> üzenetek kerüljenek a következõ mappába: 
 prf_save_only_read				= Az <b>olvasott</b> üzenetek mentése a következõ mappába: 
 prf_empty_on_exit				= <b>Kuka</b> ürítése kilépésnél
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Elküldött üzenetek
 prf_save_sent					= Az <b>elküldött</b> üzenetek mentése a következõ mappába:
 prf_messages_title				= Üzenetek

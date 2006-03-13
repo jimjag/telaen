@@ -114,6 +114,10 @@ messages_to				= Nachrichten von
 no_messages				= Im Augenblick hast Du keine Nachrichten in Deinem Postfach
 delete_selected_mnu			= Markierte löschen
 move_selected_mnu			= Markierte verschieben
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+
+
 delete_mnu				= Löschen
 move_mnu				= Verschieben
 subject_hea				= Betreff

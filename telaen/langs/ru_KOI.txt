@@ -119,6 +119,8 @@ no_messages			= Нет новых сообщений в папке
 
 delete_selected_mnu		= Удалить отмеченные
 move_selected_mnu		= Переместить отмеченные в
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
 delete_mnu			= Удалить
 move_mnu			= Переместить в
 subject_hea			= Тема
@@ -243,6 +245,8 @@ prf_trash_title			= Корзина
 prf_save_to_trash		= Когда Вы <b>удаляете</b> сообщения, помещать из в папке 
 prf_save_only_read		= Хранить только <b>прочитанные сообщения</b> в папке  
 prf_empty_on_exit		= <b>Очистить</b> корзину при выходе из программы
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title			= Отправленные
 prf_save_sent			= Хранить <b>отправляемые сообщения</b> в папке  
 prf_messages_title		= Сообщения

@@ -113,6 +113,9 @@ no_messages						= Nici un mesaj nou in
 
 delete_selected_mnu				= Sterge selectate
 move_selected_mnu				= Muta selectate in
+mark_selected_mnu         			= Mark as read
+unmark_selected_mnu      			= Mark as unread
+
 delete_mnu						= Sterge
 move_mnu						= Muta in
 subject_hea						= Subiect
@@ -238,6 +241,8 @@ prf_trash_title					= Gunoi
 prf_save_to_trash				= La <b>stergerea</b> unui mesaj, muta-l in 
 prf_save_only_read				= Salveaza numai <b>mesajele citite</b> in  
 prf_empty_on_exit				= <b>Clean</b> trash folder when you logout
+prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
+prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Mesaje trimise
 prf_save_sent					= Salveaza <b>mesajele trimise</b> in 
 prf_messages_title				= Mesaje
