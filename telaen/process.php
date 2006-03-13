@@ -57,8 +57,12 @@ if( !is_array($headers)
 			if(isset(${"msg_$i"})) {
 				if ($decision == "delete") {
 					$UM->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
-				} else {
+				} elseif ($decision == "move") {
 					$UM->mail_move_msg($headers[$i],$aval_folders);
+				} elseif ($decision == "mark") {
+					$UM->mail_set_flag($headers[$i],"\\SEEN","+");
+				} else {
+					$UM->mail_set_flag($headers[$i],"\\SEEN","-");
 				}
 
 				/*

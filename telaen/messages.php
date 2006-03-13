@@ -117,6 +117,12 @@ function movemsg() {
 }
 function addresses() { location = 'addressbook.php'; }
 function prefs() { location = 'preferences.php'; }
+function markmsg() {
+      with(document.form1) { decision.value = 'mark'; submit(); }
+};
+function unmarkmsg() {
+      with(document.form1) { decision.value = 'unmark'; submit(); }
+};
 function sel() {
 	with(document.form1) {
 		for(i=0;i<elements.length;i++) {
