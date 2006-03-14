@@ -18,6 +18,14 @@ Telaen:
 
 1.1.0:
 
+ * Provide ways to work around some issues with
+   Redirects. We can now select whether these redirects
+   are performed via HTTP redirects (the Location header)
+   or via META REFRESH and Javascript (see $redirects_use_meta).
+   Also, we can select whether the URLs used for redirects
+   are absolute (as required by HTTP) or relative (see
+   $redirects_are_relative).
+
  * New feature: mark as read/unread on message list
 
  * Fixed problem with possible incorrect redirects. Instead

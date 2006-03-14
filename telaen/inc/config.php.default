@@ -300,4 +300,23 @@ $server_timezone_offset = "-0000";
 
 $force_unmark_read_overrule = yes;
 $force_unmark_read_setting = yes;
+
+########################################################################
+# Control whether redirects will use META REFRESH and Javascript
+# to send the person to the required page ('yes') or whether to
+# use the HTTP Location header and do a "real" HTTP redirect. Some
+# browsers have issues setting Cookies during HTTP redirects, in
+# those cases, setting the below to 'yes' will help.
+########################################################################
+
+$redirects_use_meta = no;
+
+########################################################################
+# Control whether redirects refer to an absolute or relative URL.
+# HTTP redirects are required to be absolute, but in some environments
+# Telaen has a hard time determining what the absolute URL should be.
+# Setting the below to 'yes' avoids this.
+########################################################################
+
+$redirects_are_relative = no;
 ?>

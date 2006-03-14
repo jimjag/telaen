@@ -168,24 +168,28 @@ function redirect_and_exit($location) {
 	global $enable_debug;
 	global $phpver;
 	global $redirects_use_meta;
-	$url = "http";
-	if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
-		$url .= "s://";
+	global $redirects_are_relative;
+	if ($redirects_are_relative) {
+		$url = $location;
 	} else {
-		$url .= "://";
+		$url = "http";
+		if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
+			$url .= "s://";
+		} else {
+			$url .= "://";
+		}
+		$url .= $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/' . $location ;
 	}
-	$url .= $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/' . $location ;
-
 	if($enable_debug) {
 		echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$url\">Click here</a> to go to <a href=\"$url\">$url</a></h3><br><br><br><br>");
 	} elseif ($redirects_use_meta) {
 		echo <<<ENDOFREDIRECT
 <html>
  <head>
-  <meta http-equiv="refresh" content="0;url=$location">
+  <meta http-equiv="refresh" content="0;url=$url">
   <script language="JavaScript">
    <!--
-    window.location = "$location"
+    window.location = "$url"
    -->
   </script>
  </head>
@@ -196,11 +200,9 @@ ENDOFREDIRECT;
 		Header("Location: $url");
 	}
 	if ($phpver >= 4.1) {
-		if (ob_get_level()) {
-			@ob_end_flush();
+		if (ob_get_level()) @ob_end_flush();
         } else {
-                @ob_end_flush();
-        }
+		@ob_end_flush();
 	}
     exit;
 }
