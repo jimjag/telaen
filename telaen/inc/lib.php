@@ -178,7 +178,8 @@ function redirect_and_exit($location) {
 		} else {
 			$url .= "://";
 		}
-		$url .= $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/') . '/' . $location ;
+		$url .= $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . '/' . $location ;
+		$url = str_replace('\\','/', $url);	// Windows path fix
 	}
 	if($enable_debug) {
 		echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$url\">Click here</a> to go to <a href=\"$url\">$url</a></h3><br><br><br><br>");
