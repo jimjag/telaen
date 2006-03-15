@@ -1,9 +1,14 @@
-# ***** GLOBAL VARS ****** #
+#
+# Nederlands
+#
+
 # User-friendly names to system folders
 
-inbox_extended					= Postvak in
-sent_extended					= Verzonden items
+inbox_extended					= Postvak IN
+sent_extended					= Verzonden berichten
 trash_extended					= Prullenbak
+spam_extended					= Spam
+
 
 #Navigation texts
 
@@ -18,34 +23,34 @@ error_other					= Fout! Onbekende fout, neem contact op met de webmaster.
 
 #Invalid name of mailbox
 
-error_invalid_name				= Onjuist map naam - gebruik alleen: =>  'A t/m Z', '0 t/m 9', '.' en spatie's.
+error_invalid_name				= Onjuiste mapnaam - gebruik alleen: 'A t/m Z', '0 t/m 9', '.' en spaties.
 
 
 #Validations when sending mails            ;
 
-error_no_recipients		= Je hebt geen ontvangers ingevuld... :)
-error_compose_invalid_mail1_s	= Dit e-mail adres lijkt onjuist.
-error_compose_invalid_mail1_p	= Deze e-mail adressen lijken onjuist.
+error_no_recipients		= Typ een adres in het tekstvak Naar.
+error_compose_invalid_mail1_s	= Het opgegeven e-mailadres is onjuist.
+error_compose_invalid_mail1_p	= De opgegeven e-mailadressen zijn onjuist.
 error_compose_invalid_mail2_s	= Controleer het bericht voordat je het verstuurd.
 error_compose_invalid_mail2_p	= Controleer de berichten voordat je deze verstuurd.
 
 
 #Confirmation of delete                    ;
 
-confirm_delete					= Wil je echt de selectie verwijderen?
+confirm_delete					= Weet je zeker dat je de selectie wilt verwijderen?
 
 
 # If the message no have a subject or sender;
 
-no_subject_text					= [Geen onderwerp]
-no_sender_text					= [Onbekende zender]
-no_recipient_text				= [Onbekende ontvanger]
+no_subject_text					= (geen)
+no_sender_text					= (onbekende)
+no_recipient_text				= (onbekend)
 
 
 # If the quota limit was exceeded           ;
 
-quota_exceeded					= Je hebt jouw limiet behaald. Maak eerst ruimte vrij door oude berichten te verwijderen.
-quota_usage_info				= Quota limiet
+quota_exceeded					= Je hebt geen opslagruimte meer. Maak ruimte vrij door berichten te verwijderen.
+quota_usage_info				= In gebruik
 quota_usage_used				= Gebruikt
 quota_usage_of					= van
 quota_usage_avail				= beschikbaar
@@ -64,12 +69,13 @@ date_format 					= %d/%m/%y %H:%M
 
 default_char_set				= iso-8859-1
 
-messages_mnu					= Berichten
-compose_mnu					= Verstuur
+messages_mnu					= Postvak IN
+read_menu						= Lees e-mail
+compose_mnu					= Opstellen
 refresh_mnu					= Vernieuwen
 folders_mnu					= Mappen
 search_mnu					= Zoeken
-address_mnu					= Adres boek
+address_mnu					= Contact-personen
 empty_trash_mnu					= Prullenbak leegmaken
 prefs_mnu					= Instellingen
 logoff_mnu 					= Afmelden
@@ -80,7 +86,7 @@ reply_prefix					= Re:
 forward_prefix					= Fw:
 
 reply_delimiter					= --------- Oorspronkelijk bericht --------
-reply_from_hea					= Van:
+reply_from_hea					= Afzender:
 reply_to_hea					= Naar:
 reply_cc_hea					= Cc:
 reply_date_hea					= Datum:
@@ -102,73 +108,77 @@ fld_messages_hea				= Berichten
 fld_size_hea					= Grootte
 fld_empty_hea					= Leegmaken
 fld_delete_hea					= Verwijderen
-fld_total						= Totaal:
+fld_total					= Totaal:
 fld_make_new					= Nieuwe map aanmaken
-folders_to						= Mappen naar
+folders_to					= Mappen naar
 
 [MessageList]
 
-messages_to						= Berichten naar 
-no_messages						= Geen nieuwe berichten in jouw
-delete_selected_mnu				= Verwijder selectie
-move_selected_mnu				= Verplaats selectie naar
-mark_selected_mnu       		= Markeer als gelezen
-unmark_selected_mnu     		= Markeer als ongelezen 
+messages_to						= Berichten 
+no_messages						= Er zijn geen berichten in de map
+delete_selected_mnu				= Verwijder
+move_selected_mnu				= Verplaats naar
+mark_selected_mnu					= Markeer als gelezen
+unmark_selected_mnu				= Markeer als ongelezen
 delete_mnu						= Verwijder
 move_mnu						= Verplaats naar
 subject_hea						= Onderwerp
-from_hea						= Van
+from_hea						= Afzender
 to_hea							= Naar
 date_hea						= Datum
 size_hea						= Grootte
+have_spam						= Je hebt spam
 
 msg_you_have					= Je hebt
-msg_message						= bericht
+msg_message					= bericht
 msg_messages					= berichten
 
 msg_more_unread					= ongelezen
 msg_one_unread					= ongelezen
 msg_none_unread					= geen ongelezen
-msg_in_the_folder				= in deze map
+msg_in_the_folder				= in de map
 [Login]
 
 
-lgn_title						= Aanmelden
-lgn_welcome_msg					= Welkom, meld je aan op jouw account.
+lgn_title					= Aanmelden
+lgn_welcome_msg					= Welkom, meldt je aan op jouw account.
 lng_user_email					= E-mail
 lng_user_name					= Gebruikersnaam
 lng_user_pwd					= Wachtwoord
-lng_theme						= Thema
-lng_login_btn					= Aanmelden &gt;&gt;
+lng_theme					= Thema
+lng_language					= Taal
+lng_login_btn					= Aanmelden
+lng_cookie_not_enabled				= Cookies moeten aan staan
+lng_cookie_not_valid				= Cookie Beveiligingscontrole mislukt
 
 
 [Newmessage]
 
-to_hea							= Naar:
-cc_hea							= Cc:
-bcc_hea							= Bcc:
-subject_hea						= Onderwep:
-address_tip						= Uit adresboek
+to_hea						= Naar:
+cc_hea						= Cc:
+bcc_hea						= Bcc:
+subject_hea					= Onderwerp:
+address_tip					= Kiezen uit Contactpersonen
 
-attach_hea						= Bijlage:
-attch_add_new					= Nieuw bestand toevoegen
+attach_hea					= Bijlage:
+attch_add_new					= Bestand toevoegen
 attch_name_hea					= Naam
-attch_size						= Grootte
-attch_type_hea					= Schrijf
+attch_size					= Grootte
+attch_type_hea					= Type
 attch_dele_hea					= Verwijder
 attch_no_hea					= Geen bijlagen
 
 add_signature					= Voeg handtekening toe:
-send_text						= Verzend
+send_text					= Verzend
 
-result_error					= De e-mail kon niet verzonden worden...
-result_success					= Het bericht is succesvol verzonden :)
-nav_continue					= Doorgaan
-nav_back						= Terug
+result_error					= Foutmelding: het bericht is niet verstuurd.
+result_success					= Het bericht is succesvol verzonden.
+nav_continue					= Naar Postvak IN
+nav_back					= Terug
 
-up_title 						= Bestand toevoegen
+up_title 					= Bestand toevoegen
 up_information_text				= Selecteer bestand
-up_button_text					= Verstuur
+up_button_text					= Toevoegen
 
 priority_text					= Prioriteit
 priority_low					= Laag
@@ -180,7 +190,7 @@ priority_high					= Hoog
 adv_warning_text_mode1			= De-selecteer een optie
 adv_warning_text_mode2			= om de balk te kunnen gebruiken.
 
-adv_type_path					= Schrijf het adres:
+adv_type_path					= Vul hier het internetadres in:
 
 format_paragraph				= Paragraph
 format_h1					= Style 1 <H1>
@@ -190,7 +200,7 @@ format_h4					= Style 4 <H4>
 format_h5					= Style 5 <H5>
 format_h6					= Style 6 <H6>
 format_pre					= Vormgegeven <PRE>
-format_clear_all				= De-selecteer allen
+format_clear_all				= Herstellen
 
 format_font					= Lettertype
 format_size					= Grootte
@@ -204,7 +214,7 @@ color_black					= Zwart
 color_yellow					= Geel
 color_white					= Wit
 
-view_source					= Bekijk de HTML bron
+view_source					= Bekijk de HTML-bron
 text_mode					= Plain text
 clear_format					= Herstel opmaak
 
@@ -215,87 +225,87 @@ priority_text					= Prioriteit
 
 [BadLogin]
 
-bdl_title						= Aanmeld fout
-bdl_msg							= Je kan je niet aanmelden met de opgegeven account details.
-bdl_back						= Terug
+bdl_title					= Fout bij het aanmelden
+bdl_msg						= Het door jou ingevoerde e-mailadres en/of wachtwoord is onjuist.
+bdl_back					= Opnieuw aanmelden
 
 
 [Error]
 
-err_title						= Er waren fouten
-err_msg							= Er waren fouten tijdens het inloggen.<br> Probeer het opnieuw.
+err_title					= Er is een fout opgetreden
+err_msg						= Er is een fout opgetreden bij het aanmelden.<br> Probeer het opnieuw.
 err_system_msg					= Systeem bericht: 
-err_exit						= Afmelden
+err_exit					= Afmelden
 
 [Preferences]
 
-prf_title						= Instellingen
+prf_title 					= Instellingen
 prf_general_title				= Algemene informatie
-prf_name						= Naam
-prf_reply_to					= Beantwoorden
-prf_time_zone					= Tijd zone
+prf_name					= Naam:
+prf_reply_to					= Antwoordadres:
+prf_time_zone					= Tijdzone:
 prf_trash_title					= Prullenbak
-prf_save_to_trash				= Wanneer je een bericht <b>verwijdert</b>, verplaats deze dan naar
+prf_save_to_trash				= Verplaats een bericht dat <b>verwijderd</b> is automatisch naar de
 prf_save_only_read				= Bewaar alleen <b>gelezen berichten</b> in de
-prf_empty_on_exit				= Prullenbak <b>leegmaken</b> tijdens het afmelden.
-prf_empty_spam_on_exit			= Map met spam <b>leegmaken</b> tijdens het afmelden
-prf_unmark_read_on_exit			= Gelezen berichten als ongelezen markeren
-prf_sent_title					= verzonden items
-prf_save_sent					= Bewaar <b>verzonden items</b> in de
+prf_empty_on_exit				= Prullenbak automatisch <b>leegmaken</b> tijdens het afmelden.
+prf_empty_spam_on_exit				= Spam <b>verwijderen</b> tijdens het afmelden.
+prf_unmark_read_on_exit				= Gelezen berichten als ongelezen markeren tijdens het afmelden.
+prf_sent_title					= Verzonden berichten
+prf_save_sent					= Bewaar <b>verzonden berichten</b> in
 prf_messages_title				= Berichten
-prf_page_limit					= Maximaal aantal berichten per pagina
+prf_page_limit					= Maximaal aantal berichten per pagina:
 prf_signature_title				= Handtekening
-prf_signature					= Schrijf jouw handtekening
+prf_signature					= Je handtekening:
 prf_auto_add_sign				= Voeg handtekening aan alle uitgaande berichten toe.
-prf_save_button					= Bewaar
-prf_display_images				= Geef bijgevoegde plaatjes weer
-prf_default_editor_mode			= Plain text (simpel)
-prf_default_editor_mode_text	= "Plain text"
-prf_default_editor_mode_html	= "Uitgebreide editor."
-prf_time_to_refesh				= Vernieuw berichten om de zoveel minuten.
+prf_save_button					= Opslaan
+prf_display_images				= Geef bijgevoegde afbeeldingen weer
+prf_default_editor_mode				= Plain text/Editor:
+prf_default_editor_mode_text			= Plain text (simpel)
+prf_default_editor_mode_html			= Uitgebreide editor (TinyMCE)
+prf_time_to_refesh				= Vernieuw berichten om de: (aantal minuten)
 
 [Catch]
 
-ctc_title						= Voeg aan adresboek toe.
+ctc_title					= Voeg aan adresboek toe.
 ctc_information					= Alleen adressen in adresboek tonen.
-ctc_name						= Naam
-ctc_email						= E-mail
+ctc_name					= Naam
+ctc_email					= E-mail
 ctc_no_address					= Geen adres beschikbaar
-ctc_close						= Sluit
-ctc_save						= Bewaar
+ctc_close					= Sluit
+ctc_save					= Bewaar
 
 [Readmsg]
 
-next_mnu						= Volgende
+next_mnu					= Volgende
 previous_mnu					= Vorige
-back_mnu						= Terug
-reply_mnu						= Beantwoord
-reply_all_mnu					= Beantwoord allen
-forward_mnu						= Doorsturen
-headers_mnu						= Header
-move_mnu						= Verplaats naar
-delete_mnu						= Verwijder
-print_mnu						= Afdrukken
+back_mnu					= Terug
+reply_mnu					= Beantwoorden
+reply_all_mnu					= Allen beantwoorden
+forward_mnu					= Doorsturen
+headers_mnu					= Header
+move_mnu					= Verplaats naar
+delete_mnu					= Verwijder
+print_mnu					= Afdrukweergave
 
-from_hea						= Van:
-to_hea							= Naar:
-cc_hea							= Cc:
-date_hea						= Datum:
-subject_hea						= Onderwerp:
-attach_hea						= Bijlage:
+from_hea					= Van:
+to_hea						= Naar:
+cc_hea						= Cc:
+date_hea					= Datum:
+subject_hea					= Onderwerp:
+attach_hea					= Bijlage:
 
 attch_name_hea					= Naam
-attch_force_hea					= Download
+attch_force_hea					= Opslaan
 attch_type_hea					= Type
 attch_size_hea					= Grootte
-catch_address					= Aan adresboek toevoegen
+catch_address					= Aan contactpersonen toevoegen
 
 [Search]
 
-sch_information_text			= Zoek naar een deel uit één van de berichten d.m.v zin of woord. Bericht moet gelezen zijn.
-sch_button_text					= Zoek &gt;&gt;
+sch_information_text				= Zoek naar een woord of zin in al uw berichten.
+sch_button_text					= Zoek
 sch_subject_hea					= Onderwep
-sch_from_hea					= Van
+sch_from_hea					= Afzender
 sch_date_hea					= Datum
 sch_body_hea					= Bericht
 sch_folder_hea					= Map
@@ -304,8 +314,8 @@ sch_no_results					= Geen berichten gevonden
 
 [QuickAddress]
 
-qad_title 			= Adresboek
-qad_select_address		= Selecteer een contact persoon
+qad_title 			= Contactpersonen
+qad_select_address		= Selecteer een contactpersoon
 qad_to				= Naar
 qad_cc				= Cc
 qad_bcc				= Bcc
@@ -314,26 +324,26 @@ qad_bcc				= Bcc
 
 # edit/display
 
-adr_title					= Adresboek
-adr_name					= Naam
-adr_email					= E-mail
-adr_street					= Straat
-adr_city					= Plaats
-adr_state					= Provincie
-adr_work					= Werk
+adr_title					= Adresboek:
+adr_name					= Naam:
+adr_email					= E-mailadres:
+adr_street					= Adres:
+adr_city					= Postcode en plaats:
+adr_state					= Provincie:
+adr_work					= Werk:
 adr_back					= Terug
-adr_save					= Bewaar
+adr_save					= Opslaan
 
 # list
 
 adr_name_hea					= Naam
-adr_email_hea					= E-mail
+adr_email_hea					= E-mailadres
 adr_edit_hea					= Bewerken
 adr_expo_hea					= Exporteer
 adr_dele_hea					= Verwijder
-adr_new_entry					= Nieuw contact persoon
+adr_new_entry					= Voeg contactpersoon toe
 
 
-addr_saved					= De gegevens zijn bewaard
-addr_added					= De gegevens zijn toegevoegd
-addr_deleted					= De gegevens zijn verwijdert
+addr_saved					= De veranderingen zijn opgeslagen.
+addr_added					= De contactpersoon is toegevoegd.
+addr_deleted					= De contactpersoon is verwijderd.
