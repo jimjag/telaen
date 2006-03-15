@@ -114,20 +114,20 @@ folders_to						= Pastas para
 
 [MessageList]
 
-messages_to						= Mensagens para 
-no_messages						= Nenhuma mensagem na caixa postal 
+messages_to					= Mensagens para 
+no_messages					= Nenhuma mensagem na caixa postal 
 
-delete_selected_mnu					= Apagar selecionadas
-move_selected_to_trash_mnu			= Mover selecionadas para Lixeira
-move_selected_mnu					= Mover selecionadas para
-mark_selected_mnu         			= Mark as read
-unmark_selected_mnu      			= Mark as unread
+delete_selected_mnu				= Apagar selecionadas
+move_selected_to_trash_mnu		= Mover selecionadas para Lixeira
+move_selected_mnu				= Mover selecionadas para
+mark_selected_mnu         			= Marcar como lida
+unmark_selected_mnu      			= Marcar como não lida
 
 delete_mnu						= Excluir
 move_mnu						= Mover para
-subject_hea						= Assunto
+subject_hea					= Assunto
 from_hea						= De
-to_hea							= Para
+to_hea						= Para
 date_hea						= Data
 size_hea						= Tam.
 have_spam						= Você tem Spam (verifique a pasta Spam)
@@ -265,8 +265,8 @@ prf_auto_add_sign				= Adicionar assinatura automaticamente aos novos emails
 prf_save_button					= Salvar
 prf_display_images				= Mostrar imagens anexadas automaticamente
 prf_default_editor_mode			= Modo de edição padrão
-prf_default_editor_mode_text	= "Texto puro"
-prf_default_editor_mode_html	= "Editor HTML Avançado (Somente para IE5 ou superiores)"
+prf_default_editor_mode_text			= "Texto puro"
+prf_default_editor_mode_html			= "Editor HTML Avançado"
 prf_time_to_refesh				= Tempo de atualização das mensagens (minutos)
 
 [Catch]
