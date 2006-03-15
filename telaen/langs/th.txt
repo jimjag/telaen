@@ -117,6 +117,8 @@ delete_selected_mnu				= ลบที่เลือก
 move_selected_mnu				= ย้ายไปที่เลือก
 mark_selected_mnu         			= Mark as read
 unmark_selected_mnu      			= Mark as unread
+move_selected_to_trash_mnu		= Move selected to Trash
+
 delete_mnu						= ลบ
 move_mnu						= ย้ายไป
 subject_hea						= หัวเรื่อง
@@ -124,8 +126,8 @@ from_hea						= จาก
 to_hea							= ถึง
 date_hea						= วันที่
 size_hea						= ขนาด
-unmark_selected_mnu      			= Mark as unread
-move_selected_to_trash_mnu		= Move selected to Trash
+have_spam						= You have Spam (check Spam folder)
+
 
 msg_you_have					= คุณมี
 msg_message					= ข้อความ
