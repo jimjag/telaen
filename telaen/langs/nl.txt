@@ -102,9 +102,9 @@ fld_messages_hea				= Berichten
 fld_size_hea					= Grootte
 fld_empty_hea					= Leegmaken
 fld_delete_hea					= Verwijderen
-fld_total					= Totaal:
+fld_total						= Totaal:
 fld_make_new					= Nieuwe map aanmaken
-folders_to					= Mappen naar
+folders_to						= Mappen naar
 
 [MessageList]
 
@@ -112,8 +112,8 @@ messages_to						= Berichten naar
 no_messages						= Geen nieuwe berichten in jouw
 delete_selected_mnu				= Verwijder selectie
 move_selected_mnu				= Verplaats selectie naar
-mark_selected_mnu         			= Mark as read
-unmark_selected_mnu      			= Mark as unread
+mark_selected_mnu       		= Markeer als gelezen
+unmark_selected_mnu     		= Markeer als ongelezen 
 delete_mnu						= Verwijder
 move_mnu						= Verplaats naar
 subject_hea						= Onderwerp
@@ -123,7 +123,7 @@ date_hea						= Datum
 size_hea						= Grootte
 
 msg_you_have					= Je hebt
-msg_message					= bericht
+msg_message						= bericht
 msg_messages					= berichten
 
 msg_more_unread					= ongelezen
@@ -133,40 +133,40 @@ msg_in_the_folder				= in deze map
 [Login]
 
 
-lgn_title					= Aanmelden
+lgn_title						= Aanmelden
 lgn_welcome_msg					= Welkom, meld je aan op jouw account.
 lng_user_email					= E-mail
 lng_user_name					= Gebruikersnaam
 lng_user_pwd					= Wachtwoord
-lng_theme					= Thema
+lng_theme						= Thema
 lng_login_btn					= Aanmelden &gt;&gt;
 
 
 [Newmessage]
 
-to_hea						= Naar:
-cc_hea						= Cc:
-bcc_hea						= Bcc:
-subject_hea					= Onderwep:
-address_tip					= Uit adresboek
+to_hea							= Naar:
+cc_hea							= Cc:
+bcc_hea							= Bcc:
+subject_hea						= Onderwep:
+address_tip						= Uit adresboek
 
-attach_hea					= Bijlage:
+attach_hea						= Bijlage:
 attch_add_new					= Nieuw bestand toevoegen
 attch_name_hea					= Naam
-attch_size					= Grootte
+attch_size						= Grootte
 attch_type_hea					= Schrijf
 attch_dele_hea					= Verwijder
 attch_no_hea					= Geen bijlagen
 
 add_signature					= Voeg handtekening toe:
-send_text					= Verzend
+send_text						= Verzend
 
 result_error					= De e-mail kon niet verzonden worden...
 result_success					= Het bericht is succesvol verzonden :)
 nav_continue					= Doorgaan
-nav_back					= Terug
+nav_back						= Terug
 
-up_title 					= Bestand toevoegen
+up_title 						= Bestand toevoegen
 up_information_text				= Selecteer bestand
 up_button_text					= Verstuur
 
@@ -215,31 +215,31 @@ priority_text					= Prioriteit
 
 [BadLogin]
 
-bdl_title					= Aanmeld fout
-bdl_msg						= Je kan je niet aanmelden met de opgegeven account details.
-bdl_back					= Terug
+bdl_title						= Aanmeld fout
+bdl_msg							= Je kan je niet aanmelden met de opgegeven account details.
+bdl_back						= Terug
 
 
 [Error]
 
-err_title					= Er waren fouten
-err_msg						= Er waren fouten tijdens het inloggen.<br> Probeer het opnieuw.
+err_title						= Er waren fouten
+err_msg							= Er waren fouten tijdens het inloggen.<br> Probeer het opnieuw.
 err_system_msg					= Systeem bericht: 
-err_exit					= Afmelden
+err_exit						= Afmelden
 
 [Preferences]
 
-prf_title 					= Instellingen
+prf_title						= Instellingen
 prf_general_title				= Algemene informatie
-prf_name					= Naam
+prf_name						= Naam
 prf_reply_to					= Beantwoorden
 prf_time_zone					= Tijd zone
 prf_trash_title					= Prullenbak
 prf_save_to_trash				= Wanneer je een bericht <b>verwijdert</b>, verplaats deze dan naar
 prf_save_only_read				= Bewaar alleen <b>gelezen berichten</b> in de
 prf_empty_on_exit				= Prullenbak <b>leegmaken</b> tijdens het afmelden.
-prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
-prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
+prf_empty_spam_on_exit			= Map met spam <b>leegmaken</b> tijdens het afmelden
+prf_unmark_read_on_exit			= Gelezen berichten als ongelezen markeren
 prf_sent_title					= verzonden items
 prf_save_sent					= Bewaar <b>verzonden items</b> in de
 prf_messages_title				= Berichten
@@ -249,40 +249,40 @@ prf_signature					= Schrijf jouw handtekening
 prf_auto_add_sign				= Voeg handtekening aan alle uitgaande berichten toe.
 prf_save_button					= Bewaar
 prf_display_images				= Geef bijgevoegde plaatjes weer
-prf_default_editor_mode				= Plain text (simpel)
-prf_default_editor_mode_text			= "Plain text"
-prf_default_editor_mode_html			= "Uitgebreide editor, alleen IE5 en hoger."
+prf_default_editor_mode			= Plain text (simpel)
+prf_default_editor_mode_text	= "Plain text"
+prf_default_editor_mode_html	= "Uitgebreide editor."
 prf_time_to_refesh				= Vernieuw berichten om de zoveel minuten.
 
 [Catch]
 
-ctc_title					= Voeg aan adresboek toe.
+ctc_title						= Voeg aan adresboek toe.
 ctc_information					= Alleen adressen in adresboek tonen.
-ctc_name					= Naam
-ctc_email					= E-mail
+ctc_name						= Naam
+ctc_email						= E-mail
 ctc_no_address					= Geen adres beschikbaar
-ctc_close					= Sluit
-ctc_save					= Bewaar
+ctc_close						= Sluit
+ctc_save						= Bewaar
 
 [Readmsg]
 
-next_mnu					= Volgende
+next_mnu						= Volgende
 previous_mnu					= Vorige
-back_mnu					= Terug
-reply_mnu					= Beantwoord
+back_mnu						= Terug
+reply_mnu						= Beantwoord
 reply_all_mnu					= Beantwoord allen
-forward_mnu					= Doorsturen
-headers_mnu					= Header
-move_mnu					= Verplaats naar
-delete_mnu					= Verwijder
-print_mnu					= Afdrukken
+forward_mnu						= Doorsturen
+headers_mnu						= Header
+move_mnu						= Verplaats naar
+delete_mnu						= Verwijder
+print_mnu						= Afdrukken
 
-from_hea					= Van:
-to_hea						= Naar:
-cc_hea						= Cc:
-date_hea					= Datum:
-subject_hea					= Onderwerp:
-attach_hea					= Bijlage:
+from_hea						= Van:
+to_hea							= Naar:
+cc_hea							= Cc:
+date_hea						= Datum:
+subject_hea						= Onderwerp:
+attach_hea						= Bijlage:
 
 attch_name_hea					= Naam
 attch_force_hea					= Download
@@ -292,7 +292,7 @@ catch_address					= Aan adresboek toevoegen
 
 [Search]
 
-sch_information_text				= Zoek naar een deel uit één van de berichten d.m.v zin of woord. Bericht moet gelezen zijn.
+sch_information_text			= Zoek naar een deel uit één van de berichten d.m.v zin of woord. Bericht moet gelezen zijn.
 sch_button_text					= Zoek &gt;&gt;
 sch_subject_hea					= Onderwep
 sch_from_hea					= Van
