@@ -29,7 +29,8 @@ $smarty->assign("umEmail",$f_email);
 
 
 $jssource = "
-<script language=javascript>
+<script language=\"javascript\" type=\"text/javascript\">
+<!--
 	function selectLanguage() {
 		sSix		= '';
 		sUser		= '';
@@ -52,10 +53,10 @@ $jssource = "
 			sLocation = 'index.php?lid='+sLanguage+'&tid='+sTheme+'&f_user='+escape(sUser)+'&six='+sSix+'&f_email='+sEmail;
 			location.replace(sLocation);
 		} catch(err) {
-			alert('Your brownser do not support JS');
+			alert('Your brownser do not support JS'); // Vola: this is stupid... if js doesn't work also alert doesn't work :)
 		}
-	}
-</script>
+	} // -->
+</script> 
 ";
 //$smarty->debugging = true;
 $smarty->assign("umServerType",strtoupper($mail_server_type));
@@ -71,12 +72,12 @@ switch(strtoupper($mail_server_type)) {
 		
 		if(!$aval_servers) die("You must set at least one server in \$mail_servers, please review your config.php");
 		if ($aval_servers == 1) {
-			$strServers = "@".$mail_servers[0]["domain"]." <input type=hidden name=six value=0>";
+			$strServers = "@".$mail_servers[0]["domain"]." <input type=\"hidden\" name=\"six\" value=\"0\" />";
 		} else {
-			$strServers = "<select name=six>\r";
+			$strServers = "<select name=\"six\">\r";
 			for($i=0;$i<$aval_servers;$i++) {
-				$sel = ($i == $six)?" selected":"";
-				$strServers .= "<option value=$i$sel>@".$mail_servers[$i]["domain"]."\r";
+				$sel = ($i == $six)?"selected=\"selected\"":"";
+				$strServers .= "<option value=\"$i\" $sel>@".$mail_servers[$i]["domain"]."</option> \r";
 			}
 			$strServers .= "</select>\r";
 		}
@@ -105,10 +106,10 @@ $smarty->assign("umAllowSelectLanguage",$allow_user_change_language); $func($tex
 
 if($allow_user_change_language) {
 	$def_lng = (is_numeric($lid))?$lid:$default_language;
-	$langsel = "<select name=lng onChange=selectLanguage()>\r";
+	$langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
 	for($i=0;$i<$avallangs;$i++) {
-		$selected = ($lid == $i)?" selected":"";
-		$langsel .= "<option value=$i$selected>".$languages[$i]["name"]."\r";
+		$selected = ($lid == $i)?"selected=\"selected\"":"";
+		$langsel .= "<option value=\"$i\" $selected>".$languages[$i]["name"]."</option> \r";
 	}
 	$langsel .= "</select>\r";
 	$smarty->assign("umLanguages",$langsel);
@@ -118,10 +119,10 @@ $smarty->assign("umAllowSelectTheme",$allow_user_change_theme);
 
 if($allow_user_change_theme) {
 	$def_tem = (is_numeric($tid))?$tid:$default_theme;
-	$themsel = "<select name=tem onChange=selectLanguage()>\r";
+	$themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";
 	for($i=0;$i<$avalthemes;$i++) {
-		$selected = ($tid == $i)?" selected":"";
-		$themsel .= "<option value=$i$selected>".$themes[$i]["name"]."\r";
+		$selected = ($tid == $i)?"selected=\"selected\"":"";
+		$themsel .= "<option value=\"$i\" $selected>".$themes[$i]["name"]."</option> \r";
 	}
 	$themsel .= "</select>\r";
 	$smarty->assign("umThemes",$themsel);
