@@ -4,6 +4,7 @@
 inbox_extended					= ถาดเข้า
 sent_extended					= ถาดออก
 trash_extended					= ถังขยะ
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -123,6 +124,8 @@ from_hea						= จาก
 to_hea							= ถึง
 date_hea						= วันที่
 size_hea						= ขนาด
+unmark_selected_mnu      			= Mark as unread
+move_selected_to_trash_mnu		= Move selected to Trash
 
 msg_you_have					= คุณมี
 msg_message					= ข้อความ
@@ -141,7 +144,10 @@ lng_user_email					= จดหมายอิเล็กทรอนิกส์
 lng_user_name					= ชื่อผู้ใช้
 lng_user_pwd					= รหัสผ่าน
 lng_theme					= Theme
+lng_language					= Language
 lng_login_btn					= Login &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

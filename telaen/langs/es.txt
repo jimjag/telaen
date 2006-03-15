@@ -4,6 +4,7 @@
 inbox_extended				= Bandeja de Entrada
 sent_extended				= Elementos Enviados
 trash_extended				= Papelera
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -124,6 +125,7 @@ from_hea						= De
 to_hea							= Para
 date_hea						= Fecha
 size_hea						= Tamaño
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= Usted tiene
 msg_message					= mensaje
@@ -141,8 +143,11 @@ lgn_welcome_msg					= Bienvenido, por favor introduzca sus datos
 lng_user_email					= Email
 lng_user_name					= Nombre de usuario
 lng_user_pwd					= Contraseña
-lng_theme					= Idioma
+lng_theme					= Theme
+lng_language					= Idioma
 lng_login_btn					= Entrar &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

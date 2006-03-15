@@ -6,6 +6,7 @@
 inbox_extended				= Inbox
 sent_extended				= Gesendete Objetkte
 trash_extended				= Papierkorb
+spam_extended				= Spam folder
 
 #Navigation texts
 
@@ -125,6 +126,7 @@ from_hea					= Von
 to_hea					= An
 date_hea					= Datum
 size_hea					= Gr.
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have				= Du hast
 msg_message				= Nachricht
@@ -134,6 +136,7 @@ msg_more_unread				= ungelesen
 msg_one_unread				= ungelesen
 msg_none_unread				= keine ungelesenen
 msg_in_the_folder				= im Ordner
+
 [Login]
 
 
@@ -145,6 +148,8 @@ lng_user_pwd				= Kennwort
 lng_theme				= Thema
 lng_language				= Language
 lng_login_btn				= Einloggen &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

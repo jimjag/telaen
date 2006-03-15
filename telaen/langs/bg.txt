@@ -4,6 +4,7 @@
 inbox_extended					= Получени
 sent_extended					= Изпратени
 trash_extended					= Кошче
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -125,6 +126,7 @@ from_hea					= От
 to_hea						= До
 date_hea					= Дата
 size_hea					= Големина
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= Имате
 msg_message					= съобщение
@@ -145,6 +147,9 @@ lng_user_name					= Име
 lng_user_pwd					= Парола
 lng_theme					= Език
 lng_login_btn					= Вход &gt;&gt;
+lng_language					= Language
+lng_cookie_not_enabled			= Cookies must be enabled
+lng_cookie_not_valid			= Cookie Security Check Failed
 
 
 [Newmessage]

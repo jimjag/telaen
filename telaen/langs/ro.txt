@@ -4,6 +4,7 @@
 inbox_extended					= Inbox
 sent_extended					= Mesaje trimise
 trash_extended					= Cos de gunoi
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -123,6 +124,7 @@ from_hea						= De la
 to_hea							= Pentru
 date_hea						= Data
 size_hea						= Marime
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= Aveti
 msg_message					= mesaj
@@ -143,6 +145,8 @@ lng_user_pwd					= Parola
 lng_theme					= Limba
 lng_language					= Language
 lng_login_btn					= Logare &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

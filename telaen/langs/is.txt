@@ -4,6 +4,7 @@
 inbox_extended					= Innhólf
 sent_extended					= Úthólf
 trash_extended					= Rusl
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -123,6 +124,7 @@ from_hea					= Frá
 to_hea						= Til
 date_hea					= Dags
 size_hea					= Stærð
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= Þú átt
 msg_message					= skilaboð
@@ -143,6 +145,8 @@ lng_user_pwd					= Lykilorð
 lng_theme					= Útlit
 lng_language					= Tungumál
 lng_login_btn					= Innskráning &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

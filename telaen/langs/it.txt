@@ -4,6 +4,7 @@
 inbox_extended					= Posta in arrivo
 sent_extended					= Posta spedita
 trash_extended					= Cestino
+spam_extended					= Spam
 
 #Navigation texts
 
@@ -45,7 +46,7 @@ no_recipient_text				= [Destinatario sconosciuto]
 # If the quota limit was exceeded           ;
 
 quota_exceeded					= Spazio esaurito\Cancellare qualche messaggio per proseguire
-quota_usage_info					= Limite di spazio
+quota_usage_info				= Limite di spazio
 quota_usage_used				= Usato
 quota_usage_of					= di
 quota_usage_avail				= disponibile
@@ -65,14 +66,14 @@ date_format 					= %d/%m/%y %H:%M
 default_char_set				= iso-8859-1
 
 messages_mnu					= Messaggi
-compose_mnu					= Scrivi
-refresh_mnu					= Refresh
-folders_mnu					= Cartelle
-search_mnu					= Cerca
-address_mnu					= Agenda
+compose_mnu						= Scrivi
+refresh_mnu						= Refresh
+folders_mnu						= Cartelle
+search_mnu						= Cerca
+address_mnu						= Agenda
 empty_trash_mnu					= Svuota cestino
-prefs_mnu					= Preferenze
-logoff_mnu 					= Uscita
+prefs_mnu						= Preferenze
+logoff_mnu 						= Uscita
 
 
 
@@ -92,7 +93,7 @@ reply_subject_hea				= Oggetto:
 # page-specific vars
 [Headers]
 
-key_hea						= Key
+key_hea							= Key
 value_hea						= Value
 
 [Folders]
@@ -109,52 +110,54 @@ folders_to						= Sposta cartella
 
 [MessageList]
 
-messages_to					= Messaggi per 
-no_messages					= Nessun nuovo messaggio 
+messages_to						= Messaggi per 
+no_messages						= Nessun nuovo messaggio 
 
 delete_selected_mnu				= Cancella selezionato
 move_selected_mnu				= Sposta selezionato in
 move_selected_to_trash_mnu		= Sposta nel cestino
-mark_selected_mnu         			= Segna come letto
-unmark_selected_mnu      			= Segna come non letto
+mark_selected_mnu         		= Segna come letto
+unmark_selected_mnu      		= Segna come non letto
 
 delete_mnu						= Cancella
 move_mnu						= Sposta in
-subject_hea					= Oggetto
+subject_hea						= Oggetto
 from_hea						= Da
-to_hea						= Per
+to_hea							= Per
 date_hea						= Data
 size_hea						= Dimesioni
 have_spam						= Hai dello Spam (controlla la cartella Spam)
 
 msg_you_have					= Hai
-msg_message					= messaggio
+msg_message						= messaggio
 msg_messages					= messaggi
 
-msg_more_unread				= non letti
+msg_more_unread					= non letti
 msg_one_unread					= non letto
-msg_none_unread				= nessun messaggio letto
+msg_none_unread					= nessun messaggio letto
 msg_in_the_folder				= nella cartella
 
 
 [Login]
 
 lgn_title						= Accedi
-lgn_welcome_msg				= Benvenuto, accedi alla tua posta
+lgn_welcome_msg					= Benvenuto, accedi alla tua posta
 lng_user_email					= E-mail
 lng_user_name					= Username
 lng_user_pwd					= Password
 lng_theme						= Tema
 lng_language					= Lingua
 lng_login_btn					= Accedi &gt;&gt;
+lng_cookie_not_enabled			= I cookies devono essere abilitati
+lng_cookie_not_valid			= Check Sicurezza Cookies Fallito
 
 
 [Newmessage]
 
-to_hea						= Per:
-cc_hea						= Cc:
-bcc_hea						= Bcc:
-subject_hea					= Oggetto:
+to_hea							= Per:
+cc_hea							= Cc:
+bcc_hea							= Bcc:
+subject_hea						= Oggetto:
 address_tip						= Dalla rubrica
 
 attach_hea						= Allegato:
@@ -166,14 +169,14 @@ attch_dele_hea					= Cancella
 attch_no_hea					= Nessun allegato
 
 add_signature					= Aggiungi firma
-send_text					= Invia
+send_text						= Invia
 
 result_error					= Non è stato possibile inviare l'e-mail
 result_success					= E-mail inviata correttamente
 nav_continue					= Continua
-nav_back					= Torna indietro
+nav_back						= Torna indietro
 
-up_title 					= Aggiungi file
+up_title 						= Aggiungi file
 up_information_text				= Seleziona file
 up_button_text					= Invia
 
@@ -220,14 +223,14 @@ priority_text					= Priorità
 [BadLogin]
 
 bdl_title						= Errore di Login
-bdl_msg						= Controllare login e password<br><br>Riprovare
+bdl_msg							= Controllare login e password<br><br>Riprovare
 bdl_back						= Torna indietro
 
 
 [Error]
 
 err_title						= Si sono verificati alcuni errori
-err_msg						= Errori in login<br><br>Riprovare
+err_msg							= Errori in login<br><br>Riprovare
 err_system_msg					= Messaggio di sistema: 
 err_exit						= Logout
 

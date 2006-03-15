@@ -4,6 +4,7 @@
 inbox_extended					= Érkezett
 sent_extended					= Elküldött
 trash_extended					= Kuka
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -123,6 +124,7 @@ from_hea					= Küldõ
 to_hea						= Címzett
 date_hea					= Dátum
 size_hea					= Méret
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= 
 msg_message					= üzeneted van
@@ -142,8 +144,10 @@ lng_user_email					= E-mail
 lng_user_name					= Felhasználónév
 lng_user_pwd					= Jelszó
 lng_theme					= Nyelv
-lng_language					= ???
+lng_language					= Language
 lng_login_btn					= Belépés &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

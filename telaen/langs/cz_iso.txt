@@ -4,6 +4,7 @@
 inbox_extended					= Pøíchozí pošta
 sent_extended					= Odeslaná pošta
 trash_extended					= Smazané
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -124,6 +125,7 @@ from_hea						= Od
 to_hea							= Komu
 date_hea						= Datum
 size_hea						= Velikost
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= Máte
 msg_message					= zprávu
@@ -144,6 +146,8 @@ lng_user_pwd					= Heslo
 lng_theme					= Jazyk
 lng_language					= ??
 lng_login_btn					= Pøihlásit se &gt;&gt;
+lng_cookie_not_enabled			= Cookies must be enabled
+lng_cookie_not_valid			= Cookie Security Check Failed
 
 
 [Newmessage]

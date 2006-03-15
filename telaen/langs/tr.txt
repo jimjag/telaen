@@ -5,6 +5,7 @@
 inbox_extended					= Gelen Kutusu
 sent_extended					= Gönderilmiþ Öðeler
 trash_extended					= Çöp Kutusu
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -118,6 +119,7 @@ from_hea				= Kimden
 to_hea					= Kime
 date_hea				= Tarih
 size_hea				= Boyut
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= 
 msg_message					= mesajýnýz var
@@ -139,6 +141,8 @@ lng_user_pwd					= Þifre
 lng_theme					= Tema
 lng_language					= Language
 lng_login_btn					= Giriþ &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

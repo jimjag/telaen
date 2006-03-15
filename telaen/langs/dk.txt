@@ -8,6 +8,7 @@
 inbox_extended					= Indbakke
 sent_extended					= Sendt post
 trash_extended					= Papirkurv
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -128,6 +129,7 @@ from_hea						= Fra
 to_hea							= Til
 date_hea						= Dato
 size_hea						= Størrelse
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= Du har
 msg_message					= meddelelse
@@ -147,6 +149,9 @@ lng_user_name					= Brugernavn
 lng_user_pwd					= Kodeord
 lng_theme					= Tema
 lng_login_btn					= Log ind &gt;&gt;
+lng_language					= Language
+lng_cookie_not_enabled			= Cookies must be enabled
+lng_cookie_not_valid			= Cookie Security Check Failed
 
 
 [Newmessage]

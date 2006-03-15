@@ -10,6 +10,7 @@
 inbox_extended					= 收件匣
 sent_extended					= 寄件備份
 trash_extended					= 垃圾匣
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -130,6 +131,7 @@ from_hea						= 寄件者
 to_hea							= 收件者
 date_hea						= 日期
 size_hea						= 大小
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= 您目前有
 msg_message					= 封郵件
@@ -150,6 +152,8 @@ lng_user_pwd					= 密    碼
 lng_theme					= 選擇佈景
 lng_language					= 選擇語系
 lng_login_btn					= 進行登入 &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

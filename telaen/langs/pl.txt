@@ -6,6 +6,7 @@
 inbox_extended					= Otrzymane
 sent_extended					= Wys³ane
 trash_extended					= Kosz
+spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -125,6 +126,7 @@ from_hea						= Od
 to_hea							= Do
 date_hea						= Data
 size_hea						= Rozmiar
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= Masz
 msg_message					= wiadomo¶æ
@@ -145,6 +147,8 @@ lng_user_pwd					= Has³o
 lng_theme					= Wygl±d
 lng_language					= Jêzyk
 lng_login_btn					= Zaloguj &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]

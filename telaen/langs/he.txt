@@ -10,6 +10,7 @@
 inbox_extended					= דואר נכנס
 sent_extended					= דואר נשלח
 trash_extended					= סל המחזור
+spam_extended					= Spam folder
 
 # Navigation texts
 previous_text					= הקודם
@@ -110,6 +111,7 @@ from_hea						= מ
 to_hea							= אל
 date_hea						= תאריך
 size_hea						= גודל
+have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= יש לך
 msg_message						= הודעה
@@ -130,6 +132,9 @@ lng_server						= שרת
 lng_theme						= ערכה
 lng_language					= שפה
 lng_login_btn					= כניסה &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
+
 
 [Newmessage]
 to_hea							= אל:
