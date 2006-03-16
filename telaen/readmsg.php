@@ -83,9 +83,7 @@ if($ix < (count($mysess)-1)) {
 
 $body	= 	$email["body"];
 
-$redir_path = getenv("PHP_SELF")?getenv("PHP_SELF"):$_SERVER["PHP_SELF"];
-if(!$redir_path) $redir_path = $PHP_SELF;
-$redir_path = dirname($redir_path)."/redir.php";
+$redir_path = create_abs_url("redir.php");	// why not just relative??
 
 $body = eregi_replace("target=[\"]?[a-zA-Z_]+[\"]?","target=\"blank\"",$body);
 $body = eregi_replace("href=\"http([s]?)://","target=\"_blank\" href=\"$redir_path?http\\1://",$body);

@@ -164,6 +164,22 @@ function get_usage_graphic($used,$aval) {
 	return $graph;
 }
 
+function create_abs_url ($url, $add_scheme_host = true) {
+	$nurl = "";
+	if ($add_scheme_host) {
+		$nurl .= "http";
+		if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
+			$nurl .= "s://";
+		} else {
+			$nurl .= "://";
+		}
+		$nurl .= $_SERVER['HTTP_HOST'];
+	}
+	$nurl .= rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . '/' . $url ;
+	$nurl = str_replace('\\','/', $nurl);	// Windows path fix
+	return $nurl;
+}
+
 function redirect_and_exit($location) {
 	global $enable_debug;
 	global $phpver;
@@ -172,14 +188,7 @@ function redirect_and_exit($location) {
 	if ($redirects_are_relative) {
 		$url = $location;
 	} else {
-		$url = "http";
-		if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
-			$url .= "s://";
-		} else {
-			$url .= "://";
-		}
-		$url .= $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . '/' . $location ;
-		$url = str_replace('\\','/', $url);	// Windows path fix
+		$url = create_abs_url($location);
 	}
 	if($enable_debug) {
 		echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$url\">Click here</a> to go to <a href=\"$url\">$url</a></h3><br><br><br><br>");
