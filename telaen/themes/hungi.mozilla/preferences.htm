@@ -1,0 +1,155 @@
+{config_load file=$umLanguageFile section="Preferences"}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>UebiMiau - {#prf_title#}</title>
+	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+
+<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
+
+{$umJS}
+
+</head>
+
+<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF" onLoad="dis()">
+
+
+<table cellspacing=0 cellpadding=0 border=0 align=center bgcolor="#DDE3EB" width="100%">
+	<tr>
+		<td valign=top width="100%" align=center>
+		
+			<table cellspacing=1 background="themes/hungi.mozilla/images/menu-bg.gif" cellpadding=3 width="100%" border=0>
+			<tr height="54" align="center">
+				<td > <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" border=0></a><br>
+				<a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" border=0></a><br>
+				<a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td>
+				<td ><img src="themes/hungi.mozilla/images/refresh.gif" border=0><br>
+				<a class="menu">{#refresh_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" border=0></a><br>
+				<a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" border=0></a><br>
+				<a class="menu" href="javascript:search()">{#search_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" border=0></a><br>
+				<a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" border=0></a><br>
+				<a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td>
+				<td ><img src="themes/hungi.mozilla/images/preferences.gif" border=0></a><br>
+				<a class="menu">{#prefs_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" border=0></a><br>
+				<a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td>
+			</tr></table>		
+		</td></tr>
+		<td valign=top>
+			<table cellspacing=0 cellpadding=2 width="100%" border=0 >
+				<form name=form1 action=preferences.php method=POST>
+				<input type=hidden name=sid value="{$umSid}">
+				<input type=hidden name=lid value="{$umLid}">
+				<input type=hidden name=tid value="{$umTid}">
+				<tr>
+					<td height="22" colspan=2 class=headers><b>{#prf_general_title#}</b></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				<tr>
+					<td class=default size="20%"> &nbsp;{#prf_name#}</td>
+					<td class=default><input type=text name=f_real_name size=30 value="{$umRealName|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				<tr>
+					<td class=default> &nbsp;{#prf_reply_to#}</td>
+					<td class=default><input type=text name=f_reply_to size=30 value="{$umReplyTo|escape:"html"}" class="textbox"></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				<tr>
+					<td class=default> &nbsp;{#prf_time_zone#}</td>
+					<td class=default>{$umTimezoneSelect}</td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				<tr>
+					<td class=default> &nbsp;{#prf_default_editor_mode#}</td>
+					<td class=default>
+					<select name="f_editor_mode">
+						<option value="text"{if $umEditorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
+						<option value="html"{if $umEditorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td  height="22" colspan=2 class=headers><b>{#prf_trash_title#}</b></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				<tr>
+					<td class=default colspan=2><input type=checkbox name=f_save_trash onClick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" OnClick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				<tr>
+					<td class=default colspan=2><input type=checkbox name=f_st_only_read onClick="return checkDis()" value="1"{$umSaveTrashOnlyRead}><acronym style="cursor: hand;" OnClick="f_st_only_read.click()">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</acronym></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				<tr>
+					<td class=default colspan=2><input type=checkbox name=f_empty_on_exit value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" OnClick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
+				</tr>
+				<tr>
+					<td height="22" colspan=2  class=headers><b>{#prf_sent_title#}</b></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				<tr>
+					<td class=default colspan=2><input type=checkbox name=f_save_sent value="1"{$umSaveSent}><acronym style="cursor: hand;" OnClick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></td>
+				</tr>
+				<tr>
+					<td  height="22" colspan=2  class=headers><b>{#prf_messages_title#}</b></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				<tr>
+					<td class=default> &nbsp;{#prf_page_limit#}</td>
+					<td class=default>{$umRecordsPerPage}</td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				<tr>
+					<td class=default> &nbsp;{#prf_time_to_refesh#}</td>
+					<td class=default>{$umTimeToRefresh}</td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+
+				<tr>
+					<td colspan=2  class=default><input type=checkbox name=f_display_images value="1"{$umDisplayImages}><acronym style="cursor: hand;" OnClick="f_display_images.click()">{#prf_display_images#}</acronym></td>
+				</tr>
+
+				<tr>
+					<td  height="22" colspan=2  class=headers><b>{#prf_signature_title#}</b></td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				<tr>
+					<td class=default valign=top> &nbsp;{#prf_signature#}</td>
+					<td class=default>{$umSignature}</td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				<tr>
+					<td class=default colspan=2><input type=checkbox name=f_add_sig value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym> </td>
+				</tr>
+				<tr>
+					<td height="50" background="themes/hungi.mozilla/images/menu-bg.gif" ></td>
+					<td height="50"  background="themes/hungi.mozilla/images/menu-bg.gif" ><br>
+	<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
+				<input class="button100" type=submit name=submit value="{#prf_save_button#}">
+		
+					</td>
+				</tr>
+				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				</form>
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
+

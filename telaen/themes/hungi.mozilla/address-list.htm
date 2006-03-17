@@ -1,0 +1,79 @@
+{config_load file=$umLanguageFile section="AddressBook"}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+        <title>UebiMiau - {#adr_title#}</title>
+</head>
+<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
+
+{$umJS}
+
+<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+
+
+<table cellspacing=0 cellpadding=0 border=0 align=center width="100%" bgcolor="#DDE3EB">
+        <tr>
+		<td valign=top width="100%" align=center>
+
+			<table background="themes/hungi.mozilla/images/menu-bg.gif" cellspacing=0 cellpadding=0 width="100%" border=0 >
+			<tr height="54" align="center">
+				<td > <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" border=0></a><br>
+				<a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" border=0></a><br>
+				<a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:refreshlist()"><img src="themes/hungi.mozilla/images/refresh.gif" border=0></a><br>
+				<a class="menu" href="javascript:refreshlist()">{#refresh_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" border=0></a><br>
+				<a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" border=0></a><br>
+				<a class="menu" href="javascript:search()">{#search_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" border=0></a><br>
+				<a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" border=0></a><br>
+				<a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" border=0></a><br>
+				<a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" border=0></a><br>
+				<a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td>
+			</tr></table>		
+		</td></tr>
+
+                <td valign=top>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="2" bgcolor="#DDE3EB">
+                                <tr height="22">
+                                        <td width="40%" class="headers">{#adr_name_hea#}</td>
+                                        <td width="40%" class="headers">{#adr_email_hea#}</td>
+                                        <td width="10%" class="headers">{#adr_edit_hea#}</td>
+<!---
+                                         <td width="10%" class="headers">{#adr_expo_hea#}</td>
+--->
+                                        <td width="10%" class="headers">{#adr_dele_hea#}</td>
+                                </tr>
+                                {section name=i loop=$umAddressList}
+                                <tr>
+                                        <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].viewlink}">{$umAddressList[i].name}</a></td>
+                                        <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].composelink}">{$umAddressList[i].email}</a></td>
+                                        <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].editlink}">OK</a></td>
+<!---
+                                        <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].exportlink}">OK</a></td>
+--->
+                                        <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].dellink}">OK</a></td>
+                                </tr>
+                                <tr><td height="2" colspan="4" background="themes/hungi.mozilla/images/cellseparator.gif"></td></tr>
+                                {/section}
+                                <tr><td colspan="4" height="54" background="themes/hungi.mozilla/images/menu-bg.gif" valign="middle" align="center"><form>
+
+<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
+				<input class="button120" type=button name=button onclick="javascript:location = '{$umNew}" value="{#adr_new_entry#}">
+</td></form></tr>
+                        </table>
+
+                </td>
+        </tr>
+</table>
+
+
+
+</body>
+</html>

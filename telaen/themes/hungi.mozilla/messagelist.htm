@@ -1,0 +1,115 @@
+{config_load file=$umLanguageFile section="MessageList"}
+{um_welcome_message messages=$umNumMessages unread=$umNumUnread boxname=$umBoxName var="umWelcomeMessage"}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>UebiMiau - {#messages_to#} {$umUserEmail}</title>
+	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+	<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
+	{$umJS}
+</head>
+
+<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+
+<table cellspacing=0 cellpadding=0 border=0 align=center bgcolor="#DDE3EB" width="100%">
+	<tr>
+		<td bgcolor="#FFFFFF" valign=top width="100%" align=center>
+		<table background="themes/hungi.mozilla/images/menu-bg.gif" cellspacing=1 cellpadding=3 width="100%" height="54" border=0>
+			<tr height="54" align="center">
+				<td > <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" border=0><br>{#messages_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" border=0><br>{#compose_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:refreshlist()"><img src="themes/hungi.mozilla/images/refresh.gif" border=0><br>{#refresh_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" border=0><br>{#folders_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" border=0><br>{#search_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" border=0><br>{#address_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" border=0><br>{#empty_trash_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" border=0><br>{#prefs_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" border=0><br>{#logoff_mnu#}</a></td>
+			</tr></table>		
+		</td></tr>
+		<td valign=top>
+			<table cellspacing=0 cellpadding=1 width="100%" border=0 bgcolor="#DDE3EB">
+			{if $umNumMessages gt 0}
+				<tr>
+					<form name="form1" action="process.php" method="post">
+					{$umForms}
+					<td colspan="7" class="default"> &nbsp;&nbsp;
+					{$umWelcomeMessage}
+					</td>
+				</tr>
+				{if $umErrorMessage neq ""}
+				<tr>
+					<td colspan="7" class="default"><font color=red><b> &nbsp;&nbsp;{$umErrorMessage}</b></font></td>
+				</tr>
+				{/if}
+	
+				<tr>
+				    <td width="5"  class="headers"><input type=checkbox name=chkall onclick="sel()"></td>
+				    <td width="34"  class="headers"><img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
+
+					{if $umFolder eq "sent"}
+				    	<td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('toname')">{#to_hea#}{$umToArrow}</a></b> :.</td>
+					{else}
+				    	<td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('fromname')">{#from_hea#}{$umFromArrow}</a></b> :.</td>
+					{/if}
+				    <td class="headers">.: <b><a class="menu" href="javascript:sortby('subject')">{#subject_hea#}{$umSubjectArrow}</a></b> :.</td>
+				    <td width="100" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{#date_hea#}{$umDateArrow}</a></b> :.</td>
+				    <td width="100" class="headers">.: <b><a class="menu" href="javascript:sortby('size')">{#size_hea#}{$umSizeArrow}</a></b> :.</td>
+				</tr>
+			
+				{section name=i loop=$umMessageList}
+				<tr>
+					<td class="default">{$umMessageList[i].checkbox}</td>
+					<td class="default">{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
+
+
+					{if $umFolder eq "sent"}
+						<td class="default"><acronym title="{$umMessageList[i].to|escape:"html"|default:#no_recipient_text#}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].to|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</acronym></td>
+					{else}
+						<td class="default"><acronym title="{$umMessageList[i].from|escape:"html"|default:#no_recipient_text#}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a></acronym>{if $umMessageList[i].read eq "false"}</b>{/if}</td>
+					{/if}
+					<td class="default"><acronym title="{$umMessageList[i].subject|escape:"html"|default:#no_subject_text#}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</acronym></td>
+
+					<td class="cent">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].date|date_format:#date_format#}</td>
+					<td class="right">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].size}Kb &nbsp;</td>
+				</tr>
+					<tr>
+					<td height="2" colspan="7" background="themes/hungi.mozilla/images/cellseparator.gif"></td>
+					</tr>
+				{/section}
+				<tr>
+					<td colspan="7" class="default">&nbsp; 
+					<a class="menu" href="javascript:delemsg()">{#delete_selected_mnu#}</a> :: 
+					<a class="menu" href="javascript:movemsg()">{#move_selected_mnu#}</a> 
+					<select name="aval_folders">
+						{section name=i loop=$umAvalFolders}
+							<option value="{$umAvalFolders[i].path|escape:"html"}">{$umAvalFolders[i].display|escape:"html"}
+						{/section}
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="7" class="default"> &nbsp;&nbsp;{if $umPreviousLink}<a href="{$umPreviousLink}" class="navigation">{#previous_text#}</a> &nbsp;{/if}{$umNavBar}{if $umNextLink} &nbsp;<a href="{$umNextLink}" class="navigation">{#next_text#}</a>{/if}</td>
+				</tr>
+			
+			{else}		
+				<tr>
+					<td colspan="7" class="cent"><br> &nbsp;&nbsp;{#no_messages#} <b>{$umBoxName|escape:"html"}</b><br><br></td>
+				</tr>
+			{/if}
+			</form>
+			{if $umQuotaEnabled eq 1}
+			<tr>
+				<td background="themes/hungi.mozilla/images/usage-bg.gif" height="32" class="cent" colspan=7>&nbsp; {#quota_usage_info#}: {#quota_usage_used#} <b>{$umTotalUsed}</b>Kb {#quota_usage_of#} <b>{$umQuotaLimit}</b>Kb {#quota_usage_avail#}<br><img src="themes/hungi.mozilla/images/usage-start.gif" border=0>{$umUsageGraph}<img src="themes/hungi.mozilla/images/usage-end.gif" border=0></td>
+			</tr>
+			{/if}
+		</table>
+		</td>
+
+	</tr>
+
+</table>
+</body>
+</html>
+

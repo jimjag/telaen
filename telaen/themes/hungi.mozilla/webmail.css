@@ -1,0 +1,144 @@
+<!--
+	.textbox {
+		color : Black;
+		background-color : #F4F1D9;
+		height : 19px;
+		font-size : 12px;
+	}
+
+	.ComboBox {
+		color : Black;
+		background-color : #F4F1D9;
+		font-size : 12px;
+	}
+	
+	.radio {
+		color : Black;
+		background-color : #F4F1D9;
+		font-size : 12px;
+	}		
+	.formfield {
+		border-color : #666699 #666699 #666699 #666699;
+		border-width : 1 1 1 1;
+		color : Black; 
+		background-color : #F4F1D9;
+		height : 19px; font-size : 12px;
+	}
+			
+		 
+	}
+	BODY {
+	font-family : Verdana, Arial, sans-serif; 
+	text-decoration : none; 
+	color : Black;  
+	font-size : 8pt;
+	SCROLLBAR-HIGHLIGHT-COLOR: #386187 
+  	SCROLLBAR-SHADOW-COLOR: #999999; 
+  	SCROLLBAR-3DLIGHT-COLOR: #717171; 
+  	SCROLLBAR-ARROW-COLOR: #386187;
+  	SCROLLBAR-TRACK-COLOR: #C5D2E5; 
+  	SCROLLBAR-DARKSHADOW-COLOR: #848484; 
+  	SCROLLBAR-BASE-COLOR: #DDE3EB;
+	}
+	A { font-family : Verdana, Arial, sans-serif; text-decoration : none; color : Black; }
+	A.login { font-weight : bolder;	font-family : Verdana, Arial, sans-serif;  font-size : 8pt;color : #004080; text-decoration : none; color : Black; }
+	
+	A:HOVER { font-family : Verdana, Arial, sans-serif; color : Black; }
+
+	.menu { font-family : Verdana, Arial, sans-serif; font-size : 8pt; color : #004080; }
+	.menu:link { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.menu:hover { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.menu:visited { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.navigation { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080; }
+
+	.navigation:link { text-decoration: none; font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.navigation:hover { text-decoration: none; font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.navigation:visited { text-decoration: none; font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080; }
+
+	.autolink:link { text-decoration: underline; font-family : Courier New, Verdana, Arial, sans-serif; font-size : 9pt; color : #004080; }
+	.autolink:hover { text-decoration: underline; font-family : Courier New, Verdana, Arial, sans-serif; font-size : 9pt; color : #004080; }
+	.autolink:visited { text-decoration: underline; font-family : Courier New, Verdana, Arial, sans-serif; font-size : 9pt; color : #004080; }
+
+	TD.rempli { font-family : Verdana, Arial, sans-serif; background-color : #66CC99;}
+	TD.memo { font-family : Verdana, Arial, sans-serif; background-color: #E8E8E8;}
+	TD.cent { font-family : Verdana, Arial, sans-serif; background-color: #DDE3EB; text-align: center; font-size : 8pt; color: Black;}
+	TD.right { font-family : Verdana, Arial, sans-serif; background-color: #DDE3EB; text-align: right; font-size : 8pt; color: Black;}
+	TD.right2 { font-family : Verdana, Arial, sans-serif; text-align: right; font-size : 8pt; color: Black;}
+	TD.headers { font-family : Verdana, Arial, sans-serif; background-color : #CFCFCF; BACKGROUND-IMAGE: url(header-bg.gif); text-align : center; font-size : 8pt; color:  #004080;  }
+	TD.default { font-family : Verdana, Arial, sans-serif; background-color : #DDE3EB; font-size : 8pt;color : Black; }
+	TD.default2 { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : Black; }
+	TD.default9 { font-family : Verdana, Arial, sans-serif; background-color : #E8E8E8; font-size : 9pt;color : Black; }
+	TD.title { font-family : Verdana, Arial, sans-serif; color: #191970; background-color : #B0C4DE; text-align : center; font-size : 8pt;}
+	TD.headerright { font-family : Verdana, Arial, sans-serif; color: #004080; background-color : #E6ECF3; text-align : right;  font-size : 8pt; }
+	TD.headerright2 { font-family : Verdana, Arial, sans-serif; color: #004080; background-color : #E6ECF3;  BACKGROUND-IMAGE: url(header-bg.gif); text-align : right;  font-size : 8pt; }
+	select {BACKGROUND-COLOR: #F4F1D9;font-size : 12px;}
+	combo {BACKGROUND-COLOR: #F4F1D9;font-size : 12px;}
+	TextArea {BACKGROUND-COLOR: #F4F1D9;font-size : 12px;}
+
+.button50{
+border:0; 
+height:22px; 
+width: 50px; 
+background: url('images/buttonskin.mini.gif'); 
+font-family: verdana, sans-serif; 
+font-size: 12px; 
+font-weight:bold; 
+text-align: center; 
+text-decoration:none; 
+color: black; 
+border:0px; 
+margin: 0px; 
+cursor: hand; 
+padding:4px 0px 4px 0px;
+}		
+
+.button80{
+border:0; 
+height:22px; 
+width: 80px; 
+background: url('images/buttonskin.small.gif'); 
+font-family: verdana, sans-serif; 
+font-size: 12px; 
+font-weight:bold; 
+text-align: center; 
+text-decoration:none; 
+color: black; 
+border:0px; 
+margin: 0px; 
+cursor: hand; 
+padding:4px 0px 4px 0px;
+}		
+.button100{
+border:0; 
+height:22px; 
+width: 100px; 
+background: url('images/buttonskin.med.gif'); 
+font-family: verdana, sans-serif; 
+font-size: 12px; 
+font-weight:bold; 
+text-align: center; 
+text-decoration:none; 
+color: black; 
+border:0px; 
+margin: 0px; 
+cursor: hand; 
+padding:4px 0px 4px 0px;
+}		
+
+.button120{
+border:0; 
+height:22px; 
+width: 120px; 
+background: url('images/buttonskin.big.gif'); 
+font-family: verdana, sans-serif; 
+font-size: 12px; 
+font-weight:bold; 
+text-align: center; 
+text-decoration:none; 
+color: black; 
+border:0px; 
+margin: 0px; 
+cursor: hand; 
+padding:4px 0px 4px 0px;
+}		
+-->

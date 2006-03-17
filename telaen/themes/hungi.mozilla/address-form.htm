@@ -1,0 +1,77 @@
+{config_load file=$umLanguageFile section="AddressBook"}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>UebiMiau - {#adr_title#}</title>
+</head>
+<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
+
+{$umJS}
+
+<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+
+
+<table cellspacing=0 cellpadding=0 border=0 align=center bgcolor="#DDE3EB" width="100%">
+	<tr>
+		<td valign=top width="100%" align=center>
+		
+			<table background="themes/hungi.mozilla/images/menu-bg.gif" cellspacing=1 cellpadding=3 width="100%" border=0 >
+			<tr height="54" align="center">
+				<td > <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" border=0></a><br>
+				<a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" border=0></a><br>
+				<a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:refreshlist()"><img src="themes/hungi.mozilla/images/refresh.gif" border=0></a><br>
+				<a class="menu" href="javascript:refreshlist()">{#refresh_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" border=0></a><br>
+				<a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" border=0></a><br>
+				<a class="menu" href="javascript:search()">{#search_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" border=0></a><br>
+				<a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" border=0></a><br>
+				<a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" border=0></a><br>
+				<a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td>
+				<td > <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" border=0></a><br>
+				<a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td>
+			</tr></table>		
+		</td></tr>
+<tr>
+		<td bgcolor="#DDE3EB" valign=top>
+			<form name=form1 method=post action=addressbook.php>
+
+			<input type=hidden name=sid value="{$umSid}">
+			<input type=hidden name=id value="{$umAddrID}">
+			<input type=hidden name=lid value="{$umLid}">
+			<input type=hidden name=tid value="{$umTid}">
+			
+			<input type=hidden name=opt value="{$umOpt}">
+
+			<table width="400" border="0" cellspacing="0" cellpadding="2">
+				<tr><td class="headerright" size="20%">{#adr_name#} &nbsp;</td><td><input size="40" type=text name="name" value="{$umAddrName|escape:"html"}" class="textbox"></td></tr>
+				<tr><td class="headerright">{#adr_email#} &nbsp;</td><td><input size="40" type=text name="email" value="{$umAddrEmail|escape:"html"}" class="textbox"></td></tr>
+				<tr><td class="headerright">{#adr_street#} &nbsp;</td><td><input size="40" type=text name="street" value="{$umAddrStreet|escape:"html"}" class="textbox"></td></tr>
+				<tr><td class="headerright">{#adr_city#} &nbsp;</td><td><input size="40" type=text name="city" value="{$umAddrCity|escape:"html"}" class="textbox"></td></tr>
+				<tr><td class="headerright">{#adr_state#} &nbsp;</td><td><input size="3" type=text name="state" value="{$umAddrState|escape:"html"}" class="textbox" maxlength=2></td></tr>
+				<tr><td class="headerright">{#adr_work#} &nbsp;</td><td><input size="40" type=text name="work" value="{$umAddrWork|escape:"html"}" class="textbox"></td></tr>
+				<tr><td>&nbsp;</td><td>
+		
+		<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
+				<input class="button80" type=submit name=submit href="javascript:document.form1.submit()" value="{#adr_save#}">
+
+<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
+				<input class="button80" type=button name=button onclick="javascript:location = '{$umGoBack}'" value="{#adr_back#}">
+
+				</td></tr>
+			</table>
+			</form>
+		</td>
+	</tr>
+</table>
+	
+
+
+</body>
+</html> 

@@ -1,0 +1,151 @@
+{config_load file=$umLanguageFile section="QuickAddress"}
+{config_load file=$umLanguageFile section="Newmessage"}
+
+<title>UebiMiau - {#qad_title#}</title>
+<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#DDE3EB" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+{literal}
+<script language=javascript>
+
+function addItem(obj,strText,strValue,blSel,intPos){
+	var newOpt,i,ArTemp,selIndex;
+	selIndex = (blSel)?intPos:obj.selectedIndex;
+	newOpt = new Option(strText,strValue);
+	Len = obj.options.length+1
+	if (intPos > Len) return
+	obj.options.length = Len
+	if (intPos != Len) {
+		ArTemp = new Array();
+		for(i=intPos;i<obj.options.length-1;i++)
+			ArTemp[i] = Array(obj.options[i].text,obj.options[i].value);
+		for(i=intPos+1;i<Len;i++)
+			obj.options[i] = new Option(ArTemp[i-1][0],ArTemp[i-1][1]);
+	}
+	obj.options[intPos] = newOpt;
+	if (selIndex > intPos)
+		obj.selectedIndex = selIndex+1;
+	else if (selIndex == intPos) 
+		obj.selectedIndex = intPos;
+}
+function delItem(obj,intPos){
+	if(intPos > obj.length) return;
+	obj.options[intPos] = null
+}
+
+function Add(sTipo) {
+	frm = document.forms[0];
+	dest = eval("frm."+sTipo)
+	orig = frm.contacts;
+	if(orig.selectedIndex == -1) {
+{/literal}
+		alert("{#qad_select_address#}");
+{literal}
+		return
+	}
+	addItem(dest,orig.options[orig.selectedIndex].text,orig.options[orig.selectedIndex].text,false,dest.length)
+}
+
+function Dele(sTipo) {
+	frm = document.forms[0];
+	orig = eval("frm."+sTipo)
+	if(orig.selectedIndex == -1) {
+{/literal}
+		alert("{#qad_select_address#}");
+{literal}
+		return
+	}
+	delItem(orig,orig.selectedIndex)
+}
+
+function AddAndExit() {
+	frm = document.forms[0];
+	typs = new Array("to","cc","bcc");
+	for(i=0;i<typs.length;i++) {
+		orig = eval("frm."+typs[i]);
+		for(n=0;n<orig.length;n++)
+			window.opener.AddAddress(typs[i],orig.options[n].value);
+	}
+	self.close();
+}
+
+function ns_clean() {
+	frm = document.forms[0];
+	typs = new Array("to","cc","bcc");
+	for(i=0;i<typs.length;i++) {
+		orig = eval("frm."+typs[i]);
+		orig.selectedIndex = 0;
+		Dele(typs[i]);
+	}
+}
+
+</script>
+{/literal}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<form name=form1>
+	<tr>
+		<td width="260" valign=top align="center">
+			<h3 style="font-size:14px; font-family: Verdana; color:#000066;">{#address_mnu#}</h3>
+{$umContacts}
+			<script>form1.contacts.style='width:200px';</script>
+			<br><br>
+				<input class="button80" type=button onClick="AddAndExit()"  value="{#nav_back#}">
+		</td>
+		
+		<td valign=top width="225">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0">
+				<tr>
+					<td colspan=2 height="22" class="headers"><b>{#qad_to#}</b></td>
+				</tr>
+				<tr>
+					<td width="5%" valign=top class=default>
+								<input class="button50" type=button onClick="Add('to')"  value="&gt;&gt;" style="margin-bottom:2px">
+								<input class="button50" type=button onClick="Dele('to')"  value="&lt;&lt;"><br>
+					</td>
+					<td valign=top>
+						<select name="to" size="3" style="width: 260px;" onDblClick="Dele('to')">
+						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td height="22" colspan=2 class="headers"><b>{#qad_cc#}</b></td>
+				</tr>
+				<tr>
+					<td width="5%" valign=top class=default>
+							<input class="button50" type=button onClick="Add('cc')"  value="&gt;&gt;" style="margin-bottom:2px"><br>
+							<input class="button50" type=button onClick="Dele('cc')"  value="&lt;&lt;"><br>
+					</td>
+					<td valign=top >
+						<select name=cc size=3 style="width: 260px;" onDblClick="Dele('cc')">
+						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan=2 height="22"  class="headers"><b>{#qad_bcc#}</b></td>
+				</tr>
+				<tr>
+					<td width="5%" valign=top class=default>
+							<input class="button50" type=button onClick="Add('bcc')"  value="&gt;&gt;" style="margin-bottom:2px"><br>
+							<input class="button50" type=button onClick="Dele('bcc')"  value="&lt;&lt;"><br>
+					</td>
+					<td valign=top>
+						<select name=bcc size=3 style="width: 260px;" onDblClick="Dele('bcc')">
+						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</form>
+</table>
+<script>
+// clean the spaces in selects, its fix width in netscape
+ns_clean();
+window.resizeTo(535,300);
+</script>
+	
