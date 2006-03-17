@@ -4,7 +4,6 @@
 inbox_extended					= Érkezett
 sent_extended					= Elküldött
 trash_extended					= Kuka
-spam_extended					= Spam folder
 
 #Navigation texts
 
@@ -46,9 +45,9 @@ no_recipient_text				= [nincs törzse]
 # If the quota limit was exceeded           ;
 
 quota_exceeded					= A tárhelyed betelt. Töröld a régi üzeneteid a beérkezett üzenetek mappából és próbáld újra!
-quota_usage_info				= Tárhely foglaltság:
-quota_usage_used				= Szabad
-quota_usage_of					= a
+quota_usage_info				= Tárhely használat
+quota_usage_used				= 
+quota_usage_of					= foglalt az engedélyezett
 quota_usage_avail				= -ból
 
 
@@ -101,10 +100,10 @@ value_hea					= Érték
 fld_name_hea					= Mappák
 fld_messages_hea				= Üzenetek
 fld_size_hea					= Méret
-fld_empty_hea					= Üres
+fld_empty_hea					= Kiürítés
 fld_delete_hea					= Törlés
 fld_total					= Összesen:
-fld_make_new					= új mappa
+fld_make_new					= Új mappa
 folders_to					= Mappák
 
 
@@ -115,8 +114,6 @@ no_messages					= Nincs üzenet a következõ mappában:
 
 delete_selected_mnu				= Kijelölt üzenetek törlése
 move_selected_mnu				= Kijelölt üzenetek áthelyezése
-mark_selected_mnu         			= Mark as read
-unmark_selected_mnu      			= Mark as unread
 delete_mnu					= Törlés
 move_mnu					= Áthelyezés
 subject_hea					= Tárgy
@@ -124,7 +121,6 @@ from_hea					= Küldõ
 to_hea						= Címzett
 date_hea					= Dátum
 size_hea					= Méret
-have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= 
 msg_message					= üzeneted van
@@ -144,10 +140,8 @@ lng_user_email					= E-mail
 lng_user_name					= Felhasználónév
 lng_user_pwd					= Jelszó
 lng_theme					= Nyelv
-lng_language					= Language
+lng_language					= ???
 lng_login_btn					= Belépés &gt;&gt;
-lng_cookie_not_enabled				= Cookies must be enabled
-lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]
@@ -246,8 +240,6 @@ prf_trash_title					= Kuka
 prf_save_to_trash				= A <b>Törölt</b> üzenetek kerüljenek a következõ mappába: 
 prf_save_only_read				= Az <b>olvasott</b> üzenetek mentése a következõ mappába: 
 prf_empty_on_exit				= <b>Kuka</b> ürítése kilépésnél
-prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
-prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
 prf_sent_title					= Elküldött üzenetek
 prf_save_sent					= Az <b>elküldött</b> üzenetek mentése a következõ mappába:
 prf_messages_title				= Üzenetek
