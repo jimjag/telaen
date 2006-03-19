@@ -40,7 +40,8 @@ $prefs = load_prefs();
 
 $jssource = "
 
-<script language=\"JavaScript\">
+<script language=\"JavaScript\" type=\"text/javascript\">
+<!--
 disbl = false;
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
@@ -57,6 +58,7 @@ function dis() {
 	} 
 }
 function checkDis() { if (disbl) return false; }
+// -->
 </script>
 
 ";
@@ -64,17 +66,17 @@ function checkDis() { if (disbl) return false; }
 $smarty->assign("umJS",$jssource);
 
 $aval_rpp = Array(10,20,30,40,50,100,200);
-$sel_rpp = "<select name=f_rpp>\r";
+$sel_rpp = "<select name=\"f_rpp\">\r";
 for($i=0;$i<count($aval_rpp);$i++) {
-	$selected = ($prefs["rpp"] == $aval_rpp[$i])?" selected":"";
-	$sel_rpp .= "<option value=".$aval_rpp[$i].$selected.">".$aval_rpp[$i]."\r";
+	$selected = ($prefs["rpp"] == $aval_rpp[$i])?"selected=\"selected\"":"";
+	$sel_rpp .= "<option value=\"".$aval_rpp[$i]."\" $selected>".$aval_rpp[$i]."</option>\r";
 }
 $sel_rpp .= "</select>";
 
-$sel_refreshtime = "<select name=f_refresh_time>\r";
+$sel_refreshtime = "<select name=\"f_refresh_time\">\r";
 for($i=5;$i<30;$i=$i+5) {
-	$selected = ($prefs["refresh-time"] == $i)?" selected":"";
-	$sel_refreshtime .= "<option value=".$i.$selected.">".$i."\r";
+	$selected = ($prefs["refresh-time"] == $i)?"selected=\"selected\"":"";
+	$sel_refreshtime .= "<option value=\"" .$i. "\" $selected>".$i."</option>\r";
 }
 $sel_refreshtime .= "</select>";
 
@@ -84,34 +86,34 @@ $txtsignature = "<textarea cols=\"40\" rows=\"3\" name=\"f_sig\" class=\"textare
 
 $gmttime = time()-date("Z");
 
-$tzselect = "<select name=f_timezone>\r";
+$tzselect = "<select name=\"f_timezone\">\r";
 for($i=-12;$i<=12;$i = $i+0.5) {
 	$nowgmt = $gmttime + $i*3600;
 	$operator = ($i < 0)?"-":"+";
 	$z = abs($i);
 	$diff = $operator.sprintf("%02d",intval($z)).sprintf("%02d",($z-intval($z))*60);
-	$selected = ($prefs["timezone"] == $diff)?" selected":"";
-	$tzselect .= "<option value=\"$diff\"$selected>GMT $diff (".date("h:i A",$nowgmt).")\r";
+	$selected = ($prefs["timezone"] == $diff)?"selected=\"selected\"":"";
+	$tzselect .= "<option value=\"$diff\" $selected>GMT $diff (".date("h:i A",$nowgmt).")</option>\r";
 }
 $tzselect .= "</select>\r";
 
 $smarty->assign("umRealName",$prefs["real-name"]);
 $smarty->assign("umReplyTo",$prefs["reply-to"]);
-$status = ($prefs["save-to-trash"])?" checked":"";
+$status = ($prefs["save-to-trash"])?" checked=\"checked\"":"";
 $smarty->assign("umSaveTrash",$status);
-$status = ($prefs["st-only-read"])?" checked":"";
+$status = ($prefs["st-only-read"])?" checked=\"checked\"":"";
 $smarty->assign("umSaveTrashOnlyRead",$status);
-$status = ($prefs["empty-trash"])?" checked":"";
+$status = ($prefs["empty-trash"])?" checked=\"checked\"":"";
 $smarty->assign("umEmptyTrashOnExit",$status);
-$status = ($prefs["empty-spam"])?" checked":"";
+$status = ($prefs["empty-spam"])?" checked=\"checked\"":"";
 $smarty->assign("umEmptySpamOnExit",$status);
-$status = ($prefs["unmark-read"])?" checked":"";
+$status = ($prefs["unmark-read"])?" checked=\"checked\"":"";
 $smarty->assign("umUnmarkReadOnExit",$status);
-$status = ($prefs["save-to-sent"])?" checked":"";
+$status = ($prefs["save-to-sent"])?" checked=\"checked\"":"";
 $smarty->assign("umSaveSent",$status);
-$status = ($prefs["add-sig"])?" checked":"";
+$status = ($prefs["add-sig"])?" checked=\"checked\"":"";
 $smarty->assign("umAddSignature",$status);
-$status = ($prefs["display-images"])?" checked":"";
+$status = ($prefs["display-images"])?" checked=\"checked\"":"";
 $smarty->assign("umDisplayImages",$status);
 
 $smarty->assign("umEditorMode",$prefs["editor-mode"]);
