@@ -125,10 +125,11 @@ if(isset($tipo) && $tipo == "send") {
 			}
 		}
 
-	} else die("<script language=\"javascript\">location = 'error.php?err=3';</script>");
+	} else die("<script language=\"javascript\" type=\"text/javascript\">location = 'error.php?err=3';</script>");
 
-	$jssource = "
-	<script language=\"javascript\">
+	$jssource = "	
+	<script language=\"javascript\" type=\"text/javascript\">
+	<!--
 	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 	function goend() { location = 'logout.php'; }
@@ -137,7 +138,8 @@ if(isset($tipo) && $tipo == "send") {
 	function search() {	location = 'search.php?folder=".urlencode($folder)."';}
 	function addresses() { location = 'addressbook.php'; }
 	function prefs() { location = 'preferences.php'; }
-	</script>
+	// -->
+	</script>	
 	";
 
 	$smarty->assign("umJS",$jssource);
@@ -168,11 +170,11 @@ if(isset($tipo) && $tipo == "send") {
 	
 	$umAddSig = ($add_sig) ? 1 : 0 ;
 
-	$forms = "<input type=hidden name=tipo value=edit>
-	<input type=hidden name=is_html value=\"$js_advanced\">
-	<input type=hidden name=folder value=\"$folder\">
-	<input type=hidden name=sig value=\"".htmlspecialchars($signature)."\">
-	<input type=hidden name=textmode value=\"$textmode\">
+	$forms = "<input type=\"hidden\" name=\"tipo\" value=\"edit\" />
+	<input type=\"hidden\" name=\"is_html\" value=\"$js_advanced\" />
+	<input type=\"hidden\" name=\"folder\" value=\"$folder\" />
+	<input type=\"hidden\" name=\"sig\" value=\"".htmlspecialchars($signature)."\" />
+	<input type=\"hidden\" name=\"textmode\" value=\"$textmode\" />
 	";
 
 	$jssource = "";
@@ -185,7 +187,8 @@ if(isset($tipo) && $tipo == "send") {
 	}
 
 	$jssource .= "
-	<script language=\"javascript\">
+	<script language=\"javascript\" type=\"text/javascript\">
+	<!--
 	bIs_html = $js_advanced;
 	bsig_added = false;
 	function addsig() {
@@ -193,7 +196,7 @@ if(isset($tipo) && $tipo == "send") {
 			if(bsig_added || sig.value == '') return false;
 			if(cksig.checked) {
 				if(bIs_html) {					
-					body.value +='<br><br>--<br>'+sig.value;
+					body.value +='<br /><br />--<br />'+sig.value;
 				} else
 					body.value += '\\r\\n\\r\\n--\\r\\n'+sig.value;
 			}
@@ -313,7 +316,7 @@ if(isset($tipo) && $tipo == "send") {
 		}
 	}
 	
-	
+	// -->
 	</script>
 	";
 
