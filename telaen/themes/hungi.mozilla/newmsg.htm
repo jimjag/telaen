@@ -1,85 +1,80 @@
 {config_load file=$umLanguageFile section="Newmessage"}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html>
 <head>
-	<title>UebiMiau</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+	<title>Telaen Webmail</title>
+	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}" />
 	<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
 
 {$umJS}
 
 </head>
 
-{if $umAdvancedEditor eq 1}
-	<div id="hiddenCompose" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
-	<form name="hiddencomposeForm">
-	<textarea cols=76 rows=10 name="hiddencomposeFormTextArea">{$umBody|escape:"html"}</textarea>
-	</form>
-	</div>
-{/if}
+<body>
+	
+<form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
+{$umForms}
 
-<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
-
-<table cellspacing=0 cellpadding=0 border=0 align=center  bgcolor="#DDE3EB" width="100%">
+<table cellspacing="0" cellpadding="0" border="0" align="center"  bgcolor="#DDE3EB" width="100%">
 	<tr>
-		<form name=composeForm method=post action="newmsg.php" onSubmit="return false;">
-		{$umForms}
-
-		<td valign=top width="100%" align=center>
+		<td valign="top" width="100%" align="center">
 		
-			<table background="themes/hungi.mozilla/images/menu-bg.gif" cellspacing=1 cellpadding=3 width="100%" border=0>
-			<tr align="center" height="54">
-				<td > <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" border=0></a><br>
+			<table class="menu">
+			<tr align="center">
+				<td> <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td>
-				<td ><img src="themes/hungi.mozilla/images/compose.gif" border=0><br>
+				<td><img src="themes/hungi.mozilla/images/compose.gif" alt="" /><br />
 				<a class="menu">{#compose_mnu#}</a></td>
-				<td ><img src="themes/hungi.mozilla/images/refresh.gif" border=0><br>
+				<td><img src="themes/hungi.mozilla/images/refresh.gif" alt=""/><br />
 				<a class="menu">{#refresh_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:search()">{#search_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" alt=""/></a><br />
 				<a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td>
 			</tr></table>		
-		</td></tr>
-
-		<td valign=top>
-			<table width="100%" border=0 cellspacing=0 cellpadding=0 bgcolor="#DDE3EB">
+		</td>
+	</tr>
+	
+	<tr>
+		<td valign="top">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#DDE3EB">
 				<tr bgcolor="#DDE3EB">
-					<td width="26%" height="18" class="headerright">{#to_hea#} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+					<td width="26%" height="18" class="headerright">{#to_hea#} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->" /></a> &nbsp;</td>
 					<td class="default">&nbsp;{$umTo}</td>
 				</tr>	
-				<tr><td height="2"  colspan="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				<tr><td class="separator" colspan="2"></td></tr>
 				<tr bgcolor="#DDE3EB">
-					<td height="18" class="headerright">{#cc_hea#} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+					<td height="18" class="headerright">{#cc_hea#} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" alt="<!--%address_tip%-->" /></a>&nbsp;</td>
 					<td class="default">&nbsp;{$umCc}</td>
 				</tr>
-				<tr><td height="2"  colspan="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>	
+				<tr><td class="separator" colspan="2"></td></tr>	
 				<tr bgcolor="#DDE3EB">
-					<td height="18" class="headerright">{#bcc_hea#} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+					<td height="18" class="headerright">{#bcc_hea#} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" alt="<!--%address_tip%-->" /></a>&nbsp;</td>
 					<td class="default">&nbsp;{$umBcc}</td>
 				</tr>	
-				<tr><td height="2"  colspan="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				<tr><td class="separator" colspan="2"></td></tr>
 				<tr bgcolor="#DDE3EB">
 					<td height="18" class="headerright">{#subject_hea#} &nbsp;</td>
 					<td class="default">&nbsp;{$umSubject}</td>
 				</tr>	
-				<tr><td height="2"  colspan="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				<tr><td class="separator" colspan="2"></td></tr>
 				<tr bgcolor="#DDE3EB">
 					<td height="18" class="headerright">{#attach_hea#} &nbsp;</td>
-					<td><table width="100%" border=0 cellspacing=0 cellpadding=0>
+					<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
 							{if $umHaveAttachs eq 1}
 								<tr>
-									<td  height="22"  width="45%" class="headers">{#attch_name_hea#}</td>
+									<td height="22" width="45%" class="headers">{#attch_name_hea#}</td>
 									<td width="15%" class="headerright2">{#attch_size#} &nbsp;</td>
 									<td width="30%" class="headers">{#attch_type_hea#}</td>
 									<td width="10%" class="headers">{#attch_dele_hea#}</td>
@@ -95,35 +90,30 @@
 								{/section}
 							{else}							
 								<tr>
-									<td><img src="themes/hungi.mozilla/images/header-bg-left.gif" border="0"></td><td  height="22" width="100%" class="headers"> &nbsp;{#attch_no_hea#}</td><td><img src="themes/hungi.mozilla/images/header-bg-right.gif" border="0"></td>
+									<td><img src="themes/hungi.mozilla/header-bg-left.gif" alt="" /></td><td height="22" width="100%" class="headers"> &nbsp;{#attch_no_hea#}</td><td><img src="themes/hungi.mozilla/header-bg-right.gif" alt="" /></td>
 								</tr>
 							{/if}
-							<tr><td height="2" colspan="4" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+							<tr><td class="separator" colspan="2"></td></tr>
 						</table>
-						<table width="100%" border=0 cellspacing=1 cellpadding=0>
-						
-				
+						<table width="100%" border="0" cellspacing="1" cellpadding="0">
+										
 							<tr>
 								<td width="100%" class="default"> &nbsp;<a href="javascript:upwin()" class="navigation">{#attch_add_new#}</a></td>
 							</tr>
-							
-				
+											
 						</table>
 					</td>
 				</tr>	
-				<tr><td colspan="2" height="2" background="themes/hungi.mozilla/images/cellseparator.gif" ></td></tr>
+				
+				<tr>
+					<td class="separator" colspan="2"></td>
+				</tr>
+				
 				<tr>
 					<td class="headerright">&nbsp;</td>
 					<td class="default">
-					{if $umAdvancedEditor eq 1}
-						{include file="default/advanced-editor.htm"}
-						<div id="hiddenCompose2" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
-							<textarea cols=76 rows=10 name=body>{$umBody|escape:"html"}</textarea>
-						</div>
-					{else}
-						<textarea cols=76 rows=10 name=body>{$umBody|escape:"html"}</textarea>
-					{/if}
-
+					
+						<textarea cols="100" rows="20" name="body">{$umBody|escape:"html"}</textarea>
 					</td>
 				</tr>
 
@@ -131,37 +121,40 @@
 
 				{if !$umAddSignature && $umHaveSignature}
 				<tr>
-					<td  class="headerright">{#add_signature#} &nbsp;</td>
-					<td class="default"><input type=checkbox name=cksig onClick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
+					<td class="headerright">{#add_signature#} &nbsp;</td>
+					<td class="default"><input type="checkbox" name="cksig" onclick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
 				</tr>
 				{/if}
 
 				<tr>
-					<td  class="headerright">{#priority_text#} &nbsp;</td>
+					<td class="headerright">{#priority_text#} &nbsp;</td>
 					<td class="default">
 						<select name="priority">
-							<option value="1"{if $umPriority eq 1} selected{/if}>{#priority_high#}
-							<option value="3"{if $umPriority eq 3} selected{/if}>{#priority_normal#}
-							<option value="5"{if $umPriority eq 5} selected{/if}>{#priority_low#}
+							<option value="1"{if $umPriority eq 1} selected="selected"{/if}>{#priority_high#}</option>
+							<option value="3"{if $umPriority eq 3} selected="selected"{/if}>{#priority_normal#}</option>
+							<option value="5"{if $umPriority eq 5} selected="selected"{/if}>{#priority_low#}</option>
 						</select>
 					</td>
 				</tr>
 
 				<tr>
-					
-					<td colspan="2" height="33" background="themes/hungi.mozilla/images/usage-bg.gif" class="default"><center>
+					<td colspan="2" class="usage">
 					<center>
-<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
-				<input class="button100" type=button name=button value="{#send_text#}" onclick="javascript:enviar()">
-						
-	</center>
-					
+					<table class="buttonTable" cellspacing="0" >
+			    	<tr>
+			    		<td valign="middle" class="buttonLeft">&nbsp;</td>
+				  		<td valign="middle" class="buttonMiddle"><a class="login" href="javascript:enviar()" >{#send_text#}</a></td>
+				  		<td valign="middle" class="buttonRight">&nbsp;</td>
+			    	</tr>
+					</table></center>
 					</td>
 				</tr>	
 			</table>
 		</td>
-		</form>
+		
 	</tr>
 </table>
+</form>
+
 </body>
 </html> 
