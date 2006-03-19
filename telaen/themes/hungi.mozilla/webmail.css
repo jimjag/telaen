@@ -1,8 +1,7 @@
 <!--
 .textbox {
 	color: Black;
-	background-color: #F4F1D9;
-	height: 14px;
+	background-color: #F4F1D9;	
 	font-size: 12px;
 }
 
@@ -27,12 +26,12 @@
 }
 
 .button{
-	background : Tranparent;
+	background : transparent;
 	border-style: solid solid solid double;
 	border-color: #D7DFE9;
 	border : 0px solid #386187;
 	font-family : Verdana, Arial, sans-serif;
-	font-size: 12px;
+	font-size: 8pt;
 	font-weight : bolder;
 	color: #004080;
 }
