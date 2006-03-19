@@ -543,7 +543,7 @@ class Telaen extends Telaen_core {
 	 *   $myreturnarray[2] == return status where:
 	 *     -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
 	 */
-	function mail_list_msgs($boxname = "INBOX", $headers=0) {
+	function mail_list_msgs($boxname = "INBOX", $headers = Array()) {
 
 
 		global $userfolder;
