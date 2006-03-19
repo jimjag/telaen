@@ -18,6 +18,10 @@ Telaen:
 
 1.1.0:
 
+1.1.0-beta2:
+
+ * Fix issue with message lists when quotas are not used.
+
  * Provide ways to work around some issues with
    Redirects. We can now select whether these redirects
    are performed via HTTP redirects (the Location header)
@@ -27,6 +31,8 @@ Telaen:
    $redirects_are_relative).
 
  * New feature: mark as read/unread on message list
+
+1.1.0-beta1:
 
  * Fixed problem with possible incorrect redirects. Instead
    of checking that $_SERVER['HTTPS'] is non-empty, we

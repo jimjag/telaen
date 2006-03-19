@@ -36,7 +36,10 @@
 			unset($merged_returnarray);
 		}
 	} else {
-		$sess["headers"][$folder_key] = $UM->mail_list_msgs($folder, $sess["headers"][$folder_key]);
+		$returnarray = Array();		// ensure
+		$returnarray = $UM->mail_list_msgs($folder, $sess["headers"][$folder_key]);
+		$sess["headers"][$folder_key] = $returnarray[0];
+		unset($returnarray);
 	}
 	$headers = $sess["headers"][$folder_key];
 ?>

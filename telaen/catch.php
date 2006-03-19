@@ -72,7 +72,6 @@ if(isset($ckaval)) {
 	exit;
 } else {
 
-	$smarty->assign("umLid",$lid);
 	$smarty->assign("umFolder",$folder);
 	$smarty->assign("umIx",$ix);
 	$smarty->assign("umAvailableAddresses",$aval_count);
