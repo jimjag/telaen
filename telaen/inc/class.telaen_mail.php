@@ -639,9 +639,9 @@ class Telaen extends Telaen_core {
 				}
 
 
-				$oldheaders = $headers;
+				$oldheaders = (array)$headers;
 				$newheaders = $messages;
-				$oldheaderscount = count($headers);
+				$oldheaderscount = count($oldheaders);
 				$newheaderscount = count($messages);
 
 				/* OK, now we have id and size of messages, but we need the headers too */
@@ -897,10 +897,10 @@ class Telaen extends Telaen_core {
 
 				if($this->mail_protocol != "imap" && file_exists($messagescopy[$j]["localname"])) {
 
-					$headers = $this->_get_headers_from_cache($messagescopy[$j]["localname"]);
-					$headers = $this->decode_header($headers);
-					$messagescopy[$j]["flags"] = strtoupper($headers["x-um-flags"]);
-					unset($headers);
+					$iheaders = $this->_get_headers_from_cache($messagescopy[$j]["localname"]);
+					$iheaders = $this->decode_header($iheaders);
+					$messagescopy[$j]["flags"] = strtoupper($iheaders["x-um-flags"]);
+					unset($iheaders);
 				}
 				$messagescopy[$j]["folder"] = $boxname;
 
@@ -941,10 +941,10 @@ class Telaen extends Telaen_core {
 
 				if($this->mail_protocol != "imap" && file_exists($spamcopy[$y]["localname"])) {
 
-					$headers = $this->_get_headers_from_cache($spamcopy[$y]["localname"]);
-					$headers = $this->decode_header($headers);
-					$spamcopy[$y]["flags"] = strtoupper($headers["x-um-flags"]);
-					unset($headers);
+					$iheaders = $this->_get_headers_from_cache($spamcopy[$y]["localname"]);
+					$iheaders = $this->decode_header($iheaders);
+					$spamcopy[$y]["flags"] = strtoupper($iheaders["x-um-flags"]);
+					unset($iheaders);
 				}
 				$spamcopy[$y]["folder"] = "spam";
 
