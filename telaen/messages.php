@@ -13,12 +13,12 @@ require("./inc/inc.php");
 require("./folder_list.php");
 
 $smarty->assign("umUser",$f_user);
-$refreshurl = "process.php?folder=".urlencode($folder)."&pag=$pag&refr=true";
+$refreshurl = "process.php?folder=".urlencode($folder)."&amp;pag=$pag&amp;refr=true";
 
 if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect_and_exit("error.php?err=3"); }
 
 $arrow = ($sortorder == "ASC")?"images/arrow_up.gif":"images/arrow_down.gif";
-$arrow = "&nbsp;<img src=$arrow width=8 height=7 border=0 alt=>";
+$arrow = "&nbsp;<img src=\"$arrow\" width=\"8\" height=\"7\" border=\"0\" alt=\"\" />";
 
 $attach_arrow  	= "";
 $subject_arrow 	= "";
@@ -45,7 +45,9 @@ $elapsedtime = (time()-$sess["last-update"])/60;
 $timeleft = ($prefs["refresh-time"]-$elapsedtime);
 
 if($timeleft > 0) {
-	echo("<META HTTP-EQUIV=\"Refresh\" CONTENT=\"".(ceil($timeleft)*60)."; URL=$refreshurl\">");
+	$metaRefresh = "<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";
+	$smarty->assign("metaRefresh", $metaRefresh);
+	echo ($metaRefresh);
 } elseif ($prefs["refresh-time"]) {
 	redirect_and_exit("$refreshurl");
 }
@@ -69,8 +71,6 @@ $smarty->assign("umUsageGraph",$usageGraph);
 $exceeded = (($quota_limit) && (ceil($totalused/1024) >= $quota_limit));
 
 // sorting arrays..
-
-
 $smarty->assign("umAttachArrow",$attach_arrow);
 $smarty->assign("umSubjectArrow",$subject_arrow);
 $smarty->assign("umFromArrow",$fromname_arrow);
@@ -91,7 +91,8 @@ echo($nocache);
 
 $jsquota = ($exceeded)?"true":"false";
 $jssource = "
-<script language=\"JavaScript\">
+<script language=\"javascript\" type=\"text/javascript\">
+<!--
 no_quota  = $jsquota;
 quota_msg = '".ereg_replace("'","\\'",$quota_exceeded)."';
 function readmsg(ix,read) {
@@ -140,7 +141,7 @@ function sortby(col) {
 	else ord = 'ASC';
 	location = 'process.php?folder=$folder&pag=$pag&sortby='+col+'&sortorder='+ord+'';
 }
-
+// -->
 </script>
 ";
 
@@ -148,11 +149,11 @@ if(isset($msg))
 	$smarty->assign("umErrorMessage",$msg);
 
 
-$forms = "<input type=hidden name=decision value=delete>
-<input type=hidden name=folder value=\"".htmlspecialchars($folder)."\">
-<input type=hidden name=pag value=$pag>
-<input type=hidden name=start_pos value=$start_pos>
-<input type=hidden name=end_pos value=$end_pos>";
+$forms = "<input type=\"hidden\" name=\"decision\" value=\"delete\" />
+<input type=\"hidden\" name=\"folder\" value=\"".htmlspecialchars($folder)."\" />
+<input type=\"hidden\" name=\"pag\" value=\"$pag\" />
+<input type=\"hidden\" name=\"start_pos\" value=\"$start_pos\" />
+<input type=\"hidden\" name=\"end_pos\" value=\"$end_pos\" />";
 
 
 $smarty->assign("umJS",$jssource);
@@ -188,15 +189,15 @@ if($nummsg > 0) {
 		}
 		$prior = $headers[$i]["priority"];
 		if($prior == 4 || $prior == 5)
-			$img_prior = "&nbsp;<img src=\"./images/prior_low.gif\" width=5 height=11 border=0 alt=\"\">";
+			$img_prior = "&nbsp;<img src=\"./images/prior_low.gif\" width=\"5\" height=\"11\" border=\"0\" alt=\"\" />";
 		elseif($prior == 1 || $prior == 2)
-			$img_prior = "&nbsp;<img src=\"./images/prior_high.gif\" width=5 height=11 border=0 alt=\"\">";
+			$img_prior = "&nbsp;<img src=\"./images/prior_high.gif\" width=\"5\" height=\"11\" border=\"0\" alt=\"\" />";
 		else
 			$img_prior = "";
 
-		$msg_img = "&nbsp;<img src=\"$msg_img\" width=14 height=14 border=0 alt=\"\">";
-		$checkbox = "<input type=\"checkbox\" name=\"msg_$i\" value=1>";
-		$attachimg = ($headers[$i]["attach"])?"&nbsp;<img src=images/attach.gif border=0>":"";
+		$msg_img = "&nbsp;<img src=\"$msg_img\" width=\"14\" height=\"14\" border=\"0\" alt=\"\" />";
+		$checkbox = "<input type=\"checkbox\" name=\"msg_$i\" value=\"1\" />";
+		$attachimg = ($headers[$i]["attach"])?"&nbsp;<img src=\"images/attach.gif\" border=\"0\" />":"";
 
 		$date = $headers[$i]["date"];
 		$size = ceil($headers[$i]["size"]/1024);
