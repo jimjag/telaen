@@ -20,6 +20,7 @@ umask(0077);
 
 @error_reporting($error_flags);
 @ini_set ('error_reporting', $error_flags);
+@set_magic_quotes_runtime(0);           // Smarty and magic_quotes_runtime ON do not mix.
 
 $old_error_handler = set_error_handler("err_handler");
 

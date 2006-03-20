@@ -20,6 +20,9 @@ Telaen:
 
 1.1.0-beta2:
 
+ * Force magic_quotes_runtime to be disabled, since it
+   conflicts with Smarty.
+
  * Fix issue with message lists when quotas are not used.
 
  * Provide ways to work around some issues with
