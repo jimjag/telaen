@@ -166,7 +166,8 @@ if(count($ARCC) > 0) {
 $smarty->assign("umPageTitle",$email["subject"]);
 
 $jssource = "
-<script language=\"JavaScript\">
+<script language=\"JavaScript\" type=\"text/javascript\">
+<!--
 function deletemsg() { 
 	if(confirm('".ereg_replace("'","\\'",$confirm_delete)."')) 
 		with(document.move) { decision.value = 'delete'; submit(); } 
@@ -192,21 +193,22 @@ function prefs() { location = 'preferences.php'; }
 function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=600,heigth=500,scrollbars=1,status=0'); }
 function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&attachment='+attach,'','resizable=1,top=10,left=10,width=600,height=400,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
+// -->
 </script>
 ";
 
-$umDeleteForm = "<input type=hidden name=decision value=move>
-<input type=hidden name=folder value=\"".htmlspecialchars($folder)."\">
-<input type=hidden name=pag value=$pag>
-<input type=hidden name=start_pos value=$ix>
-<input type=hidden name=end_pos value=".($ix+1).">
-<input type=hidden name=msg_$ix value=X>
-<input type=hidden name=back value=true>";
+$umDeleteForm = "<input type=\"hidden\" name=\"decision\" value=\"move\" />
+<input type=\"hidden\" name=\"folder\" value=\"".htmlspecialchars($folder)."\" />
+<input type=\"hidden\" name=\"pag\" value=\"$pag\" />
+<input type=\"hidden\" name=\"start_pos\" value=\"$ix\" />
+<input type=\"hidden\" name=\"end_pos\" value=\"".($ix+1)."\" />
+<input type=\"hidden\" name=\"msg_$ix\" value=\"X\" />
+<input type=\"hidden\" name=\"back\" value=\"true\" />";
 
-$umReplyForm = "<form name=msg action=\"newmsg.php\" method=POST>
-<input type=hidden name=rtype value=\"reply\">
-<input type=hidden name=folder value=\"".htmlspecialchars($folder)."\">
-<input type=hidden name=ix value=\"$ix\">
+$umReplyForm = "<form name=\"msg\" action=\"newmsg.php\" method=\"post\">
+	<input type=\"hidden\" name=\"rtype\" value=\"reply\" />
+	<input type=\"hidden\" name=\"folder\" value=\"".htmlspecialchars($folder)."\" />
+	<input type=\"hidden\" name=\"ix\" value=\"$ix\" />
 </form>
 ";
 
