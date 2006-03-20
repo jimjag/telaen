@@ -120,6 +120,8 @@ table.menu {
  	
 
 td.usage {
+	font-family : Verdana, Arial, sans-serif;
+	font-size : 8pt;
 	background-image: url(images/usage-bg.gif);
 	height: 32px;
 	text-align: center;
