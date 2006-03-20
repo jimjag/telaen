@@ -57,7 +57,7 @@ if(!is_writable($temporary_directory)) {
 	<br>The path given in <font face="Courier New" color=Gray>$temporary_directory</font> points to a folder that is not writable<br>
 	The user wich your webserver runs on (apache in *nix or IUSR_name in windows) MUST have rights to create folder and files<br>
 	on this directory. try chmod or Properties dialog<br>');
-	echo("The directory should be mode 0700");
+	echo("The directory should be mode 700");
 	if ($uidisvalid) {
 		echo(" with a Owner of $uid and Group of $gid");
 	}
@@ -65,18 +65,36 @@ if(!is_writable($temporary_directory)) {
 	$error = true;
 } else {
 	// We know it's writable, but how secure is it?
+	// Note: If $uidisvalid is 0, then we were not able to
+	//       get the web server uid/gid, most likely due to
+	//       an open_basedir issue. Since we know $temporary_directory
+	//       is writable now, get that info here :)
+	if (!$uidisvalid) {
+		$tmpfname = tempnam("$temporary_directory", "TELAEN-");
+		$fd = @fopen($tmpfname, "w");
+		if ($fd) {
+			if (fwrite($fd, "foo")) {
+				fclose($fd);
+				// we know the file was created
+				$uid = fileowner($tmpfname);
+				$gid = filegroup($tmpfname);
+				unlink($tmpfname);
+				$uidisvalid = 1;
+			}
+		}
+	}
 	$tuid = fileowner($temporary_directory);
 	$tgid = filegroup($temporary_directory);
-	$mode = substr(sprintf('%o', fileperms($temporary_directory)), -4);
+	$mode = substr(sprintf('%o', fileperms($temporary_directory)), -3);
 	
 	echo('<font color=green><strong>PASSED</strong></font><br>');
-	echo("Now let's check the permissions.<br>The directory should be mode 0700");
+	echo("Now let's check the permissions.<br>The directory should be mode 700");
 	if ($uidisvalid) {
 		echo(" with a Owner of $uid and Group of $gid");
 	}
 	echo(". Let's see how close you are:<br>");
 	echo("Your mode is $mode, Owner is $tuid and Group is $tgid...   ");
-	if ($mode != "0700" ||
+	if ($mode != "700" ||
 	   ($uidisvalid && (($tuid != $uid) || ($tgid != $gid)))) {
 		echo('<font color=red><strong>WARNING</strong></font><br>Not setup securely!');
 		$warn = true;
