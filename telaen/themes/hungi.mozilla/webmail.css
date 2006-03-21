@@ -1,4 +1,31 @@
 <!--
+body {
+		font-family : Verdana, Arial, sans-serif; 
+		text-decoration : none;
+		background-color: #778899;
+		margin: 0;
+		color : Black;  
+		font-size : 8pt;
+}
+
+a {
+		font-family : Verdana, Arial, sans-serif; 
+		text-decoration : none; color : Black; 
+}
+
+select {BACKGROUND-COLOR: #F4F1D9;font-size : 12px;}
+combo {BACKGROUND-COLOR: #F4F1D9;font-size : 12px;}
+TextArea {BACKGROUND-COLOR: #FAFAFA; font-size : 12px;}
+
+form {
+	margin:0;
+	padding:0;
+}
+
+img {
+		border: 0;
+}
+
 .textbox {
 	color: Black;
 	background-color: #F4F1D9;	
@@ -36,19 +63,7 @@
 	color: #004080;
 }
 
-body {
-		font-family : Verdana, Arial, sans-serif; 
-		text-decoration : none;
-		background-color: #778899;
-		margin: 0;
-		color : Black;  
-		font-size : 8pt;
-}
 
-a {
-		font-family : Verdana, Arial, sans-serif; 
-		text-decoration : none; color : Black; 
-}
 
 a.login { 
 		font-weight : bolder;	
@@ -62,9 +77,7 @@ a:hover {
 		color : Black; 
 }
 
-img {
-		border: 0;
-}
+
 	.menu { font-family : Verdana, Arial, sans-serif; font-size : 8pt; color : #004080; }
 	.menu:link { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
 	.menu:hover { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
@@ -153,8 +166,6 @@ TD.default9 { font-family : Verdana, Arial, sans-serif; background-color : #E8E8
 TD.title { font-family : Verdana, Arial, sans-serif; color: #191970; background-color : #B0C4DE; text-align : center; font-size : 8pt;}
 TD.headerright { font-family : Verdana, Arial, sans-serif; color: #004080; background-color : #E6ECF3; text-align : right;  font-size : 8pt; }
 TD.headerright2 { font-family : Verdana, Arial, sans-serif; color: #004080; background-color : #E6ECF3;  BACKGROUND-IMAGE: url(images/header-bg.gif); text-align : right;  font-size : 8pt; }
-select {BACKGROUND-COLOR: #F4F1D9;font-size : 12px;}
-combo {BACKGROUND-COLOR: #F4F1D9;font-size : 12px;}
-TextArea {BACKGROUND-COLOR: #F4F1D9;font-size : 12px;}
+
 		
 -->
