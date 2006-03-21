@@ -25,17 +25,18 @@ array_qsort2ic($addressbook,"name");
 
 
 $jssource = "
-<script language=\"JavaScript\">
+<script language=\"JavaScript\" type=\"text/javascript\">
+<!--
 function goinbox() { location = 'messages.php?folder=inbox'; }
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function refreshlist() { location = 'addressbook.php' }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function search() { location = 'search.php'; }
 function addresses() { location = 'addressbook.php'; }
-function emptytrash() {        location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
+function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function goend() { location = 'logout.php'; }
 function prefs() { location = 'preferences.php'; }
-
+//-->
 </script>
 ";
 
