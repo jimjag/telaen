@@ -34,7 +34,7 @@ if(ereg("\\.\\.",$attach["filename"]) || !file_exists($attach["filename"])) { re
 $size = filesize($attach["filename"]);
 
 $disposition = (!$down)?"inline":"attachment";
-$type = (!preg_match("/[a-z]+\/[a-z\-]+/i",$attach["content-type"]))?"application/octet-stream":$attach["content-type"];
+$type = (!preg_match('/[a-z0-9\-]+\/[a-z0-9\-]+/i',$attach["content-type"]))?"application/octet-stream":$attach["content-type"];
 $dlfname = $attach["name"];
 
 // Header("Content-Type: $type; name=\"".$attach["name"]."\"\r\n");
