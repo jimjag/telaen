@@ -149,6 +149,7 @@ $prefs = load_prefs();
 
 $UM->timezone			= $prefs["timezone"];
 $UM->charset			= $default_char_set;
+$UM->userspamlevel		= $prefs["spamlevel"];
 
 
 /*

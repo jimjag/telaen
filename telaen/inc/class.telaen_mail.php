@@ -9,6 +9,7 @@ class Telaen extends Telaen_core {
 	var $_system_folders    = Array("inbox","trash","sent","spam");
 	var $_current_folder 	= "";
 	var $CRLF				= "\r\n";
+	var $userspamlevel		= 0;	// Disabled
 
 	function Telaen() {
 		require("./inc/class.tnef.php");
@@ -845,6 +846,7 @@ class Telaen extends Telaen_core {
 
 			$havespam = 0;
 			$spamsubject = $mail_info["subject"];
+			$xspamlevel = $mail_info["x-spam-level"];
 			/*
 			 * Only auto-populate the SPAM folder if
 			 * we are checking the INBOX and we have _autospamfolder
@@ -857,6 +859,13 @@ class Telaen extends Telaen_core {
 						$havespam = 1;
 						$this->havespam = "TRUE";
 						break;
+					}
+				}
+				if ($this->userspamlevel) {
+					preg_match('/[*]+/', $xspamlevel, $matches);
+					if (strlen($matches[0]) >= $this->userspamlevel) {
+						$havespam = 1;
+						$this->havespam = "TRUE";						
 					}
 				}
 			}

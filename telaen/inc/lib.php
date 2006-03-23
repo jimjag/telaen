@@ -297,6 +297,7 @@ function load_prefs() {
 		$prefs["display-images"]= $display_images_default;
 		$prefs["editor-mode"]	= $editor_mode_default;
 		$prefs["refresh-time"]	= $refresh_time_default;
+		$prefs["spamlevel"]	= $spamlevel_default;
 		$prefs["version"]	= $appversion;
 	} else {
 		$prefs = file($pref_file);

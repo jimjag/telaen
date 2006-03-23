@@ -276,7 +276,8 @@ $default_preferences = Array(
 	"timezone_default"		=> "-0500",	# timezone, format (+|-)HHMM (H=hours, M=minutes)
 	"display_images_default"	=> yes,		# automatically show attached images in the body of message
 	"editor_mode_default"		=> "text",	# use "html" or "text" to set default editor. "html" will be used only in IE5+ browsers
-	"refresh_time_default"		=> 10		# after this time, the message list will be refreshed, in minutes
+	"refresh_time_default"		=> 10,		# after this time, the message list will be refreshed, in minutes
+	"spamlevel_default"		=> 0		# Sensitivity to X-Spam-Level detection
 	);
 
 ########################################################################

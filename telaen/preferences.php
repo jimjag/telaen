@@ -32,6 +32,7 @@ if(isset($f_real_name)) {
 	$myprefs["editor-mode"]		= $f_editor_mode;
 	$myprefs["refresh-time"]	= $f_refresh_time;
 	$myprefs["first-login"] 	= 1;
+	$myprefs["spamlevel"]		= $f_spamlevel;
 	$myprefs["version"]		= $appversion;
 	save_prefs($myprefs); unset($myprefs);
 }
