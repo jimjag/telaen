@@ -787,6 +787,7 @@ class Telaen_core {
 		}
 		$myarray["status"] = $headers["status"];
 		$myarray["read"] = $headers["x-um-status"];
+		$myarray["x-spam-level"] = $headers["x-spam-level"];
 		unset($headers);
 		return $myarray;
 
@@ -834,6 +835,7 @@ class Telaen_core {
 		$this->_content["read"] = $mail_info["read"];
 		$this->_content["priority"] = $mail_info["priority"];
 		$this->_content["flags"] = $mail_info["flags"];
+		$this->_content["x-spam-level"] = $mail_info["x-spam-level"];
 		return $this->_content;
 	}
 
