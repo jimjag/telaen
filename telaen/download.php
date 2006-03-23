@@ -8,7 +8,8 @@ Telaen is a GPL'ed software developed by
 Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
  by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
-
+@ini_set ( 'output_buffering',    1024 );
+@ob_start();
 
 // load session management
 require("./inc/inc.php");
@@ -47,6 +48,7 @@ header("Content-Type: $type");
 header("Content-Disposition: $disposition; filename=\"$dlfname\";");
 header("Content-Transfer-Encoding: binary");
 header("Content-Length: $size");
+@ob_end_flush();
 
 readfile($attach["filename"]);
 
