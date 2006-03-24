@@ -266,6 +266,7 @@ prf_default_editor_mode		= Mode d'édition par défaut
 prf_default_editor_mode_text	= "Mode texte"
 prf_default_editor_mode_html	= "Editeur HTML avancé (IE5 ou supérieur uniquement)"
 prf_time_to_refesh			= Temps de rafraîchissement pour les messages (en minutes)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 

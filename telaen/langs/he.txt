@@ -238,6 +238,7 @@ prf_default_editor_mode			= מצב עריכה בברירת מחדל
 prf_default_editor_mode_text	= "טקסט רגיל"
 prf_default_editor_mode_html	= "עורך HTML מתקדם (דורש IE5 ומעלה)"
 prf_time_to_refesh				= בדוק אוטומטית עבור דואר חדש (דקות)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 ctc_title						= הוסף לספר הכתובות

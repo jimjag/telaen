@@ -210,7 +210,9 @@ ENDOFREDIRECT;
 		Header("Location: $url");
 	}
 	if ($phpver >= 4.1) {
-		if (ob_get_level()) @ob_end_flush();
+		if (ob_get_level()) {
+                        @ob_end_flush();
+                }
         } else {
 		@ob_end_flush();
 	}

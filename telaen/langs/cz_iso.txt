@@ -261,6 +261,7 @@ prf_default_editor_mode				= Editovací mód
 prf_default_editor_mode_text			= "Textový mód"
 prf_default_editor_mode_html			= "Rozšíøený HTML editor (pouze pro IE5 a vyšší)"
 prf_time_to_refesh				= Obnovovat po (minuty)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 

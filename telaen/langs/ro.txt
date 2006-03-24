@@ -260,6 +260,7 @@ prf_default_editor_mode				= Mod de editare
 prf_default_editor_mode_text			= "Mod text"
 prf_default_editor_mode_html			= "HTML (Doar pentru Internet Explorer 5+)"
 prf_time_to_refesh				= Interval pentru verificarea de mesaje noi (minute)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 

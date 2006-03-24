@@ -263,6 +263,7 @@ prf_default_editor_mode				= Нормлен режим на редактиране
 prf_default_editor_mode_text			= "Чист текст"
 prf_default_editor_mode_html			= "HTML Редактор (изсква минимум IE 5.0)"
 prf_time_to_refesh				= Време за автоматично опресняване на съобщенията (в минути)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 

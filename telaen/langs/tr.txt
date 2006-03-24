@@ -255,6 +255,7 @@ prf_default_editor_mode				= Normal edition mode
 prf_default_editor_mode_text			= "Düz Metin"
 prf_default_editor_mode_html			= "Geliþmiþ HTML editörü (Sadece IE5 ve üstü)"
 prf_time_to_refesh				= Mesajlarýn yenilenme zamaný (dakika)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 
 [Catch]

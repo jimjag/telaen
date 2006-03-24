@@ -862,7 +862,7 @@ class Telaen extends Telaen_core {
 					}
 				}
 				if ($this->userspamlevel) {
-					preg_match('/[*]+/', $xspamlevel, $matches);
+					preg_match('/[*+]+/', $xspamlevel, $matches);
 					if (strlen($matches[0]) >= $this->userspamlevel) {
 						$havespam = 1;
 						$this->havespam = "TRUE";						

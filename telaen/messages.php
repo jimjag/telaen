@@ -13,7 +13,7 @@ require("./inc/inc.php");
 require("./folder_list.php");
 
 $smarty->assign("umUser",$f_user);
-$refreshurl = "process.php?folder=".urlencode($folder)."&amp;pag=$pag&amp;refr=true";
+$refreshurl = "process.php?folder=".urlencode($folder)."&pag=$pag&refr=true";
 
 if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect_and_exit("error.php?err=3"); }
 

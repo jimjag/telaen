@@ -259,6 +259,7 @@ prf_default_editor_mode				= Standard redigeringsmodus
 prf_default_editor_mode_text			= "Tekst"
 prf_default_editor_mode_html			= "Avansert HTML editor (Kun for IE5 eller høyere)"
 prf_time_to_refesh				= Oppdateringsintervall beskjeder (minutter)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 

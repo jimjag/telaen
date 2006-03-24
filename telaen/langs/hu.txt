@@ -248,6 +248,7 @@ prf_default_editor_mode				= Szerkesztõ típusa
 prf_default_editor_mode_text			= "Sima szöveg"
 prf_default_editor_mode_html			= "HTML szerkesztõ"
 prf_time_to_refesh				= Beérkezett üzenetek automatikus frissítése (perc)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 ctc_title               			= új címek

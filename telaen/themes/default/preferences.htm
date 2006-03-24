@@ -107,6 +107,14 @@
 					<td class=default colspan=2><input type=checkbox name=f_add_sig value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym> </td>
 				</tr>
 				<tr>
+					<td class=default> &nbsp;{#prf_spam_level#}</td>
+					<td class=default>
+						<select name=f_spamlevel>
+							{html_options values=$umSpamLevelVals output=$umSpamLevelVals selected="$umSpamLevel"}
+						</select>
+					</td>
+				</tr>				
+				<tr>
 					<td bgcolor=white></td>
 					<td bgcolor=white><br><input type=submit value="{#prf_save_button#}" class="button"></td>
 				</tr>

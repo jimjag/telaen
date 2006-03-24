@@ -260,6 +260,7 @@ prf_default_editor_mode				= Venjulegur ritill
 prf_default_editor_mode_text			= "Venjulegur texti"
 prf_default_editor_mode_html			= "HTML texti (Fyrir IE5 eða nýrri)"
 prf_time_to_refesh				= Athuga ný skilaboð hverjar (mínútur)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 

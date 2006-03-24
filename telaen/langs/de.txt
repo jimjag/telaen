@@ -263,6 +263,7 @@ prf_default_editor_mode			= Editiermodus für neue Emails
 prf_default_editor_mode_text			= "Reiner Textmodus"
 prf_default_editor_mode_html			= "Word-Ähnlicher HTML editor (nur für IE5 oder höher)"
 prf_time_to_refesh				= Inbox alle x Minuten aktualisieren
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 

@@ -258,6 +258,7 @@ prf_default_editor_mode				= Standardformat på meddelanden
 prf_default_editor_mode_text			= "Endast text"
 prf_default_editor_mode_html			= "Avancerad HTML editor (Endast för IE v5 eller högre)"
 prf_time_to_refesh				= Ladda automatiskt om mappar efter: (minuter)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
 ctc_title					= Spara E-postadresser
