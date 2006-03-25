@@ -20,6 +20,15 @@ Telaen:
 
 1.1.0-beta2:
 
+ * Telaen is now aware of the SpamAssassin X-Spam-Level
+   header, and allows users to control auto-SPAM detection
+   sensitivity and SPAM folder autopopulation. For example,
+   a user can specify a sensitivity of 2 (very sensitive),
+   and all messages that have a X-Spam-Level of 2 or more
+   will get auto-moved to the SPAM folder.
+
+ * Bundled themes converted to be xhtml1.0 compliant.
+
  * Force magic_quotes_runtime to be disabled, since it
    conflicts with Smarty.
 
