@@ -74,10 +74,7 @@
 			</tr>
 			{/if}
 			<tr>
-				<form name="form1" action="folders.php" method="POST" onsubmit="return create();">
-				<input type=hidden name=sid value="{$umSid}">
-				<input type=hidden name=lid value="{$umLid}">
-				<input type=hidden name=tid value="{$umTid}">
+				<form name="form1" action="folders.php" method="post" onsubmit="return create();">
 				<td class="default" colspan="5">
 <!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
 			<input type=Text name=newfolder value="" class="textbox"> &nbsp;	<input class="button100" type=button name=button value="{#fld_make_new#}" onclick="javascript:create()">

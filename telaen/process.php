@@ -61,7 +61,7 @@ if( !is_array($headers)
 					$UM->mail_move_msg($headers[$i],$aval_folders);
 				} elseif ($decision == "mark") {
 					$UM->mail_set_flag($headers[$i],"\\SEEN","+");
-				} else {
+				} elseif ($decision == "unmark") {
 					$UM->mail_set_flag($headers[$i],"\\SEEN","-");
 				}
 

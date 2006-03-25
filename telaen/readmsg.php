@@ -205,7 +205,7 @@ $umDeleteForm = "<input type=\"hidden\" name=\"decision\" value=\"move\" />
 <input type=\"hidden\" name=\"msg_$ix\" value=\"X\" />
 <input type=\"hidden\" name=\"back\" value=\"true\" />";
 
-$umReplyForm = "<form name=\"msg\" action=\"newmsg.php\" method=\"POST\">
+$umReplyForm = "<form name=\"msg\" action=\"newmsg.php\" method=\"post\">
 	<input type=\"hidden\" name=\"rtype\" value=\"reply\" />
 	<input type=\"hidden\" name=\"folder\" value=\"".htmlspecialchars($folder)."\" />
 	<input type=\"hidden\" name=\"ix\" value=\"$ix\" />
