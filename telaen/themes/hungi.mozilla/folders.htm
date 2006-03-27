@@ -1,47 +1,44 @@
-
 {config_load file=$umLanguageFile section="Folders"}
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<title>UebiMiau - {#folders_to#} {$umUserEmail}</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+	<title>Telaen Webmail - {#folders_to#} {$umUserEmail}</title>
+	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
 	<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
 	{$umJS}
 </head>
 
-<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+<body>
 
-<table cellspacing=0 cellpadding=0 border=0 align=center width="100%" bgcolor="#DDE3EB">
+<table cellspacing="0" cellpadding="0" border="0" align="center" width="100%" bgcolor="#DDE3EB">
 	<tr>
-		<td valign=top width="100%" align=center>
+		<td valign=top width="100%" align="center">
 		
-			<table  background="themes/hungi.mozilla/images/menu-bg.gif" cellspacing=1 cellpadding=3 width="100%" border=0>
-			<tr height="54" align="center">
-				<td > <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" border=0></a><br>
+			<table class="menu">
+			<tr align="center">
+				<td><a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:refreshlist()"><img src="themes/hungi.mozilla/images/refresh.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:refreshlist()"><img src="themes/hungi.mozilla/images/refresh.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:refreshlist()">{#refresh_mnu#}</a></td>
-				<td ><img src="themes/hungi.mozilla/images/folders.gif" border=0><br>
+				<td><img src="themes/hungi.mozilla/images/folders.gif" alt="" /><br />
 				<a class="menu">{#folders_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:search()">{#search_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" border=0></a><br>
+				<td><a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" alt="" /></a><br />
 				<a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td>
 			</tr></table>		
 		</td></tr>
-		<td valign=top>
+		<td valign="top">
 
-			<table cellspacing=0 cellpadding=2 width="100%" border=0>
+			<table cellspacing="0" cellpadding="2" width="100%" border="0">
 			<tr height="22">
 			    <td width="30%" class="headers">.: {#fld_name_hea#} :.</td>
 			    <td width="20%" class="headers">.: {#fld_messages_hea#} :.</td>
@@ -58,7 +55,7 @@
 					<td class="cent"><a href="{$umFolderList[i].emptylink}">OK</a></td>
 					<td class="cent">{$umFolderList[i].del}</td>
 				</tr>
-			 <tr><td height="2" colspan="5" background="themes/hungi.mozilla/images/cellseparator.gif"></td></tr>
+			 <tr><td colspan="5" class="separator"></td></tr>
 			{/section}
 			<tr>
 				<td class="default">&nbsp;</td>
@@ -67,22 +64,24 @@
 				<td class="cent">&nbsp;</td>
 				<td class="cent">&nbsp;</td>
 			</tr>
+			<tr>
+                                <td class="default" colspan="5">
+                                <form name="form1" action="folders.php" method="post" onsubmit="return create();">
+
+<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px      -->
+                        <input type="text" name="newfolder" value="" class="textbox"> &nbsp;<input class="button100" type="button" name="button" value="{#fld_make_new#}" onclick="javascript:create()">
+                <br />
+                                </form>
+                                </td>
+                        </tr>
 
 			{if $umQuotaEnabled eq 1}
 			<tr>
-				<td class="cent" colspan=5>&nbsp; {#quota_usage_info#}: {#quota_usage_used#} <b>{$umTotalUsed}</b>Kb {#quota_usage_of#} <b>{$umQuotaLimit}</b>Kb {#quota_usage_avail#}<br> <img src="themes/hungi.mozilla/images/usage-start.gif" border=0>{$umUsageGraph}<img src="themes/hungi.mozilla/images/usage-end.gif" border=0></td>
+				<td class="usage" colspan="5">&nbsp; {#quota_usage_info#}: {#quota_usage_used#} <b>{$umTotalUsed}</b>Kb {#quota_usage_of#} <b>{$umQuotaLimit}</b>Kb {#quota_usage_avail#}<br> <img src="themes/hungi.mozilla/images/usage-start.gif" alt="" />{$umUsageGraph}<img src="themes/hungi.mozilla/images/usage-end.gif" alt="" /></td>
 			</tr>
 			{/if}
-			<tr>
-				<form name="form1" action="folders.php" method="post" onsubmit="return create();">
-				<td class="default" colspan="5">
-<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
-			<input type=Text name=newfolder value="" class="textbox"> &nbsp;	<input class="button100" type=button name=button value="{#fld_make_new#}" onclick="javascript:create()">
-		<br>
-				</td>
-				</form>
-			</tr>
-			<tr><td colspan=5 class="headers" height="22">&nbsp;</td></tr>
+
+			<!-- tr><td colspan="5" class="headers" height="22">&nbsp;</td></tr -->
 		</table>
 		</td>
 	</tr>

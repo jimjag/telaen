@@ -1,11 +1,12 @@
 {config_load file=$umLanguageFile section="QuickAddress"}
 {config_load file=$umLanguageFile section="Newmessage"}
-
-<title>UebiMiau - {#qad_title#}</title>
-<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#DDE3EB" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
-<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+	<title>Telaen Webmail - {#qad_title#}</title>
+	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
 {literal}
-<script language=javascript>
+
+<script language="javascript" type="text/javascript">
 
 function addItem(obj,strText,strValue,blSel,intPos){
 	var newOpt,i,ArTemp,selIndex;
@@ -80,62 +81,62 @@ function ns_clean() {
 
 </script>
 {/literal}
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+</head>
+
+<body>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<form name=form1>
 	<tr>
-		<td width="260" valign=top align="center">
+		<td width="260" valign="top" align="center">
 			<h3 style="font-size:14px; font-family: Verdana; color:#000066;">{#address_mnu#}</h3>
 {$umContacts}
 			<script>form1.contacts.style='width:200px';</script>
-			<br><br>
-				<input class="button80" type=button onClick="AddAndExit()"  value="{#nav_back#}">
+			<br /><br />
+			<input class="button80" type=button onClick="AddAndExit()"  value="{#nav_back#}">
 		</td>
 		
-		<td valign=top width="225">
+		<td valign="top" width="225">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
-					<td colspan=2 height="22" class="headers"><b>{#qad_to#}</b></td>
+					<td colspan="2" height="22" class="headers"><b>{#qad_to#}</b></td>
 				</tr>
 				<tr>
-					<td width="5%" valign=top class=default>
-								<input class="button50" type=button onClick="Add('to')"  value="&gt;&gt;" style="margin-bottom:2px">
-								<input class="button50" type=button onClick="Dele('to')"  value="&lt;&lt;"><br>
+					<td width="5%" valign="top" class="default">
+					<input class="button50" type=button onClick="Add('to')"  value="&gt;&gt;" style="margin-bottom:2px">
+					<input class="button50" type=button onClick="Dele('to')"  value="&lt;&lt;"><br />
 					</td>
-					<td valign=top>
-						<select name="to" size="3" style="width: 260px;" onDblClick="Dele('to')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td height="22" colspan=2 class="headers"><b>{#qad_cc#}</b></td>
-				</tr>
-				<tr>
-					<td width="5%" valign=top class=default>
-							<input class="button50" type=button onClick="Add('cc')"  value="&gt;&gt;" style="margin-bottom:2px"><br>
-							<input class="button50" type=button onClick="Dele('cc')"  value="&lt;&lt;"><br>
-					</td>
-					<td valign=top >
-						<select name=cc size=3 style="width: 260px;" onDblClick="Dele('cc')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</select>
+					<td valign="top">
+					<select name="to" size="3" style="width: 260px;" onDblClick="Dele('to')">
+						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+					</select>
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 height="22"  class="headers"><b>{#qad_bcc#}</b></td>
+					<td height="22" colspan="2" class="headers"><b>{#qad_cc#}</b></td>
 				</tr>
 				<tr>
-					<td width="5%" valign=top class=default>
-							<input class="button50" type=button onClick="Add('bcc')"  value="&gt;&gt;" style="margin-bottom:2px"><br>
-							<input class="button50" type=button onClick="Dele('bcc')"  value="&lt;&lt;"><br>
+					<td width="5%" valign="top" class="default">
+						<input class="button50" type="button" onclick="Add('cc')"  value="&gt;&gt;" style="margin-bottom:2px"><br />
+						<input class="button50" type="button" onclick="Dele('cc')"  value="&lt;&lt;"><br />
 					</td>
-					<td valign=top>
-						<select name=bcc size=3 style="width: 260px;" onDblClick="Dele('bcc')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						</select>
+					<td valign="top">
+					<select name="cc" size="3" style="width: 260px;" onDblClick="Dele('cc')">
+						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" height="22"  class="headers"><b>{#qad_bcc#}</b></td>
+				</tr>
+				<tr>
+					<td width="5%" valign="top" class="default">
+						<input class="button50" type="button" onclick="Add('bcc')" value="&gt;&gt;" style="margin-bottom:2px"><br />
+						<input class="button50" type=button onClick="Dele('bcc')"  value="&lt;&lt;"><br />
+					</td>
+					<td valign="top">
+					<select name=bcc size=3 style="width: 260px;" onDblClick="Dele('bcc')">
+						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+					</select>
 					</td>
 				</tr>
 			</table>
@@ -148,4 +149,3 @@ function ns_clean() {
 ns_clean();
 window.resizeTo(535,300);
 </script>
-	
