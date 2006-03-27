@@ -13,6 +13,12 @@ $themes[] = Array(
 	"path" 		=> "default"
 );
 
+$themes[] = Array(
+        "name"          => "Hungi Mozilla",
+        "path"          => "hungi.mozilla"
+);
+
+
 $languages[] = Array(
 	"name" 		=> "Bulgarian",
 	"path"	 	=> "bg"
