@@ -89,11 +89,23 @@
 					<td class="default" colspan="2"><input type="checkbox" name="f_st_only_read" onclick="return checkDis()" value="1"{$umSaveTrashOnlyRead} /><acronym style="cursor: hand;" onclick="f_st_only_read.click()">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</acronym></td>
 				</tr>
 				<tr>
-					<td class="separator" colspan="2"></td>
-				</tr>				
+                                        <td class="separator" colspan="2"></td>
+                                </tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_empty_on_exit" value="1"{$umEmptyTrashOnExit} /><acronym style="cursor: hand;" onclick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
-				</tr>
+                                        <td class="default" colspan="2"><input type="checkbox" name="f_empty_on_exit" value="1"{$umEmptyTrashOnExit} /><acro
+nym style="cursor: hand;" onclick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
+                                </tr>
+				<tr>
+                                        <td class="separator" colspan="2"></td>
+                                </tr>
+                                <tr>
+                                        <td class="default" colspan="2"><input type="checkbox" name="f_unmark_read_on_exit" value="1"{$umUnmarkReadOnExit} /><acronym style="cursor: hand;" onclick="f_unmark_read_on_exit.click()">{#prf_unmark_read_on_exit#}</acronym></td>
+                                </tr>
+
+
+				<tr>					
+					<td height="22" colspan="2" class="headers"><b>{#spam_extended#}</b></td>
+				</tr>								
 				<tr>
 					<td class="separator" colspan="2"></td>
 				</tr>
@@ -101,11 +113,17 @@
 					<td class="default" colspan="2"><input type="checkbox" name="f_empty_spam_on_exit" value="1"{$umEmptySpamOnExit} /><acronym style="cursor: hand;" onclick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></td>
 				</tr>
 				<tr>
-					<td class="separator" colspan="2"></td>
-				</tr>
+                                        <td class="separator" colspan="2"></td>
+                                </tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_unmark_read_on_exit" value="1"{$umUnmarkReadOnExit} /><acronym style="cursor: hand;" onclick="f_unmark_read_on_exit.click()">{#prf_unmark_read_on_exit#}</acronym></td>
-				</tr>
+                                        <td class="default"> &nbsp;{#prf_spam_level#}</td>
+                                        <td class="default">
+                                                <select name=f_spamlevel>
+                                                        {html_options values=$umSpamLevelVals output=$umSpamLevelVals selected="$umSpamLevel"}
+                                                </select>
+                                        </td>
+                                </tr>
+
 				<tr>
 					<td height="22" colspan="2"  class="headers"><b>{#prf_sent_title#}</b></td>
 				</tr>
