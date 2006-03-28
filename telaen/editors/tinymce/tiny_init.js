@@ -11,7 +11,8 @@ tinyMCE.init({
 		theme_advanced_toolbar_location : "top",
 		theme_advanced_toolbar_align : "left",
 		theme_advanced_disable : "styleselect",
-		theme_advanced_path_location : "bottom",
+		theme_advanced_statusbar_location : "bottom",
+		theme_advanced_path : false,
 		cleanup : "false", 
 		content_css : "editors/tinymce/mycontent.css",
 		plugin_insertdate_dateFormat : "%Y-%m-%d",
@@ -27,14 +28,6 @@ tinyMCE.init({
 		apply_source_formatting : false,
 		fullpage_default_encoding : "iso-8859-1",
 		fullpage_default_xml_pi : false,
-		fullpage_default_title : ""		
+		fullpage_default_title : "",
+		fullpage_default_doctype : "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">"
 });
-
-
-function fileBrowserCallBack(field_name, url, type, win) {
-		// This is where you insert your custom filebrowser logic
-		alert("Example of filebrowser callback: field_name: " + field_name + ", url: " + url + ", type: " + type);
-
-		// Insert new URL, this would normaly be done in a popup
-		win.document.forms[0].elements[field_name].value = "someurl.htm";
-}
