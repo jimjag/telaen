@@ -18,6 +18,9 @@ Telaen:
 
 1.1.0:
 
+ * Fix nasty bug where CC addresses were not being delivered
+   if using the 'mail' Mailer (PHPMailer bug).
+
 1.1.0-beta2:
 
  * Telaen is now aware of the SpamAssassin X-Spam-Level
