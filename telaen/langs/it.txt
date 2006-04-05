@@ -110,31 +110,31 @@ folders_to						= Sposta cartella
 
 [MessageList]
 
-messages_to						= Messaggi per 
-no_messages						= Nessun nuovo messaggio 
+messages_to					= Messaggi per 
+no_messages					= Nessun nuovo messaggio 
 
 delete_selected_mnu				= Cancella selezionato
 move_selected_mnu				= Sposta selezionato in
-move_selected_to_trash_mnu		= Sposta nel cestino
-mark_selected_mnu         		= Segna come letto
-unmark_selected_mnu      		= Segna come non letto
+move_selected_to_trash_mnu			= Sposta nel cestino
+mark_selected_mnu         			= Segna come letto
+unmark_selected_mnu      			= Segna come non letto
 
-delete_mnu						= Cancella
-move_mnu						= Sposta in
-subject_hea						= Oggetto
-from_hea						= Da
-to_hea							= Per
-date_hea						= Data
-size_hea						= Dimesioni
-have_spam						= Hai dello Spam (controlla la cartella Spam)
+delete_mnu					= Cancella
+move_mnu					= Sposta in
+subject_hea					= Oggetto
+from_hea					= Da
+to_hea						= Per
+date_hea					= Data
+size_hea					= Dimesioni
+have_spam					= Hai dello Spam (controlla la cartella Spam)
 
 msg_you_have					= Hai
-msg_message						= messaggio
+msg_message					= messaggio
 msg_messages					= messaggi
 
 msg_more_unread					= non letti
 msg_one_unread					= non letto
-msg_none_unread					= nessun messaggio letto
+msg_none_unread					= nessuno da leggere
 msg_in_the_folder				= nella cartella
 
 
@@ -246,8 +246,8 @@ prf_trash_title					= Cestino
 prf_save_to_trash				= Quando <b>cancelli</b> un messaggio, spostalo in
 prf_save_only_read				= Salva solo <b>i messaggi letti</b> nel
 prf_empty_on_exit				= <b>Svuota</b> il cestino quando esci
-prf_empty_spam_on_exit			= <b>Svuota</b> la cartella spam quando esci
-prf_unmark_read_on_exit			= Reimposta tutti i messaggi come NON letti quando esci 
+prf_empty_spam_on_exit				= <b>Svuota</b> la cartella spam quando esci
+prf_unmark_read_on_exit				= Reimposta tutti i messaggi come NON letti quando esci 
 prf_sent_title					= Posta inviata
 prf_save_sent					= Salva <b>posta inviata</b> nel
 prf_messages_title				= Messaggi
@@ -257,11 +257,11 @@ prf_signature					= Scrivi la firma
 prf_auto_add_sign				= Aggiungi firma a tutti i messaggi in uscita 
 prf_save_button					= Salva
 prf_display_images				= Mostra immagini allegate
-prf_default_editor_mode			= Editing semplificato
+prf_default_editor_mode				= Editing semplificato
 prf_default_editor_mode_text			= "Modo testuale"
 prf_default_editor_mode_html			= "Modo avanzato (editor HTML)"
 prf_time_to_refesh				= Refresh dei messaggi (minuti)
-prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+prf_spam_level					= Sensibilit&agrave; filtro SPAM (0 = Disattivo, 1 = Molto alta, 9 = Molto bassa)
 
 
 [Catch]
