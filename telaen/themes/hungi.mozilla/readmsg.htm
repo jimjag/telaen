@@ -13,38 +13,15 @@
 
 </head>
 
-<body>
+{include file="hungi.mozilla/header.htm"}
+
+<!-- menu -->
+{include file="hungi.mozilla/nav_menu.htm" refresh="false"}
 
 {$umReplyForm}
 
 <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#DDE3EB" width="100%">
-	<tr>
-		<td valign="top" width="100%" align="center">
-
-			<table class="menu">
-			<tr align="center">
-				<td > <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td>
-				<td ><img src="themes/hungi.mozilla/images/refresh.gif" alt="" /><br />
-				<a class="menu">{#refresh_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:search()">{#search_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td>
-				<td > <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td>
-			</tr></table>			
-		</td>
-	</tr>
-	
+		
 	<tr>	
 		<td>			
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">										
@@ -148,8 +125,5 @@
 		</td>
 	</tr>
 </table>
-</body>
-</html>
 
-
-
+{include file="hungi.mozilla/footer.htm"}

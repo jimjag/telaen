@@ -12,24 +12,13 @@
 	{$umJS}
 </head>
 
-<body>
+{include file="hungi.mozilla/header.htm"}
+
+<!-- menu -->
+{include file="hungi.mozilla/nav_menu.htm"}
 
 <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#DDE3EB" width="100%">
-	<tr>
-		<td bgcolor="#FFFFFF" valign="top" width="100%" align="center">
-		<table class="menu">
-			<tr align="center">
-				<td> <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" alt="" /><br/>{#messages_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" alt="" /><br />{#compose_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:refreshlist()"><img src="themes/hungi.mozilla/images/refresh.gif" alt="" /><br/>{#refresh_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" alt="" /><br/>{#folders_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" alt="" /><br/>{#search_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" alt="" /><br/>{#address_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" alt="" /><br/>{#empty_trash_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" alt="" /><br/>{#prefs_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" alt="" /><br/>{#logoff_mnu#}</a></td>
-			</tr></table>		
-		</td></tr>
+	
 		<tr>
 			<td valign="top"><form name="form1" action="process.php" method="post">
 			{$umForms}
@@ -115,7 +104,8 @@
 		</table>
 	</form></td>
 	</tr>
-</table>
-</body>
-</html>
 
+</table>
+
+<!-- footer -->
+{include file="hungi.mozilla/footer.htm"}

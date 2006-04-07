@@ -1,21 +1,32 @@
 {config_load file=$umLanguageFile section="Newmessage"}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>UebiMiau - {#up_title#}</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+	<title>Telaen Webmail - {#up_title#}</title>
+	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
 </head>
-<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="#DDE3EB" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF" leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
-<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+<body>
+
 <form name="form1" enctype="multipart/form-data" action="upload.php" method="post">
-	<td><img src="themes/hungi.mozilla/images/header-bg-left.gif" border="0"></td><td  height="22" width="100%" class="headers"><b>{#up_information_text#}</b></td><td><img src="themes/hungi.mozilla/images/header-bg-right.gif" border="0"></td>
-<tr><td colspan="3"><input type=file name=userfile class=textbox size=40 style="width: 300px;"></td></tr>
-<tr><td  colspan="3"class=default align="center">
-	<br>
-<input class="button80" type=button onClick="javascript:document.form1.submit()" value="{#up_button_text#}">
-</td></tr>
-</form>
+<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td><img src="themes/hungi.mozilla/images/header-bg-left.gif" border="0"></td>
+		<td height="22" width="100%" class="headers"><b>{#up_information_text#}</b></td>
+		<td><img src="themes/hungi.mozilla/images/header-bg-right.gif" border="0"></td>
+	</tr>
+	<tr>
+		<td colspan="3"><input type="file" name="userfile" class="textbox" size="29" style=""></td>
+	</tr>
+	<tr>
+		<td  colspan="3" class="default" align="center">
+		<br />
+		<input class="button80" type=button onClick="javascript:document.form1.submit()" value="{#up_button_text#}">
+		</td>
+	</tr>
+
 </table>
+</form>
+
 </body>
 </html>

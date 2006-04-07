@@ -2,7 +2,7 @@
 	function mOvr(src,clrOver) {
 		if (!src.contains(event.fromElement)) {
 			src.style.cursor = 'hand';
-			src.style.background = 'url(themes/hungi.mozilla/menu-bg2.gif)';
+			src.style.background = 'url(themes/hungi.mozilla/images/menu-bg2.gif)';
 			src.bgColor = clrOver;
 		}
 	}

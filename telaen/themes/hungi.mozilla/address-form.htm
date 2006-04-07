@@ -10,35 +10,13 @@
 {$umJS}
 </head>
 
-<body>
+{include file="hungi.mozilla/header.htm"}
+
+<!-- menu -->
+{include file="hungi.mozilla/nav_menu.htm"}
 
 <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#DDE3EB" width="100%">
-	<tr>
-		<td valign="top" width="100%" align="center">
-		
-			<table class="menu">
-			<tr align="center">
-				<td> <a class="menu" href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:refreshlist()"><img src="themes/hungi.mozilla/images/refresh.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:refreshlist()">{#refresh_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:search()">{#search_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td>
-				<td> <a class="menu" href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" alt="" /></a><br />
-				<a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td>
-			</tr></table>		
-		</td>
-	</tr>
+	
 	<tr>
 		<td bgcolor="#DDE3EB">
 			<form name="form1" method="post" action="addressbook.php">
@@ -55,18 +33,32 @@
 				<tr>
 					
 				<td colspan="2" class="usage">
-		
-		<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
-				<input class="button80" type="submit" name="submit" onclick="javascript:document.form1.submit()" value="{#adr_save#}" />
+				<center>
+				<table><tr>
+					<td><table class="buttonTable" cellspacing="0" >
+					<tr>
+						<td valign="middle" class="buttonLeft">&nbsp;</td>
+						<td valign="middle" class="buttonMiddle"><input class="button" type="submit" name="submit" onclick="javascript:document.form1.submit()" value="{#adr_save#}" /></td>
+						<td valign="middle" class="buttonRight">&nbsp;</td>
+					</tr>
+					</table></td>
 
-<!-- if you need other button size, use the button80, button100, button120 classes! = 80/100/120px	-->			
-				<input class="button80" type="button" name="button" onclick="javascript:location = '{$umGoBack}'" value="{#adr_back#}" />
+					<td><table class="buttonTable" cellspacing="0" >
+					<tr>
+						<td valign="middle" class="buttonLeft">&nbsp;</td>
+						<td valign="middle" class="buttonMiddle"><input class="button" type="button" name="button" onclick="javascript:location = '{$umGoBack}'" value="{#adr_back#}" /></td>
+						<td valign="middle" class="buttonRight">&nbsp;</td>
+					</tr>
+					</table></td>
+				</tr></table>
 
+				</center>
+				
 				</td></tr>
 			</table>
 		</form></td>
 	</tr>
 </table>
 
-</body>
-</html> 
+<!-- footer -->
+{include file="hungi.mozilla/footer.htm"}

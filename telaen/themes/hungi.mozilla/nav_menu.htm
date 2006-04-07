@@ -1,0 +1,45 @@
+	<div id="menu">
+		<div class="menuItem">
+			<a href="javascript:goinbox()"><img src="themes/hungi.mozilla/images/inbox.gif" alt="" />
+			<p>{#messages_mnu#}</p></a>
+		</div>
+		<div class="menuItem">
+			<a href="javascript:newmsg()"><img src="themes/hungi.mozilla/images/compose.gif" alt="" />
+			<p>{#compose_mnu#}</p></a>
+		</div>
+	{if $refresh neq "false"}
+		<div class="menuItem">
+			<a href="javascript:refreshlist()"><img src="themes/hungi.mozilla/images/refresh.gif" alt="" />
+			<p>{#refresh_mnu#}</p></a>		
+		</div>
+	{else}
+		<div class="menuItem">
+			<img src="themes/hungi.mozilla/images/refresh.gif" alt="" />
+			<p>{#refresh_mnu#}</p>	
+		</div>
+	{/if}
+		<div class="menuItem">
+			<a href="javascript:folderlist()"><img src="themes/hungi.mozilla/images/folders.gif" alt="" />
+			<p>{#folders_mnu#}</p></a>		
+		</div>
+		<div class="menuItem">
+			<a href="javascript:search()"><img src="themes/hungi.mozilla/images/search.gif" alt="" />
+			<p>{#search_mnu#}</p></a>		
+		</div>
+		<div class="menuItem">
+			<a href="javascript:addresses()"><img src="themes/hungi.mozilla/images/address.gif" alt="" />
+			<p>{#address_mnu#}</p></a>		
+		</div>
+		<div class="menuItem">
+			<a href="javascript:emptytrash()"><img src="themes/hungi.mozilla/images/trash.gif" alt="" />
+			<p>{#empty_trash_mnu#}</p></a>		
+		</div>
+		<div class="menuItem">
+			<a href="javascript:prefs()"><img src="themes/hungi.mozilla/images/preferences.gif" alt="" />
+			<p>{#prefs_mnu#}</p></a>
+		</div>
+		<div class="menuItem">
+			<a href="javascript:goend()"><img src="themes/hungi.mozilla/images/logout.gif" alt="" />
+			<p>{#logoff_mnu#}</p></a>	
+		</div>
+	</div>
