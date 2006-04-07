@@ -1,5 +1,46 @@
 <!--
-	.textbox {
+
+/** Globals */
+
+body {
+	font-family : Verdana, Arial, sans-serif; 
+	text-decoration : none;
+	background-color: #778899;
+	margin: 0;
+	color : Black;
+	font-size : 8pt;
+}
+
+
+a {
+	font-family : Verdana, Arial, sans-serif; 
+	text-decoration : none; color : Black; 
+}
+
+a:hover { 
+	font-family : Verdana, Arial, sans-serif; 
+	color : Black; 
+}
+
+img {
+	border: 0px;
+}
+
+/** Head logo */
+#logo {
+	background-color: #FFFFFF;
+	widht: 100%;
+}
+
+/** Main content */
+#content {
+	width: 760px;
+	margin: 0 auto;
+	margin-top: 5px;
+	padding: 0;
+}
+
+.textbox {
 		color : Black;
 		background-color : #F5FFFA;
 		height : 19px;
@@ -17,9 +58,7 @@
 		height : 19px;
 		font-size : 12px;
 	}
-	BODY {font-family : Verdana, Arial, sans-serif; text-decoration : none; color : Black;  font-size : 8pt;}
-	A { font-family : Verdana, Arial, sans-serif; text-decoration : none; color : Black; }
-	A:HOVER { font-family : Verdana, Arial, sans-serif; color : Black; }
+	
 
 	.menu { font-family : Verdana, Arial, sans-serif; font-size : 8pt; color : #004080; }
 	.menu:link { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }

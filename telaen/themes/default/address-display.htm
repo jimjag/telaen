@@ -6,32 +6,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
 	<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
 	<script language="JavaScript" src="themes/default/webmail.js" type="text/javascript"></script>
+{$umJS}
 </head>
 
-{$umJS}
+{include file="default/header.htm"}
 
-<body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
-
-
-<table width="760" border="0" cellspacing="0" cellpadding="2" align="center" bgcolor=white>
-	<tr><td colspan="2"><img src="images/telaen_logo.jpg" width="310" height="73" border=0 alt="Telaen Webmail"></td></tr>
+<table width="100%" border="0" cellspacing="0" cellpadding="2" align="center" bgcolor=white>
+	
 	<tr>
 		<td valign=top width="15%">
-			<table cellspacing=1 cellpadding=3 width="100%" border=0 bgcolor=White>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"> <a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:refreshlist()">{#refresh_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:search()">{#search_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td></tr>
-			</table>
+			{include file="default/nav_menu.htm"}
 		</td>
 
-
-		<td bgcolor=white valign=top>
+		<td bgcolor="white" valign="top">
 			<table width="500" border="0" cellspacing="1" cellpadding="0">
 				<tr><td class="headerright" size="20%">{#adr_name#} &nbsp;</td><td class=default> &nbsp;{$umAddrName|escape:"html"}</td></tr>
 				<tr><td class="headerright">{#adr_email#} &nbsp;</td><td class=default> &nbsp;{$umAddrEmail|escape:"html"}</td></tr>
@@ -45,5 +32,4 @@
 	</tr>
 </table>
 
-</body>
-</html> 
+{include file="default/footer.htm"}

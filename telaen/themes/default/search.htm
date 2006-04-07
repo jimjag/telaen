@@ -12,22 +12,14 @@
 
 </head>
 
-<body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+{include file="default/header.htm"}
 
-<table cellspacing=2 cellpadding=0 border=0 align=center bgcolor=White width="760">
-	<tr><td colspan="2"><img src="images/telaen_logo.jpg" width="310" height="73" border=0 alt="Telaen Webmail"></td></tr>
+<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
+	
 	<tr>
 		<td valign=top width="15%">
 
-			<table cellspacing=1 cellpadding=3 width="100%" border=0 bgcolor=White>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td></tr>
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="mClk(this);"><a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td></tr>
-			</table>		
+			{include file="default/nav_menu.htm" refresh="false"}	
 
 		</td>
 		<td valign=top>
@@ -82,6 +74,6 @@
 		</td>
 	</tr>
 </table>
-</body>
-</html>
+
+{include file="default/footer.htm"}
 
