@@ -119,7 +119,7 @@ function cleanup_dirs ($userfolder, $logout) {
 				$trash = "spam";
 				if(!is_array($sess["headers"][base64_encode($trash)])) {
 					$retbox = $UM->mail_list_msgs($trash);
-					$sess["headers"][base64_encode($trash)] = $retbox[0];
+					$sess["headers"][base64_encode($trash)] = $retbox[1];
 				}
 				$trash = $sess["headers"][base64_encode($trash)];
 		
