@@ -20,6 +20,11 @@ Telaen:
 
  * Fix nasty bug where CC addresses were not being delivered
    if using the 'mail' Mailer (PHPMailer bug).
+	
+ * Templates improvement, now we have a page header and footer
+   included in all pages (actually not for login and pop-ups).
+   This allow a faster style personalization.
+
 
 1.1.0-beta2:
 
