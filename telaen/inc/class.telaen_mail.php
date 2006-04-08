@@ -543,6 +543,7 @@ class Telaen extends Telaen_core {
 	 *   $myreturnarray[1] == the auto-spam populated list
 	 *   $myreturnarray[2] == return status where:
 	 *     -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
+	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
 	 */
 	function mail_list_msgs($boxname = "INBOX", $headers = Array()) {
 
@@ -961,8 +962,17 @@ class Telaen extends Telaen_core {
 			}
 		}
 		$myreturnarray = Array();
-		$myreturnarray[0] = $messagescopy; 
-		$myreturnarray[1] = $spamcopy;
+		/*
+		 * Special Hack: if we are listing the SPAM folder for any
+		 * reason, ensure that the 1st array *IS* the SPAM folder
+		 */
+		if (strtoupper($boxname) == "SPAM")) {
+			$myreturnarray[0] = $spamcopy; 
+			$myreturnarray[1] = $messagescopy;
+		} else {
+			$myreturnarray[0] = $messagescopy; 
+			$myreturnarray[1] = $spamcopy;
+		}
 		$myreturnarray[2] = 1;
 		unset($messagescopy);
 		unset($spamcopy);
