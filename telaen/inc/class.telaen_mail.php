@@ -966,7 +966,7 @@ class Telaen extends Telaen_core {
 		 * Special Hack: if we are listing the SPAM folder for any
 		 * reason, ensure that the 1st array *IS* the SPAM folder
 		 */
-		if (strtoupper($boxname) == "SPAM")) {
+		if (strtoupper($boxname) == "SPAM") {
 			$myreturnarray[0] = $spamcopy; 
 			$myreturnarray[1] = $messagescopy;
 		} else {
