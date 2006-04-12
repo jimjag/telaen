@@ -57,12 +57,6 @@ var TinyMCE_FullPagePlugin = {
 
 	cleanup : function(type, content, inst) {
 		switch (type) {
-			case "submit_content":
-				if (inst.fullpageTopContent)
-					content = inst.fullpageTopContent + content + "\n</body>\n</html>";
-
-				break;
-
 			case "insert_to_editor":
 				var tmp = content.toLowerCase();
 				var pos = tmp.indexOf('<body'), pos2;

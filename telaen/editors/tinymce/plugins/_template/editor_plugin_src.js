@@ -168,7 +168,7 @@ var TinyMCE_TemplatePlugin = {
 	 */
 	handleEvent : function(e) {
 		// Display event type in statusbar
-		top.status = "template plugin event: " + e,type;
+		top.status = "template plugin event: " + e.type;
 
 		return true; // Pass to next handler
 	},

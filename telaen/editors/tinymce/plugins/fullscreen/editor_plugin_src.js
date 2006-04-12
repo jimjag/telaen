@@ -41,7 +41,8 @@ var TinyMCE_FullScreenPlugin = {
 				} else {
 					tinyMCE.setWindowArg('editor_id', editor_id);
 
-					var win = window.open(tinyMCE.baseURL + "/plugins/fullscreen/fullscreen.htm", "mceFullScreenPopup", "fullscreen=yes,menubar=no,toolbar=no,scrollbars=no,resizable=yes,left=0,top=0,width=" + screen.availWidth + ",height="  + screen.availHeight);
+					var win = window.open(tinyMCE.baseURL + "/plugins/fullscreen/fullscreen.htm", "mceFullScreenPopup", "fullscreen=yes,menubar=no,toolbar=no,scrollbars=no,resizable=yes,left=0,top=0,width=" + screen.availWidth + ",height=" + screen.availHeight);
+					try { win.resizeTo(screen.availWidth, screen.availHeight); } catch (e) {}
 				}
 		
 				return true;

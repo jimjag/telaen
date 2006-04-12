@@ -73,7 +73,7 @@ var TinyMCE_PreviewPlugin = {
 					html += '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
 					html += '<link href="' + tinyMCE.getParam("content_css") + '" rel="stylesheet" type="text/css" />';
 					html += '</head>';
-					html += '<body>';
+					html += '<body dir="' + tinyMCE.getParam("directionality") + '">';
 					html += c;
 					html += '</body>';
 					html += '</html>';

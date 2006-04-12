@@ -80,6 +80,3 @@ rowgroup : 'Skupina řádků',
 colgroup : 'Skupina sloupců',
 missing_scope: 'Jste si jistý(á), že chcete pokračovat bez vyplnění rozsahu pro tuto buňku tabulky? Bez něj může být težké handicapovaným uživatelům porozumět obsahu nebo datům obsažených v tabulce.'
 });
-
-});
-
