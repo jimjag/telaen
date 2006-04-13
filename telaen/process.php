@@ -68,10 +68,11 @@ if( !is_array($headers)
 				/*
 				 * Fill the deleted mails into an array. We rebuild the
 				 * internal list later.
-				 */
+				 */	
+				$expunge = true;			
 				$delarray[$i]["del"] = 1;
-				$expunge = true;
 				$deletecount++;
+				
 			} else
 				$delarray[$i]["del"] = 0;
 
@@ -111,8 +112,14 @@ if( !is_array($headers)
 				}
 			}
 
+			
+			/**
+			*  Skip these if we have mark/unmark operation on msg list 
+			*/
 			$num = 20;
-			if ($messagecount > $num || (count($delarray) - $deletecount > $num)) {
+			
+			if ($decision != "mark" && $decision != "unmark" && ($messagecount > $num || (count($delarray) - $deletecount > $num))) {
+
 				/*
 				 * Renumber the message-ids after we deleted a mail. It's
 				 * still a lot faster than reloading the whole message list.
