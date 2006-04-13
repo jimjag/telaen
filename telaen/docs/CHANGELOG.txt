@@ -18,6 +18,9 @@ Telaen:
 
 1.1.0:
 
+ * Fix bug where selected messages disappear from list
+   on mark/unmark read functions with 20 or more messages.
+
  * Fix bug where auto-deleting SPAM could affect other
    messages in the INBOX.
 
