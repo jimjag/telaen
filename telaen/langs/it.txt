@@ -9,7 +9,7 @@ spam_extended					= Spam
 #Navigation texts
 
 previous_text					= Precedente
-next_text					= Successivo
+next_text					= Successiva
 
 # Mail Server Errors
 
@@ -19,16 +19,16 @@ error_other					= Errore di sistema, contattare l'amministratore di sistema
 
 #Invalid name of mailbox
 
-error_invalid_name				= Nome invalido - Usare i caratteri  A-Z, 0-9, .- e o spazio
+error_invalid_name				= Nome non valido - Usare i caratteri  A-Z, 0-9, .-
 
 
 #Validations when sending mails            ;
 
-error_no_recipients				= Necessario impostare l'indizzo e-mail
-error_compose_invalid_mail1_s	= Questa e-mail sembra non essere valida
-error_compose_invalid_mail1_p	= Queste e-mail sembrano non essere valide
-error_compose_invalid_mail2_s	= Scrivere un massaggio prima di inviare un messaggio
-error_compose_invalid_mail2_p	= Scrivere dei massaggio prima di inviare dei messaggio
+error_no_recipients				= Devi impostare almeno un indirizzo e-mail
+error_compose_invalid_mail1_s			= Questa e-mail sembra non essere valida
+error_compose_invalid_mail1_p			= Queste e-mail sembrano non essere valide
+error_compose_invalid_mail2_s			= Scrivere un messaggio prima di inviare l'email
+error_compose_invalid_mail2_p			= Scrivere dei messaggi prima di inviare l'email
 
 
 #Confirmation of delete                    ;
@@ -66,18 +66,18 @@ date_format 					= %d/%m/%y %H:%M
 default_char_set				= iso-8859-1
 
 messages_mnu					= Messaggi
-compose_mnu						= Scrivi
-refresh_mnu						= Refresh
-folders_mnu						= Cartelle
-search_mnu						= Cerca
-address_mnu						= Agenda
+compose_mnu					= Scrivi
+refresh_mnu					= Refresh
+folders_mnu					= Cartelle
+search_mnu					= Cerca
+address_mnu					= Agenda
 empty_trash_mnu					= Svuota cestino
-prefs_mnu						= Preferenze
-logoff_mnu 						= Uscita
+prefs_mnu					= Preferenze
+logoff_mnu 					= Uscita
 
 
 
-reply_prefix					= Rv:
+reply_prefix					= Re:
 forward_prefix					= Fw:
 
 reply_delimiter					= --------- Messaggio Originale --------
@@ -93,8 +93,8 @@ reply_subject_hea				= Oggetto:
 # page-specific vars
 [Headers]
 
-key_hea							= Key
-value_hea						= Value
+key_hea						= Key
+value_hea					= Value
 
 [Folders]
 
@@ -103,9 +103,9 @@ fld_messages_hea				= Messaggi
 fld_size_hea					= Dimensioni
 fld_empty_hea					= Svuota
 fld_delete_hea					= Cancella
-fld_total						= Totale:
+fld_total					= Totale:
 fld_make_new					= Crea nuova cartella
-folders_to						= Sposta cartella
+folders_to					= Sposta cartella
 
 
 [MessageList]
@@ -140,36 +140,36 @@ msg_in_the_folder				= nella cartella
 
 [Login]
 
-lgn_title						= Accedi
+lgn_title					= Accedi
 lgn_welcome_msg					= Benvenuto, accedi alla tua posta
 lng_user_email					= E-mail
 lng_user_name					= Username
 lng_user_pwd					= Password
-lng_theme						= Tema
+lng_theme					= Tema
 lng_language					= Lingua
 lng_login_btn					= Accedi &gt;&gt;
-lng_cookie_not_enabled			= I cookies devono essere abilitati
-lng_cookie_not_valid			= Check Sicurezza Cookies Fallito
+lng_cookie_not_enabled				= I cookies devono essere abilitati
+lng_cookie_not_valid				= Check Sicurezza Cookies Fallito
 
 
 [Newmessage]
 
-to_hea							= Per:
-cc_hea							= Cc:
-bcc_hea							= Bcc:
-subject_hea						= Oggetto:
-address_tip						= Dalla rubrica
+to_hea						= Per:
+cc_hea						= Cc:
+bcc_hea						= Bcc:
+subject_hea					= Oggetto:
+address_tip					= Dalla rubrica
 
-attach_hea						= Allegato:
+attach_hea					= Allegato:
 attch_add_new					= Aggiungi file
 attch_name_hea					= Nome
-attch_size						= Dimesioni
+attch_size					= Dimensioni
 attch_type_hea					= Tipo
 attch_dele_hea					= Cancella
 attch_no_hea					= Nessun allegato
 
 add_signature					= Aggiungi firma
-send_text						= Invia
+send_text					= Invia
 
 result_error					= Non è stato possibile inviare l'e-mail
 result_success					= E-mail inviata correttamente
