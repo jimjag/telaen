@@ -42,7 +42,7 @@ if(isset($tipo) && $tipo == "send") {
 		} elseif ($footer != "") $body .= $footer;
 
 		$mail->CharSet		= $default_char_set;
-		$mail->Hostname		= getenv("REMOTE_ADDR");
+		$mail->Hostname		= getenv("SERVER_ADDR");
 		$mail->From 		= ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$sess["email"];
 		$mail->FromName 	= $UM->mime_encode_headers($prefs["real-name"]);
 		$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));
@@ -450,11 +450,11 @@ $tmpbody";
 		if($show_advanced) {
 			$body = "
 <br>
-<BLOCKQUOTE dir=ltr style=\"PADDING-RIGHT: 0px; PADDING-LEFT: 5px; MARGIN-LEFT: 5px; BORDER-LEFT: #000000 2px solid; MARGIN-RIGHT: 0px\">
-  <DIV style=\"FONT: 10pt arial\">
+<blockquote dir=\"ltr\" style=\"padding-right: 0px; padding-left: 5px; margin-left: 5px; border-left: #000000 2px solid; margin-right: 0px\">
+  <div style=\"font: 10pt arial\">
   $body
-  </DIV>
-</BLOCKQUOTE>
+  </div>
+</blockquote>
 ";
 		}
 
@@ -502,13 +502,13 @@ $tmpbody";
 
 
 	$strto = (isset($nameto) && eregi("([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_])",$mailto))?
-	"<input class=textbox style=\"width : 200px;\" type=text size=20 name=to value=\"&quot;".htmlspecialchars(stripslashes($nameto))."&quot; <".htmlspecialchars(stripslashes($mailto)).">\">
-	":"<input class=textbox style=\"width : 200px;\" type=text size=20 name=to value=\"".htmlspecialchars(stripslashes($to))."\">";
+	"<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"to\" value=\"&quot;".htmlspecialchars(stripslashes($nameto))."&quot; <".htmlspecialchars(stripslashes($mailto)).">\" />
+	":"<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"to\" value=\"".htmlspecialchars(stripslashes($to))."\" />";
 
 
-	$strcc = "<input class=textbox style=\"width : 200px;\" type=text size=20 name=cc value=\"".htmlspecialchars(stripslashes($cc))."\">";
-	$strbcc = "<input class=textbox style=\"width : 200px;\" type=text size=20 name=bcc value=\"".htmlspecialchars(stripslashes($bcc))."\">";
-	$strsubject = "<input class=textbox style=\"width : 200px;\" type=text size=20 name=subject value=\"".htmlspecialchars(stripslashes($subject))."\">";
+	$strcc = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"cc\" value=\"".htmlspecialchars(stripslashes($cc))."\" />";
+	$strbcc = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"bcc\" value=\"".htmlspecialchars(stripslashes($bcc))."\" />";
+	$strsubject = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"subject\" value=\"".htmlspecialchars(stripslashes($subject))."\" />";
 
 
 	if(array_key_exists("attachments", $sess) && count($attachs = $sess["attachments"]) > 0) {
