@@ -5,6 +5,7 @@
 body {
 	font-family : Verdana, Arial, sans-serif; 
 	text-decoration : none;
+	text-align: center;
 	background-color: #778899;
 	margin: 0;
 	color : Black;
@@ -28,12 +29,14 @@ img {
 
 /** Head logo */
 #logo {
+	text-align: left;
 	background-color: #FFFFFF;
 	width: 100%;
 }
 
 /** Main content */
 #content {
+	text-align: left;
 	width: 760px;
 	margin: 0 auto;
 	margin-top: 5px;
