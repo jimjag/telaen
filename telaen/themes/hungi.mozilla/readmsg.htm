@@ -82,15 +82,15 @@
 						<td>
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
 								<tr height="22" bgcolor="#f1f1f1">
-									<td class="headers" width="60%">&nbsp;<b>{#attch_name_hea#}</b> ({#attch_force_hea#})</td>
-									<td class="headers"> &nbsp;<b>{#attch_size_hea#}</b></td>
-									<td class="headers"> &nbsp;<b>{#attch_type_hea#}</b></td>
+									<td class="headersLeft" width="60%">&nbsp; .: <b>{#attch_name_hea#}</b> ({#attch_force_hea#}) :.</td>
+									<td class="headers">.: <b>{#attch_size_hea#}</b> :.</td>
+									<td class="headersLeft">.: <b>{#attch_type_hea#}</b> :.</td>
 								</tr>
 								{section name=i loop=$umAttachList}
 								<tr bgcolor="white">
 									<td class="default"> &nbsp;{$umAttachList[i].normlink}{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> {$umAttachList[i].downlink}<img src="./images/download.gif" width="12" height="12" border="0" alt="" title="Download"></a></td>
-									<td class="default">{$umAttachList[i].size}Kb &nbsp;</td>
-									<td class="default"> &nbsp;{$umAttachList[i].type}</td>													
+									<td class="cent">{$umAttachList[i].size}Kb</td>
+									<td class="default">{$umAttachList[i].type}</td>													
 								</tr>
 								{/section}	
 							</table>

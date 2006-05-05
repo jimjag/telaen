@@ -51,18 +51,18 @@
 					<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
 							{if $umHaveAttachs eq 1}
 								<tr>
-									<td height="22" width="45%" class="headers">{#attch_name_hea#}</td>
-									<td width="15%" class="headerright2">{#attch_size#} &nbsp;</td>
-									<td width="30%" class="headers">{#attch_type_hea#}</td>
-									<td width="10%" class="headers">{#attch_dele_hea#}</td>
+									<td width="40%" class="headersLeft">&nbsp;.: <b>{#attch_name_hea#}</b> :. </td>
+									<td width="15%" class="headers">.: <b>{#attch_size#}</b> :.</td>
+									<td width="30%" class="headersLeft">.: <b>{#attch_type_hea#}</b> :.</td>
+									<td class="headers">.: <b>{#attch_dele_hea#}</b> :.&nbsp;</td>
 								</tr>
 	
 								{section name=i loop=$umAttachList}
 									<tr>
-										<td width="50%" class="default"> &nbsp;{$umAttachList[i].name|escape:"html"}</td>
-										<td width="10%" class="right">{$umAttachList[i].size}Kb&nbsp;</td>
-										<td width="30%" class="default"> &nbsp;{$umAttachList[i].type|truncate:23:"...":true}</td>
-										<td width="10%" class="default"> &nbsp;<a href="{$umAttachList[i].link}">OK</a></td>
+										<td class="default">&nbsp; {$umAttachList[i].name|escape:"html"}</td>
+										<td class="cent">{$umAttachList[i].size}Kb</td>
+										<td class="default">{$umAttachList[i].type|truncate:23:"...":true}</td>
+										<td class="cent"><a href="{$umAttachList[i].link}">OK</a></td>
 									</tr>
 								{/section}
 							{else}							
@@ -70,7 +70,7 @@
 									<td><img src="themes/hungi.mozilla/images/header-bg-left.gif" alt="" /></td><td height="22" width="100%" class="headers"> &nbsp;{#attch_no_hea#}</td><td><img src="themes/hungi.mozilla/images/header-bg-right.gif" alt="" /></td>
 								</tr>
 							{/if}
-							<tr><td class="separator" colspan="2"></td></tr>
+							<tr><td class="separator" colspan="4"></td></tr>
 						</table>
 						<table width="100%" border="0" cellspacing="1" cellpadding="0">
 										
