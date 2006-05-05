@@ -251,6 +251,24 @@ td.headers {
 		color:  #004080;
 }
 
+td.headersLeft {
+		font-family : Verdana, Arial, sans-serif;
+		background-color : #CFCFCF;
+		background-image: url(images/header-bg.gif);
+		text-align : left;
+		font-size : 8pt;
+		color:  #004080;
+}
+
+td.headersRight {
+		font-family : Verdana, Arial, sans-serif;
+		background-color : #CFCFCF;
+		background-image: url(images/header-bg.gif);
+		text-align : right;
+		font-size : 8pt;
+		color:  #004080;
+}
+
 td.separator {
 	background-image: url('images/cellseparator.gif');
 	height: 2px;

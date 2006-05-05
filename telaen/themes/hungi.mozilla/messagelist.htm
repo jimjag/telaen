@@ -40,14 +40,14 @@
 				    <td width="34" class="headers"><img src="./images/prior_high.gif" width="5" height="11" border="0" alt="" />&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="" />&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt="" /></td>
 
 					{if $umFolder eq "sent"}
-				    <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('toname')">{#to_hea#}{$umToArrow}</a></b> :.</td>
+				    <td width="210" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('toname')">{#to_hea#}{$umToArrow}</a></b> :.</td>
 					{else}
-				    <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('fromname')">{#from_hea#}{$umFromArrow}</a></b> :.</td>
+				    <td width="210" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('fromname')">{#from_hea#}{$umFromArrow}</a></b> :.</td>
 					{/if}
 					
-				    <td class="headers">.: <b><a class="menu" href="javascript:sortby('subject')">{#subject_hea#}{$umSubjectArrow}</a></b> :.</td>
+				    <td class="headersLeft">.: <b><a class="menu" href="javascript:sortby('subject')">{#subject_hea#}{$umSubjectArrow}</a></b> :.</td>
 				    <td width="100" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{#date_hea#}{$umDateArrow}</a></b> :.</td>
-				    <td width="100" class="headers">.: <b><a class="menu" href="javascript:sortby('size')">{#size_hea#}{$umSizeArrow}</a></b> :.</td>
+				    <td width="100" class="headersRight">.: <b><a class="menu" href="javascript:sortby('size')">{#size_hea#}{$umSizeArrow}</a></b> :.</td>
 				</tr>
 			
 				{section name=i loop=$umMessageList}
@@ -93,7 +93,7 @@
 			{/if}
 			{if $umHaveSpam eq "TRUE"}
 			<tr>
-				<td class="cent" colspan="7"><i>{#have_spam#}</i></td>
+				<td class="cent" colspan="7"><a href="process.php?folder=spam"><i>{#have_spam#}</i></a></td>
 			</tr>
 			{/if}			
 			{if $umQuotaEnabled eq 1}

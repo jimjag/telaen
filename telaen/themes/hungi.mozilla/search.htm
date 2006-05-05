@@ -61,11 +61,11 @@
 			{if $umDoSearch}
 
 				<tr height="22">
-				    <td width="35"  class="headers"><img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
-				    <td width="200" class="headers">.: <b>{#sch_subject_hea#}</b> :.</td>
-			    	<td  class="headers">.: <b>{#sch_from_hea#}</b> :.</td>
-				    <td width="90" class="headers">.: <b>{#sch_date_hea#}</b> :.</td>
-				    <td width="140" class="headers">.: <b>{#sch_folder_hea#}</b> :.</td>
+					<td width="35" class="headers"><img src="./images/prior_high.gif" width=5 height=11 border="0" alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
+					<td width="200" class="headersLeft">.: <b>{#sch_subject_hea#}</b> :.</td>
+					<td  class="headersLeft">.: <b>{#sch_from_hea#}</b> :.</td>
+					<td width="90" class="headers">.: <b>{#sch_date_hea#}</b> :.</td>
+					<td width="140" class="headers">.: <b>{#sch_folder_hea#}</b> :.</td>
 				</tr>
 				{section name=i loop=$umMessageList}
 				<tr>
@@ -73,7 +73,7 @@
 					<td class="default">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</td>
 					<td class="default"><a href="{$umMessageList[i].composelink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a></td>
 					<td class="cent">{$umMessageList[i].date|date_format:#date_format#}</td>
-					<td class="default">&nbsp;<a href="{$umMessageList[i].folderlink}">{$umMessageList[i].foldername|escape:"html"}</a></td>
+					<td class="cent">&nbsp;<a href="{$umMessageList[i].folderlink}">{$umMessageList[i].foldername|escape:"html"}</a></td>
 				</tr>
 				<tr><td height="2" colspan="5" background="themes/hungi.mozilla/images/cellseparator.gif"></td></tr>
 				{sectionelse}

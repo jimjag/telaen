@@ -18,23 +18,22 @@
 		
 	<table width="100%" border="0" cellspacing="0" cellpadding="2" bgcolor="#DDE3EB">
 		<tr>
-                    <td height="15" width="40%" class="headers"><b>{#adr_name_hea#}</b></td>
-                    <td width="40%" class="headers"><b>{#adr_email_hea#}</b></td>
-                    <td width="10%" class="headers"><b>{#adr_edit_hea#}</b></td>
+			<td height="15" width="40%" class="headersLeft">.: <b>{#adr_name_hea#}</b> :.</td>
+			<td width="40%" class="headersLeft">.: <b>{#adr_email_hea#}</b> :.</td>
+			<td width="10%" class="headers">.: <b>{#adr_edit_hea#}</b> :.</td>
 <!--
-					<td width="10%" class="headers">{#adr_expo_hea#}</td>
--->
-					<td width="10%" class="headers"><b>{#adr_dele_hea#}</b></td>
+			<td width="10%" class="headers">{#adr_expo_hea#}</td>
+-->			<td width="10%" class="headers">.: <b>{#adr_dele_hea#}</b> :.</td>
 		</tr>
 		{section name=i loop=$umAddressList}
 		<tr>
 	                <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].viewlink}">{$umAddressList[i].name}</a></td>
 	                <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].composelink}">{$umAddressList[i].email}</a></td>
-	                <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].editlink}">OK</a></td>
+	                <td class="cent"> &nbsp;<a class="menu" href="{$umAddressList[i].editlink}">OK</a></td>
 <!--
 					<td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].exportlink}">OK</a></td>
 -->
-			<td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].dellink}">OK</a></td>
+			<td class="cent"> &nbsp;<a class="menu" href="{$umAddressList[i].dellink}">OK</a></td>
 		</tr>
 				
 		<tr><td colspan="4" class="separator"></td></tr>

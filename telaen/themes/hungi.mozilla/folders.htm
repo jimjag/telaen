@@ -10,18 +10,16 @@
 
 {include file="hungi.mozilla/header.htm"}
 
-<!-- menu -->
 {include file="hungi.mozilla/nav_menu.htm"}
-
 
 
 			<table cellspacing="0" cellpadding="2" width="100%" border="0">
 			<tr height="20">
-			    <td width="30%" class="headers">.: {#fld_name_hea#} :.</td>
-			    <td width="20%" class="headers">.: {#fld_messages_hea#} :.</td>
-			    <td width="15%" class="headers">.: {#fld_size_hea#} :.</td>
-			    <td width="15%" class="headers">.: {#fld_empty_hea#} :.</td>
-			    <td width="20%" class="headers">.: {#fld_delete_hea#} :.</td>
+			    <td width="30%" class="headersLeft">.:<b> {#fld_name_hea#} </b>:.</td>
+			    <td width="20%" class="headers">.:<b> {#fld_messages_hea#} </b>:.</td>
+			    <td width="15%" class="headersRight">.:<b> {#fld_size_hea#} </b>:.</td>
+			    <td width="15%" class="headers">.:<b> {#fld_empty_hea#} </b>:.</td>
+			    <td width="20%" class="headers">.:<b> {#fld_delete_hea#} </b>:.</td>
 			</tr>
 
 			{section name=i loop=$umFolderList}
