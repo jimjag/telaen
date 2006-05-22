@@ -27,6 +27,11 @@
 				<tr>										
 					<td colspan="7" class="default">&nbsp;&nbsp;
 					{$umWelcomeMessage}
+			{if $umHaveSpam eq "TRUE"}
+                        - <a href="process.php?folder=spam" class="spam"><i>{#have_spam#}</i></a>
+                        
+                        {/if}
+
 					</td>
 				</tr>
 				{if $umErrorMessage neq ""}
@@ -36,23 +41,23 @@
 				{/if}
 	
 				<tr>
-				    <td width="5" class="headers"><input type="checkbox" name="chkall" onclick="sel()" /></td>
-				    <td width="34" class="headers"><img src="./images/prior_high.gif" alt="" />&nbsp;<img src="images/attach.gif" alt="" />&nbsp;<img src="images/msg_read.gif" alt="" /></td>
+				    <td width="20" class="headers"><input type="checkbox" name="chkall" onclick="sel()" /></td>
+				    <td width="34" class="headersLeft"><img src="./images/prior_high.gif" alt="" />&nbsp;<img src="images/attach.gif" alt="" />&nbsp;<img src="images/msg_read.gif" alt="" /></td>
 
 					{if $umFolder eq "sent"}
-				    <td width="210" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('toname')">{#to_hea#}{$umToArrow}</a></b> :.</td>
+				    <td width="180" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('toname')">{#to_hea#}{$umToArrow}</a></b> :.</td>
 					{else}
-				    <td width="210" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('fromname')">{#from_hea#}{$umFromArrow}</a></b> :.</td>
+				    <td width="180" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('fromname')">{#from_hea#}{$umFromArrow}</a></b> :.</td>
 					{/if}
 					
-				    <td class="headersLeft">.: <b><a class="menu" href="javascript:sortby('subject')">{#subject_hea#}{$umSubjectArrow}</a></b> :.</td>
-				    <td width="120" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{#date_hea#}{$umDateArrow}</a></b> :.</td>
-				    <td width="100" class="headersRight">.: <b><a class="menu" href="javascript:sortby('size')">{#size_hea#}{$umSizeArrow}</a></b> :.&nbsp;</td>
+				    <td width="38%" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('subject')">{#subject_hea#}{$umSubjectArrow}</a></b> :.</td>
+				    <td width="140" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{#date_hea#}{$umDateArrow}</a></b> :.</td>
+				    <td width="120" class="headersRight">.: <b><a class="menu" href="javascript:sortby('size')">{#size_hea#}{$umSizeArrow}</a></b> :.&nbsp;</td>
 				</tr>
 			
 				{section name=i loop=$umMessageList}
 				<tr>
-					<td class="default">{$umMessageList[i].checkbox}</td>
+					<td class="cent">{$umMessageList[i].checkbox}</td>
 					<td class="default">{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
 
 					{if $umFolder eq "sent"}
@@ -91,14 +96,10 @@
 					<td colspan="7" class="cent"><br/> &nbsp;&nbsp;{#no_messages#} <b>{$umBoxName|escape:"html"}</b><br/><br/></td>
 				</tr>
 			{/if}
-			{if $umHaveSpam eq "TRUE"}
-			<tr>
-				<td class="cent" colspan="7"><a href="process.php?folder=spam"><i>{#have_spam#}</i></a></td>
-			</tr>
-			{/if}			
+
 			{if $umQuotaEnabled eq 1}
 			<tr>
-				<td class="usage" colspan="7">&nbsp; {#quota_usage_info#}: {#quota_usage_used#} <b>{$umTotalUsed}</b>Kb {#quota_usage_of#} <b>{$umQuotaLimit}</b>Kb {#quota_usage_avail#}<br/><img src="themes/hungi.mozilla/images/usage-start.gif" alt="" />{$umUsageGraph}<img src="themes/hungi.mozilla/images/usage-end.gif" alt="" /></td>
+				<td class="usage" colspan="7">{#quota_usage_info#}: {#quota_usage_used#} <b>{$umTotalUsed}</b>Kb {#quota_usage_of#} <b>{$umQuotaLimit}</b>Kb {#quota_usage_avail#}<br/>{$umUsageGraph}</td>
 			</tr>
 			{/if}
 		</table>
@@ -107,5 +108,4 @@
 
 </table>
 
-<!-- footer -->
 {include file="hungi.mozilla/footer.htm"}

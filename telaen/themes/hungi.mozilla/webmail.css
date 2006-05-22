@@ -22,8 +22,8 @@ a:hover {
 }
 
 #content {
-	width: 100%
-	margin: 0 auto;
+	width: 100%;
+	margin: 0;
 	padding: 0;
 }
 
@@ -97,8 +97,9 @@ a.login {
 
 /** Header */	
 #logo {
-	width:100%
-	padding: 5px;
+	width:100%;
+	padding: 0;
+	margin: 0;
 }
 
 /** Menu */
@@ -140,7 +141,7 @@ a.login {
 .btn {
 	height: 22px;
 	border: 0;
-	width: 40px, auto;
+	width: 40px;
 }
 
 .btnLeft {
@@ -301,6 +302,16 @@ td.headersRight {
 td.separator {
 	background-image: url('images/cellseparator.gif');
 	height: 2px;
+}
+
+a:link.spam,  a:visited.spam {
+	color: red;
+}
+
+a:hover.spam {
+        color: red;
+	/*font-weight: bold; */
+	text-decoration: underline;
 }
 
 
