@@ -29,6 +29,9 @@
 					{$umForms}
 					<td colspan="7" class="default"> &nbsp;&nbsp;
 					{$umWelcomeMessage}
+				{if $umHaveSpam eq "TRUE"}
+		                        - <a href="process.php?folder=spam" class="spam"><i>{#have_spam#}</i></a>
+        	                {/if}
 					</td>
 				</tr>
 				{if $umErrorMessage neq ""}
@@ -90,11 +93,7 @@
 				</tr>
 			{/if}
 			</form>
-			{if $umHaveSpam eq "TRUE"}
-			<tr>
-				<td class="cent" colspan=7><i>{#have_spam#}</i></td>
-			</tr>
-			{/if}
+
 			{if $umQuotaEnabled eq 1}
 			<tr>
 				<td class="cent" colspan=7>&nbsp; {#quota_usage_info#}: {#quota_usage_used#} <b>{$umTotalUsed}</b>Kb {#quota_usage_of#} <b>{$umQuotaLimit}</b>Kb {#quota_usage_avail#}<br> {$umUsageGraph}</td>

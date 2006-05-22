@@ -27,6 +27,17 @@ img {
 	border: 0px;
 }
 
+a:link.spam,  a:visited.spam {
+        color: red;
+}
+
+a:hover.spam {
+        color: red;
+        /*font-weight: bold; */
+        text-decoration: underline;
+}
+
+
 /** Head logo */
 #logo {
 	text-align: left;
