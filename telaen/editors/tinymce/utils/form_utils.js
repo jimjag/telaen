@@ -92,9 +92,10 @@ function selectByValue(form_obj, field_name, value, add_custom, ignore_case) {
 	}
 
 	if (!found && add_custom && value != '') {
-		var option = new Option('Value: ' + value, value);
+		var option = new Option(value, value);
 		option.selected = true;
 		sel.options[sel.options.length] = option;
+		sel.selectedIndex = sel.options.length - 1;
 	}
 
 	return found;

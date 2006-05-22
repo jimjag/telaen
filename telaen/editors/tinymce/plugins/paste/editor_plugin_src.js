@@ -308,15 +308,15 @@ var TinyMCE_PastePlugin = {
 				// Add the rest
 				var np = p.nextSibling;
 				while (np) {
-				        // If the node is whitespace, then
-				        // ignore it and continue on.
-				        if (np.nodeType == 3 && /^\s$/m.test(np.nodeValue)) {
-				                np = np.nextSibling;
-				                continue;
-				        }
-					
+			        // If the node is whitespace, then
+			        // ignore it and continue on.
+			        if (np.nodeType == 3 && new RegExp('^\\s$', 'm').test(np.nodeValue)) {
+			                np = np.nextSibling;
+			                continue;
+			        }
+
 					if (search == mdot) {
-					        if (np.nodeType == 1 && /^o(\s+|&nbsp;)/.test(np.innerHTML)) {
+					        if (np.nodeType == 1 && new RegExp('^o(\\s+|&nbsp;)').test(np.innerHTML)) {
 					                // Second level of nesting
 					                if (!prevul) {
 					                        prevul = ul;

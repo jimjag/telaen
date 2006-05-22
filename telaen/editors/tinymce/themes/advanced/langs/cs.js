@@ -7,7 +7,7 @@
 
 
 tinyMCE.addToLang('',{
-theme_style_select : 'Styly',
+theme_style_select : '-- Styly --',
 theme_code_desc : 'Zobrazit HTML',
 theme_code_title : 'Editace HTML',
 theme_code_wordwrap : 'Bez dělení slov',
@@ -21,7 +21,7 @@ insert_image_dimensions : 'Rozměry',
 insert_image_vspace : 'Vertikální okraj',
 insert_image_hspace : 'Horizontální okraj',
 insert_image_align : 'Zarovnání',
-insert_image_align_default : 'Výchozí',
+insert_image_align_default : '-- Výchozí --',
 insert_image_align_baseline : 'Na účaří',
 insert_image_align_top : 'Nahoru',
 insert_image_align_middle : 'Na střed',
@@ -65,6 +65,17 @@ image_list : 'Seznam',
 browse : 'Procházet',
 image_props_desc : 'Vlastnosti obrázku',
 newdocument_desc : 'Nový dokument',
-newdocument : 'Jste si opravdu jistý(á), že chcete vymazat veškerý obsah?'
+newdocument : 'Jste si opravdu jistý(á), že chcete vymazat veškerý obsah?',
+about_title : 'O TinyMCE',
+about : 'O nás',
+license : 'Licence',
+plugins : 'Pluginy',
+plugin : 'Plugin',
+author : 'Autor',
+version : 'Verze',
+loaded_plugins : 'Načtené pluginy',
+help : 'Nápověda',
+not_set : '-- Nenastaven --',
+close : 'Zavřít',
+toolbar_focus : 'Nastavení fokusu na nástrojovou lištu - Alt+Q, Nastavení fokusu na editor textu - Alt-Z, Nastavení fokusu na řádek zanoření elementů - Alt-X'
 });
-
