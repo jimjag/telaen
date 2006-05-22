@@ -45,8 +45,7 @@ $elapsedtime = (time()-$sess["last-update"])/60;
 $timeleft = ($prefs["refresh-time"]-$elapsedtime);
 
 if($timeleft > 0) {
-	$metaRefresh = "<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";
-	$smarty->assign("metaRefresh", $metaRefresh);
+	$metaRefresh = "<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";	
 	echo ($metaRefresh);
 } elseif ($prefs["refresh-time"]) {
 	redirect_and_exit("$refreshurl");
@@ -87,7 +86,12 @@ $end_pos   = (($start_pos+$reg_pp) > $nummsg)?$nummsg:$start_pos+$reg_pp;
 
 if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
 
+// here we output the meta tags... why not assign to smarty?
+$tlnMetas = $metaRefresh . "\n" . $nocache;
+$smarty->assing("tlnMetas", $tlnMetas);
+
 echo($nocache);
+
 
 $jsquota = ($exceeded)?"true":"false";
 $jssource = "
