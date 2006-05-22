@@ -796,20 +796,50 @@ class Telaen_core {
 
 	/**
 	Convert a TIMESTAMP value into a RFC-compliant date
+	Vola's note: I think it does exactly the opposite...
 	*/
 
 	function build_mime_date($mydate,$timezone = "+0000") {
+
 		global $server_timezone_offset;
-		if(!ereg("((\\+|-)[0-9]{4})",$timezone)) $timezone = "+0000";
-		if(!$intdate = @strtotime($mydate)) return time();
-		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$timezone,$regs)) $datetimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
-		else $datetimezone = 0;
-		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$this->timezone,$regs)) $usertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
-		else $usertimezone = 0;
-		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$server_timezone_offset,$regs)) $servertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
-		else $servertimezone = 0;
-		$diff = $datetimezone+$usertimezone+servertimezone;
-		return ($intdate+$diff);
+
+		// check if $timezone is valid
+		if(!ereg("((\\+|-)[0-9]{4})",$timezone)) 
+			$timezone = "+0000";
+		// check if $mydate is valid, if no return current server time
+		if(!$intdate = @strtotime($mydate)) 
+			return time();
+		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$timezone,$regs)) 
+			$datetimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
+		else 
+			$datetimezone = 0;
+		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$this->timezone,$regs)) 
+			$usertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
+		else 
+			$usertimezone = 0;
+		if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$server_timezone_offset,$regs)) 
+			$servertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
+		else 
+			$servertimezone = 0;
+
+		/** 	Umm... the out time must be: 		
+  		 	mailTime - mailTimeOffset = UTCmailtime (es: 10.00 AM +0200 = 8.00 AM UTC or 10.00 AM -0400 = 2.00 PM... 10-(-4) = 14)
+			UTCmailtime + useroffset = UserMailTime (es: user zone +0200, mailUTC 8.00 AM = 10.00 AM or with -0400 = 6.00 AM) 
+			... is it ok ??? ...     
+			The serveroffset is very unuseful...
+		*/
+
+//		$diff = $datetimezone+$usertimezone+servertimezone;
+		
+		// debug echos
+/**		echo "Server offset time config:" .$server_timezone_offset ."<br>";
+		echo "Date time offset:" . $timezone ."<br>";
+		echo "Date on function:" . $mydate ."<br>";
+		echo "Converted date + date offset + user offset  + server offset:".$intdate." ". $datetimezone ." ". $usertimezone ." ". $servertimezone ."<br>";
+		echo "Returned time:" . ($intdate-$datetimezone+$usertimezone) ."<br>"; */
+
+		//return ($intdate+$diff);
+		return($intdate-$datetimezone+$usertimezone);
 	}
 
 
