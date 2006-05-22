@@ -18,6 +18,12 @@ Telaen:
 
 1.1.0:
 
+ * Fixed bug on email time calc.
+
+ * Adjusted titles alignment an other little improvements on themes. 
+
+1.1.0-rc1:
+
  * Fix bug where selected messages disappear from list
    on mark/unmark read functions with 20 or more messages.
 
