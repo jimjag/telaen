@@ -16,7 +16,9 @@ CHANGELOG:
 Telaen:
 ----------------------------------------------------------------
 
-1.1.0:
+1.1.0-rc2:
+
+ * Updated TinyMCE to latest rev.
 
  * Fixed bug on email time calc.
 
