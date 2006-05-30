@@ -88,7 +88,7 @@ if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?fold
 
 // here we output the meta tags... why not assign to smarty?
 $tlnMetas = $metaRefresh . "\n" . $nocache;
-$smarty->assing("tlnMetas", $tlnMetas);
+$smarty->assign("tlnMetas", $tlnMetas);
 
 echo($nocache);
 
