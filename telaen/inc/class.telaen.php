@@ -822,24 +822,19 @@ class Telaen_core {
 		else 
 			$servertimezone = 0;
 
-		/** 	Umm... the out time must be: 		
-  		 	mailTime - mailTimeOffset = UTCmailtime (es: 10.00 AM +0200 = 8.00 AM UTC or 10.00 AM -0400 = 2.00 PM... 10-(-4) = 14)
-			UTCmailtime + useroffset = UserMailTime (es: user zone +0200, mailUTC 8.00 AM = 10.00 AM or with -0400 = 6.00 AM) 
-			... is it ok ??? ...     
-			The serveroffset is very unuseful...
+		/** Umm... the out time must be: 		
+		       mailTime - mailTimeOffset = UTCmailtime (es: 10.00 AM +0200 = 8.00 AM UTC or 10.00 AM -0400 = 2.00 PM... 10-(-4) = 14)
+		       UTCmailtime + useroffset = UserMailTime (es: user zone +0200, mailUTC 8.00 AM = 10.00 AM or with -0400 = 6.00 AM) 
 		*/
-
-//		$diff = $datetimezone+$usertimezone+servertimezone;
 		
 		// debug echos
 /**		echo "Server offset time config:" .$server_timezone_offset ."<br>";
 		echo "Date time offset:" . $timezone ."<br>";
 		echo "Date on function:" . $mydate ."<br>";
 		echo "Converted date + date offset + user offset  + server offset:".$intdate." ". $datetimezone ." ". $usertimezone ." ". $servertimezone ."<br>";
-		echo "Returned time:" . ($intdate-$datetimezone+$usertimezone) ."<br>"; */
+		echo "Returned time:" . ($intdate - $datetimezone + $usertimezone + $servertimezone) ."<br>"; */
 
-		//return ($intdate+$diff);
-		return($intdate-$datetimezone+$usertimezone);
+		return ($intdate - $datetimezone + $usertimezone + $servertimezone);
 	}
 
 
