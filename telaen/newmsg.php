@@ -22,6 +22,12 @@ if(isset($tipo) && $tipo == "send") {
 	$mail = new PHPMailer_extra;
 	$mail->PluginDir = "./inc/";
 
+	if ($phpmailer_sendmail != "") {
+		$mail->Sendmail = $phpmailer_sendmail;
+	}
+	if ($phpmailer_timeout != 0) {
+		$mail->Timeout = $phpmailer_timeout;
+	}
 	
 	$ARTo = $UM->get_names(stripslashes($to));
 	$ARCc = $UM->get_names(stripslashes($cc));

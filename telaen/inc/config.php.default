@@ -211,17 +211,32 @@ $default_folder_prefix	= "";
 
 
 ########################################################################
-# Specify mail transport
+# Specify mail transport type
 # Allowed values:
-# "smtp" 		- To use an external SMTP Server specified in $smtp_server
-# "sendmail" 	- To server's sendmail-compatible MTA. If you need to change
-#				  the path, look into /inc/class.phpmailer.php and search for
-#				  var $Sendmail          = "/usr/sbin/sendmail";
-# "mail"		- To use default PHP's mail() function
+# "smtp"       - To use an external SMTP Server specified in $smtp_server
+# "sendmail"   - To use server's sendmail-compatible MTA. If you need to
+#                change the path, see $phpmailer_sendmail below
+# "mail"       - To use default PHP's mail() function
 ########################################################################
 
 $mailer_type		= "mail";
 
+########################################################################
+# Telaen uses PHPMailer for many mailing functions. Sometimes we
+# need or want to override PHPMailer defaults for the path to
+# 'sendmail' (see the 'sendmail' mail transport type, above)
+# or the time used when PHPMailer opens an SMTP connection. The
+# 2 following variables allow that.
+#
+# NOTE: These are only used if they are non-NULL and non-0
+#
+# Examples:
+#    $phpmailer_sendmail = "/usr/lib/sendmail";
+#    $phpmailer_timeout = 60;
+########################################################################
+
+$phpmailer_sendmail = "";
+$phpmailer_timeout = 0;
 
 ########################################################################
 # In some POP3 servers, if you send a "RETR" command, your

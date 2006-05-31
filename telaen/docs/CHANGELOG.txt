@@ -16,6 +16,12 @@ CHANGELOG:
 Telaen:
 ----------------------------------------------------------------
 
+1.1.0:
+
+ * Added $phpmailer_sendmail and $phpmailer_timeout to
+   config.php.default to allow admin to easily override
+   PHPMailer's default sendmail path and SMTP timeout
+
 1.1.0-rc2:
 
  * Updated TinyMCE to latest rev.
