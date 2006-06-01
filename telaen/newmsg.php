@@ -216,7 +216,7 @@ if(isset($tipo) && $tipo == "send") {
 		mywin = 'upload.php';
 		if (rem != null) mywin += '?rem='+rem+'';
 		else mywin += '';
-		window.open(mywin,'Upload','width=300,height=50,scrollbars=0,menubar=0,status=0'); 
+		window.open(mywin,'Upload','width=400,height=150,scrollbars=0,menubar=0,status=0'); 
 	}
 
 	function doupload() {
