@@ -22,6 +22,9 @@ Telaen:
    config.php.default to allow admin to easily override
    PHPMailer's default sendmail path and SMTP timeout
 
+ * Changed attachment window size to something large enough to
+   be readable, but not too large.
+
 1.1.0-rc2:
 
  * Updated TinyMCE to latest rev.
