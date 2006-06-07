@@ -34,6 +34,10 @@ if(isset($tipo) && $tipo == "send") {
 	$ARBcc = $UM->get_names(stripslashes($bcc));
 	
 	if((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
+	
+		// set lang for error messages, english for now
+		$mail->SetLanguage("en","langs/");
+
 		// for password authenticated servers
 
 		$mail->SMTPAuth 	= $use_password_for_smtp;
