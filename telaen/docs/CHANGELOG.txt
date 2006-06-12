@@ -18,6 +18,8 @@ Telaen:
 
 1.1.0:
 
+ * Updated Smarty to version 2.6.14
+
  * Added $phpmailer_sendmail and $phpmailer_timeout to
    config.php.default to allow admin to easily override
    PHPMailer's default sendmail path and SMTP timeout
