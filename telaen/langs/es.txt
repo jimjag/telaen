@@ -151,6 +151,7 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]
+newmsg_title					= Redactar mensaje
 
 to_hea						= Para:
 cc_hea						= Copia:

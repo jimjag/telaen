@@ -11,7 +11,8 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 
 require("./inc/inc.php");
 
-echo($nocache);
+smarty->assign("pageMetas", $nocache);
+
 if (isset($rem) && $rem != "") {
 
 	$attchs = $sess["attachments"];

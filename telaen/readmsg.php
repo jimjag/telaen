@@ -51,7 +51,9 @@ if(isset($attachment)) {
 	$UM->mail_disconnect(); 
 
 }
-echo($nocache);
+
+// metas assigned to smarty
+$smarty->assign("pageMetas", $nocache);
 
 $UM->displayimages = $prefs["display-images"];
 $UM->sanitize = ($sanitize_html || !$allow_scripts);
@@ -166,8 +168,8 @@ if(count($ARCC) > 0) {
 $smarty->assign("umPageTitle",$email["subject"]);
 
 $jssource = "
-<script language=\"JavaScript\" type=\"text/javascript\">
-<!--
+<script type=\"text/javascript\">
+//<![CDATA[
 function deletemsg() { 
 	if(confirm('".ereg_replace("'","\\'",$confirm_delete)."')) 
 		with(document.move) { decision.value = 'delete'; submit(); } 
@@ -193,7 +195,7 @@ function prefs() { location = 'preferences.php'; }
 function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=600,heigth=500,scrollbars=1,status=0'); }
 function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&attachment='+attach,'','resizable=1,top=10,left=10,width=600,height=400,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
-// -->
+//]]>
 </script>
 ";
 

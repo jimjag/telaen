@@ -10,12 +10,13 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 *************************************************************************/
 
 require("./inc/inc.php");
-echo($nocache);
 
+$smarty->assign("pageMetas", $nocache);
 
 $jsquota = ($exceeded)?"true":"false";
 $jssource = "
-<script language=\"JavaScript\">
+<script type=\"text/javascript\">
+//<![CDATA[
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function goend() { location = 'logout.php'; }
@@ -31,7 +32,7 @@ function readmsg(ix,read,folder) {
 	else
 		location = 'readmsg.php?folder='+folder+'&pag=$pag&ix='+ix+''; 
 }
-
+//]]>
 </script>
 ";
 

@@ -52,6 +52,8 @@ if (!$selected_language) die("<br><br><br><div align=center><h3>Invalid language
 Templates
 ********************************************************/
 
+// Vola on 23/06/06  I think this are never used... modified for use menu/header/footer in templates
+
 $message_list_template     = "themes/$selected_theme/messagelist.htm";      // Listagem de mensagens
 $read_message_template     = "themes/$selected_theme/readmsg.htm";          // Ler a mensagem
 $folder_list_template      = "themes/$selected_theme/folders.htm";          // Listagem de pastas
@@ -71,8 +73,12 @@ $headers_window_template   = "themes/$selected_theme/headers-window.htm";   // J
 $preferences_template      = "themes/$selected_theme/preferences.htm";      // Preferencias
 $adv_editor_template       = "themes/$selected_theme/advanced-editor.htm";  // Advanced HTML Editor
 $catch_address_template    = "themes/$selected_theme/catch-address.htm";    // Address catcher
-$print_message_template    = "themes/$selected_theme/print-message.htm";    // Print friendly version
-$menu_template             = "themes/$selected_theme/menu.htm";             // Menu
+$print_message_template		= "themes/$selected_theme/print-message.htm";    // Print friendly version
+
+$menu_template			= "$selected_theme/menu.htm";			// Menu
+$header_template		= "$selected_theme/header.htm";       		// Page Header
+$footer_template        	= "$selected_theme/footer.htm";         	// Page Footer
+
 
 
 $lg = file("langs/".$selected_language.".txt");

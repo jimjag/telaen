@@ -27,10 +27,19 @@ $smarty->assign("umLanguageFile",$selected_language.".txt");
 
 $smarty->assign("umEmail",$f_email);
 
+// Assign also the webmail title to smarty, check for empty title before
+if (!isset($webmail_title) || trim($webmail_title) == "" ) {
+        $webmail_title = "Telaen Webmail";
+}
+$smarty->assign("webmailTitle", $webmail_title);
+
+// Assing the header and footer paths because inc.php is not loaded in index
+$smarty->assign("headerTemplate", $header_template);
+$smarty->assign("footerTemplate", $footer_template);
 
 $jssource = "
 <script language=\"javascript\" type=\"text/javascript\">
-<!--
+//<![CDATA[
 	function selectLanguage() {
 		sSix		= '';
 		sUser		= '';
@@ -55,7 +64,8 @@ $jssource = "
 		} catch(err) {
 			alert('Your brownser do not support JS'); // Vola: this is stupid... if js doesn't work also alert doesn't work :)
 		}
-	} // -->
+	}
+//]]> 
 </script> 
 ";
 //$smarty->debugging = true;

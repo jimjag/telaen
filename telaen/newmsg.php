@@ -12,7 +12,8 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 require("./inc/inc.php");
 require("./folder_list.php");
 
-echo($nocache);
+// assign metas
+$smarty->assign("pageMetas", $nocache);
 
 if(isset($tipo) && $tipo == "send") {
 
@@ -139,7 +140,7 @@ if(isset($tipo) && $tipo == "send") {
 
 	$jssource = "	
 	<script language=\"javascript\" type=\"text/javascript\">
-	<!--
+	//<![CDATA[
 	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 	function goend() { location = 'logout.php'; }
@@ -148,7 +149,7 @@ if(isset($tipo) && $tipo == "send") {
 	function search() {	location = 'search.php?folder=".urlencode($folder)."';}
 	function addresses() { location = 'addressbook.php'; }
 	function prefs() { location = 'preferences.php'; }
-	// -->
+	//]]>
 	</script>	
 	";
 
@@ -198,7 +199,7 @@ if(isset($tipo) && $tipo == "send") {
 
 	$jssource .= "
 	<script language=\"javascript\" type=\"text/javascript\">
-	<!--
+	//<![CDATA[
 	bIs_html = $js_advanced;
 	bsig_added = false;
 	function addsig() {
@@ -274,7 +275,7 @@ if(isset($tipo) && $tipo == "send") {
 	function search() {	location = 'search.php?folder=".urlencode($folder)."';}
 	function addrpopup(where) {
 		url = 'quick_address.php?where=' + where;
-		mywin = window.open(url,'AddressBook','width=600,height=450,top=150,left=150');
+		mywin = window.open(url,'AddressBook','width=600,height=300,top=150,left=150');
 	}
 	function addresses() { location = 'addressbook.php'; }
 	function prefs() { location = 'preferences.php'; }
@@ -326,7 +327,7 @@ if(isset($tipo) && $tipo == "send") {
 		}
 	}
 	
-	// -->
+	//]]>
 	</script>
 	";
 

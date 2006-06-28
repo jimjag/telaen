@@ -66,7 +66,8 @@ if(isset($empty)) {
 }
 
 $jssource = "
-<script language=\"JavaScript\">
+<script type=\"text/javascript\">
+//<![CDATA[
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function refreshlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function goend() { location = 'logout.php'; }
@@ -86,6 +87,7 @@ function create() {
 	}else
 		frm.submit();
 }
+//]]>
 </script>
 ";
 
@@ -207,7 +209,7 @@ $smarty->assign("umUsageGraph",$usageGraph);
 $noquota = (($totalused/1024) > $quota_limit)?1:0;
 $smarty->assign("umNoQuota",$noquota);
 
-echo($nocache);
+$smarty->assign("pageMetas",$nocache);
 
 $smarty->display("$selected_theme/folders.htm");
 

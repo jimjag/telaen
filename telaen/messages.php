@@ -45,11 +45,13 @@ $elapsedtime = (time()-$sess["last-update"])/60;
 $timeleft = ($prefs["refresh-time"]-$elapsedtime);
 
 if($timeleft > 0) {
-	$metaRefresh = "<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";	
-	echo ($metaRefresh);
+	$refreshMeta = "	<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";	
 } elseif ($prefs["refresh-time"]) {
 	redirect_and_exit("$refreshurl");
 }
+
+// Assign metas to smarty, no more bad echos output
+$smarty->assign("pageMetas", $nocache . "\n" . $refreshMeta);
 
 /* load total size */
 $totalused = 0;
@@ -86,17 +88,11 @@ $end_pos   = (($start_pos+$reg_pp) > $nummsg)?$nummsg:$start_pos+$reg_pp;
 
 if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
 
-// here we output the meta tags... why not assign to smarty?
-$tlnMetas = $metaRefresh . "\n" . $nocache;
-$smarty->assign("tlnMetas", $tlnMetas);
-
-echo($nocache);
-
-
 $jsquota = ($exceeded)?"true":"false";
 $jssource = "
-<script language=\"javascript\" type=\"text/javascript\">
-<!--
+<script type=\"text/javascript\">
+//<![CDATA[
+
 no_quota  = $jsquota;
 quota_msg = '".ereg_replace("'","\\'",$quota_exceeded)."';
 function readmsg(ix,read) {
@@ -145,7 +141,7 @@ function sortby(col) {
 	else ord = 'ASC';
 	location = 'process.php?folder=$folder&pag=$pag&sortby='+col+'&sortorder='+ord+'';
 }
-// -->
+//]]>
 </script>
 ";
 

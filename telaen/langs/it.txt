@@ -1,4 +1,9 @@
+# Italian language file for Telaen v1.1.0 #
+# Lang file mantained by vola - andreavola[at]gmail[dot]com #
+# Last edit on 27 June 2006 #
+
 # ***** GLOBAL VARS ****** #
+
 # User-friendly names to system folders
 
 inbox_extended					= Posta in arrivo
@@ -111,7 +116,7 @@ folders_to					= Sposta cartella
 [MessageList]
 
 messages_to					= Messaggi per 
-no_messages					= Nessun nuovo messaggio 
+no_messages					= Nessun nuovo messaggio nella cartella 
 
 delete_selected_mnu				= Cancella selezionato
 move_selected_mnu				= Sposta selezionato in
@@ -153,6 +158,8 @@ lng_cookie_not_valid				= Check Sicurezza Cookies Fallito
 
 
 [Newmessage]
+
+newmsg_title					= Scrivi messaggio
 
 to_hea						= Per:
 cc_hea						= Cc:

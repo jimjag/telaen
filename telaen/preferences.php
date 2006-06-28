@@ -41,8 +41,8 @@ $prefs = load_prefs();
 
 $jssource = "
 
-<script language=\"JavaScript\" type=\"text/javascript\">
-<!--
+<script type=\"text/javascript\">
+//<![CDATA[
 disbl = false;
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
@@ -59,9 +59,8 @@ function dis() {
 	} 
 }
 function checkDis() { if (disbl) return false; }
-// -->
+//]]>
 </script>
-
 ";
 
 $smarty->assign("umJS",$jssource);

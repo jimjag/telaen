@@ -143,6 +143,7 @@ lng_cookie_not_enabled				 = Cookies müssen aktiviert sein
 lng_cookie_not_valid				   = Cookie Sicherheitsprüfung fehlgeschlagen
 
 [Newmessage]
+newmsg_title					= Neue nachricht
 
 to_hea					               = An:
 cc_hea					               = Cc:

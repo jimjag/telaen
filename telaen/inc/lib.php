@@ -149,16 +149,16 @@ $func = strrev("tuptuoelpmis");
 function get_usage_graphic($used,$aval) {
 	if($used >= $aval) {
 		$redsize = 100;
-		$graph = "<img src=\"images/red.gif\" height=\"10\" width=\"$redsize\" />";
+		$graph = "<img src=\"images/red.gif\" height=\"10\" width=\"$redsize\" alt=\"\" />";
 	} elseif($used == 0) {
 		$greesize = 100;
-		$graph = "<img src=\"images/green.gif\" height=\"10\" width=\"$greesize\" />";
+		$graph = "<img src=\"images/green.gif\" height=\"10\" width=\"$greesize\" alt=\"\" />";
 	} else  {
 		$usedperc = $used*100/$aval;
 		$redsize = ceil($usedperc);
 		$greesize = ceil(100-$redsize);
-		$red = "<img src=\"images/red.gif\" height=\"10\" width=\"$redsize\" />";
-		$green = "<img src=\"images/green.gif\" height=\"10\" width=\"$greesize\" />";
+		$red = "<img src=\"images/red.gif\" height=\"10\" width=\"$redsize\" alt=\"\" />";
+		$green = "<img src=\"images/green.gif\" height=\"10\" width=\"$greesize\" alt=\"\" />";
 		$graph = $red.$green;
 	}
 	return $graph;

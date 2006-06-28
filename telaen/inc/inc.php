@@ -44,10 +44,21 @@ $start = $sess["start"];
  * otherwise, we init them and store them
  */
 require("./inc/user_tl.php");
-//
-$smarty->assign("umMenuTemplate",dirname($PATH_TRANSLATED).$menu_template);
+
+// Assing to smarty the paths for include dinamically menu/header/footer
+$smarty->assign("menuTemplate", $menu_template);
+$smarty->assign("headerTemplate", $header_template);
+$smarty->assign("footerTemplate", $footer_template);
+
 //$smarty->debugging = false;
 $smarty->assign("umLanguageFile",$selected_language.".txt");
+
+// Assign also the webmail title to smarty, check for empty title before
+if (!isset($webmail_title) || trim($webmail_title) == "" ) {
+	$webmail_title = "Telaen Webmail"; 
+}
+$smarty->assign("webmailTitle", $webmail_title);
+
 
 $UM = new Telaen();
 
@@ -160,13 +171,13 @@ Header("Cache-Control: no-cache");
 Header("Cache-Control: must-revalidate");
 Header("Pragma: no-cache");
 
+// No cache metas
 $nocache = "
-<META HTTP-EQUIV=\"Cache-Control\" CONTENT=\"no-cache\">
-<META HTTP-EQUIV=\"Expires\" CONTENT=\"-1\">
-<META HTTP-EQUIV=\"Pragma\" CONTENT=\"no-cache\">";
+	<meta http-equiv=\"Cache-Control\" content=\"no-cache\" />
+	<meta http-equiv=\"Expires\" content=\"-1\" />
+	<meta http-equiv=\"Pragma\" content=\"no-cache\" />";
+
 // Sort rules
-
-
 if(!isset($sortby) || !ereg("(subject|fromname|date|size)",$sortby)) {
 	if(array_key_exists("sort-by",$prefs) && ereg("(subject|fromname|date|size)",$prefs["sort-by"]))
 		$sortby = $prefs["sort-by"];

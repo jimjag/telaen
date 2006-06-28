@@ -19,13 +19,13 @@ array_qsort2ic($addressbook,"name");
 
 switch($where) {
 case "cc":
-	$listbox = "<select name=contacts size=10 onDblClick=\"Add('cc')\">\r\n";
+	$listbox = "<select name=\"contacts\" size=\"10\" onDblClick=\"Add('cc')\">\r\n";
 	break;
 case "bcc":
-	$listbox = "<select name=contacts size=10 onDblClick=\"Add('bcc')\">\r\n";
+	$listbox = "<select name=\"contacts\" size=\"10\" onDblClick=\"Add('bcc')\">\r\n";
 	break;
 default:
-	$listbox = "<select name=contacts size=10 onDblClick=\"Add('to')\">\r\n";
+	$listbox = "<select name=\"contacts\" size=\"10\" onDblClick=\"Add('to')\">\r\n";
 	break;
 }
 
@@ -33,10 +33,9 @@ for($i=0;$i<count($addressbook);$i++) {
 	$line = $addressbook[$i];
 	$name = htmlspecialchars(trim($line["name"]));;
 	$email = htmlspecialchars(trim($line["email"]));
-	$listbox .= "<option value=\"&quot;$name&quot; &lt;$email&gt;\"> &quot;$name&quot; &lt;$email&gt;";
+	$listbox .= "<option value=\"&quot;$name&quot; &lt;$email&gt;\"> &quot;$name&quot; &lt;$email&gt; </option>";
 }
 $listbox .= "</select>";
-
 
 $smarty->assign("umContacts",$listbox);
 $smarty->display("$selected_theme/quick_address.htm");

@@ -14,7 +14,8 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 require("./inc/inc.php");
 require("./folder_list.php");
 
-echo($nocache);
+// meta assigned to smarty
+$smarty->assign("pageMetas", $nocache);
 
 $filename = $userfolder."_infos/addressbook.ucf";
 $myfile = $UM->_read_file($filename);
@@ -25,8 +26,8 @@ array_qsort2ic($addressbook,"name");
 
 
 $jssource = "
-<script language=\"JavaScript\" type=\"text/javascript\">
-<!--
+<script type=\"text/javascript\">
+//<![CDATA[
 function goinbox() { location = 'messages.php?folder=inbox'; }
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function refreshlist() { location = 'addressbook.php' }
@@ -36,7 +37,7 @@ function addresses() { location = 'addressbook.php'; }
 function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function goend() { location = 'logout.php'; }
 function prefs() { location = 'preferences.php'; }
-//-->
+//]]>
 </script>
 ";
 

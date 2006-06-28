@@ -39,6 +39,13 @@ define("SMARTY_DIR","./smarty/");
 
 umask(0077);
 
+
+########################################################################
+# Title prefix for webmail pages
+########################################################################
+
+$webmail_title = "Telaen Webmail";
+
 ########################################################################
 # _ Please attention _:
 # The temporary files will be stored on this folder

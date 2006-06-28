@@ -136,13 +136,16 @@ lng_cookie_not_enabled				= Cookies must be enabled
 lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
-to_hea							= To:
-cc_hea							= Cc:
-bcc_hea							= Bcc:
-subject_hea						= Subject:
-address_tip						= From address book
 
-attach_hea						= Attachment:
+newmsg_title					= Compose mail
+
+to_hea						= To:
+cc_hea						= Cc:
+bcc_hea						= Bcc:
+subject_hea					= Subject:
+address_tip					= From address book
+
+attach_hea					= Attachment:
 attch_add_new					= Attach new file
 attch_name_hea					= Name
 attch_size						= Size
@@ -240,13 +243,13 @@ prf_time_to_refesh				= Automatically check for new mail (minutes)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
 [Catch]
-ctc_title						= Add to address book
-ctc_information					= Only shows e-mails that are in the address book
-ctc_name						= Name
-ctc_email						= E-mail
+ctc_title					= Add to address book
+ctc_information					= Only shows e-mails that aren't in the address book
+ctc_name					= Name
+ctc_email					= E-mail
 ctc_no_address					= No address available
-ctc_close						= Close
-ctc_save						= Save
+ctc_close					= Close
+ctc_save					= Save
 
 [Readmsg]
 next_mnu						= Next
@@ -276,7 +279,8 @@ catch_address					= Add to address book
 block_address					= Block address
 
 [Search]
-sch_information_text			= Write a phrase or a word that you are looking for.<br> Only read messages will be searched.
+sch_title					= Search
+sch_information_text				= Write a phrase or a word that you are looking for.<br> Only read messages will be searched.
 sch_button_text					= Search &gt;&gt;
 sch_subject_hea					= Subject
 sch_from_hea					= From
@@ -286,11 +290,11 @@ sch_folder_hea					= Folder
 sch_no_results					= No messages matching your criteria have been found
 
 [QuickAddress]
-qad_title 						= Address book
+qad_title 					= Address book
 qad_select_address				= Select a contact
-qad_to							= To
-qad_cc							= Cc
-qad_bcc							= Bcc
+qad_to						= To
+qad_cc						= Cc
+qad_bcc						= Bcc
 
 [AddressBook]
 # edit/display

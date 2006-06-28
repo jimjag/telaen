@@ -16,6 +16,18 @@ CHANGELOG:
 Telaen:
 ----------------------------------------------------------------
 
+1.1.1-dev:
+
+ * Templates improvements: 
+	- now header.htm contains also the <head> section of html
+	- meta tags output in <head> instead of a bad echo
+	- menu.htm template used instead of nav_menu.htm 
+	- webmail title configurable in config.php
+	- little restyling on quick address window (mozilla style)
+
+ * New check on quick address window, avoid to add an address multiple 
+   times. 
+
 1.1.0:
 
  * Updated Smarty to version 2.6.14

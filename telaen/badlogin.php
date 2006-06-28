@@ -9,9 +9,6 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
  by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
-
-
-
 // load the configurations
 require("./inc/config.php");
 require("./inc/lib.php");
@@ -30,6 +27,17 @@ $smarty->use_sub_dirs = true;
 $smarty->assign("umLanguageFile",$selected_language.".txt");
 
 $smarty->assign("umServerResponse",$error);
+
+// Assign also the webmail title to smarty, check for empty title before
+if (!isset($webmail_title) || trim($webmail_title) == "" ) {
+        $webmail_title = "Telaen Webmail";
+}
+$smarty->assign("webmailTitle", $webmail_title);
+
+// Assing the header and footer paths because inc.php is not loaded in index
+$smarty->assign("headerTemplate", $header_template);
+$smarty->assign("footerTemplate", $footer_template);
+
 
 $smarty->display("$selected_theme/bad-login.htm");
 
