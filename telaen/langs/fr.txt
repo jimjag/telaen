@@ -1,6 +1,6 @@
 #----------------------------------------------------------------
 # File:			fr.txt
-# Description:	French locale for Uebimiau 2.7
+# Description:	French locale for Telan 1.1.1 
 # Author: 		Christophe Buguet (christophe.buguet@wanadoo.fr)
 # Comments:		If you intend to add JavaScript alert messages,
 #				use \' for quotes, and normal ' for text in	PHP
@@ -159,6 +159,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= A:
 cc_hea						= Copies à:
 bcc_hea						= Copies cachées:
@@ -305,6 +307,8 @@ attch_size_hea				= Taille
 catch_address				= Ajouter l'adresse au carnet
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text		= Entrez le mot ou la phrase que vous désirez trouver.<br> La recherche sera uniquement effectuée sur les messages des <b>dossiers locaux</b> ou sur les <b>messages lus<b>.
 sch_button_text				= Rechercher &gt;&gt;

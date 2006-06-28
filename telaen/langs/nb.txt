@@ -109,8 +109,10 @@ folders_to					= Mapper til
 
 [MessageList]
 
-messages_to						= Beskjeder til 
-no_messages						= Ingen nye meldinger i din 
+newmsg_title                                  	= Compose mail
+
+messages_to					= Beskjeder til 
+no_messages					= Ingen nye meldinger i din 
 
 delete_selected_mnu				= Slett valgte
 move_selected_mnu				= Flytt valgte til
@@ -149,6 +151,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]
+
+
 
 to_hea						= Til:
 cc_hea						= Cc:
@@ -298,6 +302,8 @@ attch_size_hea					= Størrelse
 catch_address					= Føy til i adressebok
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= Velg en frase eller et ord som du leter etter.<br> Søk i hovedteksten vil kun skje på allerede leste meldinger. 
 sch_button_text					= Søk &gt;&gt;

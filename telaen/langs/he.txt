@@ -137,6 +137,9 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]
+
+newmsg_title                                  	= Compose mail
+
 to_hea							= אל:
 cc_hea							= עותק:
 bcc_hea							= עותק עיוור:
@@ -276,6 +279,9 @@ attch_size_hea					= גודל
 catch_address					= הוסף לספר הכתובות
 
 [Search]
+
+sch_title                                     	= Search
+
 sch_information_text			= כתוב ביטוי או מילה כדי לחפש בהם.<br> החיפוש יתבצע רק בהודעות שנקראו.
 sch_button_text					= חפש &gt;&gt;
 sch_subject_hea					= נושא

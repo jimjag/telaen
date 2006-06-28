@@ -158,6 +158,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                    = Compose mail
+
 to_hea						= 收件者:
 cc_hea						= 副本:
 bcc_hea						= 密件副本:
@@ -306,6 +308,8 @@ attch_size_hea					= 附件大小
 catch_address					= 加入郵件位址到通訊錄
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= 請輸入您要搜尋的字串<br><B>注意!若是未閱讀的郵件內容目前無法搜尋</B> 
 sch_button_text					= 開始搜尋 &gt;&gt;

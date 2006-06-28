@@ -302,6 +302,8 @@ catch_address					= Añadir a la libreta de direcciones
 
 [Search]
 
+sch_title                                     	= Search
+
 sch_information_text				= Escriba la frase o palabra que desea buscar.<br> La búsqueda en el cuerpo del mensaje solamente se realizará en el caso de que el mensaje haya sido enviado 
 sch_button_text					= Buscar &gt;&gt;
 sch_subject_hea					= Asunto

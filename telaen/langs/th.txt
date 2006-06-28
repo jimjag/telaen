@@ -154,6 +154,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= ถึง :
 cc_hea						= Cc :
 bcc_hea						= Bcc :
@@ -302,6 +304,8 @@ attch_size_hea					= ขนาด
 catch_address					= เพิ่มเข้าไปในสมุดรายชื่อ
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= เขียนข้อความที่ต้องการหาจาก จดหมายที่อ่านไปแล้ว
 sch_button_text					= ค้นหา &gt;&gt;

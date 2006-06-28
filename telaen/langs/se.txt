@@ -150,6 +150,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= Till:
 cc_hea						= Kopia:
 bcc_hea						= Hemlig Kopia:
@@ -296,6 +298,8 @@ attch_size_hea					= Storlek
 catch_address					= Lägg till avsändaren i adressboken
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= Skriv in ett ord eller en fras! <br> Bara meddelanden i <b>lokala mappar</b> och <b>lästa meddelanden </b>kommer att genomsökas.<br>Observera att detta kan ta en stund!
 sch_button_text					= Sök &gt;&gt;

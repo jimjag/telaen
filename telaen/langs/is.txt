@@ -151,6 +151,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= Til:
 cc_hea						= Afrit:
 bcc_hea						= Blint afrit:
@@ -299,6 +301,8 @@ attch_size_hea					= Stærð
 catch_address					= Bæta við í nafnabók
 
 [Search]
+
+sch_title                                    	= Search
 
 sch_information_text				= Settu inn orð eða orðasamband sem þú vilt leita eftir<br>Leitað verður í lesnum skilaboðum
 sch_button_text					= Leit &gt;&gt;

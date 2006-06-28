@@ -154,6 +154,8 @@ lng_cookie_not_valid			= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= До:
 cc_hea						= Копие до:
 bcc_hea						= 2 Копие до:
@@ -303,6 +305,7 @@ catch_address					= Добави адреса
 
 [Search]
 
+sch_title                                     	= Search
 sch_information_text				= Въведете дума или фраза<br> Само съобщения в <br>локалните папки<br> и <b>прочетени съобщения</b> ще бъдат проверени
 sch_button_text					= Търси &gt;&gt;
 sch_subject_hea					= Тема

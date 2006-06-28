@@ -151,6 +151,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= Pentru:
 cc_hea						= Cc:
 bcc_hea						= Bcc:
@@ -299,6 +301,8 @@ attch_size_hea					= Marime
 catch_address					= Adauga in agenda
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= Scrieti cuvantul sau fraza dupa care se ca cauta.<br> Cautarea dupa mesaj se va face numai in mesajele citite.
 sch_button_text					= Cauta &gt;&gt;

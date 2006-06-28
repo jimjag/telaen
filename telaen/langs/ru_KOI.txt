@@ -157,6 +157,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                 	= Compose mail
+
 to_hea				= Для:
 cc_hea				= Копия:
 bcc_hea				= Копия 2:
@@ -304,6 +306,8 @@ attch_size_hea			= Размер
 catch_address			= Добавить в адресную книгу
 
 [Search]
+
+sch_title                      	= Search
 
 sch_information_text		= Напишите фразу или слово, которое Вы ищете.<br> Поиск в теле письма производится только, если письмо прочитано
 sch_button_text			= Поиск &gt;&gt;

@@ -153,8 +153,9 @@ lng_language					= Language
 lng_cookie_not_enabled			= Cookies must be enabled
 lng_cookie_not_valid			= Cookie Security Check Failed
 
-
 [Newmessage]
+
+newmsg_title                                  	= Compose mail
 
 to_hea						= Til:
 cc_hea						= Cc:
@@ -304,6 +305,8 @@ attch_size_hea					= Strørrelse
 catch_address					= Tilføj til adressekartotek
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= Skriv den sætning eller det ord som du leder efter<br> Der søges kun i allerede læste meddelelser 
 sch_button_text					= Søg &gt;&gt;

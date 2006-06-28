@@ -143,6 +143,7 @@ lng_cookie_not_enabled				 = Cookies müssen aktiviert sein
 lng_cookie_not_valid				   = Cookie Sicherheitsprüfung fehlgeschlagen
 
 [Newmessage]
+
 newmsg_title					= Neue nachricht
 
 to_hea					               = An:
@@ -290,14 +291,16 @@ catch_address				           = Zum Adressbuch hinzufügen
 
 [Search]
 
-sch_information_text				   = Bitte Suchbegriff eingeben.<br>  
-sch_button_text				         = Suche &gt;&gt;
-sch_subject_hea				         = Betreff
-sch_from_hea				           = Absender
-sch_date_hea				           = Datum
-sch_body_hea				           = Im Text
-sch_folder_hea				         = Ordner
-sch_no_results				         = Es wurden keine Nachrichten gefunden, die den Suchkriterien entsprechen.
+sch_title					= Search
+
+sch_information_text				= Bitte Suchbegriff eingeben.<br>  
+sch_button_text				        = Suche &gt;&gt;
+sch_subject_hea				        = Betreff
+sch_from_hea				        = Absender
+sch_date_hea				        = Datum
+sch_body_hea				        = Im Text
+sch_folder_hea				        = Ordner
+sch_no_results					= Es wurden keine Nachrichten gefunden, die den Suchkriterien entsprechen.
 
 [QuickAddress]
 

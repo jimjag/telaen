@@ -154,6 +154,8 @@ lng_cookie_not_valid				= Cookie Beveiligingscontrole mislukt
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= Naar:
 cc_hea						= Cc:
 bcc_hea						= Bcc:
@@ -302,6 +304,8 @@ attch_size_hea					= Grootte
 catch_address					= Aan contactpersonen toevoegen
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= Zoek naar een woord of zin in al uw berichten.
 sch_button_text					= Zoek

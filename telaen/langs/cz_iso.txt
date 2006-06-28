@@ -152,6 +152,8 @@ lng_cookie_not_valid			= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= Komu:
 cc_hea						= Kopie:
 bcc_hea						= Skrytá kopie:
@@ -300,6 +302,8 @@ attch_size_hea					= Velikost
 catch_address					= Pøidat do adresáøe
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= Napište slovo, které hledáte.<br>
 sch_button_text					= Hledat &gt;&gt;

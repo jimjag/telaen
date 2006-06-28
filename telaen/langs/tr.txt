@@ -147,6 +147,8 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                            	= Compose mail
+
 to_hea					= Kime:
 cc_hea					= Cc:
 bcc_hea					= Bcc:
@@ -297,6 +299,8 @@ catch_address					= Adres defterine ekle
 
 
 [Search]
+
+sch_title                           	= Search
 
 sch_information_text			= Lütfen bir sözcük veya sözcük grubu girin! <br> Sadece lokal klasörlerdeki mesajlar ve okunmuþ mesajlar taranacak.
 sch_button_text				= Ara &gt;&gt;

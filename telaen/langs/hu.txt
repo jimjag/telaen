@@ -147,6 +147,9 @@ lng_cookie_not_valid				= Sütik biztonsági ellenõrzése sikertelen
 
 
 [Newmessage]
+
+newmsg_title                                  	= Compose mail
+
 to_hea						= Cimzett:
 cc_hea						= Másolatot kap:
 bcc_hea						= Rejtett másolatot kap:
@@ -179,8 +182,8 @@ priority_normal					= Átlagos
 priority_high					= Sürgõs
 
 [AdvancedEditor]
-adv_warning_text_mode1			= Ellenõrizd mielõtt használod az eszköztárat
-adv_warning_text_mode2			= Az eszköztár használatával
+adv_warning_text_mode1				= Ellenõrizd mielõtt használod az eszköztárat
+adv_warning_text_mode2				= Az eszköztár használatával
 
 adv_type_path					= Ird be az URL-t:
 
@@ -287,6 +290,9 @@ catch_address                                   = Küldõ hozzáadása a Címlistához
 block_address					= Cím blokkolása
 
 [Search]
+
+sch_title                                     	= Search
+
 sch_information_text                    	= Keresendõ szó, vagy kifejezés megadása a...
 sch_button_text                         	= Keres &gt;&gt;
 sch_subject_hea                        	 	= Levél tárgyában

@@ -1,6 +1,8 @@
-# Italian language file for Telaen v1.1.0 #
-# Lang file mantained by vola - andreavola[at]gmail[dot]com #
-# Last edit on 27 June 2006 #
+#---------------------------------------------------------------#
+# Italian language file for Telaen v1.1.1 			#
+# Lang file mantained by Vola - andreavola[at]gmail[dot]com 	#
+# Last edit: 28 June 2006 					#
+#---------------------------------------------------------------#
 
 # ***** GLOBAL VARS ****** #
 
@@ -273,13 +275,13 @@ prf_spam_level					= Sensibilit&agrave; filtro SPAM (0 = Disattivo, 1 = Molto al
 
 [Catch]
 
-ctc_title						= Aggiungi alla rubrica
-ctc_information					= Mostra solo le e-mail nella rubrica
-ctc_name						= Nome
-ctc_email						= E-mail
+ctc_title					= Aggiungi alla rubrica
+ctc_information					= Vengono mostrati solo gli indirizzi che non sono gi&agrave; nella rubrica
+ctc_name					= Nome
+ctc_email					= E-mail
 ctc_no_address					= Indirizzo non disponibile
-ctc_close						= Chiudi
-ctc_save						= Salva
+ctc_close					= Chiudi
+ctc_save					= Salva
 
 [Readmsg]
 
@@ -309,14 +311,16 @@ catch_address					= Aggiungi alla rubrica
 
 [Search]
 
-sch_information_text				= Scrivi una frase o una parola che vuoi cercare.<br> La ricerca nei messaggi avverrà tra i messagi già letti
+sch_title                                     	= Ricerca
+
+sch_information_text				= Scrivi una frase o una parola che vuoi cercare.<br /> La ricerca nei messaggi avverr&agrave; tra i messagi gi&agrave; letti
 sch_button_text					= Cerca &gt;&gt;
 sch_subject_hea					= Oggetto
 sch_from_hea					= Da
 sch_date_hea					= Data
 sch_body_hea					= Messaggio
 sch_folder_hea					= Cartella
-sch_no_results					= Non è stato trovato alcun messaggio
+sch_no_results					= Non &egrave; stato trovato alcun messaggio
 
 
 [QuickAddress]

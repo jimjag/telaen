@@ -153,10 +153,12 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 [Newmessage]
 
+newmsg_title                                  	= Compose mail
+
 to_hea						= Do:
 cc_hea						= Cc:
 bcc_hea						= Bcc:
-subject_hea					= Temat:
+
 address_tip					= Wybierz
 
 attach_hea					= Za³±czniki:
@@ -301,6 +303,8 @@ attch_size_hea					= Rozmiar
 catch_address					= Dodaj do ksi±¿ki adresowej
 
 [Search]
+
+sch_title                                     	= Search
 
 sch_information_text				= Podaj frazê lub s³owo, którego szukasz.<br> Przeszukiwane bêd± wy³±cznie przeczytane wiadomo¶ci. 
 sch_button_text					= Szukaj &gt;&gt;
