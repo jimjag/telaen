@@ -1,19 +1,8 @@
 {config_load file=$umLanguageFile section="AddressBook"}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-	<title>Telaen Webmail - {#adr_title#}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}" />
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
-	<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
 
-{$umJS}
-</head>
+{include file=$headerTemplate pageTitle=#adr_title#}
 
-{include file="hungi.mozilla/header.htm"}
-
-<!-- menu -->
-{include file="hungi.mozilla/nav_menu.htm"}
+{include file=$menuTemplate refresh="false"}
 
 <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#DDE3EB" width="100%">
 	
@@ -60,5 +49,4 @@
 	</tr>
 </table>
 
-<!-- footer -->
-{include file="hungi.mozilla/footer.htm"}
+{include file=$footerTemplate}

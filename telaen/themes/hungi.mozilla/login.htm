@@ -1,19 +1,7 @@
 {config_load file=$umLanguageFile section="Login"}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-	<title>Telaen Webmail - {#lgn_title#|escape:"html"}</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}" />
+{include file=$headerTemplate showLogo="false" pageTitle=#lgn_title#|escape:"html"}
 
-{$umJS}
-
-</head>
-
-
-
-<body>
 <br /><br /><br />
 
 <table width="400" border="0" cellspacing="0" cellpadding="2" align="center">
@@ -77,5 +65,4 @@
 
 </table>
 
-</body>
-</html>
+{include file=$footerTemplate}

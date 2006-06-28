@@ -1,13 +1,11 @@
 {config_load file=$umLanguageFile section="QuickAddress"}
 {config_load file=$umLanguageFile section="Newmessage"}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<head>
-	<title>Telaen Webmail - {#qad_title#}</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+
+{include file=$headerTemplate showLogo="false" pageTitle=#qad_title#}
+
 {literal}
-
-<script language="javascript" type="text/javascript">
-
+<script type="text/javascript">
+//<![CDATA[
 function addItem(obj,strText,strValue,blSel,intPos){
 	var newOpt,i,ArTemp,selIndex;
 	selIndex = (blSel)?intPos:obj.selectedIndex;
@@ -30,7 +28,7 @@ function addItem(obj,strText,strValue,blSel,intPos){
 }
 function delItem(obj,intPos){
 	if(intPos > obj.length) return;
-	obj.options[intPos] = null
+	obj.options[intPos] = null;
 }
 
 function Add(sTipo) {
@@ -43,7 +41,12 @@ function Add(sTipo) {
 {literal}
 		return
 	}
-	addItem(dest,orig.options[orig.selectedIndex].text,orig.options[orig.selectedIndex].text,false,dest.length)
+	// check if the item is already on dest
+	for(i=0; i<dest.options.length;i++) {
+		if (orig.options[orig.selectedIndex].text == dest.options[i].text)
+			return;
+	}
+	addItem(dest, orig.options[orig.selectedIndex].text, orig.options[orig.selectedIndex].text, false, dest.length);
 }
 
 function Dele(sTipo) {
@@ -78,36 +81,41 @@ function ns_clean() {
 		Dele(typs[i]);
 	}
 }
-
+//]]>
 </script>
 {/literal}
-</head>
 
-<body>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<form name=form1>
+	<form name="form1">
 	<tr>
-		<td width="260" valign="top" align="center">
-			<h3 style="font-size:14px; font-family: Verdana; color:#000066;">{#address_mnu#}</h3>
-{$umContacts}
-			<script>form1.contacts.style='width:200px';</script>
-			<br /><br />
-			<input class="button80" type=button onClick="AddAndExit()"  value="{#nav_back#}">
+		<td width="50%" class="default" valign="top" align="center">
+			<table width="100%" cellspacing="0" cellpadding="0">
+			<tr>
+				<td class="usage"><span style="font-size:14px; color:#000066;">{#address_mnu#}</span></td>
+			</tr>
+			<tr>
+				<td align="center">
+				<br />
+				{$umContacts}
+				<script>form1.contacts.style='width:200px';</script>			
+				</td>
+			</tr>
+			</table>
 		</td>
 		
-		<td valign="top" width="225">
+		<td valign="top" width="50%">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
 					<td colspan="2" height="22" class="headers"><b>{#qad_to#}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="top" class="default">
-					<input class="button50" type=button onClick="Add('to')"  value="&gt;&gt;" style="margin-bottom:2px">
-					<input class="button50" type=button onClick="Dele('to')"  value="&lt;&lt;"><br />
+					<input class="button50" type="button" onclick="Add('to')" value="&gt;&gt;" style="margin-bottom:2px">
+					<input class="button50" type="button" onclick="Dele('to')" value="&lt;&lt;"><br />
 					</td>
 					<td valign="top">
 					<select name="to" size="3" style="width: 260px;" onDblClick="Dele('to')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+						<!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
 					</select>
 					</td>
 				</tr>
@@ -121,7 +129,7 @@ function ns_clean() {
 					</td>
 					<td valign="top">
 					<select name="cc" size="3" style="width: 260px;" onDblClick="Dele('cc')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+						<!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
 					</select>
 					</td>
 				</tr>
@@ -131,21 +139,34 @@ function ns_clean() {
 				<tr>
 					<td width="5%" valign="top" class="default">
 						<input class="button50" type="button" onclick="Add('bcc')" value="&gt;&gt;" style="margin-bottom:2px"><br />
-						<input class="button50" type=button onClick="Dele('bcc')"  value="&lt;&lt;"><br />
+						<input class="button50" type=button onclick="Dele('bcc')"  value="&lt;&lt;"><br />
 					</td>
 					<td valign="top">
-					<select name=bcc size=3 style="width: 260px;" onDblClick="Dele('bcc')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+					<select name="bcc" size="3" style="width: 260px;" onDblClick="Dele('bcc')">
+						<!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
 					</select>
 					</td>
 				</tr>
 			</table>
 		</td>
 	</tr>
+	<tr>
+		<td class="usage" colspan="2">
+			<center>
+			<table class="buttonTable" cellspacing="0" >
+			    	<tr>
+			    		<td valign="middle" class="buttonLeft">&nbsp;</td>
+			  		<td valign="middle" class="buttonMiddle"><input type="button" name="submit" value="{#nav_back#}" class="button" onclick="AddAndExit()"/></td>
+			  		<td valign="middle" class="buttonRight">&nbsp;</td>
+			    	</tr>
+			</table>
+	</tr>
 	</form>
 </table>
 <script>
 // clean the spaces in selects, its fix width in netscape
-ns_clean();
-window.resizeTo(535,300);
+//ns_clean();  old (unuseful??) things
+//window.resizeTo(535,300);
 </script>
+
+{include file=$footerTemplate}

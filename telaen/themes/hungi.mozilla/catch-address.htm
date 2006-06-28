@@ -1,14 +1,6 @@
 {config_load file=$umLanguageFile section="Catch"}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
-<head>
-	<title>Telaen Webmail - {#ctc_title#}</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}" />
-</head>
-
-<body>
+{include file=$headerTemplate pageTitle=#ctc_title# showLogo="false"}
 
 <form name="form1" action="catch.php" method="post">
 <input type="hidden" name="ix" value="{$umIx}" />
@@ -65,5 +57,5 @@
 
 </table>
 </form>
-</body>
-</html>
+
+{include file=$footerTemplate}

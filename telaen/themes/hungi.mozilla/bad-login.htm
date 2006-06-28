@@ -1,13 +1,7 @@
 {config_load file=$umLanguageFile section="BadLogin"}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
-<head>
-	<title>Telaen Webmail - {#bdl_title#}</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
-</head>
+{include file=$headerTemplate pageTitle=#bdl_title# showLogo="false"}
 
-<body>
 <br /><br /><br />
 
 <table width="400" border="0" cellspacing="0" cellpadding="2" align="center">
@@ -40,5 +34,4 @@
 	</tr>
 </table>
 
-</body>
-</html>
+{include file=$footerTemplate}

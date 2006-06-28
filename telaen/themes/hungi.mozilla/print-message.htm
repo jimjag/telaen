@@ -1,10 +1,6 @@
 {config_load file=$umLanguageFile section="Readmsg"}
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<title>UebiMiau - {$umPageTitle|escape:"html"}</title>
-</head>
-<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css">
+
+{include file=$headerTemplate pageTitle="$umPageTitle|escape:"html""}
 
 {literal}
 <script language="JavaScript" type="text/javascript">
@@ -17,9 +13,8 @@ function printIt() {
 }
 </script>
 {/literal}
-<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0 bgcolor="White" text="White" link="White" vlink="White" alink="White" onLoad="printIt()" leftmargin=5 topmargin=5 marginwidth=5 marginheigth=5>
 
-<table cellspacing=2 cellpadding=0 border=0 align=center bgcolor=White width="760">
+<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="white" width="100%">
 	<tr>
 		<td valign=top>
 
@@ -111,5 +106,5 @@ function printIt() {
 		</td>
 	</tr>
 </table>
-</body>
-</html>
+
+{include file=$footerTemplate}

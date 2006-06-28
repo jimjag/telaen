@@ -49,6 +49,9 @@ img {
 	vertical-align: middle;
 }
 
+iframe {
+	border: 1px solid #DDDDDD;
+}
 
 .textbox {
 	color: Black;
@@ -70,7 +73,7 @@ img {
 		
 .formfield {
 		border-color : #666699 #666699 #666699 #666699;
-		border-width : 1 1 1 1;
+		border-width : 1px;
 		color : Black; 
 		background-color : #F4F1D9;
 		height : 19px; font-size : 12px;

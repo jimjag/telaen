@@ -1,22 +1,8 @@
 {config_load file=$umLanguageFile section="Readmsg"}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-	<title>Telaen Webmail - {$umPageTitle|escape:"html"}</title>
+{include file=$headerTemplate pageTitle=$umPageTitle|escape:"html"}
 
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}" />
-	<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
-
-{$umJS}
-
-</head>
-
-{include file="hungi.mozilla/header.htm"}
-
-<!-- menu -->
-{include file="hungi.mozilla/nav_menu.htm" refresh="false"}
+{include file=$menuTemplate refresh="false"}
 
 {$umReplyForm}
 
@@ -126,4 +112,5 @@
 	</tr>
 </table>
 
-{include file="hungi.mozilla/footer.htm"}
+{include file=$footerTemplate}
+

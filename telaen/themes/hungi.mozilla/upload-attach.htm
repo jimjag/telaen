@@ -1,12 +1,6 @@
 {config_load file=$umLanguageFile section="Newmessage"}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html>
-<head>
-	<title>Telaen Webmail - {#up_title#}</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
-</head>
-<body>
+{include file=$headerTemplate pageTitle=#up_title# showLogo="false"}
 
 <form name="form1" enctype="multipart/form-data" action="upload.php" method="post">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -35,5 +29,4 @@
 </table>
 </form>
 
-</body>
-</html>
+{include file=$footerTemplate}

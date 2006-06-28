@@ -1,16 +1,8 @@
 {config_load file=$umLanguageFile section="Folders"}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-<head>
-	<title>Telaen Webmail - {#folders_to#} {$umUserEmail}</title>
-	<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
-	<script language="JavaScript" src="themes/hungi.mozilla/webmail.js" type="text/javascript"></script>
-	{$umJS}
-</head>
 
-{include file="hungi.mozilla/header.htm"}
+{include file=$headerTemplate pageTitle=#folders_to#|cat:" "|cat:$umUserEmail}
 
-{include file="hungi.mozilla/nav_menu.htm"}
+{include file=$menuTemplate}
 
 
 			<table cellspacing="0" cellpadding="0" width="100%" border="0">
@@ -71,6 +63,5 @@
 			
 		</table>
 		
-<!-- footer -->
-{include file="hungi.mozilla/footer.htm"}
+{include file=$footerTemplate}
 
