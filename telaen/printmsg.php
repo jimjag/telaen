@@ -14,7 +14,7 @@ require("./inc/inc.php");
 if(!isset($folder) || !isset($ix)) die("Expected parameters");
 $mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
 
-echo($nocache);
+$smarty->assign("pageMetas", $nocache);
 
 if(!file_exists($mail_info["localname"])) die("File not found");;
 $email = $UM->_read_file($mail_info["localname"]);

@@ -1,6 +1,9 @@
 {config_load file=$umLanguageFile section="Catch"}
 
-{include file=$headerTemplate pageTitle=#ctc_title# showLogo="false"}
+{include file=$popupHeaderTemplate pageTitle=#ctc_title# }
+
+<body>
+<div id="popup">
 
 <form name="form1" action="catch.php" method="post">
 <input type="hidden" name="ix" value="{$umIx}" />
@@ -58,4 +61,6 @@
 </table>
 </form>
 
-{include file=$footerTemplate}
+</div>
+</body>
+</html>

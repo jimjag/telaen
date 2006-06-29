@@ -1,6 +1,9 @@
 {config_load file=$umLanguageFile section="Readmsg"}
 
-{include file=$headerTemplate pageTitle="$umPageTitle|escape:"html""}
+{include file=$popupHeaderTemplate pageTitle=$umPageTitle|escape:"html"}
+
+<html>
+<div id="popup">
 
 {literal}
 <script language="JavaScript" type="text/javascript">
@@ -107,4 +110,6 @@ function printIt() {
 	</tr>
 </table>
 
-{include file=$footerTemplate}
+</div>
+</body>
+</html>

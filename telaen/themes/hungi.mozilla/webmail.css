@@ -105,6 +105,15 @@ a.login {
 	margin: 0;
 }
 
+/** Popups content needs a 100% width*/
+#popup {
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+}
+
+
 /** Menu */
 
 #menu {

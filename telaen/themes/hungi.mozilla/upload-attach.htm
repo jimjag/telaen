@@ -1,6 +1,9 @@
 {config_load file=$umLanguageFile section="Newmessage"}
 
-{include file=$headerTemplate pageTitle=#up_title# showLogo="false"}
+{include file=$popupHeaderTemplate pageTitle=#up_title#}
+
+<body>
+<div id="popup">
 
 <form name="form1" enctype="multipart/form-data" action="upload.php" method="post">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -29,4 +32,6 @@
 </table>
 </form>
 
-{include file=$footerTemplate}
+</div>
+</body>
+</html>
