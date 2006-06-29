@@ -11,7 +11,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 
 require("./inc/inc.php");
 
-smarty->assign("pageMetas", $nocache);
+$smarty->assign("pageMetas", $nocache);
 
 if (isset($rem) && $rem != "") {
 
