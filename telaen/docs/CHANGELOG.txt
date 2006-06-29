@@ -24,6 +24,7 @@ Telaen:
 	- menu.htm template used instead of nav_menu.htm 
 	- webmail title configurable in config.php
 	- little restyling on quick address window (mozilla style)
+	- added a different header for popups
 
  * New check on quick address window, avoid to add an address multiple 
    times. 
