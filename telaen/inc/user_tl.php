@@ -78,7 +78,7 @@ $print_message_template		= "themes/$selected_theme/print-message.htm";    // Pri
 $menu_template			= "$selected_theme/menu.htm";			// Menu
 $header_template		= "$selected_theme/header.htm";       		// Page Header
 $footer_template        	= "$selected_theme/footer.htm";         	// Page Footer
-
+$popup_header_template		= "$selected_theme/popup-header.htm";			// Header for the popup wins
 
 
 $lg = file("langs/".$selected_language.".txt");

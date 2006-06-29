@@ -49,6 +49,7 @@ require("./inc/user_tl.php");
 $smarty->assign("menuTemplate", $menu_template);
 $smarty->assign("headerTemplate", $header_template);
 $smarty->assign("footerTemplate", $footer_template);
+$smarty->assign("popupHeaderTemplate", $popup_header_template);
 
 //$smarty->debugging = false;
 $smarty->assign("umLanguageFile",$selected_language.".txt");
