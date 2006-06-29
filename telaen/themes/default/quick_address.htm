@@ -1,15 +1,17 @@
 {config_load file=$umLanguageFile section="QuickAddress"}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<title>Telaen Webmail - {#qad_title#}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-	<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
-</head>
-<body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+{include file=$popupHeaderTemplate  pageTitle=#qad_title#}
+
+<body>
+<div id="popup">
+
+<div id="logo">
+        <img src="images/telaen_logo.jpg" width="310" height="73" alt="logo">
+</div>
+
+
 {literal}
-<script language=javascript>
+<script type="text/javascript">
 
 function addItem(obj,strText,strValue,blSel,intPos){
 	var newOpt,i,ArTemp,selIndex;
@@ -46,7 +48,12 @@ function Add(sTipo) {
 {literal}
 		return
 	}
-	addItem(dest,orig.options[orig.selectedIndex].text,orig.options[orig.selectedIndex].text,false,dest.length)
+	// check if the item is already on dest
+        for(i=0; i<dest.options.length;i++) {
+                if (orig.options[orig.selectedIndex].text == dest.options[i].text)
+                        return;
+        }
+        addItem(dest, orig.options[orig.selectedIndex].text, orig.options[orig.selectedIndex].text, false, dest.length);
 }
 
 function Dele(sTipo) {
@@ -84,30 +91,32 @@ function ns_clean() {
 
 </script>
 {/literal}
-<table width="550" border="0" cellspacing="0" cellpadding="0">
-	<form name=form1>
-	<tr><td colspan="2"><img src="images/telaen_logo.jpg" width="310" height="73" border=0 alt="Telaen Webmail"></td></tr>
+
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<form name="form1">	
 	<tr>
-		<td width="250" valign=top>
+		<td width="50%" valign=top>
 			{$umContacts}
 			<br><br>
 			<input type=button value=" &nbsp;OK &nbsp;" onClick="AddAndExit()" class=button>
 		</td>
 		
-		<td valign=top width="300">
+		<td valign=top width="50%">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
 					<td colspan=2 class="headers"><b>{#qad_to#}</b></td>
 				</tr>
 				<tr>
-					<td width="5%" valign=top class=default>
+					<td width="8%" valign=top class=default>
 						<input type="button" value="&gt;&gt;" class="button" onClick="Add('to')"><br>
 						<input type="button" value="&lt;&lt;" class="button" onClick="Dele('to')"><br>
 					</td>
 					<td valign=top>
 						<select name="to" size="3" style="width: 250px;" onDblClick="Dele('to')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<!---option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
 						</select>
 					</td>
 				</tr>
@@ -119,25 +128,25 @@ function ns_clean() {
 						<input type="button" value="&gt;&gt;" class="button" onClick="Add('cc')"><br>
 						<input type="button" value="&lt;&lt;" class="button" onClick="Dele('cc')"><br>
 					</td>
-					<td valign=top >
-						<select name=cc size=3 style="width: 250px;" onDblClick="Dele('cc')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<td valign="top" >
+						<select name="cc" size="3" style="width: 250px;" onDblClick="Dele('cc')">
+<!--						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 class="headers"><b>{#qad_bcc#}</b></td>
+					<td colspan="2" class="headers"><b>{#qad_bcc#}</b></td>
 				</tr>
 				<tr>
-					<td width="5%" valign=top class=default>
+					<td width="5%" valign="top" class="default">
 						<input type="button" value="&gt;&gt;" class="button" onClick="Add('bcc')"><br>
 						<input type="button" value="&lt;&lt;" class="button" onClick="Dele('bcc')"><br>
 					</td>
 					<td valign=top>
-						<select name=bcc size=3 style="width: 250px;" onDblClick="Dele('bcc')">
-						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<select name="bcc" size="3" style="width: 250px;" onDblClick="Dele('bcc')">
+<!--						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
 						</select>
 					</td>
 				</tr>
@@ -148,7 +157,10 @@ function ns_clean() {
 </table>
 <script>
 // clean the spaces in selects, its fix width in netscape
-ns_clean();
+//ns_clean();
 </script>
+
+</div>
 </body>
 </html>
+

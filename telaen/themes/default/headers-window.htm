@@ -1,19 +1,17 @@
 {config_load file=$umLanguageFile section="Headers"}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{include file=$popupHeaderTemplate pageTitle=$umPageTitle|escape:"html"}
 
-<html>
-<head>
-	<title>Telaen Webmail - {$umPageTitle|escape:"html"}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-	<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
-</head>
-<body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr><td><img src="images/telaen_logo.jpg" width="310" height="73" border=0 alt="Telaen Webmail"></td></tr>
+<body>
+
+<div id="popup">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">	
 	<tr>
 		<td bgcolor=white><font face="Courier New" size=2>{$umHeaders}</font></td>
 	</tr>
 </table>
+
+</div>
 </body>
 </html>

@@ -1,15 +1,7 @@
 {config_load file=$umLanguageFile section="Error"}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{include file=$headerTemplate pageTitle=#err_title# showLogo="false"}
 
-<html>
-<head>
-	<title>Telaen Webmail - {#err_title#}</title>
-	<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-</head>
-
-<body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
 <br><br><br>
 <table width="500" border="0" cellspacing="0" cellpadding="2" align="center">
 	<tr><td><img src="images/telaen_logo.jpg" width="310" height="73" border=0 alt="Telaen Webmail"></td></tr>
@@ -31,5 +23,5 @@
 		</td>
 	</tr>
 </table>
-</body>
-</html>
+
+{include file=$footerTemplate}

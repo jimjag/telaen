@@ -1,32 +1,19 @@
 {config_load file=$umLanguageFile section="Newmessage"}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+{include file=$headerTemplate pageTitle=#newmsg_title#}
 
-<html>
-<head>
-	<title>Telaen Webmail</title>
-	<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-	<script language="JavaScript" src="themes/default/webmail.js" type="text/javascript"></script>
-
-{$umJS}
-
-</head>
-
-{include file="default/header.htm"}
-
-<table width="100%" border="0" cellspacing="0" cellpadding="2" align="center" bgcolor=white>
+<form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
+<table width="100%" border="0" cellspacing="0" cellpadding="2" align="center" bgcolor="white">
 	
 	<tr>
-		<form name=composeForm method=post action="newmsg.php" onSubmit="return false;">
 		{$umForms}
 
-		<td valign=top width="15%">
-			{include file="default/nav_menu.htm" refresh="false"}
+		<td valign="top" width="15%">
+			{include file=$menuTemplate refresh="false"}
 		</td>
 
-		<td bgcolor=white valign=top>
-			<table width="100%" border=0 cellspacing=1 cellpadding=0 >
+		<td bgcolor="white" valign="top">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr bgcolor=white>
 					<td width="26%" height="18" class="headerright">{#to_hea#} &nbsp;<a href="javascript:addrpopup('to')"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
 					<td class="default">&nbsp;{$umTo}</td>
@@ -109,13 +96,12 @@
 
 				<tr>
 					<td class="default">&nbsp;</td>
-					<td class="default"><input type=button name=bt_enviar value="{#send_text#}" onClick=enviar() class=button></td>
+					<td class="default"><input type=button name=bt_enviar value="{#send_text#}" onclick="enviar()" class="button"></td>
 				</tr>	
 			</table>
 		</td>
-		</form>
 	</tr>
 </table>
+</form>
 
-<!-- footer -->
-{include file="default/footer.htm"}
+{include file=$footerTemplate}

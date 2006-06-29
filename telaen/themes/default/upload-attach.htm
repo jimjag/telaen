@@ -1,21 +1,20 @@
 {config_load file=$umLanguageFile section="Newmessage"}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<title>Telaen Webmail - {#up_title#}</title>
-	<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-</head>
+{include file=$popupHeaderTemplate pageTitle=#up_title# showLogo="false"}
 
-<body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF" leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+<body>
+
+<div id="popup">
+
 <br>
-<table width="300" border="0" cellspacing="0" cellpadding="0" align="center">
+<table width="300" border="0" cellspacing="0" cellpadding="2" align="center">
 <form enctype="multipart/form-data" action="upload.php" method="post">
-<tr><td class=headers><b>{#up_information_text#}</b></td></tr>
-<tr><td><input type=file name=userfile class=textbox size=22 style="width: 300;"></td></tr>
-<tr><td class=default align=right><input type=submit value="{#up_button_text#}" name=submit class=button></td></tr>
+<tr><td class="headers"><b>{#up_information_text#}</b></td></tr>
+<tr><td class="default" align="left"><input type="file" name="userfile"  size="22" style="width: 300;"></td></tr>
+<tr><td class="default" align="center"><input type="submit" value="{#up_button_text#}" name="submit" class="button"></td></tr>
 </form>
 </table>
+
+</div>
 </body>
 </html>

@@ -54,15 +54,25 @@ a:hover.spam {
 	padding: 0;
 }
 
+/** Popups content needs a 100% width*/
+#popup {
+	text-align: left;
+        width: 100%;
+        margin: 0; 
+        padding: 0;	
+}
+
 .textbox {
-		color : Black;
-		background-color : #F5FFFA;
-		height : 19px;
-		font-size : 12px;
-	}
-	.formfield {
+	color : Black;
+	background-color : #F5FFFA;
+	height : 19px;
+/*	font-size : 12px;*/
+	padding:0;
+}
+
+.formfield {
 		border-color : #666699 #666699 #666699 #666699;
-		border-width : 1 1 1 1;
+		border-width : 1px;
 		color : Black; background-color : #99CCFF;
 		height : 19px; font-size : 12px;
 	}
@@ -97,6 +107,6 @@ a:hover.spam {
 	TD.default { font-family : Verdana, Arial, sans-serif; background-color : #E8E8E8; font-size : 8pt;color : Black; }
 	TD.default9 { font-family : Verdana, Arial, sans-serif; background-color : #E8E8E8; font-size : 9pt;color : Black; }
 	TD.title { font-family : Verdana, Arial, sans-serif; color: #191970; background-color : #B0C4DE; text-align : center; font-size : 8pt;}
-	TD.headerright { font-family : Verdana, Arial, sans-serif; color: #004080; background-color : #CFCFCF; text-align : right;  font-size : 8pt; }
+	TD.headerright { font-family : Verdana, Arial, sans-serif; color: #004080; background-color : #CFCFCF; text-align : right;  font-size : 11px; }
 	SELECT 	{ font-size : 8pt; }
 -->

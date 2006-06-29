@@ -1,26 +1,17 @@
 {config_load file=$umLanguageFile section="Login"}
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<head>
-	<title>Telaen Webmail - {#lgn_title#|escape:"html"}</title>
-	<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-</head>
+{include file=$headerTemplate showLogo="false" pageTitle=#lgn_title#|escape:"html"}
 
-{$umJS}
-
-<body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
-<br><br><br>
+<br /><br /><br />
 
 <table width="500" border="0" cellspacing="0" cellpadding="2" align="center">
-	<tr><td><img src="images/telaen_logo.jpg" width="310" height="73" border=0 alt="Telaen Webmail"></td></tr>
+	<tr><td><img src="images/telaen_logo.jpg" width="310" height="73" border="0" alt="Telaen Webmail"></td></tr>
 	<tr>
-		<td bgcolor=white>
+		<td bgcolor="white">
 			<table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">
 			<form name="form1" action="process.php" method="post">
 				
-				<tr><td align=right class="title" colspan=2>.: <b>{#lgn_welcome_msg#}</b> :.</td>
+				<tr><td align="right" class="title" colspan="2">.: <b>{#lgn_welcome_msg#}</b> :.</td>
 
 				{if $umServerType neq "ONE-FOR-EACH"}
 				<tr><td align=right class="right" width="30%"><b>{#lng_user_email#}</b>: &nbsp;</td><td class="default"><input type=text size=35 name="f_email" value="{$umEmail}" class="textbox" style="width:140px;"></td>
@@ -51,5 +42,4 @@
 	</tr>
 </table>
 
-</body>
-</html>
+{include file=$footerTemplate}	
