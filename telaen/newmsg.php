@@ -81,9 +81,9 @@ if(isset($tipo) && $tipo == "send") {
 		// add an header for keep a track of client IP
 		$mail->AddCustomHeader("X-Originating-IP: ".getenv("REMOTE_ADDR"));		
 		
-		// add return-receipt header if required 
+		// add return-receipt if required 
 		if ( isset($requireReceipt) ) {	
-			$mail->AddCustomHeader("Disposition-Notification-To: ". $UM->mime_encode_headers($prefs["real-name"]) . " <" . $prefs['reply-to'] . ">");
+			$mail->ConfirmReadingTo =  $prefs["reply-to"];
 		}
 
 		// add recipients
