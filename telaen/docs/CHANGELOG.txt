@@ -21,6 +21,9 @@ Telaen:
  * umask value and default directory permission bitmask now
    configurable via the config.php file. Useful for some
    environs that need a more "open" permission setup.
+   NOTE: this requires people upgrading from 1.1.0 or
+   earlier to modify their config.php file! Look at the
+   config.php.default file for these variable settings.
 
  * Templates improvements: 
 	- now header.htm contains also the <head> section of html

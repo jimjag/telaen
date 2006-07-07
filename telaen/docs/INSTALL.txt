@@ -53,3 +53,10 @@ temporary folder that start with '%%': These are the
 precompiled templates. By removing them, you force
 Smarty to re-recompile them again, fixing the blank-page
 problem.
+
+If upgrading from Telaen 1.1.0 (or earlier) to 1.1.1 (or later),
+please be sure to check your config.php file against the
+config.php.default file. In particular, ensure that you have
+the correct values for $default_umask and $dirperm in your
+config.php file for backwards compatibility (the defaults
+need to be set).
