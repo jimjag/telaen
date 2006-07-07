@@ -79,14 +79,30 @@
 					</td>
 				</tr>
 
-				
+				<tr>
+                                        <td class="separator" colspan="2"></td>
+                                </tr>
+
+				<tr>
+					<td class="headerright">{#require_receipt#}  &nbsp;</td>
+					<td class="default"><input type="checkbox" value="true" name="requireReceipt"></td> 
+				</tr>				
 
 				{if !$umAddSignature && $umHaveSignature}
+				
+				<tr>
+                                        <td class="separator" colspan="2"></td>
+                                </tr>
+
 				<tr>
 					<td class="headerright">{#add_signature#} &nbsp;</td>
 					<td class="default"><input type="checkbox" name="cksig" onclick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
 				</tr>
 				{/if}
+				
+				<tr>
+                                        <td class="separator" colspan="2"></td>
+                                </tr>		
 
 				<tr>
 					<td class="headerright">{#priority_text#} &nbsp;</td>
@@ -105,8 +121,8 @@
 					<table class="buttonTable" cellspacing="0" >
 			    	<tr>
 			    		<td valign="middle" class="buttonLeft">&nbsp;</td>
-				  		<td valign="middle" class="buttonMiddle"><a class="login" href="javascript:enviar()" >{#send_text#}</a></td>
-				  		<td valign="middle" class="buttonRight">&nbsp;</td>
+					<td valign="middle" class="buttonMiddle"><a class="login" href="javascript:enviar()" >{#send_text#}</a></td>
+				  	<td valign="middle" class="buttonRight">&nbsp;</td>
 			    	</tr>
 					</table></center>
 					</td>

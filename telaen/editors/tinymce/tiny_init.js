@@ -2,7 +2,7 @@ tinyMCE.init({
 		mode : "textareas",
 		theme : "advanced",
 		language : "en",
-		plugins : "table,advhr,advimage,advlink,iespell,insertdatetime,preview,flash,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable, fullpage",
+		plugins : "table,advhr,advimage,advlink,iespell,insertdatetime,preview,flash,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable",
 		//theme_advanced_buttons1_add_before : "save,newdocument,separator",
 		theme_advanced_buttons1_add : "fontselect,fontsizeselect,separator,forecolor,backcolor",
 		theme_advanced_buttons2_add : "separator,insertdate,inserttime,preview",
@@ -31,9 +31,5 @@ tinyMCE.init({
 		file_browser_callback : "fileBrowserCallBack",
 		theme_advanced_resize_horizontal : true,
 		theme_advanced_resizing : true,
-		apply_source_formatting : true,
-		fullpage_default_encoding : "iso-8859-1",
-		fullpage_default_xml_pi : false,
-		fullpage_default_title : "",
-		fullpage_default_doctype : "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">"
+		apply_source_formatting : true
 });

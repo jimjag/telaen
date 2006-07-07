@@ -33,22 +33,37 @@ if(isset($tipo) && $tipo == "send") {
 	$ARTo = $UM->get_names(stripslashes($to));
 	$ARCc = $UM->get_names(stripslashes($cc));
 	$ARBcc = $UM->get_names(stripslashes($bcc));
-	
+
+	// html head and foot to add, the editor can do it, but causes some problems with sign and footer
+	$htmlHead = "
+<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+<html>
+<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=$default_char_set\"></head>
+<body>
+	";
+
+	$htmlFoot = "
+</body>
+</html>";
+
+	// build the email	
 	if((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
 	
 		// set lang for error messages, english for now
 		$mail->SetLanguage("en","langs/");
 
 		// for password authenticated servers
-
 		$mail->SMTPAuth 	= $use_password_for_smtp;
 		$mail->Username 	= $sess["user"];
 		$mail->Password 	= $sess["pass"];
-		// if using the advanced editor
 
+		// if using the advanced editor
 		if($is_html == "true")  {
-			$mail->IsHTML(1);
-			if($footer != "") $body .= preg_replace("/(\r?\n)/","<BR />\\1",$footer);
+			$mail->IsHTML(1);			
+			if($footer != "") 
+				$body .= preg_replace("/(\r?\n)/","<br>\\1",$footer);
+			// add html head and foot
+			$body = $htmlHead . $body . $htmlFoot;				
 
 		} elseif ($footer != "") $body .= $footer;
 
@@ -62,7 +77,16 @@ if(isset($tipo) && $tipo == "send") {
 		$mail->WordWrap 	= 76;
 		$mail->Priority		= $priority;
 		$mail->SMTPDebug 	= false;
+
+		// add an header for keep a track of client IP
+		$mail->AddCustomHeader("X-Originating-IP: ".getenv("REMOTE_ADDR"));		
 		
+		// add return-receipt header if required 
+		if ( isset($requireReceipt) ) {	
+			$mail->AddCustomHeader("Disposition-Notification-To: ". $prefs['real-name'] . " <" . $prefs['reply-to'] . ">");
+		}
+
+		// add recipients
 		if(count($ARTo) != 0) {
 			for($i=0;$i<count($ARTo);$i++) {
 				$name = $ARTo[$i]["name"];

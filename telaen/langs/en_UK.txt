@@ -165,6 +165,8 @@ up_title 					= Add file
 up_information_text				= Select file
 up_button_text					= Attach file
 
+require_receipt					= Return receipt
+
 priority_text					= Priority
 priority_low					= Low
 priority_normal					= Normal
