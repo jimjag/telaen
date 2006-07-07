@@ -83,7 +83,7 @@ if(isset($tipo) && $tipo == "send") {
 		
 		// add return-receipt header if required 
 		if ( isset($requireReceipt) ) {	
-			$mail->AddCustomHeader("Disposition-Notification-To: ". $prefs['real-name'] . " <" . $prefs['reply-to'] . ">");
+			$mail->AddCustomHeader("Disposition-Notification-To: ". $UM->mime_encode_headers($prefs["real-name"]) . " <" . $prefs['reply-to'] . ">");
 		}
 
 		// add recipients
