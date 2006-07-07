@@ -156,6 +156,7 @@ $UM->user_folder 		= $userfolder;
 $UM->temp_folder		= $temporary_directory;
 $UM->timeout			= $idle_timeout;
 
+$UM->dirperm = $dirperm;
 
 $prefs = load_prefs();
 

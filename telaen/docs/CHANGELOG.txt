@@ -18,6 +18,10 @@ Telaen:
 
 1.1.1-dev:
 
+ * umask value and default directory permission bitmask now
+   configurable via the config.php file. Useful for some
+   environs that need a more "open" permission setup.
+
  * Templates improvements: 
 	- now header.htm contains also the <head> section of html
 	- meta tags output in <head> instead of a bad echo

@@ -8,8 +8,9 @@ class Telaen extends Telaen_core {
 	var $_havepipelining	= "";
 	var $_system_folders    = Array("inbox","trash","sent","spam");
 	var $_current_folder 	= "";
-	var $CRLF				= "\r\n";
-	var $userspamlevel		= 0;	// Disabled
+	var $CRLF		= "\r\n";
+	var $userspamlevel	= 0;	// Disabled
+	var $dirperm		= 0700;  // recall affected by umask value
 
 	function Telaen() {
 		require("./inc/class.tnef.php");
@@ -160,7 +161,7 @@ class Telaen extends Telaen_core {
 		$idle_timeout 			= $this->timeout;
 
 		if(!file_exists($this->user_folder))
-			if(!@mkdir($this->user_folder,0700)) die("<h1><br><br><br><center>$error_permiss</center></h1>");
+			if(!@mkdir($this->user_folder,$this->dirperm)) die("<h1><br><br><br><center>$error_permiss</center></h1>");
 
 		$boxes = $this->mail_list_boxes();
 
@@ -190,7 +191,7 @@ class Telaen extends Telaen_core {
 				$current_folder = $this->fix_prefix($boxes[$i]["name"],1);
 				if(!in_array(strtolower($current_folder),$this->_system_folders)) 
 					if(!file_exists($this->user_folder.$current_folder)) 
-						mkdir($this->user_folder.$current_folder,0700);
+						mkdir($this->user_folder.$current_folder,$this->dirperm);
 			}
 
 
@@ -204,7 +205,7 @@ class Telaen extends Telaen_core {
 			if(!file_exists($this->user_folder.$value)) {
 				if(in_array(strtolower($value),$this->_system_folders)) 
 					$value = strtolower($value);
-				mkdir($this->user_folder.$value,0700);
+				mkdir($this->user_folder.$value,$this->dirperm);
 			}
 		}
 	}
@@ -1081,7 +1082,7 @@ class Telaen extends Telaen_core {
 			$this->mail_send_command("CREATE \"$boxname\"".$this->CRLF);
 			$buffer = $this->mail_get_line();
 			if(eregi("^(".$this->_sid." OK)",$buffer)) {
-				@mkdir($this->user_folder.$boxname,0700);
+				@mkdir($this->user_folder.$boxname,$this->dirperm);
 				return 1;
 			} else { 
 				$this->mail_error_msg = $buffer; return 0; 
@@ -1089,7 +1090,7 @@ class Telaen extends Telaen_core {
 
 		} else {
 			/* if POP3, only make a new folder */
-			if(@mkdir($this->user_folder.$boxname,0700)) return 1;
+			if(@mkdir($this->user_folder.$boxname,$this->dirperm)) return 1;
 			else return 0;
 
 		}

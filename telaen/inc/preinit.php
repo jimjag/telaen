@@ -16,7 +16,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 
 $error_flags = E_ALL & ~E_NOTICE;
 
-umask(0077);
+umask($default_umask);
 
 @error_reporting($error_flags);
 @ini_set ('error_reporting', $error_flags);
