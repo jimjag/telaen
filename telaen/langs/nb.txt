@@ -168,6 +168,8 @@ attch_type_hea					= Type
 attch_dele_hea					= Slett
 attch_no_hea					= Ingen vedlegg
 
+require_receipt                                 = Return receipt
+
 add_signature					= Legg til signatur
 send_text					= Send
 

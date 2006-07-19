@@ -168,6 +168,8 @@ attch_type_hea					= Typ
 attch_dele_hea					= Smazat
 attch_no_hea					= Bez pøílohy
 
+require_receipt                                 = Return receipt
+
 add_signature					= Pøidat podpis
 send_text					= Poslat
 

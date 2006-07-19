@@ -169,6 +169,8 @@ attch_type_hea					= Typ
 attch_dele_hea					= Usuñ
 attch_no_hea					= Nie ma za³±czników
 
+require_receipt                                 = Return receipt
+
 add_signature					= Dodaj sygnaturê
 send_text					= Wy¶lij
 

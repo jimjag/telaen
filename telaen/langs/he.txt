@@ -154,6 +154,8 @@ attch_type_hea					= סוג
 attch_dele_hea					= מחק
 attch_no_hea					= אין קבצים מצורפים
 
+require_receipt                                 = Return receipt
+
 add_signature					= הוסף חתימה
 send_text					= שלח
 

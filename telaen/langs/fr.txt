@@ -175,6 +175,8 @@ attch_type_hea				= Type
 attch_dele_hea				= Supprimer
 attch_no_hea				= Aucune pièce jointe
 
+require_receipt                                 = Return receipt
+
 add_signature				= Ajouter une signature
 send_text					= Envoyer
 

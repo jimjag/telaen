@@ -170,6 +170,8 @@ attch_type_hea					= Type
 attch_dele_hea					= Verwijder
 attch_no_hea					= Geen bijlagen
 
+require_receipt                                 = Return receipt
+
 add_signature					= Voeg handtekening toe:
 send_text					= Verzend
 

@@ -167,6 +167,8 @@ attch_type_hea					= Tegund
 attch_dele_hea					= Eyða
 attch_no_hea					= Engin viðhengi
 
+require_receipt                                 = Return receipt
+
 add_signature					= Bæta við undirskrift
 send_text					= Senda
 

@@ -167,6 +167,8 @@ attch_type_hea					= Tip
 attch_dele_hea					= Stergeti
 attch_no_hea					= Nici un atasament
 
+require_receipt                                 = Return receipt
+
 add_signature					= Adaugati semnatura
 send_text					= Trimite
 

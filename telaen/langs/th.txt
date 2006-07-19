@@ -170,6 +170,8 @@ attch_type_hea					= ชนิด
 attch_dele_hea					= ลบ
 attch_no_hea					= ไม่มีการแนบไฟล์
 
+require_receipt                                 = Return receipt
+
 add_signature					= เพิ่มลายเซ็นต์ท้ายจดหมาย
 send_text					= ส่งจดหมาย
 

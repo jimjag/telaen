@@ -18,6 +18,10 @@ Telaen:
 
 1.1.1-dev:
 
+ * Added ability to require a return-receipt on a new message
+
+ * Improved signature/footer attach and multiple quotes on HTML messages
+
  * umask value and default directory permission bitmask now
    configurable via the config.php file. Useful for some
    environs that need a more "open" permission setup.

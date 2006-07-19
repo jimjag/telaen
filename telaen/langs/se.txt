@@ -166,6 +166,7 @@ attch_type_hea					= Typ
 attch_dele_hea					= Ta bort
 attch_no_hea					= Det finns inga bilagor!
 
+require_receipt                                 = Return receipt
 
 add_signature					= Använd signatur
 send_text					= Skicka

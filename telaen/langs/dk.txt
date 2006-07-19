@@ -171,6 +171,8 @@ attch_type_hea					= Type
 attch_dele_hea					= Slet
 attch_no_hea					= Ingen vedhæftede filer
 
+require_receipt                                 = Return receipt
+
 add_signature					= Tilføj signatur
 send_text					= Send meddelelse
 

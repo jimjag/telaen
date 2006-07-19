@@ -177,17 +177,21 @@ attch_type_hea					= Tipo
 attch_dele_hea					= Cancella
 attch_no_hea					= Nessun allegato
 
+require_receipt                                 = Richiedi conferma lettura
+
 add_signature					= Aggiungi firma
 send_text					= Invia
 
 result_error					= Non è stato possibile inviare l'e-mail
 result_success					= E-mail inviata correttamente
 nav_continue					= Continua
-nav_back						= Torna indietro
+nav_back					= Torna indietro
 
-up_title 						= Aggiungi file
+up_title 					= Aggiungi file
 up_information_text				= Seleziona file
 up_button_text					= Invia
+
+require_receipt					= Richiedi conferma di lettura
 
 priority_text					= Priorità
 priority_low					= Bassa

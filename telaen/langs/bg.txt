@@ -162,6 +162,7 @@ bcc_hea						= 2 Копие до:
 subject_hea					= Тема:
 address_tip					= От адресната книга
 
+
 attach_hea					= Прикрепени файлове:
 attch_add_new					= Прикрепи нов файл
 attch_name_hea					= Име
@@ -169,6 +170,8 @@ attch_size					= Големина
 attch_type_hea					= Тип
 attch_dele_hea					= Изтрий
 attch_no_hea					= Няма прикрепени файлове!
+
+require_receipt                                 = Return receipt
 
 add_signature					= Добави 
 send_text					= Изпрати

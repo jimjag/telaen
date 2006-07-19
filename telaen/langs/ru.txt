@@ -173,6 +173,8 @@ attch_type_hea			= Тип
 attch_dele_hea			= Удалить
 attch_no_hea			= Нет вложений
 
+require_receipt                                 = Return receipt
+
 add_signature			= Добавить подпись
 send_text				= Отправить
 
