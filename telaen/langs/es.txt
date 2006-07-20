@@ -1,3 +1,7 @@
+# Spanish lang file for Telaen 1.1.1 #
+# -- Thanks to pochu for updates --- #
+# Last update 20 July 2006 #
+
 # ***** GLOBAL VARS ****** #
 # User-friendly names to system folders
 
@@ -151,6 +155,7 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]
+
 newmsg_title					= Redactar mensaje
 
 to_hea						= Para:
@@ -167,7 +172,7 @@ attch_type_hea					= Tipo
 attch_dele_hea					= Borrar
 attch_no_hea					= Sin archivos adjuntos
 
-require_receipt                                 = Return receipt
+require_receipt                                 = Acuse de recibo
 
 add_signature					= Adjuntar Firma
 send_text					= Enviar

@@ -1,7 +1,7 @@
 #---------------------------------------------------------------#
 # Italian language file for Telaen v1.1.1 			#
 # Lang file mantained by Vola - andreavola[at]gmail[dot]com 	#
-# Last edit: 28 June 2006 					#
+# Last edit: 20 July 2006 					#
 #---------------------------------------------------------------#
 
 # ***** GLOBAL VARS ****** #
@@ -340,7 +340,7 @@ qad_bcc				= Bcc
 # edit/display
 
 adr_title					= Rubrica
-adr_name					= Noma
+adr_name					= Nome
 adr_email					= E-mail
 adr_street					= Via
 adr_city					= Città
