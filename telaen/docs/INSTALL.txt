@@ -44,7 +44,7 @@ we do not bundle the "local" config files, just their
 your old configuration will be saved.
 
 Sometimes, after upgrading, especially if this is the
-first time you've installed Talean and have previously
+first time you've installed Telean and have previously
 been using Uebimiau, you may be surprised by blank
 pages! This is because there is a mismatch between the
 pre-compiled Smarty templates and the "new" ones.
@@ -57,6 +57,14 @@ problem.
 If upgrading from Telaen 1.1.0 (or earlier) to 1.1.1 (or later),
 please be sure to check your config.php file against the
 config.php.default file. In particular, ensure that you have
-the correct values for $default_umask and $dirperm in your
-config.php file for backwards compatibility (the defaults
+the correct values for $default_umask, $dirperm and $webmail_title
+in your config.php file for backwards compatibility (the defaults
 need to be set).
+If upgrading from 1.1.0 (or earlier) to 1.1.1 (or later) also note 
+that the themes are NOT COMPATIBLE with the previous versions !!!
+You need to reconfigure your header and footer (if you have a 
+personalized one). See CHANGELOG.txt for details.
+Please ask on telean forum (www.telaen.org) if you need help.
+
+
+
