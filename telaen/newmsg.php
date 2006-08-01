@@ -398,7 +398,7 @@ if(isset($tipo) && $tipo == "send") {
 		$ARFrom = $email["from"];
 		$useremail = $sess["email"];
 
-		// from
+		// From
 		if($ARReplyTo[0]["mail"] != "") {
 			$name = $ARReplyTo[0]["name"];
 			$thismail = $ARReplyTo[0]["mail"];
@@ -406,23 +406,47 @@ if(isset($tipo) && $tipo == "send") {
 			$name = $ARFrom[0]["name"];
 			$thismail = $ARFrom[0]["mail"];
 		}
-		$fromreply = "\"$name\" <$thismail>";
+		$fromreply = "\"$name\" <$thismail>";		
+		
+		// These are used for re-add my address in the quoted message, since we remove it from To & CC lists
+		// I don't want my adr in To or CC fields when I reply-all, but I want to see it in the quoted message.
+		// If someone finds a better way to do this is welcome....
+		$myToAdr = "";
+		$myCCAdr = "";
 
-		// To
+		// To			
 		$ARTo = $email["to"];
-
 		for($i=0;$i<count($ARTo);$i++) {
-			$name = $ARTo[$i]["name"]; $thismail = $ARTo[$i]["mail"];
-			if(isset($toreply)) $toreply .= ", \"$name\" <$thismail>";
-			else $toreply = "\"$name\" <$thismail>";
+			$name = $ARTo[$i]["name"]; 
+			$thismail = $ARTo[$i]["mail"];
+
+			// avoid to add my address in the TO list
+                        if ($thismail != $sess["email"] && $thismail != $prefs["reply-to"]) {
+				if(isset($toreply)) 
+					$toreply .= ", \"$name\" <$thismail>";
+				else 
+					$toreply = "\"$name\" <$thismail>";
+			}
+			else
+				$myToAdr = "\"$name\" <$thismail>";
 		}
 
 		// CC
 		$ARCC = $email["cc"];
 		for($i=0;$i<count($ARCC);$i++) {
-			$name = $ARCC[$i]["name"]; $thismail = $ARCC[$i]["mail"];
-			if(isset($ccreply)) $ccreply .= ", \"$name\" <$thismail>";
-			else $ccreply = "\"$name\" <$thismail>";
+			$name = $ARCC[$i]["name"]; 
+			$thismail = $ARCC[$i]["mail"];
+
+			// avoid to add my address in the CC list
+			if ($thismail != $sess["email"] && $thismail != $prefs["reply-to"]) {
+				if(isset($ccreply)) 
+					$ccreply .= ", \"$name\" <$thismail>";
+				else 
+					$ccreply = "\"$name\" <$thismail>";
+			}
+			else
+                                $myCCAdr = "\"$name\" <$thismail>";
+	
 		}
 
 		function clear_names($strMail) {
@@ -451,6 +475,20 @@ if(isset($tipo) && $tipo == "send") {
 		$ccreply_quote		= $ccreply;
 		$msgsubject_quote	= $msgsubject;
 
+		// re-add my address in the quoted message, why? look at line #412
+		if (!empty($myToAdr))
+			if (empty($toreply_quote))
+				$toreply_quote = $myToAdr;			
+			else 
+				$toreply_quote = $myToAdr . "," . $toreply_quote;
+
+		if (!empty($myCCAdr))
+			if (empty($ccreply_quote))
+                                $ccreply_quote = $myCCAdr;
+                        else
+                                $ccreply_quote = $myCCAdr . "," . $ccreply_quote;
+
+		
 		if($show_advanced) {
 			$fromreply_quote 	= htmlspecialchars($fromreply_quote);
 			$toreply_quote		= htmlspecialchars($toreply_quote);
