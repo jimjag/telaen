@@ -491,7 +491,7 @@ class Telaen_core {
 
 				} elseif($this->displayimages) {
 					$ext = substr($thisattach["name"],-4);
-					$allowed_ext = Array(".gif",".jpg");
+					$allowed_ext = Array(".gif",".jpg",".GIF",".JPG",".Gif",".Jpg");
 					if(in_array($ext,$allowed_ext)) {
 						$this->add_body("<img src=\"$thisfile\">");
 					}
