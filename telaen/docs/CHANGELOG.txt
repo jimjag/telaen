@@ -18,6 +18,11 @@ Telaen:
 
 1.1.1-dev:
 
+ * Solved issue when attached images with upcase or capitalized extension
+   (like .JPG or .Gif) are not displayed inline
+
+ * Added check for exclude user address in reply-all  
+
  * Added ability to require a return-receipt on a new message
 
  * Improved signature/footer attach and multiple quotes on HTML messages

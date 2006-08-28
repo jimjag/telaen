@@ -68,7 +68,7 @@ $jssource = "
 //]]> 
 </script> 
 ";
-//$smarty->debugging = true;
+$smarty->debugging = true;
 $smarty->assign("umServerType",strtoupper($mail_server_type));
 
 switch(strtoupper($mail_server_type)) {

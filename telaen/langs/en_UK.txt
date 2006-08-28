@@ -10,8 +10,12 @@ trash_extended					= Trash
 spam_extended					= Spam folder
 
 # Navigation texts
+pages_text					= Pages
+first_text 					= First
 previous_text					= Previous
-next_text						= Next
+next_text					= Next
+last_text					= Last
+total_text					= Total
 
 # Mail Server Errors
 error_connect					= Error connecting to the server
@@ -96,11 +100,11 @@ folders_to						= Folders to
 [MessageList]
 messages_to					= Messages to 
 no_messages					= No new messages in your 
-delete_selected_mnu				= Delete selected
-move_selected_mnu				= Move selected to
+delete_selected_mnu				= Delete 
+move_selected_mnu				= Move to
 mark_selected_mnu         			= Mark as read
 unmark_selected_mnu      			= Mark as unread
-move_selected_to_trash_mnu		= Move selected to Trash
+move_selected_to_trash_mnu			= Move to Trash
 
 
 delete_mnu						= Delete

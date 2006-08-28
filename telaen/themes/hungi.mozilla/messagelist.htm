@@ -63,7 +63,8 @@
 				</tr>
 				{/section}
 				<tr>
-					<td colspan="7" class="default">&nbsp; 
+					<td colspan="7" class="default">
+					<img src="./themes/hungi.mozilla/images/arrowblue.gif" alt="" />&nbsp;
 					<a class="menu" href="javascript:markmsg()">{#mark_selected_mnu#}</a> ::
   					<a class="menu" href="javascript:unmarkmsg()">{#unmark_selected_mnu#}</a> ::
 					<a class="menu" href="javascript:delemsg()">{#delete_selected_mnu#}</a> :: 
@@ -76,7 +77,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="7" class="default"> &nbsp;&nbsp;{if $umPreviousLink}<a href="{$umPreviousLink}" class="navigation">{#previous_text#}</a> &nbsp;{/if}{$umNavBar}{if $umNextLink} &nbsp;<a href="{$umNextLink}" class="navigation">{#next_text#}</a>{/if}</td>
+					<td colspan="7" class="default">&nbsp;&nbsp;<span class="menu"><b>{#pages_text#}:</b></span>
+					{if $umPreviousLink}<!--<a href="{$umFirstLink}" class="navigation">&laquo; {#first_text#}</a>&nbsp; -->
+					<a href="{$umPreviousLink}" class="navigation">&laquo; {#previous_text#}</a>&nbsp;{/if}
+					{$umNavBar}
+					{if $umNextLink}&nbsp;<a href="{$umNextLink}" class="navigation">{#next_text#} &raquo;</a>
+					<!--&nbsp;<a href="{$umLastLink}" class="navigation">{#last_text#} &raquo;</a>-->{/if}
+					</td>
 				</tr>
 			
 			{else}		

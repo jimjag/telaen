@@ -242,13 +242,25 @@ default:
 
 $smarty->assign("umBoxName",$display);
 
+// Page navigation
 if($nummsg > 0) {
-	if($pag > 1) $smarty->assign("umPreviousLink","messages.php?folder=$folder&pag=".($pag-1)."");
+	if($pag > 1) {
+		$smarty->assign("umFirstLink","messages.php?folder=$folder&pag=1");
+		$smarty->assign("umPreviousLink","messages.php?folder=$folder&pag=".($pag-1)."");		
+	}
+
 	for($i=1;$i<=ceil($nummsg / $reg_pp);$i++) 
-		if($pag == $i) $navigation .= "$i ";
-		else $navigation .= "<a href=\"messages.php?folder=$folder&pag=$i\" class=\"navigation\">$i</a> ";
-	if($end_pos < $nummsg) $smarty->assign("umNextLink","messages.php?folder=$folder&pag=".($pag+1)."");
-	$navigation .= " ($pag/".ceil($nummsg / $reg_pp).")";
+		if($pag == $i) 
+			$navigation .= "[<b>$i</b>] ";
+		else 
+			$navigation .= "<a href=\"messages.php?folder=$folder&pag=$i\" class=\"navigation\">$i</a> ";
+
+	$totPages = ceil($nummsg / $reg_pp);
+	if($end_pos < $nummsg) {
+		$smarty->assign("umNextLink","messages.php?folder=$folder&pag=".($pag+1)."");
+		$smarty->assign("umLastLink","messages.php?folder=$folder&pag=".$totPages."");
+	}
+	$navigation .= " ($pag/". $totPages .")";
 }
 
 $smarty->assign("umNavBar",$navigation);

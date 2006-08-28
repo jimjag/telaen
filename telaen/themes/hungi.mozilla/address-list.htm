@@ -14,6 +14,7 @@
 -->			<td width="10%" class="headers">.: <b>{#adr_dele_hea#}</b> :.</td>
 		</tr>
 		{section name=i loop=$umAddressList}
+		<tr><td colspan="4" class="separator"></td></tr>
 		<tr>
 	                <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].viewlink}">{$umAddressList[i].name}</a></td>
 	                <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].composelink}">{$umAddressList[i].email}</a></td>
@@ -22,9 +23,7 @@
 					<td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].exportlink}">OK</a></td>
 -->
 			<td class="cent"> &nbsp;<a class="menu" href="{$umAddressList[i].dellink}">OK</a></td>
-		</tr>
-				
-		<tr><td colspan="4" class="separator"></td></tr>
+		</tr>						
 				
 		{/section}
 		<tr>

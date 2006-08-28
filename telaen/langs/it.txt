@@ -14,9 +14,12 @@ trash_extended					= Cestino
 spam_extended					= Spam
 
 #Navigation texts
-
+pages_text					= Pagine
+first_text					= Prima
 previous_text					= Precedente
 next_text					= Successiva
+last_text					= Ultima
+total_text					= Total
 
 # Mail Server Errors
 
@@ -120,8 +123,8 @@ folders_to					= Sposta cartella
 messages_to					= Messaggi per 
 no_messages					= Nessun nuovo messaggio nella cartella 
 
-delete_selected_mnu				= Cancella selezionato
-move_selected_mnu				= Sposta selezionato in
+delete_selected_mnu				= Cancella 
+move_selected_mnu				= Sposta in
 move_selected_to_trash_mnu			= Sposta nel cestino
 mark_selected_mnu         			= Segna come letto
 unmark_selected_mnu      			= Segna come non letto

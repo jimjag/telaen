@@ -51,7 +51,9 @@ $smarty->assign("headerTemplate", $header_template);
 $smarty->assign("footerTemplate", $footer_template);
 $smarty->assign("popupHeaderTemplate", $popup_header_template);
 
-//$smarty->debugging = false;
+// For debug in smarty
+$smarty->debugging = true;
+
 $smarty->assign("umLanguageFile",$selected_language.".txt");
 
 // Assign also the webmail title to smarty, check for empty title before

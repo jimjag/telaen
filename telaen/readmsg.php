@@ -91,15 +91,15 @@ $body = eregi_replace("target=[\"]?[a-zA-Z_]+[\"]?","target=\"blank\"",$body);
 $body = eregi_replace("href=\"http([s]?)://","target=\"_blank\" href=\"$redir_path?http\\1://",$body);
 $body = eregi_replace("href=\"mailto:","target=\"_top\" href=\"newmsg.php?to=",$body);
 
+// looking for browser type    --vola's note: add check for safari and opera??
 $uagent = 	$_SERVER["HTTP_USER_AGENT"];
 
-$ns4    = 	(ereg("Mozilla/4",$uagent) && !ereg("MSIE",$uagent) && 
-			!ereg("Gecko",$uagent));
+$ns4    = 	(ereg("Mozilla/4",$uagent) && !ereg("MSIE",$uagent) && !ereg("Gecko",$uagent));
 $ns6moz = 	ereg("Gecko",$uagent);
 $ie4up  = 	ereg("MSIE (4|5|6)",$uagent);
 $other	= 	(!$ns4 && !$ns6moz && !$ie4up);
 
-
+// with no recognized browser display inline on the page
 if ($other) {
 	$body 	= 	eregi_replace("<base","<telaen_base_not_alowed",
 				eregi_replace("<link","<telaen_link_not_alowed",
@@ -116,11 +116,15 @@ if ($other) {
 	$body = eregi_replace("a:(link|visited|hover)",".".uniqid(""),$body);
 	$body = eregi_replace("(body)[ ]?\\{",".".uniqid(""),$body);
 
-} elseif($ie4up || $ns6moz) {
+} 
+// with ie4+/mozilla/ns6+ use iframe for display body  
+elseif($ie4up || $ns6moz) {
 	$sess["currentbody"] = $body;;
 	$body = "<iframe src=\"show_body.php?folder=".htmlspecialchars($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
 
-} elseif($ns4) {
+} 
+// with ns4 use ilayer
+elseif($ns4) {
 	$sess["currentbody"] = $body;;
 	$body = "<ilayer width=\"100%\" left=\"0\" top=\"0\">$body</ilayer>";
 }
