@@ -52,7 +52,7 @@ $smarty->assign("footerTemplate", $footer_template);
 $smarty->assign("popupHeaderTemplate", $popup_header_template);
 
 // For debug in smarty
-$smarty->debugging = true;
+//$smarty->debugging = true;
 
 $smarty->assign("umLanguageFile",$selected_language.".txt");
 
