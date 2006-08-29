@@ -727,7 +727,8 @@ class Telaen extends Telaen_core {
 						if ($parallelized)
 							$this->mail_send_command($mailcommand);
 
-						for($i=$oldheaderscount;$i<$newheaderscount;$i++) {
+						for($i=$oldheaderscount,$j=0;$i<$newheaderscount;$i++,$j++) {
+							$header = "";
 							if (! $parallelized) {
 								/*
 								 * Fetch headers serially. Very slow.
@@ -747,12 +748,8 @@ class Telaen extends Telaen_core {
 							if(!($pos = strpos($header,"\r\n\r\n") === false)) 
 								$header = substr($header,0,$pos);
 
+        						$oldheaders[$i + 1] = $messages[$j];
 							$oldheaders[$i + 1]["header"] = $header;
-							$header = "";
-
-							$oldheaders[$i + 1]["id"] = $messages[$i]["id"];
-							$oldheaders[$i + 1]["msg"] = $messages[$i]["msg"];
-							$oldheaders[$i + 1]["size"] = $messages[$i]["size"];
 						}
 						$fetched_part = $oldheaderscount;
 						$messages = array_merge($oldheaders, null);
@@ -786,6 +783,7 @@ class Telaen extends Telaen_core {
 						$this->mail_send_command($mailcommand);
 
 					for($i=$rescount;$i<count($messages);$i++) {
+						$header="";
 						if (! $parallelized) {
 							/*
 							 * Fetch headers serially. Very slow.
@@ -805,7 +803,6 @@ class Telaen extends Telaen_core {
 							$header = substr($header,0,$pos);
 				
 						$messages[$i]["header"] = $header;
-						$header="";
 					}
 				}
 			} else {
@@ -821,8 +818,8 @@ class Telaen extends Telaen_core {
 					$fullpath = "$datapath/$entry";
 					if(is_file($fullpath)) {
 						$thisheader = $this->_get_headers_from_cache($fullpath);
-						$messages[$i]["id"]			= $i+1;
-						$messages[$i]["msg"]			= $i;
+						$messages[$i]["id"]		= $i+1;
+						$messages[$i]["msg"]		= $i;
 						$messages[$i]["header"]		= $thisheader;
 						$messages[$i]["size"]		= filesize($fullpath);
 						$messages[$i]["localname"]	= $fullpath;
@@ -873,26 +870,18 @@ class Telaen extends Telaen_core {
 			}
 
 			if (! $havespam) {
-				if ($fetched_part && $i < $fetched_part ) {
-					$messagescopy[$j] = $messages[$i];
-					$j++;
-					continue;
-				}
-				$messagescopy[$j]["id"]		= $messages[$i]["id"];
-				$messagescopy[$j]["msg"]	= $messages[$i]["msg"];
-				$messagescopy[$j]["size"]	= $messages[$i]["size"];
-				$messagescopy[$j]["localname"]	= $messages[$i]["localname"];
-	
-				$messagescopy[$j]["subject"] = $mail_info["subject"];
-				$messagescopy[$j]["date"] = $mail_info["date"];
+				$messagescopy[$j]               = $messages[$i];
+
+				$messagescopy[$j]["subject"]    = $mail_info["subject"];
+				$messagescopy[$j]["date"]       = $mail_info["date"];
 				$messagescopy[$j]["message-id"] = $mail_info["message-id"];
-				$messagescopy[$j]["from"] = $mail_info["from"];
-				$messagescopy[$j]["to"] = $mail_info["to"];
-				$messagescopy[$j]["fromname"] = $mail_info["from"][0]["name"];
-				$messagescopy[$j]["to"] = $mail_info["to"];
-				$messagescopy[$j]["cc"] = $mail_info["cc"];
-				$messagescopy[$j]["priority"] = $mail_info["priority"];
-				$messagescopy[$j]["attach"] = (eregi("(multipart/mixed|multipart/related|application)",
+				$messagescopy[$j]["from"]       = $mail_info["from"];
+				$messagescopy[$j]["to"]         = $mail_info["to"];
+				$messagescopy[$j]["fromname"]   = $mail_info["from"][0]["name"];
+				$messagescopy[$j]["to"]         = $mail_info["to"];
+				$messagescopy[$j]["cc"]         = $mail_info["cc"];
+				$messagescopy[$j]["priority"]   = $mail_info["priority"];
+				$messagescopy[$j]["attach"]     = (eregi("(multipart/mixed|multipart/related|application)",
 								     $mail_info["content-type"]))?1:0;
 
 				if ($messagescopy[$j]["localname"] == "") {
@@ -917,26 +906,18 @@ class Telaen extends Telaen_core {
 
 				$j++;
 			} else {
-				if ($fetched_part && $i < $fetched_part ) {
-					$spamcopy[$y] = $messages[$i];
-					$y++;
-					continue;
-				}
-				$spamcopy[$y]["id"]		= $messages[$i]["id"];
-				$spamcopy[$y]["msg"]	= $messages[$i]["msg"];
-				$spamcopy[$y]["size"]	= $messages[$i]["size"];
-				$spamcopy[$y]["localname"]	= $messages[$i]["localname"];
+				$spamcopy[$y]                   = $messages[$i];
 	
-				$spamcopy[$y]["subject"] = $mail_info["subject"];
-				$spamcopy[$y]["date"] = $mail_info["date"];
-				$spamcopy[$y]["message-id"] = $mail_info["message-id"];
-				$spamcopy[$y]["from"] = $mail_info["from"];
-				$spamcopy[$y]["to"] = $mail_info["to"];
-				$spamcopy[$y]["fromname"] = $mail_info["from"][0]["name"];
-				$spamcopy[$y]["to"] = $mail_info["to"];
-				$spamcopy[$y]["cc"] = $mail_info["cc"];
-				$spamcopy[$y]["priority"] = $mail_info["priority"];
-				$spamcopy[$y]["attach"] = (eregi("(multipart/mixed|multipart/related|application)",
+				$spamcopy[$y]["subject"]        = $mail_info["subject"];
+				$spamcopy[$y]["date"]           = $mail_info["date"];
+				$spamcopy[$y]["message-id"]     = $mail_info["message-id"];
+				$spamcopy[$y]["from"]           = $mail_info["from"];
+				$spamcopy[$y]["to"]             = $mail_info["to"];
+				$spamcopy[$y]["fromname"]       = $mail_info["from"][0]["name"];
+				$spamcopy[$y]["to"]             = $mail_info["to"];
+				$spamcopy[$y]["cc"]             = $mail_info["cc"];
+				$spamcopy[$y]["priority"]       = $mail_info["priority"];
+				$spamcopy[$y]["attach"]         = (eregi("(multipart/mixed|multipart/related|application)",
 								 $mail_info["content-type"]))?1:0;
 
 				if ($spamcopy[$y]["localname"] == "") {
