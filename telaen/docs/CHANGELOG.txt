@@ -18,6 +18,10 @@ Telaen:
 
 1.1.1-dev:
 
+ * Fixed problem with missing header info when using IMAP. Also
+   addresses possible "double showing" of SPAM email both Inbox
+   and Spam folder.
+
  * Solved issue when attached images with upcase or capitalized extension
    (like .JPG or .Gif) are not displayed inline
 
