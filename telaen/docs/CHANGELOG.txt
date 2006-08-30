@@ -17,7 +17,10 @@ Telaen:
 ----------------------------------------------------------------
 
 1.1.1-dev:
-
+ 
+ * Added sort for personal folders on folders list and fixed a
+   bug can cause duplicate entries in the list.
+ 
  * Fixed problem with missing header info when using IMAP. Also
    addresses possible "double showing" of SPAM email both Inbox
    and Spam folder.
