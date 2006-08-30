@@ -2,11 +2,14 @@
 $folders = $sess["folders"];
 $scounter = 0;
 $pcounter = 0;
+$system = Array();
+$personal = Array();
 foreach($folders as $entry) {
 	$entry = $entry["name"];
 	$boxname = $entry;
-	if(preg_match("/(inbox|sent|trash|spam)/i",$entry)) {
-		switch(strtolower($entry)) {
+	if ($UM->is_system_folder($entry)) {
+                $entry = strtolower($entry);
+		switch ($entry) {
 		case "inbox":
 			$boxname = $inbox_extended;
 			break;
@@ -20,9 +23,9 @@ foreach($folders as $entry) {
 			$boxname = ($spam_extended ? $spam_extended : "SPAM");
 			break;
 		}
-		$system[$scounter]["systemname"]    = strtolower($entry);
+		$system[$scounter]["systemname"]    = $entry;
 		$system[$scounter]["name"]      = $boxname;
-		$system[$scounter]["link"] 	= "process.php?folder=".strtolower($entry)."";
+		$system[$scounter]["link"] 	= "process.php?folder=$entry";
 		$scounter++;
 	} else {
 		$personal[$pcounter]["systemname"]  = $entry;

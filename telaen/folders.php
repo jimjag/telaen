@@ -151,8 +151,9 @@ for($n=0;$n<count($boxes);$n++) {
 
 	if($unread != 0) $unread = "<b>$unread</b>";
 
-	if(ereg("^(inbox|sent|trash|spam)$",strtolower($entry))) {
-		switch(strtolower($entry)) {
+	if ($UM->is_system_folder($entry)) {
+                $entry = strtolower($entry);
+		switch ($entry) {
 		case "inbox":
 			$boxname = $inbox_extended;
 			break;
@@ -166,13 +167,13 @@ for($n=0;$n<count($boxes);$n++) {
 			$boxname = ($spam_extended ? $spam_extended : "SPAM");
 			break;
 		}
-		$system[$scounter]["entry"]     	= strtolower($entry);
+		$system[$scounter]["entry"]     	= $entry;
 		$system[$scounter]["name"]      	= $boxname;
 		$system[$scounter]["msgs"]      	= count($thisbox)."/$unread";
 		$system[$scounter]["del"]       	= $delete;
 		$system[$scounter]["boxsize"]   	= ceil($boxsize/1024);
-		$system[$scounter]["chlink"] 		= "process.php?folder=".strtolower($entry)."";
-		$system[$scounter]["emptylink"]		= "folders.php?empty=".strtolower($entry)."&folder=".strtolower($entry)."";
+		$system[$scounter]["chlink"] 		= "process.php?folder=$entry";
+		$system[$scounter]["emptylink"]		= "folders.php?empty=".$entry."&folder=".$entry."";
 
 		$scounter++;
 	} else {
@@ -200,8 +201,6 @@ unset($SS,$UM);
 array_qsort2ic ($system,"name");
 array_qsort2ic ($personal,"name");
 
-if (!is_array($personal)) 
-	$personal = Array();
 $umFolderList = array_merge((array)$system, (array)$personal);
 
 
