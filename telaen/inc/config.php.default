@@ -336,14 +336,4 @@ $redirects_use_meta = no;
 
 $redirects_are_relative = no;
 
-########################################################################
-# Control the default permissions of files and directories created
-# by Telaen. For max security, the value of $default_umask should be 0077
-# and $dirperm should be 0700, but in shared environments, this
-# may need to be adjusted
-########################################################################
-
-$default_umask = 0077;
-$dirperm = 0700;
-
 ?>
