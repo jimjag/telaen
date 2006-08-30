@@ -101,6 +101,11 @@ $boxes = $UM->mail_list_boxes();
 $scounter = 0;
 $pcounter = 0;
 
+
+// Reset these arrays because are used on previuos included func!!
+$system = Array();
+$personal = Array();
+
 for($n=0;$n<count($boxes);$n++) {
 
 	$entry = $boxes[$n]["name"];
@@ -190,9 +195,13 @@ for($n=0;$n<count($boxes);$n++) {
 $SS->Save($sess);
 $UM->mail_disconnect();
 unset($SS,$UM);
-array_qsort2ic ($system,"name");
 
-if (!is_array($personal)) $personal = Array();
+// Sort and merge the 2 folders arrays
+array_qsort2ic ($system,"name");
+array_qsort2ic ($personal,"name");
+
+if (!is_array($personal)) 
+	$personal = Array();
 $umFolderList = array_merge((array)$system, (array)$personal);
 
 
