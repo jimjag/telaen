@@ -68,11 +68,15 @@ if( !is_array($headers)
 				/*
 				 * Fill the deleted mails into an array. We rebuild the
 				 * internal list later.
-				 */	
-				$expunge = true;			
-				$delarray[$i]["del"] = 1;
-				$deletecount++;
-				
+				 */
+				if ($decision == "delete" || $decision == "move") {
+        				$expunge = true;			
+        				$delarray[$i]["del"] = 1;
+        				$deletecount++;
+				        
+				} else {
+				        $delarray[$i]["del"] = 0;
+				}
 			} else
 				$delarray[$i]["del"] = 0;
 
@@ -113,12 +117,9 @@ if( !is_array($headers)
 			}
 
 			
-			/**
-			*  Skip these if we have mark/unmark operation on msg list 
-			*/
 			$num = 20;
 			
-			if ($decision != "mark" && $decision != "unmark" && ($messagecount > $num || (count($delarray) - $deletecount > $num))) {
+			if ($messagecount > $num || (count($delarray) - $deletecount > $num)) {
 
 				/*
 				 * Renumber the message-ids after we deleted a mail. It's
