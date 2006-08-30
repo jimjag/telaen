@@ -270,7 +270,7 @@ if ($sortby == "date" || $sortby == "size") {
 }
 
 $sess["headers"][$folder_key] = $headers;
-$sess["havespam"] = $UM->havespam;
+$sess["havespam"] = ($UM->havespam || count($sess["headers"][$folder_key_spam]));
 $SS->Save($sess);
 
 /*
