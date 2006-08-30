@@ -32,12 +32,7 @@ class Telaen extends Telaen_core {
 	}
 
 	function is_system_folder($name) {
-		foreach ($this->_system_folders as $test) {
-			if (strtolower($test) == strtolower($name)) {
-				return 1;
-			}
-		}
-		return 0;
+		return (in_array(strtolower($name), $this->$_system_folders));
 	}
 
 	function mail_get_line() {
@@ -172,7 +167,7 @@ class Telaen extends Telaen_core {
 			for($i=0;$i<count($boxes);$i++) {
 				$current_folder = $boxes[$i]["name"];
 
-				if(in_array(strtolower($current_folder),$this->_system_folders)) 
+				if ($this->is_system_folder($current_folder)) 
 					$current_folder = strtolower($current_folder);
 
 				while(list($index,$value) = each($tmp)) {
@@ -189,7 +184,7 @@ class Telaen extends Telaen_core {
 
 			for($i=0;$i<count($boxes);$i++) {
 				$current_folder = $this->fix_prefix($boxes[$i]["name"],1);
-				if(!in_array(strtolower($current_folder),$this->_system_folders)) 
+				if(!$this->is_system_folder($current_folder))
 					if(!file_exists($this->user_folder.$current_folder)) 
 						mkdir($this->user_folder.$current_folder,$this->dirperm);
 			}
@@ -203,7 +198,7 @@ class Telaen extends Telaen_core {
 		while(list($index,$value) = each($system_folders)) {
 			$value = $this->fix_prefix($value,1);
 			if(!file_exists($this->user_folder.$value)) {
-				if(in_array(strtolower($value),$this->_system_folders)) 
+				if($this->is_system_folder($value)) 
 					$value = strtolower($value);
 				mkdir($this->user_folder.$value,$this->dirperm);
 			}
@@ -554,7 +549,7 @@ class Telaen extends Telaen_core {
 		$parallelized = 0;
 		// $this->havespam = "";
 
-		if(in_array(strtolower($boxname),$this->_system_folders)) 
+		if($this->is_system_folder($boxname))
 			$boxname = strtolower($boxname);
 
 		$messages = Array();
@@ -996,7 +991,7 @@ class Telaen extends Telaen_core {
 			/* if POP3, only list the available folders */
 			$d = dir($this->user_folder);
 			while($entry=$d->read()) {
-				if(in_array(strtolower($entry),$this->_system_folders)) 
+				if($this->is_system_folder($entry)) 
 					$entry = strtolower($entry);
 
 				if(	is_dir($this->user_folder.$entry) && 

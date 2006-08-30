@@ -67,7 +67,7 @@ function cleanup_dirs ($userfolder, $logout) {
 		
 					if(is_array($curfolder = $sess["headers"][base64_encode(strtolower($entry))])) {
 		
-						if(in_array(strtolower($entry),$UM->_system_folders))
+						if ($UM->is_system_folder($entry))
 							$entry = strtolower($entry);
 						for($j=0;$j<count($curfolder);$j++) {
 							$file_list[] = $curfolder[$j]["localname"];
