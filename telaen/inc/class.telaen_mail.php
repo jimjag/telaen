@@ -32,7 +32,7 @@ class Telaen extends Telaen_core {
 	}
 
 	function is_system_folder($name) {
-		return (in_array(strtolower($name), $this->$_system_folders));
+		return (in_array(strtolower($name), $this->_system_folders));
 	}
 
 	function mail_get_line() {
@@ -865,23 +865,23 @@ class Telaen extends Telaen_core {
 			}
 
 			if (! $havespam) {
-//				$messagescopy[$j]               = $messages[$i];
-				$messagescopy[$j]["id"]		= $messages[$i]["id"];
-				$messagescopy[$j]["msg"]	= $messages[$i]["msg"]; 
-				$messagescopy[$j]["size"]	= $messages[$i]["size"];
-				$messagescopy[$j]["localname"]	= $messages[$i]["localname"]; 
-
-				$messagescopy[$j]["subject"]    = $mail_info["subject"];
-				$messagescopy[$j]["date"]       = $mail_info["date"];
-				$messagescopy[$j]["message-id"] = $mail_info["message-id"];
-				$messagescopy[$j]["from"]       = $mail_info["from"];
-				$messagescopy[$j]["to"]         = $mail_info["to"];
-				$messagescopy[$j]["fromname"]   = $mail_info["from"][0]["name"];
-				$messagescopy[$j]["to"]         = $mail_info["to"];
-				$messagescopy[$j]["cc"]         = $mail_info["cc"];
-				$messagescopy[$j]["priority"]   = $mail_info["priority"];
-				$messagescopy[$j]["attach"]     = (eregi("(multipart/mixed|multipart/related|application)",
-								     $mail_info["content-type"]))?1:0;
+				$messagescopy[$j]		= $messages[$i];
+				
+				if ($fetched_part && $i < $fetched_part ) {
+					$j++;
+					continue;
+				}
+				$messagescopy[$j]["subject"]	= $mail_info["subject"];
+				$messagescopy[$j]["date"]	= $mail_info["date"];
+				$messagescopy[$j]["message-id"]	= $mail_info["message-id"];
+				$messagescopy[$j]["from"]	= $mail_info["from"];
+				$messagescopy[$j]["to"]		= $mail_info["to"];
+				$messagescopy[$j]["fromname"]	= $mail_info["from"][0]["name"];
+				$messagescopy[$j]["to"]		= $mail_info["to"];
+				$messagescopy[$j]["cc"]		= $mail_info["cc"];
+				$messagescopy[$j]["priority"]	= $mail_info["priority"];
+				$messagescopy[$j]["attach"]	= (eregi("(multipart/mixed|multipart/related|application)",
+									$mail_info["content-type"]))?1:0;
 
 				if ($messagescopy[$j]["localname"] == "") {
 					$messagescopy[$j]["localname"] = $this->_get_local_name($mail_info,$boxname);
@@ -905,23 +905,23 @@ class Telaen extends Telaen_core {
 
 				$j++;
 			} else {
-//				$spamcopy[$y]                   = $messages[$i];
-				$spamcopy[$y]["id"]		= $messages[$i]["id"];
-				$spamcopy[$y]["msg"]		= $messages[$i]["msg"];
-				$spamcopy[$y]["size"]		= $messages[$i]["size"];
-				$spamcopy[$y]["localname"]	= $messages[$i]["localname"]; 
-	
-				$spamcopy[$y]["subject"]        = $mail_info["subject"];
-				$spamcopy[$y]["date"]           = $mail_info["date"];
-				$spamcopy[$y]["message-id"]     = $mail_info["message-id"];
-				$spamcopy[$y]["from"]           = $mail_info["from"];
-				$spamcopy[$y]["to"]             = $mail_info["to"];
-				$spamcopy[$y]["fromname"]       = $mail_info["from"][0]["name"];
-				$spamcopy[$y]["to"]             = $mail_info["to"];
-				$spamcopy[$y]["cc"]             = $mail_info["cc"];
-				$spamcopy[$y]["priority"]       = $mail_info["priority"];
-				$spamcopy[$y]["attach"]         = (eregi("(multipart/mixed|multipart/related|application)",
-								 $mail_info["content-type"]))?1:0;
+				$spamcopy[$y]			= $messages[$i];
+				if ($fetched_part && $i < $fetched_part ) {
+					$y++;
+					continue;
+				}
+
+				$spamcopy[$y]["subject"]	= $mail_info["subject"];
+				$spamcopy[$y]["date"]		= $mail_info["date"];
+				$spamcopy[$y]["message-id"]	= $mail_info["message-id"];
+				$spamcopy[$y]["from"]		= $mail_info["from"];
+				$spamcopy[$y]["to"]		= $mail_info["to"];
+				$spamcopy[$y]["fromname"]	= $mail_info["from"][0]["name"];
+				$spamcopy[$y]["to"]		= $mail_info["to"];
+				$spamcopy[$y]["cc"]		= $mail_info["cc"];
+				$spamcopy[$y]["priority"]	= $mail_info["priority"];
+				$spamcopy[$y]["attach"]		= (eregi("(multipart/mixed|multipart/related|application)",
+									 $mail_info["content-type"]))?1:0;
 
 				if ($spamcopy[$y]["localname"] == "") {
 					$spamcopy[$y]["localname"] = $this->_get_local_name($mail_info,$boxname);

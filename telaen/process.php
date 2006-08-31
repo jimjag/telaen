@@ -37,6 +37,7 @@ if( !is_array($headers)
 	$deletecount = 0;
 	$sess["auth"] = true;
 	$expunge = false;
+	$require_update = false;
 
 	if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
 		cleanup_dirs($userfolder, 0);
@@ -70,10 +71,11 @@ if( !is_array($headers)
 				 * internal list later.
 				 */
 				if ($decision == "delete" || $decision == "move") {
-					$expunge = true;			
+					$expunge = true;
 					$delarray[$i]["del"] = 1;
 					$deletecount++;
 				} else {
+					$require_update = true;
 					$delarray[$i]["del"] = 0;
 				}
 			} else
@@ -84,7 +86,7 @@ if( !is_array($headers)
 			$delarray[$i]["msgid"] = $msgid;
 			$delarray[$i]["folder"] = "$folder_key";
 		}
-		if($expunge) {
+		if($expunge || $require_update) {
 			/*
 			 * Add the spamfolder if we have one.
 			 */
@@ -118,7 +120,7 @@ if( !is_array($headers)
 			
 			$num = 20;
 			
-			if ($messagecount > $num || (count($delarray) - $deletecount > $num)) {
+			if ($expunge && ($messagecount > $num || (count($delarray) - $deletecount > $num))) {
 
 				/*
 				 * Renumber the message-ids after we deleted a mail. It's
@@ -221,7 +223,8 @@ if( !is_array($headers)
 					unset ($sess["headers"][$other_folder_key]);
 					$sess["headers"][$other_folder_key] = Array();
 				}
-				$expunge = 0;
+				$expunge = false;
+				$require_update = false;
 			}
 			if($prefs["save-to-trash"])
 				unset($sess["headers"][base64_encode("trash")]);
