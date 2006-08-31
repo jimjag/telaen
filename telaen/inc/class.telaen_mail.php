@@ -6,7 +6,7 @@ class Telaen extends Telaen_core {
 	var $havespam		= "";
 	var $_haveatop		= "";
 	var $_havepipelining	= "";
-	var $_system_folders    = Array("inbox","trash","sent","spam");
+	var $_system_folders	= Array("inbox","trash","sent","spam");
 	var $_current_folder 	= "";
 	var $CRLF		= "\r\n";
 	var $userspamlevel	= 0;	// Disabled
@@ -19,16 +19,16 @@ class Telaen extends Telaen_core {
 	}
 
 	function mail_connected() {
-        if(!empty($this->mail_connection)) {
-            $sock_status = @socket_get_status($this->mail_connection);
-			
-            if($sock_status["eof"]) {
-                @fclose($this->mail_connection);
-                return 0;
-            }
-            return 1; 
-        } 
-        return 0;
+		if(!empty($this->mail_connection)) {
+			$sock_status = @socket_get_status($this->mail_connection);
+
+			if($sock_status["eof"]) {
+				@fclose($this->mail_connection);
+				return 0;
+			}
+			return 1; 
+		} 
+		return 0;
 	}
 
 	function is_system_folder($name) {
@@ -93,13 +93,13 @@ class Telaen extends Telaen_core {
 			$haspipe = 0;
 			if ($this->mail_protocol == "pop3") {
 				$this->mail_send_command("CAPA".$this->CRLF);
-                                while (!feof($this->mail_connection)) {
-                                        $buffer = $this->mail_get_line();
+				while (!feof($this->mail_connection)) {
+					$buffer = $this->mail_get_line();
 					if(ereg("PIPELINING",$buffer))
 						$haspipe = 1;
-                                        if(chop($buffer) == ".") break;
-                                        $msgcontent .= $buffer;
-                                }
+					if(chop($buffer) == ".") break;
+					$msgcontent .= $buffer;
+				}
 				if (!$haspipe) {
 					$this->mail_send_command("EPOP".$this->CRLF);
 					while (!feof($this->mail_connection)) {
@@ -743,7 +743,7 @@ class Telaen extends Telaen_core {
 							if(!($pos = strpos($header,"\r\n\r\n") === false)) 
 								$header = substr($header,0,$pos);
 
-        						$oldheaders[$i + 1] = $messages[$j];
+							$oldheaders[$i + 1] = $messages[$j];
 							$oldheaders[$i + 1]["header"] = $header;
 						}
 						$fetched_part = $oldheaderscount;
@@ -847,7 +847,7 @@ class Telaen extends Telaen_core {
 			 * set :)
 			 */
 			if ( ($this->_autospamfolder == "TRUE") &&
-			      (strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") ) {
+				(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") ) {
 				foreach ($this->_spamregex as $spamregex) {
 					if (eregi($spamregex,$spamsubject)) {
 						$havespam = 1;
@@ -865,7 +865,11 @@ class Telaen extends Telaen_core {
 			}
 
 			if (! $havespam) {
-				$messagescopy[$j]               = $messages[$i];
+//				$messagescopy[$j]               = $messages[$i];
+				$messagescopy[$j]["id"]		= $messages[$i]["id"];
+				$messagescopy[$j]["msg"]	= $messages[$i]["msg"]; 
+				$messagescopy[$j]["size"]	= $messages[$i]["size"];
+				$messagescopy[$j]["localname"]	= $messages[$i]["localname"]; 
 
 				$messagescopy[$j]["subject"]    = $mail_info["subject"];
 				$messagescopy[$j]["date"]       = $mail_info["date"];
@@ -901,7 +905,11 @@ class Telaen extends Telaen_core {
 
 				$j++;
 			} else {
-				$spamcopy[$y]                   = $messages[$i];
+//				$spamcopy[$y]                   = $messages[$i];
+				$spamcopy[$y]["id"]		= $messages[$i]["id"];
+				$spamcopy[$y]["msg"]		= $messages[$i]["msg"];
+				$spamcopy[$y]["size"]		= $messages[$i]["size"];
+				$spamcopy[$y]["localname"]	= $messages[$i]["localname"]; 
 	
 				$spamcopy[$y]["subject"]        = $mail_info["subject"];
 				$spamcopy[$y]["date"]           = $mail_info["date"];
@@ -1197,7 +1205,7 @@ class Telaen extends Telaen_core {
 				$this->mail_send_command("QUIT".$this->CRLF);
 				$tmp = $this->mail_get_line();
 			}
-	        	fclose($this->mail_connection);
+			fclose($this->mail_connection);
 			$this->mail_connection = "";
 			//usleep(500);
 			return 1;
