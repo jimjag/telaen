@@ -8,7 +8,7 @@ foreach($folders as $entry) {
 	$entry = $entry["name"];
 	$boxname = $entry;
 	if ($UM->is_system_folder($entry)) {
-                $entry = strtolower($entry);
+		$entry = strtolower($entry);
 		switch ($entry) {
 		case "inbox":
 			$boxname = $inbox_extended;
@@ -23,14 +23,14 @@ foreach($folders as $entry) {
 			$boxname = ($spam_extended ? $spam_extended : "SPAM");
 			break;
 		}
-		$system[$scounter]["systemname"]    = $entry;
-		$system[$scounter]["name"]      = $boxname;
-		$system[$scounter]["link"] 	= "process.php?folder=$entry";
+		$system[$scounter]["systemname"]	= $entry;
+		$system[$scounter]["name"]		= $boxname;
+		$system[$scounter]["link"]		= "process.php?folder=$entry";
 		$scounter++;
 	} else {
-		$personal[$pcounter]["systemname"]  = $entry;
-		$personal[$pcounter]["name"]    = $boxname;
-		$personal[$pcounter]["link"] 	= "process.php?folder=$entry";
+		$personal[$pcounter]["systemname"]	= $entry;
+		$personal[$pcounter]["name"]		= $boxname;
+		$personal[$pcounter]["link"]		= "process.php?folder=$entry";
 		$pcounter++;
 	}
 }
