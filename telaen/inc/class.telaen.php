@@ -124,8 +124,8 @@ class Telaen_core {
 
 	function mime_encode_headers($string) {
 		if($string == "") return;
-        if(!eregi("^([[:print:]]*)$",$string))
-    		$string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
+		if(!eregi("^([[:print:]]*)$",$string))
+		$string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
 		return $string;
 	}
 
@@ -822,11 +822,11 @@ class Telaen_core {
 		else 
 			$servertimezone = 0;
 
-		/** Umm... the out time must be: 		
-		       mailTime - mailTimeOffset = UTCmailtime (es: 10.00 AM +0200 = 8.00 AM UTC or 10.00 AM -0400 = 2.00 PM... 10-(-4) = 14)
-		       UTCmailtime + useroffset = UserMailTime (es: user zone +0200, mailUTC 8.00 AM = 10.00 AM or with -0400 = 6.00 AM) 
+		/** Umm... the out time must be:
+		    mailTime - mailTimeOffset = UTCmailtime (es: 10.00 AM +0200 = 8.00 AM UTC or 10.00 AM -0400 = 2.00 PM... 10-(-4) = 14)
+		    UTCmailtime + useroffset = UserMailTime (es: user zone +0200, mailUTC 8.00 AM = 10.00 AM or with -0400 = 6.00 AM) 
 		*/
-		
+
 		// debug echos
 /**		echo "Server offset time config:" .$server_timezone_offset ."<br>";
 		echo "Date time offset:" . $timezone ."<br>";
@@ -958,8 +958,8 @@ class Telaen_core {
 
 	function extract_uuencoded(&$body) {
 		$regex = "/(begin ([0-7]{3}) (.+))\r?\n(.+)\r?\nend/Us";
-        preg_match_all($regex, $body, $matches);
-        for ($i = 0; $i < count($matches[3]); $i++) {
+		preg_match_all($regex, $body, $matches);
+		for ($i = 0; $i < count($matches[3]); $i++) {
 
 			$boundary	= $matches[1][$i];
 			$fileperm	= $matches[2][$i];

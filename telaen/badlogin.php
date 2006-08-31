@@ -30,7 +30,7 @@ $smarty->assign("umServerResponse",$error);
 
 // Assign also the webmail title to smarty, check for empty title before
 if (!isset($webmail_title) || trim($webmail_title) == "" ) {
-        $webmail_title = "Telaen Webmail";
+	$webmail_title = "Telaen Webmail";
 }
 $smarty->assign("webmailTitle", $webmail_title);
 
