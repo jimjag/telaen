@@ -70,12 +70,11 @@ if( !is_array($headers)
 				 * internal list later.
 				 */
 				if ($decision == "delete" || $decision == "move") {
-        				$expunge = true;			
-        				$delarray[$i]["del"] = 1;
-        				$deletecount++;
-				        
+					$expunge = true;			
+					$delarray[$i]["del"] = 1;
+					$deletecount++;
 				} else {
-				        $delarray[$i]["del"] = 0;
+					$delarray[$i]["del"] = 0;
 				}
 			} else
 				$delarray[$i]["del"] = 0;
@@ -238,8 +237,8 @@ if( !is_array($headers)
 	$sess["folders"] = $boxes;
 
 	/*
-         * If we deleted mails, the message list has already been reloaded.
-         */
+	 * If we deleted mails, the message list has already been reloaded.
+	 */
 	if(!$expunge || ($folder_key != $folder_key_inbox && $folder_key != $folder_key_spam)) {
 		require("./get_message_list.php");
 		require("./apply_filters.php");
@@ -287,7 +286,7 @@ if ($prefs["version"] != $appversion) {
 	}
 }
 if ( (!$same_version) ||
-     ($check_first_login && !$prefs["first-login"]) ) {
+	($check_first_login && !$prefs["first-login"]) ) {
 	$prefs["first-login"] = 1;
 	save_prefs($prefs);
 	redirect_and_exit("preferences.php?folder=".urlencode($folder));
