@@ -365,7 +365,10 @@ class Telaen extends Telaen_core {
 			}
 			$this->mail_set_flag($msg,"\\DELETED","+");
 
-			$this->_require_expunge = true;
+			// Expunge NOW instead of expunge on disconnect
+			// so no reconnect is required for update the list
+                        $this->mail_expunge();
+                        //$this->_require_expunge = true;
 
 			return 1;
 
@@ -477,7 +480,12 @@ class Telaen extends Telaen_core {
 					unlink($currentname);
 				}
 				$this->mail_set_flag($msg,"\\DELETED","+");
-				$this->_require_expunge = true;
+				
+				// Expunge NOW instead of expunge on disconnect
+        	                // so no reconnect is required for update the list
+                	        $this->mail_expunge();
+                        	//$this->_require_expunge = true;
+	
 			}
 
 			return 1;
