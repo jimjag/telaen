@@ -6,10 +6,17 @@ sent_extended					= Mesaje trimise
 trash_extended					= Cos de gunoi
 spam_extended					= Spam folder
 
+
 #Navigation texts
 
 previous_text					= Precedentul
 next_text					= Urmatorul
+pages_text                                      = Pages
+first_text                                      = First
+last_text                                       = Last
+total_text                                      = Total
+
+
 
 # Mail Server Errors
 

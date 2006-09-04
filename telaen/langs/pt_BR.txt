@@ -8,6 +8,12 @@ inbox_extended					= Caixa de Entrada
 sent_extended					= Ítens Enviados
 trash_extended					= Lixeira
 spam_extended					= Spam
+pages_text                                      = Pages
+first_text                                      = First
+last_text                                       = Last
+total_text                                      = Total
+
+
 
 #Navigation texts
 

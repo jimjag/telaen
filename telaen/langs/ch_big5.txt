@@ -16,6 +16,12 @@ spam_extended					= Spam folder
 
 previous_text					= 上一頁
 next_text					= 下一頁
+pages_text                                      = Pages
+first_text                                      = First
+last_text                                       = Last
+total_text                                      = Total
+
+
 
 # Mail Server Errors
 

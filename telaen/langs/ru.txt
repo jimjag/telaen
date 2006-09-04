@@ -16,6 +16,11 @@ spam_extended					= Spam folder
 
 previous_text			= Назад
 next_text				= Далее
+pages_text                                      = Pages
+first_text                                      = First
+last_text                                       = Last
+total_text                                      = Total
+
 
 # Mail Server Errors
 

@@ -15,6 +15,12 @@ spam_extended					= Spam folder
 # Navigation texts
 previous_text					= הקודם
 next_text						= הבא
+pages_text                                      = Pages
+first_text                                      = First
+last_text                                       = Last
+total_text                                      = Total
+
+
 
 # Mail Server Errors
 error_connect					= שגיאה בחיבור אל השרת

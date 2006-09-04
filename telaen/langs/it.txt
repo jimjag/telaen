@@ -19,7 +19,7 @@ first_text					= Prima
 previous_text					= Precedente
 next_text					= Successiva
 last_text					= Ultima
-total_text					= Total
+total_text					= Totale
 
 # Mail Server Errors
 

@@ -15,6 +15,12 @@ spam_extended				           = Junk-E-Mail
 
 previous_text				           = Nächste Nachricht
 next_text					             = Vorherige Nachricht
+pages_text                                      = Pages
+first_text                                      = First
+last_text                                       = Last
+total_text                                      = Total
+
+
 
 # Mail Server Errors
 

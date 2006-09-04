@@ -7,6 +7,12 @@ inbox_extended					= Otrzymane
 sent_extended					= Wys³ane
 trash_extended					= Kosz
 spam_extended					= Spam folder
+pages_text                                      = Pages
+first_text                                      = First
+last_text                                       = Last
+total_text                                      = Total
+
+
 
 #Navigation texts
 
