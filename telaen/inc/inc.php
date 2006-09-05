@@ -158,7 +158,10 @@ $UM->user_folder 		= $userfolder;
 $UM->temp_folder		= $temporary_directory;
 $UM->timeout			= $idle_timeout;
 
-$UM->dirperm = $dirperm;
+// avoid missing settings allow dirs creation with 000 perms
+if (isset($dirperm) && $dirperm != 0000) {
+	$UM->dirperm = $dirperm;
+}
 
 $prefs = load_prefs();
 
