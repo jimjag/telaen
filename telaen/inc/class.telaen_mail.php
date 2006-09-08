@@ -652,13 +652,14 @@ class Telaen extends Telaen_core {
 
 				/* OK, now we have id and size of messages, but we need the headers too */
 				if($newheaderscount == 0) {
+					
 					$myreturnarray = Array();
 					$myreturnarray[0] = Array();
 					$myreturnarray[1] = Array();
 					$myreturnarray[2] = 1;
 					return $myreturnarray;
 				}
-
+								
 				if ($newheaderscount < $oldheaderscount || $oldheaderscount == 0) {
 					/*
 					 * Someone deleted some messages on the server, refetch all
@@ -672,7 +673,7 @@ class Telaen extends Telaen_core {
 					 * is still at the same place, else we refetch all message
 					 * headers again, because it is too complicated to see which messages we
 					 * have or haven't.
-					 */
+					 */					
 					$this->mail_send_command("TOP ".$messages[$oldheaderscount - 1]["msg"]." 0".$this->CRLF);
 					$buffer = $this->mail_get_line();
 					if(!ereg("^(\+OK)",$buffer))  {
@@ -701,14 +702,17 @@ class Telaen extends Telaen_core {
 					$newid = $mail_info_new["message-id"];
 
 					if ("$oldid" == "$newid") {
+					// Ok the ids are the same and we have new messages, fetch only the new part
+					
 						if ($newheaderscount == $oldheaderscount) {
+							// in this case return nothing, get_message_list.php handle this
 							$myreturnarray = Array();
 							$myreturnarray[0] = Array();
 							$myreturnarray[1] = Array();
-							$myreturnarray[2] = 0;
-							return $myreturnarray;
-						}
-
+							$myreturnarray[2] = 0; // zero 0 no changes
+							return $myreturnarray; 
+						}											
+	
 						if ($this->_havepipelining == "TRUE") {
 							/*
 							 * Server with PIPELINING support, fast.
@@ -730,7 +734,8 @@ class Telaen extends Telaen_core {
 						if ($parallelized)
 							$this->mail_send_command($mailcommand);
 
-						for($i=$oldheaderscount,$j=0;$i<$newheaderscount;$i++,$j++) {
+						// fetch the only the new messages
+						for($i=$oldheaderscount; $i<$newheaderscount; $i++) {
 							$header = "";
 							if (! $parallelized) {
 								/*
@@ -750,19 +755,29 @@ class Telaen extends Telaen_core {
 							}
 							if(!($pos = strpos($header,"\r\n\r\n") === false)) 
 								$header = substr($header,0,$pos);
-
-							$oldheaders[$i + 1] = $messages[$j];
-							$oldheaders[$i + 1]["header"] = $header;
+				
+							/**
+							 * Add the basic info (index and size) and then msg header 
+							 * of the new msg to the old headers array
+						 	 */				 
+							$oldheaders[$i] = $newheaders[$i]; 
+							$oldheaders[$i]["header"] = $header;
 						}
 						$fetched_part = $oldheaderscount;
-						$messages = array_merge($oldheaders, null);
+						// now the oldheaders are updated with the new ones						
+						$messages = $oldheaders;
+						//$messages = array_merge($oldheaders, null); ?? why this command? 
+
 						$rescount = $newheaderscount;
+					
 					} else {
+					// The ids differs, refetch all						
 						$rescount = 0;
 					}
 				}
-
-				if (! $fetched_part) {
+				
+				if (!$fetched_part) { // refetch all
+										
 					if ($this->_havepipelining == "TRUE") {
 						/*
 						 * Server with PIPELINING support, fast.
@@ -809,7 +824,7 @@ class Telaen extends Telaen_core {
 					}
 				}
 			} else {
-				/* otherwise, we need get the message list from a cache (currently, hard disk)*/
+				/* otherwise (not inbox or spam), we need get the message list from a cache (currently, hard disk)*/
 
 				$datapath = $userfolder.$boxname;
 				$i = 0;
