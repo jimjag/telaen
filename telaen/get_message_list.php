@@ -40,7 +40,7 @@
 
 		$returnarray = Array();		// ensure
 		// if inbox or spam merge the 2 current folders
-		if ($folder_key == base64_encode("inbox") || $folder_key == base64_encode("inbox")) {			
+		if ($folder_key == base64_encode("inbox") || $folder_key == base64_encode("spam")) {			
 			/*
 			 * Sort the arrays and fit them together again.
 			 */
