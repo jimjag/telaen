@@ -1,3 +1,10 @@
+#---------------------------------------------------------------#
+# Swedish language file for Telaen v1.1.1                       #
+# Thanks to forth for the upgrade				#
+# Last edit: 11 Sept 2006                                       #
+#---------------------------------------------------------------#
+
+
 # ***** GLOBAL VARS ****** #
 # User-friendly names to system folders
 
@@ -11,8 +18,8 @@ spam_extended					= Spam folder
 previous_text					= Föregående
 next_text					= Nästa
 pages_text                                      = Pages
-first_text                                      = First
-last_text                                       = Last
+first_text                                      = Första
+last_text                                       = Sista
 total_text                                      = Total
 
 
@@ -114,8 +121,8 @@ folders_to					= Mappar för
 
 [MessageList]
 
-messages_to					= Meddelanden för 
-no_messages					= Inga meddelanden i mappen 
+messages_to					= Meddelanden för
+no_messages					= Inga meddelanden i mappen
 
 delete_selected_mnu				= Ta bort markerade
 move_selected_mnu				= Flytta markerade till
@@ -128,7 +135,7 @@ from_hea					= Från
 to_hea						= Till
 date_hea					= Datum
 size_hea					= Storl
-have_spam						= You have Spam (check Spam folder)
+have_spam					= Du har fått Spam (kolla Spam foldern)
 
 msg_you_have					= Du har
 msg_message					= meddelande
@@ -146,16 +153,16 @@ lgn_welcome_msg					= Välkommen. Ange din kontoinformation:
 lng_user_email					= E-postadress
 lng_user_name					= Användarnamn
 lng_user_pwd					= Lösenord
-lng_theme					= Språk
-lng_language					= Language
+lng_theme					= Tema
+lng_language					= Språk
 lng_login_btn					= Logga in &gt;&gt;
-lng_cookie_not_enabled				= Cookies must be enabled
-lng_cookie_not_valid				= Cookie Security Check Failed
+lng_cookie_not_enabled				= Cookies måste vara på
+lng_cookie_not_valid				= Cookie Säkerhetskontroll misslyckades
 
 
 [Newmessage]
 
-newmsg_title                                  	= Compose mail
+newmsg_title                                  	= Skapa epost
 
 to_hea						= Till:
 cc_hea						= Kopia:
@@ -171,7 +178,7 @@ attch_type_hea					= Typ
 attch_dele_hea					= Ta bort
 attch_no_hea					= Det finns inga bilagor!
 
-require_receipt                                 = Return receipt
+require_receipt                                 = Returnera kvitto
 
 add_signature					= Använd signatur
 send_text					= Skicka
@@ -237,7 +244,7 @@ bdl_back					= Tillbaka
 
 err_title					= Det uppstod ett fel
 err_msg						= Ett fel har uppstått i din session<br><br>Var vänlig logga in igen
-err_system_msg					= Systemmeddelande: 
+err_system_msg					= Systemmeddelande:
 err_exit					= Logga in igen
 
 [Preferences]
@@ -249,7 +256,7 @@ prf_reply_to					= Svarsadress
 prf_time_zone					= Tidszon
 prf_trash_title					= Borttaget
 prf_save_to_trash				= Flytta <b>borttagna</b> meddelanden till mappen <b><!--%UM_TRASH_EXTENDED%--></b>
-prf_save_only_read				= Använd <b>inte</b> mappen <b>&quot;Borttaget&quot;</b> för <b>lästa</b> meddelanden. Ta bort dem direkt. 
+prf_save_only_read				= Använd <b>inte</b> mappen <b>&quot;Borttaget&quot;</b> för <b>lästa</b> meddelanden. Ta bort dem direkt.
 prf_empty_on_exit				= <b>Töm</b> mappen borttaget vid utloggning
 prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
 prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
@@ -305,7 +312,7 @@ catch_address					= Lägg till avsändaren i adressboken
 
 [Search]
 
-sch_title                                     	= Search
+sch_title                                     	= Sök
 
 sch_information_text				= Skriv in ett ord eller en fras! <br> Bara meddelanden i <b>lokala mappar</b> och <b>lästa meddelanden </b>kommer att genomsökas.<br>Observera att detta kan ta en stund!
 sch_button_text					= Sök &gt;&gt;
@@ -348,6 +355,6 @@ adr_expo_hea					= Exportera
 adr_dele_hea					= Ta bort
 adr_new_entry					= Ny adress
 
-addr_saved					= Adressen sparades 
+addr_saved					= Adressen sparades
 addr_added					= Adressen lades till
 addr_deleted					= Adressen togs bort
