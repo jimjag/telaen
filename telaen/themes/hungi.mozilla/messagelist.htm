@@ -54,7 +54,7 @@
 					<td class="default"><acronym title="{$umMessageList[i].from|escape:"html"|default:#no_recipient_text#}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</acronym></td>
 					{/if}
 					
-					<td class="default"><acronym title="{$umMessageList[i].subject|escape:"html"|default:#no_subject_text#}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</acronym></td>
+					<td class="default"><acronym title="{$umMessageList[i].subject|escape:"html"|default:#no_subject_text#}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:40:"...":true|escape:"html"|default:#no_subject_text#}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</acronym></td>
 					<td class="cent">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].date|date_format:#date_format#}{if $umMessageList[i].read eq "false"}</b>{/if}</td>
 					<td class="right">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].size}Kb &nbsp;{if $umMessageList[i].read eq "false"}</b>{/if}</td>
 				</tr>

@@ -5,7 +5,7 @@
 <br /><br /><br />
 
 <table width="500" border="0" cellspacing="0" cellpadding="2" align="center">
-	<tr><td><img src="images/telaen_logo.jpg" width="310" height="73" border="0" alt="Telaen Webmail"></td></tr>
+	<tr><td><img src="themes/default/images/login-logo.gif" border="0" alt="Telaen Webmail"></td></tr>
 	<tr>
 		<td bgcolor="white">
 			<table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">
@@ -14,12 +14,11 @@
 				<tr><td align="right" class="title" colspan="2">.: <b>{#lgn_welcome_msg#}</b> :.</td>
 
 				{if $umServerType neq "ONE-FOR-EACH"}
-				<tr><td align=right class="right" width="30%"><b>{#lng_user_email#}</b>: &nbsp;</td><td class="default"><input type=text size=35 name="f_email" value="{$umEmail}" class="textbox" style="width:140px;"></td>
+				<tr><td align=right class="right" width="30%"><b>{#lng_user_email#}</b>: &nbsp;</td><td class="default"><input id="user" tabindex="1" type="text" size="35" name="f_email" value="{$umEmail}" class="textbox" style="width:140px;"></td>
 				{else}
-				<tr><td align=right class="right" width="30%"><b>{#lng_user_name#}</b>: &nbsp;</td><td class="default"><input type=text size=5 name="f_user" value="{$umUser}" class="textbox" style="width:80px;">{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
+				<tr><td align=right class="right" width="30%"><b>{#lng_user_name#}</b>: &nbsp;</td><td class="default"><input id="user" tabindex="1" type="text" size="35" name="f_user" value="{$umUser}" class="textbox" style="width:80px;">{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
 				{/if}
-				<tr><td align=right class="right" width="30%"><b>{#lng_user_pwd#}</b>: &nbsp;</td><td class="default"><input type=password size=15 name="f_pass" value="" class="textbox" style="width:80px;"></td>
-
+				<tr><td align=right class="right" width="30%"><b>{#lng_user_pwd#}</b>: &nbsp;</td><td class="default"><input type="password" tabindex="2" size="15" name="f_pass" value="" class="textbox" style="width:80px;"></td>
 
 				{if $umAllowSelectLanguage}
 				<tr><td align=right class="right"><b>{#lng_language#}</b>: &nbsp;</td><td class="default">{$umLanguages}</td>
@@ -29,17 +28,24 @@
 				<tr><td align=right class="right"><b>{#lng_theme#}</b>: &nbsp;</td><td class="default">{$umThemes}</td>
 				{/if}
 
-				<tr><td class="right">&nbsp;</td><td class="default"><input type=submit name=submit value="{#lng_login_btn#}" class="button"><input type=hidden name="f_doing_login" value="1"></td>
+				<tr><td class="right">&nbsp;</td><td class="default"><input type="submit" name="submit" value="{#lng_login_btn#}" class="button"><input type="hidden" name="f_doing_login" value="1"></td>
 				{if $umCookieState eq "1"}
 				<tr><td class="alert" colspan="2">{#lng_cookie_not_enabled#}</td></tr>
 				{elseif $umCookieState eq "2"}
 				<tr><td class="alert" colspan="2">{#lng_cookie_not_valid#}</td></tr>
 				{/if}
-				<tr><td class="cent" colspan="2">Telaen Webmail!</td></tr>
+				<tr><td class="cent" colspan="2"><a target="_blank" href="http://www.telaen.org" >Powered by Telaen Webmail!</a></td></tr>
 			</form>
 			</table>
 		</td>
 	</tr>
 </table>
+
+<script type="text/javascript">
+//<![CDATA[ 
+	// simple tip for focus the user field on page load
+	document.getElementById("user").focus();
+//]]> 
+</script>
 
 {include file=$footerTemplate}	

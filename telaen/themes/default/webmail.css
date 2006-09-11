@@ -25,6 +25,7 @@ a:hover {
 
 img {
 	border: 0px;
+	vertical-align: middle;
 }
 
 a:link.spam,  a:visited.spam {

@@ -2,7 +2,7 @@
 
 {include file=$headerTemplate pageTitle=#prf_title# onLoad="dis()"}
 
-<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
+<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="white" width="100%">
 	
 	<tr>
 		<td valign=top width="15%">
@@ -47,13 +47,25 @@
 				</tr>
 				<tr>
 					<td class=default colspan=2><input type=checkbox name=f_empty_on_exit value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" OnClick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
-				</tr>
-				<tr>
-					<td class=default colspan=2><input type=checkbox name=f_empty_spam_on_exit value="1"{$umEmptySpamOnExit}><acronym style="cursor: hand;" OnClick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></td>
-				</tr>
+				</tr>				
 				<tr>
 					<td class=default colspan=2><input type=checkbox name=f_unmark_read_on_exit value="1"{$umUnmarkReadOnExit}><acronym style="cursor: hand;" OnClick="f_unmark_read_on_exit.click()">{#prf_unmark_read_on_exit#}</acronym></td>
 				</tr>
+				<tr>
+                                        <td colspan=2  class=headers><b>{#spam_extended#}</b></td>
+                                </tr>
+				<tr>
+                                        <td class=default> &nbsp;{#prf_spam_level#}</td>
+                                        <td class=default>
+                                                <select name=f_spamlevel>
+                                                        {html_options values=$umSpamLevelVals output=$umSpamLevelVals selected="$umSpamLevel"}
+                                                </select>
+                                        </td>
+                                </tr>
+				<tr>
+                                        <td class=default colspan=2><input type=checkbox name=f_empty_spam_on_exit value="1"{$umEmptySpamOnExit}><acronym style="cursor: hand;" OnClick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></td>
+                                </tr>
+				
 				<tr>
 					<td colspan=2  class=headers><b>{#prf_sent_title#}</b></td>
 				</tr>
@@ -86,14 +98,7 @@
 				<tr>
 					<td class=default colspan=2><input type=checkbox name=f_add_sig value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym> </td>
 				</tr>
-				<tr>
-					<td class=default> &nbsp;{#prf_spam_level#}</td>
-					<td class=default>
-						<select name=f_spamlevel>
-							{html_options values=$umSpamLevelVals output=$umSpamLevelVals selected="$umSpamLevel"}
-						</select>
-					</td>
-				</tr>				
+	
 				<tr>
 					<td bgcolor=white></td>
 					<td bgcolor=white><br><input type=submit value="{#prf_save_button#}" class="button"></td>
