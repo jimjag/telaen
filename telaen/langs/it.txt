@@ -1,7 +1,7 @@
 #---------------------------------------------------------------#
 # Italian language file for Telaen v1.1.1 			#
 # Lang file mantained by Vola - andreavola[at]gmail[dot]com 	#
-# Last edit: 20 July 2006 					#
+# Last edit: 11 Sept 2006 					#
 #---------------------------------------------------------------#
 
 # ***** GLOBAL VARS ****** #
@@ -115,7 +115,7 @@ fld_empty_hea					= Svuota
 fld_delete_hea					= Cancella
 fld_total					= Totale:
 fld_make_new					= Crea nuova cartella
-folders_to					= Sposta cartella
+folders_to					= Cartelle
 
 
 [MessageList]
