@@ -96,7 +96,7 @@ $uagent = 	$_SERVER["HTTP_USER_AGENT"];
 
 $ns4    = 	(ereg("Mozilla/4",$uagent) && !ereg("MSIE",$uagent) && !ereg("Gecko",$uagent));
 $ns6moz = 	ereg("Gecko",$uagent);
-$ie4up  = 	ereg("MSIE (4|5|6)",$uagent);
+$ie4up  = 	ereg("MSIE (4|5|6|7)",$uagent);
 $other	= 	(!$ns4 && !$ns6moz && !$ie4up);
 
 // with no recognized browser display inline on the page
@@ -196,8 +196,8 @@ function search() { location = 'search.php'; }
 function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function addresses() { location = 'addressbook.php'; }
 function prefs() { location = 'preferences.php'; }
-function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=600,heigth=500,scrollbars=1,status=0'); }
-function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&attachment='+attach,'','resizable=1,top=10,left=10,width=600,height=400,scrollbars=1,status=0'); }
+function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
+function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&attachment='+attach,'','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
 //]]>
 </script>
