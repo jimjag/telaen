@@ -549,7 +549,7 @@ class Telaen extends Telaen_core {
 	 *     -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
 	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
 	 */
-	function mail_list_msgs($boxname = "INBOX", $headers = Array()) {
+	function mail_list_msgs($boxname = "INBOX", $localmessages = Array()) {
 
 
 		global $userfolder;
@@ -644,14 +644,12 @@ class Telaen extends Telaen_core {
 					}
 				}
 
-
-				$oldheaders = (array)$headers;
-				$newheaders = $messages;
-				$oldheaderscount = count($oldheaders);
-				$newheaderscount = count($messages);
+				if (!is_array($localmessages)) $localmessages = (array)$localmessages;
+				$localcount = count($localmessages);
+				$onservercount = count($messages);
 
 				/* OK, now we have id and size of messages, but we need the headers too */
-				if($newheaderscount == 0) {
+				if($onservercount == 0) {
 					
 					$myreturnarray = Array();
 					$myreturnarray[0] = Array();
@@ -660,13 +658,13 @@ class Telaen extends Telaen_core {
 					return $myreturnarray;
 				}
 								
-				if ($newheaderscount < $oldheaderscount || $oldheaderscount == 0) {
+				if ($onservercount < $localcount || $localcount == 0) {
 					/*
 					 * Someone deleted some messages on the server, refetch all
 					 * headers via TOP, or we just didn't had any messages previously.
 					 */
 					$rescount = 0;
-				} else if ($newheaderscount >= $oldheaderscount) {
+				} else if ($onservercount >= $localcount) {
 					/*
 					 * More messages have arrived or we still have the same amount of messages.
 					 * Keep our old array and skip all the rest. Check if the last message
@@ -674,7 +672,7 @@ class Telaen extends Telaen_core {
 					 * headers again, because it is too complicated to see which messages we
 					 * have or haven't.
 					 */					
-					$this->mail_send_command("TOP ".$messages[$oldheaderscount - 1]["msg"]." 0".$this->CRLF);
+					$this->mail_send_command("TOP ".$messages[$localcount - 1]["msg"]." 0".$this->CRLF);
 					$buffer = $this->mail_get_line();
 					if(!ereg("^(\+OK)",$buffer))  {
 						$this->mail_error_msg = $buffer;
@@ -697,14 +695,14 @@ class Telaen extends Telaen_core {
 					$header = "";
 
 					// We need the old array sorted by msg, else we can't compare
-					array_qsort2($oldheaders,"msg","ASC");
-					$oldid = $oldheaders[$oldheaderscount - 1]["message-id"];
+					array_qsort2($localmessages,"msg","ASC");
+					$oldid = $localmessages[$localcount - 1]["message-id"];
 					$newid = $mail_info_new["message-id"];
 
 					if ("$oldid" == "$newid") {
 					// Ok the ids are the same and we have new messages, fetch only the new part
 					
-						if ($newheaderscount == $oldheaderscount) {
+						if ($onservercount == $localcount) {
 							// in this case return nothing, get_message_list.php handle this
 							$myreturnarray = Array();
 							$myreturnarray[0] = Array();
@@ -717,17 +715,17 @@ class Telaen extends Telaen_core {
 							/*
 							 * Server with PIPELINING support, fast.
 							 */
-							for($i=$oldheaderscount;$i<$newheaderscount;$i++) {
-								$mailcommand .= "TOP ".$newheaders[$i]["msg"]." 0".$this->CRLF;
+							for($i=$localcount;$i<$onservercount;$i++) {
+								$mailcommand .= "TOP ".$messages[$i]["msg"]." 0".$this->CRLF;
 							}
 							$parallelized = 1;
 						} else if ($this->_haveatop == "TRUE") {
 							/*
 							 * Server with ATOP support, very fast
 							 */
-							$mailcommand = "ATOP " . $newheaders[$oldheaderscount]["msg"] .
+							$mailcommand = "ATOP " . $messages[$localcount]["msg"] .
 									" " .
-									$messages[$newheaderscount - 1]["msg"] . $this->CRLF;
+									$messages[$onservercount - 1]["msg"] . $this->CRLF;
 							$parallelized = 1;
 						}
 
@@ -735,13 +733,13 @@ class Telaen extends Telaen_core {
 							$this->mail_send_command($mailcommand);
 
 						// fetch the only the new messages
-						for($i=$oldheaderscount; $i<$newheaderscount; $i++) {
+						for($i=$localcount; $i<$onservercount; $i++) {
 							$header = "";
 							if (! $parallelized) {
 								/*
 								 * Fetch headers serially. Very slow.
 								 */
-								$this->mail_send_command("TOP ".$newheaders[$i]["msg"]." 0".$this->CRLF);
+								$this->mail_send_command("TOP ".$messages[$i]["msg"]." 0".$this->CRLF);
 								$buffer = $this->mail_get_line();
 								/* if any problem with this messages list, stop the procedure */
 								if(!ereg("^(\+OK)",$buffer))  { $this->mail_error_msg = $buffer; return 0; }
@@ -760,15 +758,14 @@ class Telaen extends Telaen_core {
 							 * Add the basic info (index and size) and then msg header 
 							 * of the new msg to the old headers array
 						 	 */				 
-							$oldheaders[$i] = $newheaders[$i]; 
-							$oldheaders[$i]["header"] = $header;
+							$localmessages[$i] = $messages[$i]; 
+							$localmessages[$i]["header"] = $header;
 						}
-						$fetched_part = $oldheaderscount;
-						// now the oldheaders are updated with the new ones						
-						$messages = $oldheaders;
-						//$messages = array_merge($oldheaders, null); ?? why this command? 
+						$fetched_part = $localcount;
+						// now the localmessages are updated with the new ones						
+						$messages = $localmessages;
 
-						$rescount = $newheaderscount;
+						$rescount = $onservercount;
 					
 					} else {
 					// The ids differs, refetch all						
@@ -792,7 +789,7 @@ class Telaen extends Telaen_core {
 						 * Server with ATOP support, very fast
 						 */
 						$mailcommand = "ATOP " . $messages[$rescount]["msg"] .
-								" " .  $messages[$newheaderscount - 1]["msg"] .
+								" " .  $messages[$onservercount - 1]["msg"] .
 								$this->CRLF;
 						$parallelized = 1;
 					}
@@ -800,7 +797,8 @@ class Telaen extends Telaen_core {
 					if ($parallelized)
 						$this->mail_send_command($mailcommand);
 
-					for($i=$rescount;$i<count($messages);$i++) {
+					$endcount = count($messages);
+					for($i=$rescount;$i<$endcount;$i++) {
 						$header="";
 						if (! $parallelized) {
 							/*
