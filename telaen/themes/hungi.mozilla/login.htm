@@ -16,16 +16,16 @@
 				
 				{if $umServerType neq "ONE-FOR-EACH"}
 				<tr>
-					<td align="right" class="right2" width="40%"><b>{#lng_user_email#}</b>: &nbsp;</td><td class="default2"><input type="text" size="10" name="f_email" value="{$umEmail}" class="textbox" style="width:140px;" /></td>
+					<td align="right" class="right2" width="40%"><b>{#lng_user_email#}</b>: &nbsp;</td><td class="default2"><input id="user" type="text" size="10" name="f_email" value="{$umEmail}" class="textbox" style="width:140px;" tabindex="1" /></td>
 				</tr>
 				{else}
 				<tr>
-					<td align="right" class="right2" width="40%"><b>{#lng_user_name#}</b>: &nbsp;</td><td class="default2"><input type="text" size="5" name="f_user" value="{$umUser}" class="textbox" style="width:80px;" />{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
+					<td align="right" class="right2" width="40%"><b>{#lng_user_name#}</b>: &nbsp;</td><td class="default2"><input id="user" type="text" size="5" name="f_user" value="{$umUser}" class="textbox" style="width:80px;" tabindex="1" />{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
 				</tr>
 				{/if}
 				
 				<tr>
-					<td align="right" class="right2"><b>{#lng_user_pwd#}</b>: &nbsp;</td><td class="default2"><input type="password" size="5" name="f_pass" value="" class="textbox" style="width:80px;" /></td>
+					<td align="right" class="right2"><b>{#lng_user_pwd#}</b>: &nbsp;</td><td class="default2"><input type="password" size="5" name="f_pass" value="" class="textbox" style="width:80px;" tabindex="2" /></td>
 				</tr>
 				
 				{if $umAllowSelectLanguage}
@@ -41,11 +41,9 @@
 				{/if}
 
 				<tr>
-					<!-- td class="right2">&nbsp;</td -->
 					<td class="default2" colspan="2">
 					<center>	
-				<!--<input type=submit name=submit value="{#lng_login_btn#}" class="button">-->
-				
+		
 					<table class="buttonTable" cellspacing="0" >
 					    	<tr>
 							<td valign="middle" class="buttonLeft">&nbsp;</td>
@@ -63,6 +61,12 @@
 		</td>
 	</tr>
 
+<script language="javascript" type="text/javascript">
+//<![CDATA[ 
+	// simple tip for focus the user field on page load
+	document.getElementById("user").focus();
+//]]> 
+</script>
 </table>
 
 {include file=$footerTemplate}
