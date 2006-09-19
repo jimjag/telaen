@@ -528,6 +528,7 @@ $tmpbody";
   $body
   </div>
 </blockquote>
+<br>
 ";
 		}
 
