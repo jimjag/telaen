@@ -1,24 +1,30 @@
+#---------------------------------------------------------------#
+# Brazilian Portugues language file for Telaen v1.1.1           #
+# Thanks to Claudio Oliveira for the update			#
+# Last edit: 19 Sept 2006                                       #
+#---------------------------------------------------------------#
+
+
 # ***** GLOBAL VARS ****** #
-#
-#  Portuguese - Brazilian
-#
+
+
 # User-friendly names to system folders
 
 inbox_extended					= Caixa de Entrada
 sent_extended					= Ítens Enviados
 trash_extended					= Lixeira
 spam_extended					= Spam
-pages_text                                      = Pages
-first_text                                      = First
-last_text                                       = Last
-total_text                                      = Total
-
 
 
 #Navigation texts
 
 previous_text					= Anterior
-next_text						= Próxima
+next_text					= Próxima
+pages_text                                      = Páginas
+first_text                                      = Primeira
+last_text                                       = Última
+total_text                                      = Total
+
 
 # Mail Server Errors
 
@@ -76,10 +82,10 @@ default_char_set				= iso-8859-1
 
 messages_mnu					= Mensagens
 read_menu						= Ler E-Mail(s)
-compose_mnu						= Escrever
+compose_mnu						= Nova mensagem
 refresh_mnu						= Atualizar
 folders_mnu						= Pastas
-search_mnu						= Busca
+search_mnu						= Pesquisar
 address_mnu						= Endereços
 empty_trash_mnu					= Limpar lixeira
 prefs_mnu						= Preferências
@@ -123,9 +129,9 @@ folders_to						= Pastas para
 messages_to					= Mensagens para 
 no_messages					= Nenhuma mensagem na caixa postal 
 
-delete_selected_mnu				= Apagar selecionadas
-move_selected_to_trash_mnu		= Mover selecionadas para Lixeira
-move_selected_mnu				= Mover selecionadas para
+delete_selected_mnu				= Apagar
+move_selected_to_trash_mnu			= Mover para Lixeira
+move_selected_mnu				= Mover para
 mark_selected_mnu         			= Marcar como lida
 unmark_selected_mnu      			= Marcar como não lida
 
@@ -164,13 +170,13 @@ lng_cookie_not_valid				= Falha na Verificação do Cookie de Segurança
 
 [Newmessage]
 
-newmsg_title                                  	= Compose mail
+newmsg_title                                  	= Nova mensagem
 
 to_hea						= Para:
 cc_hea						= Cópia:
 bcc_hea						= Cópia Oculta:
 subject_hea					= Assunto:
-address_tip					= Pegar endereços do catálogo
+address_tip					= Consultar o catálogo de endereços
 
 attach_hea					= Anexos:
 attch_add_new					= Incluir novo anexo
@@ -180,7 +186,7 @@ attch_type_hea					= Tipo
 attch_dele_hea					= Excluir
 attch_no_hea					= Nenhum anexo
 
-require_receipt                                 = Return receipt
+require_receipt                                 = Recibo de entrega
 
 add_signature					= Adicionar Assinatura
 send_text					= Enviar
@@ -320,10 +326,10 @@ block_address					= Bloquear endereços
 
 [Search]
 
-sch_title                                     	= Search
+sch_title                                     	= Pesquisar
 
-sch_information_text				= Digite a frase ou palavra que deseja buscar.<br /> A busca no corpo da mensagem somente será feita caso a mensagem já tenha sido lida.
-sch_button_text					= Buscar &gt;&gt;
+sch_information_text				= Digite a frase ou palavra que deseja pesquisar.<br /> A pesquisa no corpo da mensagem somente será feita caso a mensagem já tenha sido lida.
+sch_button_text					= Pesquisar &gt;&gt;
 sch_subject_hea					= Assunto
 sch_from_hea					= De
 sch_date_hea					= Data
