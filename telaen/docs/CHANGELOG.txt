@@ -16,6 +16,11 @@ CHANGELOG:
 Telaen:
 ----------------------------------------------------------------
 
+1.1.1:
+
+ * Fixed little bug on catch-address where wrong address was added
+   to addressbook.
+
 1.1.1-rc2:
 
  * Fixed problem where messages disappear on refresh with zero quota.
