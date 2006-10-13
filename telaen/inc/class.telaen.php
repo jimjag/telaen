@@ -509,8 +509,8 @@ class Telaen_core {
 	*/
 
 	function build_text_body($body) {
-		$body = preg_replace("/(\r\n|\n|\r)/","<BR />\\1",$this->make_link_clickable(htmlspecialchars($body)));
-		return "<font face=\"Courier New\" size=2>$body</font>";
+		$body = preg_replace("/(\r\n|\n|\r|\n\r)/","<br>\\1",$this->make_link_clickable(htmlspecialchars($body)));
+		return "<font face=\"Courier New\" size=\"2\">$body</font>";
 	}
 
 	/**
@@ -607,11 +607,14 @@ class Telaen_core {
 		$cdisp = $headers["content-disposition"];
 		$ctype = $headers["content-type"]; 
 
-		preg_match("/filename ?= ?(.+)/i",$cdisp,$matches);
-		$filename = preg_replace("/\"(.*)\"/","\\1",trim($matches[1]));
+		preg_match("/filename ?= ?\"(.+)\"/i",$cdisp,$matches);
+//		$filename = preg_replace("/\"(.*)\"/","\\1",trim($matches[1]));
+		$filename = trim($matches[1]);
+	
 		if(!$filename) {
-			preg_match("/name ?= ?(.+)/i",$ctype,$matches);
-			$filename = preg_replace("/\"(.*)\"/","\\1",trim($matches[1]));
+			preg_match("/name ?= ?\"(.+)\"/i",$ctype,$matches);
+//			$filename = preg_replace("/\"(.*)\"/","\\1",trim($matches[1]));
+			$filename = trim($matches[1]);
 		}
 
 		$tenc = $headers["content-transfer-encoding"];
