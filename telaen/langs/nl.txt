@@ -29,7 +29,7 @@ error_other					= Fout! Onbekende fout, neem contact op met de webmaster.
 
 #Invalid name of mailbox
 
-error_invalid_name				= Onjuiste mapnaam - gebruik alleen: 'A t/m Z', '0 t/m 9', '.' en spaties.
+error_invalid_name                              = Onjuiste mapnaam - gebruik alleen: 'A t/m Z', '0 t/m 9' en '-'.
 
 
 #Validations when sending mails            ;
