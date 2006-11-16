@@ -12,13 +12,24 @@ Telaen is released under the GPL.
 
 CHANGELOG:
 
+Note x jim: use a better syntax here? Like [Fix] [Rem] [New] is more
+readable??
+
+
 ----------------------------------------------------------------
 Telaen:
 ----------------------------------------------------------------
-1.1.2-dev
+1.1.2-dev:
 
- * Fixed bug on attachment filename, sometime the name ends with ';'
-   when receving emails from Hotmail accounts.
+[Fix] 	Bug on attachment filename, sometimes the name ends with 
+	';' when receving emails from Hotmail accounts.
+
+[Fix]	Use the configured port on ONE-FOR-ALL mode, not depending
+	from protocol.
+
+[Fix]	Use relative path on redirect links, avoid problems on 
+	https servers.
+
 
 1.1.1:
 
