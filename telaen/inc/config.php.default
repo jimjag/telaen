@@ -12,6 +12,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 ########################################################################
 # Load in the version information
 ########################################################################
+
 require("./inc/version.php");
 
 ########################################################################
@@ -19,11 +20,24 @@ require("./inc/version.php");
 #1 - Yes/On/True
 #0 - No/Off/False
 # do not remove or change this
+########################################################################
 
 define("yes",1);
 define("no",0);
-$themes 	= Array();
-$languages 	= Array();
+$themes         = Array();
+$languages      = Array();
+
+########################################################################
+# Language & themes settings
+########################################################################
+
+require("./inc/config.languages.php");
+
+########################################################################
+# Security related settings
+########################################################################
+
+require("./inc/config.security.php");
 
 ########################################################################
 # Location of the Smarty template installation.
@@ -32,12 +46,6 @@ $languages 	= Array();
 ########################################################################
 
 define("SMARTY_DIR","./smarty/");
-
-########################################################################
-# Title prefix for webmail pages
-########################################################################
-
-$webmail_title = "Telaen Webmail";
 
 ########################################################################
 # _ Please attention _:
@@ -61,76 +69,45 @@ $webmail_title = "Telaen Webmail";
 $temporary_directory = "./database/";
 
 ########################################################################
-# Your local SMTP Server (alias or IP) such as "smtp.yourdomain.com"
-# eg. "server1;server2;server3"   -> specify main and backup server
-########################################################################
-
-$smtp_server = "localhost";  #YOU NEED CHANGE IT !!
-
-
-########################################################################
 # You should enable this option if you know what are doing
 ########################################################################
+
 $allow_filters = no;
 
+########################################################################
+# Title prefix for webmail pages
+########################################################################
+
+$webmail_title = "Telaen Webmail";
 
 ########################################################################
 # The maximum size for stored files
 # In order to keep you system fast, use values better than 5MB
 # If you need disable it, set the value to 0 or leave it blank
 ########################################################################
+
 $quota_limit = 4096;  //  in KB, eg. 4096 Kb = 4MB
 
 
 ########################################################################
-# Use SMTP password (AUTH LOGIN type)
-########################################################################
-$use_password_for_smtp	= yes;
-
-########################################################################
-# Redirect new users to the preferences page at first login
-########################################################################
-$check_first_login		= yes;
-
-########################################################################
-# Turn this option to 'yes' if you want allow users send messages using
-# they 'Reply to' preference's option as your 'From' header, otherwise 
-# the From field will be the email wich the users log in
-########################################################################
-$allow_modified_from	= yes;
-
-########################################################################
-# Language & themes settings
-########################################################################
-
-require("./inc/config.languages.php");
-
-########################################################################
-# Security related settings
-########################################################################
-
-require("./inc/config.security.php");
-
-
-########################################################################
-# Server type:
+# Mail server type:
 # allowed values:
 
-# "DETECT" -------->	Guess the pop3 server. If you are running UM
-# 					in a domain "www.company.com", the script will 
-#					use "PREFIX.company.com" as your server. you 
-#					can set the "PREFIX" in the var $mail_detect_prefix.
-#					Also, the var $mail_detect_remove can be set
-#					to "www.", then the script get rid the "www" and 
-#					put the prefix, eg. pop3.company.com.br
+# "DETECT" -------->	Guess the pop3 server. If you are running Telaen
+#			in a domain "www.company.com", the script will 
+#			use "PREFIX.company.com" as your server. you 
+#			can set the "PREFIX" in the var $mail_detect_prefix.
+#			Also, the var $mail_detect_remove can be set
+#			to "www.", then the script get rid the "www" and 
+#			put the prefix, eg. pop3.company.com.br
 
 #"ONE-FOR-EACH" -->	Each domain have your own mail server.
-#					The script will load the list of domains/servers from
-#					var $mail_servers.
+#			The script will load the list of domains/servers from
+#			var $mail_servers.
 
 #"ONE-FOR-ALL" --->	If you use this option, your users must supply the
-#					full email address as username. You can set the mail
-#					server in the var $default_mail_server
+#			full email address as username. You can set the mail
+#			server in the var $default_mail_server
 #					
 
 # LOGIN_TYPE
@@ -171,6 +148,11 @@ $mail_detect_folder_prefix 	= "";
 ########################################################################
 # TYPE: ONE-FOR-EACH
 # Each domain have your own mail server
+#
+# Note: If you set only one domain, the users are forced to use a single
+# mail server. Can be useful if you want to type only your mail name 
+# instead of a complete mail address at login.
+# (example: frank instead of frank@telaen.org)
 ########################################################################
 
 
@@ -182,8 +164,6 @@ $mail_servers[] = Array(
 	"port"		=> "110",
 	"folder_prefix"	=> ""
 );
-
-
 
 
 /*
@@ -208,6 +188,17 @@ $one_for_all_login_type	= "%user%@%domain%";
 $default_protocol	= "pop3";
 $default_port		= "110";
 $default_folder_prefix	= "";
+
+
+
+########################################################################
+# In some POP3 servers, if you send a "RETR" command, your
+# message will be automatically deleted :(
+# This option prevents this inconvenience
+########################################################################
+
+$mail_use_top = no;
+
 
 
 ########################################################################
@@ -239,12 +230,19 @@ $phpmailer_sendmail = "";
 $phpmailer_timeout = 0;
 
 ########################################################################
-# In some POP3 servers, if you send a "RETR" command, your
-# message will be automatically deleted :(
-# This option prevents this inconvenience
+# Your local SMTP Server (alias or IP) such as "smtp.yourdomain.com"
+# eg. "server1;server2;server3"   -> specify main and backup server
 ########################################################################
 
-$mail_use_top = no;
+$smtp_server = "localhost";  #YOU NEED CHANGE IT !!
+
+########################################################################
+# Use SMTP password (AUTH LOGIN type)
+########################################################################
+
+$use_password_for_smtp  = yes;
+
+
 
 ########################################################################
 # Add a "footer" to sent mails
@@ -256,14 +254,20 @@ ________________________________________________________________
 Message sent using $appname $appversion
 ";
 
+
 ########################################################################
-# Enable debug :)
-# no - disabled
-# 1 or yes -> enabled with full results
-# 2 -> enable with servers communications only
-# ********************************************************/
-$enable_debug = no;
-$enable_cookies = yes;
+# Redirect new users to the preferences page at first login
+########################################################################
+
+$check_first_login      = yes;
+
+########################################################################
+# Turn this option to 'yes' if you want allow users send messages using
+# they 'Reply to' preference's option as your 'From' header, otherwise
+# the From field will be the email wich the users log in
+########################################################################
+
+$allow_modified_from    = yes;
 
 ########################################################################
 # Order setting
@@ -290,7 +294,7 @@ $default_preferences = Array(
 	"signature_default"		=> "",		# a default signature for all users, use text only, with multiple lines if needed
 	"timezone_default"		=> "-0000",	# timezone, format (+|-)HHMM (H=hours, M=minutes)
 	"display_images_default"	=> yes,		# automatically show attached images in the body of message
-	"editor_mode_default"		=> "text",	# use "html" or "text" to set default editor. "html" will be used only in IE5+ browsers
+	"editor_mode_default"		=> "text",	# use "html" or "text" to set default editor.
 	"refresh_time_default"		=> 10,		# after this time, the message list will be refreshed, in minutes
 	"spamlevel_default"		=> 0		# Sensitivity to X-Spam-Level detection
 	);
@@ -335,5 +339,14 @@ $redirects_use_meta = no;
 ########################################################################
 
 $redirects_are_relative = no;
+
+########################################################################
+# Enable debug :)
+# no - disabled
+# 1 or yes -> enabled with full results
+# 2 -> enable with servers communications only
+########################################################################
+
+$enable_debug = no;
 
 ?>
