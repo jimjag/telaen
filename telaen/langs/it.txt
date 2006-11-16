@@ -55,7 +55,7 @@ no_recipient_text				= [Destinatario sconosciuto]
 
 # If the quota limit was exceeded           ;
 
-quota_exceeded					= Spazio esaurito\Cancellare qualche messaggio per proseguire
+quota_exceeded					= Spazio esaurito\nCancellare qualche messaggio per proseguire\nSvuotare il cestino 
 quota_usage_info				= Limite di spazio
 quota_usage_used				= Usato
 quota_usage_of					= di

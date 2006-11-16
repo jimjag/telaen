@@ -20,7 +20,7 @@ total_text					= Total
 # Mail Server Errors
 error_connect					= Error connecting to the server
 error_retrieving				= Error getting your messages, your Inbox has changed
-error_other						= System failure, please contact your network administrator
+error_other					= System failure, please contact your network administrator
 
 # Invalid name of mailbox
 error_invalid_name				= Invalid folder name - Use only the following characters  A-Z, a-z, 0-9, and -
@@ -41,7 +41,7 @@ no_sender_text					= [Sender unknown]
 no_recipient_text				= [Recipient unknown]
 
 # If the quota limit was exceeded
-quota_exceeded					= Not enough space in your inbox to complete this action\Please delete some messages to continue
+quota_exceeded					= Not enough space in your inbox to complete this action\nPlease delete some messages to continue
 quota_usage_info				= Quota limit
 quota_usage_used				= Used
 quota_usage_of					= of
@@ -59,15 +59,15 @@ default_char_set				= iso-8859-1
 
 # Menu
 messages_mnu					= Inbox
-read_menu						= Read E-Mail(s)
-compose_mnu						= Write E-Mail
-refresh_mnu						= Refresh
-folders_mnu						= Folders
-search_mnu						= Search
-address_mnu						= Address book
+read_menu					= Read E-Mail(s)
+compose_mnu					= Write E-Mail
+refresh_mnu					= Refresh
+folders_mnu					= Folders
+search_mnu					= Search
+address_mnu					= Address book
 empty_trash_mnu					= Empty trash
-prefs_mnu						= Preferences
-logoff_mnu 						= Log out
+prefs_mnu					= Preferences
+logoff_mnu 					= Log out
 
 # Reply
 reply_prefix					= Re:
@@ -93,9 +93,9 @@ fld_messages_hea				= Messages
 fld_size_hea					= Size
 fld_empty_hea					= Empty
 fld_delete_hea					= Delete
-fld_total						= Total:
+fld_total					= Total:
 fld_make_new					= Create new folder
-folders_to						= Folders to
+folders_to					= Folders to
 
 [MessageList]
 messages_to					= Messages to 
@@ -117,23 +117,23 @@ size_hea						= Size
 have_spam						= You have Spam (check Spam folder)
 
 msg_you_have					= You have
-msg_message						= message
+msg_message					= message
 msg_messages					= messages
 
-msg_more_unread				= unread
+msg_more_unread					= unread
 msg_one_unread					= unread
-msg_none_unread				= none read
+msg_none_unread					= none to read
 msg_in_the_folder				= in the folder
 
 
 [Login]
-lgn_title						= Login
+lgn_title					= Login
 lgn_welcome_msg					= Welcome, please login into your account
 lng_user_email					= E-mail
 lng_user_name					= Username
 lng_user_pwd					= Password
-lng_server						= Server
-lng_theme						= Theme
+lng_server					= Server
+lng_theme					= Theme
 lng_language					= Language
 lng_login_btn					= Login &gt;&gt;
 lng_cookie_not_enabled				= Cookies must be enabled
