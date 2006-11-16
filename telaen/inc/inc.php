@@ -108,13 +108,7 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		$f_server = $default_mail_server;
 
 		$f_protocol	= $default_protocol;
-		if($f_protocol=="imap")
-		{
-			$f_port		= "143";
-		}elseif($f_protocol=="pop3")
-		{
-			$f_port		= "110";
-		}
+		$f_port		= $default_port;
 		$f_prefix	= $default_folder_prefix;
 
 		break;
