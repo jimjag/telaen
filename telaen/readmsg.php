@@ -85,7 +85,7 @@ if($ix < (count($mysess)-1)) {
 
 $body	= 	$email["body"];
 
-$redir_path = create_abs_url("redir.php");	// why not just relative??
+$redir_path = "redir.php";	// why not just relative?? Now is relative (due to problems on https servers)! 
 
 $body = eregi_replace("target=[\"]?[a-zA-Z_]+[\"]?","target=\"blank\"",$body);
 $body = eregi_replace("href=\"http([s]?)://","target=\"_blank\" href=\"$redir_path?http\\1://",$body);
