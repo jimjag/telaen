@@ -216,20 +216,27 @@ class Telaen_core {
 		$headers = explode("\r\n",$header);
 		$decodedheaders = Array();
 		for($i=0;$i<count($headers);$i++) {
-			$thisheader = trim($headers[$i]);
-			if(!empty($thisheader)) {
-				if(!ereg("^[A-Z0-9a-z_-]+:",$thisheader))
-					$decodedheaders[$lasthead] .= " ".$thisheader;
-				else {
+			
+			// If current header starts with a TAB or is not very standard, 
+			// attach it at the prev header			
+			if(ereg("^[\t]",$headers[$i]) || !ereg("^[A-Z0-9a-z_-]+:",trim($headers[$i])) ) {
+				$decodedheaders[$lasthead] .= " ".trim($headers[$i]);
+			}
+			else { // otherwise extract the header
+				$thisheader = trim($headers[$i]);
+				if(!empty($thisheader)) {			 	
 					$dbpoint = strpos($thisheader,":");
 					$headname = strtolower(substr($thisheader,0,$dbpoint));
 					$headvalue = trim(substr($thisheader,$dbpoint+1));
-					if(array_key_exists($headname, $decodedheaders)) $decodedheaders[$headname] .= "; $headvalue";
-					else $decodedheaders[$headname] = $headvalue;
-					$lasthead = $headname;
+					if(array_key_exists($headname, $decodedheaders))
+						$decodedheaders[$headname] .= "; $headvalue";
+					else 
+						$decodedheaders[$headname] = $headvalue;
+					$lasthead = $headname;										
 				}
 				unset($thisheader);
 			}
+
 		}
 		unset($headers);
 		return $decodedheaders;
