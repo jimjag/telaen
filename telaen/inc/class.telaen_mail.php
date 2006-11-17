@@ -304,7 +304,8 @@ class Telaen extends Telaen_core {
 			} elseif (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam") {
 
 				$command = ($mail_use_top)?"TOP ".$msg["id"]." ".$msg["size"]:"RETR ".$msg["id"];
-				$this->mail_send_command($command.$this->CRLF);
+				$command .= $this->CRLF;
+				$this->mail_send_command($command);
 
 				$buffer = $this->mail_get_line();
 
