@@ -7,10 +7,11 @@ class Telaen extends Telaen_core {
 	var $_haveatop		= "";
 	var $_havepipelining	= "";
 	var $_system_folders	= Array("inbox","trash","sent","spam");
-	var $_current_folder 	= "";
+	var $_current_folder 	= "";	
 	var $CRLF		= "\r\n";
-	var $userspamlevel	= 0;	// Disabled
-	var $dirperm		= 0700;  // recall affected by umask value
+	var $userspamlevel	= 0;		// Disabled
+	var $dirperm		= 0700;  	// recall affected by umask value
+	var $greeting		= ""; 		// Internally used for store pop3 ATOP greeting message
 
 	function Telaen() {
 		require("./inc/class.tnef.php");
@@ -79,10 +80,17 @@ class Telaen extends Telaen_core {
 			$this->mail_connection = fsockopen($this->mail_server, $this->mail_port, $errno, $errstr, 15);
 			if($this->mail_connection) {
 				$buffer = $this->mail_get_line();
-				if($this->mail_protocol == "imap") $regexp = "^([ ]?\\*[ ]?OK)";
-				else $regexp = "^(\\+OK)";
-				if(ereg($regexp,$buffer)) return 1;
-				else return 0;
+				if($this->mail_protocol == "imap") 
+					$regexp = "^([ ]?\\*[ ]?OK)";
+				else { 
+					$regexp = "^(\\+OK)";
+					// save the greeting message
+					$this->greeting = $buffer;
+				}
+				if(ereg($regexp,$buffer)) 
+					return 1;
+				else 
+					return 0;
 			}
 			return 0;
 		} else return 1;
@@ -130,21 +138,31 @@ class Telaen extends Telaen_core {
 					return 0; 
 				}
 			} else {
-				$this->mail_send_command("USER ".$this->mail_user.$this->CRLF);
+				// APOP login mode, more sicure
+				if (preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
+					$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass).$this->CRLF);
+                                } 
+				// Classic login mode
+				else {
+					$this->mail_send_command("USER ".$this->mail_user.$this->CRLF);
+				
+					$buffer = $this->mail_get_line();	
+					if(ereg("^(\+OK)", $buffer)) {				
+						$this->mail_send_command("PASS ".$this->mail_pass.$this->CRLF);
+					}	
+					else 
+						return 0;
+				}
+
 				$buffer = $this->mail_get_line();
 				if(ereg("^(\+OK)",$buffer)) {
-					$this->mail_send_command("PASS ".$this->mail_pass.$this->CRLF);
-					$buffer = $this->mail_get_line();
-					if(ereg("^(\+OK)",$buffer)) { 
-						if($checkfolders)
-							$this->_check_folders();
-						return 1;
-					} else { 
-						$this->mail_error_msg = $buffer; 
-						return 0; 
-					}
-				} else 
+					if($checkfolders)
+						$this->_check_folders();
+					return 1;
+				} else {
+					$this->mail_error_msg = $buffer;
 					return 0;
+				}
 			}
 		}
 		return 0;
