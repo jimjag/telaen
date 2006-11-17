@@ -11,7 +11,7 @@ class Telaen extends Telaen_core {
 	var $CRLF		= "\r\n";
 	var $userspamlevel	= 0;		// Disabled
 	var $dirperm		= 0700;  	// recall affected by umask value
-	var $greeting		= ""; 		// Internally used for store pop3 ATOP greeting message
+	var $greeting		= ""; 		// Internally used for store pop3 APOP greeting message
 
 	function Telaen() {
 		require("./inc/class.tnef.php");
@@ -138,7 +138,7 @@ class Telaen extends Telaen_core {
 					return 0; 
 				}
 			} else {
-				// APOP login mode, more sicure
+				// APOP login mode, more secure
 				if (preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
 					$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass).$this->CRLF);
                                 } 
