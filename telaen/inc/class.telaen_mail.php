@@ -542,20 +542,31 @@ class Telaen extends Telaen_core {
 						if(!$this->mail_retr_msg($msg,0)) return 0;
 						$this->mail_set_flag($msg,"\\SEEN","-");
 					}
-					$this->mail_send_command("DELE ".$msg["id"].$this->CRLF);
-					$buffer = $this->mail_get_line();
-					if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return 0; }
-				}
+				}				
+				// ensure that the original file exist
 				if(file_exists($msg["localname"])) {
 					$currentname = $msg["localname"];
 					$basename = basename($currentname);
 					$newfilename = $this->user_folder."$tofolder/$basename";
-					copy($currentname,$newfilename);
-					unlink($currentname);
-				}
+					copy($currentname, $newfilename);
+					// ensure that the copy exist
+					if(file_exists($newfilename)) {
+						unlink($currentname);
+						// delete from server if we are working on inbox or spam
+						if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
+							$this->mail_send_command("DELE ".$msg["id"].$this->CRLF);
+							$buffer = $this->mail_get_line();
+							if(substr($buffer, 0, 3) != "+OK") {
+								$this->mail_error_msg = $buffer;
+								return 0;
+							}
+						}
+					} else
+						return 0;
+				} else 
+					return 0;						
 			} else 
 				return 0;
-			
 		}
 		return 1;
 	}
