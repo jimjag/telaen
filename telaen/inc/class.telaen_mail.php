@@ -664,7 +664,9 @@ class Telaen extends Telaen_core {
 
 				while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
-					if(trim($buffer) == ".") break;
+					$buffer = trim($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
+					if($buffer == ".") 
+						break;
 					$msgs = split(" ",$buffer);
 					if(is_numeric($msgs[0])) {
 						$messages[$counter]["id"] = $counter+1; //$msgs[0];
