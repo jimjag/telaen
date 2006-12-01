@@ -28,7 +28,7 @@ Telaen:
 
 [New]	Added APOP login support. To enable, add
 
-		$pop3_has_apop = true;
+		$mail_use_apop = true;
 
 	to your config.php file.
 
