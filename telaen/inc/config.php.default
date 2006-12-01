@@ -200,10 +200,10 @@ $default_folder_prefix	= "";
 $mail_use_top = no;
 
 ########################################################################
-# This enables the ATOP login mode for POP3 servers.
+# This enables the APOP login mode for POP3 servers.
 # APOP provides an encrypted login system instead of clean password send
-# Most of POP3 server support this. 
-# If you experience problems with login, just leave it "no"
+# Most POP3 servers support this. 
+# If you experience problems with login, just leave it to no
 ########################################################################
 
 $mail_use_apop = no;
