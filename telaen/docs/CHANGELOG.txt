@@ -17,7 +17,7 @@ Telaen:
 ----------------------------------------------------------------
 1.1.2:
 
-[New]   Updated Smarty to 2.6.15
+[New]	Updated Smarty to 2.6.15
 
 [New]	Added korean language.
 
