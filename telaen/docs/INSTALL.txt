@@ -20,6 +20,9 @@ INSTALL
      config.php.default            ->  config.php
      config.security.php.default   ->  config.security.php
      
+- IMPORTANT: Move the bundled ./smarty/ directory to a non web-shared
+  folder.
+ 
 - Open all the "inc/config*php" files in a text editor; all instructions are
   commented on this file, pay attention on the $temporary_folder variable,
   set it according your above folder name
