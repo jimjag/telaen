@@ -85,6 +85,13 @@ $languages[] = Array(
 	"path" 		=> "is"
 );
 
+
+$languages[] = Array(
+        "name"          => "Korean",
+        "path"          => "ko"
+);
+
+
 $languages[] = Array(
 	"name" 		=> "Norwegian",
 	"path" 		=> "nb"
