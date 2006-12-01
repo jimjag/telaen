@@ -42,10 +42,13 @@ require("./inc/config.security.php");
 ########################################################################
 # Location of the Smarty template installation.
 # We bundle Smarty, but you can point it to your
-# locally installed version if you like
+# locally installed version if you like. Not matter
+# what, make sure Smarty is not located under your
+# public web-space. DO NOT USE THE BUNDLED VERSION
+# AS IS WITHOUT MOVING IT TO A SAFE LOCATION
 ########################################################################
 
-define("SMARTY_DIR","./smarty/");
+define("SMARTY_DIR","/some/place/safe/smarty/");
 
 ########################################################################
 # _ Please attention _:
