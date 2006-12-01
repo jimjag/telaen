@@ -16,6 +16,9 @@ CHANGELOG:
 Telaen:
 ----------------------------------------------------------------
 1.1.2:
+[New]	Provide notice that the ./smarty/ directory
+	should be moved someplace outside of the
+	web-space.
 
 [New]	Updated Smarty to 2.6.15
 	Updated tinyMce to 2.0.8
