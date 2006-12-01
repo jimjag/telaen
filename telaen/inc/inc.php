@@ -152,6 +152,10 @@ $UM->user_folder 		= $userfolder;
 $UM->temp_folder		= $temporary_directory;
 $UM->timeout			= $idle_timeout;
 
+if (isset($pop3_has_apop)) {
+	$UM->useAPOP = $pop3_has_apop;
+}
+
 // avoid missing settings allow dirs creation with 000 perms
 if (isset($dirperm) && $dirperm != 0000) {
 	$UM->dirperm = $dirperm;

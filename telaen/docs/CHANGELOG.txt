@@ -26,7 +26,11 @@ Telaen:
 	command. Also improved the move function, the message is
 	deleted only if the copy is done on filesystem.
 
-[New]	Added APOP login support.
+[New]	Added APOP login support. To enable, add
+
+		$pop3_has_apop = true;
+
+	to your config.php file.
 
 [Fix] 	Better header parsing, support multi-line headers avoid
 	wrong content-type detect.

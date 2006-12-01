@@ -188,7 +188,9 @@ $one_for_all_login_type	= "%user%@%domain%";
 $default_protocol	= "pop3";
 $default_port		= "110";
 $default_folder_prefix	= "";
-
+# Does the POP3 server support APOP? If so,
+# set the below to true.
+$pop3_has_apop		= false;
 
 
 ########################################################################

@@ -12,7 +12,7 @@ class Telaen extends Telaen_core {
 	var $userspamlevel	= 0;		// Disabled
 	var $dirperm		= 0700;  	// recall affected by umask value
 	var $greeting		= ""; 		// Internally used for store pop3 APOP greeting message
-	var $useAPOP		= true;		// Turn this off if your server not support APOP login
+	var $useAPOP		= false;	// Turn this on if your server supports APOP login
 
 	function Telaen() {
 		require("./inc/class.tnef.php");
