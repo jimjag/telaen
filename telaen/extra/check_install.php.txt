@@ -115,6 +115,40 @@ if(substr($temppath, 0, strlen($localpath)) == $localpath) {
 	echo('<font color=green><strong>PASSED</strong></font><br>');
 }
 
+// Now check to make sure that Smarty is not under here as well.
+$smartypathdefined = realpath(SMARTY_DIR);
+$smartypathold = realpath('./smarty/');
+$smartypathnew = realpath('./smarty_move_me/');
+
+echo("<br><strong>- Testing your Smarty libs location... <br>");
+if(substr($smartypathdefined, 0, strlen($localpath)) == $localpath) {
+	echo('<font color=red><strong>WARNING</strong></font>
+	<br>The path given in <font face="Courier New" color=Gray>SMARTY_DIR</font> points to a folder inside the main folder<br>
+	Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br>
+	There are security issues using this configuration, please choose a non-shared folder to store temporary files<br>
+	/var/telaen is a good choice<br>');
+	$warn = true;
+} else {
+	echo('<font color=green><strong>PASSED</strong></font><br>');
+}
+
+echo("<br><strong>- Now checking that ./smarty/ is not here as well... <br>");
+if(is_readable($smartypathold)) {
+	echo('<font color=red><strong>WARNING</strong></font>
+	<br>There is a Smarty libs installation here in your public space. It should be removed!<br>');
+} else {
+	echo('<font color=green><strong>PASSED</strong></font><br>');
+}
+
+echo("<br><strong>- Now checking that ./smarty_move_me/ is not here as well... <br>");
+if(is_readable($smartypathnew)) {
+	echo('<font color=red><strong>WARNING</strong></font>
+	<br>There is a Smarty libs installation here in your public space. It should be removed!<br>');
+} else {
+	echo('<font color=green><strong>PASSED</strong></font><br>');
+}
+
+
 $phpver = phpversion();
 $phpver = doubleval($phpver[0].".".$phpver[2]);
 

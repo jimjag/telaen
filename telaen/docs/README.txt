@@ -65,6 +65,9 @@ Smarty                 - YES       - Bundled with Telaen
                                      own. Be sure to copy the
                                      function.um_welcome_message.php
                                      file to your plugins folder!
+                                     If you use the bundled version,
+                                     BE SURE to move it outside of the
+                                     public web space.
 PHPMailer              - YES       - Bundled with Telaen
                                      but you can use your
                                      own

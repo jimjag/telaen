@@ -20,7 +20,7 @@ INSTALL
      config.php.default            ->  config.php
      config.security.php.default   ->  config.security.php
      
-- IMPORTANT: Move the bundled ./smarty/ directory to a non web-shared
+- IMPORTANT: Move the bundled ./smarty_move_me/ directory to a non web-shared
   folder.
  
 - Open all the "inc/config*php" files in a text editor; all instructions are
