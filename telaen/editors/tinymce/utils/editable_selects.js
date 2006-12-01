@@ -1,7 +1,5 @@
 /**
- * $RCSfile$
- * $Revision$
- * $Date$
+ * $Id$
  *
  * Makes select boxes editable.
  *

@@ -1,4 +1,4 @@
-// DK lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
+// Danish lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
 
 tinyMCE.addToLang('flash',{
 title : 'Inds&aelig;t / rediger Flash-film',

@@ -1,4 +1,4 @@
-// DK lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
+// Danish lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
 
 tinyMCE.addToLang('advimage',{
 tab_general : 'Generelt',
@@ -18,7 +18,7 @@ rtl : 'H&oslash;jre til venstre',
 id : 'Id',
 image_map : 'Billedkort',
 swap_image : 'Alternativt billede',
-alt_image : 'Alternative image',
+alt_image : 'Alternativt billede',
 mouseover : 'ved mouse over',
 mouseout : 'ved mouse out',
 misc : 'Diverse',

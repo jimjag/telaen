@@ -1,7 +1,5 @@
 /**
- * $RCSfile$
- * $Revision$
- * $Date$
+ * $Id$
  *
  * Moxiecode floating layer script.
  *

@@ -1,4 +1,4 @@
-// DK lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
+// Danish lang variables contributed by Jan Moelgaard, John Dalsgaard and Bo Frederiksen.
 
 tinyMCE.addToLang('',{
 theme_style_select : '-- Styles --',

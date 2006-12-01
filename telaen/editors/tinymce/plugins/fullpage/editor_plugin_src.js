@@ -1,20 +1,18 @@
 /**
- * $RCSfile$
- * $Revision$
- * $Date$
+ * $Id$
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import plugin specific language pack */
-tinyMCE.importPluginLanguagePack('fullpage', 'en,tr,sv');
+tinyMCE.importPluginLanguagePack('fullpage');
 
 var TinyMCE_FullPagePlugin = {
 	getInfo : function() {
 		return {
 			longname : 'Fullpage',
-			author : 'Moxiecode Systems',
+			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
 			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_fullpage.html',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
@@ -218,7 +216,7 @@ var TinyMCE_FullPagePlugin = {
 			body.text = tinyMCE.getAttrib(nl[0], 'text');
 
 			if ((tmp = tinyMCE.getAttrib(nl[0], 'background')) != '')
-				body.style.backgroundImage = tmp;
+				body.style.backgroundImage = "url('" + tmp + "')";
 
 			if ((tmp = tinyMCE.getAttrib(nl[0], 'bgcolor')) != '')
 				body.style.backgroundColor = tmp;
