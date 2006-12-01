@@ -20,7 +20,7 @@ Telaen:
 	should be moved someplace outside of the
 	web-space. Done by renaming the directory.
 
-[New]	Updated Smarty to 2.6.15
+[New]	Updated Smarty to 2.6.16
 	Updated tinyMce to 2.0.8
 
 [New]	Added korean language.
