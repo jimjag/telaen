@@ -18,6 +18,7 @@ Telaen:
 1.1.2:
 
 [New]	Updated Smarty to 2.6.15
+	Updated tinyMce to 2.0.8
 
 [New]	Added korean language.
 
@@ -28,7 +29,7 @@ Telaen:
 
 [New]	Added APOP login support. To enable, add
 
-		$mail_use_apop = true;
+		$mail_use_apop = yes;
 
 	to your config.php file.
 
