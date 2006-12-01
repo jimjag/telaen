@@ -17,7 +17,9 @@ Telaen:
 ----------------------------------------------------------------
 1.1.2:
 
-[New]	Added corean language.
+[New]   Updated Smarty to 2.6.15
+
+[New]	Added korean language.
 
 [Fix]	Fixed error when using TOP retrieve mode, the msg[size]
 	contained an EOF that caused a bad response on the next
