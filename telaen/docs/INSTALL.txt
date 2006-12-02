@@ -2,30 +2,33 @@
 INSTALL
 ----------------------------------------------------
 - Read the README file... really, you should!
-- Unpack the package (.tar.gz or .zip file) into a directory within your
-  web server,
-  eg /home/httpd/webmail (*unix) or c:\inetpub\wwwroot\webmail (Win32). 
 
+- Unpack the package (.tar.gz or .zip file) into temporary directory. 
+
+- Move the 'telaen' folder to where you want it under your
+  public webspace.
+  eg /home/httpd/webmail (*unix) or c:\inetpub\wwwroot\webmail (Win32).
+  
 - Make a non web-shared folder (users cannot see this folder throught a web
   browser), eg. /home/telaen or c:\winnt\temp\telaen
 
+- IMPORTANT: If using the bundled Smarty package, move the ./smarty_move_me/
+  directory to a non web-shared folder.
+ 
 - The user which the webserver is running (nobody, apache, IUSR_machine,etc)
   need permission to write on this folder. It is best to make
   it owned by the webserver ID and mode 700.
 
-- In the "inc/" directory, copy the following files to their
+- In the "telaen/inc/" directory, copy the following files to their
   new names:
   
      config.languages.php.default  ->  config.languages.php
      config.php.default            ->  config.php
      config.security.php.default   ->  config.security.php
      
-- IMPORTANT: Move the bundled ./smarty_move_me/ directory to a non web-shared
-  folder.
- 
 - Open all the "inc/config*php" files in a text editor; all instructions are
-  commented on this file, pay attention on the $temporary_folder variable,
-  set it according your above folder name
+  commented on this file, pay attention on the $temporary_folder variable and
+  the SMARTY_DIR define, set them according your above folder names.
 
 - Check your installation setup by performing the following
   tasks:

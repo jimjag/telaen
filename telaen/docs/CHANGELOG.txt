@@ -16,6 +16,11 @@ CHANGELOG:
 Telaen:
 ----------------------------------------------------------------
 1.1.2:
+
+[New]   Moved to subversion. This allowed us to rearrange
+	the default layout more easily and move the bundled Smarty
+	package from underneath the telaen path.
+
 [New]	Provide notice that the ./smarty/ directory
 	should be moved someplace outside of the
 	web-space. Done by renaming the directory.
