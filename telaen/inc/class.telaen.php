@@ -497,10 +497,10 @@ class Telaen_core {
 					$this->_msgbody	= preg_replace("/".quotemeta($cid)."/i",$thisfile,$this->_msgbody);
 
 				} elseif($this->displayimages) {
-					$ext = substr($thisattach["name"],-4);
-					$allowed_ext = Array(".gif",".jpg",".GIF",".JPG",".Gif",".Jpg");
+					$ext = strtolower(substr($thisattach["name"],-4));
+					$allowed_ext = Array(".gif",".jpg",".png");
 					if(in_array($ext,$allowed_ext)) {
-						$this->add_body("<img src=\"$thisfile\">");
+						$this->add_body("<img src=\"$thisfile\" alt=\"\">");
 					}
 				}
 
@@ -626,10 +626,12 @@ class Telaen_core {
 
 		$tenc = $headers["content-transfer-encoding"];
 
+		// extract content-disposition 	(ex "attachment")
 		preg_match("/[a-z0-9]+/i",$cdisp,$matches);
 		$content_disposition 	= $matches[0];
 
-		preg_match("/[a-z0-9\/-]+/i",$ctype,$matches);
+		// extract content-type		(ex "text/plain" or "application/vnd.ms-excel" note the DOT)
+		preg_match("/[a-z0-9\/\.-]+/i",$ctype,$matches);	
 		$content_type 	= $matches[0];
 
 		$tmp 			= explode("/",$content_type);
@@ -639,7 +641,6 @@ class Telaen_core {
 		$is_embebed = ($headers["content-id"] != "")?1:0;
 
 		$body = $this->compile_body($body,$tenc,$ctype);
-
 
 		if($filename == "" && $main_type == "message") {
 			$attachheader = $this->fetch_structure($body);
@@ -652,7 +653,7 @@ class Telaen_core {
 
 		$filename = preg_replace("/[.]{2,}/",".",preg_replace("'(/|\\\\)+'","_",trim($this->decode_mime_string($filename))));
 		$safefilename = preg_replace("/[ \t\.\W]+/", "_", $filename);
-		$nIndex 							= count($this->_content["attachments"]);
+		$nIndex 					= count($this->_content["attachments"]);
 		$temp_array["name"] 				= trim($filename);
 		$temp_array["size"] 				= strlen($body);
 		$temp_array["temp"] 				= $is_embebed;
