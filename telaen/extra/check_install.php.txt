@@ -116,11 +116,12 @@ if(substr($temppath, 0, strlen($localpath)) == $localpath) {
 }
 
 // Now check to make sure that Smarty is not under here as well.
+$smartyrelative = SMARTY_DIR;
 $smartypathdefined = realpath(SMARTY_DIR);
 $smartypathold = realpath('./smarty/');
 $smartypathnew = realpath('./smarty_move_me/');
 
-echo("<br><strong>- Testing your Smarty libs location... <br>");
+echo("<br><strong>- Testing your Smarty libs location</strong> (SMARTY_DIR:$smartyrelative -> $smartypathdefined)... <br>");
 if(substr($smartypathdefined, 0, strlen($localpath)) == $localpath) {
 	echo('<font color=red><strong>WARNING</strong></font>
 	<br>The path given in <font face="Courier New" color=Gray>SMARTY_DIR</font> points to a folder inside the main folder<br>
@@ -132,7 +133,7 @@ if(substr($smartypathdefined, 0, strlen($localpath)) == $localpath) {
 	echo('<font color=green><strong>PASSED</strong></font><br>');
 }
 
-echo("<br><strong>- Now checking that ./smarty/ is not here as well... <br>");
+echo("<br><strong>- Now checking that ./smarty/ is not here as well</strong>... <br>");
 if(is_readable($smartypathold)) {
 	echo('<font color=red><strong>WARNING</strong></font>
 	<br>There is a Smarty libs installation here in your public space. It should be removed!<br>');
@@ -140,7 +141,7 @@ if(is_readable($smartypathold)) {
 	echo('<font color=green><strong>PASSED</strong></font><br>');
 }
 
-echo("<br><strong>- Now checking that ./smarty_move_me/ is not here as well... <br>");
+echo("<br><strong>- Now checking that ./smarty_move_me/ is not here as well</strong>... <br>");
 if(is_readable($smartypathnew)) {
 	echo('<font color=red><strong>WARNING</strong></font>
 	<br>There is a Smarty libs installation here in your public space. It should be removed!<br>');
