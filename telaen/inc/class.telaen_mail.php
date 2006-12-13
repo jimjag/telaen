@@ -1,18 +1,18 @@
 <?php
 class Telaen extends Telaen_core {
 
-	var $_autospamfolder	= "TRUE";
+	var $_autospamfolder	= true;		// boolean
 	var $_spamregex		= Array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
-	var $havespam		= "";
-	var $_haveatop		= "";
-	var $_havepipelining	= "";
+	var $havespam		= "";		// NOTE: This is a STRING!
+	var $_haveatop		= false;	// boolean
+	var $_havepipelining	= false;	// boolean
 	var $_system_folders	= Array("inbox","trash","sent","spam");
 	var $_current_folder 	= "";	
 	var $CRLF		= "\r\n";
 	var $userspamlevel	= 0;		// Disabled
 	var $dirperm		= 0700;  	// recall affected by umask value
 	var $greeting		= ""; 		// Internally used for store pop3 APOP greeting message
-	var $useAPOP		= false;	// Turn this on if your server supports APOP login
+	var $_haveapop		= false;	// boolean
 
 	function Telaen() {
 		require("./inc/class.tnef.php");
@@ -97,34 +97,6 @@ class Telaen extends Telaen_core {
 		} else return 1;
 	}
 
-	function have_pipe_capability() {
-		if($this->mail_connected()) {
-			$haspipe = 0;
-			if ($this->mail_protocol == "pop3") {
-				$this->mail_send_command("CAPA".$this->CRLF);
-				while (!feof($this->mail_connection)) {
-					$buffer = $this->mail_get_line();
-					if(ereg("PIPELINING",$buffer))
-						$haspipe = 1;
-					if(chop($buffer) == ".") break;
-					$msgcontent .= $buffer;
-				}
-				if (!$haspipe) {
-					$this->mail_send_command("EPOP".$this->CRLF);
-					while (!feof($this->mail_connection)) {
-						$buffer = $this->mail_get_line();
-						if(ereg("PIPELINING",$buffer))
-							$haspipe = 1;
-						if(chop($buffer) == ".") break;
-						$msgcontent .= $buffer;
-					}
-				}
-				return ($haspipe);
-			}
-		}
-		return (0);
-	}
-
 	function mail_auth($checkfolders=false) {
 		if($this->mail_connected()) {
 			if ($this->mail_protocol == "imap") {
@@ -140,7 +112,7 @@ class Telaen extends Telaen_core {
 				}
 			} else {
 				// APOP login mode, more secure
-				if ($this->useAPOP && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
+				if ($this->_haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
 					$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass).$this->CRLF);
                                 } 
 				// Classic login mode
@@ -744,7 +716,7 @@ class Telaen extends Telaen_core {
 							return $myreturnarray; 
 						}											
 	
-						if ($this->_havepipelining == "TRUE") {
+						if ($this->_havepipelining) {
 							/*
 							 * Server with PIPELINING support, fast.
 							 */
@@ -752,7 +724,7 @@ class Telaen extends Telaen_core {
 								$mailcommand .= "TOP ".$messages[$i]["msg"]." 0".$this->CRLF;
 							}
 							$parallelized = 1;
-						} else if ($this->_haveatop == "TRUE") {
+						} else if ($this->_haveatop) {
 							/*
 							 * Server with ATOP support, very fast
 							 */
@@ -808,7 +780,7 @@ class Telaen extends Telaen_core {
 				
 				if (!$fetched_part) { // refetch all
 										
-					if ($this->_havepipelining == "TRUE") {
+					if ($this->_havepipelining) {
 						/*
 						 * Server with PIPELINING support, fast.
 						 */
@@ -817,7 +789,7 @@ class Telaen extends Telaen_core {
 									" 0".$this->CRLF;
 						}
 						$parallelized = 1;
-					} else if ($this->_haveatop == "TRUE") {
+					} else if ($this->_haveatop) {
 						/*
 						 * Server with ATOP support, very fast
 						 */
@@ -900,7 +872,7 @@ class Telaen extends Telaen_core {
 			 * we are checking the INBOX and we have _autospamfolder
 			 * set :)
 			 */
-			if ( ($this->_autospamfolder == "TRUE") &&
+			if ( ($this->_autospamfolder) &&
 				(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") ) {
 				foreach ($this->_spamregex as $spamregex) {
 					if (eregi($spamregex,$spamsubject)) {
@@ -1290,6 +1262,29 @@ class Telaen extends Telaen_core {
 			}
 		}
 		return 1;
+	}
+
+	function pop3_capa() {
+		$capa = Array();
+		$this->mail_connect();
+		if ($this->mail_protocol == "pop3") {
+			$this->mail_send_command("CAPA".$this->CRLF);
+                               while (!feof($this->mail_connection)) {
+					$buffer = $this->mail_get_line();
+					if(ereg("PIPELINING",$buffer))
+						$capa["PIPELINING"] = 1;
+					if(ereg("ATOP",$buffer))
+						$capa["ATOP"] = 1;
+					if(ereg("APOP",$buffer))
+						$capa["APOP"] = 1;
+					if(ereg("UIDL",$buffer))
+						$capa["UIDL"] = 1;
+					if(chop($buffer) == ".")
+						break;
+                               }
+		}
+		$this->mail_disconnect();
+		return ($capa);
 	}
 
 

@@ -43,7 +43,7 @@ if( !is_array($headers)
 		cleanup_dirs($userfolder, 0);
 	}
 
-	if ($UM->_autospamfolder == "TRUE") {
+	if ($UM->_autospamfolder) {
 		if ($folder_key == $folder_key_inbox) {
 			$other_folder_key = $folder_key_spam;
 		} else {
@@ -90,7 +90,7 @@ if( !is_array($headers)
 			/*
 			 * Add the spamfolder if we have one.
 			 */
-			if ($UM->_autospamfolder == "TRUE" && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
+			if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
 				$j = count($delarray);
 				$othercount = count($sess["headers"][$other_folder_key]);
 				for($i=0;$i<$othercount;$i++) {
@@ -157,7 +157,7 @@ if( !is_array($headers)
 						$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
 						unset ($sess["headers"][$folder_key][$ubiid]);
 					} else {
-						if ($UM->_autospamfolder == "TRUE" && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
+						if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
 							$sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
 							$sess["headers"][$myfold][$ubiid]["id"] -= $subtract;
 						} else {
@@ -189,7 +189,7 @@ if( !is_array($headers)
 					$sess["headers"][$folder_key] = Array();
 				}
 
-				if ($UM->_autospamfolder == "TRUE" && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
+				if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
 					/*
 					 * Rebuild the folder array.
 					 */
@@ -219,7 +219,7 @@ if( !is_array($headers)
 				 */
 				unset ($sess["headers"][$folder_key]);
 				$sess["headers"][$folder_key] = Array();
-				if ($UM->_autospamfolder == "TRUE") {
+				if ($UM->_autospamfolder) {
 					unset ($sess["headers"][$other_folder_key]);
 					$sess["headers"][$other_folder_key] = Array();
 				}

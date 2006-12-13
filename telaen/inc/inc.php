@@ -122,6 +122,13 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$UM->mail_port 		= $sess["port"] 		= $f_port; 
 	$UM->mail_protocol	= $sess["protocol"] 		= $f_protocol; 
 	$UM->mail_prefix	= $sess["folder_prefix"] 	= $f_prefix; 
+
+	$pop3capa = $UM->pop3_capa();
+	$UM->_havepipelining	= $sess["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
+	$UM->_haveatop 		= $sess["haveatop"] 		= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
+	$UM->_haveuidl 		= $sess["haveuidl"] 		= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
+	$UM->_haveapop 		= $sess["haveapop"] 		= ( isset($mail_use_apop) ? $mail_use_apop : $pop3capa["APOP"] );
+
 	$refr = 1;
 
 } elseif (
@@ -135,6 +142,12 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$UM->mail_port 		= $f_port 	= $sess["port"]; 
 	$UM->mail_protocol	= $f_protocol	= $sess["protocol"]; 
 	$UM->mail_prefix	= $f_prefix 	= $sess["folder_prefix"]; 
+
+	$UM->_havepipelining	= $sess["havepipelining"];
+	$UM->_haveatop 		= $sess["haveatop"];
+	$UM->_haveuidl 		= $sess["haveuidl"];
+	$UM->_haveapop 		= $sess["haveapop"];
+
 } else {        
         redirect_and_exit("./index.php");
 }
@@ -151,10 +164,6 @@ $UM->use_html			= $allow_html;
 $UM->user_folder 		= $userfolder;
 $UM->temp_folder		= $temporary_directory;
 $UM->timeout			= $idle_timeout;
-
-if (isset($mail_use_apop)) {
-	$UM->useAPOP = $mail_use_apop;
-}
 
 // avoid missing settings allow dirs creation with 000 perms
 if (isset($dirperm) && $dirperm != 0000) {
