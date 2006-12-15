@@ -195,19 +195,40 @@ $default_folder_prefix	= "";
 ########################################################################
 # In some POP3 servers, if you send a "RETR" command, your
 # message will be automatically deleted :(
-# This option prevents this inconvenience
+# This option prevents this inconvenience. Assumes
+# that the server supports TOP
 ########################################################################
 
 $mail_use_top = no;
 
 ########################################################################
-# This enables the APOP login mode for POP3 servers.
-# APOP provides an encrypted login system instead of clean password send
-# Most POP3 servers support this. 
-# If you experience problems with login, just leave it to no
+# These enable you to overrule the automatic detection of
+# the following POP3 server capabilities: PIPELINING, ATOP,
+# UIDL and APOP. If you find that Telaen is using one of these
+# when it shouldn't, uncomment out the respective variable
+# setting and set it to 'no'. If the reverse is happening, and
+# Telaen is not using/detecting a capability you *know* your
+# POP3 server has, then uncomment out the variable line and
+# set it to 'yes'.
+#
+# PIPELINING: the POP3 server is capable of accepting multiple
+#             commands at a time; Telaen does not have to wait for
+#             the response to a command before issuing a subsequent
+#             command.
+# ATOP: Faster varient of normal POP3 TOP
+# UIDL: the server can provide an assigned unique ID for each POP3
+#       message
+# APOP: provides an encrypted login system instead of clean password sent.
 ########################################################################
 
-$mail_use_apop = no;
+##
+## NOTE: if any of the below are set, either to yes or no,
+##       they will overrule Telaen's automatic detection
+##
+#$mail_use_pipelining	= no;
+#$mail_use_atop		= no;
+#$mail_use_uidl		= no;
+#$mail_use_apop		= no;
 
 
 ########################################################################

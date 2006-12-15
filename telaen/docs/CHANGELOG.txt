@@ -18,6 +18,10 @@ Telaen:
 
 1.1.3-dev:
 
+[New]	Now automatically detects if the POP3 server supports
+	PIPELINING, APOP, ATOP and UIDL. Can be overruled
+	(enable or disable) from config.php.
+
 1.1.2:
 
 [New]   Moved to subversion. This allowed us to rearrange
