@@ -653,7 +653,7 @@ class Telaen extends Telaen_core {
 					$buffer = trim($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
 					if($buffer == ".") 
 						break;
-					$msgs = split(" ",$buffer);
+					$msgs = explode(" ",$buffer);
 					if(is_numeric($msgs[0])) {
 						$messages[$counter]["id"] = $counter+1; //$msgs[0];
 						$messages[$counter]["msg"] = $msgs[0];
@@ -1205,7 +1205,7 @@ class Telaen extends Telaen_core {
 
 			$flags = Array();
 			if(!empty($strFlags))
-				$flags = split(" ",$strFlags);
+				$flags = explode(" ",$strFlags);
 
 			if($flagtype == "+") {
 				if(!in_array($flagname,$flags))
@@ -1282,6 +1282,11 @@ class Telaen extends Telaen_core {
 		return 1;
 	}
 
+	/*
+	 * Use the optional POP3 CAPA command to determine
+	 * what extensions the pop server supports. Returns
+	 * a hash of supported options.
+	 */
 	function mail_pop3_capa() {
 		$capa = Array();
 		$this->mail_connect();
@@ -1289,20 +1294,67 @@ class Telaen extends Telaen_core {
 			$this->mail_send_command("CAPA");
                                while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
-					if(ereg("PIPELINING",$buffer))
-						$capa["PIPELINING"] = 1;
-					if(ereg("ATOP",$buffer))
-						$capa["ATOP"] = 1;
-					if(ereg("APOP",$buffer))
-						$capa["APOP"] = 1;
-					if(ereg("UIDL",$buffer))
-						$capa["UIDL"] = 1;
-					if(chop($buffer) == ".")
+					if(trim($buffer) == ".")
 						break;
+					if(ereg("PIPELINING",$buffer)) {
+						$capa["PIPELINING"] = 1;
+						continue;
+					}
+					if(ereg("ATOP",$buffer)) {
+						$capa["ATOP"] = 1;
+						continue;
+					}
+					if(ereg("APOP",$buffer))
+						$capa["APOP"] = 1; {
+						continue;
+					}
+					if(ereg("UIDL",$buffer))
+						$capa["UIDL"] = 1; {
+						continue;
+					}
                                }
 		}
 		$this->mail_disconnect();
 		return ($capa);
+	}
+
+	/*
+	 * Get the UIDL for the specified message. If none
+	 * provided, then return an array of all UIDLs for
+	 * all non-deleted messages, indexed by message id.
+	 * Requires that it conforms to RFC 1725.
+	 */
+	function mail_get_uidl ($id = "") {
+		if(!empty($id)) {
+			$this->mail_send_command("UIDL $id");
+			$buffer = $this->mail_get_line();
+			list ($resp,$num,$uidl) = explode(" ",$buffer);
+			if ($resp == "+OK") {
+				return $uidl;
+			} else {
+				return "";
+			}
+		} else {
+			$retarray = array();
+
+			$this->mail_send_command("UIDL");
+
+			$buffer = $this->mail_get_line();
+			if (substr($buffer, 0, 3) == "+OK") {
+				while (!feof($this->mail_connection)) {
+					$buffer = $this->mail_get_line();
+					if(trim($buffer) == ".") {
+						break;
+					}
+					list ($num,$uidl) = explode(" ",$buffer);
+					if (!empty($uidl)) {
+						$retarray[intval($num)] = md5($uidl);
+					}
+				}
+				return $retarray;
+			} else
+				return "";
+		}
 	}
 
 
