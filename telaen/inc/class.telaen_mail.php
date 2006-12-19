@@ -4,15 +4,16 @@ class Telaen extends Telaen_core {
 	var $_autospamfolder	= true;		// boolean
 	var $_spamregex		= Array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
 	var $havespam		= "";		// NOTE: This is a STRING!
-	var $_haveatop		= false;	// boolean
-	var $_havepipelining	= false;	// boolean
 	var $_system_folders	= Array("inbox","trash","sent","spam");
 	var $_current_folder 	= "";	
 	var $CRLF		= "\r\n";
 	var $userspamlevel	= 0;		// Disabled
 	var $dirperm		= 0700;  	// recall affected by umask value
 	var $greeting		= ""; 		// Internally used for store pop3 APOP greeting message
+	var $_haveatop		= false;	// boolean
+	var $_havepipelining	= false;	// boolean
 	var $_haveapop		= false;	// boolean
+	var $_haveuidl          = false;        // boolean
 
 	function Telaen() {
 		require("./inc/class.tnef.php");
