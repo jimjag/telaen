@@ -1281,7 +1281,7 @@ class Telaen extends Telaen_core {
 		return 1;
 	}
 
-	function pop3_capa() {
+	function mail_pop3_capa() {
 		$capa = Array();
 		$this->mail_connect();
 		if ($this->mail_protocol == "pop3") {

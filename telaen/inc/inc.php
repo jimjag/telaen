@@ -123,7 +123,7 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$UM->mail_protocol	= $sess["protocol"] 		= $f_protocol; 
 	$UM->mail_prefix	= $sess["folder_prefix"] 	= $f_prefix; 
 
-	$pop3capa = $UM->pop3_capa();
+	$pop3capa = $UM->mail_pop3_capa();
 	$UM->_havepipelining	= $sess["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
 	$UM->_haveatop 		= $sess["haveatop"] 		= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
 	$UM->_haveuidl 		= $sess["haveuidl"] 		= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
