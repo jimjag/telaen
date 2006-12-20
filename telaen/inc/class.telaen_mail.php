@@ -1286,6 +1286,8 @@ class Telaen extends Telaen_core {
 	 * Use the optional POP3 CAPA command to determine
 	 * what extensions the pop server supports. Returns
 	 * a hash of supported options.
+	 * NOTE: Any whitespace within a capability string is
+	 * squeezed down to a single "_".
 	 */
 	function mail_pop3_capa() {
 		$capa = Array();
@@ -1294,24 +1296,11 @@ class Telaen extends Telaen_core {
 			$this->mail_send_command("CAPA");
                                while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
-					if(trim($buffer) == ".")
+					$buffer = trim($buffer);
+					if($buffer) == ".")
 						break;
-					if(ereg("PIPELINING",$buffer)) {
-						$capa["PIPELINING"] = 1;
-						continue;
-					}
-					if(ereg("ATOP",$buffer)) {
-						$capa["ATOP"] = 1;
-						continue;
-					}
-					if(ereg("APOP",$buffer))
-						$capa["APOP"] = 1; {
-						continue;
-					}
-					if(ereg("UIDL",$buffer))
-						$capa["UIDL"] = 1; {
-						continue;
-					}
+					$key = preg_replace('/\s+/', "_", $buffer);
+					$capa[$key] = 1;
                                }
 		}
 		$this->mail_disconnect();
