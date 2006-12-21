@@ -1297,7 +1297,7 @@ class Telaen extends Telaen_core {
                                while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
 					$buffer = trim($buffer);
-					if($buffer) == ".")
+					if($buffer == ".")
 						break;
 					$key = preg_replace('/\s+/', "_", $buffer);
 					$capa[$key] = 1;
@@ -1341,11 +1341,11 @@ class Telaen extends Telaen_core {
 					}
 				}
 				return $retarray;
-			} else
+			} else {
 				return "";
+			}
 		}
 	}
-
 
 }
 ?>
