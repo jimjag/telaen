@@ -63,8 +63,9 @@ PHP                    - YES       - Sure ;)
 Smarty                 - YES       - Bundled with Telaen
                                      but you can use your
                                      own. Be sure to copy the
-                                     function.um_welcome_message.php
-                                     file to your plugins folder!
+                                     function.um_welcome_message.php.txt
+                                     file to your plugins folder (rename
+                                     it to function.um_welcome_message.php)!
                                      If you use the bundled version,
                                      BE SURE to move it outside of the
                                      public web space.
