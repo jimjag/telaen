@@ -494,7 +494,7 @@ class Telaen_core {
 
 				if($cid != "") {
 					$cid = "cid:$cid";
-					$this->_msgbody	= preg_replace("/".quotemeta($cid)."/i",$thisfile,$this->_msgbody);
+					$this->_msgbody	= preg_replace("/" . preg_quote($cid, "/") . "/i", $thisfile, $this->_msgbody);
 
 				} elseif($this->displayimages) {
 					$ext = strtolower(substr($thisattach["name"],-4));
