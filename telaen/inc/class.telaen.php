@@ -376,39 +376,58 @@ class Telaen_core {
 
 	function build_alternative_body($ctype,$body) {
 
+		// get the boundary
 		$boundary = $this->get_boundary($ctype);
+		// split the parts
 		$parts = $this->split_parts($boundary,$body);
 
-		$thispart = ($this->use_html)?$parts[1]:$parts[0];
+		// not needed.. $thispart = ($this->use_html)?$parts[1]:$parts[0];
 
+		// multipart flag
+		$multipartSub = false;
+		
+		// look at the better part we can display
 		foreach($parts as $index => $value) {
+		
 			$email = $this->fetch_structure($value);
 
 			$parts[$index] = $email;
 			$parts[$index]["headers"] = $headers = $this->decode_header($email["header"]);
 			unset($email);
 			$ctype = split(";",$headers["content-type"]); $ctype = strtolower($ctype[0]);
-
 			$parts[$index]["type"] = $ctype;
-			if($this->use_html && $ctype == "text/html") {
+			
+			// in this case the alternative is not html or text but multipart/*
+			if(eregi("^multipart\/(mixed|signed|related|report)",$ctype)) {
 				$part = $parts[$index];
+                                $multipartSub = true;
 				break;
+			// if html enabled use it
+                        } elseif($this->use_html && $ctype == "text/html") {
+                                $part = $parts[$index];
+                                break;
+			// else use the text part
 			} elseif (!$this->use_html && $ctype == "text/plain") {
 				$part = $parts[$index];
 				break;
 			}
-
 		}
 
+		// no recognizable content, use first part, usually text only
 		if(!isset($part)) $part = $parts[0];
 		unset($parts);
 
-
-		$body = $this->compile_body($part["body"],$part["headers"]["content-transfer-encoding"],$part["headers"]["content-type"]);
-
-		if(!$this->use_html && $part["type"] != "text/plain") $body = $this->html2text($body);
-		if(!$this->use_html) $body = $this->build_text_body($body);
-		$this->add_body($body);
+		// if the subcontent is multipart go to multipart function
+		if($multipartSub) {
+			unset($body);
+			$this->build_complex_body($part["headers"]["content-type"], $part["body"]);
+		}
+		else {
+			$body = $this->compile_body($part["body"],$part["headers"]["content-transfer-encoding"],$part["headers"]["content-type"]);
+			if(!$this->use_html && $part["type"] != "text/plain") $body = $this->html2text($body);
+			if(!$this->use_html) $body = $this->build_text_body($body);
+			$this->add_body($body);
+		}
 	}
 
 	/**
@@ -426,7 +445,6 @@ class Telaen_core {
 			$Rtype = substr($Rtype,0,strpos($Rtype,";"));
 		if(substr($Rtype,0,1) == "\"" && substr($Rtype,-1) == "\"")
 			$Rtype = substr($Rtype,1,strlen($Rtype)-2);
-
 
 		$boundary = $this->get_boundary($ctype);
 		$part = $this->split_parts($boundary,$body);
@@ -487,9 +505,9 @@ class Telaen_core {
 			} elseif($is_download) {
 
 				$thisattach 	= $this->build_attach($header,$body,$boundary,$i);
-				$tree			= array_merge((array)$this->current_level, array($thisattach["index"]));
-				$thisfile 		= "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
-				$filename 		= $thisattach["filename"];
+				$tree		= array_merge((array)$this->current_level, array($thisattach["index"]));
+				$thisfile	= "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
+				$filename 	= $thisattach["filename"];
 				$cid = preg_replace("/<(.*)\\>/", "\\1", $cid);
 
 				if($cid != "") {
@@ -503,7 +521,6 @@ class Telaen_core {
 						$this->add_body("<img src=\"$thisfile\" alt=\"\">");
 					}
 				}
-
 			} else
 				$this->process_message($header,$body);
 
@@ -614,13 +631,21 @@ class Telaen_core {
 		$cdisp = $headers["content-disposition"];
 		$ctype = $headers["content-type"]; 
 
+		// for debug echo $cdisp . " -- " . $ctype;
+
+		// try to extract filename from content-disposition
 		preg_match("/filename ?= ?\"(.+)\"/i",$cdisp,$matches);
-//		$filename = preg_replace("/\"(.*)\"/","\\1",trim($matches[1]));
 		$filename = trim($matches[1]);
 	
+		// if the first not work, same regex without duoblequote
+		if(!$filename) {
+			preg_match("/filename ?= ?(.+)/i",$cdisp,$matches);
+        	        $filename = trim($matches[1]);
+		}
+		
+		// try to extract from content-type
 		if(!$filename) {
 			preg_match("/name ?= ?\"(.+)\"/i",$ctype,$matches);
-//			$filename = preg_replace("/\"(.*)\"/","\\1",trim($matches[1]));
 			$filename = trim($matches[1]);
 		}
 
