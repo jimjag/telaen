@@ -96,8 +96,8 @@ $jssource = "
 no_quota  = $jsquota;
 quota_msg = '".ereg_replace("'","\\'",$quota_exceeded)."';
 function readmsg(ix,read) {
-	if(!read && no_quota)
-		alert(quota_msg)
+	if(no_quota)
+		alert(quota_msg);
 	else
 		location = 'readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix='+ix+''; 
 }
