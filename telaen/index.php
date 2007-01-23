@@ -37,6 +37,16 @@ $smarty->assign("webmailTitle", $webmail_title);
 $smarty->assign("headerTemplate", $header_template);
 $smarty->assign("footerTemplate", $footer_template);
 
+// Detect errors
+if (isset($_GET["err"])) {
+        $smarty->assign("errorCode", $_GET["err"]);
+        $smarty->assign("error", "true");
+}
+else {
+        $smarty->assign("error", "false");
+}
+
+
 $jssource = "
 <script language=\"javascript\" type=\"text/javascript\">
 //<![CDATA[

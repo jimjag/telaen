@@ -14,8 +14,14 @@ require("./inc/inc.php");
 
 function mail_connect() {
 	global $UM,$sid,$tid,$lid;
-	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1"); }
-	if(!$UM->mail_auth(true)) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
+	
+	// server check
+	if(!$UM->mail_connect()){
+	        redirect_and_exit("index.php?err=1", true);
+	}	
+	if(!$UM->mail_auth(true)) {
+        	redirect_and_exit("index.php?err=0");
+	}
 }
 
 $headers = null;
@@ -260,7 +266,7 @@ if( !is_array($headers)
 	$UM->mail_disconnect();
 }
 
-if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("error.php?err=3"); }
+if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
 
 /*
  * Sort the date and size fields with a natural sort

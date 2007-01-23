@@ -92,8 +92,10 @@ function cleanup_dirs ($userfolder, $logout) {
 		
 			if($prefs["empty-trash"]) {
 				if ($UM->mail_protocol == "imap") {
-					if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1"); }
-					if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
+					if(!$UM->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
+					if(!$UM->mail_auth()) { 
+						redirect_and_exit("index.php?err=0");
+					}
 				}
 				$trash = "trash";
 				if(!is_array($sess["headers"][base64_encode($trash)])) {
@@ -114,8 +116,10 @@ function cleanup_dirs ($userfolder, $logout) {
 			}
 	
 			if($prefs["empty-spam"]) {
-				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1"); }
-				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
+				if(!$UM->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
+				if(!$UM->mail_auth()) {
+					 redirect_and_exit("index.php?err=0"));
+				}
 				$trash = "spam";
 				if(!is_array($sess["headers"][base64_encode($trash)])) {
 					$retbox = $UM->mail_list_msgs($trash);
@@ -180,11 +184,17 @@ function create_abs_url ($url, $add_scheme_host = true) {
 	return $nurl;
 }
 
-function redirect_and_exit($location) {
+function redirect_and_exit($location, $killsession = false) {
 	global $enable_debug;
 	global $phpver;
 	global $redirects_use_meta;
 	global $redirects_are_relative;
+	global $SS;
+
+	// on error the session should be killed, on badlogin no, i want my selected theme/lang
+	if ($killsession)
+		$SS->Kill();
+
 	if ($redirects_are_relative) {
 		$url = $location;
 	} else {

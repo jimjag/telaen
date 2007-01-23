@@ -12,12 +12,16 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 // load session management
 require("./inc/inc.php");
 
-
-if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1");
-if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
+// server check
+if(!$UM->mail_connect()){ 
+	$SS->Kill();
+	redirect_and_exit("index.php?err=1");
+}
+if(!$UM->mail_auth()) { 
+	redirect_and_exit("index.php?err=0");
+}
 
 // check and create a new folder
-
 $newfolder = trim($newfolder);
 
 $require_update = false;

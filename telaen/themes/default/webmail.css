@@ -38,6 +38,15 @@ a:hover.spam {
         text-decoration: underline;
 }
 
+/** Error box on login page */
+#errorBox {
+	padding: 5px 0px 5px 0px;
+	font-size: 13px;
+	text-align: center;
+	color: red;
+	background-color: #F1F3F5;
+	border: 1px solid red;
+}
 
 /** Head logo */
 #logo {

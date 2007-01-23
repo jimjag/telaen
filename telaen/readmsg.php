@@ -12,7 +12,7 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 //defines
 require("./inc/inc.php");
 
-if(!isset($ix) || !isset($pag)) redirect_and_exit("error.php?err=3");
+if(!isset($ix) || !isset($pag)) redirect_and_exit("index.php?err=3", true);
 
 $folderkey = base64_encode(strtolower($folder));
 
@@ -33,15 +33,17 @@ if(isset($attachment)) {
 			$root = &$root["attachments"][$item];
 
 	if( !is_array($root) || 
-		!file_exists($root["filename"])) redirect_and_exit("error.php?err=3");
+		!file_exists($root["filename"])) redirect_and_exit("index.php?err=3");
 
 	$result = $UM->_read_file($root["filename"]);
 
 } else {
 	$is_attached = false;
 	$arAttachment = Array();
-	if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1"); }
-	if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
+	if(!$UM->mail_connect()) {
+		redirect_and_exit("index.php?err=1", true);
+	}
+	if(!$UM->mail_auth()) { redirect_and_exit("index.php?err=0"); }
 
 	if(!($result = $UM->mail_retr_msg($mail_info,1))) { redirect_and_exit("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true"); }
 	if($UM->mail_set_flag($mail_info,"\\SEEN","+")) {

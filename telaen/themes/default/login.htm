@@ -11,24 +11,41 @@
 			<table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">
 			<form name="form1" action="process.php" method="post">
 				
-				<tr><td align="right" class="title" colspan="2">.: <b>{#lgn_welcome_msg#}</b> :.</td>
+				<tr><td align="right" class="title" colspan="2">.: <b>{#lgn_welcome_msg#}</b> :.</td></tr>
+
+				{if $error eq "true"}
+                                <tr><td align="center" colspan="2">
+                                        <div id="errorBox">
+                                                {if $errorCode eq "0"}
+                                                        <b>{#err_login_msg#}:</b> {#error_login#}
+                                                {elseif $errorCode eq "1"}
+                                                        <b>{#err_system_msg#}:</b> {#error_connect#}
+                                                {elseif $errorCode eq "2"}
+                                                        <b>{#err_system_msg#}:</b> {#error_retrieving#}
+                                                {else}
+                                                        <b>{#err_system_msg#}:</b> {#error_other#}
+                                                {/if}
+                                        </div>
+                                </td></tr>
+                                {/if}
+
 
 				{if $umServerType neq "ONE-FOR-EACH"}
-				<tr><td align=right class="right" width="30%"><b>{#lng_user_email#}</b>: &nbsp;</td><td class="default"><input id="user" tabindex="1" type="text" size="35" name="f_email" value="{$umEmail}" class="textbox" style="width:140px;"></td>
+				<tr><td align=right class="right" width="30%"><b>{#lng_user_email#}</b>: &nbsp;</td><td class="default"><input id="user" tabindex="1" type="text" size="35" name="f_email" value="{$umEmail}" class="textbox" style="width:140px;"></td></tr>
 				{else}
-				<tr><td align=right class="right" width="30%"><b>{#lng_user_name#}</b>: &nbsp;</td><td class="default"><input id="user" tabindex="1" type="text" size="35" name="f_user" value="{$umUser}" class="textbox" style="width:80px;">{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
+				<tr><td align=right class="right" width="30%"><b>{#lng_user_name#}</b>: &nbsp;</td><td class="default"><input id="user" tabindex="1" type="text" size="35" name="f_user" value="{$umUser}" class="textbox" style="width:80px;">{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td></tr>
 				{/if}
-				<tr><td align=right class="right" width="30%"><b>{#lng_user_pwd#}</b>: &nbsp;</td><td class="default"><input type="password" tabindex="2" size="15" name="f_pass" value="" class="textbox" style="width:80px;"></td>
+				<tr><td align=right class="right" width="30%"><b>{#lng_user_pwd#}</b>: &nbsp;</td><td class="default"><input type="password" tabindex="2" size="15" name="f_pass" value="" class="textbox" style="width:80px;"></td></tr>
 
 				{if $umAllowSelectLanguage}
-				<tr><td align=right class="right"><b>{#lng_language#}</b>: &nbsp;</td><td class="default">{$umLanguages}</td>
+				<tr><td align=right class="right"><b>{#lng_language#}</b>: &nbsp;</td><td class="default">{$umLanguages}</td></tr>
 				{/if}
 
 				{if $umAllowSelectTheme}
-				<tr><td align=right class="right"><b>{#lng_theme#}</b>: &nbsp;</td><td class="default">{$umThemes}</td>
+				<tr><td align=right class="right"><b>{#lng_theme#}</b>: &nbsp;</td><td class="default">{$umThemes}</td></tr>
 				{/if}
 
-				<tr><td class="right">&nbsp;</td><td class="default"><input type="submit" name="submit" value="{#lng_login_btn#}" class="button"><input type="hidden" name="f_doing_login" value="1"></td>
+				<tr><td class="right">&nbsp;</td><td class="default"><input type="submit" name="submit" value="{#lng_login_btn#}" class="button"><input type="hidden" name="f_doing_login" value="1"></td></tr>
 				{if $umCookieState eq "1"}
 				<tr><td class="alert" colspan="2">{#lng_cookie_not_enabled#}</td></tr>
 				{elseif $umCookieState eq "2"}

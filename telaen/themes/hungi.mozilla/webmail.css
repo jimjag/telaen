@@ -27,6 +27,18 @@ a:hover {
 	padding: 0;
 }
 
+/** Error box on login page */
+#errorBox {
+	margin: 2px;
+        padding: 5px;
+        font-size: 11px;
+        text-align: center;
+        color: red;
+        background-color: #F1F3F5;
+        border: 1px solid red;
+}
+
+
 select {
 	background-color: #F4F1D9;font-size : 12px;
 }

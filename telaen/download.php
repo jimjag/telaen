@@ -17,11 +17,11 @@ require("./inc/inc.php");
 
 if(	$attach == "" || 
 	$folder == "" || 
-	$ix == "") redirect_and_exit("error.php?err=3");
+	$ix == "") redirect_and_exit("index.php?err=3", true);
 
 $mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
 
-if(!is_array($mail_info)) redirect_and_exit("error.php?err=3");
+if(!is_array($mail_info)) redirect_and_exit("index.php?err=3", true);
 
 $arAttachment = explode(",",$attach);
 $attach = $mail_info;
@@ -29,7 +29,7 @@ foreach($arAttachment as $item )
 	if(is_numeric($item))
 		$attach = &$attach["attachments"][intval($item)];
 
-if(ereg("\\.\\.",$attach["filename"]) || !file_exists($attach["filename"])) { redirect_and_exit("error.php?err=3"); }
+if(ereg("\\.\\.",$attach["filename"]) || !file_exists($attach["filename"])) { redirect_and_exit("index.php?err=3", true); }
 
 
 $size = filesize($attach["filename"]);

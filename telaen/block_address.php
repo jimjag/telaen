@@ -9,11 +9,9 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
  by Aldoir Ventura (aldoir@users.sourceforge.net)
 *************************************************************************/
 
-
-
-
 require("./inc/inc.php");
-if(!isset($ix) || !isset($folder)) redirect_and_exit("error.php?err=3");
+
+if(!isset($ix) || !isset($folder)) redirect_and_exit("index.php?err=3", true);
 
 $filename = $userfolder."_infos/filters.ucf";
 $myfile = $UM->_read_file($filename);

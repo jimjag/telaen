@@ -53,8 +53,10 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 		$entry = $boxes[$n]["name"];
 		if(!is_array($sess["headers"][base64_encode(strtolower($entry))])) {
 			if(!$UM->mail_connected()) {
-				if(!$UM->mail_connect()) redirect_and_exit("error.php?err=1");
-				if(!$UM->mail_auth()) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
+				if(!$UM->mail_connect()) {
+					redirect_and_exit("index.php?err=1", true);
+				}
+				if(!$UM->mail_auth()) { redirect_and_exit("index.php?err=0"); }
 			}
 			$retbox = $UM->mail_list_msgs($entry);
 			$sess["headers"][base64_encode(strtolower($entry))] = $retbox[0];

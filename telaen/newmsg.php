@@ -150,8 +150,10 @@ if(isset($tipo) && $tipo == "send") {
 			
 			if($prefs["save-to-sent"]) {
 
-				if(!$UM->mail_connect()) { redirect_and_exit("error.php?err=1"); }
-				if(!$UM->mail_auth(false)) { redirect_and_exit("badlogin.php?error=".urlencode($UM->mail_error_msg)); }
+				if(!$UM->mail_connect()) { 				
+					redirect_and_exit("index.php?err=1", true);
+				}
+				if(!$UM->mail_auth(false)) { redirect_and_exit("index.php?err=0"); }
 				$UM->mail_save_message("sent",$mail->FormattedMail,"\\SEEN");
 				unset($sess["headers"][base64_encode("sent")]);
 				$UM->mail_disconnect();
@@ -160,7 +162,7 @@ if(isset($tipo) && $tipo == "send") {
 			}
 		}
 
-	} else die("<script language=\"javascript\" type=\"text/javascript\">location = 'error.php?err=3';</script>");
+	} else die("<script language=\"javascript\" type=\"text/javascript\">location = 'index.php?err=3';</script>");
 
 	$jssource = "	
 	<script language=\"javascript\" type=\"text/javascript\">
@@ -181,7 +183,7 @@ if(isset($tipo) && $tipo == "send") {
 
 	$smarty->display("$selected_theme/newmsg-result.htm");
 
-}else {
+} else {
 
 	$priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority ;
 
@@ -368,8 +370,12 @@ if(isset($tipo) && $tipo == "send") {
 
 		if(!eregi("\\ANSWERED",$mail_info["flags"])) {
 
-			if(!$UM->mail_connect()) { die("<script>location = 'error.php?err=1'</script>"); }
-			if(!$UM->mail_auth()) { die("<script>location = 'badlogin.php?error=".urlencode($UM->mail_error_msg)."'</script>"); }
+			if(!$UM->mail_connect()) { 
+				redirect_and_exit("index.php?err=1", true);
+			}
+			if(!$UM->mail_auth()) { 
+				redirect_and_exit("index.php?err=0");
+			}
 			if($UM->mail_set_flag($mail_info,"\\ANSWERED","+")) {
 				$sess["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
 				$SS->Save($sess);

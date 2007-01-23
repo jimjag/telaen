@@ -15,7 +15,7 @@ require("./folder_list.php");
 $smarty->assign("umUser",$f_user);
 $refreshurl = "process.php?folder=".urlencode($folder)."&pag=$pag&refr=true";
 
-if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect_and_exit("error.php?err=3"); }
+if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect_and_exit("index.php?err=3", true); }
 
 $arrow = ($sortorder == "ASC")?"images/arrow_up.gif":"images/arrow_down.gif";
 $arrow = "&nbsp;<img src=\"$arrow\" width=\"8\" height=\"7\" border=\"0\" alt=\"\" />";
