@@ -14,8 +14,7 @@ require("./inc/inc.php");
 
 // server check
 if(!$UM->mail_connect()){ 
-	$SS->Kill();
-	redirect_and_exit("index.php?err=1");
+	redirect_and_exit("index.php?err=1", true);
 }
 if(!$UM->mail_auth()) { 
 	redirect_and_exit("index.php?err=0");
