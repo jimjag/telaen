@@ -22,6 +22,16 @@ Telaen:
 	PIPELINING, APOP, ATOP and UIDL. Can be overruled
 	(enable or disable) from config.php.
 
+[Fix]	Email parsing enhancement, now can parse correctly
+	multipart/alternative emails with multipart/mixed nested
+	content. This emails are usually generate form Apple Mail Clients
+	Also attachments types with dots (like application/vnd.ms-exel)
+	are detected correctly.
+
+[New]	Little usability issue, error/badlogin pages are merged with login 
+	page, the errors are simply displayed in a box. 
+	Also removes unuseful/redudant code.
+
 1.1.2:
 
 [New]   Moved to subversion. This allowed us to rearrange
