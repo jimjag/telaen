@@ -446,8 +446,11 @@ class Telaen_core {
 		if(substr($Rtype,0,1) == "\"" && substr($Rtype,-1) == "\"")
 			$Rtype = substr($Rtype,1,strlen($Rtype)-2);
 
-		$boundary = $this->get_boundary($ctype);
+		$boundary = $this->get_boundary($ctype);	
 		$part = $this->split_parts($boundary,$body);
+		// only for debug
+		//echo "<br> boundary" . $boundary . "  parts: " . count($part);
+
 
 		for($i=0;$i<count($part);$i++) {
 
@@ -824,6 +827,7 @@ class Telaen_core {
 		$myarray["status"] = $headers["status"];
 		$myarray["read"] = $headers["x-um-status"];
 		$myarray["x-spam-level"] = $headers["x-spam-level"];
+		$myarray["receipt-to"] = $headers["disposition-notification-to"];
 		unset($headers);
 		return $myarray;
 
@@ -897,6 +901,7 @@ class Telaen_core {
 		$this->_content["priority"] = $mail_info["priority"];
 		$this->_content["flags"] = $mail_info["flags"];
 		$this->_content["x-spam-level"] = $mail_info["x-spam-level"];
+		$this->_content["receipt-to"] = $mail_info["receipt-to"];
 		return $this->_content;
 	}
 
@@ -931,9 +936,9 @@ class Telaen_core {
 	*/
 
 	function get_boundary($ctype){
-		if(preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
-			$boundary = preg_replace('/^\"(.*)\"$/', "\\1", $regs[1]);
-			return trim("--$boundary");
+		if(preg_match('/boundary[ ]?=[ ]?["]?([^";]*)["]?.*$/i',$ctype,$regs)) {	//preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
+			//$boundary = preg_replace('/^\"(.*)\"$/', "\\1", $regs[1])
+			return trim("--$regs[1]");
 		}
 	}
 
