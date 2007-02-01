@@ -16,7 +16,7 @@ CHANGELOG:
 Telaen:
 =======
 
-1.1.3-dev:
+1.1.3:
 
 [New]	Now automatically detects if the POP3 server supports
 	PIPELINING, APOP, ATOP and UIDL. Can be overruled
@@ -31,6 +31,9 @@ Telaen:
 [New]	Little usability issue, error/badlogin pages are merged with login 
 	page, the errors are simply displayed in a box. 
 	Also removes unuseful/redudant code.
+
+[New] 	TinyMce updated to version 2.0.9
+
 
 1.1.2:
 
