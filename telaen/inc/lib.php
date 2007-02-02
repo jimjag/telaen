@@ -118,7 +118,7 @@ function cleanup_dirs ($userfolder, $logout) {
 			if($prefs["empty-spam"]) {
 				if(!$UM->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
 				if(!$UM->mail_auth()) {
-					 redirect_and_exit("index.php?err=0"));
+					 redirect_and_exit("index.php?err=0");
 				}
 				$trash = "spam";
 				if(!is_array($sess["headers"][base64_encode($trash)])) {

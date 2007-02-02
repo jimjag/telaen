@@ -133,6 +133,11 @@ elseif($ns4) {
 
 $smarty->assign("umMessageBody",$body);
 
+// look if the msg needs a receipt
+if ($email["receipt-to"]) {
+	$smarty->assign("receiptRequired", true);
+	$smarty->assign("receiptTo", $email["receipt-to"]);
+}
 
 $ARFrom = $email["from"];
 $useremail = $sess["email"];
@@ -201,6 +206,9 @@ function prefs() { location = 'preferences.php'; }
 function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&attachment='+attach,'','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
+
+
+
 //]]>
 </script>
 ";
