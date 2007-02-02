@@ -183,7 +183,7 @@ if($tempSize && $memoryLimit < $megs8) {
 	echo('<font color=red><strong>FAILED</strong></font>
 	<br>PHP.ini\'s <font face="Courier New" color=Gray>memory_limit</font> must be at least <code>8M</code> (We recommend 32M (32 MegaBytes)<br>');
 	$error = true;
-} elseif($tempSize && $memoryLimit >= megs8 && $memoryLimit < $megs32) {
+} elseif($tempSize && $memoryLimit >= $megs8 && $memoryLimit < $megs32) {
 	echo('<font color=red><strong>WARNING</strong></font>
 	<br>PHP.ini\'s <font face="Courier New" color=Gray>memory_limit</font> should be at least 32 (32 MegaBytes), but may still work.<br>');
 	$warn = true;
