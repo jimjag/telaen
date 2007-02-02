@@ -162,24 +162,30 @@ there are SERIOUS security risks using versions below 4.1. Telaen will not work 
 	$error = true;
 }
 
+$megs8 = 8*1024*1024;
+$megs32 = $megs8 * 4;
+
+$iniLimit = ini_get('memory_limit');
 $tempSize = 
 	str_replace('K', '*1024', 
 	str_replace('M', '*1024*1024', 
 	str_replace('G', '*1024*1024*1024', 
-	ini_get('memory_limit'))));
+	$iniLimit)));
 
-$memoryLimit = 8*1024*1024; //default is 8Mb
-if($tempSize) eval("\$memoryLimit = $tempSize;");
+if($tempSize) {
+	eval("\$memoryLimit = $tempSize;");
+} else {
+	$iniLimit = "Unlimited";
+}
+echo("<br><strong>- Testing your memory limits</strong> (memory_limit: $iniLimit) ... <br>");
 
-echo('<br><strong>- Testing your memory limits</strong>... ');
-
-if($memoryLimit < 8) {
+if($tempSize && $memoryLimit < $megs8) {
 	echo('<font color=red><strong>FAILED</strong></font>
-	<br>PHP.ini\'s <font face="Courier New" color=Gray>memory_limit</font> must be at least <code>8M</code> (We recommend 64M (64 MegaBytes)<br>');
+	<br>PHP.ini\'s <font face="Courier New" color=Gray>memory_limit</font> must be at least <code>8M</code> (We recommend 32M (32 MegaBytes)<br>');
 	$error = true;
-} elseif($memoryLimit >= 8 && $memoryLimit < 64) {
+} elseif($tempSize && $memoryLimit >= megs8 && $memoryLimit < $megs32) {
 	echo('<font color=red><strong>WARNING</strong></font>
-	<br>PHP.ini\'s <font face="Courier New" color=Gray>memory_limit</font> should be at least 64M (64 MegaBytes)<br>');
+	<br>PHP.ini\'s <font face="Courier New" color=Gray>memory_limit</font> should be at least 32 (32 MegaBytes), but may still work.<br>');
 	$warn = true;
 } else {
 	echo('<font color=green><strong>PASSED</strong></font><br>');
