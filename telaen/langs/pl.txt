@@ -19,8 +19,12 @@ total_text                                      = Total
 previous_text					= Poprzednia
 next_text					= Nastêpna
 
+
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= Nie mogê po³±czyæ siê z serwerem
 error_retrieving				= Nie mogê odczytaæ wiadomo¶ci
 error_other					= B³±d - proszê skontaktowaæ siê z administratorem

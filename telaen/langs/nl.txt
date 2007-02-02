@@ -20,12 +20,14 @@ last_text                                       = Last
 total_text                                      = Total
 
 
-
 # Mail Server Errors
 
-error_connect					= Fout! De POP3 locatie is onjuist.
-error_retrieving				= Fout! De berichten konden niet opgehaald worden.
-error_other					= Fout! Onbekende fout, neem contact op met de webmaster.
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
+error_connect					= De POP3 locatie is onjuist.
+error_retrieving				= De berichten konden niet opgehaald worden.
+error_other					= Onbekende fout, neem contact op met de webmaster.
 
 #Invalid name of mailbox
 

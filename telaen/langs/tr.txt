@@ -19,6 +19,9 @@ total_text                                      = Total
 
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= Sunucuya baðlanamadý.
 error_retrieving				= Mesajlarýnýzý alýrken bir hata oluþtu. Gelen Kutusunun yeri deðiþmiþ.
 error_other					= Sistem hatasý! Sistem yöneticisiyle irtibata geçin.

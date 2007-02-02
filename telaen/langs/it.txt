@@ -23,9 +23,12 @@ total_text					= Totale
 
 # Mail Server Errors
 
-error_connect					= Errore di connessione con il server
-error_retrieving				= Errore di scaricamento posta, posta reimpostata
-error_other					= Errore di sistema, contattare l'amministratore di sistema
+err_login_msg                                   = Errore di login
+err_system_msg                                  = Errore di sistema
+error_login                                     = Controlla il tuo nome utente o password e riprova
+error_connect					= Impossibile connettersi al server
+error_retrieving				= Errore di sincronizzazione della cartella
+error_other					= Contattare l'amministratore di sistema
 
 #Invalid name of mailbox
 

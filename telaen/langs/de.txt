@@ -24,9 +24,12 @@ total_text                                      = Total
 
 # Mail Server Errors
 
-error_connect				           = FEHLER: Keine Verbindung zum Server!
-error_retrieving				       = FEHLER: Konnte Deine Nachrichten nicht abrufen!
-error_other				             = FEHLER: Bitte kontaktiere den Administrator
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
+error_connecr				        = Keine Verbindung zum Server!
+error_retrieving				= Konnte Deine Nachrichten nicht abrufen!
+error_other				        = Bitte kontaktiere den Administrator
 
 # Invalid name of mailbox
 

@@ -19,6 +19,9 @@ total_text                                      = Total
 
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= Nem sikerült a POP szerverhez kapcsolódás.
 error_retrieving				= Az üzenet nem lett letöltve.
 error_other					= Váratlan hiba történt. Lépj kapcsolatba az adminisztrátorral.

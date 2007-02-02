@@ -17,9 +17,11 @@ last_text                                       = Last
 total_text                                      = Total
 
 
-
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= Eroare la conectarea cu serverul
 error_retrieving				= Eroare la receptionarea mesajelor, Inbox-ul a fost modificat intre timp.
 error_other					= Eroare fatala, contactati administratorul

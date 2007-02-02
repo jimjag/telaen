@@ -26,6 +26,9 @@ total_text                                      = Total
 
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= Connexion au serveur impossible
 error_retrieving				= Impossible de recevoir le message, dû aux modifications 
 error_other						= Des erreurs sont survenues, veuillez contacter votre administrateur

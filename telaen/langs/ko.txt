@@ -18,6 +18,9 @@ last_text					= 마지막
 total_text					= 전체
 
 # Mail Server Errors
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= 서버에 연결할수 없습니다
 error_retrieving					= 받은편지를 가져올수 없습니다.
 error_other						= 시스템장애입니다. 관리자에게 문의하세요

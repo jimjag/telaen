@@ -25,6 +25,9 @@ total_text                                      = Total
 
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= 無法連接至郵件伺服器!
 error_retrieving				= 因為您的收件匣位置變更，因此無法取得此信件。
 error_other					= 目前系統發生不明錯誤，請洽詢您的郵件伺服器管理員。

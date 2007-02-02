@@ -20,9 +20,11 @@ last_text                                       = Last
 total_text                                      = Total
 
 
-
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect				= No fue posible la conexión con el servidor
 error_retrieving			= No fue posible obtener sus mensajes, hubo modificaciones en su bandeja
 error_other				= Hubo problemas con el sistema, por favor contacte con el administrador

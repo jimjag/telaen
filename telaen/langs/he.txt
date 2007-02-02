@@ -23,6 +23,9 @@ total_text                                      = Total
 
 
 # Mail Server Errors
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= שגיאה בחיבור אל השרת
 error_retrieving				= שגיאה בקבלת הדואר שלך, תיבת הדואר שלך השתנתה
 error_other						= תקלה במערכת, אנא פנה לאיש הסיסטם

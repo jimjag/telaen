@@ -25,6 +25,9 @@ total_text                                      = Total
 
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= Anslutning till POP-server misslyckades
 error_retrieving				= Pga ändringar i din inkorg kunde inte detta meddelande hämtas
 error_other					= Ett oväntat fel uppstod. Var vänlig kontakta din adminstratör

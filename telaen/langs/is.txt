@@ -19,6 +19,9 @@ total_text                                      = Total
 
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= Tenging við póstþjón mistókst
 error_retrieving				= Villa við að ná í póst, innhólf hefur breyst
 error_other					= Kerfisvilla, vinsamlegast hafið samband við kerfisstjóra

@@ -19,6 +19,9 @@ total_text                                      = Total
 
 # Mail Server Errors
 
+err_login_msg                                   = Login error
+err_system_msg                                  = System error
+error_login                                     = Please check your username or password and try again
 error_connect					= Kontakt ble ikke oppnådd med server
 error_retrieving				= Problemer oppstod under forsøk på å motta dine beskjeder. Din innboks har blitt endret.
 error_other					= Systemfeil. Kontakt systemansvarlig.
