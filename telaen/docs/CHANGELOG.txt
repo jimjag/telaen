@@ -32,8 +32,10 @@ Telaen:
 	are detected correctly.
 
 [New]	Little usability issue, error/badlogin pages are merged with login 
-	page, the errors are simply displayed in a box. 
-	Also removes unuseful/redudant code.
+	page, the errors are simply displayed in a box.  This also removes
+        unuseful/redudant code. To use this feature, themes need
+        to update their login.htm file (look at default/login.htm
+        for guidance).
 
 [New] 	TinyMce updated to version 2.0.9
 
