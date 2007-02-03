@@ -19,7 +19,7 @@ Telaen:
 1.1.3-rc1:
 
 [Fix]   check_install.php(.txt) now correctly checks memory_limit
-        value.
+	value.
 
 [New]	Now automatically detects if the POP3 server supports
 	PIPELINING, APOP, ATOP and UIDL. Can be overruled
@@ -33,9 +33,9 @@ Telaen:
 
 [New]	Little usability issue, error/badlogin pages are merged with login 
 	page, the errors are simply displayed in a box.  This also removes
-        unuseful/redudant code. To use this feature, themes need
-        to update their login.htm file (look at default/login.htm
-        for guidance).
+	unuseful/redudant code. To use this feature, themes need
+	to update their login.htm file (look at default/login.htm
+	for guidance).
 
 [New] 	TinyMce updated to version 2.0.9
 
