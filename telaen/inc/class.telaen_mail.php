@@ -275,7 +275,8 @@ class Telaen extends Telaen_core {
 				
 				while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
-					if(trim($buffer) == ".") break;
+					if(chop($buffer) == ".")
+						break;
 					$header .= $buffer;
 				}
 				$mail_info = $this->get_mail_info($header);
@@ -300,7 +301,8 @@ class Telaen extends Telaen_core {
 				$msgcontent = "";
 				while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
-					if(chop($buffer) == ".") break;
+					if(chop($buffer) == ".")
+						break;
 					$msgcontent .= $buffer;
 				}
 				$this->_save_file($msg["localname"],$msgcontent);
@@ -392,7 +394,8 @@ class Telaen extends Telaen_core {
 	
 				while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
-					if(trim($buffer) == ".") break;
+					if(chop($buffer) == ".")
+						break;
 					$header .= $buffer;
 				}
 				$mail_info = $this->get_mail_info($header);
@@ -512,7 +515,8 @@ class Telaen extends Telaen_core {
 		
 					while (!feof($this->mail_connection)) {
 						$buffer = $this->mail_get_line();
-						if(trim($buffer) == ".") break;
+						if(chop($buffer) == ".")
+							break;
 						$header .= $buffer;
 					}
 					$mail_info = $this->get_mail_info($header);
@@ -650,7 +654,7 @@ class Telaen extends Telaen_core {
 
 				while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
-					$buffer = trim($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
+					$buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
 					if($buffer == ".") 
 						break;
 					$msgs = explode(" ",$buffer);
@@ -702,7 +706,8 @@ class Telaen extends Telaen_core {
 					}
 					while (!feof($this->mail_connection)) {
 						$buffer = $this->mail_get_line();
-						if(trim($buffer) == ".") break;
+						if(chop($buffer) == ".")
+							break;
 						if(strlen($buffer) > 3) 
 							$header .= $buffer;
 					}
@@ -767,7 +772,8 @@ class Telaen extends Telaen_core {
 
 							while (!feof($this->mail_connection)) {
 								$buffer = $this->mail_get_line();
-								if(trim($buffer) == ".") break;
+								if(chop($buffer) == ".") 
+									break;
 								if(strlen($buffer) > 3) 
 									$header .= $buffer;
 							}
@@ -831,7 +837,8 @@ class Telaen extends Telaen_core {
 			
 						while (!feof($this->mail_connection)) {
 							$buffer = $this->mail_get_line();
-							if(trim($buffer) == ".") break;
+							if(chop($buffer) == ".")
+								break;
 							if(strlen($buffer) > 3) 
 								$header .= $buffer;
 						}
