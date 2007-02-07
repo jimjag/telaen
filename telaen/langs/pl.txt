@@ -300,6 +300,7 @@ headers_mnu					= Nag³ówki
 move_mnu					= Przenie¶ do
 delete_mnu					= Usuñ
 print_mnu					= Drukuj
+download_mnu                                    = Download
 
 from_hea					= Od:
 to_hea						= Do:

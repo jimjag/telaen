@@ -301,6 +301,8 @@ move_mnu					= Премести в
 delete_mnu					= Изтрий
 print_mnu					= Печат
 
+download_mnu                                    = Download
+
 from_hea					= От:
 to_hea						= До:
 cc_hea						= Копие до:

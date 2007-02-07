@@ -298,6 +298,7 @@ headers_mnu					= Heading
 move_mnu					= Flytt til
 delete_mnu					= Slett
 print_mnu					= Skriv ut
+download_mnu                                    = Download
 
 from_hea					= Fra:
 to_hea						= Til:

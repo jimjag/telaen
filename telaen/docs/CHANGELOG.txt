@@ -39,6 +39,8 @@ Telaen:
 
 [New] 	TinyMce updated to version 2.0.9
 
+[New]	New feauture: Button for download the entire message
+
 
 1.1.2:
 

@@ -297,6 +297,7 @@ headers_mnu					= Hlavièka
 move_mnu					= Pøesunout do
 delete_mnu					= Smazat
 print_mnu					= Tisk
+download_mnu                                    = Download
 
 from_hea					= Od:
 to_hea						= Komu:

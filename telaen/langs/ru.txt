@@ -301,6 +301,7 @@ headers_mnu				= Заголовок
 move_mnu				= Переместить в
 delete_mnu				= Удалить
 print_mnu				= Распечатать
+download_mnu                                    = Download
 
 from_hea				= От:
 to_hea					= Для:

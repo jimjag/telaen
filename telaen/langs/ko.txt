@@ -274,6 +274,8 @@ move_to_trash_mnu				= 휴지통으로
 delete_mnu						= 삭제
 print_mnu						= 인쇄
 
+download_mnu                                    = Download
+
 from_hea						= 보낸이:
 to_hea							= 받는이:
 cc_hea							= 참조:

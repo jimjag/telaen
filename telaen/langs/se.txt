@@ -300,6 +300,7 @@ move_mnu					= Flytta till
 delete_mnu					= Ta bort
 print_mnu					= Skriv ut
 
+download_mnu                                    = Download
 from_hea					= Från:
 to_hea						= Till:
 cc_hea						= Kopia:

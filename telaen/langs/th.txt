@@ -299,6 +299,7 @@ headers_mnu					= หัว
 move_mnu					= ย้ายไป
 delete_mnu					= ลบ
 print_mnu					= พิมพ์
+download_mnu                                    = Download
 
 from_hea					= จาก :
 to_hea						= ถึง :

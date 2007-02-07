@@ -299,6 +299,7 @@ headers_mnu					= Header
 move_mnu					= Verplaats naar
 delete_mnu					= Verwijder
 print_mnu					= Afdrukweergave
+download_mnu                                    = Download
 
 from_hea					= Van:
 to_hea						= Naar:

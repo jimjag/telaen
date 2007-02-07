@@ -83,7 +83,8 @@ if($ix < (count($mysess)-1)) {
 	$smarty->assign("umNextLink",$umNextLink);
 }
 
-
+// message download link
+$smarty->assign("downloadLink", "download.php?folder=".urlencode($folder)."&ix=".$ix);
 
 $body	= 	$email["body"];
 

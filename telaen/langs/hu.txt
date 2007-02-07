@@ -282,9 +282,10 @@ reply_all_mnu                                   = Válasz mindenkinek
 forward_mnu                                     = Továbbküldés
 headers_mnu                                     = Fejléc
 move_mnu                                        = Áthelyez
-move_to_trash_mnu																= Kukába helyezés
+move_to_trash_mnu				= Kukába helyezés
 delete_mnu                                      = Törlés
-print_mnu																				= Nyomtatás
+print_mnu					= Nyomtatás
+download_mnu                                    = Download
 
 from_hea                                        = Küldõ:
 to_hea                                          = Cimzett:

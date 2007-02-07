@@ -304,6 +304,7 @@ headers_mnu					= 檢視信件原始檔
 move_mnu					= 搬移到
 delete_mnu					= 刪除
 print_mnu					= 列印
+download_mnu                                    = Download
 
 from_hea					= 寄件者:
 to_hea						= 收件者:

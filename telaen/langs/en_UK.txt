@@ -261,20 +261,21 @@ ctc_close					= Close
 ctc_save					= Save
 
 [Readmsg]
-next_mnu						= Next
+next_mnu					= Next
 previous_mnu					= Previous
-back_mnu						= Back
-reply_mnu						= Reply
+back_mnu					= Back
+reply_mnu					= Reply
 reply_all_mnu					= Reply to all
-forward_mnu						= Forward
-headers_mnu						= Header
-move_mnu						= Move to
+forward_mnu					= Forward
+headers_mnu					= Header
+move_mnu					= Move to
 move_to_trash_mnu				= Move to Trash
-delete_mnu						= Delete
-print_mnu						= Print
+delete_mnu					= Delete
+print_mnu					= Print
+download_mnu					= Download
 
-from_hea						= From:
-to_hea							= To:
+from_hea					= From:
+to_hea						= To:
 cc_hea							= Cc:
 date_hea						= Date:
 subject_hea						= Subject:

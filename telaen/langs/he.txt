@@ -275,6 +275,7 @@ move_mnu						= העבר ל
 move_to_trash_mnu				= העבר לסל המחזור
 delete_mnu						= מחק
 print_mnu						= הדפס
+download_mnu                                    = Download
 
 from_hea						= מ:
 to_hea							= אל:

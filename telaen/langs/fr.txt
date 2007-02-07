@@ -302,6 +302,7 @@ headers_mnu					= En-tête
 move_mnu					= Déplacer dans
 delete_mnu					= Supprimer
 print_mnu					= Imprimer
+download_mnu                                    = Download
 
 from_hea					= De:
 to_hea						= A:

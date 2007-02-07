@@ -297,6 +297,7 @@ headers_mnu					= Afiseaza header
 move_mnu					= Muta in
 delete_mnu					= Sterge
 print_mnu					= Printeaza
+download_mnu                                    = Download
 
 from_hea					= De la:
 to_hea						= Pentru:

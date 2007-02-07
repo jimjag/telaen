@@ -293,6 +293,7 @@ headers_mnu					= Baþlýklar
 move_mnu					= Taþý:
 delete_mnu					= Sil
 print_mnu					= Yazdýr
+download_mnu                                    = Download
 
 from_hea					= Kimden:
 to_hea						= Kime:

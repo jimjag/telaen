@@ -275,7 +275,7 @@ prf_save_button					= Guardar
 prf_display_images				= Mostrar imagenes adjuntas automáticamente
 prf_default_editor_mode				= Modo de edición normal
 prf_default_editor_mode_text			= "Texto puro"
-prf_default_editor_mode_html			= "Editor HTML Avanzado (Solamente para IE5 o superior)"
+prf_default_editor_mode_html			= "Editor HTML Avanzado"
 prf_time_to_refesh				= Tiempo de atualización de mensajes (minutos)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
@@ -301,6 +301,7 @@ headers_mnu					= Encabezado
 move_mnu					= Mover a
 delete_mnu					= Borrar
 print_mnu					= Imprimir
+download_mnu                                    = Download
 
 from_hea					= De:
 to_hea						= Para:

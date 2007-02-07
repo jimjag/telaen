@@ -301,6 +301,7 @@ headers_mnu					= Meddelelseshoved
 move_mnu					= Flyt til
 delete_mnu					= Slet
 print_mnu					= Udskriv
+download_mnu                                    = Download
 
 from_hea					= Fra:
 to_hea						= Til:

@@ -297,6 +297,7 @@ headers_mnu					= Haus
 move_mnu					= Færa í
 delete_mnu					= Eyða
 print_mnu					= Prenta
+download_mnu                                    = Download
 
 from_hea					= Frá:
 to_hea						= Til:

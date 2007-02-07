@@ -286,6 +286,8 @@ headers_mnu				             = Kopf-Bereich
 move_mnu				               = Verschieben
 delete_mnu				             = Entfernen
 print_mnu					             = Drucken
+download_mnu                                    = Download
+
 
 from_hea					             = Von:
 to_hea					               = An:

@@ -13,32 +13,56 @@ Telaen is based on Uebimiau (http://uebimiau.sourceforge.net)
 
 // load session management
 require("./inc/inc.php");
-// check for all parameters
 
-if(	$attach == "" || 
-	$folder == "" || 
-	$ix == "") redirect_and_exit("index.php?err=3", true);
+// check for main parameters
+if(!isset($_GET['folder']) || !isset($_GET['ix']))
+	redirect_and_exit("index.php?err=3", true);
 
+$folder = $_GET['folder'];
+$ix = $_GET['ix'];
+
+// ensure we have email infos
 $mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
+if(!is_array($mail_info))
+        redirect_and_exit("index.php?err=3", true);
 
-if(!is_array($mail_info)) redirect_and_exit("index.php?err=3", true);
+// check if we are downloading an attachment or the entire message
+if(isset($_GET['attach'])) {
+	$att = $_GET['attach'];
+	$downAll = false;	
+} else {
+	$downAll = true;
+}
 
-$arAttachment = explode(",",$attach);
-$attach = $mail_info;
-foreach($arAttachment as $item )
-	if(is_numeric($item))
-		$attach = &$attach["attachments"][intval($item)];
+if($downAll) {
+	$sourceFile = $mail_info['localname']; 
+	if(ereg("\\.\\.",$sourceFile) || !file_exists($sourceFile)) {
+                redirect_and_exit("index.php?err=3", true);
+        }
 
-if(ereg("\\.\\.",$attach["filename"]) || !file_exists($attach["filename"])) { redirect_and_exit("index.php?err=3", true); }
+	$size = filesize($sourceFile);
+	$disposition = "attachment";
+	$type = "message/rfc822";
+	$dlfname = trim($mail_info["subject"]) . ".eml";
 
+} else {
+	$arAttachment = explode(",",$att);	
+	$attach = $mail_info;
+	foreach($arAttachment as $item)
+		if(is_numeric($item))
+			$attach = &$attach["attachments"][intval($item)];
 
-$size = filesize($attach["filename"]);
+	$sourceFile = $attach["filename"];
+	if(ereg("\\.\\.",$sourceFile) || !file_exists($sourceFile)) {
+		redirect_and_exit("index.php?err=3", true);
+	}
+	
+	$size = filesize($sourceFile);
+	$disposition = (!$down)?"inline":"attachment";
+	$type = (!preg_match('/[a-z0-9\-]+\/[a-z0-9\-]+/i',$attach["content-type"]))?"application/octet-stream":$attach["content-type"];
+	$dlfname = $attach["name"];
+}
 
-$disposition = (!$down)?"inline":"attachment";
-$type = (!preg_match('/[a-z0-9\-]+\/[a-z0-9\-]+/i',$attach["content-type"]))?"application/octet-stream":$attach["content-type"];
-$dlfname = $attach["name"];
-
-// Header("Content-Type: $type; name=\"".$attach["name"]."\"\r\n");
 header("Pragma: public");
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
@@ -48,8 +72,8 @@ header("Content-Type: $type");
 header("Content-Disposition: $disposition; filename=\"$dlfname\";");
 header("Content-Transfer-Encoding: binary");
 header("Content-Length: $size");
+
 @ob_end_flush();
 
-readfile($attach["filename"]);
-
+readfile($sourceFile);
 ?>

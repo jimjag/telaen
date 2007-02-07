@@ -305,6 +305,8 @@ headers_mnu					= Intestazione
 move_mnu					= Sposta
 delete_mnu					= Cancella
 print_mnu					= Stampa
+download_mnu                                    = Scarica
+
 
 from_hea					= Da:
 to_hea						= Per:

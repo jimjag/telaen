@@ -312,6 +312,7 @@ move_mnu						= Mover para
 move__to_trash_mnu					= Mover para Lixeira
 delete_mnu						= Excluir
 print_mnu						= Imprimir
+download_mnu                                    = Download
 
 from_hea						= De:
 to_hea							= Para:
