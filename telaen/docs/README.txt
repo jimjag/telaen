@@ -7,7 +7,7 @@ see www.gnu.org for more informations. You can use or
 redistribute this software, but need preserve the credits
 of author.
 
-Telaen is based on Uebimiau.
+Telaen was originally based on Uebimiau.
 
 We recommend that you read the other documents in
 the docs/ subdirectory, especially the CHANGELOG.txt

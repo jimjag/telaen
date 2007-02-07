@@ -2,9 +2,9 @@ INTRO:
 This documents the changes made to Telaen.
 
 First of all: Telaen would be nowhere without the
-effort of many beta testers, other bug-and-patch submitters,
-and, most importantly, Aldoir Ventura <aldoir@users.sourceforge.net>
-who gave us Uebimiau, on which Telaen is based, in the first place!
+effort of many beta testers, other bug-and-patch submitters.
+
+Telaen was originally based on Uebimiau.
 
 LICENSE:
 Telaen is released under the GPL.
