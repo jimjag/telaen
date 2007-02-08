@@ -1,17 +1,22 @@
 ----------------------------------------------------
 OVERVIEW
 ----------------------------------------------------
-Telaen is a web-based e-mail client written in PHP 
-It is a free software distributed under GPL terms,
-see www.gnu.org for more informations. You can use or
-redistribute this software, but need preserve the credits
-of author.
+Telaen is a web-based e-mail client written in PHP. What is particularly
+nice about Telaen is that it is fast, lean and simple, but also extremely
+powerful. It does not require much more than a "standard" PHP
+installation, nor does it require a database. It supports multiple
+folders, POP3 and IMAP, is SPAM aware and incorporates a WYSIWYG editor
+for Email composition. It supports multiple languages as well as
+multiple themes (or "skins").
+
+Telaen is free software distributed under GPL terms; see www.gnu.org for
+more informations. You can use or redistribute this software, but need to
+preserve the credits of author.
 
 Telaen was originally based on Uebimiau.
 
-We recommend that you read the other documents in
-the docs/ subdirectory, especially the CHANGELOG.txt
-and INSTALL.txt files.
+We recommend that you read the other documents in the docs/ subdirectory,
+especially the CHANGELOG.txt and INSTALL.txt files.
 
 ----------------------------------------------------
 DEVELOPER
@@ -44,7 +49,8 @@ FEATURES/REQUIREMENTS
 - Auto population of SPAM folder for tagged SPAM messages
 
 * Planned
-- Database support
+- Optional database support
+- Plugin API
 
 * NOT Planned
 ----------------------------------------------------
