@@ -1301,6 +1301,8 @@ class Telaen extends Telaen_core {
 		$this->mail_connect();
 		if ($this->mail_protocol == "pop3") {
 			$this->mail_send_command("CAPA");
+			$buffer = $this->mail_get_line();
+                        if (substr($buffer, 0, 3) == "+OK") {
                                while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
 					$buffer = trim($buffer);
@@ -1309,6 +1311,7 @@ class Telaen extends Telaen_core {
 					$key = preg_replace('/\s+/', "_", $buffer);
 					$capa[$key] = 1;
                                }
+			}
 		}
 		$this->mail_disconnect();
 		return ($capa);
