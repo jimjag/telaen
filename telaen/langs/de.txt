@@ -1,51 +1,48 @@
-# *************** GLOBAL VARS ***************#
-# ADDS for Telaen 1.1.0 BY guido@lokietek.de #
-# GERMAN TRANSLATION BY TITUS.HANKE@WEB.DE   #
-# POLITE FORM ( )      CASUAL FORM (XX)      #
-# *******************************************#
+#
+# German Language Translation update ready for Telaen 1.1.3
+# Original based on Guilokie German Translationfile
+#
 
 # User-friendly names to system folders      
 
 inbox_extended				         = Posteingang
 sent_extended				           = Gesendete Objekte
 trash_extended				         = Gelöschte Objekte
-spam_extended				           = Junk-E-Mail
+spam_extended				           = Spam E-Mail
 
 # Navigation texts
 
 previous_text				           = Nächste Nachricht
 next_text					             = Vorherige Nachricht
-pages_text                                      = Pages
-first_text                                      = First
-last_text                                       = Last
-total_text                                      = Total
-
-
+pages_text                     = Seiten
+first_text                     = Erste
+last_text                      = Letzte
+total_text                     = Total
 
 # Mail Server Errors
 
-err_login_msg                                   = Login error
-err_system_msg                                  = System error
-error_login                                     = Please check your username or password and try again
-error_connecr				        = Keine Verbindung zum Server!
-error_retrieving				= Konnte Deine Nachrichten nicht abrufen!
-error_other				        = Bitte kontaktiere den Administrator
+err_login_msg                  		= Anmeldungsfehler
+err_system_msg                 		= Systemfehler
+error_login                    		= Bitte prüfen Sie ihren Benutzernamen und das Kennwort und versuchen Sie es erneut
+error_connecr				           = Keine Verbindung zum Server!
+error_retrieving				       = Konnte Ihre Nachrichten nicht abrufen!
+error_other				             = Bitte kontaktieren Sie den Administrator
 
 # Invalid name of mailbox
 
-error_invalid_name				     = Ungültiger Ordnername. Gültige Zeichen: A-Z, 0-9, .- und or Leerzeichen
+error_invalid_name				     = Ungültiger Ordnername. Gültige Zeichen sind: A-Z, 0-9, .- und oder Leerzeichen
 
 # Validations when sending mails            ;
 
 error_no_recipients				     = Bitte mindestens eine Empfängeradresse angeben
-error_compose_invalid_mail1_s	 = Diese Email scheint fehlerhaft zu sein
-error_compose_invalid_mail1_p	 = Die folgenden Emails scheinen fehlerhaft zu sein
+error_compose_invalid_mail1_s	 = Diese E-Mail scheint fehlerhaft zu sein
+error_compose_invalid_mail1_p	 = Die folgenden E-Mails scheinen fehlerhaft zu sein
 error_compose_invalid_mail2_s	 = FEHLER!
 error_compose_invalid_mail2_p	 = FEHLER!
 
 # Confirmation of delete                    ;
 
-confirm_delete				         = Möchtest Du diese Nachricht wirklich löschen?
+confirm_delete				         = Möchten Sie diese Nachricht wirklich löschen?
 
 # If the message no have a subject or sender;
 
@@ -55,7 +52,7 @@ no_recipient_text				       = [Empfänger unbekannt]
 
 # If the quota limit was exceeded           ;
 
-quota_exceeded				         = Leider ist Dein Speicherplatz erschöpft. Bitte lösche ein paar Emails, bevor Du weitermachst.
+quota_exceeded				         = Leider ist Ihr Speicherplatz erschöpft. Bitte löschen Sie nicht benötigte E-Mails, bevor Sie fortfahren.
 quota_usage_info				       = Speicherlimit
 quota_usage_used				       = verwendet
 quota_usage_of				         = von
@@ -68,7 +65,7 @@ quota_usage_avail				       = verfügbar
 # for a complete list, see http://www.php.net/strftime     #
 #**********************************************************#
 
-date_format 				           = %d/%m/%y %H:%M
+date_format 				           = %d.%m.%Y - %H:%M
 
 # CharSet                                                 ;
 
@@ -81,8 +78,9 @@ folders_mnu				             = Ordner
 search_mnu		         			   = Suchen
 address_mnu			         		   = Kontakte
 empty_trash_mnu			         	 = "Gelöschte Objekte" leeren
+help_mnu                       = Hilfe
 prefs_mnu				         	     = Einstellungen
-logoff_mnu 			         		   = Logout
+logoff_mnu 			         		   = Abmelden
 
 reply_prefix				           = AW:
 forward_prefix				         = WG:
@@ -92,19 +90,19 @@ reply_from_hea				         = Von:
 reply_to_hea				           = An:
 reply_cc_hea				           = Cc:
 reply_date_hea				         = Datum:
-reply_subject_hea				       = Betreff:
+reply_subject_hea				= Betreff:
 
 # page-specific vars
 [Headers]
 
-key_hea					               = Schlüssel
-value_hea					             = Wert
+key_hea						= Schlüssel
+value_hea					= Wert
 
 [Folders]
 
 fld_name_hea				           = Ordner
 fld_messages_hea				       = Nachrichten
-fld_size_hea				           = Gr.
+fld_size_hea				           = Größe
 fld_empty_hea				           = Leeren
 fld_delete_hea				         = Löschen
 fld_total					             = Gesamt:
@@ -114,7 +112,7 @@ folders_to					           = Ordner von
 [MessageList]
 
 messages_to				             = Nachrichten von
-no_messages				             = Im Augenblick hast Du keine Nachrichten in Deinem Postfach
+no_messages				             = Es sind keine neuen Nachrichten in ihrem Ordner
 delete_selected_mnu			       = Markierte löschen
 move_selected_mnu		           = Markierte verschieben
 mark_selected_mnu         	   = Markiere als gelesen
@@ -127,9 +125,9 @@ from_hea					             = Von
 to_hea					               = An
 date_hea					             = Datum
 size_hea					             = Gr.
-have_spam						           = Sie haben Junk-E-Mails (Bitte den Junk-E-Mail Ordner kontrollieren)
+have_spam						           = Sie haben Spam E-Mails (Bitte den Spam E-Mail Ordner kontrollieren)
 
-msg_you_have				           = Du hast
+msg_you_have				           = Sie haben
 msg_message				             = Nachricht
 msg_messages				           = Nachrichten
 
@@ -146,14 +144,14 @@ lng_user_email				         = E-Mail
 lng_user_name				           = Benutzername
 lng_user_pwd				           = Kennwort
 lng_theme				               = Thema
-lng_language				           = Language
-lng_login_btn				           = Einloggen &gt;&gt;
+lng_language				           = Sprache
+lng_login_btn				           = Anmelden &gt;&gt;
 lng_cookie_not_enabled				 = Cookies müssen aktiviert sein
 lng_cookie_not_valid				   = Cookie Sicherheitsprüfung fehlgeschlagen
 
 [Newmessage]
 
-newmsg_title					= Neue nachricht
+newmsg_title					         = Neue Nachricht
 
 to_hea					               = An:
 cc_hea					               = Cc:
@@ -164,18 +162,18 @@ address_tip				             = Vom Adressbuch
 attach_hea				             = Dateianhang:
 attch_add_new				           = Datei auswählen
 attch_name_hea				         = Name
-attch_size					           = Gr.
+attch_size					           = Größe
 attch_type_hea				         = Typ
 attch_dele_hea				         = Entfernen
 attch_no_hea				           = Kein Dateianhang
 
-require_receipt                                 = Empfangsbestätigung
+require_receipt                = Empfangsbestätigung
 
 add_signature				           = Signatur hinzufügen
 send_text					             = Senden
 
-result_error				           = FEHLER: Diese Email konnte nicht versandt werden.
-result_success				         = Deine Nachricht wurde erfolgreich verschickt.
+result_error				           = FEHLER: Diese E-Mail konnte nicht versandt werden.
+result_success				         = Ihre Nachricht wurde erfolgreich verschickt.
 nav_continue				           = HIER KLICKEN!
 nav_back					             = Zurück
 
@@ -190,7 +188,7 @@ priority_high				           = Hoch
 
 [AdvancedEditor]
 
-adv_warning_text_mode1			   = Bitte wähle 
+adv_warning_text_mode1			   = Bitte wählen 
 adv_warning_text_mode2			   = um die Toolbar zu verwenden
 
 adv_type_path				           = Setze die URL:
@@ -226,50 +224,50 @@ priority_text				           = Dringlichkeit
 [BadLogin]
 
 bdl_title					             = Anmeldefehler 
-bdl_msg					               = Du kannst Dich mit dieser Benutzername/Passwort Kombination nicht einloggen.<br><br>Bitte überprüfe die Zugangsdaten und versuche es noch einmal.
+bdl_msg					               = Sie können sich mit dieser Benutzername und Kennwort Kombination nicht anmelden.<br><br>Bitte überprüfen Sie die Zugangsdaten und versuchen Sie es erneut.
 bdl_back					             = Zurück
 
 [Error]
 
 err_title					             = Es sind Fehler aufgetreten
-err_msg					               = Beim Einloggen sind Fehler aufgetreten.<br><br>Bitte noch einmal einloggen.
-err_system_msg				         = Systemmitteilung: 
+err_msg					               = Beim Anmelden sind Fehler aufgetreten.<br><br>Bitte erneut anmelden.
+err_system_msg				         = Systemmeldung: 
 err_exit					             = Abmelden
 
 [Preferences]
 
 prf_title 					           = Einstellungen
 prf_general_title				       = Allgemeine Einstellungen
-prf_name					             = Name
-prf_reply_to				           = Antwortadresse
-prf_time_zone				           = Zeitzone
-prf_trash_title				         = Papierkorb
-prf_save_to_trash				       = Wenn Du eine Nachricht löschst, dann <b>verschiebe</b> diese Mitteilung in den  
-prf_save_only_read				     = Nur <b>gelesene Nachrichten</b> in den Papierkorb verschieben
-prf_empty_on_exit				       = <b>Papierkorb leeren</b>, nach dem Abmelden.
+prf_name					             = Name:
+prf_reply_to				           = Antwortadresse:
+prf_time_zone				           = Zeitzone:
+prf_trash_title				         = Gelöschte Objekte
+prf_save_to_trash				       = Wenn Sie eine Nachricht löschen, dann <b>verschiebe</b> diese Nachricht in den Ordner 
+prf_save_only_read				     = Nur <b>gelesene Nachrichten</b> verschieben nach Ordner
+prf_empty_on_exit				       = Ordner <b>Gelöschte Objekte</b>, nach dem Abmelden leeren.
 prf_sent_title				         = Gesendete Objekte
-prf_empty_spam_on_exit			   = <b>Junk-E-Mail Ordner leeren</b> nach dem Abmelden.
-prf_unmark_read_on_exit			   = Gelesene Nachrichten nach dem Abmelden wieder als Ungelesen markieren
-prf_save_sent				           = <b>Gesendete Objekte </b> in den Ordner Gesendete Objekte verschieben.
+prf_empty_spam_on_exit			   = <b>Spam E-Mail Ordner</b> nach dem Abmelden leeren.
+prf_unmark_read_on_exit			   = <b>Gelesene Nachrichten</b> nach dem Abmelden wieder als ungelesen markieren
+prf_save_sent				           = <b>Gesendete Nachrichten</b> verschieben nach Ordner
 prf_messages_title				     = Nachrichten
-prf_page_limit				         = Max. Nachrichten pro Seite (je weniger, desto schneller der Ladevorgang)
+prf_page_limit				         = <b>Maximal</b> angezeigte Nachrichten pro Seite
 prf_signature_title				     = Signatur
-prf_signature				           = Erstelle Deine Signatur
-prf_auto_add_sign				       = Signatur allen ausgehenden Nachrichten anhängen
+prf_signature				           = Erstellen Sie ihren <b>Signaturtext</b>
+prf_auto_add_sign				       = Signatur allen ausgehenden Nachrichten einfügen
 prf_save_button				         = Speichern
-prf_display_images				     = Bilder in Anlagen in der Email anzeigen
-prf_default_editor_mode			   = Editiermodus für neue Emails
+prf_display_images				     = Angehängte <b>Bilder</b> in der E-Mail anzeigen
+prf_default_editor_mode			   = Editiermodus für neue E-Mails:
 prf_default_editor_mode_text	 = "Reiner Textmodus"
-prf_default_editor_mode_html	 = "Word-Ähnlicher HTML editor (nur für IE5 oder höher)"
-prf_time_to_refesh				     = Posteingang alle x Minuten aktualisieren
-prf_spam_level					       = Junk-E-Mail Schwellwert (0 = Deaktiviert, 1 = sehr hoch, 9 = sehr niedrig)
+prf_default_editor_mode_html	 = "Erweiterter HTML Editor"
+prf_time_to_refesh				     = <b>Posteingang</b> alle x Minuten aktualisieren
+prf_spam_level					       = <b>Spam Schwellenwert</b> (0 = Deaktiviert, 1 = sehr hoch, 9 = sehr niedrig)
 
 [Catch]
 
 ctc_title					             = Zum Adressbuch hinzufügen
-ctc_information				         = Nur Emails anzeigen, die auch im Adressbuch sind
+ctc_information				         = Nur E-Mails anzeigen, die auch im Adressbuch angelegt sind
 ctc_name					             = Name
-ctc_email					             = E-mail
+ctc_email					             = E-Mail
 ctc_no_address				         = Keine Adresse vorhanden
 ctc_close					             = Schließen
 ctc_save					             = Speichern
@@ -286,7 +284,7 @@ headers_mnu				             = Kopf-Bereich
 move_mnu				               = Verschieben
 delete_mnu				             = Entfernen
 print_mnu					             = Drucken
-download_mnu                                    = Download
+download_mnu                   = Herunterladen
 
 
 from_hea					             = Von:
@@ -294,26 +292,26 @@ to_hea					               = An:
 cc_hea									       = Cc:
 date_hea					             = Datum:
 subject_hea				             = Betreff:
-attach_hea				             = Dateianlage:
+attach_hea				             = Dateianhang:
 
 attch_name_hea				         = Name
-attch_force_hea				         = Download
+attch_force_hea				         = Herunterladen
 attch_type_hea				         = Typ
 attch_size_hea				         = Gr.
 catch_address				           = Zum Adressbuch hinzufügen
 
 [Search]
 
-sch_title					= Search
+sch_title					             = Search
 
-sch_information_text				= Bitte Suchbegriff eingeben.<br>  
-sch_button_text				        = Suche &gt;&gt;
-sch_subject_hea				        = Betreff
-sch_from_hea				        = Absender
-sch_date_hea				        = Datum
-sch_body_hea				        = Im Text
-sch_folder_hea				        = Ordner
-sch_no_results					= Es wurden keine Nachrichten gefunden, die den Suchkriterien entsprechen.
+sch_information_text				   = Bitte Suchbegriff eingeben.<br>  
+sch_button_text				         = Suche &gt;&gt;
+sch_subject_hea				         = Betreff
+sch_from_hea				           = Absender
+sch_date_hea				           = Datum
+sch_body_hea				           = Im Text
+sch_folder_hea				         = Ordner
+sch_no_results					       = Es wurden keine Nachrichten gefunden, die den Suchkriterien entsprechen.
 
 [QuickAddress]
 
@@ -328,19 +326,19 @@ qad_bcc					               = Bcc
 # edit/display
 
 adr_title					             = Addressbuch
-adr_name					             = Name
-adr_email					             = E-mail
-adr_street					           = Straße
-adr_city					             = Stadt
-adr_state					             = Bundesland
-adr_work					             = Telefon
+adr_name					             = Name:
+adr_email					             = E-Mail:
+adr_street					           = Straße:
+adr_city					             = Stadt:
+adr_state					             = Bundesland:
+adr_work					             = Telefon:
 adr_back					             = Zurück
 adr_save					             = Speichern
 
 # list
 
 adr_name_hea				           = Name
-adr_email_hea				           = E-mail
+adr_email_hea				           = E-Mail
 adr_edit_hea				           = Bearbeiten
 adr_expo_hea				           = Exportieren
 adr_dele_hea				           = Entfernen
@@ -354,9 +352,9 @@ addr_deleted				           = Der Kontakt wurde entfernt.
 [BlockSender]
 
 blk_title					             = Absender blockieren
-blk_information				         = Nur E-Mails an zeigen die bisher nicht gefiltert werden
+blk_information				         = Nur E-Mails anzeigen die bisher nicht gefiltert werden
 blk_email					             = E-Mail
 blk_no_address				         = Keine Adresse verfügbar
-blk_close					             = Schliessen
+blk_close					             = Schließen
 blk_save					             = Speichern
 

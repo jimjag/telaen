@@ -264,7 +264,7 @@ if(count($anexos) > 0) {
 			else
 				$anexos[$i]["normlink"] = "<a href=\"$link1\" target=\"_new\">";
 
-			$anexos[$i]["downlink"] = "<a href=\"$link2\" target=\"_new\">";
+			$anexos[$i]["downlink"] = "<a href=\"$link2\">";
 			$anexos[$i]["size"] = ceil($anexos[$i]["size"]/1024);
 			$anexos[$i]["type"] = $anexos[$i]["content-type"];
 			$attachAr[] = $anexos[$i];

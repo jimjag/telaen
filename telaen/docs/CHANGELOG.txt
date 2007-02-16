@@ -16,6 +16,16 @@ CHANGELOG:
 Telaen:
 =======
 
+1.1.3
+
+[Fix]	Added check for on CAPA detection, avoid hangs when command 
+	is not supported.
+
+[Fix]	Removed target->new on attach download (not open), causes blank
+	window remains open on IE.
+
+[New]	de lang up-to-date
+
 1.1.3-rc1:
 
 [Fix]   check_install.php(.txt) now correctly checks memory_limit
