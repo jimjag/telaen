@@ -12,7 +12,7 @@ Telaen is a GPL'ed software developed by
 # "X-Mailer" field, footer
 ########################################################################
 
-$appversion = "1.1.3-rc1";
+$appversion = "1.1.3-rc2";
 $appname = "Telaen Webmail";
 
 ?>
