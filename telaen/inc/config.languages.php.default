@@ -8,6 +8,8 @@ $default_theme						= 0; //index of theme, starting with zero
 $allow_user_change_language			= yes; //allow users select language
 $default_language					= 5; //index of language, starting with zero
 
+# Themes
+
 $themes[] = Array(
 	"name" 		=> "Telaen Default",
 	"path" 		=> "default"
@@ -18,6 +20,12 @@ $themes[] = Array(
         "path"          => "hungi.mozilla"
 );
 
+$themes[] = Array(
+        "name"          => "Outlook",
+        "path"          => "outlook"
+);
+
+# Languages
 
 $languages[] = Array(
 	"name" 		=> "Bulgarian",
@@ -91,6 +99,10 @@ $languages[] = Array(
         "path"          => "ko"
 );
 
+$languages[] = Array(
+        "name"          => "Malay",
+        "path"          => "ms"
+);
 
 $languages[] = Array(
 	"name" 		=> "Norwegian",

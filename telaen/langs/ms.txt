@@ -1,0 +1,341 @@
+#
+# Malay by mrmuzzo 21.02.2007 - updated for telaen 1.1.3
+#
+
+
+# User-friendly names to system folders
+inbox_extended					= Peti Emel
+sent_extended					= Item dihantar
+trash_extended					= Trash
+spam_extended					= Folder Spam 
+
+# Navigation texts
+pages_text					= Muka Surat
+first_text 					= Mula
+previous_text					= Sebelum
+next_text					= Selepas
+last_text					= Akhir
+total_text					= Jumlah
+
+# Mail Server Errors
+err_login_msg					= Masalah Login
+err_system_msg					= Masalah Sistem
+error_login 					= Sila semak pengguna atau kata laluan anda dan cuba lagi
+error_connect					= Terdapat Masalah berhubung dengan Server Emel
+error_retrieving				= Terdapat Masalah mendapatkan emel anda, Peti Emel anda telah berubah
+error_other					= Sistem tidak berfungsi dengan baik, sila hubungi UPTM (095129425)
+
+# Invalid name of mailbox
+error_invalid_name				= Nama folder tidak sah - Gunakan characters berikut  A-Z, a-z, 0-9, and -
+
+# Validations when sending mails
+error_no_recipients		= Kesalahan: Anda perlu ada sekurangnya satu penerima emel!
+error_compose_invalid_mail1_s	= Kesalahan: Alamat emel ini tidak sah
+error_compose_invalid_mail1_p	= Kesalahan: Alamat-alamat emel ini tidak sah
+error_compose_invalid_mail2_s	= Semak alamat emel tersebut sebelum menghantar semula.
+error_compose_invalid_mail2_p	= Semak alamat emel tersebut sebelum menghantar semula.
+
+# Confirmation of delete
+confirm_delete					= Adakah anda ingin membuang emel ini?
+
+# If the message no have a subject or sender
+no_subject_text					= [Tiada Tajuk]
+no_sender_text					= [Penghantar tidak diketahui]
+no_recipient_text				= [Penerima tidak diketahui]
+
+# If the quota limit was exceeded
+quota_exceeded					= Peti Emel anda tidak cukup kuota untuk melakukan fungsi ini\nSila buang sebahagian emel anda untuk meneruskan fungsi tersebut
+quota_usage_info				= Tahap Kuota
+quota_usage_used				= Digunakan
+quota_usage_of					= daripada
+quota_usage_avail				= yang peruntukkan
+
+#********************************************************#
+# Date Format                                            #
+# %d = day, %m = month, %y = year, %H = hour, %M = minutes    #
+# for a complete list, see http://www.php.net/strftime       #
+#********************************************************#
+date_format 					= %d/%m/%y %H:%M
+
+# CharSet 
+default_char_set				= iso-8859-1
+
+# Menu
+messages_mnu					= Peti Emel
+read_menu					= Baca Emel(s)
+compose_mnu					= Tulis Emel
+refresh_mnu					= Refresh
+folders_mnu					= Folders
+search_mnu					= Carian
+address_mnu					= Buku Alamat
+empty_trash_mnu					= Empty trash
+prefs_mnu					= Utiliti
+logoff_mnu 					= Keluar
+
+# Reply
+reply_prefix					= Re:
+forward_prefix					= Fw:
+reply_delimiter					= --------- Original Message --------
+reply_from_hea					= Daripada:
+reply_to_hea					= Kepada:
+reply_cc_hea					= Cc:
+reply_date_hea					= Tarikh:
+reply_subject_hea				= Tajuk Emel:
+# done
+
+
+# page-specific vars
+
+[Headers]
+key_hea							= Key
+value_hea						= Value
+
+[Folders]
+fld_name_hea					= Folder
+fld_messages_hea				= Messages
+fld_size_hea					= Saiz
+fld_empty_hea					= Empty
+fld_delete_hea					= Padam
+fld_total					= Jumlah:
+fld_make_new					= Cipta folder baru
+folders_to					= Folders kepada
+
+[MessageList]
+messages_to					= Emel kepada 
+no_messages					= Tiada Emel di dalam 
+delete_selected_mnu				= Padam 
+move_selected_mnu				= Pindah ke
+mark_selected_mnu         			= Tanda Telah dibaca
+unmark_selected_mnu      			= Tanda Belum dibaca
+move_selected_to_trash_mnu			= Pindah ke Trash
+
+
+delete_mnu						= Padam
+move_mnu						= Pindah ke
+subject_hea					= Tajuk Emel
+from_hea						= Penghantar Emel
+to_hea						= Kepada
+date_hea						= Tarikh
+size_hea						= Saiz
+have_spam						= You have Spam (check Spam folder)
+
+msg_you_have					= Anda menerima
+msg_message					= emel
+msg_messages					= emel
+
+msg_more_unread					= tidak dibaca
+msg_one_unread					= tidak dibaca
+msg_none_unread					= tiada belum dibaca
+msg_in_the_folder				= di dalam folder
+
+
+[Login]
+lgn_title					= Login
+lgn_welcome_msg					= Selamat Datang, Sila Masukkan Pengguna dan Kata Laluan Anda
+lng_user_email					= Emel
+lng_user_name					= Pengguna
+lng_user_pwd					= Kata Laluan
+lng_server					= Server
+lng_theme					= Theme
+lng_language					= Language
+lng_login_btn					= Masuk &gt;&gt;
+lng_cookie_not_enabled				= Cookies must be enabled
+lng_cookie_not_valid				= Cookie Security Check Failed
+
+[Newmessage]
+
+newmsg_title					= Tulis Emel
+
+to_hea						= Kepada:
+cc_hea						= Cc:
+bcc_hea						= Bcc:
+subject_hea					= Tajuk Emel:
+address_tip					= Daripada Buku Alamat
+
+attach_hea					= Lampiran:
+attch_add_new					= Attach fail baru
+attch_name_hea					= Nama
+attch_size						= Saiz
+attch_type_hea					= Jenis
+attch_dele_hea					= Padam
+attch_no_hea					= Tiada Lampiran
+
+add_signature					= Masukkan Tandatangan
+send_text					= Hantar
+
+result_error					= Emel ini tidak boleh dihantar
+result_success					= Emel ini telah dihantar
+nav_continue					= &lt;&lt; Sambung &gt;&gt;
+nav_back					= Kembali
+
+up_title 					= Tambah Fail
+up_information_text				= Pilih fail
+up_button_text					= Attach file
+
+require_receipt					= Makluman Emel dibaca
+
+priority_text					= Keutamaan
+priority_low					= Kurang Penting
+priority_normal					= Biasa
+priority_high					= Penting
+
+[AdvancedEditor]
+adv_warning_text_mode1			= Sila buangkan pilihan anda
+adv_warning_text_mode2			= untuk menggunakan toolbar
+
+adv_type_path					= Sila Taip URL:
+
+format_paragraph				= Paragraph
+format_h1						= Style 1 <H1>
+format_h2						= Style 2 <H2>
+format_h3						= Style 3 <H3>
+format_h4						= Style 4 <H4>
+format_h5						= Style 5 <H5>
+format_h6						= Style 6 <H6>
+format_pre						= Formatted <PRE>
+format_clear_all				= Clear all
+
+format_font						= Font
+format_size						= Saiz
+
+format_color					= Colour
+format_back						= Background
+color_red						= Red
+color_blue						= Blue
+color_green						= Green
+color_black						= Black
+color_yellow					= Yellow
+color_white						= White
+
+view_source						= View HTML source
+text_mode						= Text mode
+clear_format					= Clear format
+
+priority_text					= Keutamaan
+
+[BadLogin]
+bdl_title						= Kesalahan Login 
+bdl_msg							= Anda tidak boleh login menggunakan Pengguna dan Kata Laluan yang dimasukkan.<br><br>Sila semak Pengguna dan Kata Laluan anda dan cuba lagi.
+bdl_back						= Cuba Lagi
+
+[Error]
+err_title						= Terdapat beberapa masalah
+err_msg							= Terdapat masalah dalam proses kemasukan sistem<br><br>Sila login semula
+err_system_msg					= Mesej Sistem: 
+err_exit						= Keluar
+
+[Preferences]
+prf_title 						= Utiliti
+prf_general_title				= Maklumat Asas
+prf_name						= Nama
+prf_reply_to					= Balas kepada
+prf_time_zone					= Time zone
+prf_trash_title					= Trash
+prf_save_to_trash				= Apabila anda <b>padam</b> emel anda, pindahkannya ke 
+prf_save_only_read				= Simpan hanya <b>Emel dibaca</b> di dalam 
+prf_empty_on_exit				= <b>Kosongkan</b> trash folder apabila anda keluar
+prf_empty_spam_on_exit				= <b>Kosongkan</b> Spam folder apabila anda keluar
+prf_unmark_read_on_exit				= Reset EMEL TELAH DIBACA kepada BELUM DIBACA apabila anda keluar
+prf_sent_title					= Sent items
+prf_save_sent					= Simpan <b>Emel dihantar</b> di dalam 
+prf_messages_title				= Emel
+prf_page_limit					= Maksimum paparan senarai emel diterima setiap muka surat
+prf_signature_title				= Tandatangan
+prf_signature					= Taipkan tandatangan anda
+prf_auto_add_sign				= Masukkan tandatangan anda ke dalam setiap emel yang dihantar 
+prf_save_button					= Simpan
+prf_display_images				= Paparkan gambar attached
+prf_default_editor_mode			= Default edit mode
+prf_default_editor_mode_text			= "Plain text"
+prf_default_editor_mode_html			= "Advanced HTML editor"
+prf_time_to_refesh				= Semak Emel baru secara automatik (minit)
+prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+[Catch]
+ctc_title					= Tambah ke Buku Alamat
+ctc_information					= Hanya paparkan Alamat Emel yang tiada di dalam Buku Alamat
+ctc_name					= Nama
+ctc_email					= Emel
+ctc_no_address					= Tiada Alamat Emel diperolehi
+ctc_close					= Tutup
+ctc_save					= Simpan
+
+[Readmsg]
+next_mnu					= Selepas
+previous_mnu					= Sebelum
+back_mnu					= Kembali
+reply_mnu					= Balas
+reply_all_mnu					= Balas kepada Semua
+forward_mnu					= Forward
+headers_mnu					= Header
+move_mnu					= Pindah ke
+move_to_trash_mnu				= Pindah ke Trash
+delete_mnu					= Padam
+print_mnu					= Cetak
+download_mnu					= Muat Turun
+
+from_hea					= Daripada:
+to_hea						= Kepada:
+cc_hea							= Cc:
+date_hea						= Tarikh:
+subject_hea						= Tajuk Emel:
+attach_hea						= Lampiran:
+
+attch_name_hea					= Nama
+attch_force_hea					= Muat Turun
+attch_type_hea					= Jenis
+attch_size_hea					= Saiz
+catch_address					= Tambah ke dalam Buku Alamat
+block_address					= Halang alamat
+
+[Search]
+sch_title					= Carian
+sch_information_text				= Taipkan ayat atau perkataan yang anda cari.<br> Hanya Emel yang dimabaca akan dicari.
+sch_button_text					= Carian &gt;&gt;
+sch_subject_hea					= Tajuk Emel
+sch_from_hea					=Alamat Emel Penghantar
+sch_date_hea					= Tarikh
+sch_body_hea					= Isi Emel
+sch_folder_hea					= Folder
+sch_no_results					= Tiada Emel yang bersamaan berdasarkan kriteria carian anda ditemui
+
+[QuickAddress]
+qad_title 					= Buku Alamat
+qad_select_address				= Sila Pilih Contact
+qad_to						= Kepada
+qad_cc						= Cc
+qad_bcc						= Bcc
+
+[AddressBook]
+# edit/display
+adr_title						= Buku Alamat
+adr_name						= Nama
+adr_email						= Emel
+adr_street						= Alamat
+adr_city						= Bandar
+adr_state						= Negeri
+adr_work						= Pekerjaan
+adr_back						= Kembali
+adr_save						= Simpan
+
+# list
+adr_name_hea					= Nama
+adr_email_hea					= Emel
+adr_edit_hea					= Kemaskini
+adr_expo_hea					= Export
+adr_dele_hea					= Padam
+adr_new_entry					= Contact Baru
+
+addr_saved						= Contact telah disimpan
+addr_added						= Contact telah ditambah
+addr_deleted					= Contact telah dipadam
+
+
+[BlockSender]
+blk_title						= Block penghantar
+blk_information					= Hanya papar emel yang belum di tapis
+blk_email						= Emel
+blk_no_address					= Tiada Alamat Emel
+blk_close						= Tutup
+blk_save						= Simpan
+

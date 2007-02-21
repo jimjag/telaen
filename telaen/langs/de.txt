@@ -1,7 +1,7 @@
 #
 # German Language Translation update ready for Telaen 1.1.3
-# Original based on Guilokie German Translationfile
-#
+# Original based on Guilokie´s German Translationfile
+# 
 
 # User-friendly names to system folders      
 
@@ -21,9 +21,9 @@ total_text                     = Total
 
 # Mail Server Errors
 
-err_login_msg                  		= Anmeldungsfehler
-err_system_msg                 		= Systemfehler
-error_login                    		= Bitte prüfen Sie ihren Benutzernamen und das Kennwort und versuchen Sie es erneut
+err_login_msg                  = Anmeldungsfehler
+err_system_msg                 = Systemfehler
+error_login                    = Bitte prüfen Sie ihren Benutzernamen und das Kennwort und versuchen Sie es erneut
 error_connecr				           = Keine Verbindung zum Server!
 error_retrieving				       = Konnte Ihre Nachrichten nicht abrufen!
 error_other				             = Bitte kontaktieren Sie den Administrator
@@ -77,7 +77,7 @@ refresh_mnu				             = Aktualisieren
 folders_mnu				             = Ordner
 search_mnu		         			   = Suchen
 address_mnu			         		   = Kontakte
-empty_trash_mnu			         	 = "Gelöschte Objekte" leeren
+empty_trash_mnu			         	 = Gelöschte Objekte leeren
 help_mnu                       = Hilfe
 prefs_mnu				         	     = Einstellungen
 logoff_mnu 			         		   = Abmelden
@@ -90,13 +90,13 @@ reply_from_hea				         = Von:
 reply_to_hea				           = An:
 reply_cc_hea				           = Cc:
 reply_date_hea				         = Datum:
-reply_subject_hea				= Betreff:
+reply_subject_hea				       = Betreff:
 
 # page-specific vars
 [Headers]
 
-key_hea						= Schlüssel
-value_hea					= Wert
+key_hea					               = Schlüssel
+value_hea					             = Wert
 
 [Folders]
 
@@ -124,7 +124,7 @@ subject_hea				             = Betreff
 from_hea					             = Von
 to_hea					               = An
 date_hea					             = Datum
-size_hea					             = Gr.
+size_hea					             = Größe
 have_spam						           = Sie haben Spam E-Mails (Bitte den Spam E-Mail Ordner kontrollieren)
 
 msg_you_have				           = Sie haben
@@ -139,7 +139,7 @@ msg_in_the_folder				       = im Ordner
 [Login]
 
 lgn_title					             = Anmelden
-lgn_welcome_msg				         = Webmail
+lgn_welcome_msg				         = Willkommen, bitte melden Sie sich an
 lng_user_email				         = E-Mail
 lng_user_name				           = Benutzername
 lng_user_pwd				           = Kennwort
@@ -280,7 +280,7 @@ back_mnu				               = Zurück
 reply_mnu					             = Antworten
 reply_all_mnu				           = Allen antworten
 forward_mnu				             = Weiterleiten
-headers_mnu				             = Kopf-Bereich
+headers_mnu				             = E-Mail Header
 move_mnu				               = Verschieben
 delete_mnu				             = Entfernen
 print_mnu					             = Drucken
