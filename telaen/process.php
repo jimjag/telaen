@@ -106,22 +106,31 @@ if( !is_array($headers)
 					$j++;
 				}
 			}
+
 			/*
-			 * If a previous page deleted or moved mails, we have to
-			 * force a disconnect if a POP3 proxy server is used. Else
-			 * our internal list does not match what we got on the server.
+			 * With Imap we need to expunge ALWAYS when move or delete,
+			 * because all the folders are on server. 
 			 */
-			if ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam) {
-				if ($mail_use_forcedquit) {
-					$UM->mail_disconnect_force();
-					mail_connect();
-				} else {
-					$UM->mail_disconnect();
-					mail_connect();
-				}
+			if ($UM->mail_protocol == "imap" && $expunge) {
+				$UM->mail_expunge();
 			}
 
+			/*
+			 * With Pop3 do a reconnect for expunge the deleted messages,
+			 * but only if we are working on inbox or spam folders. Else
+			 * our internal list does not match what we got on the server.
+			 */
+			if ($UM->mail_protocol == "pop3" && $expunge 
+				&& ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
 			
+				if ($mail_use_forcedquit) {
+					$UM->mail_disconnect_force();					
+				} else {
+					$UM->mail_disconnect();					
+				}
+				mail_connect();
+			}
+						
 			$num = 20;
 			
 			if ($expunge && ($messagecount > $num || (count($delarray) - $deletecount > $num))) {
