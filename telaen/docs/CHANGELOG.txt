@@ -24,6 +24,9 @@ Telaen:
 
 [New] 	Included Outlook theme into package
 
+[Fix]	Solved bug with imap when move or delete multiple message
+        only one was moved or deleted.
+
 1.1.3-rc2:
 
 [Fix]	Added check for on CAPA detection, avoid hangs when command 

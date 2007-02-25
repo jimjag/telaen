@@ -1,7 +1,7 @@
 #---------------------------------------------------------------#
-# Brazilian Portugues language file for Telaen v1.1.1           #
+# Brazilian Portugues language file for Telaen v1.1.3           #
 # Thanks to Claudio Oliveira for the update			#
-# Last edit: 19 Sept 2006                                       #
+# Last edit: 22 Feb 2007                                        #
 #---------------------------------------------------------------#
 
 
@@ -28,9 +28,9 @@ total_text                                      = Total
 
 # Mail Server Errors
 
-err_login_msg                                   = Login error
-err_system_msg                                  = System error
-error_login                                     = Please check your username or password and try again
+err_login_msg                                   = Erro de Login
+err_system_msg                                  = Erro de Sistema
+error_login                                     = Por favor verifique Usuário ou Senha e tente novamente
 error_connect					= Não foi possível conectar ao servidor
 error_retrieving				= Não foi possível receber a mensagem, houveram modificações em sua caixa postal
 error_other					= Ocorreram falhas no sistema, por favor contate o administrador
