@@ -1319,7 +1319,7 @@ class Telaen extends Telaen_core {
 			$buffer = $this->mail_get_line();
 			list ($resp,$num,$uidl) = explode(" ",$buffer);
 			if ($resp == "+OK") {
-				return $uidl;
+				return md5($uidl);
 			} else {
 				return "";
 			}
