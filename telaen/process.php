@@ -196,7 +196,7 @@ if( !is_array($headers)
 				 */
 				unset ($sess["headers"][$folder_key]);
 				if (count($newarray) > 0) {
-					array_qsort2($newarray,$sortby,$sortorder);
+					// array_qsort2($newarray,$sortby,$sortorder);
 					$sess["headers"][$folder_key] = $newarray;
 				} else {
 					$sess["headers"][$folder_key] = Array();
@@ -219,7 +219,7 @@ if( !is_array($headers)
 					 */
 					unset ($sess["headers"][$other_folder_key]);
 					if (count($newotherarray) > 0) {
-						array_qsort2($newotherarray,$sortby,$sortorder);
+						// array_qsort2($newotherarray,$sortby,$sortorder);
 						$sess["headers"][$other_folder_key] = $newotherarray;
 					} else {
 						$sess["headers"][$other_folder_key] = Array();
