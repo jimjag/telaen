@@ -878,7 +878,7 @@ class Telaen extends Telaen_core {
 					$messagescopy[$j]["localname"] = $this->_get_local_name($messagescopy[$j]["uidl"],$boxname);
 				}
 
-				$messagescopy[$j]["read"] = file_exists($messagescopy[$j]["localname"])?1:0;
+				// $messagescopy[$j]["read"] = file_exists($messagescopy[$j]["localname"])?1:0;
 
 				/* 
 				 * ops, a trick. if the message is not imap, the flags are stored in
@@ -921,7 +921,7 @@ class Telaen extends Telaen_core {
 					$spamcopy[$y]["localname"] = $this->_get_local_name($spamcopy[$y]["uidl"],$boxname);
 				}
 
-				$spamcopy[$y]["read"] = file_exists($spamcopy[$y]["localname"])?1:0;
+				// $spamcopy[$y]["read"] = file_exists($spamcopy[$y]["localname"])?1:0;
 
 				/* 
 				 * ops, a trick. if the message is not imap, the flags are stored in
@@ -958,7 +958,7 @@ class Telaen extends Telaen_core {
 		return $myreturnarray;
 	}
 
-	function _get_local_name($messageid,$boxname) {
+	function _get_local_name($message,$boxname) {
 		if (is_array($message))
 			$flocalname = trim($this->user_folder."$boxname/".md5(trim($message["subject"].$message["date"].$message["message-id"])).".eml");
 		else
