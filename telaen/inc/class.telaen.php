@@ -766,7 +766,10 @@ class Telaen_core {
 		}
 	}
 
-	
+	function is_valid_md5($val) {
+		return preg_match('/^[A-Fa-f0-9]{32}$/',$val);
+	}
+
 	/**
 	Guess all needed information about this mail
 	*/
@@ -826,6 +829,9 @@ class Telaen_core {
 		$myarray["read"] = $headers["x-um-status"];
 		$myarray["x-spam-level"] = $headers["x-spam-level"];
 		$myarray["receipt-to"] = $headers["disposition-notification-to"];
+		$uidl = $headers["x-um-uidl"];
+		if ($this->is_valid_md5($uidl))
+			$myarray["uidl"] = $uidl;
 		unset($headers);
 		return $myarray;
 

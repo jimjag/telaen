@@ -211,7 +211,7 @@ class Telaen extends Telaen_core {
 	}
 	
 	
-	function mail_retr_msg($msg,$check=1) {
+	function mail_retr_msg(&$msg,$check=1) {
 
 		global $mail_use_top,$error_retrieving;
 		$msgheader = $msg["header"];
@@ -265,22 +265,7 @@ class Telaen extends Telaen_core {
 		} else {
 
 			if($check && (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam")) {
-				$this->mail_send_command("TOP ".$msg["id"]." 0");
-				$buffer = $this->mail_get_line();
-
-				if(substr($buffer, 0, 3) != "+OK")  { $this->mail_error_msg = $buffer; return 0; }
-
-				unset($header);
-				
-				
-				while (!feof($this->mail_connection)) {
-					$buffer = $this->mail_get_line();
-					if(chop($buffer) == ".")
-						break;
-					$header .= $buffer;
-				}
-				$mail_info = $this->get_mail_info($header);
-				if(base64_encode($mail_info["message-id"]) != base64_encode($msg["message-id"])) {
+				if ($msg["uidl"] != $this->mail_get_uidl($msg["id"])) {
 					$this->mail_error_msg = $error_retrieving;
 					return 0;
 				}
@@ -305,6 +290,25 @@ class Telaen extends Telaen_core {
 						break;
 					$msgcontent .= $buffer;
 				}
+				$email		= $this->fetch_structure($msgcontent);
+				$header 	= $email["header"];
+				$body	 	= $email["body"];
+				$mail_info = $this->get_mail_info($header);
+
+				// Since we are pulling this message for the first
+				// time from the server, we need to add in our UIDL
+				// header. Thus, it will always now be available on
+				// the cached/local version.
+				$uidl = $this->mail_get_uidl($msg["id"], $mail_info);
+				$header .= "\r\nX-UM-UIDL: $uidl";
+
+				// Update globally
+				$msg["header"]  = $header;
+				$msg["flags"]	= $flags;
+				$msg["uidl"]	= $uidl;
+
+				$msgcontent = "$header\r\n\r\n$body";
+
 				$this->_save_file($msg["localname"],$msgcontent);
 			}
 		}
@@ -379,25 +383,8 @@ class Telaen extends Telaen_core {
 			/* check the message id to make sure that the messages still in the server */
 			if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
 
-				$this->mail_send_command("TOP ".$msg["id"]." 0");
-				$buffer = $this->mail_get_line();
-	
-				/* if any problem with the server, stop the function */
-				if(substr($buffer, 0, 3) != "+OK")  { $this->mail_error_msg = $buffer; return 0; }
-	
-				unset($header);
-	
-				while (!feof($this->mail_connection)) {
-					$buffer = $this->mail_get_line();
-					if(chop($buffer) == ".")
-						break;
-					$header .= $buffer;
-				}
-				$mail_info = $this->get_mail_info($header);
-	
-	
-				/* compare the old and the new message id, if different, stop*/
-				if(base64_encode($mail_info["message-id"]) != base64_encode($msg["message-id"])) {
+				/* compare the old and the new message uidl, if different, stop*/
+				if ($msg["uidl"] != $this->mail_get_uidl($msg["id"])) {
 					$this->mail_error_msg = $error_retrieving;
 					return 0;
 				}
@@ -494,26 +481,9 @@ class Telaen extends Telaen_core {
 				/* now we are working with POP3 */
 				/* check the message id to make sure that the messages still in the server */
 				if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
-	
-					$this->mail_send_command("TOP ".$msg["id"]." 0");
-					$buffer = $this->mail_get_line();
-		
-					/* if any problem with the server, stop the function */
-					if(substr($buffer, 0, 3) != "+OK")  { $this->mail_error_msg = $buffer; return 0; }
-		
-					unset($header);
-		
-					while (!feof($this->mail_connection)) {
-						$buffer = $this->mail_get_line();
-						if(chop($buffer) == ".")
-							break;
-						$header .= $buffer;
-					}
-					$mail_info = $this->get_mail_info($header);
-		
-		
+			
 					/* compare the old and the new message id, if different, stop*/
-					if(base64_encode($mail_info["message-id"]) != base64_encode($msg["message-id"])) {
+					if ($msg["uidl"] != $this->mail_get_uidl($msg["id"])) {
 						$this->mail_error_msg = $error_retrieving;
 						return 0;
 					}
@@ -684,33 +654,13 @@ class Telaen extends Telaen_core {
 					 * headers again, because it is too complicated to see which messages we
 					 * have or haven't.
 					 */					
-					$this->mail_send_command("TOP ".$messages[$localcount - 1]["msg"]." 0");
-					$buffer = $this->mail_get_line();
-					if(substr($buffer, 0, 3) != "+OK")  {
-						$this->mail_error_msg = $buffer;
-						$myreturnarray = Array();
-						$myreturnarray[0] = Array(); 
-						$myreturnarray[1] = Array();
-						$myreturnarray[2] = -1;
-						return $myreturnarray;
-					}
-					while (!feof($this->mail_connection)) {
-						$buffer = $this->mail_get_line();
-						if(chop($buffer) == ".")
-							break;
-						if(strlen($buffer) > 3) 
-							$header .= $buffer;
-					}
-					if(!($pos = strpos($header,"\r\n\r\n") === false)) 
-						$header = substr($header,0,$pos);
-
-					$mail_info_new = $this->get_mail_info($header);
 					$header = "";
 
 					// We need the old array sorted by msg, else we can't compare
+					// TODO: Optimize this!
 					array_qsort2($localmessages,"msg","ASC");
-					$oldid = $localmessages[$localcount - 1]["message-id"];
-					$newid = $mail_info_new["message-id"];
+					$oldid = $localmessages[$localcount - 1]["uidl"];
+					$newid = $this->mail_get_uidl($messages[$localcount - 1]["msg"]);
 
 					if ("$oldid" == "$newid") {
 					// Ok the ids are the same and we have new messages, fetch only the new part
@@ -747,7 +697,7 @@ class Telaen extends Telaen_core {
 						if ($parallelized)
 							$this->mail_send_command($mailcommand);
 
-						// fetch the only the new messages
+						// fetch only the new messages
 						for($i=$localcount; $i<$onservercount; $i++) {
 							$header = "";
 							if (! $parallelized) {
@@ -918,14 +868,17 @@ class Telaen extends Telaen_core {
 				$messagescopy[$j]["to"]		= $mail_info["to"];
 				$messagescopy[$j]["cc"]		= $mail_info["cc"];
 				$messagescopy[$j]["priority"]	= $mail_info["priority"];
+				$messagescopy[$j]["uidl"]	= ((!$this->is_valid_md5($mail_info["uidl"])) ?
+									$this->mail_get_uidl($messagescopy[$j]["msg"], $mail_info) :
+									$mail_info["uidl"]);
 				$messagescopy[$j]["attach"]	= (eregi("(multipart/mixed|multipart/related|application)",
 									$mail_info["content-type"]))?1:0;
 
 				if ($messagescopy[$j]["localname"] == "") {
-					$messagescopy[$j]["localname"] = $this->_get_local_name($mail_info,$boxname);
+					$messagescopy[$j]["localname"] = $this->_get_local_name($messagescopy[$j]["uidl"],$boxname);
 				}
 
-				$messagescopy[$j]["read"] = file_exists($flocalname)?1:0;
+				$messagescopy[$j]["read"] = file_exists($messagescopy[$j]["localname"])?1:0;
 
 				/* 
 				 * ops, a trick. if the message is not imap, the flags are stored in
@@ -958,14 +911,17 @@ class Telaen extends Telaen_core {
 				$spamcopy[$y]["to"]		= $mail_info["to"];
 				$spamcopy[$y]["cc"]		= $mail_info["cc"];
 				$spamcopy[$y]["priority"]	= $mail_info["priority"];
+				$spamcopy[$y]["uidl"]		= ((!$this->is_valid_md5($mail_info["uidl"])) ?
+									$this->mail_get_uidl($spamcopy[$y]["msg"], $mail_info) :
+									$mail_info["uidl"]);
 				$spamcopy[$y]["attach"]		= (eregi("(multipart/mixed|multipart/related|application)",
 									 $mail_info["content-type"]))?1:0;
 
 				if ($spamcopy[$y]["localname"] == "") {
-					$spamcopy[$y]["localname"] = $this->_get_local_name($mail_info,$boxname);
+					$spamcopy[$y]["localname"] = $this->_get_local_name($spamcopy[$y]["uidl"],$boxname);
 				}
 
-				$spamcopy[$y]["read"] = file_exists($flocalname)?1:0;
+				$spamcopy[$y]["read"] = file_exists($spamcopy[$y]["localname"])?1:0;
 
 				/* 
 				 * ops, a trick. if the message is not imap, the flags are stored in
@@ -1002,8 +958,11 @@ class Telaen extends Telaen_core {
 		return $myreturnarray;
 	}
 
-	function _get_local_name($message,$boxname) {
-		$flocalname = trim($this->user_folder."$boxname/".md5(trim($message["subject"].$message["date"].$message["message-id"])).".eml");
+	function _get_local_name($messageid,$boxname) {
+		if (is_array($message))
+			$flocalname = trim($this->user_folder."$boxname/".md5(trim($message["subject"].$message["date"].$message["message-id"])).".eml");
+		else
+			$flocalname = trim($this->user_folder."$boxname/".$message.".eml");
 		return $flocalname;
 	}
 
@@ -1311,39 +1270,96 @@ class Telaen extends Telaen_core {
 	 * Get the UIDL for the specified message. If none
 	 * provided, then return an array of all UIDLs for
 	 * all non-deleted messages, indexed by message id.
-	 * Requires that it conforms to RFC 1725.
+	 *
+	 * If the server does not provide for the UIDL command,
+	 * then we generate our own by reading the message
+	 * headers and using the Message-ID, Date and Subject
+	 * headers to craft one. If passed a message header
+	 * hash, we grab them from there, otherwise we need
+	 * to query the server. Note that the provided array
+	 * only makes sense for single UIDL lookups.
 	 */
-	function mail_get_uidl ($id = "") {
+	function mail_get_uidl ($id = "", $message = Array()) {
 		if(!empty($id)) {
-			$this->mail_send_command("UIDL $id");
-			$buffer = $this->mail_get_line();
-			list ($resp,$num,$uidl) = explode(" ",$buffer);
-			if ($resp == "+OK") {
-				return md5($uidl);
-			} else {
-				return "";
+			if ($this->_haveuidl) {
+				$this->mail_send_command("UIDL $id");
+				$buffer = $this->mail_get_line();
+				list ($resp,$num,$uidl) = explode(" ",$buffer);
+				if ($resp == "+OK")
+					return md5($uidl);
+				// If we DON'T get the OK response, we drop through
 			}
-		} else {
-			$retarray = array();
-
-			$this->mail_send_command("UIDL");
-
-			$buffer = $this->mail_get_line();
-			if (substr($buffer, 0, 3) == "+OK") {
+			if (count($message))	// provided a header hash
+				return md5(trim($message["subject"].$message["date"].$message["message-id"]));
+			else {
+				$this->mail_send_command("TOP " . $id . " 0");
+				$buffer = $this->mail_get_line();
+	
+				/* if any problem with the server, stop the function */
+				if(substr($buffer, 0, 3) != "+OK")  { $this->mail_error_msg = $buffer; return ""; }
+				unset($header);
 				while (!feof($this->mail_connection)) {
 					$buffer = $this->mail_get_line();
-					if(trim($buffer) == ".") {
+					if(chop($buffer) == ".")
 						break;
-					}
-					list ($num,$uidl) = explode(" ",$buffer);
-					if (!empty($uidl)) {
-						$retarray[intval($num)] = md5($uidl);
+					$header .= $buffer;
+				}
+				$mail_info = $this->get_mail_info($header);
+				return md5(trim($mail_info["subject"].$mail_info["date"].$mail_info["message-id"]));
+			}
+
+		} else {
+			$retarray = array();
+			if ($this->_haveuidl) {
+				$this->mail_send_command("UIDL");
+	
+				$buffer = $this->mail_get_line();
+				if (substr($buffer, 0, 3) == "+OK") {
+					while (!feof($this->mail_connection)) {
+						$buffer = $this->mail_get_line();
+						if(trim($buffer) == ".")
+							break;
+						list ($num,$uidl) = explode(" ",$buffer);
+						if (!empty($uidl))
+							$retarray[intval($num)] = md5($uidl);
 					}
 				}
-				return $retarray;
-			} else {
-				return "";
 			}
+			// Drop through if we got a UIDL error (the array is still empty)
+			if (!count($retarray)) {
+				$this->mail_send_command("LIST");
+				$buffer = $this->mail_get_line();
+
+				if(substr($buffer, 0, 3) == "+OK")  {
+					$messages = array();
+					while (!feof($this->mail_connection)) {
+						$buffer = $this->mail_get_line();
+						if(trim($buffer) == ".")
+							break;
+						$msgs = explode(" ",$buffer);
+						if(is_numeric($msgs[0]))	// store message number
+							$messages[] = $msgs[0];
+					}
+					// now grab the header info
+					foreach ($messages as $id) {
+						$this->mail_send_command("TOP " . $id . " 0");
+						$buffer = $this->mail_get_line();
+			
+						if(substr($buffer, 0, 3) == "+OK")  {
+							unset($header);
+							while (!feof($this->mail_connection)) {
+								$buffer = $this->mail_get_line();
+								if(trim($buffer) == ".")
+									break;
+								$header .= $buffer;
+							}
+							$mail_info = $this->get_mail_info($header);
+							$retarray[intval($id)] = md5(trim($mail_info["subject"].$mail_info["date"].$mail_info["message-id"]));
+						}
+					}
+				}
+			}
+			return $retarray;
 		}
 	}
 
