@@ -166,8 +166,6 @@ if( !is_array($headers)
 
 					if ($del) {
 						$subtract++;
-						$sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
-						$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
 						unset ($sess["headers"][$folder_key][$ubiid]);
 					} else {
 						if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
