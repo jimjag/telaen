@@ -135,7 +135,6 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 	$messagelist = Array();
 
 	for($i=0;$i<count($headers);$i++) {
-		$mnum = $headers[$i]["id"]; 
 		$read = (eregi("\\SEEN",$headers[$i]["flags"]))?"true":"false";
 
 		$readlink = "javascript:readmsg(".$headers[$i]["ix"].",$read,'".urlencode($headers[$i]["folder"])."')";

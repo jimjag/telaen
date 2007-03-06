@@ -168,7 +168,6 @@ if($nummsg > 0) {
 		if(!eregi("\\SEEN",$headers[$i]["flags"])) $newmsgs++;
 
 	for($i=$start_pos;$i<$end_pos;$i++) {
-		$mnum = $headers[$i]["id"]; 
 
 		$read = (eregi("\\SEEN",$headers[$i]["flags"]))?"true":"false";
 		$readlink = "javascript:readmsg($i,$read)";

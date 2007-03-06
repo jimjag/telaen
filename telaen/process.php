@@ -143,13 +143,12 @@ if( !is_array($headers)
 				 * ubiid variable. Scan through the delarray to find the
 				 * first ID to be deleted.
 				 */
-				array_qsort2int($delarray,"msgid","ASC");
 				$delarray_count = count($delarray);
 				$firstid = 0;
 
 				for ($i=0; $i<$delarray_count; $i++) {
 					if ($delarray[$i]["del"]) {
-						$firstid = $delarray[$i]["id"] - 1;
+						$firstid = $i;
 						break;
 					}
 				}
@@ -159,22 +158,22 @@ if( !is_array($headers)
 				$subtract = 0;
 		
 				for ($z=$firstid; $z<$delarray_count; $z++) {
-					$msgid = $z + 1;	# msgid's always begin with 1, not 0.
+					// $msgid = $z + 1;	# msgid's always begin with 1, not 0.
 					$ubiid = $delarray[$z]["ubiid"];
 					$myfold = $delarray[$z]["folder"];
 					$del = $delarray[$z]["del"];
 
 					if ($del) {
 						$subtract++;
-						$sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
+						// $sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
 						$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
 						unset ($sess["headers"][$folder_key][$ubiid]);
 					} else {
 						if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
-							$sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
+							// $sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
 							$sess["headers"][$myfold][$ubiid]["id"] -= $subtract;
 						} else {
-							$sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
+							// $sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
 							$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
 						}
 					}
@@ -186,7 +185,7 @@ if( !is_array($headers)
 				$y = 0;
 				$newarray = Array();
 				for($i=0;$i<$messagecount;$i++) {
-					if ($sess["headers"][$folder_key][$i]["id"]) {
+					if ($sess["headers"][$folder_key][$i]["msg"]) {
 						$newarray[$y] = $sess["headers"][$folder_key][$i];
 						$y++;
 					}
@@ -209,7 +208,7 @@ if( !is_array($headers)
 					$y = 0;
 					$newotherarray = Array();
 					for($i=0;$i<$othercount;$i++) {
-						if ($sess["headers"][$other_folder_key][$i]["id"]) {
+						if ($sess["headers"][$other_folder_key][$i]["msg"]) {
 							$newotherarray[$y] = $sess["headers"][$other_folder_key][$i];
 							$y++;
 						}
