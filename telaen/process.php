@@ -143,6 +143,7 @@ if( !is_array($headers)
 				 * ubiid variable. Scan through the delarray to find the
 				 * first ID to be deleted.
 				 */
+                                array_qsort2int($delarray,"msgid","ASC"); 
 				$delarray_count = count($delarray);
 				$firstid = 0;
 
@@ -165,15 +166,15 @@ if( !is_array($headers)
 
 					if ($del) {
 						$subtract++;
-						// $sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
+						$sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
 						$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
 						unset ($sess["headers"][$folder_key][$ubiid]);
 					} else {
 						if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
-							// $sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
+							$sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
 							$sess["headers"][$myfold][$ubiid]["id"] -= $subtract;
 						} else {
-							// $sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
+							$sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
 							$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
 						}
 					}
