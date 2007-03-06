@@ -129,8 +129,7 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 
 	$refr = 1;
 
-} elseif (
-	($sess["auth"] && ((time() - $start) < ($idle_timeout * 60))) ) {
+} elseif ($sess["auth"] && ((time() - $start) < ($idle_timeout * 60)) ) {
 
 	$UM->mail_user   	= $f_user    	= $sess["user"];
 	$UM->mail_pass   	= $f_pass    	= $sess["pass"];
@@ -147,7 +146,8 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$UM->_haveapop 		= $sess["haveapop"];
 
 } else {        
-        redirect_and_exit("./index.php");
+		// session expired
+        redirect_and_exit("index.php?err=4");
 }
 
 $sess["start"] = time();
@@ -210,8 +210,8 @@ if(!isset($sortorder) || !ereg("ASC|DESC",$sortorder)) {
 	$prefs["sort-order"] = $sortorder;
 }
 
-if(isset($need_save)) save_prefs($prefs);
-
+if(isset($need_save)) 
+	save_prefs($prefs);
 
 if(!isset($folder) || $folder == "" || strpos($folder,"..") !== false ) 
 	$folder = "inbox";

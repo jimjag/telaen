@@ -22,6 +22,8 @@
                                                         <b>{#err_system_msg#}:</b> {#error_connect#}
                                                 {elseif $errorCode eq "2"}
                                                         <b>{#err_system_msg#}:</b> {#error_retrieving#}
+                                                {elseif $errorCode eq "4"}
+                                                        <b>{#err_system_msg#}:</b> {#error_session_expired#}
                                                 {else}
                                                         <b>{#err_system_msg#}:</b> {#error_other#}
                                                 {/if}

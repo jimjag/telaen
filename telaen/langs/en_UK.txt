@@ -23,6 +23,7 @@ err_system_msg					= System error
 error_login 					= Please check your username or password and try again
 error_connect					= Error connecting to the server
 error_retrieving				= Error getting your messages, your Inbox has changed
+error_session_expired				= Your session is expired, please login again
 error_other					= System failure, please contact your network administrator
 
 # Invalid name of mailbox
@@ -179,55 +180,10 @@ priority_low					= Low
 priority_normal					= Normal
 priority_high					= High
 
-[AdvancedEditor]
-adv_warning_text_mode1			= Please uncheck an option
-adv_warning_text_mode2			= to use the toolbar
-
-adv_type_path					= Write the URL:
-
-format_paragraph				= Paragraph
-format_h1						= Style 1 <H1>
-format_h2						= Style 2 <H2>
-format_h3						= Style 3 <H3>
-format_h4						= Style 4 <H4>
-format_h5						= Style 5 <H5>
-format_h6						= Style 6 <H6>
-format_pre						= Formatted <PRE>
-format_clear_all				= Clear all
-
-format_font						= Font
-format_size						= Size
-
-format_color					= Colour
-format_back						= Background
-color_red						= Red
-color_blue						= Blue
-color_green						= Green
-color_black						= Black
-color_yellow					= Yellow
-color_white						= White
-
-view_source						= View HTML source
-text_mode						= Text mode
-clear_format					= Clear format
-
-priority_text					= Priority
-
-[BadLogin]
-bdl_title						= Login error 
-bdl_msg							= You cannot login with the username and password entered.<br><br>Please check your username and password and try again.
-bdl_back						= Try Again
-
-[Error]
-err_title						= There were errors
-err_msg							= There were errors in the process<br><br>Please login again
-err_system_msg					= System message: 
-err_exit						= Logout
-
 [Preferences]
-prf_title 						= Preferences
+prf_title 					= Preferences
 prf_general_title				= General information
-prf_name						= Name
+prf_name					= Name
 prf_reply_to					= Reply to
 prf_time_zone					= Time zone
 prf_trash_title					= Trash
@@ -245,11 +201,41 @@ prf_signature					= Write your signature
 prf_auto_add_sign				= Add your signature to all the outgoing messages 
 prf_save_button					= Save
 prf_display_images				= Show attached images
-prf_default_editor_mode			= Default edit mode
+prf_default_editor_mode				= Default edit mode
 prf_default_editor_mode_text			= "Plain text"
 prf_default_editor_mode_html			= "Advanced HTML editor"
 prf_time_to_refesh				= Automatically check for new mail (minutes)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_title                              = If field
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_title                               = Do the following
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_match                                    = Match
+
+filter_folder                                   = Folder
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+
+filter_list_field                               = Filter on
+filter_list_match                               = Search for
+filter_list_type                                = Action
+filter_list_folder                              = Destination folder
+
 
 [Catch]
 ctc_title					= Add to address book

@@ -30,8 +30,10 @@
 				{#err_login_msg#}: {#error_login#}
 		{elseif $errorCode eq "1"}
 				{#err_system_msg#}: {#error_connect#}
-		{elseif $errorCode eq "2"}
+		{elseif $errorCode eq "2"}		
 				{#err_system_msg#}: {#error_retrieving#}
+		{elseif $errorCode eq "4"}
+             	{#err_system_msg#}: {#error_session_expired#}				
 		{else}
 				{#err_system_msg#}: {#error_other#}
 		{/if}
