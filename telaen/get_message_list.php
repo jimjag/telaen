@@ -13,7 +13,7 @@
 				 * Sort the arrays and fit them together again.
 				 */
 				$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
-				array_qsort2($merged_array,"msg","ASC");
+				array_qsort2int($merged_array,"msg","ASC");
 
 				$merged_returnarray = $UM->mail_list_msgs("INBOX", $merged_array);
 
@@ -45,7 +45,7 @@
 			 * Sort the arrays and fit them together again.
 			 */
 			$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
-			array_qsort2($merged_array,"msg","ASC");
+			array_qsort2int($merged_array,"msg","ASC");
 			$returnarray = $UM->mail_list_msgs("INBOX", $merged_array);
 
 			/*

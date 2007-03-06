@@ -143,7 +143,7 @@ if( !is_array($headers)
 				 * ubiid variable. Scan through the delarray to find the
 				 * first ID to be deleted.
 				 */
-				array_qsort2($delarray,"msgid","ASC");
+				array_qsort2int($delarray,"msgid","ASC");
 				$delarray_count = count($delarray);
 				$firstid = 0;
 

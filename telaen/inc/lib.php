@@ -241,6 +241,16 @@ function array_qsort2 (&$array, $column=0, $order="ASC") {
 	reset($array);
 }
 
+function array_qsort2int (&$array, $column=0, $order="ASC") {
+        // The column value must be an int value
+	if (!is_array($array)) return;
+        if ($order == "ASC")
+                usort($array, create_function('$a,$b',"return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']<\$b['$column'])?-1:1));")); 
+        else
+                usort($array, create_function('$a,$b',"return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']>\$b['$column'])?-1:1));")); 
+	reset($array);
+}
+
 class Session {
 
 	var $temp_folder;

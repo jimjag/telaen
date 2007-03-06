@@ -579,8 +579,8 @@ class Telaen extends Telaen_core {
 						/*	the end of message header was reached, increment the counter and store the last message */
 						} elseif(trim($buffer) == ")") {
 							$messages[$counter]["id"] = $counter+1; //$msgs[0];
-							$messages[$counter]["msg"] = $curmsg;
-							$messages[$counter]["size"] = $size;
+							$messages[$counter]["msg"] = intval($curmsg);
+							$messages[$counter]["size"] = intval($size);
 							$messages[$counter]["flags"] = strtoupper($flags);
 							$messages[$counter]["header"] = $header;
 							$counter++;
@@ -620,8 +620,8 @@ class Telaen extends Telaen_core {
 					$msgs = explode(" ",$buffer);
 					if(is_numeric($msgs[0])) {
 						$messages[$counter]["id"] = $counter+1; //$msgs[0];
-						$messages[$counter]["msg"] = $msgs[0];
-						$messages[$counter]["size"] = $msgs[1];
+						$messages[$counter]["msg"] = intval($msgs[0]);
+						$messages[$counter]["size"] = intval($msgs[1]);
 						$counter++;
 					}
 				}
