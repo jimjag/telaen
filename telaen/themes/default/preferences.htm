@@ -5,30 +5,30 @@
 <table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="white" width="100%">
 	
 	<tr>
-		<td valign=top width="15%">
+		<td valign="top" width="15%">
 			{include file=$menuTemplate refresh="false"}
 		</td>
-		<td valign=top>
-			<table cellspacing=1 cellpadding=1 width="100%" border=0 bgcolor=White>
-				<form name="form1" action="preferences.php" method="post">
+		<td valign="top">
+			<form name="form1" action="preferences.php" method="post">
+			<table cellspacing="1" cellpadding="1" width="100%" border="0" bgcolor="white">
 				<tr>
-					<td colspan=2 class=headers><b>{#prf_general_title#}</b></td>
+					<td colspan="2" class="headers"><b>{#prf_general_title#}</b></td>
 				</tr>
 				<tr>
-					<td class=default size="20%"> &nbsp;{#prf_name#}</td>
-					<td class=default><input type=text name=f_real_name size=30 value="{$umRealName|escape:"html"}" class="textbox"></td>
+					<td class="default" size="20%"> &nbsp;{#prf_name#}</td>
+					<td class="default"><input type="text" name="f_real_name" size="30" value="{$umRealName|escape:"html"}" class="textbox"></td>
 				</tr>
 				<tr>
-					<td class=default> &nbsp;{#prf_reply_to#}</td>
-					<td class=default><input type=text name=f_reply_to size=30 value="{$umReplyTo|escape:"html"}" class="textbox"></td>
+					<td class="default"> &nbsp;{#prf_reply_to#}</td>
+					<td class="default"><input type="text" name="f_reply_to" size="30" value="{$umReplyTo|escape:"html"}" class="textbox"></td>
 				</tr>
 				<tr>
-					<td class=default> &nbsp;{#prf_time_zone#}</td>
-					<td class=default>{$umTimezoneSelect}</td>
+					<td class="default"> &nbsp;{#prf_time_zone#}</td>
+					<td class="default">{$umTimezoneSelect}</td>
 				</tr>
 				<tr>
-					<td class=default> &nbsp;{#prf_default_editor_mode#}</td>
-					<td class=default>
+					<td class="default"> &nbsp;{#prf_default_editor_mode#}</td>
+					<td class="default">
 					<select name="f_editor_mode">
 						<option value="text"{if $umEditorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
 						<option value="html"{if $umEditorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
@@ -37,74 +37,163 @@
 				</tr>
 				
 				<tr>
-					<td colspan=2 class=headers><b>{#prf_trash_title#}</b></td>
+					<td colspan="2" class="headers"><b>{#prf_trash_title#}</b></td>
 				</tr>
 				<tr>
-					<td class=default colspan=2><input type=checkbox name=f_save_trash onClick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" OnClick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym></td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_save_trash" onclick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" onclick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym></td>
 				</tr>
 				<tr>
-					<td class=default colspan=2><input type=checkbox name=f_st_only_read onClick="return checkDis()" value="1"{$umSaveTrashOnlyRead}><acronym style="cursor: hand;" OnClick="f_st_only_read.click()">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</acronym></td>
+					<td class="default" colspan="2">
+						<input type="checkbox" name="f_st_only_read" onclick="return checkDis()" value="1"{$umSaveTrashOnlyRead}>
+						<acronym style="cursor: hand;" onclick="f_st_only_read.click()">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</acronym>
+					</td>
 				</tr>
 				<tr>
-					<td class=default colspan=2><input type=checkbox name=f_empty_on_exit value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" OnClick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_empty_on_exit" value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" onclick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
 				</tr>				
 				<tr>
-					<td class=default colspan=2><input type=checkbox name=f_unmark_read_on_exit value="1"{$umUnmarkReadOnExit}><acronym style="cursor: hand;" OnClick="f_unmark_read_on_exit.click()">{#prf_unmark_read_on_exit#}</acronym></td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_unmark_read_on_exit" value="1"{$umUnmarkReadOnExit}><acronym style="cursor: hand;" onclick="f_unmark_read_on_exit.click()">{#prf_unmark_read_on_exit#}</acronym></td>
 				</tr>
 				<tr>
-                                        <td colspan=2  class=headers><b>{#spam_extended#}</b></td>
+                                        <td colspan="2"  class="headers"><b>{#spam_extended#}</b></td>
                                 </tr>
 				<tr>
-                                        <td class=default> &nbsp;{#prf_spam_level#}</td>
-                                        <td class=default>
-                                                <select name=f_spamlevel>
+                                        <td class="default"> &nbsp;{#prf_spam_level#}</td>
+                                        <td class="default">
+                                                <select name="f_spamlevel">
                                                         {html_options values=$umSpamLevelVals output=$umSpamLevelVals selected="$umSpamLevel"}
                                                 </select>
                                         </td>
                                 </tr>
 				<tr>
-                                        <td class=default colspan=2><input type=checkbox name=f_empty_spam_on_exit value="1"{$umEmptySpamOnExit}><acronym style="cursor: hand;" OnClick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></td>
+                                        <td class="default" colspan="2"><input type="checkbox" name="f_empty_spam_on_exit" value="1"{$umEmptySpamOnExit}><acronym style="cursor: hand;" onclick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></td>
                                 </tr>
 				
 				<tr>
-					<td colspan=2  class=headers><b>{#prf_sent_title#}</b></td>
+					<td colspan="2" class="headers"><b>{#prf_sent_title#}</b></td>
 				</tr>
 				<tr>
-					<td class=default colspan=2><input type=checkbox name=f_save_sent value="1"{$umSaveSent}><acronym style="cursor: hand;" OnClick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_save_sent" value="1"{$umSaveSent}><acronym style="cursor: hand;" onclick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></td>
 				</tr>
 				<tr>
-					<td colspan=2  class=headers><b>{#prf_messages_title#}</b></td>
+					<td colspan="2" class="headers"><b>{#prf_messages_title#}</b></td>
 				</tr>
 				<tr>
-					<td class=default> &nbsp;{#prf_page_limit#}</td>
-					<td class=default>{$umRecordsPerPage}</td>
+					<td class="default"> &nbsp;{#prf_page_limit#}</td>
+					<td class="default">{$umRecordsPerPage}</td>
 				</tr>
 				<tr>
-					<td class=default> &nbsp;{#prf_time_to_refesh#}</td>
-					<td class=default>{$umTimeToRefresh}</td>
-				</tr>
-
-				<tr>
-					<td colspan=2  class=default><input type=checkbox name=f_display_images value="1"{$umDisplayImages}><acronym style="cursor: hand;" OnClick="f_display_images.click()">{#prf_display_images#}</acronym></td>
+					<td class="default"> &nbsp;{#prf_time_to_refesh#}</td>
+					<td class="default">{$umTimeToRefresh}</td>
 				</tr>
 
 				<tr>
-					<td colspan=2  class=headers><b>{#prf_signature_title#}</b></td>
+					<td colspan="2" class="default"><input type="checkbox" name="f_display_images" value="1"{$umDisplayImages}><acronym style="cursor: hand;" onclick="f_display_images.click()">{#prf_display_images#}</acronym></td>
+				</tr>
+
+			<tr>
+					<td colspan="2" class="headers"><b>{#prf_signature_title#}</b></td>
 				</tr>
 				<tr>
-					<td class=default valign=top> &nbsp;{#prf_signature#}</td>
-					<td class=default>{$umSignature}</td>
+					<td class="default" valign="top"> &nbsp;{#prf_signature#}</td>
+					<td class="default">{$umSignature}</td>
 				</tr>
 				<tr>
-					<td class=default colspan=2><input type=checkbox name=f_add_sig value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym> </td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_add_sig" value="1"{$umAddSignature}><acronym style="cursor: hand;" onclick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym></td>
 				</tr>
 	
 				<tr>
-					<td bgcolor=white></td>
-					<td bgcolor=white><br><input type=submit value="{#prf_save_button#}" class="button"></td>
+					<td bgcolor="white" colspan="2"><br><input type="submit" value="{#prf_save_button#}" class="button"></td>
 				</tr>
 				</form>
 			</table>
+			<!-- filters section -->
+			<form action="preferences.php" method="post">
+                        <input type="hidden" name="action" value="addFilter">
+                        <table cellspacing="1" cellpadding="1" width="100%" border="0" bgcolor="white">                       
+                                <tr>
+                                        <td class="headers" colspan="2"><b>{#filter_new#}</b></td>
+                                </tr>
+                                <tr>
+                                        <td class="default">
+                                                {#filter_field_title#}:
+                                        </td>
+                                        <td class="default">
+                                                <select name="filterField">
+                                                        <option value="1">{#filter_field_from#}</option>
+                                                        <option value="2">{#filter_field_subject#}</option>
+                                                        <option value="4">{#filter_field_to#}</option>
+                                                </select>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td class="default">
+                                                {#filter_match#}:
+                                        </td>
+                                        <td class="default">
+                                                <input type="text" name="filterMatch" size="30">
+                                        </td>
+                                </tr>
+				<tr>
+                                        <td class="default">
+                                                {#filter_type_title#}:
+                                        </td>
+                                        <td class="default">
+                                                <select name="filterType" onchange="checkMove();">
+                                                        <option value="1">{#filter_type_move#}</option>
+                                                        <option value="2">{#filter_type_delete#}</option>
+                                                        <option value="4">{#filter_type_mark#}</option>
+                                                </select>
+                                        </td>
+                                </tr>
+                                <tr>
+                           		<td class="default">
+                                                {#filter_folder#}:
+                                        </td>
+                                        <td class="default">
+                                     		<select name="filterDestFolder">
+						{section name=i loop=$umPersonalFolders}
+							<option value="{$umPersonalFolders[i].name}">{$umPersonalFolders[i].name}</option>
+						{/section}
+						</select>
+                                        </td>
+                                </tr>
+				<tr>
+					<td class="default" align="center" colspan="2"><input type="submit" value="{#filter_add#}"></td>
+				</tr>
+                        </table>
+                        </form>
+			<table cellspacing="1" cellpadding="1" width="100%" border="0" bgcolor="white">                       
+                                <tr>
+                                        <td class="headers" colspan="5"><b>{#filter_list#}</b></td>
+                                </tr>
+                                <tr>
+                                        <td class="headers">{#filter_list_field#}</td>
+                                        <td class="headers">{#filter_list_match#}</td>
+                                        <td class="headers">{#filter_list_type#}</td>
+                                        <td class="headers">{#filter_list_folder#}</td>
+                                        <td class="headers">&nbsp;</td>
+                                </tr>
+                                {section name=j loop=$filterList}
+                                <tr>
+                                        <td class="default">
+                                        {if $filterList[j].field eq 1}{#filter_field_from#}
+                                        {elseif $filterList[j].field eq 2}{#filter_field_subject#}
+                                        {elseif $filterList[j].field eq 4}{#filter_field_to#}{/if}
+                                        </td>
+                                        <td class="default">{$filterList[j].match}</td>
+                                        <td class="default">
+                                        {if $filterList[j].type eq 1}{#filter_type_move#}
+                                        {elseif $filterList[j].type eq 2}{#filter_type_delete#}
+                                        {elseif $filterList[j].type eq 4}{#filter_type_mark#}{/if}
+                                        </td>
+                                        <td class="default">{$filterList[j].moveto}</td>
+                                        <td class="default">Del</td>
+                                </tr>
+                                {/section}
+			</table>	
+
+	
 		</td>
 	</tr>
 </table>
