@@ -9,7 +9,7 @@
 			{include file=$menuTemplate refresh="false"}
 		</td>
 		<td valign="top">
-			<form name="form1" action="preferences.php" method="post">
+			<form id="prf-form" name="prf-form" action="preferences.php" method="post">
 			<input type="hidden" name="action" value="savePrefs">
 			<table cellspacing="1" cellpadding="1" width="100%" border="0" bgcolor="white">
 				<tr>
@@ -17,22 +17,30 @@
 				</tr>
 				<tr>
 					<td class="default" size="20%"> &nbsp;{#prf_name#}</td>
-					<td class="default"><input type="text" name="f_real_name" size="30" value="{$umRealName|escape:"html"}" class="textbox"></td>
+					<td class="default">
+						<input type="text" name="f_real_name" size="30" value="{$realName|escape:"html"}" class="textbox">
+					</td>
 				</tr>
 				<tr>
 					<td class="default"> &nbsp;{#prf_reply_to#}</td>
-					<td class="default"><input type="text" name="f_reply_to" size="30" value="{$umReplyTo|escape:"html"}" class="textbox"></td>
+					<td class="default">
+						<input type="text" name="f_reply_to" size="30" value="{$replyTo|escape:"html"}" class="textbox">
+					</td>
 				</tr>
 				<tr>
 					<td class="default"> &nbsp;{#prf_time_zone#}</td>
-					<td class="default">{$umTimezoneSelect}</td>
+					<td class="default">
+						<select name="f_timezone">
+						{html_options options=$timezoneVals selected=$timezone}
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td class="default"> &nbsp;{#prf_default_editor_mode#}</td>
 					<td class="default">
 					<select name="f_editor_mode">
-						<option value="text"{if $umEditorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
-						<option value="html"{if $umEditorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
+						<option value="text"{if $editorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
+						<option value="html"{if $editorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
 					</select>
 					</td>
 				</tr>
@@ -41,19 +49,21 @@
 					<td colspan="2" class="headers"><b>{#prf_trash_title#}</b></td>
 				</tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_save_trash" onclick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" onclick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym></td>
+					<td class="default" colspan="2">
+						<input type="checkbox" name="f_save_trash" onclick="dis()" value="1"{$saveTrash}><acronym style="cursor: hand;" onclick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym>
+					</td>
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_st_only_read" onclick="return checkDis()" value="1"{$umSaveTrashOnlyRead}>
+						<input type="checkbox" name="f_st_only_read" onclick="return checkDis()" value="1"{$saveTrashOnlyRead}>
 						<acronym style="cursor: hand;" onclick="f_st_only_read.click()">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</acronym>
 					</td>
 				</tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_empty_on_exit" value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" onclick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_empty_on_exit" value="1"{$emptyTrashOnExit}><acronym style="cursor: hand;" onclick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
 				</tr>				
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_unmark_read_on_exit" value="1"{$umUnmarkReadOnExit}><acronym style="cursor: hand;" onclick="f_unmark_read_on_exit.click()">{#prf_unmark_read_on_exit#}</acronym></td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_unmark_read_on_exit" value="1"{$unmarkReadOnExit}><acronym style="cursor: hand;" onclick="f_unmark_read_on_exit.click()">{#prf_unmark_read_on_exit#}</acronym></td>
 				</tr>
 				<tr>
                                         <td colspan="2"  class="headers"><b>{#spam_extended#}</b></td>
@@ -62,34 +72,42 @@
                                         <td class="default"> &nbsp;{#prf_spam_level#}</td>
                                         <td class="default">
                                                 <select name="f_spamlevel">
-                                                        {html_options values=$umSpamLevelVals output=$umSpamLevelVals selected="$umSpamLevel"}
+						{html_options values=$spamLevelVals output=$spamLevelVals selected=$spamLevel}
                                                 </select>
                                         </td>
                                 </tr>
 				<tr>
-                                        <td class="default" colspan="2"><input type="checkbox" name="f_empty_spam_on_exit" value="1"{$umEmptySpamOnExit}><acronym style="cursor: hand;" onclick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></td>
+                                        <td class="default" colspan="2"><input type="checkbox" name="f_empty_spam_on_exit" value="1"{$emptySpamOnExit}><acronym style="cursor: hand;" onclick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></td>
                                 </tr>
 				
 				<tr>
 					<td colspan="2" class="headers"><b>{#prf_sent_title#}</b></td>
 				</tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_save_sent" value="1"{$umSaveSent}><acronym style="cursor: hand;" onclick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_save_sent" value="1"{$saveSent}><acronym style="cursor: hand;" onclick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="headers"><b>{#prf_messages_title#}</b></td>
 				</tr>
 				<tr>
 					<td class="default"> &nbsp;{#prf_page_limit#}</td>
-					<td class="default">{$umRecordsPerPage}</td>
+					<td class="default">
+						<select name="f_rpp">
+						{html_options values=$msgPerPageVals output=$msgPerPageVals selected=$msgPerPage}
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<td class="default"> &nbsp;{#prf_time_to_refesh#}</td>
-					<td class="default">{$umTimeToRefresh}</td>
+					<td class="default">
+						<select name="f_refresh_time">	
+						{html_options values=$refreshTimeVals output=$refreshTimeVals selected=$refreshTime}
+						</select>	
+					</td>
 				</tr>
 
 				<tr>
-					<td colspan="2" class="default"><input type="checkbox" name="f_display_images" value="1"{$umDisplayImages}><acronym style="cursor: hand;" onclick="f_display_images.click()">{#prf_display_images#}</acronym></td>
+					<td colspan="2" class="default"><input type="checkbox" name="f_display_images" value="1"{$displayImages}><acronym style="cursor: hand;" onclick="f_display_images.click()">{#prf_display_images#}</acronym></td>
 				</tr>
 
 			<tr>
@@ -97,10 +115,12 @@
 				</tr>
 				<tr>
 					<td class="default" valign="top"> &nbsp;{#prf_signature#}</td>
-					<td class="default">{$umSignature}</td>
+					<td class="default">
+						<textarea cols="40" rows="3" name="f_sig" class="textarea">{$signature}</textarea>
+					</td>
 				</tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_add_sig" value="1"{$umAddSignature}><acronym style="cursor: hand;" onclick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym></td>
+					<td class="default" colspan="2"><input type="checkbox" name="f_add_sig" value="1" {$addSignature}><acronym style="cursor: hand;" onclick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym></td>
 				</tr>
 	
 				<tr>
@@ -108,6 +128,7 @@
 				</tr>
 				</form>
 			</table>
+
 			<!-- filters section -->
 			<form action="preferences.php" method="post">
                         <input type="hidden" name="action" value="addFilter">

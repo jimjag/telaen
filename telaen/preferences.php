@@ -105,6 +105,15 @@ if(isset($_POST['action'])) {
 
 		case "delFilter":
 
+			if (!isset($_POST['filterIndex'])) {
+				break;
+			}
+
+						
+			// save the file
+                        $content = base64_encode(serialize($filters));
+                        $UM->_save_file($filename, $content);
+
                         break;
         }
 }
@@ -114,67 +123,68 @@ $smarty->assign("filterList", $filters);
 // load prefs
 $prefs = load_prefs();
 
-$aval_rpp = Array(10,20,30,40,50,100,200);
-$sel_rpp = "<select name=\"f_rpp\">\r";
-for($i=0;$i<count($aval_rpp);$i++) {
-	$selected = ($prefs["rpp"] == $aval_rpp[$i])?"selected=\"selected\"":"";
-	$sel_rpp .= "<option value=\"".$aval_rpp[$i]."\" $selected>".$aval_rpp[$i]."</option>\r";
-}
-$sel_rpp .= "</select>";
+// name & reply to
+$smarty->assign("realName", $prefs["real-name"]);
+$smarty->assign("replyTo", $prefs["reply-to"]);
 
-$sel_refreshtime = "<select name=\"f_refresh_time\">\r";
-for($i=5;$i<30;$i=$i+5) {
-	$selected = ($prefs["refresh-time"] == $i)?"selected=\"selected\"":"";
-	$sel_refreshtime .= "<option value=\"" .$i. "\" $selected>".$i."</option>\r";
-}
-$sel_refreshtime .= "</select>";
-
-
-$txtsignature = "<textarea cols=\"40\" rows=\"3\" name=\"f_sig\" class=\"textarea\">".htmlspecialchars($prefs["signature"])."</textarea>";
-
-
+// timezones
 $gmttime = time()-date("Z");
 
-$tzselect = "<select name=\"f_timezone\">\r";
-for($i=-12;$i<=12;$i = $i+0.5) {
-	$nowgmt = $gmttime + $i*3600;
-	$operator = ($i < 0)?"-":"+";
-	$z = abs($i);
-	$diff = $operator.sprintf("%02d",intval($z)).sprintf("%02d",($z-intval($z))*60);
-	$selected = ($prefs["timezone"] == $diff)?"selected=\"selected\"":"";
-	$tzselect .= "<option value=\"$diff\" $selected>GMT $diff (".date("h:i A",$nowgmt).")</option>\r";
+$timeVals = array();
+for($i=-12; $i<=12; $i = $i+0.5) {
+        $nowgmt = $gmttime + $i*3600;
+        $operator = ($i < 0)?"-":"+";
+        $z = abs($i);
+        $diff = $operator . sprintf("%02d",intval($z)) . sprintf("%02d",($z-intval($z))*60);
+        $timeVals[$diff] = "GMT " .$diff. "(" .date("h:i A",$nowgmt). ")";
 }
-$tzselect .= "</select>\r";
 
-$smarty->assign("umRealName",$prefs["real-name"]);
-$smarty->assign("umReplyTo",$prefs["reply-to"]);
-$status = ($prefs["save-to-trash"])?" checked=\"checked\"":"";
-$smarty->assign("umSaveTrash",$status);
-$status = ($prefs["st-only-read"])?" checked=\"checked\"":"";
-$smarty->assign("umSaveTrashOnlyRead",$status);
-$status = ($prefs["empty-trash"])?" checked=\"checked\"":"";
-$smarty->assign("umEmptyTrashOnExit",$status);
-$status = ($prefs["empty-spam"])?" checked=\"checked\"":"";
-$smarty->assign("umEmptySpamOnExit",$status);
-$status = ($prefs["unmark-read"])?" checked=\"checked\"":"";
-$smarty->assign("umUnmarkReadOnExit",$status);
-$status = ($prefs["save-to-sent"])?" checked=\"checked\"":"";
-$smarty->assign("umSaveSent",$status);
+$smarty->assign("timezone", $prefs["timezone"]);
+$smarty->assign("timezoneVals", $timeVals);
+
+// editor mode
+$smarty->assign("editorMode", $prefs["editor-mode"]);
+
+// records per page
+$smarty->assign("msgPerPage", $prefs["rpp"]);
+$smarty->assign("msgPerPageVals", array(10,20,30,40,50,100,200));
+
+// refresh time
+$smarty->assign("refreshTime", $prefs["refresh-time"]); 
+$smarty->assign("refreshTimeVals", array(5,10,15,20,25));
+
+// signature 
 $status = ($prefs["add-sig"])?" checked=\"checked\"":"";
-$smarty->assign("umAddSignature",$status);
+$smarty->assign("addSignature",$status);
+
+$txtsignature = htmlspecialchars($prefs["signature"]);
+$smarty->assign("signature", $txtsignature);
+
+// misc
+$status = ($prefs["save-to-trash"])?" checked=\"checked\"":"";
+$smarty->assign("saveTrash",$status);
+
+$status = ($prefs["st-only-read"])?" checked=\"checked\"":"";
+$smarty->assign("saveTrashOnlyRead",$status);
+
+$status = ($prefs["empty-trash"])?" checked=\"checked\"":"";
+$smarty->assign("emptyTrashOnExit",$status);
+
+$status = ($prefs["unmark-read"])?" checked=\"checked\"":"";
+$smarty->assign("unmarkReadOnExit",$status);
+
+$status = ($prefs["save-to-sent"])?" checked=\"checked\"":"";
+$smarty->assign("saveSent",$status);
+
 $status = ($prefs["display-images"])?" checked=\"checked\"":"";
-$smarty->assign("umDisplayImages",$status);
+$smarty->assign("displayImages",$status);
 
-$smarty->assign("umEditorMode",$prefs["editor-mode"]);
+// spam options
+$status = ($prefs["empty-spam"])?" checked=\"checked\"":"";
+$smarty->assign("emptySpamOnExit",$status);
 
-$smarty->assign("umRecordsPerPage",$sel_rpp);
-$smarty->assign("umTimeToRefresh",$sel_refreshtime);
-
-$smarty->assign("umSignature",$txtsignature);
-$smarty->assign("umTimezoneSelect",$tzselect);
-
-$smarty->assign("umSpamLevelVals", array(0,1,2,3,4,5,6,7,8,9));
-$smarty->assign("umSpamLevel", $prefs["spamlevel"]);
+$smarty->assign("spamLevelVals", array(0,1,2,3,4,5,6,7,8,9));
+$smarty->assign("spamLevel", $prefs["spamlevel"]);
 
 $smarty->display("$selected_theme/preferences.htm");
 
