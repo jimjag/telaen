@@ -16,6 +16,13 @@ CHANGELOG:
 Telaen:
 =======
 
+1.2.0-dev
+
+[New]   Uses POP3 UIDL for better message tracking. If server
+        does not provide a UIDL, we create our own.
+
+[Fix]   Various performance improvements
+
 1.1.3
 
 [New]	Added Malay translation
