@@ -1102,9 +1102,14 @@ class Telaen extends Telaen_core {
 	function mail_save_message($boxname,$message,$flags = "") {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(ereg_replace("\"(.*)\"","\\1",$boxname),1);
-			$mailcommand = array();
+	/**		$mailcommand = array();
 			$mailcommand[0] = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
-			$mailcommand[1] = "$message";
+			$mailcommand[1] = "$message"; */
+			
+			$mailcommand = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
+			$mailcommand .= $this->CRLF;
+			$mailcommand .= "$message";
+
 			$this->mail_send_command($mailcommand);
 			$buffer = $this->mail_get_line();
 			if($buffer[0] == "+") {
