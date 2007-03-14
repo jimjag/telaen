@@ -435,6 +435,7 @@ class Telaen_core {
 	*/
 
 	function build_complex_body($ctype,$body) {
+
 		global $sid,$lid,$ix,$folder;
 
 		$Rtype = trim(substr($ctype,strpos($ctype,"type=")+5,strlen($ctype)));
@@ -446,19 +447,24 @@ class Telaen_core {
 
 		$boundary = $this->get_boundary($ctype);	
 		$part = $this->split_parts($boundary,$body);
+		
 		// only for debug
-		//echo "<br> boundary" . $boundary . "  parts: " . count($part);
-
+		//echo "<br>Boundary: " . $boundary . " parts count: " . count($part);
 
 		for($i=0;$i<count($part);$i++) {
 
-			$email = $this->fetch_structure($part[$i]);
+			$email = $this->fetch_structure($part[$i]);			
 
 			$header = $email["header"];
 			$body = $email["body"];
-			$headers = $this->decode_header($header);
 
+			// free unused vars
+			unset($email);
+
+			$headers = $this->decode_header($header);
 			$ctype = $headers["content-type"];
+
+			//echo "<br>Part: $i - ctype: $ctype";
 
 			/*
 			 * Special case for mac with resource and data fork
@@ -471,8 +477,9 @@ class Telaen_core {
 			$cid = $headers["content-id"];
 
 			$Actype = split(";",$headers["content-type"]);
-			$types = split("/",$Actype[0]); $rctype = strtolower($Actype[0]);
-
+			$types = split("/",$Actype[0]); 
+			$rctype = strtolower($Actype[0]);
+			
 			$is_download = (ereg("name=",$headers["content-disposition"].$headers["content-type"]) || $headers["content-id"] != "" || $rctype == "message/rfc822");
 
 			if($rctype == "multipart/alternative") {
@@ -632,7 +639,8 @@ class Telaen_core {
 		$cdisp = $headers["content-disposition"];
 		$ctype = $headers["content-type"]; 
 
-		// for debug echo $cdisp . " -- " . $ctype;
+		// for debug 
+		//echo "<br>CDisp: ". $cdisp . " - CType: " . $ctype;
 
 		// try to extract filename from content-disposition
 		preg_match("/filename ?= ?\"(.+)\"/i",$cdisp,$matches);
@@ -664,7 +672,9 @@ class Telaen_core {
 		$main_type 		= $tmp[0];
 		$sub_type		= $tmp[1];
 
-		$is_embebed = ($headers["content-id"] != "")?1:0;
+		// This set determine if an attachement is embedded (like some images) so there no download link	
+		// Note: added check for use it only for images, some clients adds id where not necessary
+		$is_embed = ($main_type == "image" && $headers["content-id"] != "")?1:0;
 
 		$body = $this->compile_body($body,$tenc,$ctype);
 
@@ -682,7 +692,7 @@ class Telaen_core {
 		$nIndex 					= count($this->_content["attachments"]);
 		$temp_array["name"] 				= trim($filename);
 		$temp_array["size"] 				= strlen($body);
-		$temp_array["temp"] 				= $is_embebed;
+		$temp_array["temp"] 				= $is_embed;
 		$temp_array["content-type"] 		= strtolower(trim($content_type));
 		$temp_array["content-disposition"] 	= strtolower(trim($content_disposition));
 		$temp_array["boundary"] 			= $boundary;
