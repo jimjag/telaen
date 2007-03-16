@@ -353,6 +353,19 @@ if(isset($tipo) && $tipo == "send") {
 	
 	//]]>
 	</script>
+	
+	<script type=\"text/javascript\" src=\"./js/prototype.js\"></script>
+	<script type=\"text/javascript\">
+	//<![CDATA[
+	window.setInterval(function() {
+	        new Ajax.Request('ajax.php', {
+        	        method: 'post',
+                	parameters: {action: 'pingSession'}
+	        });
+	}, 60000);
+	//]]>
+	</script>
+
 	";
 
 	$smarty->assign("umPriority",$priority_level);
