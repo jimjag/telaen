@@ -377,4 +377,14 @@ $redirects_are_relative = no;
 
 $enable_debug = no;
 
+########################################################################
+# When show_errors is enabled, PHP errors are printed to the output.
+# For production websites, you're strongly encouraged to turn this
+# feature off. 
+# You can turn this on for troubleshooting problems like blank pages
+# or during debug.
+########################################################################
+
+$show_errors = no;
+
 ?>

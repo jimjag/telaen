@@ -12,15 +12,24 @@ Telaen is a GPL'ed software developed by
  * various aspects of Telaen that should be universal.
  */
 
-$error_flags = E_ALL & ~E_NOTICE;
-
 umask($default_umask);
 
-@error_reporting($error_flags);
-@ini_set ('error_reporting', $error_flags);
-@set_magic_quotes_runtime(0);           // Smarty and magic_quotes_runtime ON do not mix.
+$error_flags = E_ALL & ~E_NOTICE;
 
-$old_error_handler = set_error_handler("err_handler");
+// set the error reporting, normally they are turned off
+// but sometimes are useful for debugging 
+if(isset($show_errors) && $show_errors == 1) {
+	@error_reporting($error_flags);
+        @ini_set('error_reporting', $error_flags);
+        @ini_set('display_errors', 1);
+} else {
+	@error_reporting(0);
+	@ini_set('display_errors', 0); 
+}
+
+//$old_error_handler = set_error_handler("err_handler");
+
+@set_magic_quotes_runtime(0);           // Smarty and magic_quotes_runtime ON do not mix.
 
 $phpver = phpversion();
 $phpver = doubleval($phpver[0].".".$phpver[2]);
