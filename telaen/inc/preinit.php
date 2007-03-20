@@ -18,7 +18,7 @@ $error_flags = E_ALL & ~E_NOTICE;
 
 // set the error reporting, normally they are turned off
 // but sometimes are useful for debugging 
-if(isset($show_errors) && $show_errors == 1) {
+if(isset($show_errors) && $show_errors) {
 	@error_reporting($error_flags);
         @ini_set('error_reporting', $error_flags);
         @ini_set('display_errors', 1);
