@@ -76,13 +76,34 @@ $temporary_directory = "./database/";
 $webmail_title = "Telaen Webmail";
 
 ########################################################################
-# The maximum size for stored files
-# In order to keep you system fast, use values better than 5MB
-# If you need disable it, set the value to 0 or leave it blank
+# Quota handling:
+# Telaen allows for quotas to be set that limit the maximum size
+# for all stored files and folders. For backwards compatibility
+# there are 2 ways to set this:
+#    $quota_limit: Will be used as the system-wide default
+#    $quota_limits: An array which specifies, via regex, the
+#		    quotas for various accounts. Each element of
+#		    this array is an array which maps the user to
+#		    their quote. The array is scanned sequentially
+#		    so later matches override earlier ones (see
+#		    example below)
+#
+# A value of 0 means no limit (and no quotas)
 ########################################################################
 
 $quota_limit = 4096;  //  in KB, eg. 4096 Kb = 4MB
 
+##
+# Example of quota limit array. All users from @example.com
+# will have a quota of 4096, except jim@example.com who will
+# have his quota disabled. Recall that this array is scanned
+# sequentially... If the order was reverse, then jim would
+# also be set to 4096!
+##
+$quota_limits = Array (
+    Array ('/@example.com/i', 4096 ),
+    Array ('/jim@example.com/i', 0)
+);
 
 ########################################################################
 # Mail server type:

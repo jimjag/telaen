@@ -129,6 +129,16 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 
 	$refr = 1;
 
+	if (is_array($quota_limits)) {
+		foreach ($quota_limits as $quota) {
+			if (preg_match($quota[0], $UM->mail_user)) {
+				$quota_limit = $quota[1];
+			}
+		}
+	}
+	
+	$sess["quota_limit"] = $quota_limit;
+	
 } elseif ($sess["auth"] && ((time() - $start) < ($idle_timeout * 60)) ) {
 
 	$UM->mail_user   	= $f_user    	= $sess["user"];
@@ -144,6 +154,8 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$UM->_haveatop 		= $sess["haveatop"];
 	$UM->_haveuidl 		= $sess["haveuidl"];
 	$UM->_haveapop 		= $sess["haveapop"];
+	
+	$quota_limit		= $sess["quota_limit"];
 
 } else {        
 		// session expired

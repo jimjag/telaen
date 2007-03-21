@@ -18,6 +18,10 @@ Telaen:
 
 1.2.0-dev
 
+[New]	Quota handling can now be set per user or per
+	domain (or any combination) via the new $quota_limits
+	config variable.
+
 [New]   Uses POP3 UIDL for better message tracking. If server
         does not provide a UIDL, we create our own.
 
