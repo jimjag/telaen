@@ -9,7 +9,7 @@
 			{include file=$menuTemplate refresh="false"}
 		</td>
 		<td valign="top">
-			<form id="prf-form" name="prf-form" action="preferences.php" method="post">
+			<form id="prefs_form" name="prefs_form" action="preferences.php" method="post">
 			<input type="hidden" name="action" value="savePrefs">
 			<table cellspacing="1" cellpadding="1" width="100%" border="0" bgcolor="white">
 				<tr>
@@ -39,8 +39,8 @@
 					<td class="default"> &nbsp;{#prf_default_editor_mode#}</td>
 					<td class="default">
 					<select name="f_editor_mode">
-						<option value="text"{if $editorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
-						<option value="html"{if $editorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
+						<option value="text"{if $editorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}</option>
+						<option value="html"{if $editorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}</option>
 					</select>
 					</td>
 				</tr>
@@ -124,10 +124,14 @@
 				</tr>
 	
 				<tr>
-					<td bgcolor="white" colspan="2" align="center"><br><input type="submit" value="{#prf_save_button#}" class="button"></td>
+					<td class="default" colspan="2" align="center">
+						<input type="submit" value="{#prf_save_button#}" class="button">
+					</td>
 				</tr>
 				</form>
 			</table>
+			<br>
+
 
 			<!-- filters section -->
 			<form action="preferences.php" method="post">
@@ -138,10 +142,10 @@
                                 </tr>
                                 <tr>
                                         <td class="default">
-                                                {#filter_field_title#}:
+                                                {#filter_field#}:
                                         </td>
                                         <td class="default">
-                                                <select name="filterField">
+                                                <select name="filter_field">
                                                         <option value="1">{#filter_field_from#}</option>
                                                         <option value="2">{#filter_field_subject#}</option>
                                                         <option value="4">{#filter_field_to#}</option>
@@ -153,15 +157,15 @@
                                                 {#filter_match#}:
                                         </td>
                                         <td class="default">
-                                                <input type="text" name="filterMatch" size="30">
+                                                <input type="text" class="textbox" name="filter_match" size="30">
                                         </td>
                                 </tr>
 				<tr>
                                         <td class="default">
-                                                {#filter_type_title#}:
+                                                {#filter_type#}:
                                         </td>
                                         <td class="default">
-                                                <select name="filterType" onchange="checkMove();">
+                                                <select name="filter_type" onchange="checkMove();">
                                                         <option value="1">{#filter_type_move#}</option>
                                                         <option value="2">{#filter_type_delete#}</option>
                                                         <option value="4">{#filter_type_mark#}</option>
@@ -173,7 +177,7 @@
                                                 {#filter_folder#}:
                                         </td>
                                         <td class="default">
-                                     		<select name="filterDestFolder">
+                                     		<select name="filter_folder">
 						{section name=i loop=$umPersonalFolders}
 							<option value="{$umPersonalFolders[i].name}">{$umPersonalFolders[i].name}</option>
 						{/section}
@@ -181,41 +185,58 @@
                                         </td>
                                 </tr>
 				<tr>
-					<td class="default" align="center" colspan="2"><input type="submit" value="{#filter_add#}"></td>
+					<td class="default" align="center" colspan="2">
+						<input type="submit" class="button" value="{#filter_add#}">
+					</td>
 				</tr>
                         </table>
                         </form>
+			<form id="filters_form" name="filters_form" action="preferences.php" method="post">
+			<input type="hidden" name="action" value="delFilter">
 			<table cellspacing="1" cellpadding="1" width="100%" border="0" bgcolor="white">                       
                                 <tr>
-                                        <td class="headers" colspan="5"><b>{#filter_list#}</b></td>
+                                        <td class="headers" colspan="6"><b>{#filter_list#}</b></td>
                                 </tr>
                                 <tr>
-                                        <td class="headers">{#filter_list_field#}</td>
-                                        <td class="headers">{#filter_list_match#}</td>
-                                        <td class="headers">{#filter_list_type#}</td>
-                                        <td class="headers">{#filter_list_folder#}</td>
+					<td class="headers">&nbsp;</td>
+                                        <td class="headers">{#filter_field#}</td>
+                                        <td class="headers">{#filter_match#}</td>
+                                        <td class="headers">{#filter_type#}</td>
+                                        <td class="headers">{#filter_folder#}</td>
                                         <td class="headers">&nbsp;</td>
                                 </tr>
-                                {section name=j loop=$filterList}
+                                {section name=filter loop=$filterList}
                                 <tr>
+					<td class="default" width="18" align="center">
+						<input type="checkbox" id="cb{$smarty.section.filter.index}" name="filters_array[]" value="{$smarty.section.filter.index}">
+					</td>
                                         <td class="default">
-                                        {if $filterList[j].field eq 1}{#filter_field_from#}
-                                        {elseif $filterList[j].field eq 2}{#filter_field_subject#}
-                                        {elseif $filterList[j].field eq 4}{#filter_field_to#}{/if}
+                                        {if $filterList[filter].field eq 1}{#filter_field_from#}
+                                        {elseif $filterList[filter].field eq 2}{#filter_field_subject#}
+                                        {elseif $filterList[filter].field eq 4}{#filter_field_to#}{/if}
                                         </td>
-                                        <td class="default">{$filterList[j].match}</td>
+                                        <td class="default">{$filterList[filter].match}</td>
                                         <td class="default">
-                                        {if $filterList[j].type eq 1}{#filter_type_move#}
-                                        {elseif $filterList[j].type eq 2}{#filter_type_delete#}
-                                        {elseif $filterList[j].type eq 4}{#filter_type_mark#}{/if}
+                                        {if $filterList[filter].type eq 1}{#filter_type_move#}
+                                        {elseif $filterList[filter].type eq 2}{#filter_type_delete#}
+                                        {elseif $filterList[filter].type eq 4}{#filter_type_mark#}{/if}
                                         </td>
-                                        <td class="default">{$filterList[j].moveto}</td>
-                                        <td class="default">Del</td>
+                                        <td class="default">{$filterList[filter].moveto}</td>
+                                        <td class="default" align="center">
+						<a href="#" class="menu" onclick="filterDelete({$smarty.section.filter.index});return false;">[{#filter_delete#}]</a>
+					</td>
                                 </tr>
+				{sectionelse}
+				<tr><td class="default" align="center" colspan="6">{#filter_msg_nofilters#}</td></td>
                                 {/section}
+				<tr>
+					<td colspan="6" class="default">
+						<img src="themes/default/images/arrowblue.gif">
+						<a href="#" class="menu" onclick="document.filters_form.submit();return false;">{#filter_delete_selected#}</a>
+					</td>
+				</tr>
 			</table>	
-
-	
+			</form>	
 		</td>
 	</tr>
 </table>

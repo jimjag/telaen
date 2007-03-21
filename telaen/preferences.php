@@ -29,7 +29,18 @@ function dis() {
                 disbl = !f_save_trash.checked
         } 
 }
-function checkDis() { if (disbl) return false; }
+function checkDis() {
+	if (disbl)
+		return false;
+}
+function filterDelete(id) {
+	var f = document.filters_form;
+	cb = eval('f.cb' + id);
+	if(cb) {
+		cb.checked = true;
+	}
+	f.submit();
+}
 //]]>
 </script>
 ";
@@ -39,7 +50,7 @@ $smarty->assign("umJS", $jssource);
 // load filters
 $filename = $userfolder."_infos/filters.ucf";
 $myfile = $UM->_read_file($filename);
-$filters = Array();
+$filters = array();
 
 if($myfile != "")  
         $filters = unserialize(base64_decode($myfile));
@@ -75,27 +86,27 @@ if(isset($_POST['action'])) {
 			break;
 
 		case "addFilter":
-            
 			// check for params
-                        if(!isset($_POST['filterType']) ||
-                                !isset($_POST['filterField']) ||
-                                !isset($_POST['filterMatch']) ||
-                                !isset($_POST['filterType']))
+                        if(!isset($_POST['filter_type']) ||
+                                !isset($_POST['filter_field']) ||
+                                !isset($_POST['filter_match']) ||
+                                !isset($_POST['filter_folder']))
                                 break;
 
                         // set the folder only for move
                         $destFolder = "";
-                        if(intval($_POST['filterType']) == 1) {
-                                $destFolder = trim($_POST['filterDestFolder']);
+                        if(intval($_POST['filter_type']) == 1) {
+                                $destFolder = trim($_POST['filter_folder']);
                         }
 
                         // add the filter
-                        $filters[] =  Array(
-		                "type"          => intval($_POST['filterType']),
-        		        "field"         => intval($_POST['filterField']),
-                		"match"         => trim($_POST['filterMatch']),
+                        $newFilter =  array(
+		                "type"          => intval($_POST['filter_type']),
+        		        "field"         => intval($_POST['filter_field']),
+                		"match"         => trim($_POST['filter_match']),
 	                	"moveto"        => $destFolder
         	        );
+			array_push($filters, $newFilter);
 
 			// save the file
 		        $content = base64_encode(serialize($filters));
@@ -105,11 +116,22 @@ if(isset($_POST['action'])) {
 
 		case "delFilter":
 
-			if (!isset($_POST['filterIndex'])) {
+			if (!isset($_POST['filters_array'])) {
+				// nothing to delete
 				break;
 			}
-
-						
+			
+			$delArray = $_POST['filters_array'];			
+			
+			$newFilters = array();
+			for($i=0; $i<count($filters); $i++) {
+				if(!in_array(strval($i), $delArray)) {
+					array_push($newFilters, $filters[$i]);
+				}	
+			} 
+			
+			$filters = $newFilters;			
+			
 			// save the file
                         $content = base64_encode(serialize($filters));
                         $UM->_save_file($filename, $content);
