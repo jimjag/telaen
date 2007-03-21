@@ -16,7 +16,7 @@
 					<td colspan="2" class="headers"><b>{#prf_general_title#}</b></td>
 				</tr>
 				<tr>
-					<td class="default" size="20%"> &nbsp;{#prf_name#}</td>
+					<td class="default"> &nbsp;{#prf_name#}</td>
 					<td class="default">
 						<input type="text" name="f_real_name" size="30" value="{$realName|escape:"html"}" class="textbox">
 					</td>
@@ -50,20 +50,27 @@
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_save_trash" onclick="dis()" value="1"{$saveTrash}><acronym style="cursor: hand;" onclick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym>
+						<input type="checkbox" name="f_save_trash" onclick="dis()" value="1"{$saveTrash}>
+						{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"
 					</td>
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
 						<input type="checkbox" name="f_st_only_read" onclick="return checkDis()" value="1"{$saveTrashOnlyRead}>
-						<acronym style="cursor: hand;" onclick="f_st_only_read.click()">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</acronym>
+						{#prf_save_only_read#} "<b>{#trash_extended#}</b>"
 					</td>
 				</tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_empty_on_exit" value="1"{$emptyTrashOnExit}><acronym style="cursor: hand;" onclick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
+					<td class="default" colspan="2">
+						<input type="checkbox" name="f_empty_on_exit" value="1"{$emptyTrashOnExit}>
+						{#prf_empty_on_exit#}
+					</td>
 				</tr>				
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_unmark_read_on_exit" value="1"{$unmarkReadOnExit}><acronym style="cursor: hand;" onclick="f_unmark_read_on_exit.click()">{#prf_unmark_read_on_exit#}</acronym></td>
+					<td class="default" colspan="2">
+						<input type="checkbox" name="f_unmark_read_on_exit" value="1"{$unmarkReadOnExit}>
+						{#prf_unmark_read_on_exit#}
+					</td>
 				</tr>
 				<tr>
                                         <td colspan="2"  class="headers"><b>{#spam_extended#}</b></td>
@@ -77,14 +84,20 @@
                                         </td>
                                 </tr>
 				<tr>
-                                        <td class="default" colspan="2"><input type="checkbox" name="f_empty_spam_on_exit" value="1"{$emptySpamOnExit}><acronym style="cursor: hand;" onclick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></td>
+                                        <td class="default" colspan="2">
+						<input type="checkbox" name="f_empty_spam_on_exit" value="1"{$emptySpamOnExit}>					
+						{#prf_empty_spam_on_exit#}
+					</td>
                                 </tr>
 				
 				<tr>
 					<td colspan="2" class="headers"><b>{#prf_sent_title#}</b></td>
 				</tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_save_sent" value="1"{$saveSent}><acronym style="cursor: hand;" onclick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></td>
+					<td class="default" colspan="2">
+						<input type="checkbox" name="f_save_sent" value="1"{$saveSent}>
+						{#prf_save_sent#} "<b>{#sent_extended#}</b>"
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="headers"><b>{#prf_messages_title#}</b></td>
@@ -107,7 +120,10 @@
 				</tr>
 
 				<tr>
-					<td colspan="2" class="default"><input type="checkbox" name="f_display_images" value="1"{$displayImages}><acronym style="cursor: hand;" onclick="f_display_images.click()">{#prf_display_images#}</acronym></td>
+					<td colspan="2" class="default">
+						<input type="checkbox" name="f_display_images" value="1"{$displayImages}>
+						{#prf_display_images#}
+					</td>
 				</tr>
 
 			<tr>
@@ -128,8 +144,8 @@
 						<input type="submit" value="{#prf_save_button#}" class="button">
 					</td>
 				</tr>
-				</form>
 			</table>
+			</form
 			<br>
 
 
@@ -227,11 +243,11 @@
 					</td>
                                 </tr>
 				{sectionelse}
-				<tr><td class="default" align="center" colspan="6">{#filter_msg_nofilters#}</td></td>
+				<tr><td class="default" align="center" colspan="6">{#filter_msg_nofilters#}</td></tr>
                                 {/section}
 				<tr>
 					<td colspan="6" class="default">
-						<img src="themes/default/images/arrowblue.gif">
+						<img src="themes/default/images/arrowblue.gif" alt="">
 						<a href="#" class="menu" onclick="document.filters_form.submit();return false;">{#filter_delete_selected#}</a>
 					</td>
 				</tr>
