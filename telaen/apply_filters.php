@@ -1,5 +1,5 @@
 <?php
-if($folder == "inbox" && $allow_filters) {
+if($folder == "inbox") {
 
 	$require_update = false;
 
@@ -89,4 +89,3 @@ if($folder == "inbox" && $allow_filters) {
 	}
 }
 ?>
-

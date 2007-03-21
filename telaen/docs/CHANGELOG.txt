@@ -21,7 +21,14 @@ Telaen:
 [New]   Uses POP3 UIDL for better message tracking. If server
         does not provide a UIDL, we create our own.
 
+[New]	Email filters
+
 [Fix]   Various performance improvements
+
+[Fix] 	IMAP bug: extra text added on saved sent message cause wrong date/time display
+
+[Fix] 	Hide attachments links only if they are embedded images. Some clients (like pine)
+	set Content-Id on all attachment types.
 
 1.1.3
 

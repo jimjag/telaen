@@ -70,12 +70,6 @@ define("SMARTY_DIR","/some/place/safe/smarty/");
 $temporary_directory = "./database/";
 
 ########################################################################
-# You should enable this option if you know what are doing
-########################################################################
-
-$allow_filters = no;
-
-########################################################################
 # Title prefix for webmail pages
 ########################################################################
 

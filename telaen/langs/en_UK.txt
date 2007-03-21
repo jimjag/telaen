@@ -207,6 +207,8 @@ prf_default_editor_mode_html			= "Advanced HTML editor"
 prf_time_to_refesh				= Automatically check for new mail (minutes)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 
+prf_mgs_saved					= Preferences saved
+
 # filters
 filter_title                                    = Filters
 
@@ -214,27 +216,26 @@ filter_new                                      = Create a filter
 filter_desc                                     = Choose the search criteria and the action for the incoming messages
 filter_list					= Current filters
 
-filter_field_title                              = If field
 filter_field_from                               = From
 filter_field_to                                 = To
 filter_field_subject				= Subject
 
-filter_type_title                               = Do the following
 filter_type_move                                = Move
 filter_type_delete                              = Delete
 filter_type_mark                                = Mark read
 
-filter_match                                    = Match
-
-filter_folder                                   = Folder
-
 filter_add					= Add filter
 filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
 
-filter_list_field                               = Filter on
-filter_list_match                               = Search for
-filter_list_type                                = Action
-filter_list_folder                              = Destination folder
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
 
 
 [Catch]
