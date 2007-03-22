@@ -72,8 +72,6 @@ a:hover.spam {
 .textbox {
 	background-color: #FAFAFA;
 	color: Black;
-	height: 17px;
-	font-size: 13px;
 	padding: 0;
 	margin: 1px;
 }
@@ -86,7 +84,7 @@ a:hover.spam {
 }
 
 .button {
-	border: 1px ridge #BBBBBB;
+	border: 1px solid #AAAAAA;
 	background-position: top;
 	font-size: 12px;
 	font-family: Verdana, Arial, sans-serif;
@@ -96,6 +94,8 @@ a:hover.spam {
 	background-color: #CCC;
 	background-repeat: repeat-x;
 	margin: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
 	background-image: url(./images/button.gif);
 }
 	

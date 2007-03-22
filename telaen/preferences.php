@@ -158,7 +158,7 @@ for($i=-12; $i<=12; $i = $i+0.5) {
         $operator = ($i < 0)?"-":"+";
         $z = abs($i);
         $diff = $operator . sprintf("%02d",intval($z)) . sprintf("%02d",($z-intval($z))*60);
-        $timeVals[$diff] = "GMT " .$diff. "(" .date("h:i A",$nowgmt). ")";
+        $timeVals[$diff] = "GMT " .$diff. " (" .date("h:i A",$nowgmt). ")";
 }
 
 $smarty->assign("timezone", $prefs["timezone"]);
@@ -176,33 +176,33 @@ $smarty->assign("refreshTime", $prefs["refresh-time"]);
 $smarty->assign("refreshTimeVals", array(5,10,15,20,25));
 
 // signature 
-$status = ($prefs["add-sig"])?" checked=\"checked\"":"";
+$status = ($prefs["add-sig"])? true:false;
 $smarty->assign("addSignature",$status);
 
 $txtsignature = htmlspecialchars($prefs["signature"]);
 $smarty->assign("signature", $txtsignature);
 
 // misc
-$status = ($prefs["save-to-trash"])?" checked=\"checked\"":"";
+$status = ($prefs["save-to-trash"])? true:false;
 $smarty->assign("saveTrash",$status);
 
-$status = ($prefs["st-only-read"])?" checked=\"checked\"":"";
+$status = ($prefs["st-only-read"])? true:false;
 $smarty->assign("saveTrashOnlyRead",$status);
 
-$status = ($prefs["empty-trash"])?" checked=\"checked\"":"";
+$status = ($prefs["empty-trash"])? true:false;
 $smarty->assign("emptyTrashOnExit",$status);
 
-$status = ($prefs["unmark-read"])?" checked=\"checked\"":"";
+$status = ($prefs["unmark-read"])? true:false;
 $smarty->assign("unmarkReadOnExit",$status);
 
-$status = ($prefs["save-to-sent"])?" checked=\"checked\"":"";
+$status = ($prefs["save-to-sent"])? true:false;
 $smarty->assign("saveSent",$status);
 
-$status = ($prefs["display-images"])?" checked=\"checked\"":"";
+$status = ($prefs["display-images"])? true:false;
 $smarty->assign("displayImages",$status);
 
 // spam options
-$status = ($prefs["empty-spam"])?" checked=\"checked\"":"";
+$status = ($prefs["empty-spam"])? true:false;
 $smarty->assign("emptySpamOnExit",$status);
 
 $smarty->assign("spamLevelVals", array(0,1,2,3,4,5,6,7,8,9));

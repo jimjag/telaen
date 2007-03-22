@@ -50,25 +50,25 @@
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_save_trash" onclick="dis()" value="1"{$saveTrash}>
+						<input type="checkbox" name="f_save_trash" onclick="dis()" value="1"{if $saveTrash eq true} checked="checked"{/if}>
 						{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"
 					</td>
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_st_only_read" onclick="return checkDis()" value="1"{$saveTrashOnlyRead}>
+						<input type="checkbox" name="f_st_only_read" onclick="return checkDis()" value="1"{if $saveTrashOnlyRead eq true} checked="checked"{/if}>
 						{#prf_save_only_read#} "<b>{#trash_extended#}</b>"
 					</td>
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_empty_on_exit" value="1"{$emptyTrashOnExit}>
+						<input type="checkbox" name="f_empty_on_exit" value="1"{if $emptyTrashOnExit eq true} checked="checked"{/if}>
 						{#prf_empty_on_exit#}
 					</td>
 				</tr>				
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_unmark_read_on_exit" value="1"{$unmarkReadOnExit}>
+						<input type="checkbox" name="f_unmark_read_on_exit" value="1"{if $unmarkReadOnExit eq true} checked="checked"{/if}>
 						{#prf_unmark_read_on_exit#}
 					</td>
 				</tr>
@@ -85,7 +85,7 @@
                                 </tr>
 				<tr>
                                         <td class="default" colspan="2">
-						<input type="checkbox" name="f_empty_spam_on_exit" value="1"{$emptySpamOnExit}>					
+						<input type="checkbox" name="f_empty_spam_on_exit" value="1" {if $emptySpamOnExit eq true} checked="checked"{/if}>					
 						{#prf_empty_spam_on_exit#}
 					</td>
                                 </tr>
@@ -95,7 +95,7 @@
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_save_sent" value="1"{$saveSent}>
+						<input type="checkbox" name="f_save_sent" value="1"{if $saveSent eq true} checked="checked"{/if}>
 						{#prf_save_sent#} "<b>{#sent_extended#}</b>"
 					</td>
 				</tr>
@@ -121,7 +121,7 @@
 
 				<tr>
 					<td colspan="2" class="default">
-						<input type="checkbox" name="f_display_images" value="1"{$displayImages}>
+						<input type="checkbox" name="f_display_images" value="1"{if $displayImages eq true} checked="checked"{/if}>
 						{#prf_display_images#}
 					</td>
 				</tr>
@@ -136,7 +136,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="default" colspan="2"><input type="checkbox" name="f_add_sig" value="1" {$addSignature}><acronym style="cursor: hand;" onclick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym></td>
+					<td class="default" colspan="2">
+						<input type="checkbox" name="f_add_sig" value="1"{if $addSignature eq true} checked="checked"{/if}>
+						{#prf_auto_add_sign#}
+					</td>
 				</tr>
 	
 				<tr>
@@ -145,8 +148,8 @@
 					</td>
 				</tr>
 			</table>
-			</form
-			<br>
+			</form>
+			<br> 
 
 
 			<!-- filters section -->
