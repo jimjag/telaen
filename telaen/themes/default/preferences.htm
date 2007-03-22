@@ -18,19 +18,19 @@
 				<tr>
 					<td class="default"> &nbsp;{#prf_name#}</td>
 					<td class="default">
-						<input type="text" name="f_real_name" size="30" value="{$realName|escape:"html"}" class="textbox">
+						<input type="text" name="real_name" size="30" value="{$realName|escape:"html"}" class="textbox">
 					</td>
 				</tr>
 				<tr>
 					<td class="default"> &nbsp;{#prf_reply_to#}</td>
 					<td class="default">
-						<input type="text" name="f_reply_to" size="30" value="{$replyTo|escape:"html"}" class="textbox">
+						<input type="text" name="reply_to" size="30" value="{$replyTo|escape:"html"}" class="textbox">
 					</td>
 				</tr>
 				<tr>
 					<td class="default"> &nbsp;{#prf_time_zone#}</td>
 					<td class="default">
-						<select name="f_timezone">
+						<select name="timezone">
 						{html_options options=$timezoneVals selected=$timezone}
 						</select>
 					</td>
@@ -38,7 +38,7 @@
 				<tr>
 					<td class="default"> &nbsp;{#prf_default_editor_mode#}</td>
 					<td class="default">
-					<select name="f_editor_mode">
+					<select name="editor_mode">
 						<option value="text"{if $editorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}</option>
 						<option value="html"{if $editorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}</option>
 					</select>
@@ -50,25 +50,25 @@
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_save_trash" onclick="dis()" value="1"{if $saveTrash eq true} checked="checked"{/if}>
+						<input type="checkbox" name="save_trash" onclick="dis()" value="1"{if $saveTrash eq true} checked="checked"{/if}>
 						{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"
 					</td>
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_st_only_read" onclick="return checkDis()" value="1"{if $saveTrashOnlyRead eq true} checked="checked"{/if}>
+						<input type="checkbox" name="st_only_read" onclick="return checkDis()" value="1"{if $saveTrashOnlyRead eq true} checked="checked"{/if}>
 						{#prf_save_only_read#} "<b>{#trash_extended#}</b>"
 					</td>
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_empty_on_exit" value="1"{if $emptyTrashOnExit eq true} checked="checked"{/if}>
+						<input type="checkbox" name="empty_trash_on_exit" value="1"{if $emptyTrashOnExit eq true} checked="checked"{/if}>
 						{#prf_empty_on_exit#}
 					</td>
 				</tr>				
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_unmark_read_on_exit" value="1"{if $unmarkReadOnExit eq true} checked="checked"{/if}>
+						<input type="checkbox" name="unmark_read_on_exit" value="1"{if $unmarkReadOnExit eq true} checked="checked"{/if}>
 						{#prf_unmark_read_on_exit#}
 					</td>
 				</tr>
@@ -78,14 +78,14 @@
 				<tr>
                                         <td class="default"> &nbsp;{#prf_spam_level#}</td>
                                         <td class="default">
-                                                <select name="f_spamlevel">
+                                                <select name="spamlevel">
 						{html_options values=$spamLevelVals output=$spamLevelVals selected=$spamLevel}
                                                 </select>
                                         </td>
                                 </tr>
 				<tr>
                                         <td class="default" colspan="2">
-						<input type="checkbox" name="f_empty_spam_on_exit" value="1" {if $emptySpamOnExit eq true} checked="checked"{/if}>					
+						<input type="checkbox" name="empty_spam_on_exit" value="1" {if $emptySpamOnExit eq true} checked="checked"{/if}>					
 						{#prf_empty_spam_on_exit#}
 					</td>
                                 </tr>
@@ -95,7 +95,7 @@
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_save_sent" value="1"{if $saveSent eq true} checked="checked"{/if}>
+						<input type="checkbox" name="save_sent" value="1"{if $saveSent eq true} checked="checked"{/if}>
 						{#prf_save_sent#} "<b>{#sent_extended#}</b>"
 					</td>
 				</tr>
@@ -105,7 +105,7 @@
 				<tr>
 					<td class="default"> &nbsp;{#prf_page_limit#}</td>
 					<td class="default">
-						<select name="f_rpp">
+						<select name="rpp">
 						{html_options values=$msgPerPageVals output=$msgPerPageVals selected=$msgPerPage}
 						</select>
 					</td>
@@ -113,7 +113,7 @@
 				<tr>
 					<td class="default"> &nbsp;{#prf_time_to_refesh#}</td>
 					<td class="default">
-						<select name="f_refresh_time">	
+						<select name="refresh_time">	
 						{html_options values=$refreshTimeVals output=$refreshTimeVals selected=$refreshTime}
 						</select>	
 					</td>
@@ -121,10 +121,17 @@
 
 				<tr>
 					<td colspan="2" class="default">
-						<input type="checkbox" name="f_display_images" value="1"{if $displayImages eq true} checked="checked"{/if}>
+						<input type="checkbox" name="display_images" value="1"{if $displayImages eq true} checked="checked"{/if}>
 						{#prf_display_images#}
 					</td>
 				</tr>
+				<tr>
+                                        <td class="default" colspan="2">
+                                                <input type="checkbox" name="require_receipt" value="1"{if $requireReceipt eq true} checked="checked"{/if}>
+                                                {#prf_auto_require_receipt#}
+                                        </td>
+                                </tr>
+
 
 			<tr>
 					<td colspan="2" class="headers"><b>{#prf_signature_title#}</b></td>
@@ -132,12 +139,12 @@
 				<tr>
 					<td class="default" valign="top"> &nbsp;{#prf_signature#}</td>
 					<td class="default">
-						<textarea cols="40" rows="3" name="f_sig" class="textarea">{$signature}</textarea>
+						<textarea cols="40" rows="3" name="sig" class="textarea">{$signature}</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td class="default" colspan="2">
-						<input type="checkbox" name="f_add_sig" value="1"{if $addSignature eq true} checked="checked"{/if}>
+						<input type="checkbox" name="add_sig" value="1"{if $addSignature eq true} checked="checked"{/if}>
 						{#prf_auto_add_sign#}
 					</td>
 				</tr>

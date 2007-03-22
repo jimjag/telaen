@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<table width='100%' cellspacing=2 cellpadding=0 class='window_inner'>
+<table width='100%' cellspacing="2" cellpadding="0" class="window_inner">
 	<tr>
 		<td>
 			<table width='100%' cellpadding='0' cellspacing='0'>
@@ -139,7 +139,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><input type="checkbox" value="true" name="requireReceipt"><FONT CLASS="xx-normal">&nbsp;&nbsp;{#require_receipt#}</FONT></td>
+		<td><input type="checkbox" value="true" name="requireReceipt"{if $requireReceipt eq true} checked="checked"{/if}><FONT CLASS="xx-normal">&nbsp;&nbsp;{#require_receipt#}</FONT></td>
 	</tr>
 
 	<tr>
@@ -158,7 +158,7 @@
 	</div>
 </div>
 <!-- CHECKBOX HIDDEN FOR SIGNATURE TO WORK -->
-<input style="visibility:hidden" type=checkbox name=cksig onClick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}>
+<input style="visibility:hidden" type="checkbox" name="cksig" onclick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}>
 </form>
 
 </body>

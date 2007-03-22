@@ -69,21 +69,20 @@
 				<tr>
 					<td class="default">&nbsp;</td>
 					<td class="default">
-						<textarea cols=50 rows=15 id=body name=body>{$umBody|escape:"html"}</textarea>
-
+						<textarea cols="50" rows="15" id="body" name="body">{$umBody|escape:"html"}</textarea>
 					</td>
 				</tr>
 
 				<tr>
                                         <td class="headerright">{#require_receipt#}  &nbsp;</td>
-                                        <td class="default"><input type="checkbox" value="true" name="requireReceipt"></td>
+                                        <td class="default"><input type="checkbox" value="true" name="requireReceipt"{if $requireReceipt eq true} checked{/if}></td>
                                 </tr>
 				
 
 				{if !$umAddSignature && $umHaveSignature}
 				<tr>
 					<td  class="headerright">{#add_signature#} &nbsp;</td>
-					<td class="default"><input type=checkbox name=cksig onClick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
+					<td class="default"><input type="checkbox" name="cksig" onclick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
 				</tr>
 				{/if}
 

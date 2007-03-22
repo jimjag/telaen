@@ -206,6 +206,7 @@ prf_default_editor_mode_text			= "Plain text"
 prf_default_editor_mode_html			= "Advanced HTML editor"
 prf_time_to_refesh				= Automatically check for new mail (minutes)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+prf_auto_require_receipt			= Require read receipt by default
 
 prf_mgs_saved					= Preferences saved
 

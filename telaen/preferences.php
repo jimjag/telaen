@@ -62,23 +62,24 @@ if(isset($_POST['action'])) {
                 
 		case "savePrefs":
 			// pick the new settings and save			
-			$myprefs["real-name"]           = $_POST['f_real_name'];
-		        $myprefs["reply-to"]            = $_POST['f_reply_to'];
-		        $myprefs["save-to-trash"]       = $_POST['f_save_trash'];
-		        $myprefs["st-only-read"]        = $_POST['f_st_only_read'];
-		        $myprefs["empty-trash"]         = $_POST['f_empty_on_exit'];
-		        $myprefs["empty-spam"]          = $_POST['f_empty_spam_on_exit'];
-		        $myprefs["unmark-read"]         = $_POST['f_unmark_read_on_exit'];
-		        $myprefs["save-to-sent"]        = $_POST['f_save_sent'];
-		        $myprefs["rpp"]                 = $_POST['f_rpp'];
-		        $myprefs["add-sig"]             = $_POST['f_add_sig'];
-		        $myprefs["signature"]           = $_POST['f_sig'];
-		        $myprefs["timezone"]            = $_POST['f_timezone'];
-		        $myprefs["display-images"]      = $_POST['f_display_images'];
-		        $myprefs["editor-mode"]         = $_POST['f_editor_mode'];
-		        $myprefs["refresh-time"]        = $_POST['f_refresh_time'];
+			$myprefs["real-name"]           = $_POST['real_name'];
+		        $myprefs["reply-to"]            = $_POST['reply_to'];
+		        $myprefs["save-to-trash"]       = $_POST['save_trash'];
+		        $myprefs["st-only-read"]        = $_POST['st_only_read'];
+		        $myprefs["empty-trash"]         = $_POST['empty_trash_on_exit'];
+		        $myprefs["empty-spam"]          = $_POST['empty_spam_on_exit'];
+		        $myprefs["unmark-read"]         = $_POST['unmark_read_on_exit'];
+		        $myprefs["save-to-sent"]        = $_POST['save_sent'];
+		        $myprefs["rpp"]                 = $_POST['rpp'];
+		        $myprefs["add-sig"]             = $_POST['add_sig'];
+		        $myprefs["signature"]           = $_POST['sig'];
+		        $myprefs["timezone"]            = $_POST['timezone'];
+		        $myprefs["display-images"]      = $_POST['display_images'];
+		        $myprefs["editor-mode"]         = $_POST['editor_mode'];
+		        $myprefs["refresh-time"]        = $_POST['refresh_time'];
 		        $myprefs["first-login"]         = 1;
-		        $myprefs["spamlevel"]           = $_POST['f_spamlevel'];
+		        $myprefs["spamlevel"]           = $_POST['spamlevel'];
+			$myprefs["require-receipt"]	= $_POST['require_receipt'];
 		        $myprefs["version"]             = $appversion;
 		        save_prefs($myprefs);
 			unset($myprefs);
@@ -200,6 +201,10 @@ $smarty->assign("saveSent",$status);
 
 $status = ($prefs["display-images"])? true:false;
 $smarty->assign("displayImages",$status);
+
+$status = ($prefs["require-receipt"])? true:false;
+$smarty->assign("requireReceipt",$status);
+
 
 // spam options
 $status = ($prefs["empty-spam"])? true:false;

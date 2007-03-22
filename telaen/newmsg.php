@@ -182,35 +182,38 @@ if(isset($tipo) && $tipo == "send") {
 	$smarty->display("$selected_theme/newmsg-result.htm");
 
 } else {
-
-	$priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority ;
-
-	$uagent = $_SERVER["HTTP_USER_AGENT"];
-	$isMac = ereg("Mac",$uagent);
-	$isOpera = ereg("Opera",$uagent);
-
-	$uagent = explode("; ",$uagent);
-	$uagent = explode(" ",$uagent[1]);
-	$bname = strtoupper($uagent[0]);
-	$bvers = $uagent[1];
-	if(!isset($textmode)) $textmode = null;
-	$show_advanced = ((!$textmode) && ($prefs["editor-mode"] != "text")) ? 1 : 0 ;
-
-	$js_advanced = ($show_advanced) ? "true" : "false" ;
-
-	$signature = $prefs["signature"];
-	if($show_advanced) $signature = nl2br($signature);
-
-	$add_sig = $prefs["add-sig"];
 	
-	$umAddSig = ($add_sig) ? 1 : 0 ;
+	// priority
+	$priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority;
+	$smarty->assign("umPriority",$priority_level);
 
+        // signature
+        $signature = $prefs["signature"];
+        if($show_advanced)
+                $signature = nl2br($signature);
+	
+        $add_sig = $prefs["add-sig"];
+	$addSignature = ($add_sig) ? 1 : 0 ;
+        $smarty->assign("umAddSignature", $addSignature);
+
+        // return receipt
+        $rr = ($prefs["require-receipt"])? true:false;
+        $smarty->assign("requireReceipt", $rr);
+
+	// hidden inputs ---- Note: these should be moved into template...
 	$forms = "<input type=\"hidden\" name=\"tipo\" value=\"edit\" />
 	<input type=\"hidden\" name=\"is_html\" value=\"$js_advanced\" />
 	<input type=\"hidden\" name=\"folder\" value=\"$folder\" />
 	<input type=\"hidden\" name=\"sig\" value=\"".htmlspecialchars($signature)."\" />
 	<input type=\"hidden\" name=\"textmode\" value=\"$textmode\" />
 	";
+	$smarty->assign("umForms",$forms);
+
+	// adv editor
+	if(!isset($textmode))
+                $textmode = null;
+        $show_advanced = ((!$textmode) && ($prefs["editor-mode"] != "text")) ? 1 : 0 ;
+        $js_advanced = ($show_advanced) ? "true" : "false" ;
 
 	$jssource = "";
 
@@ -231,9 +234,9 @@ if(isset($tipo) && $tipo == "send") {
 			if(bsig_added || sig.value == '') return false;
 			if(cksig.checked) {
 				if(bIs_html) {					
-					body.value +='<br /><br />--<br />'+sig.value;
+					body.value +='<br /><br />----<br />'+sig.value;
 				} else
-					body.value += '\\r\\n\\r\\n--\\r\\n'+sig.value;
+					body.value += '\\r\\n\\r\\n----\\r\\n'+sig.value;
 			}
 			cksig.disabled = true;
 			bsig_added = true;
@@ -367,14 +370,12 @@ if(isset($tipo) && $tipo == "send") {
 	</script>
 
 	";
-
-	$smarty->assign("umPriority",$priority_level);
-	$smarty->assign("umAddSignature",$umAddSig);
-	$smarty->assign("umForms",$forms);
+	
 	$smarty->assign("umJS",$jssource);
-	if(!isset($body)) $body = null;
-	$body = stripslashes($body);
 
+	if(!isset($body))
+		$body = null;
+	$body = stripslashes($body);
 
 	if(isset($rtype)) {
 		$mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
@@ -575,13 +576,13 @@ $tmpbody";
 			break;
 		}
 		if($add_sig && !empty($signature)) 
-			if($show_advanced) $body = "<br><br>--<br>$signature<br><br>$body";
-			else $body = "\r\n\r\n--\r\n$signature\r\n\r\n$body";
+			if($show_advanced) $body = "<br><br>----<br>$signature<br><br>$body";
+			else $body = "\r\n\r\n----\r\n$signature\r\n\r\n$body";
 	} else
 
 		if($add_sig && !empty($signature) && empty($body)) 
-			if($show_advanced) $body = "<br><br>--<br>$signature<br><br>$body";
-			else $body = "\r\n\r\n--\r\n$signature\r\n\r\n$body";
+			if($show_advanced) $body = "<br><br>----<br>$signature<br><br>$body";
+			else $body = "\r\n\r\n----\r\n$signature\r\n\r\n$body";
 
 	$haveSig = empty($signature) ? 0 : 1 ;
 	$smarty->assign("umHaveSignature",$haveSig);
