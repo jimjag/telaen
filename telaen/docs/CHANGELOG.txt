@@ -18,6 +18,8 @@ Telaen:
 
 1.2.0-dev
 
+[New]	Smarty upgraded to 2.6.18.
+
 [New]	Quota handling can now be set per user or per
 	domain (or any combination) via the new $quota_limits
 	config variable.
