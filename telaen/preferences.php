@@ -96,27 +96,31 @@ if(isset($_POST['action'])) {
 
                         // set the folder only for move
                         $destFolder = "";
-                        if(intval($_POST['filter_type']) == 1) {
+                        if(intval($_POST['filter_type']) == FL_TYPE_MOVE) {
                                 $destFolder = trim($_POST['filter_folder']);
+				// Check if the user entered a valid folder
+				if(!valid_folder_name($destFolder) || !file_exists($userfolder.$destFolder))
+					break;
                         }
+			
+			// the matching string must not be empty
+			$match = trim($_POST['filter_match']);
+			if($match == "")
+				break;
 
-			// Check if the user entered a valid folder
-			if(valid_folder_name($destFolder) &&
-			   file_exists($userfolder.$destFolder)) {
+			// add the filter
+			$newFilter =  array(
+				"type"          => intval($_POST['filter_type']),
+				"field"         => intval($_POST['filter_field']),
+				"match"         => $match,
+				"moveto"        => $destFolder
+			);
+			array_push($filters, $newFilter);
 
-				// add the filter
-				$newFilter =  array(
-					"type"          => intval($_POST['filter_type']),
-					"field"         => intval($_POST['filter_field']),
-					"match"         => trim($_POST['filter_match']),
-					"moveto"        => $destFolder
-				);
-				array_push($filters, $newFilter);
-
-				// save the file
-				$content = base64_encode(serialize($filters));
-				$UM->_save_file($filename, $content);
-			}
+			// save the file
+			$content = base64_encode(serialize($filters));
+			$UM->_save_file($filename, $content);
+			
                         break;
 
 		case "delFilter":
