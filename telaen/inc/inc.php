@@ -71,10 +71,11 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		$f_server 	= strtolower(getenv("HTTP_HOST"));
 		$f_server 	= str_replace($mail_detect_remove,"",$f_server);
 		$f_server 	= $mail_detect_prefix.$f_server;
+		$f_email	= trim($f_email);
 
 		if(ereg("(.*)@(.*)",$f_email,$regs)) {
-			$f_user = $regs[1];
-			$domain = $regs[2];
+			$f_user = trim($regs[1]);
+			$domain = trim($regs[2]);
 			if($mail_detect_login_type != "") $f_user = eregi_replace("%user%",$f_user,eregi_replace("%domain%",$domain,$mail_detect_login_type));
 		}
 
@@ -85,10 +86,11 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		break;
 
 	case "ONE-FOR-EACH": 
-		$domain 		= $mail_servers[$six]["domain"];
+		$f_user			= trim($f_user);
+		$domain 		= trim($mail_servers[$six]["domain"]);
 		$f_email 		= $f_user."@".$domain;
 		$f_server 		= $mail_servers[$six]["server"];
-		$login_type 	= $mail_servers[$six]["login_type"];
+		$login_type 		= $mail_servers[$six]["login_type"];
 
 		$f_protocol		= $mail_servers[$six]["protocol"];
 		$f_port			= $mail_servers[$six]["port"];
@@ -98,12 +100,13 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		break;
 
 	case "ONE-FOR-ALL": 
+		$f_email	= trim($f_email);
 		if(ereg("(.*)@(.*)",$f_email,$regs)) {
-			$f_user = $regs[1];
-			$domain = $regs[2];
+			$f_user = trim($regs[1]);
+			$domain = trim($regs[2]);
 			if($one_for_all_login_type != "") $f_user = eregi_replace("%user%",$f_user,eregi_replace("%domain%",$domain,$one_for_all_login_type));
 		}
-		$f_server = $default_mail_server;
+		$f_server	= $default_mail_server;
 
 		$f_protocol	= $default_protocol;
 		$f_port		= $default_port;
@@ -112,10 +115,10 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		break;
 	}
 
-	$UM->mail_email 	= $sess["email"]  		= stripslashes($f_email);
-	$UM->mail_user 		= $sess["user"]   		= stripslashes($f_user);
-	$UM->mail_pass 		= $sess["pass"]   		= stripslashes($f_pass); 
-	$UM->mail_server 	= $sess["server"] 		= stripslashes($f_server); 
+	$UM->mail_email 	= $sess["email"]	= $f_email	= trim(stripslashes($f_email));
+	$UM->mail_user 		= $sess["user"]   	= $f_user	= trim(stripslashes($f_user));
+	$UM->mail_pass 		= $sess["pass"]   	= $f_pass	= stripslashes($f_pass); 
+	$UM->mail_server 	= $sess["server"] 	= $f_server	= stripslashes($f_server); 
 
 	$UM->mail_port 		= $sess["port"] 		= $f_port; 
 	$UM->mail_protocol	= $sess["protocol"] 		= $f_protocol; 

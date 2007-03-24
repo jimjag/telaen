@@ -367,4 +367,8 @@ function print_struc($obj) {
 	echo("</pre>");
 }
 
+function valid_folder_name($name) {
+	if ($name == "") return false;
+	return !preg_match("/[^A-Za-z0-9\-]/",$name);
+}
 ?>

@@ -100,19 +100,23 @@ if(isset($_POST['action'])) {
                                 $destFolder = trim($_POST['filter_folder']);
                         }
 
-                        // add the filter
-                        $newFilter =  array(
-		                "type"          => intval($_POST['filter_type']),
-        		        "field"         => intval($_POST['filter_field']),
-                		"match"         => trim($_POST['filter_match']),
-	                	"moveto"        => $destFolder
-        	        );
-			array_push($filters, $newFilter);
+			// Check if the user entered a valid folder
+			if(valid_folder_name($destFolder) &&
+			   file_exists($userfolder.$destFolder)) {
 
-			// save the file
-		        $content = base64_encode(serialize($filters));
-		        $UM->_save_file($filename, $content);
+				// add the filter
+				$newFilter =  array(
+					"type"          => intval($_POST['filter_type']),
+					"field"         => intval($_POST['filter_field']),
+					"match"         => trim($_POST['filter_match']),
+					"moveto"        => $destFolder
+				);
+				array_push($filters, $newFilter);
 
+				// save the file
+				$content = base64_encode(serialize($filters));
+				$UM->_save_file($filename, $content);
+			}
                         break;
 
 		case "delFilter":

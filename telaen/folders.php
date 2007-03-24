@@ -24,8 +24,7 @@ $newfolder = trim($newfolder);
 $require_update = false;
 
 
-if($newfolder != "" && 
-	!ereg("[^A-Za-z0-9\-]",$newfolder) && 
+if(valid_folder_name($newfolder) && 
 	!file_exists($userfolder.$newfolder)) {
 	$UM->mail_create_box($newfolder);
 	$require_update = true;
@@ -34,8 +33,7 @@ if($newfolder != "" &&
 
 // check and delete the especified folder: system folders can not be deleted
 if(	!$UM->is_system_folder($delfolder) &&
-	$delfolder != "" && 
-	!ereg("[^A-Za-z0-9\-]",$delfolder) &&
+	valid_folder_name($delfolder) &&
 	(strpos($delfolder,"..") === false)) {
 	if($UM->mail_delete_box($delfolder)) {
 		unset($sess["headers"][base64_encode(strtolower($delfolder))]);
