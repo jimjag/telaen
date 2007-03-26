@@ -27,15 +27,15 @@
 	<td height="10" style="padding:2;background-color:#ffffe1;font-family: tahoma,verdana,sans;font-weight: normal ;font-size: 11px;color: #000000;">
 		<nobr>
 		{if $errorCode eq "0"}
-				{#err_login_msg#}: {#error_login#}
+			{#err_login_msg#}: {#error_login#}
 		{elseif $errorCode eq "1"}
-				{#err_system_msg#}: {#error_connect#}
+			{#err_system_msg#}: {#error_connect#}
 		{elseif $errorCode eq "2"}		
-				{#err_system_msg#}: {#error_retrieving#}
+			{#err_system_msg#}: {#error_retrieving#}
 		{elseif $errorCode eq "4"}
-             	{#err_system_msg#}: {#error_session_expired#}				
+			{#err_login_msg#}: {#error_session_expired#}	
 		{else}
-				{#err_system_msg#}: {#error_other#}
+			{#err_system_msg#}: {#error_other#}
 		{/if}
 		</nobr>
 	</td></tr>
