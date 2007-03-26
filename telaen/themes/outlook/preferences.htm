@@ -35,6 +35,9 @@
 							<td id="tab_messages" class="tab_info_hidden">
 								<table cellpadding='0' cellspacing='0'><tr><td><img src="themes/outlook/images/tab_left.gif"></td><td background="themes/outlook/images/tab_middle.gif" onclick="info.className='tab_hidden';trash.className='tab_hidden';messages.className='tab_visible';tab_info.className='tab_info_hidden';tab_trash.className='tab_info_hidden';tab_messages.className='tab_info_visible';"><nobr><font class='xx-normal'>&nbsp;{#prf_trash_title#}&nbsp;</font></nobr></td><td><img src="themes/outlook/images/tab_right.gif"></td></tr></table>
 							</td>
+							<td id="tab_filters" class="tab_info_hidden">
+								<table cellpadding='0' cellspacing='0'><tr><td><img src="themes/outlook/images/tab_left.gif"></td><td background="themes/outlook/images/tab_middle.gif" onclick="info.className='tab_hidden';trash.className='tab_hidden';messages.className='tab_hidden';tab_info.className='tab_info_hidden';tab_trash.className='tab_info_hidden';tab_messages.className='tab_info_hidden';"><nobr><font class='xx-normal'>&nbsp;{#prf_trash_title#}&nbsp;</font></nobr></td><td><img src="themes/outlook/images/tab_right.gif"></td></tr></table>
+							</td>
 
 							<td class="tab_blank" width='100%'>&nbsp;</td>
 						</tr>
@@ -44,7 +47,8 @@
 			</table>
 			<table width='100%' cellpadding='15' cellspacing='0' class="tab">
 				<tr><td width='100%' height='320'>
-					<div id="info" class="tab_visible">
+					
+					<div id="info" class="tab_visible"> <!-- first tab -->
 					<fieldset><legend><font class='xx-normal'>{#prf_general_title#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr>
@@ -72,7 +76,7 @@
 					</fieldset>
 					</div>
 
-					<div id="trash" class="tab_hidden">
+					<div id="trash" class="tab_hidden"> <!-- second tab -->
 					<fieldset><legend><font class='xx-normal'>{#prf_messages_title#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr>
@@ -112,9 +116,9 @@
 						</tr>
 						</table>
 					</fieldset>
-
 					</div>
-					<div id="messages" class="tab_hidden">
+
+					<div id="messages" class="tab_hidden"> <!-- third tab -->
 					<fieldset><legend><font class='xx-normal'>{#prf_trash_title#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr><td><font class='xx-normal'><input type=checkbox name=f_save_trash onClick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" OnClick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym></font></td></tr>
@@ -135,9 +139,63 @@
 					<!-- end telaen adds -->
 
 					</div>
+					
+					<div id="filters" class="tab_hidden"> <!-- fourth tab - filters -->
+						<fieldset>
+							<legend><font class="xx-normal">{#filter_new#}</font></legend>
+						</fieldset>
+						<table width="100%" cellpadding="2" cellspacing="0">
+							<tr>
+								<td class="label" size="120">{#filter_field#}:</td>
+								<td>
+									<select name="filter_field">
+										<option value="1">{#filter_field_from#}</option>
+										<option value="2">{#filter_field_subject#}</option>
+										<option value="4">{#filter_field_to#}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="label">{#filter_field#}:</td>
+								<td>
+									 <input type="text" class="textbox" name="filter_match" size="30">
+								</td>
+							</tr>
+							<tr>
+			                                        <td class="label">
+			                                                {#filter_type#}:
+			                                        </td>
+			                                        <td>
+			                                                <select name="filter_type" onchange="checkMove();">
+			                                                        <option value="1">{#filter_type_move#}</option>
+			                                                        <option value="2">{#filter_type_delete#}</option>
+			                                                        <option value="4">{#filter_type_mark#}</option>
+			                                                </select>
+			                                        </td>
+			                                </tr>
+			                                <tr>
+			                                        <td class="label">
+			                                                {#filter_folder#}:
+			                                        </td>
+			                                        <td>
+			                                                <select name="filter_folder">
+			                                                {section name=i loop=$umPersonalFolders}
+			                                                        <option value="{$umPersonalFolders[i].name}">{$umPersonalFolders[i].name}</option>
+			                                                {/section}
+			                                                </select>
+			                                        </td>
+			                                </tr>
+			                                <tr>
+			                                        <td class="default" align="center" colspan="2">
+			                                                <input type="submit" class="button" value="{#filter_add#}">
+			                                        </td>
+			                                </tr>
+						</table>
+					</div>
+
 				</td></tr>
 				<tr><td>
-				<input type=submit value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
+				<input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
 				</td></tr>
 			</table>
 		</td>
