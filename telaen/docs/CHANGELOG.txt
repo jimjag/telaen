@@ -29,6 +29,9 @@ Telaen:
 
 [New]	Email filters
 
+[Fix]	Fixed regression with forward/reply of email with embedded
+	images. downloads.php causes logout on recipient if uses telaen.
+
 [Fix]   Various performance improvements
 
 [Fix] 	IMAP bug: extra text added on saved sent message cause wrong date/time display

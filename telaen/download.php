@@ -14,7 +14,7 @@ require("./inc/inc.php");
 
 // check for main parameters
 if(!isset($_GET['folder']) || !isset($_GET['ix']))
-	redirect_and_exit("index.php?err=3", true);
+	die();
 
 $folder = $_GET['folder'];
 $ix = $_GET['ix'];
@@ -22,7 +22,7 @@ $ix = $_GET['ix'];
 // ensure we have email infos
 $mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
 if(!is_array($mail_info))
-        redirect_and_exit("index.php?err=3", true);
+	die();
 
 // check if we are downloading an attachment or the entire message
 if(isset($_GET['attach'])) {
@@ -35,7 +35,7 @@ if(isset($_GET['attach'])) {
 if($downAll) {
 	$sourceFile = $mail_info['localname']; 
 	if(ereg("\\.\\.",$sourceFile) || !file_exists($sourceFile)) {
-                redirect_and_exit("index.php?err=3", true);
+		die();
         }
 
 	$size = filesize($sourceFile);
@@ -52,7 +52,7 @@ if($downAll) {
 
 	$sourceFile = $attach["filename"];
 	if(ereg("\\.\\.",$sourceFile) || !file_exists($sourceFile)) {
-		redirect_and_exit("index.php?err=3", true);
+		die();
 	}
 	
 	$size = filesize($sourceFile);
