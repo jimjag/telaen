@@ -187,6 +187,12 @@ if(isset($tipo) && $tipo == "send") {
 	$priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority;
 	$smarty->assign("umPriority",$priority_level);
 
+	// adv editor
+	if(!isset($textmode))
+                $textmode = null;
+        $show_advanced = ((!$textmode) && ($prefs["editor-mode"] != "text")) ? 1 : 0 ;
+        $js_advanced = ($show_advanced) ? "true" : "false" ;
+
         // signature
         $signature = $prefs["signature"];
         if($show_advanced)
@@ -209,11 +215,6 @@ if(isset($tipo) && $tipo == "send") {
 	";
 	$smarty->assign("umForms",$forms);
 
-	// adv editor
-	if(!isset($textmode))
-                $textmode = null;
-        $show_advanced = ((!$textmode) && ($prefs["editor-mode"] != "text")) ? 1 : 0 ;
-        $js_advanced = ($show_advanced) ? "true" : "false" ;
 
 	$jssource = "";
 
