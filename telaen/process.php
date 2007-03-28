@@ -26,6 +26,7 @@ $headers = null;
 $folder_key = base64_encode(strtolower($folder));
 $folder_key_inbox = base64_encode("inbox");
 $folder_key_spam = base64_encode("spam");
+$is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam);
 
 if(!array_key_exists("headers",$sess)) $sess["headers"] = array();
 	
@@ -54,7 +55,7 @@ if( !is_array($headers)
 			$other_folder_key = $folder_key_inbox;
 		}
 	}
-	$messagecount = count($sess["headers"][$folder_key]);
+	$messagecount = count($headers);
 
 	if(isset($start_pos) && isset($end_pos)) {
 		$delarray = Array();
@@ -94,7 +95,7 @@ if( !is_array($headers)
 			/*
 			 * Add the spamfolder if we have one.
 			 */
-			if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
+			if ($UM->_autospamfolder && $is_inbox_or_spam) {
 				$j = count($delarray);
 				$othercount = count($sess["headers"][$other_folder_key]);
 				for($i=0;$i<$othercount;$i++) {
@@ -121,7 +122,7 @@ if( !is_array($headers)
 			 * our internal list does not match what we got on the server.
 			 */
 			if ($UM->mail_protocol == "pop3" && $expunge 
-				&& ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
+				&& $is_inbox_or_spam) {
 			
 				if ($mail_use_forcedquit) {
 					$UM->mail_disconnect_force();					
@@ -168,7 +169,7 @@ if( !is_array($headers)
 						$subtract++;
 						unset ($sess["headers"][$folder_key][$ubiid]);
 					} else {
-						if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
+						if ($UM->_autospamfolder && $is_inbox_or_spam) {
 							$sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
 							$sess["headers"][$myfold][$ubiid]["id"] -= $subtract;
 						} else {
@@ -200,7 +201,7 @@ if( !is_array($headers)
 					$sess["headers"][$folder_key] = Array();
 				}
 
-				if ($UM->_autospamfolder && ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam)) {
+				if ($UM->_autospamfolder && $is_inbox_or_spam) {
 					/*
 					 * Rebuild the folder array.
 					 */
@@ -230,7 +231,7 @@ if( !is_array($headers)
 				 */
 				unset ($sess["headers"][$folder_key]);
 				$sess["headers"][$folder_key] = Array();
-				if ($UM->_autospamfolder) {
+				if ($UM->_autospamfolder && $is_inbox_or_spam) {
 					unset ($sess["headers"][$other_folder_key]);
 					$sess["headers"][$other_folder_key] = Array();
 				}
@@ -253,7 +254,7 @@ if( !is_array($headers)
 	/*
 	 * If we deleted mails, the message list has already been reloaded.
 	 */
-	if(!$expunge || ($folder_key != $folder_key_inbox && $folder_key != $folder_key_spam)) {
+	if(!$expunge || !$is_inbox_or_spam) {
 		require("./get_message_list.php");
 		require("./apply_filters.php");
 	}
