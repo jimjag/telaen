@@ -31,7 +31,7 @@
 					<td class="default"> &nbsp;{#prf_time_zone#}</td>
 					<td class="default">
 						<select name="timezone">
-						{html_options options=$timezoneVals selected=$timezone}
+							{html_options options=$timezoneVals selected=$timezone}
 						</select>
 					</td>
 				</tr>
@@ -66,12 +66,6 @@
 						{#prf_empty_on_exit#}
 					</td>
 				</tr>				
-				<tr>
-					<td class="default" colspan="2">
-						<input type="checkbox" name="unmark_read_on_exit" value="1"{if $unmarkReadOnExit eq true} checked="checked"{/if}>
-						{#prf_unmark_read_on_exit#}
-					</td>
-				</tr>
 				<tr>
                                         <td colspan="2"  class="headers"><b>{#spam_extended#}</b></td>
                                 </tr>
@@ -131,9 +125,15 @@
                                                 {#prf_auto_require_receipt#}
                                         </td>
                                 </tr>
+				<tr>
+					<td class="default" colspan="2">
+						<input type="checkbox" name="unmark_read_on_exit" value="1"{if $unmarkReadOnExit eq true} checked="checked"{/if}>
+						{#prf_unmark_read_on_exit#}
+					</td>
+                                </tr>
 
 
-			<tr>
+				<tr>
 					<td colspan="2" class="headers"><b>{#prf_signature_title#}</b></td>
 				</tr>
 				<tr>
@@ -203,7 +203,7 @@
                                                 {#filter_folder#}:
                                         </td>
                                         <td class="default">
-						<select name="filter_folder">
+                                     		<select name="filter_folder">
 						{section name=i loop=$umPersonalFolders}
 							<option value="{$umPersonalFolders[i].name}">{$umPersonalFolders[i].name}</option>
 						{/section}
