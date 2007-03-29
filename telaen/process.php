@@ -167,15 +167,10 @@ if( !is_array($headers)
 
 					if ($del) {
 						$subtract++;
-						unset ($sess["headers"][$folder_key][$ubiid]);
+						unset ($sess["headers"][$myfold][$ubiid]);
 					} else {
-						if ($UM->_autospamfolder && $is_inbox_or_spam) {
-							$sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
-							$sess["headers"][$myfold][$ubiid]["id"] -= $subtract;
-						} else {
-							$sess["headers"][$folder_key][$ubiid]["msg"] -= $subtract;
-							$sess["headers"][$folder_key][$ubiid]["id"] -= $subtract;
-						}
+						$sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
+						$sess["headers"][$myfold][$ubiid]["id"] -= $subtract;
 					}
 				}
 
@@ -194,12 +189,7 @@ if( !is_array($headers)
 				 * Recreate empty arrays in the case we deleted all existing mails.
 				 */
 				unset ($sess["headers"][$folder_key]);
-				if (count($newarray) > 0) {
-					// array_qsort2($newarray,$sortby,$sortorder);
-					$sess["headers"][$folder_key] = $newarray;
-				} else {
-					$sess["headers"][$folder_key] = Array();
-				}
+				$sess["headers"][$folder_key] = $newarray;
 
 				if ($UM->_autospamfolder && $is_inbox_or_spam) {
 					/*
@@ -217,12 +207,7 @@ if( !is_array($headers)
 					 * Recreate empty arrays in the case we deleted all existing mails.
 					 */
 					unset ($sess["headers"][$other_folder_key]);
-					if (count($newotherarray) > 0) {
-						// array_qsort2($newotherarray,$sortby,$sortorder);
-						$sess["headers"][$other_folder_key] = $newotherarray;
-					} else {
-						$sess["headers"][$other_folder_key] = Array();
-					}
+					$sess["headers"][$other_folder_key] = $newotherarray;
 				}
 			} else {
 				/*
