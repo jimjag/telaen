@@ -185,15 +185,12 @@ if( !is_array($headers)
 						$y++;
 					}
 				}
-				/*
-				 * Recreate empty arrays in the case we deleted all existing mails.
-				 */
 				unset ($sess["headers"][$folder_key]);
 				$sess["headers"][$folder_key] = $newarray;
 
 				if ($UM->_autospamfolder && $is_inbox_or_spam) {
 					/*
-					 * Rebuild the folder array.
+					 * Rebuild the SPAM/INBOX folder array.
 					 */
 					$y = 0;
 					$newotherarray = Array();
@@ -203,9 +200,6 @@ if( !is_array($headers)
 							$y++;
 						}
 					}
-					/*
-					 * Recreate empty arrays in the case we deleted all existing mails.
-					 */
 					unset ($sess["headers"][$other_folder_key]);
 					$sess["headers"][$other_folder_key] = $newotherarray;
 				}
