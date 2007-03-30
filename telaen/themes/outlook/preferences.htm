@@ -12,10 +12,8 @@
 
 </head>
 <body>
-<form name="form1" action="preferences.php" method="post">
 
-
-<table width='100%' cellspacing=2 cellpadding=0 class='window_inner'>
+<table width='100%' cellspacing="2" cellpadding="0" class="window_inner">
 	<tr>
 		<td>
 			<table width='100%' cellpadding='0' cellspacing='0'>
@@ -23,74 +21,124 @@
 			</table>
 			<table width='100%' cellpadding='0' cellspacing='0'>
 				<tr>
-					<td height=30 valign='bottom'>
+					<td height="30" valign="bottom">
 						<table width='100%' cellpadding='0' cellspacing='0'>
 						<tr>
-							<td id="tab_info" class="tab_info_visible">
-								<table cellpadding='0' cellspacing='0'><tr><td><img src="themes/outlook/images/tab_left.gif"></td><td background="themes/outlook/images/tab_middle.gif" onclick="info.className='tab_visible';trash.className='tab_hidden';messages.className='tab_hidden';tab_info.className='tab_info_visible';tab_trash.className='tab_info_hidden';tab_messages.className='tab_info_hidden';"><nobr><font class='xx-normal'>&nbsp;{#prf_general_title#}&nbsp;</font></nobr></td><td><img src="themes/outlook/images/tab_right.gif"></td></tr></table>
-							</td>
-							<td id="tab_trash" class="tab_info_hidden">
-								<table cellpadding='0' cellspacing='0'><tr><td><img src="themes/outlook/images/tab_left.gif"></td><td background="themes/outlook/images/tab_middle.gif" onclick="info.className='tab_hidden';trash.className='tab_visible';messages.className='tab_hidden';tab_info.className='tab_info_hidden';tab_trash.className='tab_info_visible';tab_messages.className='tab_info_hidden';"><nobr><font class='xx-normal'>&nbsp;{#prf_messages_title#}&nbsp;</font></nobr></td><td><img src="themes/outlook/images/tab_right.gif"></td></tr></table>
-							</td>
-							<td id="tab_messages" class="tab_info_hidden">
-								<table cellpadding='0' cellspacing='0'><tr><td><img src="themes/outlook/images/tab_left.gif"></td><td background="themes/outlook/images/tab_middle.gif" onclick="info.className='tab_hidden';trash.className='tab_hidden';messages.className='tab_visible';tab_info.className='tab_info_hidden';tab_trash.className='tab_info_hidden';tab_messages.className='tab_info_visible';"><nobr><font class='xx-normal'>&nbsp;{#prf_trash_title#}&nbsp;</font></nobr></td><td><img src="themes/outlook/images/tab_right.gif"></td></tr></table>
-							</td>
-							<td id="tab_filters" class="tab_info_hidden">
-								<table cellpadding='0' cellspacing='0'><tr><td><img src="themes/outlook/images/tab_left.gif"></td><td background="themes/outlook/images/tab_middle.gif" onclick="info.className='tab_hidden';trash.className='tab_hidden';messages.className='tab_hidden';tab_info.className='tab_info_hidden';tab_trash.className='tab_info_hidden';tab_messages.className='tab_info_hidden';"><nobr><font class='xx-normal'>&nbsp;{#prf_trash_title#}&nbsp;</font></nobr></td><td><img src="themes/outlook/images/tab_right.gif"></td></tr></table>
-							</td>
+						<td id="tab_info" class="tab_info_visible">
+							<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td><img src="themes/outlook/images/tab_left.gif"></td>
+								<td background="themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('info')"><nobr><font class="xx-normal">&nbsp;{#prf_general_title#}&nbsp;</font></nobr></td>
+								<td><img src="themes/outlook/images/tab_right.gif"></td>
+							</tr>
+							</table>
+						</td>
+							
+						<td id="tab_trash" class="tab_info_hidden">
+							<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td><img src="themes/outlook/images/tab_left.gif"></td>
+								<td background="themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('trash')"><nobr><font class="xx-normal">&nbsp;{#prf_messages_title#}&nbsp;</font></nobr></td>
+								<td><img src="themes/outlook/images/tab_right.gif"></td>
+							</tr>
+							</table>
+						</td>
+						
+						<td id="tab_messages" class="tab_info_hidden">
+							<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td><img src="themes/outlook/images/tab_left.gif"></td>
+								<td background="themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('messages')"><nobr><font class="xx-normal">&nbsp;{#prf_trash_title#}&nbsp;</font></nobr></td>
+								<td><img src="themes/outlook/images/tab_right.gif"></td>
+							</tr>
+							</table>
+						</td>
+						
+						<td id="tab_filters" class="tab_info_hidden">
+							<table cellpadding="0" cellspacing="0">
+							<tr>
+								<td><img src="themes/outlook/images/tab_left.gif"></td>
+								<td background="themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('filters')"><nobr><font class="xx-normal">&nbsp;{#filter_title#}&nbsp;</font></nobr></td>
+								<td><img src="themes/outlook/images/tab_right.gif"></td>
+							</tr>
+							</table>
+						</td>
 
-							<td class="tab_blank" width='100%'>&nbsp;</td>
+						<td class="tab_blank" width='100%'>&nbsp;</td>
 						</tr>
 						</table>
 					</td>
 				</tr>
 			</table>
-			<table width='100%' cellpadding='15' cellspacing='0' class="tab">
-				<tr><td width='100%' height='320'>
+			<table width='100%' cellpadding='15' cellspacing='0' class="tab" height="430">
+				<tr><td width='100%'>
 					
+					<form name="prefs_form" id="prefs_form" action="preferences.php" method="post">
+					<input type="hidden" name="action" value="savePrefs">
+
 					<div id="info" class="tab_visible"> <!-- first tab -->
 					<fieldset><legend><font class='xx-normal'>{#prf_general_title#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr>
-							<td class='label' size="120">{#prf_name#}</td>
-							<td><input type=text name=f_real_name size=30 value="{$umRealName|escape:"html"}" class="textbox"></td>
+							<td class="label" size="120">{#prf_name#}</td>
+							<td><input type="text" name="real_name" size="30" value="{$realName|escape:"html"}" class="textbox"></td>
 						</tr>
 						<tr>
-							<td class='label' size="120">{#prf_reply_to#}</td>
-							<td><input type=text name=f_reply_to size=30 value="{$umReplyTo|escape:"html"}" class="textbox"></td>
+							<td class="label" size="120">{#prf_reply_to#}</td>
+							<td><input type="text" name="reply_to" size="30" value="{$replyTo|escape:"html"}" class="textbox"></td>
 						</tr>
 						<tr>
 							<td class='label' size="120">{#prf_time_zone#}</td>
-							<td>{$umTimezoneSelect}</td>
+							<td>
+							<select name="timezone">
+								{html_options options=$timezoneVals selected=$timezone}
+							</select>
+							</td>
 						</tr>
 						<tr>
 							<td class='label' size="120">{#prf_default_editor_mode#}</td>
 							<td>
-							<select name="f_editor_mode">
-								<option value="text"{if $umEditorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
-								<option value="html"{if $umEditorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
+							<select name="editor_mode">
+								<option value="text"{if $editorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
+								<option value="html"{if $editorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
 							</select>
 							</td>
 						</tr>
 						</table>
 					</fieldset>
+					
+					<table><tr><td>
+					<input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
+					</td></tr></table>
 					</div>
 
 					<div id="trash" class="tab_hidden"> <!-- second tab -->
 					<fieldset><legend><font class='xx-normal'>{#prf_messages_title#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr>
-							<td class='label' size="120">{#prf_page_limit#}</td>
-							<td>{$umRecordsPerPage}</td>
+							<td class="label" size="120">{#prf_page_limit#}</td>
+							<td>
+								<select name="rpp">
+								{html_options values=$msgPerPageVals output=$msgPerPageVals selected=$msgPerPage}
+								</select>
+							</td>
 						</tr>
 						<tr>
-							<td class='label' size="120">{#prf_time_to_refesh#}</td>
-							<td>{$umTimeToRefresh}</td>
+							<td class="label" size="120">{#prf_time_to_refesh#}</td>
+							<td>
+								<select name="refresh_time">	
+								{html_options values=$refreshTimeVals output=$refreshTimeVals selected=$refreshTime}
+								</select>	
+							</td>
 						</tr>
 						<tr>
-							<td colspan=2>
-								<input type=checkbox name=f_display_images value="1"{$umDisplayImages}><acronym style="cursor: hand;" OnClick="f_display_images.click()"><font class='xx-normal'>{#prf_display_images#}</font></acronym><br>
-								<input type="checkbox" name="f_unmark_read_on_exit" value="1"{$umUnmarkReadOnExit} /><acronym style="cursor: hand;" onclick="f_unmark_read_on_exit.click()"><font class='xx-normal'>{#prf_unmark_read_on_exit#}</font></acronym>
+							<td colspan="2">
+								<input type="checkbox" name="display_images" value="1"{if $displayImages eq true} checked="checked"{/if}>
+								<font class="xx-normal">{#prf_display_images#}</font><br>
+								<input type="checkbox" name="require_receipt" value="1"{if $requireReceipt eq true} checked="checked"{/if}>
+								<font class="xx-normal">{#prf_auto_require_receipt#}</font><br>
+								<input type="checkbox" name="unmark_read_on_exit" value="1" {if $unmarkReadOnExit eq true} checked="checked"{/if}>
+								<font class="xx-normal">{#prf_unmark_read_on_exit#}</font>
 							</td>
 
 						</tr>
@@ -100,7 +148,8 @@
 					<fieldset><legend><font class='xx-normal'>{#prf_sent_title#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr>
-							<td><font class='xx-normal'><input type=checkbox name=f_save_sent value="1"{$umSaveSent}><acronym style="cursor: hand;" OnClick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></font></td>
+							<td><input type="checkbox" name="save_sent" value="1"{if $saveSent eq true} checked="checked"{/if}>
+							<font class="xx-normal">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</font></td>
 						</tr>
 						</table>
 					</fieldset>
@@ -109,41 +158,77 @@
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr>
 							<td class='label' size="120">{#prf_signature#}</td>
-							<td>{$umSignature}</td>
+							<td><textarea cols="40" rows="3" name="sig" class="textarea">{$signature}</textarea></td>
 						</tr>
 						<tr>
-							<td colspan="2"><font class='xx-normal'><input type=checkbox name=f_add_sig value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym></font></td>
+							<td colspan="2"><input type="checkbox" name="add_sig" value="1"{if $addSignature eq true} checked="checked"{/if}>
+							<font class="xx-normal">{#prf_auto_add_sign#}</font></td>
 						</tr>
+
 						</table>
 					</fieldset>
+					<table><tr><td>
+                                        <input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
+                                        </td></tr></table>
+
 					</div>
 
 					<div id="messages" class="tab_hidden"> <!-- third tab -->
-					<fieldset><legend><font class='xx-normal'>{#prf_trash_title#}</font></legend>
-						<table width='100%' cellpadding='2' cellspacing='0'>
-						<tr><td><font class='xx-normal'><input type=checkbox name=f_save_trash onClick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" OnClick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym></font></td></tr>
-						<tr><td><font class='xx-normal'><input type=checkbox name=f_st_only_read onClick="return checkDis()" value="1"{$umSaveTrashOnlyRead}><acronym style="cursor: hand;" OnClick="f_st_only_read.click()">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</acronym></font></td></tr>
-						<tr><td><font class='xx-normal'><input type=checkbox name=f_empty_on_exit value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" OnClick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></font></td></tr>
+					<fieldset><legend><font class="xx-normal">{#prf_trash_title#}</font></legend>
+						<table width="100%" cellpadding="2" cellspacing="0">
+						<tr>
+							<td>
+								<input type="checkbox" name="save_trash" onClick="dis()" value="1"{if $saveTrash eq true} checked="checked"{/if}>
+								<font class="xx-normal">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</font>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" name="st_only_read" onclick="return checkDis()" value="1"{if $saveTrashOnlyRead eq true} checked="checked"{/if}>
+								<font class="xx-normal">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</font>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox" name="empty_trash_on_exit" value="1"{if $emptyTrashOnExit eq true} checked="checked"{/if}>
+								<font class='xx-normal'>{#prf_empty_on_exit#}</font>
+							</td>
+						</tr>
 						</table>
 					</fieldset>
 					<font class="xx-normal"><br></font>
 
-					<!-- telaen add for spam control -->
 					<fieldset><legend><font class='xx-normal'>{#spam_extended#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr><td class='label' size="120">{#prf_spam_level#}</td>
-							<td><select name=f_spamlevel>{html_options values=$umSpamLevelVals output=$umSpamLevelVals selected="$umSpamLevel"}</select></td></tr>
-						<tr><td colspan="2"><font class='xx-normal'><input type="checkbox" name="f_empty_spam_on_exit" value="1" {$umEmptySpamOnExit}><acronym style="cursor: hand;" onclick="f_empty_spam_on_exit.click()">{#prf_empty_spam_on_exit#}</acronym></font></td></tr>
+							<td>
+							<select name="spamlevel">
+							{html_options values=$spamLevelVals output=$spamLevelVals selected=$spamLevel}
+							</select>
+							</td>
+						</tr>
+						<tr>
+						<td colspan="2">
+							<input type="checkbox" name="empty_spam_on_exit" value="1"{if $emptySpamOnExit eq true} checked="checked"{/if}>
+							<font class='xx-normal'>{#prf_empty_spam_on_exit#}</font>
+						</td>
+						</tr>
 						</table>
+				
 					</fieldset>
-					<!-- end telaen adds -->
+					
+					<table><tr><td>
+                                        <input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
+                                        </td></tr></table>
 
 					</div>
+					</form>
 					
 					<div id="filters" class="tab_hidden"> <!-- fourth tab - filters -->
-						<fieldset>
-							<legend><font class="xx-normal">{#filter_new#}</font></legend>
-						</fieldset>
+					<fieldset>
+						<legend><font class="xx-normal">{#filter_new#}</font></legend>
+						<form action="preferences.php" method="post">
+						<input type="hidden" name="action" value="addFilter">
 						<table width="100%" cellpadding="2" cellspacing="0">
 							<tr>
 								<td class="label" size="120">{#filter_field#}:</td>
@@ -180,7 +265,7 @@
 			                                        <td>
 			                                                <select name="filter_folder">
 			                                                {section name=i loop=$umPersonalFolders}
-			                                                        <option value="{$umPersonalFolders[i].name}">{$umPersonalFolders[i].name}</option>
+									<option value="{$umPersonalFolders[i].name}">{$umPersonalFolders[i].name}</option>
 			                                                {/section}
 			                                                </select>
 			                                        </td>
@@ -191,11 +276,57 @@
 			                                        </td>
 			                                </tr>
 						</table>
+						</form>
+					</fieldset>
+					<br>
+					<fieldset>
+						<legend><font class="xx-normal">{#filter_list#}</font></legend>
+						<form id="filters_form" name="filters_form" action="preferences.php" method="post">
+						<input type="hidden" name="action" value="delFilter">
+				
+			<table cellspacing="0" cellpadding="0" width="100%" border="0" bgcolor="white">                       
+                                <tr>
+					<td class="headers">&nbsp;</td>
+                                        <td class="headers">{#filter_field#}</td>
+                                        <td class="headers">{#filter_match#}</td>
+                                        <td class="headers">{#filter_type#}</td>
+                                        <td class="headers">{#filter_folder#}</td>
+                                        <td class="headers">&nbsp;</td>
+                                </tr>
+                                {section name=filter loop=$filterList}
+                                <tr>
+					<td width="18" align="center">
+						<input type="checkbox" id="cb{$smarty.section.filter.index}" name="filters_array[]" value="{$smarty.section.filter.index}">
+					</td>
+                                        <td class="label">
+                                        {if $filterList[filter].field eq 1}{#filter_field_from#}
+                                        {elseif $filterList[filter].field eq 2}{#filter_field_subject#}
+                                        {elseif $filterList[filter].field eq 4}{#filter_field_to#}{/if}
+                                        </td>
+                                        <td class="label">{$filterList[filter].match}</td>
+                                        <td class="label">
+                                        {if $filterList[filter].type eq 1}{#filter_type_move#}
+                                        {elseif $filterList[filter].type eq 2}{#filter_type_delete#}
+                                        {elseif $filterList[filter].type eq 4}{#filter_type_mark#}{/if}
+                                        </td>
+                                        <td class="label">{$filterList[filter].moveto}</td>
+                                        <td align="center">
+						<a href="#" onclick="filterDelete({$smarty.section.filter.index});return false;">[{#filter_delete#}]</a>
+					</td>
+                                </tr>
+				{sectionelse}
+				<tr><td class="label" align="center" colspan="6">{#filter_msg_nofilters#}</td></tr>
+                                {/section}
+				<tr>
+					<td><img src="themes/default/images/arrowblue.gif" alt=""></td>
+					<td>
+						<a href="#" onclick="document.filters_form.submit();return false;">{#filter_delete_selected#}</a>
+					</td>
+				</tr>
+			</table>	
+					</fieldset>
 					</div>
 
-				</td></tr>
-				<tr><td>
-				<input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
 				</td></tr>
 			</table>
 		</td>

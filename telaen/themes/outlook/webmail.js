@@ -29,4 +29,18 @@
 		}
 	}
 
+function switchPrefsTab(tab) {
+	// hide all
+	document.getElementById('info').className='tab_hidden';
+	document.getElementById('trash').className='tab_hidden';
+	document.getElementById('messages').className='tab_hidden';
+	document.getElementById('filters').className='tab_hidden';
+	document.getElementById('tab_info').className='tab_info_hidden';
+	document.getElementById('tab_trash').className='tab_info_hidden';
+	document.getElementById('tab_messages').className='tab_info_hidden';
+	document.getElementById('tab_filters').className='tab_info_hidden';
+	// show needed
+	document.getElementById('tab_'+tab).className='tab_info_visible';
+	document.getElementById(tab).className='tab_visible';
+}
 // -->	
