@@ -29,6 +29,7 @@ err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
 error_connect			= Ошибка подключения к почтовому серверу
 error_retrieving		= Ошибка получения письма - Папка входящие изменилась
+error_session_expired				= Your session is expired, please login again
 error_other				= Общий сбой системы
 
 #Invalid name of mailbox
@@ -200,56 +201,6 @@ priority_low			= Низкий
 priority_normal			= Средний
 priority_high			= Высокий
 
-[AdvancedEditor]
-
-adv_warning_text_mode1	= Деактивируйте эту функцию
-adv_warning_text_mode2	= чтобы воспользоваться дополнительной панелью
-
-adv_type_path			= Ввести URL:
-
-format_paragraph		= Параграф
-format_h1				= Стиль 1 <H1>
-format_h2				= Стиль 2 <H2>
-format_h3				= Стиль 3 <H3>
-format_h4				= Стиль 4 <H4>
-format_h5				= Стиль 5 <H5>
-format_h6				= Стиль 6 <H6>
-format_pre				= Форматирование <PRE>
-format_clear_all		= Очистить всё
-
-format_font				= Шрифт
-format_size				= Размер
-
-format_color			= Цвет
-format_back				= Фон
-color_red				= Красный
-color_blue				= Синий
-color_green				= Зелёный
-color_black				= Чёрный
-color_yellow			= Жёлтый
-color_white				= Белый
-
-view_source				= Посмотреть в виде HTML
-text_mode				= Текстовый режим
-clear_format			= Очистить формат
-
-priority_text			= Приоритет
-
-
-
-[BadLogin]
-
-bdl_title				= Ошибка входа 
-bdl_msg					= Вы неверно ввели Логин или пароль<br><br>Пожалуйста, проверьте и попробуйте снова
-bdl_back				= Назад
-
-
-[Error]
-
-err_title				= Произошли ошибки
-err_msg					= Произошла системная ошибка<br><br>Пожалуйста, войдите снова
-err_system_msg			= Системное сообщение: 
-err_exit				= Выход
 
 [Preferences]
 
@@ -278,6 +229,38 @@ prf_default_editor_mode_text	= "Простой текстовый"
 prf_default_editor_mode_html	= "HTML редактор (Internet Explorer 5 или выше, или схожих)"
 prf_time_to_refesh		= Обновление папки с сообщениями (в минутах)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
+
 
 [Catch]
 

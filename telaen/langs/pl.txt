@@ -27,6 +27,7 @@ err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
 error_connect					= Nie mogê po³±czyæ siê z serwerem
 error_retrieving				= Nie mogê odczytaæ wiadomo¶ci
+error_session_expired				= Your session is expired, please login again
 error_other					= B³±d - proszê skontaktowaæ siê z administratorem
 
 #Invalid name of mailbox
@@ -198,57 +199,6 @@ priority_low					= Niski
 priority_normal					= ¦redni
 priority_high					= Wysoki
 
-[AdvancedEditor]
-
-adv_warning_text_mode1			= Aby u¿ywaæ paska zadañ, proszê odznaczyæ opcjê
-adv_warning_text_mode2			=  
-
-adv_type_path					= Podaj URL:
-
-format_paragraph				= Styl
-format_h1					= Style 1 <H1>
-format_h2					= Style 2 <H2>
-format_h3					= Style 3 <H3>
-format_h4					= Style 4 <H4>
-format_h5					= Style 5 <H5>
-format_h6					= Style 6 <H6>
-format_pre					= Formatted <PRE>
-format_clear_all				= Usuñ wszystko
-
-format_font					= Czcionka
-format_size					= Rozmiar
-
-format_color					= Kolor
-format_back					= T³o
-color_red					= Czerwony
-color_blue					= Niebieski
-color_green					= Zielony
-color_black					= Czarny
-color_yellow					= ¯ó³ty
-color_white					= Bia³y
-
-view_source					= Poka¿ kod HTML
-text_mode					= Text mode
-clear_format					= Usuñ format
-
-priority_text					= Priorytet
-
-
-
-
-[BadLogin]
-
-bdl_title					= B³±d logowania 
-bdl_msg						= Podana nazwa u¿ytkownika lub has³o jest nieprawid³owe<br><br>Proszê spróbowaæ ponownie
-bdl_back					= Powrót
-
-
-[Error]
-
-err_title					= Wyst±pi³ b³±d
-err_msg						= Wyst±pi³ b³±d<br><br>Proszê siê ponownie zalogowaæ
-err_system_msg					= Komunikat systemu: 
-err_exit					= Wyloguj
 
 [Preferences]
 
@@ -277,6 +227,37 @@ prf_default_editor_mode_text			= "Tryb tekstowy"
 prf_default_editor_mode_html			= "Edytor HTML (Tylko dla przegl±darek IE5 lub nowszych)"
 prf_time_to_refesh				= Czêstotliwo¶æ od¶wierzania wiadomo¶ci (w minutach)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
 
 [Catch]
 

@@ -32,6 +32,7 @@ error_login                                     = Please check your username or 
 error_connect					= Connexion au serveur impossible
 error_retrieving				= Impossible de recevoir le message, dû aux modifications 
 error_other						= Des erreurs sont survenues, veuillez contacter votre administrateur
+error_session_expired				= Your session is expired, please login again
 
 #Invalid name of mailbox
 
@@ -202,55 +203,7 @@ priority_low				= Basse
 priority_normal				= Normale
 priority_high				= Haute
 
-[AdvancedEditor]
 
-adv_warning_text_mode1		= Veuillez décocher l\'option
-adv_warning_text_mode2		= pour utiliser la barre des outils
-
-adv_type_path				= Tapez une adresse URL:
-
-format_paragraph			= Paragraphe
-format_h1					= En-tête 1 <H1>
-format_h2					= En-tête 2 <H2>
-format_h3					= En-tête 3 <H3>
-format_h4					= En-tête 4 <H4>
-format_h5					= En-tête 5 <H5>
-format_h6					= En-tête 6 <H6>
-format_pre					= Formaté <PRE>
-format_clear_all			= Nettoyer le formatage
-
-format_font					= Police
-format_size					= Taille
-
-format_color				= Couleur
-format_back					= Fond
-color_red					= Rouge
-color_blue					= Bleu
-color_green					= Vert
-color_black					= Noir
-color_yellow				= Jaune
-color_white					= Blanc
-
-view_source					= Voir source HTML 
-text_mode					= Mode texte 
-clear_format				= Supprimer le formatage
-
-priority_text				= Priorité
-
-
-[BadLogin]
-
-bdl_title					= Authentification erronée 
-bdl_msg						= Les informations entrées sont incorrectes<br><br>Veuillez vérifier les données et réessayer à nouveau
-bdl_back					= Retour
-
-
-[Error]
-
-err_title					= Erreur
-err_msg						= Une erreur est survenue durant l'éxécution de la commande<br><br>Veuillez vous reconnecter à nouveau
-err_system_msg				= Message système:
-err_exit					= Quitter
 
 [Preferences]
 
@@ -274,11 +227,43 @@ prf_signature				= Tapez ou collez votre signature
 prf_auto_add_sign			= Ajouter la signature automatiquement aux nouveaux messages
 prf_save_button				= Enregistrer
 prf_display_images			= Afficher les images attachées
-prf_default_editor_mode		= Mode d'édition par défaut
-prf_default_editor_mode_text	= "Mode texte"
-prf_default_editor_mode_html	= "Editeur HTML avancé (IE5 ou supérieur uniquement)"
+prf_default_editor_mode			= Mode d'édition par défaut
+prf_default_editor_mode_text		= "Mode texte"
+prf_default_editor_mode_html		= "Editeur HTML avancé"
 prf_time_to_refesh			= Temps de rafraîchissement pour les messages (en minutes)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
+
 
 [Catch]
 

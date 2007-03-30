@@ -28,6 +28,7 @@ err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
 error_connect					= Fejl ved forsøg på forbindelse til server
 error_retrieving				= Fejl ved hentning af dine meddelelser
+error_session_expired				= Your session is expired, please login again
 error_other					= System fejl, kontakt din administrator
 
 #Invalid name of mailbox
@@ -199,57 +200,37 @@ priority_low					= Lav
 priority_normal					= Normal
 priority_high					= Høj
 
-[AdvancedEditor]
+prf_mgs_saved					= Preferences saved
 
-adv_warning_text_mode1			= Fravælg venligt
-adv_warning_text_mode2			= for at benytte værktøjslinjen
+# filters
+filter_title                                    = Filters
 
-adv_type_path					= Skriv URLen:
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
 
-format_paragraph				= Paragraf
-format_h1					= Overskrift 1 <H1>
-format_h2					= Overskrift 2 <H2>
-format_h3					= Overskrift 3 <H3>
-format_h4					= Overskrift 4 <H4>
-format_h5					= Overskrift 5 <H5>
-format_h6					= Overskrift 6 <H6>
-format_pre					= Formateret <PRE>
-format_clear_all				= Rens formatering
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
 
-format_font					= Skrifttype
-format_size					= Strørrelse
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
 
-format_color					= Farve
-format_back					= Baggrund
-color_red					= Rød
-color_blue					= Blå
-color_green					= Grøn
-color_black					= Sort
-color_yellow					= Gul
-color_white					= Hvid
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
 
-view_source					= Vis HTML kilde
-text_mode					= Ren Tekst
-clear_format					= Nulstil format
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
 
-priority_text					= Prioritet
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
 
 
-
-
-[BadLogin]
-
-bdl_title					= Fejl ved log ind
-bdl_msg						= Du kan ikke logge ind på dette tidspunkt med det angivet brugernavn og kodeord<br><br>Check venligst dine informationer og prøv igen
-bdl_back					= Tilbage
-
-
-[Error]
-
-err_title					= Der skete en fejl
-err_msg						= Der var fejl i processen<br><br>Log venligst ind igen
-err_system_msg					= System meddelelse: 
-err_exit					= Log af
 
 [Preferences]
 

@@ -28,6 +28,7 @@ err_system_msg                                  = Error del sistema
 error_login                                     = Compruebe su usuario y contraseña e intente nuevamente
 error_connect				= No fue posible la conexión con el servidor
 error_retrieving			= No fue posible obtener sus mensajes, hubo modificaciones en su bandeja
+error_session_expired				= Your session is expired, please login again
 error_other				= Hubo problemas con el sistema, por favor contacte con el administrador
 
 #Invalid name of mailbox
@@ -200,57 +201,7 @@ priority_low					= Baja
 priority_normal					= Normal
 priority_high					= Alta
 
-[AdvancedEditor]
 
-adv_warning_text_mode1			= Por favor desmarque una opción
-adv_warning_text_mode2			= para usar la barra de herramientas
-
-adv_type_path					= Escriba la URL:
-
-format_paragraph				= Párrafo
-format_h1					= Estilo 1 <H1>
-format_h2					= Estilo 2 <H2>
-format_h3					= Estilo 3 <H3>
-format_h4					= Estilo 4 <H4>
-format_h5					= Estilo 5 <H5>
-format_h6					= Estilo 6 <H6>
-format_pre					= Formateado <PRE>
-format_clear_all				= Borrar todo
-
-format_font					= Fuente
-format_size					= Tamaño
-
-format_color					= Color
-format_back					= Fondo
-color_red					= Rojo
-color_blue					= Azul
-color_green					= Verde
-color_black					= Negro
-color_yellow					= Amarillo
-color_white					= Blanco
-
-view_source					= Ver código HTML
-text_mode					= Modo Texto
-clear_format					= Borrar Formato
-
-priority_text					= Prioridad
-
-
-
-
-[BadLogin]
-
-bdl_title					= Error de autenticación 
-bdl_msg						= No es posible autenticar usuario/contraseña introducidos<br><br>Por favor verifique sus datos e intente nuevamente
-bdl_back					= Volver
-
-
-[Error]
-
-err_title					= Ocurrieron errores
-err_msg						= Ocurrieron errores durante la ejecución<br><br>Por favor identifíquese nuevamente
-err_system_msg					= Mensaje del sistema: 
-err_exit					= Salir
 
 [Preferences]
 
@@ -279,6 +230,38 @@ prf_default_editor_mode_text			= "Texto puro"
 prf_default_editor_mode_html			= "Editor HTML Avanzado"
 prf_time_to_refesh				= Tiempo de atualización de mensajes (minutos)
 prf_spam_level					= Sensibilidad para SPAM (0=Desactivada, 1=Muy alta, 9=Muy baja)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
+
 
 [Catch]
 

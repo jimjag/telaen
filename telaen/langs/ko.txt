@@ -23,6 +23,7 @@ err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
 error_connect					= 서버에 연결할수 없습니다
 error_retrieving					= 받은편지를 가져올수 없습니다.
+error_session_expired				= Your session is expired, please login again
 error_other						= 시스템장애입니다. 관리자에게 문의하세요
 
 # Invalid name of mailbox
@@ -180,50 +181,6 @@ priority_low					= 낮음
 priority_normal					= 보통
 priority_high					= 높음
 
-[AdvancedEditor]
-adv_warning_text_mode1			= 다음 항목
-adv_warning_text_mode2			= 의 체크를 해제하셔야 툴바를 사용하실 수 있습니다.
-
-adv_type_path					= URL(웹주소) :
-
-format_paragraph				= 문단
-format_h1						= 스타일 1 <H1>
-format_h2						= 스타일 2 <H2>
-format_h3						= 스타일 3 <H3>
-format_h4						= 스타일 4 <H4>
-format_h5						= 스타일 5 <H5>
-format_h6						= 스타일 6 <H6>
-format_pre						= <PRE> 형식
-format_clear_all				= 모두 지우기
-
-format_font						= 글자모양
-format_size						= 글자크기
-
-format_color					= 색상
-format_back						= 배경색
-color_red						= 빨강
-color_blue						= 파랑
-color_green						= 녹색
-color_black						= 검정
-color_yellow					= 노랑
-color_white						= 흰색
-
-view_source						= HTML 소스 보기
-text_mode						= 텍스트 모드
-clear_format					= 효과 지우기
-
-priority_text					= 중요도
-
-[BadLogin]
-bdl_title						= 로그인 실패
-bdl_msg						= 이메일주소 또는 비밀번호를 확인하세요
-bdl_back						= 재시도
-
-[Error]
-err_title						= 오류발생
-err_msg						= 요청하신 작업을 수행하던중 오류가 발생하였습니다.<br><br>다시 로그인 해주세요.
-err_system_msg					= 오류 문구: 
-err_exit						= 로그아웃
 
 [Preferences]
 prf_title 						= 환경 설정
@@ -251,6 +208,38 @@ prf_default_editor_mode_text			= "텍스트만 사용"
 prf_default_editor_mode_html			= "고급에디터 사용"
 prf_time_to_refesh				= 자동으로 새로온 이메일 확인하기 (~분간격)
 prf_spam_level					= 스팸 차단 정도 (0 = 차단안함, 1 = 매우높음, 9 = 매우낮음)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
+
 
 [Catch]
 ctc_title					= 주소록에 추가

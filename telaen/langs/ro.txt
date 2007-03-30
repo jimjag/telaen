@@ -24,6 +24,7 @@ err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
 error_connect					= Eroare la conectarea cu serverul
 error_retrieving				= Eroare la receptionarea mesajelor, Inbox-ul a fost modificat intre timp.
+error_session_expired				= Your session is expired, please login again
 error_other					= Eroare fatala, contactati administratorul
 
 #Invalid name of mailbox
@@ -195,57 +196,7 @@ priority_low					= Mica
 priority_normal					= Normala
 priority_high					= Mare
 
-[AdvancedEditor]
 
-adv_warning_text_mode1			= Selectati o optiune
-adv_warning_text_mode2			= pentru a folosi bara de unelte
-
-adv_type_path					= Introduceti URL-ul:
-
-format_paragraph				= Paragraf
-format_h1					= Stil 1 <H1>
-format_h2					= Stil 2 <H2>
-format_h3					= Stil 3 <H3>
-format_h4					= Stil 4 <H4>
-format_h5					= Stil 5 <H5>
-format_h6					= Stil 6 <H6>
-format_pre					= Preformatat <PRE>
-format_clear_all				= Sterge tot
-
-format_font					= Font
-format_size					= Marime
-
-format_color					= Culoare
-format_back					= Fond
-color_red					= Rosu
-color_blue					= Albastru
-color_green					= Verde
-color_black					= Negru
-color_yellow					= Galben
-color_white					= Alb
-
-view_source					= Afiseaza sursa HTML
-text_mode					= Mod text
-clear_format					= Sterge formatarea
-
-priority_text					= Prioritate
-
-
-
-
-[BadLogin]
-
-bdl_title					= Eroare la autentificare 
-bdl_msg						= Combinatia nume/parola este gresita.<br><br>Va rugam incercati din nou
-bdl_back					= Inapoi
-
-
-[Error]
-
-err_title					= Eroare
-err_msg						= O eroare in proces<br><br>Va rugam incercati din nou
-err_system_msg					= Mesajul dat de sistem: 
-err_exit					= Iesire
 
 [Preferences]
 
@@ -274,6 +225,36 @@ prf_default_editor_mode_text			= "Mod text"
 prf_default_editor_mode_html			= "HTML (Doar pentru Internet Explorer 5+)"
 prf_time_to_refesh				= Interval pentru verificarea de mesaje noi (minute)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
 
 [Catch]
 

@@ -33,6 +33,7 @@ err_system_msg                                  = Erro de Sistema
 error_login                                     = Por favor verifique Usuário ou Senha e tente novamente
 error_connect					= Não foi possível conectar ao servidor
 error_retrieving				= Não foi possível receber a mensagem, houveram modificações em sua caixa postal
+error_session_expired				= Your session is expired, please login again
 error_other					= Ocorreram falhas no sistema, por favor contate o administrador
 
 #Invalid name of mailbox
@@ -208,57 +209,36 @@ priority_low					= Baixa
 priority_normal					= Normal
 priority_high					= Alta
 
-[AdvancedEditor]
+prf_mgs_saved					= Preferences saved
 
-adv_warning_text_mode1			= Por favor desmarque a opção
-adv_warning_text_mode2			= para usar a barra de ferramentas
+# filters
+filter_title                                    = Filters
 
-adv_type_path					= Digite a URL:
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
 
-format_paragraph				= Parágrafo
-format_h1						= Estilo 1 <H1>
-format_h2						= Estilo 2 <H2>
-format_h3						= Estilo 3 <H3>
-format_h4						= Estilo 4 <H4>
-format_h5						= Estilo 5 <H5>
-format_h6						= Estilo 6 <H6>
-format_pre						= Formatado <PRE>
-format_clear_all				= Limpar tudo
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
 
-format_font						= Fonte
-format_size						= Tam
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
 
-format_color					= Cor
-format_back						= Fundo
-color_red						= Verm
-color_blue						= Azul
-color_green						= Verde
-color_black						= Preto
-color_yellow					= Amar
-color_white						= Branco
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
 
-view_source						= Ver código HTML
-text_mode						= Modo Texto
-clear_format					= Limpar Formatação
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
 
-priority_text					= Prioridade
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
 
-
-
-
-[BadLogin]
-
-bdl_title						= Falha na autenticação
-bdl_msg							= Não foi possível autenticar o usuário/senha informado<br><br>Por favor verifique seus dados e tente novamente
-bdl_back						= Voltar
-
-
-[Error]
-
-err_title						= Ocorreram erros
-err_msg							= Ocorreram erros durante a execução<br><br>Por favor logue-se novamente
-err_system_msg					= Mensagem do sistema: 
-err_exit						= Sair
 
 [Preferences]
 

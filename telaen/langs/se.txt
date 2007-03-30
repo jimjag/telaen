@@ -30,6 +30,7 @@ err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
 error_connect					= Anslutning till POP-server misslyckades
 error_retrieving				= Pga ändringar i din inkorg kunde inte detta meddelande hämtas
+error_session_expired				= Your session is expired, please login again
 error_other					= Ett oväntat fel uppstod. Var vänlig kontakta din adminstratör
 
 #Invalid name of mailbox
@@ -200,55 +201,7 @@ priority_low					= Låg
 priority_normal					= Normal
 priority_high					= Hög
 
-[AdvancedEditor]
 
-adv_warning_text_mode1				= Var god avmarkera ett val
-adv_warning_text_mode2				= för att använda verktygsfältet
-
-adv_type_path					= Skriv in URL:
-
-format_paragraph				= Stycke
-format_h1					= Rubrik 1 <H1>
-format_h2					= Rubrik 2 <H2>
-format_h3					= Rubrik 3 <H3>
-format_h4					= Rubrik 4 <H4>
-format_h5					= Rubrik 5 <H5>
-format_h6					= Rubrik 6 <H6>
-format_pre					= Formaterad <PRE>
-format_clear_all				= Rensa formatering
-
-format_font					= Teckensnitt
-format_size					= Storlek
-
-format_color					= Färg
-format_back					= Bakgrund
-color_red					= Röd
-color_blue					= Blå
-color_green					= Grön
-color_black					= Svart
-color_yellow					= Gul
-color_white					= Vit
-
-view_source					= Visa Källa
-text_mode					= Endast Text
-clear_format					= Rensa Format
-
-priority_text					= Prioritet
-
-
-[BadLogin]
-
-bdl_title					= Inloggningsfel
-bdl_msg						= Du kan inte logga in med angivet användarnamn/lösenord<br><br>Kontrollera din auppgifter, och försök igen
-bdl_back					= Tillbaka
-
-
-[Error]
-
-err_title					= Det uppstod ett fel
-err_msg						= Ett fel har uppstått i din session<br><br>Var vänlig logga in igen
-err_system_msg					= Systemmeddelande:
-err_exit					= Logga in igen
 
 [Preferences]
 
@@ -274,9 +227,39 @@ prf_save_button					= Spara
 prf_display_images				= Visa bilder i meddelanden
 prf_default_editor_mode				= Standardformat på meddelanden
 prf_default_editor_mode_text			= "Endast text"
-prf_default_editor_mode_html			= "Avancerad HTML editor (Endast för IE v5 eller högre)"
+prf_default_editor_mode_html			= "Avancerad HTML editor"
 prf_time_to_refesh				= Ladda automatiskt om mappar efter: (minuter)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
 
 [Catch]
 ctc_title					= Spara E-postadresser

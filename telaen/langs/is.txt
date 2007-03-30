@@ -24,6 +24,7 @@ err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
 error_connect					= Tenging við póstþjón mistókst
 error_retrieving				= Villa við að ná í póst, innhólf hefur breyst
+error_session_expired				= Your session is expired, please login again
 error_other					= Kerfisvilla, vinsamlegast hafið samband við kerfisstjóra
 
 #Invalid name of mailbox
@@ -195,57 +196,6 @@ priority_low					= Lítill
 priority_normal					= Venjulegur
 priority_high					= Mikill
 
-[AdvancedEditor]
-
-adv_warning_text_mode1			= Afhakðu valkost 
-adv_warning_text_mode2			= til að nota tólastikuna
-
-adv_type_path					= Skrifa veffangið:
-
-format_paragraph				= Málsgrein
-format_h1					= Stærð 1 (stærst) <H1>
-format_h2					= Stærð 2 <H2>
-format_h3					= Stærð 3 <H3>
-format_h4					= Stærð 4 <H4>
-format_h5					= Stærð 5 <H5>
-format_h6					= Stærð 6 (minnst) <H6>
-format_pre					= Ritvélarstafir <PRE>
-format_clear_all				= Hreinsa allt
-
-format_font					= Letur
-format_size					= Stærð
-
-format_color					= Litur
-format_back					= Bakgrunnur
-color_red					= Rauður
-color_blue					= Blár
-color_green					= Grænn 
-color_black					= Svartur
-color_yellow					= Gulur
-color_white					= Hvítur
-
-view_source					= Sjá HTML kóða
-text_mode					= Bara texti
-clear_format					= Hreinsa HTML kóða
-
-priority_text					= Forgangur
-
-
-
-
-[BadLogin]
-
-bdl_title					= Villa í innskráningu
-bdl_msg						= Gat ekki skráð þig inn með þessu notendafni og lykilorði <br><br>Vinsamlegast reyndu aftur
-bdl_back					= Til baka
-
-
-[Error]
-
-err_title					= Upp komu villur :(
-err_msg						= Það komu upp villur<br><br>Vinsamlegast skráðu þig inn aftur
-err_system_msg					= Kerfisboð: 
-err_exit					= Útskráning
 
 [Preferences]
 
@@ -274,6 +224,37 @@ prf_default_editor_mode_text			= "Venjulegur texti"
 prf_default_editor_mode_html			= "HTML texti (Fyrir IE5 eða nýrri)"
 prf_time_to_refesh				= Athuga ný skilaboð hverjar (mínútur)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
 
 [Catch]
 

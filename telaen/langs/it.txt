@@ -1,7 +1,7 @@
 #---------------------------------------------------------------#
-# Italian language file for Telaen v1.1.1 			#
+# Italian language file for Telaen v1.2.0 			#
 # Lang file mantained by Vola - andreavola[at]gmail[dot]com 	#
-# Last edit: 11 Sept 2006 					#
+# Last edit: 30 Mar 2007 					#
 #---------------------------------------------------------------#
 
 # ***** GLOBAL VARS ****** #
@@ -28,6 +28,7 @@ err_system_msg                                  = Errore di sistema
 error_login                                     = Controlla il tuo nome utente o password e riprova
 error_connect					= Impossibile connettersi al server
 error_retrieving				= Errore di sincronizzazione della cartella
+error_session_expired                           = La sessione &egrave; scaduta, devi rieffettuare il login
 error_other					= Contattare l'amministratore di sistema
 
 #Invalid name of mailbox
@@ -204,55 +205,6 @@ priority_low					= Bassa
 priority_normal					= Normale
 priority_high					= Alta
 
-[AdvancedEditor]
-
-adv_warning_text_mode1			= Please un mark an option
-adv_warning_text_mode2			= to use the toolbar
-
-adv_type_path					= Scrivi URL:
-
-format_paragraph				= Paragrafo
-format_h1					= Stile 1 <H1>
-format_h2					= Stile 2 <H2>
-format_h3					= Stile 3 <H3>
-format_h4					= Stile 4 <H4>
-format_h5					= Stile 5 <H5>
-format_h6					= Stile 6 <H6>
-format_pre					= Formattato <PRE>
-format_clear_all				= Cancella tutto
-
-format_font					= Font
-format_size						= Dim.
-
-format_color					= Colore
-format_back					= Sfondo
-color_red						= Rosso
-color_blue						= Blu
-color_green						= Verde
-color_black						= Nero
-color_yellow					= Giallo
-color_white						= Bianco
-
-view_source					= Vedi codice HTML
-text_mode						= Visualizzazione testuale
-clear_format					= Visualizzazione standard
-priority_text					= Priorità
-
-
-[BadLogin]
-
-bdl_title						= Errore di Login
-bdl_msg							= Controllare login e password<br><br>Riprovare
-bdl_back						= Torna indietro
-
-
-[Error]
-
-err_title						= Si sono verificati alcuni errori
-err_msg							= Errori in login<br><br>Riprovare
-err_system_msg					= Messaggio di sistema: 
-err_exit						= Logout
-
 
 [Preferences]
 
@@ -281,6 +233,35 @@ prf_default_editor_mode_text			= "Modo testuale"
 prf_default_editor_mode_html			= "Modo avanzato (editor HTML)"
 prf_time_to_refesh				= Refresh dei messaggi (minuti)
 prf_spam_level					= Sensibilit&agrave; filtro SPAM (0 = Disattivo, 1 = Molto alta, 9 = Molto bassa)
+
+prf_mgs_saved					= Preferenze salvate
+
+filter_title                                    = Filtri
+
+filter_new                                      = Crea un filtro
+filter_desc                                     = Scegli il criterio di ricerca a l'azione per il messaggio
+filter_list					= Filtri correnti
+
+filter_field_from                               = Da
+filter_field_to                                 = Per
+filter_field_subject				= Oggetto
+
+filter_type_move                                = Sposta
+filter_type_delete                              = Cancella
+filter_type_mark                                = Segna come letto
+
+filter_add					= Aggiungi filtro
+filter_delete                                   = Elimina	
+filter_delete_selected				= Elimina i filtri selezionati
+
+filter_field					= Filtro sul campo
+filter_match					= Cerca
+filter_type					= Azione
+filter_folder					= Cartella destinazione
+
+filter_msg_nofilters				= Nessun filtro disponibile
+filter_msg_added				= Filtro aggiunto
+filter_msg_deleted				= Filtro eliminato
 
 
 [Catch]

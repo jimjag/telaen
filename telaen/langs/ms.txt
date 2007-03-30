@@ -23,6 +23,7 @@ err_system_msg					= Masalah Sistem
 error_login 					= Sila semak pengguna atau kata laluan anda dan cuba lagi
 error_connect					= Terdapat Masalah berhubung dengan Server Emel
 error_retrieving				= Terdapat Masalah mendapatkan emel anda, Peti Emel anda telah berubah
+error_session_expired				= Your session is expired, please login again
 error_other					= Sistem tidak berfungsi dengan baik, sila hubungi UPTM (095129425)
 
 # Invalid name of mailbox
@@ -179,50 +180,6 @@ priority_low					= Kurang Penting
 priority_normal					= Biasa
 priority_high					= Penting
 
-[AdvancedEditor]
-adv_warning_text_mode1			= Sila buangkan pilihan anda
-adv_warning_text_mode2			= untuk menggunakan toolbar
-
-adv_type_path					= Sila Taip URL:
-
-format_paragraph				= Paragraph
-format_h1						= Style 1 <H1>
-format_h2						= Style 2 <H2>
-format_h3						= Style 3 <H3>
-format_h4						= Style 4 <H4>
-format_h5						= Style 5 <H5>
-format_h6						= Style 6 <H6>
-format_pre						= Formatted <PRE>
-format_clear_all				= Clear all
-
-format_font						= Font
-format_size						= Saiz
-
-format_color					= Colour
-format_back						= Background
-color_red						= Red
-color_blue						= Blue
-color_green						= Green
-color_black						= Black
-color_yellow					= Yellow
-color_white						= White
-
-view_source						= View HTML source
-text_mode						= Text mode
-clear_format					= Clear format
-
-priority_text					= Keutamaan
-
-[BadLogin]
-bdl_title						= Kesalahan Login 
-bdl_msg							= Anda tidak boleh login menggunakan Pengguna dan Kata Laluan yang dimasukkan.<br><br>Sila semak Pengguna dan Kata Laluan anda dan cuba lagi.
-bdl_back						= Cuba Lagi
-
-[Error]
-err_title						= Terdapat beberapa masalah
-err_msg							= Terdapat masalah dalam proses kemasukan sistem<br><br>Sila login semula
-err_system_msg					= Mesej Sistem: 
-err_exit						= Keluar
 
 [Preferences]
 prf_title 						= Utiliti
@@ -250,6 +207,37 @@ prf_default_editor_mode_text			= "Plain text"
 prf_default_editor_mode_html			= "Advanced HTML editor"
 prf_time_to_refesh				= Semak Emel baru secara automatik (minit)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
 
 [Catch]
 ctc_title					= Tambah ke Buku Alamat

@@ -31,6 +31,7 @@ error_login                                     = Please check your username or 
 error_connect					= 無法連接至郵件伺服器!
 error_retrieving				= 因為您的收件匣位置變更，因此無法取得此信件。
 error_other					= 目前系統發生不明錯誤，請洽詢您的郵件伺服器管理員。
+error_session_expired				= Your session is expired, please login again
 
 #Invalid name of mailbox
 
@@ -202,57 +203,6 @@ priority_low					= 低
 priority_normal					= 中
 priority_high					= 高
 
-[AdvancedEditor]
-
-adv_warning_text_mode1				= 請勿選擇
-adv_warning_text_mode2				= 在您使用工具列之前
-
-adv_type_path					= 請輸入網址:
-
-format_paragraph				= 內文格式
-format_h1					= 標題 1 <H1>
-format_h2					= 標題 2 <H2>
-format_h3					= 標題 3 <H3>
-format_h4					= 標題 4 <H4>
-format_h5					= 標題 5 <H5>
-format_h6					= 標題 6 <H6>
-format_pre					= 原始格式 <PRE>
-format_clear_all				= 清除格式設定
-
-format_font					= 字型
-format_size					= 字型大小
-	
-format_color					= 字型色彩
-format_back					= 字型底色
-color_red					= 紅色
-color_blue					= 藍色
-color_green					= 綠色
-color_black					= 黑色
-color_yellow					= 黃色
-color_white					= 白色
-
-view_source					= 顯示原始碼
-text_mode					= 使用純文字模式
-clear_format					= 清除格式
-
-priority_text					= 優先權
-
-
-
-
-[BadLogin]
-
-bdl_title					= 登入失敗 
-bdl_msg						= 您無法使用目前的 帳號/密碼 登入<BR>請檢查是否輸入正確。
-bdl_back					= 上一頁
-
-
-[Error]
-
-err_title					= 登入錯誤
-err_msg						= 系統程式可能發生錯誤<br><br>請再次重新登入
-err_system_msg					= 系統訊息: 
-err_exit					= 重新登入
 
 [Preferences]
 
@@ -281,6 +231,39 @@ prf_default_editor_mode_text			= "純文字編輯模式"
 prf_default_editor_mode_html			= "HTML編輯模式 (僅支援 IE5 以上版本)"
 prf_time_to_refesh				= 重新整理時間 (分鐘)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
+
+
 
 [Catch]
 

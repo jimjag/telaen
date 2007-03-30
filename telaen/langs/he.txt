@@ -29,6 +29,7 @@ error_login                                     = Please check your username or 
 error_connect					= שגיאה בחיבור אל השרת
 error_retrieving				= שגיאה בקבלת הדואר שלך, תיבת הדואר שלך השתנתה
 error_other						= תקלה במערכת, אנא פנה לאיש הסיסטם
+error_session_expired				= Your session is expired, please login again
 
 # Invalid name of mailbox
 error_invalid_name				= שם תיקיה שגוי. יש להשתמש רק ב A-Z, 0-9, - ורווחים
@@ -182,50 +183,6 @@ priority_low					= נמוכה
 priority_normal					= רגילה
 priority_high					= גבוהה
 
-[AdvancedEditor]
-adv_warning_text_mode1			= בבקשה הורד את הסימון מאפשרות זו
-adv_warning_text_mode2			= כדי להשתמש בשורת הכלים
-
-adv_type_path					= כתוב את ה URL:
-
-format_paragraph				= פיסקה
-format_h1						= סגנון 1 <H1>
-format_h2						= סגנון 2 <H2>
-format_h3						= סגנון 3 <H3>
-format_h4						= סגנון 4 <H4>
-format_h5						= סגנון 5 <H5>
-format_h6						= סגנון 6 <H6>
-format_pre						= אחיד <PRE>
-format_clear_all				= נקה הכל
-
-format_font						= גופן
-format_size						= גודל
-
-format_color					= צבע
-format_back						= רקע
-color_red						= אדום
-color_blue						= כחול
-color_green						= ירוק
-color_black						= שחור
-color_yellow					= צהוב
-color_white						= לבן
-
-view_source						= הראה מקור HTML
-text_mode						= מצב טקסט
-clear_format					= נקה פורמט
-
-priority_text					= עדיפות
-
-[BadLogin]
-bdl_title						= שגיאת כניסה
-bdl_msg							= אינך יכול להיכנס עם שם המשתמש והסיסמא שהוזנו.<br><br>אנא בדוק את שם המשתמש והסיסמא, ונסה שנית.
-bdl_back						= חזרה
-
-[Error]
-err_title						= היו שגיאות
-err_msg							= היו שגיאות בתהליך.<br><br>אנא היכנס מחדש למערכת.
-err_system_msg					= הודעת מערכת: 
-err_exit						= יציאה
 
 [Preferences]
 prf_title 						= מאפיינים
@@ -253,6 +210,37 @@ prf_default_editor_mode_text	= "טקסט רגיל"
 prf_default_editor_mode_html	= "עורך HTML מתקדם (דורש IE5 ומעלה)"
 prf_time_to_refesh				= בדוק אוטומטית עבור דואר חדש (דקות)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
 
 [Catch]
 ctc_title						= הוסף לספר הכתובות

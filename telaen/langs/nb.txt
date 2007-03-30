@@ -23,6 +23,7 @@ err_login_msg                                   = Login error
 err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
 error_connect					= Kontakt ble ikke oppnådd med server
+error_session_expired				= Your session is expired, please login again
 error_retrieving				= Problemer oppstod under forsøk på å motta dine beskjeder. Din innboks har blitt endret.
 error_other					= Systemfeil. Kontakt systemansvarlig.
 
@@ -144,8 +145,9 @@ msg_more_unread					= uleste
 msg_one_unread					= ulest
 msg_none_unread					= ingen uleste
 msg_in_the_folder				= i mappen
-[Login]
 
+
+[Login]
 
 lgn_title					= Innlogging
 lgn_welcome_msg					= Velkommen! Vennligst logg deg inn på din konto
@@ -160,8 +162,6 @@ lng_cookie_not_valid				= Cookie Security Check Failed
 
 
 [Newmessage]
-
-
 
 to_hea						= Til:
 cc_hea						= Cc:
@@ -196,57 +196,6 @@ priority_low					= Lav
 priority_normal					= Normal
 priority_high					= Høy
 
-[AdvancedEditor]
-
-adv_warning_text_mode1			= Vennligst velg bort et valg
-adv_warning_text_mode2			= for å bruke verktøyslinja
-
-adv_type_path					= Skriv URL - adressen:
-
-format_paragraph				= Paragraf
-format_h1					= Heading 1 <H1>
-format_h2					= Heading 2 <H2>
-format_h3					= Heading 3 <H3>
-format_h4					= Heading 4 <H4>
-format_h5					= Heading 5 <H5>
-format_h6					= Heading 6 <H6>
-format_pre					= Formatert <PRE>
-format_clear_all				= Fjern alt
-
-format_font					= Skrifttype
-format_size					= Størrelse
-
-format_color					= Farge
-format_back					= Bakgrunn
-color_red					= Rød
-color_blue					= Blå
-color_green					= Grønn
-color_black					= Svart
-color_yellow					= Gul
-color_white					= Hvit
-
-view_source					= Vis HTML - koden
-text_mode					= Tekstmodus
-clear_format					= Fjern formatering
-
-priority_text					= Prioritet
-
-
-
-
-[BadLogin]
-
-bdl_title					= Innloggingsfeil 
-bdl_msg						= Du kan ikke logge inn akkurat nå med ditt oppgitte brukernavn/passord<br><br>Sjekk opplysningene og prøv igjen
-bdl_back					= Tilbake
-
-
-[Error]
-
-err_title					= Det oppstod problemer
-err_msg						= Det oppstod problemer underveis<br><br>Vennligst logg inn igjen på nytt
-err_system_msg					= Systemmeldingn: 
-err_exit					= Logg ut
 
 [Preferences]
 
@@ -275,6 +224,37 @@ prf_default_editor_mode_text			= "Tekst"
 prf_default_editor_mode_html			= "Avansert HTML editor (Kun for IE5 eller høyere)"
 prf_time_to_refesh				= Oppdateringsintervall beskjeder (minutter)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+
+prf_mgs_saved					= Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list					= Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject				= Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add					= Add filter
+filter_delete                                   = Delete
+filter_delete_selected				= Delete selected filters
+
+filter_field					= Filter on field
+filter_match					= Search for
+filter_type					= Action
+filter_folder					= Destination folder
+
+filter_msg_nofilters				= No filters available.
+filter_msg_added				= Filter added
+filter_msg_deleted				= Filter deleted
+
 
 [Catch]
 
