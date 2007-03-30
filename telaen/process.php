@@ -174,35 +174,6 @@ if( !is_array($headers)
 					}
 				}
 
-				/*
-				 * Rebuild the folder array.
-				 */
-				$y = 0;
-				$newarray = Array();
-				for($i=0;$i<$messagecount;$i++) {
-					if ($sess["headers"][$folder_key][$i]["msg"]) {
-						$newarray[$y] = $sess["headers"][$folder_key][$i];
-						$y++;
-					}
-				}
-				unset ($sess["headers"][$folder_key]);
-				$sess["headers"][$folder_key] = $newarray;
-
-				if ($UM->_autospamfolder && $is_inbox_or_spam) {
-					/*
-					 * Rebuild the SPAM/INBOX folder array.
-					 */
-					$y = 0;
-					$newotherarray = Array();
-					for($i=0;$i<$othercount;$i++) {
-						if ($sess["headers"][$other_folder_key][$i]["msg"]) {
-							$newotherarray[$y] = $sess["headers"][$other_folder_key][$i];
-							$y++;
-						}
-					}
-					unset ($sess["headers"][$other_folder_key]);
-					$sess["headers"][$other_folder_key] = $newotherarray;
-				}
 			} else {
 				/*
 				 * We dont have many messages. Unset the array and fetch everything
