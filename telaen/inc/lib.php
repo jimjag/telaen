@@ -313,6 +313,7 @@ function load_prefs() {
 		$prefs["rpp"]           = $rpp_default;
 		$prefs["add-sig"]       = $add_signature_default;
 		$prefs["signature"]     = $signature_default;
+		$prefs["require-receipt"] = $require_receipt_default;
 		$prefs["timezone"]	= $timezone_default;
 		$prefs["display-images"]= $display_images_default;
 		$prefs["editor-mode"]	= $editor_mode_default;

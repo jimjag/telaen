@@ -334,6 +334,7 @@ $default_preferences = Array(
 	"sortorder_default"		=> "DESC",	# alowed: "ASC","DESC"
 	"rpp_default"			=> 20,		# records per page (messages), alowed: 10,20,30,40,50,100,200
 	"add_signature_default"		=> no,		# add the signature by default
+	"require_receipt_default"	=> no,		# require read receipt by default
 	"signature_default"		=> "",		# a default signature for all users, use text only, with multiple lines if needed
 	"timezone_default"		=> "-0000",	# timezone, format (+|-)HHMM (H=hours, M=minutes)
 	"display_images_default"	=> yes,		# automatically show attached images in the body of message
