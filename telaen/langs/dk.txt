@@ -200,37 +200,6 @@ priority_low					= Lav
 priority_normal					= Normal
 priority_high					= Høj
 
-prf_mgs_saved					= Preferences saved
-
-# filters
-filter_title                                    = Filters
-
-filter_new                                      = Create a filter
-filter_desc                                     = Choose the search criteria and the action for the incoming messages
-filter_list					= Current filters
-
-filter_field_from                               = From
-filter_field_to                                 = To
-filter_field_subject				= Subject
-
-filter_type_move                                = Move
-filter_type_delete                              = Delete
-filter_type_mark                                = Mark read
-
-filter_add					= Add filter
-filter_delete                                   = Delete
-filter_delete_selected				= Delete selected filters
-
-filter_field					= Filter on field
-filter_match					= Search for
-filter_type					= Action
-filter_folder					= Destination folder
-
-filter_msg_nofilters				= No filters available.
-filter_msg_added				= Filter added
-filter_msg_deleted				= Filter deleted
-
-
 
 [Preferences]
 
@@ -259,6 +228,38 @@ prf_default_editor_mode_text			= "Tekst redigering"
 prf_default_editor_mode_html			= "Advanceret HTML redigering (Kun til IE5 eller bedre)"
 prf_time_to_refesh				= Opdateringsinterval (minutter)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
+prf_auto_require_receipt                        = Require read receipt by default
+
+prf_mgs_saved                                   = Preferences saved
+
+# filters
+filter_title                                    = Filters
+
+filter_new                                      = Create a filter
+filter_desc                                     = Choose the search criteria and the action for the incoming messages
+filter_list                                     = Current filters
+
+filter_field_from                               = From
+filter_field_to                                 = To
+filter_field_subject                            = Subject
+
+filter_type_move                                = Move
+filter_type_delete                              = Delete
+filter_type_mark                                = Mark read
+
+filter_add                                      = Add filter
+filter_delete                                   = Delete
+filter_delete_selected                          = Delete selected filters
+
+filter_field                                    = Filter on field
+filter_match                                    = Search for
+filter_type                                     = Action
+filter_folder                                   = Destination folder
+
+filter_msg_nofilters                            = No filters available.
+filter_msg_added                                = Filter added
+filter_msg_deleted                              = Filter deleted
+
 
 [Catch]
 

@@ -207,10 +207,10 @@ prf_save_button					= שמור
 prf_display_images				= הצג תמונות מצורפות
 prf_default_editor_mode			= מצב עריכה בברירת מחדל
 prf_default_editor_mode_text	= "טקסט רגיל"
-prf_default_editor_mode_html	= "עורך HTML מתקדם (דורש IE5 ומעלה)"
+prf_default_editor_mode_html	= "עורך HTML מתקדם"
 prf_time_to_refesh				= בדוק אוטומטית עבור דואר חדש (דקות)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
-
+prf_auto_require_receipt                        = Require read receipt by default
 prf_mgs_saved					= Preferences saved
 
 # filters

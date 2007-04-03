@@ -233,6 +233,7 @@ prf_default_editor_mode_text			= "Modo testuale"
 prf_default_editor_mode_html			= "Modo avanzato (editor HTML)"
 prf_time_to_refesh				= Refresh dei messaggi (minuti)
 prf_spam_level					= Sensibilit&agrave; filtro SPAM (0 = Disattivo, 1 = Molto alta, 9 = Molto bassa)
+prf_auto_require_receipt                        = Richiedi conferma di lettura nei messaggi in uscita
 
 prf_mgs_saved					= Preferenze salvate
 

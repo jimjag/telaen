@@ -1,6 +1,6 @@
-# Spanish lang file for Telaen 1.1.3 
+# Spanish lang file for Telaen 1.2.0 
 # -- Thanks to pochu and alf for updates --- 
-# Last update 20 Feb 2007 
+# Last update 02 Apr 2007 
 
 
 # ***** GLOBAL VARS ****** #
@@ -230,36 +230,37 @@ prf_default_editor_mode_text			= "Texto puro"
 prf_default_editor_mode_html			= "Editor HTML Avanzado"
 prf_time_to_refesh				= Tiempo de atualización de mensajes (minutos)
 prf_spam_level					= Sensibilidad para SPAM (0=Desactivada, 1=Muy alta, 9=Muy baja)
+prf_auto_require_receipt			= Require read receipt by default
 
-prf_mgs_saved					= Preferences saved
+prf_mgs_saved					= Se han guardado sus preferencias
 
 # filters
-filter_title                                    = Filters
+filter_title                                    = Filtros
 
-filter_new                                      = Create a filter
-filter_desc                                     = Choose the search criteria and the action for the incoming messages
-filter_list					= Current filters
+filter_new                                      = Crear filtro
+filter_desc                                     = Escoja el criterio de búsqueda y la acción a tomar para el mensaje entrante
+filter_list					= Filtros actuales
 
-filter_field_from                               = From
-filter_field_to                                 = To
-filter_field_subject				= Subject
+filter_field_from                               = De
+filter_field_to                                 = A
+filter_field_subject				= Asunto
 
-filter_type_move                                = Move
-filter_type_delete                              = Delete
-filter_type_mark                                = Mark read
+filter_type_move                                = Mover
+filter_type_delete                              = Eliminar
+filter_type_mark                                = Marcar como leído
 
-filter_add					= Add filter
-filter_delete                                   = Delete
-filter_delete_selected				= Delete selected filters
+filter_add					= Agregar filtro
+filter_delete                                   = Eliminar
+filter_delete_selected				= Eliminar filtros seleccionados
 
-filter_field					= Filter on field
-filter_match					= Search for
-filter_type					= Action
-filter_folder					= Destination folder
+filter_field					= Filtrar por campo
+filter_match					= Texto a buscar
+filter_type					= Acción
+filter_folder					= Carpeta de destino
 
-filter_msg_nofilters				= No filters available.
-filter_msg_added				= Filter added
-filter_msg_deleted				= Filter deleted
+filter_msg_nofilters				= No hay filtros disponibles
+filter_msg_added				= Filtro agregado
+filter_msg_deleted				= Filtro eliminado
 
 
 

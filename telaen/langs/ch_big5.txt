@@ -231,7 +231,7 @@ prf_default_editor_mode_text			= "純文字編輯模式"
 prf_default_editor_mode_html			= "HTML編輯模式 (僅支援 IE5 以上版本)"
 prf_time_to_refesh				= 重新整理時間 (分鐘)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
-
+prf_auto_require_receipt                        = Require read receipt by default
 prf_mgs_saved					= Preferences saved
 
 # filters
