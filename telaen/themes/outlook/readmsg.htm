@@ -5,10 +5,13 @@
 <head>
 	<title>{if $webmailTitle}{$webmailTitle} - {/if}{$umPageTitle|escape:"html"}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-</head>
+	{$pageMetas}
+	
 	<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
 	<script language="JavaScript" src="themes/outlook/webmail.js" type="text/javascript"></script>
-{$umJS}
+	{$umJS}
+</head>
+
 <body>
 <table width='100%' cellspacing="2" cellpadding="0" class='window_inner'>
 	<tr>
@@ -50,10 +53,12 @@
 	</tr>
 	<tr>
 		<td>
+
+			<iframe name="process" id="process" style="display:none;"></iframe>
 			<table width="100%" border="0" cellspacing="4" cellpadding="0">
 				<tr>
 					<td valign=top width='120'><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<b>{#from_hea#}</b></font></td>
-					<td width='*'><font class='xx-normal'>{section name=i loop=$umFromList}<a href="{$umFromList[i].link}" title="{$umFromList[i].title|escape:"html"}">{$umFromList[i].name|default:#no_sender_text#|escape:"html"}</a>&nbsp;<a href="addressbook.php?name={$umFromList[i].name}&email={$umFromList[i].mail}&page_ref=readmsg&opt=add&id=N&dummy={$umFromList[i].link}" title=""><img src="themes/outlook/images/icon_addtoaddressbook.gif" border=0></a>&nbsp;{/section}</font></td>
+					<td width='*'><font class='xx-normal'>{section name=i loop=$umFromList}<a href="{$umFromList[i].link}" title="{$umFromList[i].title|escape:"html"}">{$umFromList[i].name|default:#no_sender_text#|escape:"html"}</a>&nbsp;<a target="process" href="addressbook.php?name={$umFromList[i].name}&email={$umFromList[i].mail}&page_ref=readmsg&opt=add&id=N&dummy={$umFromList[i].link}" title=""><img src="themes/outlook/images/icon_addtoaddressbook.gif" border=0></a>&nbsp;{/section}</font></td>
 				</tr>
 				<tr>
 					<td valign=top width='120'><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<b>{#date_hea#}</b></font></td>
@@ -61,12 +66,12 @@
 				</tr>
 				<tr>
 					<td valign=top width='120'><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<b>{#to_hea#}</b></font></td>
-					<td width='*'><font class='xx-normal'>{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}<a href="{$umTOList[i].link}" title="{$umTOList[i].title|escape:"html"}">{$umTOList[i].name|escape:"html"}</a>&nbsp;<a href="addressbook.php?name={$umTOList[i].name}&email={$umTOList[i].mail}&page_ref=readmsg&opt=add&id=N&dummy={$umTOList[i].link}" title=""><img src="themes/outlook/images/icon_addtoaddressbook.gif" border=0></a>&nbsp;{assign var="firstto" value="no"}{sectionelse}&nbsp;{#no_recipient_text#}{/section}</font></td>
+					<td width='*'><font class='xx-normal'>{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}<a href="{$umTOList[i].link}" title="{$umTOList[i].title|escape:"html"}">{$umTOList[i].name|escape:"html"}</a>&nbsp;<a target="process" href="addressbook.php?name={$umTOList[i].name}&email={$umTOList[i].mail}&page_ref=readmsg&opt=add&id=N&dummy={$umTOList[i].link}" title=""><img src="themes/outlook/images/icon_addtoaddressbook.gif" border=0></a>&nbsp;{assign var="firstto" value="no"}{sectionelse}&nbsp;{#no_recipient_text#}{/section}</font></td>
 				</tr>
 				{if $umHaveCC}
 				<tr>
 					<td valign=top width='120'><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<b>{#cc_hea#}</b></font></td>
-					<td width='*'><font class='xx-normal'>{section name=i loop=$umCCList}{if $firstcc eq "no"};{/if}<a href="{$umCCList[i].link}" title="{$umCCList[i].title|escape:"html"}">{$umCCList[i].name|escape:"html"}</a>&nbsp;<a href="addressbook.php?name={$umCCList[i].name}&email={$umCCList[i].mail}&page_ref=readmsg&opt=add&id=N&dummy={$umCCList[i].link}" title=""><img src="themes/outlook/images/icon_addtoaddressbook.gif" border=0></a>&nbsp;{assign var="firstcc" value="no"}{/section}</font></td>
+					<td width='*'><font class='xx-normal'>{section name=i loop=$umCCList}{if $firstcc eq "no"};{/if}<a href="{$umCCList[i].link}" title="{$umCCList[i].title|escape:"html"}">{$umCCList[i].name|escape:"html"}</a>&nbsp;<a target="process" href="addressbook.php?name={$umCCList[i].name}&email={$umCCList[i].mail}&page_ref=readmsg&opt=add&id=N&dummy={$umCCList[i].link}" title=""><img src="themes/outlook/images/icon_addtoaddressbook.gif" border=0></a>&nbsp;{assign var="firstcc" value="no"}{/section}</font></td>
 				</tr>
 				{/if}
 				<tr>

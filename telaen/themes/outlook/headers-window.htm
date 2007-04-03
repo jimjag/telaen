@@ -6,6 +6,8 @@
 <head>
 	<title>{if $webmailTitle}{$webmailTitle} - {/if}{$umPageTitle|escape:"html"}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	{$pageMetas}
+        {$umJS}
 </head>
 <link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
 <body>

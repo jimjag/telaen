@@ -4,12 +4,12 @@
 <head>
     <title>{if $webmailTitle}{$webmailTitle} - {/if}{#adr_title#}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-</head>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
-<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-<script language="JavaScript" src="themes/outlook/webmail.js" type="text/javascript"></script>
+	{$pageMetas}
+	{$umJS}
 
-{$umJS}
+	<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+	<script src="themes/outlook/webmail.js" type="text/javascript"></script>
+</head>
 
 <body >
 
@@ -48,12 +48,14 @@
 		               <td width="10%" class="headers">{#adr_dele_hea#}</td>
 		       </tr>
 		       {counter start=0 skip=1 print=false}
+
+			   <iframe id="process" name="process" style="display:none;"></iframe>
 		       {section name=i loop=$umAddressList}
                {counter print=false assign=contador}
 		       <tr>
 		               <td id="name_{$contador}" onmouseover="name_{$contador}.className='messagelist_over';mail_{$contador}.className='messagelist_over';ok_{$contador}.className='messagelist_over';" onmouseout="name_{$contador}.className='messagelist';mail_{$contador}.className='messagelist';ok_{$contador}.className='messagelist';" class="messagelist" onclick="location = '{$umAddressList[i].editlink}'"><img src="themes/outlook/images/icon_addtoaddressbook.gif" border=0>&nbsp;{$umAddressList[i].name}</td>
 		               <td id="mail_{$contador}" onmouseover="name_{$contador}.className='messagelist_over';mail_{$contador}.className='messagelist_over';ok_{$contador}.className='messagelist_over';" onmouseout="name_{$contador}.className='messagelist';mail_{$contador}.className='messagelist';ok_{$contador}.className='messagelist';" class="messagelist" onclick="location = '{$umAddressList[i].editlink}'">{$umAddressList[i].email}</td>
-		               <td id="ok_{$contador}" onmouseover="name_{$contador}.className='messagelist_over';mail_{$contador}.className='messagelist_over';ok_{$contador}.className='messagelist_over';" onmouseout="name_{$contador}.className='messagelist';mail_{$contador}.className='messagelist';ok_{$contador}.className='messagelist';" class="messagelist"><a class="menu" href="{$umAddressList[i].dellink}"><img src='themes/outlook/images/icon_delete_mini.gif' border=0></a></td>
+		               <td id="ok_{$contador}" onmouseover="name_{$contador}.className='messagelist_over';mail_{$contador}.className='messagelist_over';ok_{$contador}.className='messagelist_over';" onmouseout="name_{$contador}.className='messagelist';mail_{$contador}.className='messagelist';ok_{$contador}.className='messagelist';" class="messagelist"><a target="process" class="menu" href="{$umAddressList[i].dellink}"><img src='themes/outlook/images/icon_delete_mini.gif' border=0></a></td>
 		       </tr>
 		       {/section}
 

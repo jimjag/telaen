@@ -6,9 +6,10 @@
 	<title>{if $webmailTitle}{$webmailTitle} - {/if}{#compose_mnu#}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
 	<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
-	<script language="JavaScript" src="themes/outlook/webmail.js" type="text/javascript"></script>
+	{$pageMetas}
+	<script src="themes/outlook/webmail.js" type="text/javascript"></script>
 
-{$umJS}
+	{$umJS}
 
 </head>
 <body>

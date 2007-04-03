@@ -4,6 +4,8 @@
 <head>
 	<title>{if $webmailTitle}{$webmailTitle} - {/if}{#adr_title#}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	{$pageMetas}
+	{$umJS}
 
 </head>
 <link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
@@ -13,7 +15,9 @@
 {$umJS}
 
 <body>
-<form name=form1 method=post action=addressbook.php>
+
+<iframe id="process" name="process" style="display:none;"></iframe>
+<form name='form1' method='post' action='addressbook.php' target='process'>
 <input type=hidden name=sid value="{$umSid}">
 <input type=hidden name=id value="{$umAddrID}">
 <input type=hidden name=lid value="{$umLid}">

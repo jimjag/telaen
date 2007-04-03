@@ -1,8 +1,10 @@
 {config_load file=$umLanguageFile section="QuickAddress"}
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{#qad_title#}</title>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	{$pageMetas}
+	<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+
 {literal}
 <script language=javascript>
 

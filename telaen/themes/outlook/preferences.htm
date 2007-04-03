@@ -5,10 +5,10 @@
 	<title>{if $webmailTitle}{$webmailTitle} - {/if}{#prf_title#}</title>
 	<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
 	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	{$pageMetas}	
+	<script src="themes/outlook/webmail.js" type="text/javascript"></script>
 
-<script language="JavaScript" src="themes/outlook/webmail.js" type="text/javascript"></script>
-
-{$umJS}
+	{$umJS}
 
 </head>
 <body>
@@ -33,7 +33,7 @@
 							</tr>
 							</table>
 						</td>
-							
+
 						<td id="tab_trash" class="tab_info_hidden">
 							<table cellpadding="0" cellspacing="0">
 							<tr>
@@ -43,7 +43,7 @@
 							</tr>
 							</table>
 						</td>
-						
+
 						<td id="tab_messages" class="tab_info_hidden">
 							<table cellpadding="0" cellspacing="0">
 							<tr>
@@ -53,7 +53,7 @@
 							</tr>
 							</table>
 						</td>
-						
+
 						<td id="tab_filters" class="tab_info_hidden">
 							<table cellpadding="0" cellspacing="0">
 							<tr>
@@ -70,13 +70,14 @@
 					</td>
 				</tr>
 			</table>
+
 			<table width='100%' cellpadding='15' cellspacing='0' class="tab" height="430">
-				<tr><td width='100%'>
-					
+				<tr><td width='100%' valign='top'>
 					<form name="prefs_form" id="prefs_form" action="preferences.php" method="post">
 					<input type="hidden" name="action" value="savePrefs">
 
-					<div id="info" class="tab_visible"> <!-- first tab -->
+<!-- first tab - general -->
+					<div id="info" class="tab_visible">
 					<fieldset><legend><font class='xx-normal'>{#prf_general_title#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr>
@@ -106,13 +107,16 @@
 						</tr>
 						</table>
 					</fieldset>
-					
-					<table><tr><td>
-					<input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
-					</td></tr></table>
+
+					<table>
+						<tr><td>
+							<input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
+						</td></tr>
+					</table>
 					</div>
 
-					<div id="trash" class="tab_hidden"> <!-- second tab -->
+<!-- second tab - messages -->
+					<div id="trash" class="tab_hidden">
 					<fieldset><legend><font class='xx-normal'>{#prf_messages_title#}</font></legend>
 						<table width='100%' cellpadding='2' cellspacing='0'>
 						<tr>
@@ -126,9 +130,9 @@
 						<tr>
 							<td class="label" size="120">{#prf_time_to_refesh#}</td>
 							<td>
-								<select name="refresh_time">	
+								<select name="refresh_time">
 								{html_options values=$refreshTimeVals output=$refreshTimeVals selected=$refreshTime}
-								</select>	
+								</select>
 							</td>
 						</tr>
 						<tr>
@@ -167,13 +171,15 @@
 
 						</table>
 					</fieldset>
-					<table><tr><td>
-                                        <input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
-                                        </td></tr></table>
-
+					<table>
+						<tr><td>
+						<input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
+						</td></tr>
+					</table>
 					</div>
 
-					<div id="messages" class="tab_hidden"> <!-- third tab -->
+<!-- third tab - trash -->
+					<div id="messages" class="tab_hidden">
 					<fieldset><legend><font class="xx-normal">{#prf_trash_title#}</font></legend>
 						<table width="100%" cellpadding="2" cellspacing="0">
 						<tr>
@@ -214,20 +220,23 @@
 						</td>
 						</tr>
 						</table>
-				
+
 					</fieldset>
-					
-					<table><tr><td>
-                                        <input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
-                                        </td></tr></table>
+
+					<table>
+						<tr><td>
+						<input type="submit" value="&nbsp;&nbsp;&nbsp;{#prf_save_button#}&nbsp;&nbsp;&nbsp;" class="button">
+						</td></tr>
+					</form>
+					</table>
 
 					</div>
-					</form>
-					
-					<div id="filters" class="tab_hidden"> <!-- fourth tab - filters -->
-					<fieldset>
-						<legend><font class="xx-normal">{#filter_new#}</font></legend>
-						<form action="preferences.php" method="post">
+
+
+<!-- fourth tab - filters -->
+					<div id="filters" class="tab_hidden">
+					<form action="preferences.php" method="post">
+					<fieldset><legend><font class="xx-normal">{#filter_new#}</font></legend>
 						<input type="hidden" name="action" value="addFilter">
 						<table width="100%" cellpadding="2" cellspacing="0">
 							<tr>
@@ -241,40 +250,40 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="label">{#filter_field#}:</td>
+								<td class="label">{#filter_match#}:</td>
 								<td>
 									 <input type="text" class="textbox" name="filter_match" size="30">
 								</td>
 							</tr>
 							<tr>
-			                                        <td class="label">
-			                                                {#filter_type#}:
-			                                        </td>
-			                                        <td>
-			                                                <select name="filter_type" onchange="checkMove();">
-			                                                        <option value="1">{#filter_type_move#}</option>
-			                                                        <option value="2">{#filter_type_delete#}</option>
-			                                                        <option value="4">{#filter_type_mark#}</option>
-			                                                </select>
-			                                        </td>
-			                                </tr>
-			                                <tr>
-			                                        <td class="label">
-			                                                {#filter_folder#}:
-			                                        </td>
-			                                        <td>
-			                                                <select name="filter_folder">
-			                                                {section name=i loop=$umPersonalFolders}
-									<option value="{$umPersonalFolders[i].name}">{$umPersonalFolders[i].name}</option>
-			                                                {/section}
-			                                                </select>
-			                                        </td>
-			                                </tr>
-			                                <tr>
-			                                        <td class="default" align="center" colspan="2">
-			                                                <input type="submit" class="button" value="{#filter_add#}">
-			                                        </td>
-			                                </tr>
+								<td class="label">
+									{#filter_type#}:
+								</td>
+								<td>
+									<select name="filter_type" onchange="checkMove();">
+										<option value="1">{#filter_type_move#}</option>
+										<option value="2">{#filter_type_delete#}</option>
+										<option value="4">{#filter_type_mark#}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="label">
+									{#filter_folder#}:
+								</td>
+								<td>
+									<select name="filter_folder">
+									{section name=i loop=$umPersonalFolders}
+										<option value="{$umPersonalFolders[i].name}">{$umPersonalFolders[i].name}</option>
+									{/section}
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="default" align="center" colspan="2">
+									<input type="submit" class="button" value="{#filter_add#}">
+								</td>
+							</tr>
 						</table>
 						</form>
 					</fieldset>
@@ -283,47 +292,60 @@
 						<legend><font class="xx-normal">{#filter_list#}</font></legend>
 						<form id="filters_form" name="filters_form" action="preferences.php" method="post">
 						<input type="hidden" name="action" value="delFilter">
-				
-			<table cellspacing="0" cellpadding="0" width="100%" border="0" bgcolor="white">                       
-                                <tr>
-					<td class="headers">&nbsp;</td>
-                                        <td class="headers">{#filter_field#}</td>
-                                        <td class="headers">{#filter_match#}</td>
-                                        <td class="headers">{#filter_type#}</td>
-                                        <td class="headers">{#filter_folder#}</td>
-                                        <td class="headers">&nbsp;</td>
+
+					<table cellspacing=2 cellpadding=0 width=100%>
+						<tr>
+							<td class='messages' valign=top >
+
+
+							<table cellspacing="0" cellpadding="0" width="100%" border="0" bgcolor="white">
+					                 <tr>
+									<td class="headers">&nbsp;</td>
+									<td class="headers">{#filter_field#}</td>
+									<td class="headers">{#filter_match#}</td>
+									<td class="headers">{#filter_type#}</td>
+									<td class="headers">{#filter_folder#}</td>
+									<td class="headers">&nbsp;</td>
+							</tr>
+						{section name=filter loop=$filterList}
+							<tr>
+									<td width="18" align="center">
+										<input type="checkbox" id="cb{$smarty.section.filter.index}" name="filters_array[]" value="{$smarty.section.filter.index}">
+									</td>
+									<td class="label">
+									{if $filterList[filter].field eq 1}{#filter_field_from#}
+									{elseif $filterList[filter].field eq 2}{#filter_field_subject#}
+									{elseif $filterList[filter].field eq 4}{#filter_field_to#}{/if}
+									</td>
+									<td class="label">{$filterList[filter].match}</td>
+									<td class="label">
+									{if $filterList[filter].type eq 1}{#filter_type_move#}
+									{elseif $filterList[filter].type eq 2}{#filter_type_delete#}
+									{elseif $filterList[filter].type eq 4}{#filter_type_mark#}{/if}
+									</td>
+									<td class="label">{$filterList[filter].moveto}</td>
+									<td align="center">
+										<a href="#" onclick="filterDelete({$smarty.section.filter.index});return false;"><acronym title="{#filter_delete#}"><img src='themes/outlook/images/icon_delete_mini.gif' border=0></acronym></a>
+									</td>
                                 </tr>
-                                {section name=filter loop=$filterList}
-                                <tr>
-					<td width="18" align="center">
-						<input type="checkbox" id="cb{$smarty.section.filter.index}" name="filters_array[]" value="{$smarty.section.filter.index}">
-					</td>
-                                        <td class="label">
-                                        {if $filterList[filter].field eq 1}{#filter_field_from#}
-                                        {elseif $filterList[filter].field eq 2}{#filter_field_subject#}
-                                        {elseif $filterList[filter].field eq 4}{#filter_field_to#}{/if}
-                                        </td>
-                                        <td class="label">{$filterList[filter].match}</td>
-                                        <td class="label">
-                                        {if $filterList[filter].type eq 1}{#filter_type_move#}
-                                        {elseif $filterList[filter].type eq 2}{#filter_type_delete#}
-                                        {elseif $filterList[filter].type eq 4}{#filter_type_mark#}{/if}
-                                        </td>
-                                        <td class="label">{$filterList[filter].moveto}</td>
-                                        <td align="center">
-						<a href="#" onclick="filterDelete({$smarty.section.filter.index});return false;">[{#filter_delete#}]</a>
-					</td>
-                                </tr>
-				{sectionelse}
-				<tr><td class="label" align="center" colspan="6">{#filter_msg_nofilters#}</td></tr>
-                                {/section}
-				<tr>
-					<td><img src="themes/default/images/arrowblue.gif" alt=""></td>
-					<td>
-						<a href="#" onclick="document.filters_form.submit();return false;">{#filter_delete_selected#}</a>
-					</td>
-				</tr>
-			</table>	
+
+						{sectionelse}
+							<tr>
+								<td class="label" align="center" colspan="6"><br>{#filter_msg_nofilters#}<br><br></td>
+							</tr>
+                        {/section}
+							</table>
+							</td>
+						</tr>
+						{if $filterList}
+						<tr>
+							<td class="default" align="center" colspan="2">
+								<input type="button" class="button" value="{#filter_delete_selected#}" onclick="document.filters_form.submit();return false;">
+							</td>
+						</tr>
+						{/if}
+					</table>
+					</form>
 					</fieldset>
 					</div>
 
@@ -332,7 +354,7 @@
 		</td>
 	</tr>
 </table>
-</form>
+
 </body>
 </html>
 

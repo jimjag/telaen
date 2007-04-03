@@ -541,22 +541,14 @@ DIV.priority_inner {
 
 DIV.tab_visible {
 	background-color: #D4D0C8;
-	z-index: 10;
-	position: absolute;
-	left: 20px;
-	top: 70px;
-	visibility: visible;
 	width: 550px;
+	display: block;
 }
 
 DIV.tab_hidden {
 	background-color: #D4D0C8;
-	z-index: 0;
-	position: absolute;
-	left: 20px;
-	top: 70px;
-	visibility: hidden;
 	width: 550px;
+	display: none;
 }
 
 DIV.showmodal {
