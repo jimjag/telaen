@@ -14,20 +14,20 @@ spam_extended					= Spam
 
 previous_text					= Vorige
 next_text					= Volgende
-pages_text                                      = Pages
-first_text                                      = First
-last_text                                       = Last
-total_text                                      = Total
+pages_text                                      = Pagina's
+first_text                                      = Eerste
+last_text                                       = Laatste
+total_text                                      = Totaal
 
 
 # Mail Server Errors
 
 err_login_msg                                   = Login error
-err_system_msg                                  = System error
-error_login                                     = Please check your username or password and try again
+err_system_msg                                  = Systeem error
+error_login                                     = Controleer gebruikersnaam en wachtwoord en probeer opnieuw
 error_connect					= De POP3 locatie is onjuist.
 error_retrieving				= De berichten konden niet opgehaald worden.
-error_session_expired				= Your session is expired, please login again
+error_session_expired				= Uw sessie is verlopen, log alsjeblieft opnieuw in.
 error_other					= Onbekende fout, neem contact op met de webmaster.
 
 #Invalid name of mailbox
@@ -52,7 +52,7 @@ confirm_delete					= Weet je zeker dat je de selectie wilt verwijderen?
 # If the message no have a subject or sender;
 
 no_subject_text					= (geen)
-no_sender_text					= (onbekende)
+no_sender_text					= (onbekend)
 no_recipient_text				= (onbekend)
 
 
@@ -65,11 +65,11 @@ quota_usage_of					= van
 quota_usage_avail				= beschikbaar
 
 
-#********************************************************#
-# Date Format                                            #
-# %d = day, %m = month, %y = year, %H = hour, %M = minutes    #
-# for a complete list, see http://www.php.net/strftime       #
-#********************************************************#
+#**********************************************************#
+# Date Format                                              #
+# %d = day, %m = month, %y = year, %H = hour, %M = minutes #
+# for a complete list, see http://www.php.net/strftime     #
+#**********************************************************#
 
 date_format 					= %d/%m/%y %H:%M
 
@@ -95,8 +95,8 @@ reply_prefix					= Re:
 forward_prefix					= Fw:
 
 reply_delimiter					= --------- Oorspronkelijk bericht --------
-reply_from_hea					= Afzender:
-reply_to_hea					= Naar:
+reply_from_hea					= Van:
+reply_to_hea					= Aan:
 reply_cc_hea					= Cc:
 reply_date_hea					= Datum:
 reply_subject_hea				= Onderwerp:
@@ -150,22 +150,22 @@ msg_in_the_folder				= in de map
 
 
 lgn_title					= Aanmelden
-lgn_welcome_msg					= Welkom, meldt je aan op jouw account.
+lgn_welcome_msg					= Welkom, meld je aan op jouw account.
 lng_user_email					= E-mail
 lng_user_name					= Gebruikersnaam
 lng_user_pwd					= Wachtwoord
 lng_theme					= Thema
 lng_language					= Taal
 lng_login_btn					= Aanmelden
-lng_cookie_not_enabled				= Cookies moeten aan staan
-lng_cookie_not_valid				= Cookie Beveiligingscontrole mislukt
+lng_cookie_not_enabled				= Cookies moeten geaccepteerd worden
+lng_cookie_not_valid				= Cookie beveiligingscontrole mislukt
 
 
 [Newmessage]
 
-newmsg_title                                  	= Compose mail
+newmsg_title                                  	= Nieuw bericht
 
-to_hea						= Naar:
+to_hea						= Aan:
 cc_hea						= Cc:
 bcc_hea						= Bcc:
 subject_hea					= Onderwerp:
@@ -179,7 +179,7 @@ attch_type_hea					= Type
 attch_dele_hea					= Verwijder
 attch_no_hea					= Geen bijlagen
 
-require_receipt                                 = Return receipt
+require_receipt                                 = Verzoek om leesbevestiging
 
 add_signature					= Voeg handtekening toe:
 send_text					= Verzend
@@ -225,37 +225,37 @@ prf_default_editor_mode				= Plain text/Editor:
 prf_default_editor_mode_text			= Plain text (simpel)
 prf_default_editor_mode_html			= Uitgebreide editor (TinyMCE)
 prf_time_to_refesh				= Vernieuw berichten om de: (aantal minuten)
-prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
-prf_auto_require_receipt                        = Require read receipt by default
-prf_mgs_saved					= Preferences saved
+prf_spam_level					= Spam gevoeligheid (0 = uitgeschakeld, 1 = hoogste, 9 = laagste)
+prf_auto_require_receipt                        = Verzoek altijd om leesbevestiging
+prf_mgs_saved					= Voorkeuren opgeslagen
 
 # filters
 filter_title                                    = Filters
 
-filter_new                                      = Create a filter
-filter_desc                                     = Choose the search criteria and the action for the incoming messages
-filter_list					= Current filters
+filter_new                                      = Maak een filter aan
+filter_desc                                     = Kies de zoekcriteria en de actie voor binnenkomende berichten
+filter_list					= Huidige filters
 
-filter_field_from                               = From
-filter_field_to                                 = To
-filter_field_subject				= Subject
+filter_field_from                               = Van
+filter_field_to                                 = Aan
+filter_field_subject				= Onderwerp
 
-filter_type_move                                = Move
-filter_type_delete                              = Delete
-filter_type_mark                                = Mark read
+filter_type_move                                = Verplaats
+filter_type_delete                              = Verwijder
+filter_type_mark                                = Markeer als gelezen
 
-filter_add					= Add filter
-filter_delete                                   = Delete
-filter_delete_selected				= Delete selected filters
+filter_add					= Voeg filter toe
+filter_delete                                   = Verwijder
+filter_delete_selected				= Verwijder geselecteerde filters
 
-filter_field					= Filter on field
-filter_match					= Search for
-filter_type					= Action
-filter_folder					= Destination folder
+filter_field					= Filter op veld
+filter_match					= Zoek naar
+filter_type					= Actie
+filter_folder					= Doelmap
 
-filter_msg_nofilters				= No filters available.
-filter_msg_added				= Filter added
-filter_msg_deleted				= Filter deleted
+filter_msg_nofilters				= Geen filters beschikbaar.
+filter_msg_added				= Filter toegevoegd
+filter_msg_deleted				= Filter verwijderd
 
 
 [Catch]
@@ -280,7 +280,7 @@ headers_mnu					= Header
 move_mnu					= Verplaats naar
 delete_mnu					= Verwijder
 print_mnu					= Afdrukweergave
-download_mnu                                    = Download
+download_mnu                                    = Opslaan
 
 from_hea					= Van:
 to_hea						= Naar:
@@ -297,7 +297,7 @@ catch_address					= Aan contactpersonen toevoegen
 
 [Search]
 
-sch_title                                     	= Search
+sch_title                                     	= Zoeken
 
 sch_information_text				= Zoek naar een woord of zin in al uw berichten.
 sch_button_text					= Zoek
@@ -313,7 +313,7 @@ sch_no_results					= Geen berichten gevonden
 
 qad_title 			= Contactpersonen
 qad_select_address		= Selecteer een contactpersoon
-qad_to				= Naar
+qad_to				= Aan
 qad_cc				= Cc
 qad_bcc				= Bcc
 
