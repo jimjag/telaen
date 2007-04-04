@@ -66,7 +66,7 @@ if(isset($tipo) && $tipo == "send") {
 		} elseif ($footer != "") $body .= $footer;
 
 		$mail->CharSet		= $default_char_set;
-		$mail->Hostname		= getenv("SERVER_ADDR");
+		$mail->Hostname		= getenv("SERVER_NAME");
 		$mail->From 		= ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$sess["email"];
 		$mail->FromName 	= $UM->mime_encode_headers($prefs["real-name"]);
 		$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));
