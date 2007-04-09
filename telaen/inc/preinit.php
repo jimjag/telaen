@@ -35,9 +35,9 @@ $phpver = phpversion();
 $phpver = doubleval($phpver[0].".".$phpver[2]);
 
 if($phpver >= 4.1) {
+	extract($_SERVER,EXTR_SKIP);
 	extract($_POST,EXTR_SKIP);
 	extract($_GET,EXTR_SKIP);
-	extract($_SERVER,EXTR_SKIP);
 	extract($_FILES);
 } else {
 	function array_key_exists($key,&$array) {
