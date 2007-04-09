@@ -18,6 +18,8 @@ Telaen:
 
 1.2.0-dev
 
+[New]	Removed support for versions of PHP < 4.1.0
+
 [New]	Smarty upgraded to 2.6.18.
 
 [New]	Quota handling can now be set per user or per

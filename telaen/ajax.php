@@ -14,8 +14,6 @@ Telaen is a GPL'ed software developed by
 session_name('telaen');
 session_start();
 
-$phpver = phpversion(); // this is needed only for the session obj
-
 // cheking for main param
 if(isset($_POST['action'])) {
 	

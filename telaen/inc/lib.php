@@ -184,7 +184,6 @@ function create_abs_url ($url, $add_scheme_host = true) {
 
 function redirect_and_exit($location, $killsession = false) {
 	global $enable_debug;
-	global $phpver;
 	global $redirects_use_meta;
 	global $redirects_are_relative;
 	global $SS;
@@ -217,14 +216,10 @@ ENDOFREDIRECT;
 	} else {
 		Header("Location: $url");
 	}
-	if ($phpver >= 4.1) {
-		if (ob_get_level()) {
-                        @ob_end_flush();
-                }
-        } else {
-		@ob_end_flush();
+	if (ob_get_level()) {
+		ob_end_flush();
 	}
-    exit;
+	exit;
 }
 
 function array_qsort2ic (&$array, $column=0, $order="ASC") {
@@ -259,12 +254,7 @@ class Session {
 	var $ss = null;
 	
 	function Session() {
-		global $phpver;
-		if($phpver >= 4.1) {
-			$this->ss = &$_SESSION;
-		} else {
-			$this->ss = &$HTTP_SESSION_VARS;
-		}
+		$this->ss = &$_SESSION;
 	}
 	function Load() {
 		if(!is_array($this->ss['telaen_sess']))
@@ -277,13 +267,8 @@ class Session {
 	}       
 
 	function Kill() {
-		global $phpver;
 		@session_destroy();
-		if($phpver >= 4.1) {
-			$_SESSION = Array();
-		} else {
-			$HTTP_SESSION_VARS  = Array();
-		}
+		$_SESSION = Array();
 	}
 }
 

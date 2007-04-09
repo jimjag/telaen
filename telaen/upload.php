@@ -30,26 +30,25 @@ if (isset($rem) && $rem != "") {
 	</script>\n
 	");
 
-} elseif (
-		isset($userfile) && 
+} elseif (	isset($userfile) && 
 		((!is_array($userfile) && is_uploaded_file($userfile)) || 
 		is_uploaded_file($userfile["tmp_name"]))) {
 
 	//if(file_exists($userfile["tmp_name"])) {
 
-	if($phpver >= 4.1) {
-		$userfile_name  = $userfile["name"];
-		$userfile_type	= $userfile["type"];
-		$userfile_size	= $userfile["size"];
-		$userfile		= $userfile["tmp_name"];
-	}
+
+	$userfile_name  = $userfile["name"];
+	$userfile_type	= $userfile["type"];
+	$userfile_size	= $userfile["size"];
+	$userfile	= $userfile["tmp_name"];
+
 
 	if(!is_array($sess["attachments"])) $ind = 0;
 	else $ind = count($sess["attachments"]);
 
 	$filename = $userfolder."_attachments/".md5(uniqid("")).$userfile_name;
 
-    move_uploaded_file($userfile, $filename);
+	move_uploaded_file($userfile, $filename);
 
 	$sess["attachments"][$ind]["localname"] = $filename;
 	$sess["attachments"][$ind]["name"] = $userfile_name;
