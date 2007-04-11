@@ -362,9 +362,7 @@ class Telaen_core {
 
 			unset($name);unset($email);
 		}
-		unset($armail); 
-		unset ($thisPart);
-		return $ARfrom;
+	$receiptTo[0]["email"];	return $ARfrom;
 	}
 
 	/**
@@ -838,7 +836,10 @@ class Telaen_core {
 		$myarray["status"] = $headers["status"];
 		$myarray["read"] = $headers["x-um-status"];
 		$myarray["x-spam-level"] = $headers["x-spam-level"];
-		$myarray["receipt-to"] = $headers["disposition-notification-to"];
+		
+		$receiptTo = $this->get_first_of_names($headers["disposition-notification-to"]);
+		$myarray["receipt-to"] = $receiptTo[0]["mail"];
+		
 		$uidl = $headers["x-um-uidl"];
 		if ($this->is_valid_md5($uidl))
 			$myarray["uidl"] = $uidl;

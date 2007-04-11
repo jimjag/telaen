@@ -45,6 +45,9 @@ if(isset($_POST['action'])) {
 			$recipient = $_POST['recipient'];			
 			$receiptSubj = $_POST['receipt_subj'];
 			$receiptMsg = $_POST['receipt_msg'];
+			
+			require("./inc/class.telaen.php");
+			$UM = new Telaen();
 
 			require("./inc/class.phpmailer.php");
 		        require("./inc/class.phpmailer_extra.php");
@@ -73,7 +76,7 @@ if(isset($_POST['action'])) {
 			$mail->Password = $sess["pass"];
 
 			// build the email
-			$mail->From = ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$sess["email"];						
+			$mail->From = ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$sess["email"];
 			$mail->FromName = $UM->mime_encode_headers($prefs["real-name"]);
 			$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));			
 			$mail->AddAddress($recipient);
