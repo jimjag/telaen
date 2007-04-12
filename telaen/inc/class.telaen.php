@@ -362,7 +362,9 @@ class Telaen_core {
 
 			unset($name);unset($email);
 		}
-	$receiptTo[0]["email"];	return $ARfrom;
+		unset($armail);
+		unset ($thisPart);
+		return $ARfrom;
 	}
 
 	/**
