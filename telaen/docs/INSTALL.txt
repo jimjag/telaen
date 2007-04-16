@@ -38,7 +38,12 @@ INSTALL
       o Make any required changes.
       o Be SURE to REMOVE check_install.php or RENAME it back to
         check_install.php.txt !!!
-  
+
+- If not using the bundled version of Smarty, be sure to copy the
+  function.um_welcome_message.php.txt in the 'patches'
+  directory file to your Smarty plugins folder (rename it to
+  function.um_welcome_message.php)!
+
 ---------------
 UPGRADING
 ---------------
