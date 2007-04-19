@@ -204,7 +204,15 @@ $nocache = "
 	<meta http-equiv=\"Expires\" content=\"-1\" />
 	<meta http-equiv=\"Pragma\" content=\"no-cache\" />";
 
+// Common js included system-wide
+$commonJS = "
+	<script type=\"text/javascript\" src=\"./js/prototype.js\"></script>
+	<script type=\"text/javascript\" src=\"./js/common.js\"></script>
+";
+
+
 // Sort rules
+
 if(!isset($sortby) || !ereg("(subject|fromname|date|size)",$sortby)) {
 	if(array_key_exists("sort-by",$prefs) && ereg("(subject|fromname|date|size)",$prefs["sort-by"]))
 		$sortby = $prefs["sort-by"];

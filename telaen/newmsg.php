@@ -162,20 +162,18 @@ if(isset($tipo) && $tipo == "send") {
 
 	} else die("<script language=\"javascript\" type=\"text/javascript\">location = 'index.php?err=3';</script>");
 
-	$jssource = "	
+	$jssource = $commonJS;
+	$jssource .= "	
 	<script language=\"javascript\" type=\"text/javascript\">
 	//<![CDATA[
 	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-	function goend() { location = 'logout.php'; }
-	function goinbox() { location = 'messages.php?folder=inbox'; }
 	function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 	function search() {	location = 'search.php?folder=".urlencode($folder)."';}
-	function addresses() { location = 'addressbook.php'; }
-	function prefs() { location = 'preferences.php'; }
 	//]]>
 	</script>	
 	";
+	
 
 	$smarty->assign("umJS",$jssource);
 
@@ -216,10 +214,10 @@ if(isset($tipo) && $tipo == "send") {
 	$smarty->assign("umForms",$forms);
 
 
-	$jssource = "";
+	$jssource = $commonJS;
 
 	if ($show_advanced) {
-		$jssource = "
+		$jssource .= "
 	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_mce_gzip.php\"></script>
 	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_init.js\"></script>
 		";
@@ -297,16 +295,12 @@ if(isset($tipo) && $tipo == "send") {
 	
 	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-	function goend() { location = 'logout.php'; }
-	function goinbox() { location = 'messages.php?folder=inbox'; }
 	function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 	function search() {	location = 'search.php?folder=".urlencode($folder)."';}
 	function addrpopup(where) {
 		url = 'quick_address.php?where=' + where;
 		mywin = window.open(url,'AddressBook','width=600,height=300,top=150,left=150');
 	}
-	function addresses() { location = 'addressbook.php'; }
-	function prefs() { location = 'preferences.php'; }
 	function AddAddress(strType,strAddress) {
 		obj = eval('document.composeForm.'+strType);
 		if(obj.value == '') obj.value = strAddress
@@ -358,7 +352,6 @@ if(isset($tipo) && $tipo == "send") {
 	//]]>
 	</script>
 	
-	<script type=\"text/javascript\" src=\"./js/prototype.js\"></script>
 	<script type=\"text/javascript\">
 	//<![CDATA[
 	window.setInterval(function() {
