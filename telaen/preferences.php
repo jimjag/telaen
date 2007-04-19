@@ -10,6 +10,9 @@ Telaen is a GPL'ed software developed by
 require("./inc/inc.php");
 require("./folder_list.php");
 
+// assign metas
+$smarty->assign("pageMetas", $nocache);
+
 $jssource = $commonJS;
 $jssource .= "
 
@@ -21,18 +24,19 @@ function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function search() { location = 'search.php'; }
 function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function dis() { 
-        with(document.forms[0]) { 
-                f_st_only_read.disabled = !f_save_trash.checked; 
-                if(f_st_only_read.checked) f_st_only_read.checked = f_save_trash.checked; 
-                disbl = !f_save_trash.checked
-        } 
+	var f = $('prefs_form'); 
+	f.st_only_read.disabled = !f.save_trash.checked; 
+	if(f.st_only_read.checked) {
+		f.st_only_read.checked = f.save_trash.checked; 
+                disbl = f.save_trash.checked;
+	} 
 }
 function checkDis() {
 	if (disbl)
 		return false;
 }
 function filterDelete(id) {
-	var f = document.filters_form;
+	var f = $('filters_form');
 	cb = eval('f.cb' + id);
 	if(cb) {
 		cb.checked = true;
