@@ -18,23 +18,19 @@ $jssource .= "
 
 <script type=\"text/javascript\">
 //<![CDATA[
-disbl = false;
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function search() { location = 'search.php'; }
 function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
+
 function dis() { 
 	var f = $('prefs_form'); 
 	f.st_only_read.disabled = !f.save_trash.checked; 
 	if(f.st_only_read.checked) {
 		f.st_only_read.checked = f.save_trash.checked; 
-                disbl = f.save_trash.checked;
 	} 
 }
-function checkDis() {
-	if (disbl)
-		return false;
-}
+
 function filterDelete(id) {
 	var f = $('filters_form');
 	cb = eval('f.cb' + id);

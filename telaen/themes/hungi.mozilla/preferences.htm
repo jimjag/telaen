@@ -57,7 +57,7 @@
 				<tr><td class="separator" colspan="2"></td></tr>
 				<tr>
 					<td class="default" colspan="2">
-					<input type="checkbox" name="st_only_read" onclick="return checkDis()" value="1"{if $saveTrashOnlyRead eq true} checked="checked"{/if} />
+					<input type="checkbox" name="st_only_read" value="1"{if $saveTrashOnlyRead eq true} checked="checked"{/if} />
 					{#prf_save_only_read#} "<b>{#trash_extended#}</b>"
 					</td>
 				</tr>
@@ -297,7 +297,7 @@
 				<tr>
 					<td colspan="6" class="default">
 						<img src="themes/default/images/arrowblue.gif" alt="" />
-						<a href="#" class="menu" onclick="document.filters_form.submit();return false;">{#filter_delete_selected#}</a>
+						<a href="#" class="menu" onclick="$('filters_form').submit();return false;">{#filter_delete_selected#}</a>
 					</td>
 				</tr>
 			</table>	
