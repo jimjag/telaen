@@ -10,18 +10,16 @@ Telaen is a GPL'ed software developed by
 require("./inc/inc.php");
 require("./folder_list.php");
 
-$jssource = "
+$jssource = $commonJS;
+$jssource .= "
 
 <script type=\"text/javascript\">
 //<![CDATA[
 disbl = false;
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-function goend() { location = 'logout.php'; }
-function goinbox() { location = 'messages.php?folder=inbox'; }
 function search() { location = 'search.php'; }
 function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-function addresses() { location = 'addressbook.php'; }
 function dis() { 
         with(document.forms[0]) { 
                 f_st_only_read.disabled = !f_save_trash.checked; 

@@ -12,20 +12,18 @@ require("./inc/inc.php");
 $smarty->assign("pageMetas", $nocache);
 
 $jsquota = ($exceeded)?"true":"false";
-$jssource = "
+
+$jssource = $commonJS;
+$jssource .= "
 <script type=\"text/javascript\">
 //<![CDATA[
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-function goend() { location = 'logout.php'; }
-function goinbox() { location = 'messages.php?folder=inbox'; }
 function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-function addresses() { location = 'addressbook.php'; }
-function prefs() { location = 'preferences.php'; }
 no_quota  = $jsquota;
 quota_msg = '".ereg_replace("'","\\'",$quota_exceeded)."';
 function readmsg(ix,read,folder) {
-	if(!read && no_quota)
+	if(no_quota)
 		alert(quota_msg)
 	else
 		location = 'readmsg.php?folder='+folder+'&pag=$pag&ix='+ix+''; 

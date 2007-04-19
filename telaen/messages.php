@@ -87,7 +87,9 @@ $end_pos   = (($start_pos+$reg_pp) > $nummsg)?$nummsg:$start_pos+$reg_pp;
 if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
 
 $jsquota = ($exceeded)?"true":"false";
-$jssource = "
+
+$jssource = $commonJS;
+$jssource .= "
 <script type=\"text/javascript\">
 //<![CDATA[
 
@@ -103,8 +105,6 @@ function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder).
 function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag' }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function delemsg() { document.form1.submit() }
-function goend() { location = 'logout.php'; }
-function goinbox() { location = 'messages.php?folder=inbox'; }
 function search() { location = 'search.php'; }
 function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function movemsg() { 
@@ -114,8 +114,6 @@ function movemsg() {
 		with(document.form1) { decision.value = 'move'; submit(); } 
 	}
 }
-function addresses() { location = 'addressbook.php'; }
-function prefs() { location = 'preferences.php'; }
 function markmsg() {
       with(document.form1) { decision.value = 'mark'; submit(); }
 };

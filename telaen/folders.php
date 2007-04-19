@@ -64,17 +64,14 @@ if(isset($empty)) {
 
 }
 
-$jssource = "
+$jssource = $commonJS;
+$jssource .= "
 <script type=\"text/javascript\">
 //<![CDATA[
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function refreshlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-function goend() { location = 'logout.php'; }
 function search() { location = 'search.php'; }
-function goinbox() { location = 'messages.php?folder=inbox'; }
 function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-function addresses() { location = 'addressbook.php'; }
-function prefs() { location = 'preferences.php'; }
 function create() {
 	strPat = /[^A-Za-z0-9\-]/;
 	frm = document.forms[0];
