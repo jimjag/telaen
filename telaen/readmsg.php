@@ -135,7 +135,6 @@ $smarty->assign("umMessageBody",$body);
 // look if the msg needs a receipt
 if ($email["receipt-to"]) {
 	$smarty->assign("receiptRequired", true);
-	$smarty->assign("receiptTo", $email["receipt-to"]);
 }
 
 $ARFrom = $email["from"];
@@ -177,7 +176,8 @@ if(count($ARCC) > 0) {
 
 $smarty->assign("umPageTitle",$email["subject"]);
 
-$jssource = "
+$jssource = $commonJS;
+$jssource .= "
 <script type=\"text/javascript\">
 //<![CDATA[
 function deletemsg() { 
@@ -195,18 +195,26 @@ function replyall() { with(document.msg) { rtype.value = 'replyall'; submit(); }
 function forward() { with(document.msg) { rtype.value = 'forward'; submit(); } }
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-function goend() { location = 'logout.php'; }
-function goinbox() { location = 'messages.php?folder=inbox'; }
 function goback() { location = 'messages.php?folder=".urlencode($folder)."&pag=$pag'; }
 function search() { location = 'search.php'; }
 function emptytrash() {	location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-function addresses() { location = 'addressbook.php'; }
-function prefs() { location = 'preferences.php'; }
 function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&attachment='+attach,'','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
 
 
+
+//]]>
+</script>
+<script type=\"text/javascript\" src=\"./js/prototype.js\"></script>
+<script type=\"text/javascript\">
+//<![CDATA[
+function sendReceipt(subj, msg) {
+	new Ajax.Request('ajax.php', {
+		method: 'post',
+		parameters: {action: 'sendReceipt', recipient: '" . $email["receipt-to"] . "', receipt_subj: subj, receipt_msg: msg}
+	}); 
+}
 
 //]]>
 </script>
