@@ -37,7 +37,7 @@ $phpver = doubleval($phpver[0].".".$phpver[2]);
 /*
  * "emulate" register_globals ON
  */
-extract($_SERVER,EXTR_SKIP);
+// extract($_SERVER,EXTR_SKIP);
 extract($_POST,EXTR_SKIP);
 extract($_GET,EXTR_SKIP);
 extract($_FILES);
