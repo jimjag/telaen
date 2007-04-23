@@ -262,7 +262,7 @@
                                         <td class="headers" colspan="6"><b>{#filter_list#}</b></td>
                                 </tr>
                                 <tr>
-					<td class="headers">&nbsp;</td>
+					<td class="headers" width="20"><input type="checkbox" name="toggle" id="toggle" onclick="selectAll('filters_form', {$filterList|@count})"</td>
                                         <td class="headersLeft">.:<b>{#filter_field#}</b>:.</td>
                                         <td class="headersLeft">.:<b>{#filter_match#}</b>:.</td>
                                         <td class="headersLeft">.:<b>{#filter_type#}</b>:.</td>
@@ -287,7 +287,7 @@
                                         </td>
                                         <td class="default">{$filterList[filter].moveto}</td>
                                         <td class="default" align="center">
-						<a href="#" class="menu" onclick="filterDelete({$smarty.section.filter.index});return false;">[{#filter_delete#}]</a>
+						<a href="#" class="menu" onclick="selectAndSubmit('filters_form',{$smarty.section.filter.index});return false;">[{#filter_delete#}]</a>
 					</td>
                                 </tr>
 				<tr><td colspan="6" class="separator"></td></tr>
@@ -297,7 +297,7 @@
 				<tr>
 					<td colspan="6" class="default">
 						<img src="themes/default/images/arrowblue.gif" alt="" />
-						<a href="#" class="menu" onclick="$('filters_form').submit();return false;">{#filter_delete_selected#}</a>
+						<a href="#" class="menu" onclick="submitForm('filters_form');return false;">{#filter_delete_selected#}</a>
 					</td>
 				</tr>
 			</table>	

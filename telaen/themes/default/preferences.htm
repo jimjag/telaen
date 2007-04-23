@@ -217,6 +217,7 @@
 				</tr>
                         </table>
                         </form>
+
 			<form id="filters_form" name="filters_form" action="preferences.php" method="post">
 			<input type="hidden" name="action" value="delFilter">
 			<table cellspacing="1" cellpadding="1" width="100%" border="0" bgcolor="white">                       
@@ -224,7 +225,7 @@
                                         <td class="headers" colspan="6"><b>{#filter_list#}</b></td>
                                 </tr>
                                 <tr>
-					<td class="headers">&nbsp;</td>
+					<td class="headers" width="20"><input type="checkbox" name="toggle" id="toggle" onclick="selectAll('filters_form',{$filterList|@count});"></td>
                                         <td class="headers">{#filter_field#}</td>
                                         <td class="headers">{#filter_match#}</td>
                                         <td class="headers">{#filter_type#}</td>
@@ -236,20 +237,20 @@
 					<td class="default" width="18" align="center">
 						<input type="checkbox" id="cb{$smarty.section.filter.index}" name="filters_array[]" value="{$smarty.section.filter.index}">
 					</td>
-                                        <td class="default">
-                                        {if $filterList[filter].field eq 1}{#filter_field_from#}
-                                        {elseif $filterList[filter].field eq 2}{#filter_field_subject#}
-                                        {elseif $filterList[filter].field eq 4}{#filter_field_to#}{/if}
-                                        </td>
-                                        <td class="default">{$filterList[filter].match}</td>
-                                        <td class="default">
-                                        {if $filterList[filter].type eq 1}{#filter_type_move#}
-                                        {elseif $filterList[filter].type eq 2}{#filter_type_delete#}
-                                        {elseif $filterList[filter].type eq 4}{#filter_type_mark#}{/if}
-                                        </td>
+					<td class="default">
+					{if $filterList[filter].field eq 1}{#filter_field_from#}
+					{elseif $filterList[filter].field eq 2}{#filter_field_subject#}
+					{elseif $filterList[filter].field eq 4}{#filter_field_to#}{/if}
+					</td>
+					<td class="default">{$filterList[filter].match}</td>
+					<td class="default">
+					{if $filterList[filter].type eq 1}{#filter_type_move#}
+					{elseif $filterList[filter].type eq 2}{#filter_type_delete#}
+					{elseif $filterList[filter].type eq 4}{#filter_type_mark#}{/if}
+					</td>
                                         <td class="default">{$filterList[filter].moveto}</td>
                                         <td class="default" align="center">
-						<a href="#" class="menu" onclick="filterDelete({$smarty.section.filter.index});return false;">[{#filter_delete#}]</a>
+						<a href="#" class="menu" onclick="selectAndSubmit('filters_form',{$smarty.section.filter.index});return false;">[{#filter_delete#}]</a>
 					</td>
                                 </tr>
 				{sectionelse}
@@ -258,7 +259,7 @@
 				<tr>
 					<td colspan="6" class="default">
 						<img src="themes/default/images/arrowblue.gif" alt="">
-						<a href="#" class="menu" onclick="$('filters_form').submit();return false;">{#filter_delete_selected#}</a>
+						<a href="#" class="menu" onclick="submitForm('filters_form');return false;">{#filter_delete_selected#}</a>
 					</td>
 				</tr>
 			</table>	

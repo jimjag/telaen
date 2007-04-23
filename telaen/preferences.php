@@ -31,14 +31,6 @@ function dis() {
 	} 
 }
 
-function filterDelete(id) {
-	var f = $('filters_form');
-	cb = eval('f.cb' + id);
-	if(cb) {
-		cb.checked = true;
-	}
-	f.submit();
-}
 //]]>
 </script>
 ";

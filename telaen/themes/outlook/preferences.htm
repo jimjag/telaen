@@ -300,7 +300,7 @@
 
 							<table cellspacing="0" cellpadding="0" width="100%" border="0" bgcolor="white">
 					                 <tr>
-									<td class="headers">&nbsp;</td>
+									<td class="headers" width="20"><input type="checkbox" name=toggle" id="toggle" onclick="selectAll('filters_form', {$filterList|@count})"></td>
 									<td class="headers">{#filter_field#}</td>
 									<td class="headers">{#filter_match#}</td>
 									<td class="headers">{#filter_type#}</td>
@@ -325,7 +325,7 @@
 									</td>
 									<td class="label">{$filterList[filter].moveto}</td>
 									<td align="center">
-										<a href="#" onclick="filterDelete({$smarty.section.filter.index});return false;"><acronym title="{#filter_delete#}"><img src='themes/outlook/images/icon_delete_mini.gif' border=0></acronym></a>
+										<a href="#" onclick="selectAndSubmit('filters_form',{$smarty.section.filter.index});return false;"><acronym title="{#filter_delete#}"><img src='themes/outlook/images/icon_delete_mini.gif' border=0></acronym></a>
 									</td>
                                 </tr>
 
@@ -340,7 +340,7 @@
 						{if $filterList}
 						<tr>
 							<td class="default" align="center" colspan="2">
-								<input type="button" class="button" value="{#filter_delete_selected#}" onclick="document.filters_form.submit();return false;">
+								<input type="button" class="button" value="{#filter_delete_selected#}" onclick="submitForm('filters_form');return false;">
 							</td>
 						</tr>
 						{/if}
