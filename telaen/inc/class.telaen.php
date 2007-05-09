@@ -1071,18 +1071,22 @@ class Telaen_core {
 
 	/**
 	Used for IMAP servers wich uses INBOX. as prefix for folder names
+	Removes or add the prefix to the folder
 	*/
 
 	function fix_prefix($folder,$add = 0) {
-		if(		$this->mail_protocol == "imap" &&
-				!preg_match("/^inbox$/i",$folder) && 
-				$this->mail_prefix && 
-				!preg_match("/^_/",$folder)) {
+		if($this->mail_protocol == "imap" &&
+			!preg_match("/^inbox$/i",$folder) && 
+			$this->mail_prefix && 
+			!preg_match("/^_/",$folder)) {
 
-			if($add) return $this->mail_prefix.$folder;
-			else return preg_replace("/^".quotemeta($this->mail_prefix)."/","",$folder);
+			if($add)
+				return $this->mail_prefix.$folder;
+			else 
+				return preg_replace("/^".quotemeta($this->mail_prefix)."/","",$folder);
 
-		} else return $folder;
+		} else 
+			return $folder;
 	}
 	
 }

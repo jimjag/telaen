@@ -1,6 +1,5 @@
 #
-# German Language Translation update ready for Telaen 1.1.3
-# Original based on Guilokie´s German Translationfile
+# German Language Translation update ready for Telaen 1.2.0
 # 
 
 # User-friendly names to system folders      
@@ -27,7 +26,7 @@ error_login                    = Bitte prüfen Sie ihren Benutzernamen und das Ke
 error_connecr				           = Keine Verbindung zum Server!
 error_retrieving				       = Konnte Ihre Nachrichten nicht abrufen!
 error_other				             = Bitte kontaktieren Sie den Administrator
-error_session_expired				= Your session is expired, please login again
+error_session_expired				   = Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an
 
 # Invalid name of mailbox
 
@@ -216,36 +215,36 @@ prf_default_editor_mode_text	 = "Reiner Textmodus"
 prf_default_editor_mode_html	 = "Erweiterter HTML Editor"
 prf_time_to_refesh				     = <b>Posteingang</b> alle x Minuten aktualisieren
 prf_spam_level					       = <b>Spam Schwellenwert</b> (0 = Deaktiviert, 1 = sehr hoch, 9 = sehr niedrig)
-prf_auto_require_receipt                        = Require read receipt by default
-prf_mgs_saved					= Preferences saved
+prf_auto_require_receipt       = <b>Empfangsbestätigung</b> anfordern, standardmäßig aktiviert
+prf_mgs_saved					         = Einstellungen gespeichert
 
 # filters
-filter_title                                    = Filters
+filter_title                   = Nachrichtenfilter
 
-filter_new                                      = Create a filter
-filter_desc                                     = Choose the search criteria and the action for the incoming messages
-filter_list					= Current filters
+filter_new                     = Neuen Nachrichtenfilter erstellen
+filter_desc                    = Suchkriterien und Aktion für Eingehende Nachrichten wählen
+filter_list					           = Angelegte Nachrichtenfilter
 
-filter_field_from                               = From
-filter_field_to                                 = To
-filter_field_subject				= Subject
+filter_field_from              = Von
+filter_field_to                = An
+filter_field_subject				   = Betreff
 
-filter_type_move                                = Move
-filter_type_delete                              = Delete
-filter_type_mark                                = Mark read
+filter_type_move               = Verschieben
+filter_type_delete             = Löschen
+filter_type_mark               = als gelesen markieren
 
-filter_add					= Add filter
-filter_delete                                   = Delete
-filter_delete_selected				= Delete selected filters
+filter_add					           = Filter hinzufügen
+filter_delete                  = Löschen
+filter_delete_selected				 = Markierte Filter löschen
 
-filter_field					= Filter on field
-filter_match					= Search for
-filter_type					= Action
-filter_folder					= Destination folder
+filter_field					         = Filter anwenden auf Feld
+filter_match					         = Suchen nach
+filter_type					           = Aktion
+filter_folder					         = Zielordner
 
-filter_msg_nofilters				= No filters available.
-filter_msg_added				= Filter added
-filter_msg_deleted				= Filter deleted
+filter_msg_nofilters				   = keine Filter vorhanden.
+filter_msg_added				       = Filter hinzugefügt
+filter_msg_deleted				     = Filter gelöscht
 
 
 [Catch]
@@ -288,7 +287,7 @@ catch_address				           = Zum Adressbuch hinzufügen
 
 [Search]
 
-sch_title					             = Search
+sch_title					             = Suchen
 
 sch_information_text				   = Bitte Suchbegriff eingeben.<br>  
 sch_button_text				         = Suche &gt;&gt;

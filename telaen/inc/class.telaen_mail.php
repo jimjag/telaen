@@ -956,6 +956,9 @@ class Telaen extends Telaen_core {
 	}
 
 	function _get_local_name($message,$boxname) {
+
+		$boxname = $this->fix_prefix($boxname,1);
+
 		if (is_array($message))
 			$flocalname = trim($this->user_folder."$boxname/".md5(trim($message["subject"].$message["date"].$message["message-id"])).".eml");
 		else

@@ -16,6 +16,10 @@ CHANGELOG:
 Telaen:
 =======
 
+1.2.0-beta2
+
+[Fix]	Fixed bug on IMAP when using prefix
+
 1.2.0-beta1
 
 [New]	Removed support for versions of PHP < 4.1.0
