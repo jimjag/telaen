@@ -74,6 +74,8 @@ if(isset($_POST['action'])) {
 		        save_prefs($myprefs);
 			unset($myprefs);
 
+			$smarty->assign("message", "1");
+
 			break;
 
 		case "addFilter":
@@ -110,7 +112,9 @@ if(isset($_POST['action'])) {
 			// save the file
 			$content = base64_encode(serialize($filters));
 			$UM->_save_file($filename, $content);
-			
+		
+			$smarty->assign("message", "4");
+	
                         break;
 
 		case "delFilter":
@@ -134,6 +138,8 @@ if(isset($_POST['action'])) {
 			// save the file
                         $content = base64_encode(serialize($filters));
                         $UM->_save_file($filename, $content);
+
+			$smarty->assign("message", "5");			
 
                         break;
         }
