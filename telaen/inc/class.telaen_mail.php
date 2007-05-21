@@ -63,7 +63,7 @@ class Telaen extends Telaen_core {
 	 * send or an array of command strings that will be
 	 * sent one after another in order.
 	 */
-	function mail_send_command($cmds) {
+	function mail_send_command($cmds, $killSid = false) {
 
 		if($this->mail_connected()) {
 			if (!is_array($cmds)) {
@@ -72,7 +72,7 @@ class Telaen extends Telaen_core {
 			foreach ($cmds as $cmd) {
 				$cmd = trim($cmd) . $this->CRLF;
 				$output = (eregi("^(PASS|LOGIN)",$cmd,$regs))?$regs[1]." ****":$cmd;
-				if($this->mail_protocol == "imap") {
+				if($this->mail_protocol == "imap" && !$killSid) {
 					$cmd = $this->_sid." ".$cmd;
 					$output = $this->_sid." ".$output;
 				}
@@ -1103,21 +1103,25 @@ class Telaen extends Telaen_core {
 	function mail_save_message($boxname,$message,$flags = "") {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(ereg_replace("\"(.*)\"","\\1",$boxname),1);
-	/**		$mailcommand = array();
-			$mailcommand[0] = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
-			$mailcommand[1] = "$message"; */
-			
+		
+			// send an append command
 			$mailcommand = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
-			$mailcommand .= $this->CRLF;
-			$mailcommand .= "$message";
-
 			$this->mail_send_command($mailcommand);
+
+			// wait for a "+ Something" here and not after the msg sent!!
 			$buffer = $this->mail_get_line();
-			if($buffer[0] == "+") {
-				$this->mail_send_command("");
-				$buffer = $this->mail_get_line();
-			}
-			if(!eregi("^(".$this->_sid." OK)",$buffer)) return 0; 
+			if($buffer[0] != "+") {
+				return 0;	// problem appending
+			}			
+
+			// send the msg	
+			$mailcommand = "$message";
+			$this->mail_send_command($mailcommand, true); 	// not send the session id here!
+
+			$buffer = $this->mail_get_line();
+			
+			if(!eregi("^(".$this->_sid." OK)", $buffer)) 
+				return 0; 
 		}
 
 		if(is_dir($this->user_folder.$boxname)) {
