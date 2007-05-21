@@ -216,7 +216,7 @@ prf_default_editor_mode_html	 = "Erweiterter HTML Editor"
 prf_time_to_refesh				     = <b>Posteingang</b> alle x Minuten aktualisieren
 prf_spam_level					       = <b>Spam Schwellenwert</b> (0 = Deaktiviert, 1 = sehr hoch, 9 = sehr niedrig)
 prf_auto_require_receipt       = <b>Empfangsbest‰tigung</b> anfordern, standardm‰ﬂig aktiviert
-prf_mgs_saved					         = Einstellungen gespeichert
+prf_msg_saved					         = Einstellungen gespeichert
 
 # filters
 filter_title                   = Nachrichtenfilter

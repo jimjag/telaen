@@ -228,7 +228,7 @@ prf_default_editor_mode_html			= "Edytor HTML (Tylko dla przegl±darek IE5 lub no
 prf_time_to_refesh				= Czêstotliwo¶æ od¶wierzania wiadomo¶ci (w minutach)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 prf_auto_require_receipt                        = Require read receipt by default
-prf_mgs_saved					= Preferences saved
+prf_msg_saved					= Preferences saved
 
 # filters
 filter_title                                    = Filters

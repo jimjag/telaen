@@ -227,7 +227,7 @@ prf_default_editor_mode_html			= Uitgebreide editor (TinyMCE)
 prf_time_to_refesh				= Vernieuw berichten om de: (aantal minuten)
 prf_spam_level					= Spam gevoeligheid (0 = uitgeschakeld, 1 = hoogste, 9 = laagste)
 prf_auto_require_receipt                        = Verzoek altijd om leesbevestiging
-prf_mgs_saved					= Voorkeuren opgeslagen
+prf_msg_saved					= Voorkeuren opgeslagen
 
 # filters
 filter_title                                    = Filters

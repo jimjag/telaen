@@ -232,7 +232,7 @@ prf_time_to_refesh				= Tiempo de atualización de mensajes (minutos)
 prf_spam_level					= Sensibilidad para SPAM (0=Desactivada, 1=Muy alta, 9=Muy baja)
 prf_auto_require_receipt			= Require read receipt by default
 
-prf_mgs_saved					= Se han guardado sus preferencias
+prf_msg_saved					= Se han guardado sus preferencias
 
 # filters
 filter_title                                    = Filtros
