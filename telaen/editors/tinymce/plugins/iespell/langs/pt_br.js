@@ -9,6 +9,6 @@
  * Last Updated : November 20, 2006 - TinyMCE Version : 2.0.8
  */
 tinyMCE.addToLang('',{
-iespell_desc : 'Executar verifica&ccedil;&atilde;o ortogr&aacute;fica',
-iespell_download : "Verificador ieSpell n&atilde;o detectado. Click OK para ir &agrave; p&aacute;gina de download."
+iespell_desc : 'Executar verificação ortográfica',
+iespell_download : "Verificador ieSpell não detectado. Clique em \"OK\" para ir à página de download."
 });

@@ -9,8 +9,8 @@
  * Last Updated : November 20, 2006 - TinyMCE Version : 2.0.8
  */
 tinyMCE.addToLang('flash',{
-title : 'Inserir / editar Arquivo Flash',
-desc : 'Inserir / editar Arquivo Flash',
+title : 'Inserir/editar arquivo Flash',
+desc : 'Inserir/editar arquivo Flash',
 file : 'Arquivo Flash (.swf)',
 size : 'Tamanho',
 list : 'Lista de arquivos Flash',

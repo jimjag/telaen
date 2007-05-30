@@ -1,4 +1,4 @@
-// Danish lang variables contributed by John Dalsgaard and Bo Frederiksen.
+// DK lang variables - Transl.:John Dalsgaard, Bo Frederiksen - Corr.:
 
 tinyMCE.addToLang('spellchecker',{
 	desc : 'Stavekontrol til/fra',

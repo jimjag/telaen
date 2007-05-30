@@ -218,7 +218,8 @@ if(isset($tipo) && $tipo == "send") {
 
 	if ($show_advanced) {
 		$jssource .= "
-	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_mce_gzip.php\"></script>
+	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_mce_gzip.js\"></script>
+	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_comp_init.js\"></script>
 	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_init.js\"></script>
 		";
 	}

@@ -19,7 +19,7 @@ var TinyMCE_ContextMenuPlugin = {
 			longname : 'Context menus',
 			author : 'Moxiecode Systems AB',
 			authorurl : 'http://tinymce.moxiecode.com',
-			infourl : 'http://tinymce.moxiecode.com/tinymce/docs/plugin_contextmenu.html',
+			infourl : 'http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/contextmenu',
 			version : tinyMCE.majorVersion + "." + tinyMCE.minorVersion
 		};
 	},
@@ -73,6 +73,9 @@ var TinyMCE_ContextMenuPlugin = {
 	},
 
 	_showContextMenu : function(e, inst) {
+		if (e.ctrlKey)
+			return true;
+
 		function getAttrib(elm, name) {
 			return elm.getAttribute(name) ? elm.getAttribute(name) : "";
 		}

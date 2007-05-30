@@ -1,9 +1,10 @@
+
 // this init the editor
 tinyMCE.init({
 	mode : "textareas",
 	theme : "advanced",
 	language : "en",
-	plugins : "advimage,advlink,iespell,contextmenu,paste,directionality,noneditable",
+	plugins : "advimage,advlink,iespell,paste",
 	//theme_advanced_buttons1_add_before : "save,newdocument,separator",
 	theme_advanced_buttons1_add : "fontselect,fontsizeselect,separator,forecolor,backcolor",
 	theme_advanced_buttons2_add_before: "cut,copy,paste,pastetext,pasteword,separator,hr,removeformat,separator,sub,sup,separator,charmap,separator",

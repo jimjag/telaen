@@ -9,6 +9,6 @@
  * Last Updated : November 20, 2006 - TinyMCE Version : 2.0.8
  */
 tinyMCE.addToLang('',{
-template_title : 'Este &eacute; s&oacute; um mod&ecirc;lo de popup',
-template_desc : 'Este &eacute; s&oacute; um mod&ecirc;lo de bot&atilde;o'
+template_title : 'Este é só um modelo de popup',
+template_desc : 'Este é só um modelo de botão'
 });

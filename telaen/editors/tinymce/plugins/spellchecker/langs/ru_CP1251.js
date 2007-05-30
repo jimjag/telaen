@@ -1,4 +1,4 @@
-// RU lang variables cp1251
+// RU lang variables
 
 tinyMCE.addToLang('spellchecker',{
 	desc : 'Вкл / Выкл проверку правописания',
@@ -7,8 +7,9 @@ tinyMCE.addToLang('spellchecker',{
 	ignore_words : 'Игнорировать все',
 	langs : 'Языки',
 	wait : 'Пожалуйста подождите...',
-	swait : Проверка правописания, пожалуйста подождите...',
+	swait : 'Проверка правописания, пожалуйста подождите...',
 	sug : 'Варианты',
 	no_sug : 'Нет вариантов',
-	no_mpell : 'Ошибок не найдено.'
+	no_mpell : 'Ошибок не найдено.',
+        mpell_found : 'Найдено ошибок: {$words}'
 });

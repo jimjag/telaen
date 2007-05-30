@@ -9,21 +9,21 @@
  * Last Updated : November 20, 2006 - TinyMCE Version : 2.0.8
  */
 tinyMCE.addToLang('emotions',{
-title : 'Inserir Emoticons',
+title : 'Inserir emoticons',
 desc : 'Emoticons',
 cool : 'Legal',
 cry : 'Chorando',
-embarassed : 'Embara&ccedil;ado',
+embarassed : 'Embaraçado',
 foot_in_mouth : 'Falando asneira',
 frown : 'Triste',
 innocent : 'Inocente',
 kiss : 'Beijo',
 laughing : 'Rindo',
 money_mouth : 'Interesseiro',
-sealed : 'L&aacute;bios fechados',
+sealed : 'Lábios fechados',
 smile : 'Sorriso',
 surprised : 'Surpreso',
-tongue_out : 'Mostrar a l&iacute;ng&uuml;a',
+tongue_out : 'Mostrar a língua',
 undecided : 'Indeciso',
 wink : 'Piscar',
 yell : 'Grito'

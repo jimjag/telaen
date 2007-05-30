@@ -1,4 +1,4 @@
-// RU lang variables KOI8-R
+// RU lang variables
 
 tinyMCE.addToLang('flash',{
 title : 'Вставить / Редактировать флеш-ролик',

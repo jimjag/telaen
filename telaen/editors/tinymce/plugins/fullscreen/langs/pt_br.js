@@ -9,6 +9,6 @@
  * Last Updated : November 20, 2006 - TinyMCE Version : 2.0.8
  */
 tinyMCE.addToLang('',{
-fullscreen_title : 'Modo de Janela Inteira (Fullscreen)',
+fullscreen_title : 'Modo de janela inteira (Fullscreen)',
 fullscreen_desc : 'Alterar para modo de janela inteira'
 });
