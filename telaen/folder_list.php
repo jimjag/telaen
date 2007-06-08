@@ -34,8 +34,13 @@ foreach($folders as $entry) {
 		$pcounter++;
 	}
 }
-array_qsort2ic ($system,"name");
+
+// sort the sys item by sysname so the order will always
+// inbox -> sent -> spam -> trash
+// in all languages
+array_qsort2ic ($system,"systemname");  
 array_qsort2ic ($personal,"name");
+
 $smarty->assign("umSystemFolders",$system);
 $smarty->assign("umPersonalFolders",$personal);
 ?>
