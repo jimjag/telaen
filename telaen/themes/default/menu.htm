@@ -1,6 +1,20 @@
 			<!-- menu template -->
 			<table cellspacing="1" cellpadding="3" width="100%" border="0" bgcolor="White">
-				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="goinbox();"> <a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td></tr>
+
+				<tr><td bgcolor="#EEE5DE">{$webmailTitle}</td></tr>
+				<tr><td bgcolor="#EEE5DE">
+					<ul class="menuFldList">
+				<!-- sys folders -->
+				{section name=sysFolder loop=$umSystemFolders}
+						<li class="menuFldItem"><a class="menu" href="{$umSystemFolders[sysFolder].link}">{$umSystemFolders[sysFolder].name}</a></li>
+				{/section}
+
+				<!-- personal folders -->
+				{section name=persFolder loop=$umPersonalFolders}
+						<li class="menuFldItem"<a class="menu" href="{$umPersonalFolders[persFolder].link}">{$umPersonalFolders[persFolder].name}</a></li>
+                                {/section}
+				</td></tr>
+
 				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="newmsg();"><a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td></tr>
 				{if $refresh neq "false"}
 				<tr><td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="refreshlist();"><a class="menu" href="javascript:refreshlist()">{#refresh_mnu#}</a></td></tr>
