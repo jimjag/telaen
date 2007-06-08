@@ -8,7 +8,6 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 require("./inc/inc.php");
-require("./folder_list.php");
 
 $smarty->assign("umUser",$f_user);
 $refreshurl = "process.php?folder=".urlencode($folder)."&pag=$pag&refr=true";

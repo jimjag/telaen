@@ -8,7 +8,6 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 require("./inc/inc.php");
-require("./folder_list.php");
 
 // assign metas
 $smarty->assign("pageMetas", $nocache);
