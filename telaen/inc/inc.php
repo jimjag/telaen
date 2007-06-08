@@ -210,6 +210,8 @@ $commonJS = "
 	<script type=\"text/javascript\" src=\"./js/common.js\"></script>
 ";
 
+// Include also folder list
+require_once("./folder_list.php");
 
 // Sort rules
 
