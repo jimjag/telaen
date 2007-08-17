@@ -60,7 +60,10 @@ if(isset($tipo) && $tipo == "send") {
 			if($footer != "") 
 				$body .= preg_replace("/(\r?\n)/","<br>\\1",$footer);
 			// add html head and foot
-			$body = $htmlHead . $body . $htmlFoot;				
+			$body = $htmlHead . $body . $htmlFoot;
+			$mail->AltBody = "
+This Email is formatted in HTML. Your Email client appears to be incompatible.
+";
 
 		} elseif ($footer != "") $body .= $footer;
 
