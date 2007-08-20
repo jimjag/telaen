@@ -1024,7 +1024,7 @@ class Telaen_core {
 			$filename	= $matches[3][$i];
 			$stream		= $this->UUDecode($matches[4][$i]);
 
-			$temp_array["index"]				= count($this->_content["attachments"]);
+			$temp_array["index"] = count($this->_content["attachments"]);
 			$temp_array["name"] = $filename;
 			$temp_array["size"] = strlen($stream);
 			$temp_array["content-type"] = "application/unknown";
@@ -1049,17 +1049,17 @@ class Telaen_core {
 		$tnefobj = $this->_tnef->Decode($body);
 
 		for($i=0;$i<count($tnefobj);$i++) {
-			$content							= $tnefobj[$i]["stream"];
-			$temp_array["index"]				= count($this->_content["attachments"]);
-			$temp_array["name"] 				= $tnefobj[$i]["name"];
-			$temp_array["size"] 				= $tnefobj[$i]["size"];
+			$content				= $tnefobj[$i]["stream"];
+			$temp_array["index"]			= count($this->_content["attachments"]);
+			$temp_array["name"] 			= $tnefobj[$i]["name"];
+			$temp_array["size"] 			= $tnefobj[$i]["size"];
 			$temp_array["content-type"] 		= $tnefobj[$i]["type0"]."/".$tnefobj[$i]["type1"];
 			$temp_array["content-disposition"] 	= "attachment";
-			$temp_array["boundary"] 			= $boundary;
-			$temp_array["part"] 				= $part;
-			$temp_array["type"] 				= "tnef";
-			$temp_array["tnef"] 				= $i;
-			$temp_array["filename"] 			= $this->user_folder."_attachments/".md5($temp_array["boundary"])."_".$temp_array["name"];
+			$temp_array["boundary"] 		= $boundary;
+			$temp_array["part"] 			= $part;
+			$temp_array["type"] 			= "tnef";
+			$temp_array["tnef"] 			= $i;
+			$temp_array["filename"] 		= $this->user_folder."_attachments/".md5($temp_array["boundary"])."_".$temp_array["name"];
 			
 			$this->_content["attachments"][] 	= $temp_array;
 

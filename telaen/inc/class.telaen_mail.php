@@ -291,9 +291,9 @@ class Telaen extends Telaen_core {
 					$msgcontent .= $buffer;
 				}
 				$email		= $this->fetch_structure($msgcontent);
-				$header 	= $email["header"];
-				$body	 	= $email["body"];
-				$mail_info = $this->get_mail_info($header);
+				$header		= $email["header"];
+				$body		= $email["body"];
+				$mail_info	= $this->get_mail_info($header);
 
 				// Since we are pulling this message for the first
 				// time from the server, we need to add in our UIDL
