@@ -283,9 +283,19 @@ $smtp_server = "localhost";  #YOU NEED CHANGE IT !!
 # Use SMTP password (AUTH LOGIN type)
 ########################################################################
 
-$use_password_for_smtp  = yes;
+$use_password_for_smtp = yes;
 
+########################################################################
+# Use static authentication info for smtp.
+# Always the same user and password will be used for smtp authentication
+# instead of user data.
+# Useful when you have multiple incoming domains but a single SMTP
+# Note: You need to enable also the option above.
+########################################################################
 
+$smtp_static_auth = no;
+$smtp_static_user = "yourSmtpUser";
+$smtp_static_password = "yourSmtpPasswd";
 
 ########################################################################
 # Add a "footer" to sent mails
@@ -385,13 +395,19 @@ $redirects_use_meta = no;
 $redirects_are_relative = no;
 
 ########################################################################
-# Enable debug :)
+# Enable mailserver debug :)
 # no - disabled
 # 1 or yes -> enabled with full results
 # 2 -> enable with servers communications only
 ########################################################################
 
 $enable_debug = no;
+
+########################################################################
+# Show debug infos on smtp communications
+########################################################################
+
+$smtp_debug = no;
 
 ########################################################################
 # When show_errors is enabled, PHP errors are printed to the output.

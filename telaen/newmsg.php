@@ -51,8 +51,15 @@ if(isset($tipo) && $tipo == "send") {
 
 		// for password authenticated servers
 		$mail->SMTPAuth 	= $use_password_for_smtp;
-		$mail->Username 	= $sess["user"];
-		$mail->Password 	= $sess["pass"];
+		
+		// use user data or static data for smtp auth
+		if ($smtp_static_auth) {
+			$mail->Username = $smtp_static_user;
+	                $mail->Password = $smtp_static_password;
+		} else {		
+			$mail->Username = $sess["user"];
+			$mail->Password	= $sess["pass"];
+		}
 
 		// if using the advanced editor
 		if($is_html == "true")  {
@@ -76,7 +83,10 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		$mail->Host 		= $smtp_server;
 		$mail->WordWrap 	= 76;
 		$mail->Priority		= $priority;
-		$mail->SMTPDebug 	= false;
+		
+		if($smtp_debug) {
+			$mail->SMTPDebug = true;
+		}
 
 		// add an header for keep a track of client IP
 		$mail->AddCustomHeader("X-Originating-IP: ".getenv("REMOTE_ADDR"));		
