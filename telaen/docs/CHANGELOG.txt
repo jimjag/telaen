@@ -18,6 +18,8 @@ Telaen:
 
 1.2.0-beta2
 
+[Fix]   Sorting by To in Sent Messages now works.
+
 [Fix]   HTML Emails now have plain-text component, so that
         SpamAssassin doesn't score them too badly.
 

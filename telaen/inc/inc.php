@@ -215,8 +215,8 @@ require_once("./folder_list.php");
 
 // Sort rules
 
-if(!isset($sortby) || !ereg("(subject|fromname|date|size)",$sortby)) {
-	if(array_key_exists("sort-by",$prefs) && ereg("(subject|fromname|date|size)",$prefs["sort-by"]))
+if(!isset($sortby) || !ereg("(subject|fromname|date|size|toname)",$sortby)) {
+	if(array_key_exists("sort-by",$prefs) && ereg("(subject|fromname|date|size|toname)",$prefs["sort-by"]))
 		$sortby = $prefs["sort-by"];
 	else
 		$sortby = $default_sortby;

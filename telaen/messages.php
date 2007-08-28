@@ -22,19 +22,23 @@ $subject_arrow 	= "";
 $fromname_arrow = "";
 $date_arrow 	= "";
 $size_arrow 	= "";
+$toname_arrow	= "";
 
 switch($sortby) {
 	case "subject":
-		$subject_arrow  	= $arrow;
+		$subject_arrow	= $arrow;
 		break;
 	case "fromname":
-		$fromname_arrow  	= $arrow;
+		$fromname_arrow	= $arrow;
 		break;
 	case "date":
-		$date_arrow  		= $arrow;
+		$date_arrow	= $arrow;
 		break;
 	case "size":
-		$size_arrow   		= $arrow;
+		$size_arrow	= $arrow;
+		break;
+	case "toname":
+		$toname_arrow	= $arrow;
 		break;
 }
 
