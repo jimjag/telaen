@@ -16,7 +16,7 @@ CHANGELOG:
 Telaen:
 =======
 
-1.2.0-beta2
+1.2.0-RC1
 
 [New]   Updated Thai translation
 
