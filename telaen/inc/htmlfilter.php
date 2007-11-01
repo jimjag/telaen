@@ -82,8 +82,8 @@ function tln_casenormalize(&$val){
 function tln_skipspace($body, $offset){
     $me = 'tln_skipspace';
     preg_match('/^(\s*)/s', substr($body, $offset), $matches);
-    if (sizeof($matches{1})){
-        $count = strlen($matches{1});
+    if (sizeof($matches[1])){
+        $count = strlen($matches[1]);
         $offset += $count;
     }
     return $offset;
@@ -128,12 +128,12 @@ function tln_findnxreg($body, $offset, $reg){
     $retarr = Array();
     $preg_rule = '%^(.*?)(' . $reg . ')%s';
     preg_match($preg_rule, substr($body, $offset), $matches);
-    if (!isset($matches{0})){
+    if (!isset($matches[0])){
         $retarr = false;
     } else {
-        $retarr{0} = $offset + strlen($matches{1});
-        $retarr{1} = $matches{1};
-        $retarr{2} = $matches{2};
+        $retarr[0] = $offset + strlen($matches[1]);
+        $retarr[1] = $matches[1];
+        $retarr[2] = $matches[2];
     }
     return $retarr;
 }
@@ -288,12 +288,12 @@ function tln_getnxtag($body, $offset){
          */
         $matches = Array();
         preg_match('%^(\s*)(>|/>)%s', substr($body, $pos), $matches);
-        if (isset($matches{0}) && $matches{0}){
+        if (isset($matches[0]) && $matches[0]){
             /**
              * Yep. So we did.
              */
-            $pos += strlen($matches{1});
-            if ($matches{2} == '/>'){
+            $pos += strlen($matches[1]);
+            if ($matches[2] == '/>'){
                 $tagtype = 3;
                 $pos++;
             }

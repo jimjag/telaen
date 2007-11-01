@@ -217,7 +217,7 @@ class Telaen_core {
 			
 			// If current header starts with a TAB or is not very standard, 
 			// attach it at the prev header			
-			if(($headers[$i]{0} == "\t") || !ereg("^[A-Z0-9a-z_-]+:",trim($headers[$i])) ) {
+			if(($headers[$i][0] == "\t") || !ereg("^[A-Z0-9a-z_-]+:",trim($headers[$i])) ) {
 				$decodedheaders[$lasthead] .= " ".trim($headers[$i]);
 			}
 			else { // otherwise extract the header

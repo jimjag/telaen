@@ -68,7 +68,7 @@ class TNEF {
 	function geti8(&$buf) {
 		$value = null;
 		if (strlen($buf) >= 1) {
-			$value = ord($buf{0});
+			$value = ord($buf[0]);
 			$buf = substr_replace($buf, '', 0, 1);
 		}
 		return $value;
@@ -78,8 +78,8 @@ class TNEF {
 	function geti16(&$buf) {
 		$value = null;
 		if (strlen($buf) >= 2) {
-			$value = ord($buf{0}) +
-					(ord($buf{1}) << 8);
+			$value = ord($buf[0]) +
+					(ord($buf[1]) << 8);
 			$buf = substr_replace($buf, '', 0, 2);
 		}
 		return $value;
@@ -88,10 +88,10 @@ class TNEF {
 	function geti32(&$buf) {
 		$value = null;
 		if (strlen($buf) >= 4) {
-			$value = ord($buf{0}) +
-					(ord($buf{1}) << 8) +
-					(ord($buf{2}) << 16) +
-					(ord($buf{3}) << 24);
+			$value = ord($buf[0]) +
+					(ord($buf[1]) << 8) +
+					(ord($buf[2]) << 16) +
+					(ord($buf[3]) << 24);
 			$buf = substr_replace($buf, '', 0, 4);
 		}
 		return $value;
