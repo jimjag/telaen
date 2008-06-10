@@ -16,6 +16,13 @@ CHANGELOG:
 Telaen:
 =======
 
+1.2.1
+
+[New]	Smarty upgraded to 2.6.19.
+
+[Fix]   Users cannot create folder that have the same names
+        as system folders
+
 1.2.0
 
 [Released]

@@ -353,8 +353,11 @@ function print_struc($obj) {
 	echo("</pre>");
 }
 
-function valid_folder_name($name) {
+function valid_folder_name($name, $checksys = false) {
+	global $UM;
 	if ($name == "") return false;
+	// Folder names that match system folder names are NOT valid
+	if ($checksys && $UM->is_system_folder($name)) return false;
 	return !preg_match("/[^A-Za-z0-9\-]/",$name);
 }
 ?>
