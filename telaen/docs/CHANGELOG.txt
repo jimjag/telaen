@@ -20,7 +20,7 @@ Telaen:
 
 [New]	Smarty upgraded to 2.6.20
 
-[New]   PHPMailer upgraded to 2.0.2
+[New]   PHPMailer upgraded to 2.0.3
 
 [Fix]   Users cannot create folder that have the same names
         as system folders
