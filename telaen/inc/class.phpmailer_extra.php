@@ -46,7 +46,9 @@ class PHPMailer_extra extends PHPMailer {
             $fheader .= $this->HeaderLine("Subject", $this->EncodeHeader(trim($this->Subject)));
             if(count($this->cc) > 0) {
                 $fheader .= $this->AddrAppend("Cc", $this->cc);
-                $header .= $this->AddrAppend("Cc", $this->cc);
+                if ($this->Version < 2) {
+                    $header .= $this->AddrAppend("Cc", $this->cc);
+                }
             }
         }
         $this->FormattedMail = sprintf("%s\r\n\r\n%s",$fheader,$body);
@@ -54,18 +56,17 @@ class PHPMailer_extra extends PHPMailer {
         // Choose the mailer
         switch($this->Mailer)
         {
-            case "sendmail":
+            case 'sendmail':
                 $result = $this->SendmailSend($header, $body);
                 break;
-            case "mail":
-                $result = $this->MailSend($header, $body);
-                break;
-            case "smtp":
+            case 'smtp':
                 $result = $this->SmtpSend($header, $body);
                 break;
+            case 'mail':
+                $result = $this->MailSend($header, $body);
+                break;
             default:
-            $this->SetError($this->Mailer . $this->Lang("mailer_not_supported"));
-                $result = false;
+                $result = $this->MailSend($header, $body);
                 break;
         }
 
