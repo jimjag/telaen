@@ -16,15 +16,15 @@ $myfile = $UM->_read_file($filename);
 $filters = Array();
 
 if($myfile != "") 
-	$filters = unserialize(base64_decode($myfile));
+    $filters = unserialize(base64_decode($myfile));
 
 function is_in_filter($email) {
-	global $filters;
-	foreach($filters as $filter) {
-		if($filter["type"] == FL_TYPE_DELETE && $filter["match"] == $email)
-			return true;
-	}
-	return false;
+    global $filters;
+    foreach($filters as $filter) {
+        if($filter["type"] == FL_TYPE_DELETE && $filter["match"] == $email)
+            return true;
+    }
+    return false;
 }
 
 $mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
@@ -36,40 +36,40 @@ $cc = $mail_info["cc"];
 
 
 for($i=0;$i<count($from);$i++) {
-	if(!is_in_filter($from[$i]["mail"])) {
-		$from[$i]["index"] = $i;
-		$emails[] = $from[$i];
-	}
+    if(!is_in_filter($from[$i]["mail"])) {
+        $from[$i]["index"] = $i;
+        $emails[] = $from[$i];
+    }
 }
 $aval = array();
 
 
 if(isset($fFilter)) {
-	for($i=0;$i<count($fFilter);$i++) {
+    for($i=0;$i<count($fFilter);$i++) {
 
-		$filters[] = Array(
-					"type" 		=> 2,
-					"field"		=> 1,
-					"match"		=>  $emails[$fFilter[$i]]["mail"],
-					);
-	}
+        $filters[] = Array(
+                    "type"      => 2,
+                    "field"     => 1,
+                    "match"     =>  $emails[$fFilter[$i]]["mail"],
+                    );
+    }
 
-	$UM->_save_file($filename,base64_encode(serialize($filters)));
+    $UM->_save_file($filename,base64_encode(serialize($filters)));
 
-	echo("
-	<script language=javascript>
-		self.close();
-	</script>
-	");
-	exit;
+    echo("
+    <script language=javascript>
+        self.close();
+    </script>
+    ");
+    exit;
 } else {
 
-	$smarty->assign("umFolder",$folder);
-	$smarty->assign("umIx",$ix);
-	$smarty->assign("umAvailableAddresses",count($emails));
+    $smarty->assign("umFolder",$folder);
+    $smarty->assign("umIx",$ix);
+    $smarty->assign("umAvailableAddresses",count($emails));
 
-	$smarty->assign("umAddressList",$emails);
+    $smarty->assign("umAddressList",$emails);
 
-	$smarty->display("$selected_theme/block-address.htm");
+    $smarty->display("$selected_theme/block-address.htm");
 }
 ?>
