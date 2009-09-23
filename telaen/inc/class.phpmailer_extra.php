@@ -5,7 +5,8 @@ class PHPMailer_extra extends PHPMailer {
      *  Read only - return a formatted mail to the client
      *  @var string
      */
-    var $FormattedMail          = "";
+    var $FormattedMail   = "";
+    var $LE              = "\n";
 
     function Send() {
         $header = "";
