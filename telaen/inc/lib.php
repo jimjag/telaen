@@ -327,7 +327,7 @@ function get_headers_from_file($strfile) {
     if(!file_exists($strfile)) return;
     $f = fopen($strfile,"rb");
     while(!feof($f)) {
-        $result .= ereg_replace("\n","",fread($f,100));
+        $result .= preg_replace("/\n/","",fread($f,100));
         $pos = strpos($result,"\r\r");
         if(!($pos === false)) {
             $result = substr($result,0,$pos);
@@ -336,7 +336,7 @@ function get_headers_from_file($strfile) {
     }
     fclose($f);
     unset($f); unset($pos); unset($strfile);
-    return ereg_replace("\r","\r\n",trim($result));
+    return preg_replace("/\r/","\r\n",trim($result));
 }
 
 function save_file($fname,$fcontent) {

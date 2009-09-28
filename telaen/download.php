@@ -34,7 +34,7 @@ if(isset($_GET['attach'])) {
 
 if($downAll) {
     $sourceFile = $mail_info['localname']; 
-    if(ereg("\\.\\.",$sourceFile) || !file_exists($sourceFile)) {
+    if(preg_match("/\\.\\./",$sourceFile) || !file_exists($sourceFile)) {
         die();
         }
 
@@ -51,7 +51,7 @@ if($downAll) {
             $attach = &$attach["attachments"][intval($item)];
 
     $sourceFile = $attach["filename"];
-    if(ereg("\\.\\.",$sourceFile) || !file_exists($sourceFile)) {
+    if(preg_match("/\\.\\./",$sourceFile) || !file_exists($sourceFile)) {
         die();
     }
     

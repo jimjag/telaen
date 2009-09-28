@@ -97,7 +97,7 @@ $jssource .= "
 //<![CDATA[
 
 no_quota  = $jsquota;
-quota_msg = '".ereg_replace("'","\\'",$quota_exceeded)."';
+quota_msg = '".preg_replace("/'/","\\'",$quota_exceeded)."';
 function readmsg(ix,read) {
     if(no_quota)
         alert(quota_msg);
@@ -166,11 +166,11 @@ $newmsgs = 0;
 if($nummsg > 0) {
 
     for($i=0;$i<count($headers);$i++)
-        if(!eregi("\\SEEN",$headers[$i]["flags"])) $newmsgs++;
+        if(!preg_match("/\\SEEN/i",$headers[$i]["flags"])) $newmsgs++;
 
     for($i=$start_pos;$i<$end_pos;$i++) {
 
-        $read = (eregi("\\SEEN",$headers[$i]["flags"]))?"true":"false";
+        $read = (preg_match("/\\SEEN/i",$headers[$i]["flags"]))?"true":"false";
         $readlink = "javascript:readmsg($i,$read)";
         $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."";
         $composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["to"][0]["name"])."";
@@ -178,9 +178,9 @@ if($nummsg > 0) {
         $from = $headers[$i]["from"][0]["name"];
         $to = $headers[$i]["to"][0]["name"];
         $subject = $headers[$i]["subject"];
-        if(!eregi("\\SEEN",$headers[$i]["flags"])) {
+        if(!preg_match("/\\SEEN/i",$headers[$i]["flags"])) {
             $msg_img = "./images/msg_unread.gif";
-        } elseif (eregi("\\ANSWERED",$headers[$i]["flags"])) {
+        } elseif (preg_match("/\\ANSWERED/i",$headers[$i]["flags"])) {
             $msg_img = "./images/msg_answered.gif";
         } else {
             $msg_img = "./images/msg_read.gif";

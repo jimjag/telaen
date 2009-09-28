@@ -73,10 +73,10 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
         $f_server   = $mail_detect_prefix.$f_server;
         $f_email    = trim($f_email);
 
-        if(ereg("(.*)@(.*)",$f_email,$regs)) {
+        if(preg_match("/(.*)@(.*)/",$f_email,$regs)) {
             $f_user = trim($regs[1]);
             $domain = trim($regs[2]);
-            if($mail_detect_login_type != "") $f_user = eregi_replace("%user%",$f_user,eregi_replace("%domain%",$domain,$mail_detect_login_type));
+            if($mail_detect_login_type != "") $f_user = preg_replace("/%user%/i",$f_user,preg_replace("/%domain%/i",$domain,$mail_detect_login_type));
         }
 
         $f_protocol = $mail_detect_protocol;
@@ -96,15 +96,15 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
         $f_port         = $mail_servers[$six]["port"];
         $f_prefix       = $mail_servers[$six]["folder_prefix"];
 
-        if($login_type != "") $f_user = eregi_replace("%user%",$f_user,eregi_replace("%domain%",$domain,$login_type));
+        if($login_type != "") $f_user = preg_replace("/%user%/i",$f_user,preg_replace("/%domain%/i",$domain,$login_type));
         break;
 
     case "ONE-FOR-ALL": 
         $f_email    = trim($f_email);
-        if(ereg("(.*)@(.*)",$f_email,$regs)) {
+        if(preg_match("/(.*)@(.*)/",$f_email,$regs)) {
             $f_user = trim($regs[1]);
             $domain = trim($regs[2]);
-            if($one_for_all_login_type != "") $f_user = eregi_replace("%user%",$f_user,eregi_replace("%domain%",$domain,$one_for_all_login_type));
+            if($one_for_all_login_type != "") $f_user = preg_replace("/%user%/i",$f_user,preg_replace("/%domain%/i",$domain,$one_for_all_login_type));
         }
         $f_server   = $default_mail_server;
 
@@ -169,7 +169,7 @@ $sess["start"] = time();
 
 $SS->Save($sess);
 
-$userfolder = $temporary_directory.ereg_replace("[^a-z0-9\._-]","_",strtolower($f_user))."_".strtolower($f_server)."/";
+$userfolder = $temporary_directory.preg_replace("/[^a-z0-9\._-]/","_",strtolower($f_user))."_".strtolower($f_server)."/";
 
 $UM->debug          = $enable_debug;
 $UM->use_html           = $allow_html;
@@ -215,8 +215,8 @@ require_once("./folder_list.php");
 
 // Sort rules
 
-if(!isset($sortby) || !ereg("(subject|fromname|date|size|toname)",$sortby)) {
-    if(array_key_exists("sort-by",$prefs) && ereg("(subject|fromname|date|size|toname)",$prefs["sort-by"]))
+if(!isset($sortby) || !preg_match("/(subject|fromname|date|size|toname)/",$sortby)) {
+    if(array_key_exists("sort-by",$prefs) && preg_match("/(subject|fromname|date|size|toname)/",$prefs["sort-by"]))
         $sortby = $prefs["sort-by"];
     else
         $sortby = $default_sortby;
@@ -225,8 +225,8 @@ if(!isset($sortby) || !ereg("(subject|fromname|date|size|toname)",$sortby)) {
     $prefs["sort-by"] = $sortby;
 }
 
-if(!isset($sortorder) || !ereg("ASC|DESC",$sortorder)) {
-    if(array_key_exists("sort-order",$prefs) && ereg("ASC|DESC",$prefs["sort-order"]))
+if(!isset($sortorder) || !preg_match("/ASC|DESC/",$sortorder)) {
+    if(array_key_exists("sort-order",$prefs) && preg_match("/ASC|DESC/",$prefs["sort-order"]))
         $sortorder = $prefs["sort-order"];
     else
         $sortorder = $default_sortorder;

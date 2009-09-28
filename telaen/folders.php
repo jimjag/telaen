@@ -76,7 +76,7 @@ function create() {
     strName = frm.newfolder.value
     mathArray = strName.match(strPat)
     if(mathArray != null) {
-        alert('".ereg_replace("'","\\'",$error_invalid_name)."')
+        alert('".preg_replace("/'/","\\'",$error_invalid_name)."')
         return false;
     }else
         frm.submit();
@@ -133,7 +133,7 @@ for($n=0;$n<count($boxes);$n++) {
 
     $boxsize = 0;
     for($i=0;$i<count($thisbox);$i++) {
-        if(!eregi("\\SEEN",$thisbox[$i]["flags"])) $unread++;
+        if(!preg_match("/\\SEEN/i",$thisbox[$i]["flags"])) $unread++;
         $boxsize += $thisbox[$i]["size"];
     }
     $delete = "&nbsp;";

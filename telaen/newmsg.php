@@ -285,18 +285,18 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         errors = error_msg.length;
 
         if(frm.to.value == '' && frm.cc.value == '' && frm.bcc.value == '')
-            alert('".ereg_replace("'","\\'",$error_no_recipients)."');
+            alert('".preg_replace("/'/","\\'",$error_no_recipients)."');
 
         else if (errors > 0) {
 
-            if (errors == 1) errmsg = '".ereg_replace("'","\\'",$error_compose_invalid_mail1_s)."\\r\\r';
-            else  errmsg = '".ereg_replace("'","\\'",$error_compose_invalid_mail1_p)."\\r\\r';
+            if (errors == 1) errmsg = '".preg_replace("/'/","\\'",$error_compose_invalid_mail1_s)."\\r\\r';
+            else  errmsg = '".preg_replace("/'/","\\'",$error_compose_invalid_mail1_p)."\\r\\r';
 
             for(i=0;i<errors;i++)
                 errmsg += error_msg[i]+'\\r';
 
-            if (errors == 1) errmsg += '\\r".ereg_replace("'","\\'",$error_compose_invalid_mail2_s)."s';
-            else  errmsg += '\\r".ereg_replace("'","\\'",$error_compose_invalid_mail2_p)."';
+            if (errors == 1) errmsg += '\\r".preg_replace("/'/","\\'",$error_compose_invalid_mail2_s)."s';
+            else  errmsg += '\\r".preg_replace("/'/","\\'",$error_compose_invalid_mail2_p)."';
 
             alert(errmsg)
     
@@ -387,7 +387,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     if(isset($rtype)) {
         $mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
 
-        if(!eregi("\\ANSWERED",$mail_info["flags"])) {
+        if(!preg_match("/\\ANSWERED/i",$mail_info["flags"])) {
 
             if(!$UM->mail_connect()) { 
                 redirect_and_exit("index.php?err=1", true);
@@ -523,17 +523,17 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         } else {
             $tmpbody            = strip_tags($tmpbody);
             $quote_string = "> ";
-            $tmpbody = $quote_string.ereg_replace("\n","\n$quote_string",$tmpbody);
+            $tmpbody = $quote_string.preg_replace("/\n/","\n$quote_string",$tmpbody);
         }
 
 $body = "
 $reply_delimiter$linebreak
-$reply_from_hea ".ereg_replace("(\")","",$fromreply_quote)."$linebreak
-$reply_to_hea ".ereg_replace("(\")","",$toreply_quote);
+$reply_from_hea ".preg_replace("/(\")/","",$fromreply_quote)."$linebreak
+$reply_to_hea ".preg_replace("/(\")/","",$toreply_quote);
 
 if(!empty($ccreply)) {
     $body .= "$linebreak
-$reply_cc_hea ".ereg_replace("(\")","",$ccreply_quote);
+$reply_cc_hea ".preg_replace("/(\")/","",$ccreply_quote);
 }
 
 
@@ -558,16 +558,16 @@ $tmpbody";
 
         switch($rtype) {
         case "reply":
-            if(!eregi("^$reply_prefix",trim($subject))) $subject = "$reply_prefix $subject";
+            if(!preg_match("/^$reply_prefix/i",trim($subject))) $subject = "$reply_prefix $subject";
             $to = $fromreply;
             break;
         case "replyall":
-            if(!eregi("^$reply_prefix",trim($subject))) $subject = "$reply_prefix $subject";
+            if(!preg_match("/^$reply_prefix/i",trim($subject))) $subject = "$reply_prefix $subject";
             $to = $allreply;
             $cc = $ccreply;
             break;
         case "forward":
-            if(!eregi("^$forward_prefix",trim($subject))) $subject = "$forward_prefix $subject";
+            if(!preg_match("/^$forward_prefix/i",trim($subject))) $subject = "$forward_prefix $subject";
             if(count($email["attachments"]) > 0) {
                 for($i = 0; $i < count($email["attachments"]); $i++) {
                     $current = $email["attachments"][$i];
@@ -599,7 +599,7 @@ $tmpbody";
     if(!isset($subject)) $subject = null;
 
 
-    $strto = (isset($nameto) && eregi("([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_])",$mailto))?
+    $strto = (isset($nameto) && preg_match("/([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_])/i",$mailto))?
     "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"to\" value=\"&quot;".htmlspecialchars(stripslashes($nameto))."&quot; <".htmlspecialchars(stripslashes($mailto)).">\" />
     ":"<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"to\" value=\"".htmlspecialchars(stripslashes($to))."\" />";
 

@@ -24,16 +24,16 @@ $email = $UM->Decode($email);
 $body = $email["body"];
 
 //cleanning bad tags to show
-if(eregi("<[ ]*body.*background[ ]*=[ ]*[\"']?([A-Za-z0-9._&?=:/{}%+-]+)[\"']?.*>",$body,$regs))
+if(preg_match("/<[ ]*body.*background[ ]*=[ ]*[\"']?([A-Za-z0-9._&?=:/{}%+-]+)[\"']?.*>/i",$body,$regs))
     $backimg =  " background=\"".$regs[1]."\"";
 $smarty->assign("umBackImg",$backimg);
-if(eregi("<[ ]*body[A-Z0-9._&?=:/\"' -]*bgcolor=[\"']?([A-Z0-9#]+)[\"']?[A-Z0-9._&?=:/\"' -]*>",$body,$regs))
+if(preg_match("/<[ ]*body[A-Z0-9._&?=:/\"' -]*bgcolor=[\"']?([A-Z0-9#]+)[\"']?[A-Z0-9._&?=:/\"' -]*>/i",$body,$regs))
     $backcolor = " bgcolor=\"".$regs[1]."\"";
 $smarty->assign("umBackColor",$backcolor);
 
-$body = eregi_replace("<body","<telaen_body_not_alowed",$body);
-$body = eregi_replace("a:(link|visited|hover)",".".uniqid(""),$body);
-$body = eregi_replace("(body)[ ]?\\{",".".uniqid(""),$body);
+$body = preg_replace("/<body/i","<telaen_body_not_alowed",$body);
+$body = preg_replace("/a:(link|visited|hover)/i",".".uniqid(""),$body);
+$body = preg_replace("/(body)[ ]?\\{/i",".".uniqid(""),$body);
 
 $smarty->assign("umMessageBody",$body);
 

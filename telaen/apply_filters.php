@@ -74,7 +74,7 @@ if($folder == "inbox") {
                         break;
                     case FL_TYPE_MARK_READ:
     
-                        if(!eregi("SEEN",$message["flags"])) {
+                        if(!preg_match("/SEEN/i",$message["flags"])) {
                             $UM->mail_set_flag($message,"SEEN","+");
                             $sess["headers"][base64_encode(strtolower($folder))][$index] = $message;
                         }
