@@ -28,8 +28,8 @@ function convert2vcf($data) {
             $testo=($key=="street") ? (";;".$data["street"].";".$data["city"].";;;".$data["state"]) : ($value);
             if (preg_match("/[@,\r,\(,\),;,:]/",$value)) {
                 $testo=urlencode($testo);
-                $testo=preg_replace("/\+/"," ",$testo);
-                $testo=preg_replace("/%/","=",$testo);
+                $testo=preg_replace('|\+|'," ",$testo);
+                $testo=preg_replace('|%|',"=",$testo);
                 $testo=chunk_split($testo,76,"=\r\n");
                 $testo=substr($testo,0,strlen($testo)-3);
                 $ldapfile.=$ldap_key[$key].";ENCODING=QUOTED-PRINTABLE:$testo\r\n";

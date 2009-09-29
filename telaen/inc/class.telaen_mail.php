@@ -40,10 +40,10 @@ class Telaen extends Telaen_core {
 
     function mail_get_line() {
         $buffer = fgets($this->mail_connection,8192);
-        $buffer = preg_replace("/\r?\n/","\r\n",$buffer);
+        $buffer = preg_replace('|\r?\n|',"\r\n",$buffer);
         if($this->debug) {
             $sendtodebug = true;
-            if(preg_match("/^(\\* )/i",$buffer) || preg_match("/^([A-Za-z0-9]+ (OK|NO|BAD))/i",$buffer) || preg_match("/^(\\+OK|\\-ERR)/i",$buffer)) {
+            if(preg_match('|^(\\* )|i',$buffer) || preg_match('/^([A-Za-z0-9]+ (OK|NO|BAD))/i',$buffer) || preg_match('/^(\\+OK|\\-ERR)/i',$buffer)) {
                 $output = "<- <b>".htmlspecialchars($buffer)."</b>";
             } else {
                 $sendtodebug = ($this->debug > 1)?false:true;
@@ -71,7 +71,7 @@ class Telaen extends Telaen_core {
             }
             foreach ($cmds as $cmd) {
                 $cmd = trim($cmd) . $this->CRLF;
-                $output = (preg_match("/^(PASS|LOGIN)/",$cmd,$regs))?$regs[1]." ****":$cmd;
+                $output = (preg_match('/^(PASS|LOGIN)/',$cmd,$regs))?$regs[1]." ****":$cmd;
                 if($this->mail_protocol == "imap" && !$killSid) {
                     $cmd = $this->_sid." ".$cmd;
                     $output = $this->_sid." ".$output;
@@ -226,8 +226,8 @@ class Telaen extends Telaen_core {
                 $buffer = chop($this->mail_get_line());
                 if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
                 while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-                    if(preg_match("/message-id: (.*)/i",$buffer,$regs))
-                        $current_id = preg_replace("/<(.*)>/","\\1",$regs[1]);
+                    if(preg_match('|message-id: (.*)|i',$buffer,$regs))
+                        $current_id = preg_replace('|<(.*)>|',"\\1",$regs[1]);
                     $buffer = chop($this->mail_get_line());
                 }
 
@@ -243,12 +243,12 @@ class Telaen extends Telaen_core {
                 $this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY[TEXT]");
                 $buffer = $this->mail_get_line();
                 if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
-                if(preg_match("/\\{(.*)\\}/",$buffer,$regs))
+                if(preg_match('|\\{(.*)\\}|',$buffer,$regs))
                     $bytes = $regs[1];
 
                 $buffer = $this->mail_get_line();
                 while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-                    if(!preg_match("/[ ]?\\*[ ]?[0-9]+[ ]?FETCH/i",$buffer))
+                    if(!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i',$buffer))
                         $msgbody .= $buffer;
                     $buffer = $this->mail_get_line();
                 }
@@ -319,7 +319,7 @@ class Telaen extends Telaen_core {
 
     function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
 
-        $read = (preg_match("/\\SEEN/",$msg["flags"]))?1:0;
+        $read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
 
         /* choose your protocol */
         if($this->mail_protocol == "imap") {
@@ -338,8 +338,8 @@ class Telaen extends Telaen_core {
             while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
                 /* we need only the message id yet */
 
-                if(preg_match("/message-id: (.*)/i",$buffer,$regs))
-                    $current_id = preg_replace("/<(.*)>/","\\1",$regs[1]);
+                if(preg_match('|message-id: (.*)|i',$buffer,$regs))
+                    $current_id = preg_replace('|<(.*)>|',"\\1",$regs[1]);
 
                 $buffer = chop($this->mail_get_line());
             }
@@ -441,8 +441,8 @@ class Telaen extends Telaen_core {
                 while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
                     /* we need only the message id yet */
     
-                    if(preg_match("/message-id: (.*)/i",$buffer,$regs))
-                        $current_id = preg_replace("/<(.*)>/","\\1",$regs[1]);
+                    if(preg_match('|message-id: (.*)|i',$buffer,$regs))
+                        $current_id = preg_replace('|<(.*)>|',"\\1",$regs[1]);
     
                     $buffer = chop($this->mail_get_line());
                 }
@@ -566,11 +566,11 @@ class Telaen extends Telaen_core {
                     /* the end mark is <sid> OK FETCH, we are waiting for it*/
                     while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
                         /* if the return is something such as * N FETCH, a new message will displayed  */
-                        if(preg_match("/[ ]?\\*[ ]?([0-9]+)[ ]?FETCH/i",$buffer,$regs)) {
+                        if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i',$buffer,$regs)) {
                             $curmsg = $regs[1];
-                            preg_match("/SIZE[ ]?([0-9]+)/i",$buffer,$regs);
+                            preg_match('|SIZE[ ]?([0-9]+)|i',$buffer,$regs);
                             $size   = $regs[1];
-                            preg_match("/FLAGS[ ]?\\((.*)\\)/i",$buffer,$regs);
+                            preg_match('|FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs);
                             $flags  = $regs[1];
                         /* if any problem, add the current line to buffer */
                         } elseif(trim($buffer) != ")" && trim($buffer) != "") {
@@ -834,14 +834,14 @@ class Telaen extends Telaen_core {
             if ( ($this->_autospamfolder) &&
                 (strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") ) {
                 foreach ($this->_spamregex as $spamregex) {
-                    if (preg_match("/${spamregex}/i",$spamsubject)) {
+                    if (preg_match("/$spamregex/i",$spamsubject)) {
                         $havespam = 1;
                         $this->havespam = "TRUE";
                         break;
                     }
                 }
                 if ($this->userspamlevel) {
-                    preg_match('/[*+]+/', $xspamlevel, $matches);
+                    preg_match('|[*+]+|', $xspamlevel, $matches);
                     if (strlen($matches[0]) >= $this->userspamlevel) {
                         $havespam = 1;
                         $this->havespam = "TRUE";                       
@@ -868,7 +868,7 @@ class Telaen extends Telaen_core {
                 $messagescopy[$j]["uidl"]   = ((!$this->is_valid_md5($mail_info["uidl"])) ?
                                     $this->mail_get_uidl($messagescopy[$j]["msg"], $mail_info) :
                                     $mail_info["uidl"]);
-                $messagescopy[$j]["attach"] = (preg_match("/(multipart/mixed|multipart/related|application)/i",
+                $messagescopy[$j]["attach"] = (preg_match('/(multipart/mixed|multipart/related|application)/i',
                                     $mail_info["content-type"]))?1:0;
 
                 if ($messagescopy[$j]["localname"] == "") {
@@ -911,7 +911,7 @@ class Telaen extends Telaen_core {
                 $spamcopy[$y]["uidl"]       = ((!$this->is_valid_md5($mail_info["uidl"])) ?
                                     $this->mail_get_uidl($spamcopy[$y]["msg"], $mail_info) :
                                     $mail_info["uidl"]);
-                $spamcopy[$y]["attach"]     = (preg_match("/(multipart/mixed|multipart/related|application)/i",
+                $spamcopy[$y]["attach"]     = (preg_match('/(multipart/mixed|multipart/related|application)/i',
                                      $mail_info["content-type"]))?1:0;
 
                 if ($spamcopy[$y]["localname"] == "") {
@@ -975,18 +975,18 @@ class Telaen extends Telaen_core {
             /* loop throught the list and split the parts */
             while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
                 $tmp = Array();
-                preg_match("/\\((.*)\\)/",$buffer,$regs);
+                preg_match('|\\((.*)\\)|',$buffer,$regs);
                 $flags = $regs[1];
                 $tmp["flags"] = $flags;
 
-                preg_match("/\\((.*)\\)/",$buffer,$regs);
+                preg_match('|\\((.*)\\)|',$buffer,$regs);
                 $flags = $regs[1];
                 
                 $pos = strpos($buffer,")");
                 $rest = substr($buffer,$pos+2);
                 $pos = strpos($rest," ");
-                $tmp["prefix"] = preg_replace("/\"(.*)\"/","\\1",substr($rest,0,$pos));
-                $tmp["name"] = $this->fix_prefix(trim(preg_replace("/\"(.*)\"/","\\1",substr($rest,$pos+1))),0);
+                $tmp["prefix"] = preg_replace('|"(.*)"|',"\\1",substr($rest,0,$pos));
+                $tmp["name"] = $this->fix_prefix(trim(preg_replace('|"(.*)"|',"\\1",substr($rest,$pos+1))),0);
                 $buffer = $this->mail_get_line();
                 $boxlist[] = $tmp;
             }
@@ -1012,7 +1012,7 @@ class Telaen extends Telaen_core {
     function mail_select_box($boxname = "INBOX") {
         /* this function is used only for IMAP servers */
         if($this->mail_protocol == "imap") {
-            $original_name = preg_replace("/\"(.*)\"/","\\1",$boxname);
+            $original_name = preg_replace('|"(.*)"|',"\\1",$boxname);
             $boxname = $this->fix_prefix($original_name,1);
             $this->mail_send_command("SELECT \"$boxname\"");
             $buffer = $this->mail_get_line();
@@ -1026,11 +1026,11 @@ class Telaen extends Telaen_core {
             $boxinfo = Array();
             /* get total, recent messages and flags */
             while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-                if(preg_match("/[ ]?\\*[ ]?([0-9]+)[ ]EXISTS/i",$buffer,$regs))
+                if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]EXISTS|i',$buffer,$regs))
                     $boxinfo["exists"] = $regs[1];
-                if(preg_match("/[ ]?\\*[ ]?([0-9])+[ ]RECENT/i",$buffer,$regs))
+                if(preg_match('|[ ]?\\*[ ]?([0-9])+[ ]RECENT|i',$buffer,$regs))
                     $boxinfo["recent"] = $regs[1];
-                if(preg_match("/[ ]?\\*[ ]?FLAGS[ ]?\\((.*)\\)/i",$buffer,$regs))
+                if(preg_match('|[ ]?\\*[ ]?FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs))
                     $boxinfo["flags"] = $regs[1];
                 $buffer = $this->mail_get_line();
             }
@@ -1043,7 +1043,7 @@ class Telaen extends Telaen_core {
     function mail_subscribe_box($boxname = "INBOX") {
         /* this function is used only for IMAP servers */
         if($this->mail_protocol == "imap") {
-            $boxname = $this->fix_prefix(preg_replace("/\"(.*)\"/","\\1",$boxname),1);
+            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"\\1",$boxname),1);
             $this->mail_send_command("SUBSCRIBE \"$boxname\"");
             $buffer = $this->mail_get_line();
             if(preg_match("/^".$this->_sid." (NO|BAD)/i",$buffer)) { 
@@ -1057,7 +1057,7 @@ class Telaen extends Telaen_core {
 
     function mail_create_box($boxname) {
         if($this->mail_protocol == "imap") {
-            $boxname = $this->fix_prefix(preg_replace("/\"(.*)\"/","\\1",$boxname),1);
+            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"\\1",$boxname),1);
             $this->mail_send_command("CREATE \"$boxname\"");
             $buffer = $this->mail_get_line();
             if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
@@ -1077,7 +1077,7 @@ class Telaen extends Telaen_core {
 
     function mail_delete_box($boxname) {
         if($this->mail_protocol == "imap") {
-            $boxname = $this->fix_prefix(preg_replace("/\"(.*)\"/","\\1",$boxname),1);
+            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"\\1",$boxname),1);
             $this->mail_send_command("DELETE \"$boxname\"");
             $buffer = $this->mail_get_line();
 
@@ -1102,7 +1102,7 @@ class Telaen extends Telaen_core {
 
     function mail_save_message($boxname,$message,$flags = "") {
         if($this->mail_protocol == "imap") {
-            $boxname = $this->fix_prefix(preg_replace("/\"(.*)\"/","\\1",$boxname),1);
+            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"\\1",$boxname),1);
         
             // send an append command
             $mailcommand = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
@@ -1181,7 +1181,7 @@ class Telaen extends Telaen_core {
             }
 
             $flags = join(" ",$flags);
-            if(!preg_match("/X-UM-Flags/i",$header)) {
+            if(!preg_match('|X-UM-Flags|i',$header)) {
                 $header .= "\r\nX-UM-Flags: $flags";
             } else {
                 $header = preg_replace("/".quotemeta("X-UM-Flags:")."(.*)/i","X-UM-Flags: $flags",$header);
@@ -1264,7 +1264,7 @@ class Telaen extends Telaen_core {
                     $buffer = trim($buffer);
                     if($buffer == ".")
                         break;
-                    $key = preg_replace('/\s+/', "_", $buffer);
+                    $key = preg_replace('|\s+|', "_", $buffer);
                     $capa[$key] = 1;
                                }
             }

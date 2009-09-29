@@ -67,7 +67,7 @@
 
 	// Check if it supports gzip
 	if (isset($_SERVER['HTTP_ACCEPT_ENCODING']))
-		$encodings = explode(',', strtolower(preg_replace("/\s+/", "", $_SERVER['HTTP_ACCEPT_ENCODING'])));
+		$encodings = explode(',', strtolower(preg_replace('|\s+|', "", $_SERVER['HTTP_ACCEPT_ENCODING'])));
 
 	if ((in_array('gzip', $encodings) || in_array('x-gzip', $encodings) || isset($_SERVER['---------------'])) && function_exists('ob_gzhandler') && !ini_get('zlib.output_compression')) {
 		$enc = in_array('x-gzip', $encodings) ? "x-gzip" : "gzip";
@@ -141,7 +141,7 @@
 		if (!isset($_GET[$name]))
 			return $def;
 
-		return preg_replace("/[^0-9a-z\-_,]+/i", "", $_GET[$name]); // Remove anything but 0-9,a-z,-_
+		return preg_replace('|[^0-9a-z\-_,]+|i', "", $_GET[$name]); // Remove anything but 0-9,a-z,-_
 	}
 
 	function getFileContents($path) {

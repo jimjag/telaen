@@ -51,7 +51,7 @@ class Telaen_core {
         if(!file_exists($strfile)) return;
         $f = fopen($strfile,"rb");
         while(!feof($f)) {
-            $result .= preg_replace("/\r?\n/","\r\n",fread($f,4096));
+            $result .= preg_replace('/\r?\n/',"\r\n",fread($f,4096));
             $pos = strpos($result,"\r\n\r\n");
             if(!($pos === false)) {
                 $result = substr($result,0,$pos);
@@ -73,7 +73,7 @@ class Telaen_core {
         if($strfile == "" || !file_exists($strfile)) return;
         $fp = fopen($strfile,"rb"); fseek($fp,0,SEEK_END);
         $size = ftell($fp); rewind($fp);
-        $result =  preg_replace("/\r?\n/","\r\n",fread($fp,$size)); 
+        $result =  preg_replace('|\r?\n|',"\r\n",fread($fp,$size)); 
         fclose($fp);
         unset($fp); unset($size);
         return $result;
@@ -122,7 +122,7 @@ class Telaen_core {
 
     function mime_encode_headers($string) {
         if($string == "") return;
-        if(!preg_match("/^([[:print:]]*)$/i",$string))
+        if(!preg_match('|^([\x20-\x7E]*)$|iD',$string))
         $string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
         return $string;
     }
@@ -180,7 +180,7 @@ class Telaen_core {
             $endpos = strpos($string,"?=");
             $mystring = substr($string,0,$endpos);
             $string = substr($string,$endpos+2,strlen($string));
-            if($enctype == "q") $mystring = quoted_printable_decode(preg_replace("/_/"," ",$mystring)); 
+            if($enctype == "q") $mystring = quoted_printable_decode(preg_replace('|_|'," ",$mystring)); 
             else if ($enctype == "b") $mystring = base64_decode($mystring);
 
             if($charset != $this->charset) $mystring = $this->convert_charset($mystring, $charset, $this->charset);
@@ -192,7 +192,7 @@ class Telaen_core {
         $result = $newresult.$string;
         unset($mystring); unset($newresult); unset($pos);
         
-        if(preg_match("/koi8/", $subject)) $result = convert_cyr_string($result, "k", "w");
+        if(preg_match('|koi8|', $subject)) $result = convert_cyr_string($result, "k", "w");
         unset($subject);
         return $result;
 
@@ -217,7 +217,7 @@ class Telaen_core {
             
             // If current header starts with a TAB or is not very standard, 
             // attach it at the prev header         
-            if(($headers[$i][0] == "\t") || !preg_match("/^[A-Z0-9a-z_-]+:/",trim($headers[$i])) ) {
+            if(($headers[$i][0] == "\t") || !preg_match('|^[A-Z0-9a-z_-]+:|',trim($headers[$i])) ) {
                 $decodedheaders[$lasthead] .= " ".trim($headers[$i]);
             }
             else { // otherwise extract the header
@@ -249,7 +249,7 @@ class Telaen_core {
 
     function get_names($strmail) {
         $ARfrom = Array();
-        $strmail = stripslashes(preg_replace("/(\t|\r|\n)/","",$strmail));
+        $strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
 
         if(trim($strmail) == "") return $ARfrom;
 
@@ -276,22 +276,22 @@ class Telaen_core {
         }
 
         for($i=0;$i<count($armail);$i++) {
-            $thisPart = trim(preg_replace("/^\"(.*)\"$/i", "\\1", trim($armail[$i])));
+            $thisPart = trim(preg_replace('|^"(.*)"$|iD', "\\1", trim($armail[$i])));
             if($thisPart != "") {
-                if (preg_match("/(.*)<(.*)>/i", $thisPart, $regs)) {
+                if (preg_match('|(.*)<(.*)>|i', $thisPart, $regs)) {
                     $email = trim($regs[2]);
                     $name = trim($regs[1]);
                 } else {
-                    if (preg_match("/([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_]+)((.*))/i", $thisPart, $regs)) {
+                    if (preg_match('|([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_]+)((.*))|i', $thisPart, $regs)) {
                         $email = $regs[1];
                         $name = $regs[2];
                     } else
                         $email = $thisPart;
                 }
 
-                $email = preg_replace("/<(.*)\\>/", "\\1", $email);
-                $name = preg_replace("/\"(.*)\"/", "\\1", trim($name));
-                $name = preg_replace("/\((.*)\)/", "\\1", $name);
+                $email = preg_replace('|<(.*)\\>|', "\\1", $email);
+                $name = preg_replace('|"(.*)"|', "\\1", trim($name));
+                $name = preg_replace('|\((.*)\)|', "\\1", $name);
 
                 if ($name == "") $name = $email;
                 if ($email == "") $email = $name;
@@ -313,7 +313,7 @@ class Telaen_core {
 
     function get_first_of_names($strmail) {
         $ARfrom = Array();
-        $strmail = stripslashes(preg_replace("/(\t|\r|\n)/","",$strmail));
+        $strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
 
         if(trim($strmail) == "") return $ARfrom;
 
@@ -338,22 +338,22 @@ class Telaen_core {
             $armail = $strmail;
         }
 
-        $thisPart = trim(preg_replace("/^\"(.*)\"$/i", "\\1", trim($armail)));
+        $thisPart = trim(preg_replace('|^"(.*)"$|iD', "\\1", trim($armail)));
         if($thisPart != "") {
-            if (preg_match("/(.*)<(.*)>/i", $thisPart, $regs)) {
+            if (preg_match('|(.*)<(.*)>|i', $thisPart, $regs)) {
                 $email = trim($regs[2]);
                 $name = trim($regs[1]);
             } else {
-                if (preg_match("/([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_]+)((.*))/i", $thisPart, $regs)) {
+                if (preg_match('|([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_]+)((.*))|i', $thisPart, $regs)) {
                     $email = $regs[1];
                     $name = $regs[2];
                 } else
                     $email = $thisPart;
             }
 
-            $email = preg_replace("/<(.*)\\>/", "\\1", $email);
-            $name = preg_replace("/\"(.*)\"/", "\\1", trim($name));
-            $name = preg_replace("/\((.*)\)/", "\\1", $name);
+            $email = preg_replace('|<(.*)\\>|', "\\1", $email);
+            $name = preg_replace('|"(.*)"|', "\\1", trim($name));
+            $name = preg_replace('|\((.*)\)|', "\\1", $name);
 
             if ($name == "") $name = $email;
             if ($email == "") $email = $name;
@@ -396,7 +396,7 @@ class Telaen_core {
             $parts[$index]["type"] = $ctype;
             
             // in this case the alternative is not html or text but multipart/*
-            if(preg_match("/^multipart\/(mixed|signed|related|report)/i",$ctype)) {
+            if(preg_match('!^multipart/(mixed|signed|related|report)!i',$ctype)) {
                 $part = $parts[$index];
                                 $multipartSub = true;
                 break;
@@ -470,7 +470,7 @@ class Telaen_core {
              * Special case for mac with resource and data fork
              * Ignore apple data parts.
              */
-            if (preg_match("|application/applefile|i",$ctype)) {
+            if (preg_match('|application/applefile|i',$ctype)) {
                 continue;
             }
 
@@ -480,7 +480,7 @@ class Telaen_core {
             $types = split("/",$Actype[0]); 
             $rctype = strtolower($Actype[0]);
             
-            $is_download = (preg_match("/name=/",$headers["content-disposition"].$headers["content-type"]) || $headers["content-id"] != "" || $rctype == "message/rfc822");
+            $is_download = (preg_match('|name=|',$headers["content-disposition"].$headers["content-type"]) || $headers["content-id"] != "" || $rctype == "message/rfc822");
 
             if($rctype == "multipart/alternative") {
 
@@ -516,7 +516,7 @@ class Telaen_core {
                 $tree       = array_merge((array)$this->current_level, array($thisattach["index"]));
                 $thisfile   = "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
                 $filename   = $thisattach["filename"];
-                $cid = preg_replace("/<(.*)\\>/", "\\1", $cid);
+                $cid = preg_replace('|<(.*)\\>|', "\\1", $cid);
 
                 if($cid != "") {
                     $cid = "cid:$cid";
@@ -541,7 +541,7 @@ class Telaen_core {
     */
 
     function build_text_body($body) {
-        $body = preg_replace("/(\r\n|\n|\r|\n\r)/","<br>\\1",$this->make_link_clickable(htmlspecialchars($body)));
+        $body = preg_replace('/(\r\n|\n|\r|\n\r)/',"<br>\\1",$this->make_link_clickable(htmlspecialchars($body)));
         return "<font face=\"Courier New\" size=\"2\">$body</font>";
     }
 
@@ -549,7 +549,7 @@ class Telaen_core {
     Decode Quoted-Printable strings
     */
     function decode_qp($str) {
-        return quoted_printable_decode(preg_replace("/=\r?\n/", "", $str));
+        return quoted_printable_decode(preg_replace('|=\r?\n|', "", $str));
     }
 
 
@@ -559,12 +559,12 @@ class Telaen_core {
 
     function make_link_clickable($str){
 
-        $str = preg_replace("|([[:space:]])((f|ht)tps?:\/\/[a-z0-9~#%@\&:=?+\/\.,_-]+[a-z0-9~#%@\&=?+\/_.;-]+)|i", "\\1<a class=autolink href=\"\\2\" target=\"_blank\">\\2</a>", $str); //http 
-        $str = preg_replace("|([[:space:]])(www\.[a-z0-9~#%@\&:=?+\/\.,_-]+[a-z0-9~#%@\&=?+\/_.;-]+)|i", "\\1<a class=autolink href=\"http://\\2\" target=\"_blank\">\\2</a>", $str); // www. 
-        $str = preg_replace("|([[:space:]])([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","\\1<a class=autolink href=\"mailto:\\2\">\\2</a>", $str); // mail 
+        $str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "\\1<a class=autolink href=\"\\2\" target=\"_blank\">\\2</a>", $str); //http 
+        $str = preg_replace("|(\s)(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "\\1<a class=autolink href=\"http://\\2\" target=\"_blank\">\\2</a>", $str); // www. 
+        $str = preg_replace("|(\s)([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","\\1<a class=autolink href=\"mailto:\\2\">\\2</a>", $str); // mail 
 
-        $str = preg_replace("|^((f|ht)tp:\/\/[a-z0-9~#%@\&:=?+\/\.,_-]+[a-z0-9~#%@\&=?+\/_.;-]+)|i", "<a href=\"\\1\" target=\"_blank\">\\1</a>", $str); //http 
-        $str = preg_replace("|^(www\.[a-z0-9~#%@\&:=?+\/\.,_-]+[a-z0-9~#%@\&=?+\/_.;-]+)|i", "<a class=autolink href=\"http://\\1\" target=\"_blank\">\\1</a>", $str); // www. 
+        $str = preg_replace("!^((f|ht)tp://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "<a href=\"\\1\" target=\"_blank\">\\1</a>", $str); //http 
+        $str = preg_replace("|^(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "<a class=autolink href=\"http://\\1\" target=\"_blank\">\\1</a>", $str); // www. 
         $str = preg_replace("|^([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","<a class=autolink href=\"mailto:\\1\">\\1</a>", $str); // mail 
 
         return $str;
@@ -607,7 +607,7 @@ class Telaen_core {
             $this->add_body($msgbody);
             break;
         case "multipart":
-            if(preg_match("/${subtype}/","signed,mixed,related,report"))
+            if(preg_match("/$subtype/","signed,mixed,related,report"))
                 $subtype = "complex";
 
             switch($subtype) {
@@ -643,29 +643,29 @@ class Telaen_core {
         //echo "<br>CDisp: ". $cdisp . " - CType: " . $ctype;
 
         // try to extract filename from content-disposition
-        preg_match("/filename ?= ?\"(.+)\"/i",$cdisp,$matches);
+        preg_match('|filename ?= ?"(.+)"|i',$cdisp,$matches);
         $filename = trim($matches[1]);
     
         // if the first not work, same regex without duoblequote
         if(!$filename) {
-            preg_match("/filename ?= ?(.+)/i",$cdisp,$matches);
+            preg_match('|filename ?= ?(.+)|i',$cdisp,$matches);
                     $filename = trim($matches[1]);
         }
         
         // try to extract from content-type
         if(!$filename) {
-            preg_match("/name ?= ?\"(.+)\"/i",$ctype,$matches);
+            preg_match('|name ?= ?"(.+)"|i',$ctype,$matches);
             $filename = trim($matches[1]);
         }
 
         $tenc = $headers["content-transfer-encoding"];
 
         // extract content-disposition  (ex "attachment")
-        preg_match("/[a-z0-9]+/i",$cdisp,$matches);
+        preg_match('|[a-z0-9]+|i',$cdisp,$matches);
         $content_disposition    = $matches[0];
 
         // extract content-type     (ex "text/plain" or "application/vnd.ms-excel" note the DOT)
-        preg_match("/[a-z0-9\/\.-]+/i",$ctype,$matches);    
+        preg_match('|[a-z0-9/\.-]+|i',$ctype,$matches);    
         $content_type   = $matches[0];
 
         $tmp            = explode("/",$content_type);
@@ -687,8 +687,8 @@ class Telaen_core {
             $filename = uniqid("").".tmp";
         }
 
-        $filename = preg_replace("/[.]{2,}/",".",preg_replace("'(/|\\\\)+'","_",trim($this->decode_mime_string($filename))));
-        $safefilename = preg_replace("/[ \t\.\W]+/", "_", $filename);
+        $filename = preg_replace('|[.]{2,}|',".",preg_replace("'(/|\\\\)+'","_",trim($this->decode_mime_string($filename))));
+        $safefilename = preg_replace('|[ \t\.\W]+|', "_", $filename);
         $nIndex                     = count($this->_content["attachments"]);
         $temp_array["name"]                 = trim($filename);
         $temp_array["size"]                 = strlen($body);
@@ -722,10 +722,10 @@ class Telaen_core {
         elseif(strtolower($enctype) == "quoted-printable")
             $body = $this->decode_qp($body);
 
-        if(preg_match("/koi8/", $ctype))
+        if(preg_match('|koi8|', $ctype))
             $body = convert_cyr_string($body, "k", "w");
         else
-            if(preg_match("/charset ?= ?\"?([a-z0-9-]+)\"?/i",$ctype,$regs)) {
+            if(preg_match('|charset ?= ?"?([a-z0-9-]+)"?|i',$ctype,$regs)) {
                 if($regs[1] != $this->charset) {
                     $body = $this->convert_charset($body,$regs[1],$this->charset);
                 }
@@ -777,7 +777,7 @@ class Telaen_core {
     }
 
     function is_valid_md5($val) {
-        return preg_match('/^[A-Fa-f0-9]{32}$/',$val);
+        return preg_match('|^[A-Fa-f0-9]{32}$|D',$val);
     }
 
     /**
@@ -789,33 +789,33 @@ class Telaen_core {
         $myarray = Array();
         $headers = $this->decode_header($header);
 
-        $myarray["message-id"] = (array_key_exists("message-id",$headers))?preg_replace("/<(.*)>/","\\1",trim($headers["message-id"])):null;
+        $myarray["message-id"] = (array_key_exists("message-id",$headers))?preg_replace('|<(.*)>|',"\\1",trim($headers["message-id"])):null;
         $myarray["content-type"] = (array_key_exists("content-type",$headers))?$headers["content-type"]:null;
         $myarray["priority"] = (array_key_exists("x-priority",$headers))?$headers["x-priority"][0]:null;
         $myarray["flags"]        = $headers["x-um-flags"]; // 
         $myarray["content-transfer-encoding"] = (array_key_exists("content-transfer-encoding",$headers))?str_replace("GM","-",$headers["content-transfer-encoding"]):null;
 
-        $received   = preg_replace("/  /"," ",$headers["received"]);
-        $user_date  = preg_replace("/  /"," ",$headers["date"]);
+        $received   = preg_replace('|  |'," ",$headers["received"]);
+        $user_date  = preg_replace('|  |'," ",$headers["date"]);
 
-        if(preg_match("|([0-9]{1,2}[ ]+[A-Z]{3}[ ]+[0-9]{4}[ ]+[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]?((\+|-)[0-9]{4})?|",$received,$regs)) {
+        if(preg_match('/([0-9]{1,2}[ ]+[A-Z]{3}[ ]+[0-9]{4}[ ]+[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]?((\+|-)[0-9]{4})?/',$received,$regs)) {
             //eg. Tue, 4 Sep 2001 16:22:31 -0000
             $mydate = $regs[1];
             $mytimezone = $regs[2];
             if(empty($mytimezone))
-                if(preg_match("/((\\+|-)[0-9]{4})/i",$user_date,$regs)) $mytimezone = $regs[1];
+                if(preg_match('/((\\+|-)[0-9]{4})/i',$user_date,$regs)) $mytimezone = $regs[1];
                 else $mytimezone = $this->timezone;
-        } elseif(preg_match("/(([A-Z]{3})[ ]+([0-9]{1,2})[ ]+([0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]+([0-9]{4}))/i",$received,$regs)) {
+        } elseif(preg_match('|(([A-Z]{3})[ ]+([0-9]{1,2})[ ]+([0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]+([0-9]{4}))|i',$received,$regs)) {
             //eg. Tue Sep 4 16:26:17 2001 (Cubic Circle's style)
             $mydate = $regs[3]." ".$regs[2]." ".$regs[5]." ".$regs[4];
-            if(preg_match("/((\\+|-)[0-9]{4})/i",$user_date,$regs)) $mytimezone = $regs[1];
+            if(preg_match('/((\\+|-)[0-9]{4})/i',$user_date,$regs)) $mytimezone = $regs[1];
             else $mytimezone = $this->timezone;
-        } elseif(preg_match("/([0-9]{1,2}[ ]+[A-Z]{3}[ ]+[0-9]{4}[ ]+[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]?((\+|-)[0-9]{4})?/i",$user_date,$regs)) {
+        } elseif(preg_match('/([0-9]{1,2}[ ]+[A-Z]{3}[ ]+[0-9]{4}[ ]+[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]?((\+|-)[0-9]{4})?/i',$user_date,$regs)) {
             //eg. Tue, 4 Sep 2001 16:22:31 -0000 (from Date header)
             $mydate = $regs[1];
             $mytimezone = $regs[2];
             if(empty($mytimezone))
-                if(preg_match("/((\\+|-)[0-9]{4})/i",$user_date,$regs)) $mytimezone = $regs[1];
+                if(preg_match('/((\\+|-)[0-9]{4})/i',$user_date,$regs)) $mytimezone = $regs[1];
                 else $mytimezone = $this->timezone;
         } else {
             $mydate     = date("d M Y H:i");
@@ -861,20 +861,20 @@ class Telaen_core {
         global $server_timezone_offset;
 
         // check if $timezone is valid
-        if(!preg_match("/((\\+|-)[0-9]{4})/",$timezone)) 
+        if(!preg_match('/((\\+|-)[0-9]{4})/',$timezone)) 
             $timezone = "+0000";
         // check if $mydate is valid, if no return current server time
         if(!$intdate = @strtotime($mydate)) 
             return time();
-        if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$timezone,$regs)) 
+        if(preg_match('/(\\+|-)+([0-9]{2})([0-9]{2})/',$timezone,$regs)) 
             $datetimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
         else 
             $datetimezone = 0;
-        if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$this->timezone,$regs)) 
+        if(preg_match('/(\\+|-)+([0-9]{2})([0-9]{2})/',$this->timezone,$regs)) 
             $usertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
         else 
             $usertimezone = 0;
-        if(preg_match("/(\\+|-)+([0-9]{2})([0-9]{2})/",$server_timezone_offset,$regs)) 
+        if(preg_match('/(\\+|-)+([0-9]{2})([0-9]{2})/',$server_timezone_offset,$regs)) 
             $servertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
         else 
             $servertimezone = 0;
@@ -953,7 +953,7 @@ class Telaen_core {
     */
 
     function get_boundary($ctype){
-        if(preg_match('/boundary[ ]?=[ ]?["]?([^";]*)["]?.*$/i',$ctype,$regs)) {    //preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
+        if(preg_match('|boundary[ ]?=[ ]?["]?([^";]*)["]?.*$|iD',$ctype,$regs)) {    //preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
             //$boundary = preg_replace('/^\"(.*)\"$/', "\\1", $regs[1])
             return trim("--$regs[1]");
         }
@@ -1076,9 +1076,9 @@ class Telaen_core {
 
     function fix_prefix($folder,$add = 0) {
         if($this->mail_protocol == "imap" &&
-            !preg_match("/^inbox$/i",$folder) && 
+            !preg_match('|^inbox$|i',$folder) && 
             $this->mail_prefix && 
-            !preg_match("/^_/",$folder)) {
+            !preg_match('|^_|',$folder)) {
 
             if($add)
                 return $this->mail_prefix.$folder;

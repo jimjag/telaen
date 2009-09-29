@@ -88,34 +88,34 @@ $body   =   $email["body"];
 
 $redir_path = "redir.php";  // why not just relative?? Now is relative (due to problems on https servers)! 
 
-$body = preg_replace("/target=[\"]?[a-zA-Z_]+[\"]?/i","target=\"blank\"",$body);
-$body = preg_replace("|href=\"http([s]?)://|i","target=\"_blank\" href=\"$redir_path?http\\1://",$body);
-$body = preg_replace("/href=\"mailto:/i","target=\"_top\" href=\"newmsg.php?to=",$body);
+$body = preg_replace('|target=["]?[a-zA-Z_]+["]?|i',"target=\"blank\"",$body);
+$body = preg_replace('|href="http([s]?)://|i',"target=\"_blank\" href=\"$redir_path?http\\1://",$body);
+$body = preg_replace('|href="mailto:|i',"target=\"_top\" href=\"newmsg.php?to=",$body);
 
 // looking for browser type    --vola's note: add check for safari and opera??
 $uagent =   $_SERVER["HTTP_USER_AGENT"];
 
-$ns4    =   (preg_match("|Mozilla/4|",$uagent) && !preg_match("/MSIE/",$uagent) && !preg_match("/Gecko/",$uagent));
-$ns6moz =   preg_match("/Gecko/",$uagent);
-$ie4up  =   preg_match("/MSIE (4|5|6|7)/",$uagent);
+$ns4    =   (preg_match('|Mozilla/4|',$uagent) && !preg_match('|MSIE|',$uagent) && !preg_match('|Gecko|',$uagent));
+$ns6moz =   preg_match('|Gecko|',$uagent);
+$ie4up  =   preg_match('/MSIE (4|5|6|7)/',$uagent);
 $other  =   (!$ns4 && !$ns6moz && !$ie4up);
 
 // with no recognized browser display inline on the page
 if ($other) {
-    $body   =   preg_replace("/<base/i","<telaen_base_not_alowed",
-                preg_replace("/<link/i","<telaen_link_not_alowed",
+    $body   =   preg_replace('|<base|i',"<telaen_base_not_alowed",
+                preg_replace('|<link|i',"<telaen_link_not_alowed",
                 $body));
 
-    if(preg_match("/<[ ]*body.*background[ ]*=[ ]*[\"']?([A-Za-z0-9._&?=:/{}%+-]+)[\"']?.*>/i",$body,$regs))
+    if(preg_match('/<[ ]*body.*background[ ]*=[ ]*["\']?([A-Za-z0-9._&?=:/{}%+-]+)["\']?.*>/i',$body,$regs))
         $backimg =  " background=\"".$regs[1]."\"";
     $smarty->assign("umBackImg",$backimg);
-    if(preg_match("/<[ ]*body[A-Z0-9._&?=:/\"' -]*bgcolor=[\"']?([A-Z0-9#]+)[\"']?[A-Z0-9._&?=:/\"' -]*>/i",$body,$regs))
+    if(preg_match('|<[ ]*body[A-Z0-9._&?=:/"\' -]*bgcolor=["\']?([A-Z0-9#]+)["\']?[A-Z0-9._&?=:/"\' -]*>|i',$body,$regs))
         $backcolor = " bgcolor=\"".$regs[1]."\"";
     $smarty->assign("umBackColor",$backcolor);
 
-    $body = preg_replace("/<body/i","<telaen_body_not_alowed",$body);
+    $body = preg_replace('|<body|i',"<telaen_body_not_alowed",$body);
     $body = preg_replace("/a:(link|visited|hover)/i",".".uniqid(""),$body);
-    $body = preg_replace("/(body)[ ]?\\{/i",".".uniqid(""),$body);
+    $body = preg_replace('|(body)[ ]?\\{|i',".".uniqid(""),$body);
 
 } 
 // with ie4+/mozilla/ns6+ use iframe for display body  

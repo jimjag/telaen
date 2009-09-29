@@ -20,7 +20,7 @@ if($myfile != "")
     $addressbook = unserialize(base64_decode($myfile));
 
 function valid_email($thismail) {
-    $valid_regex = '/^[-a-z0-9_{|}~!#$+]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)+$/i';
+    $valid_regex = '/^[-a-z0-9_{|}~!#$+]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)+$/iD';
     if (!preg_match($valid_regex, $thismail)) 
         return 0;
     global $addressbook,$f_email;

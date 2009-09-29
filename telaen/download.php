@@ -34,7 +34,7 @@ if(isset($_GET['attach'])) {
 
 if($downAll) {
     $sourceFile = $mail_info['localname']; 
-    if(preg_match("/\\.\\./",$sourceFile) || !file_exists($sourceFile)) {
+    if(preg_match('|\\.\\.|',$sourceFile) || !file_exists($sourceFile)) {
         die();
         }
 
@@ -51,13 +51,13 @@ if($downAll) {
             $attach = &$attach["attachments"][intval($item)];
 
     $sourceFile = $attach["filename"];
-    if(preg_match("/\\.\\./",$sourceFile) || !file_exists($sourceFile)) {
+    if(preg_match('|\\.\\.|',$sourceFile) || !file_exists($sourceFile)) {
         die();
     }
     
     $size = filesize($sourceFile);
     $disposition = (!$down)?"inline":"attachment";
-    $type = (!preg_match('/[a-z0-9\-]+\/[a-z0-9\-]+/i',$attach["content-type"]))?"application/octet-stream":$attach["content-type"];
+    $type = (!preg_match('|[a-z0-9\-]+/[a-z0-9\-]+|i',$attach["content-type"]))?"application/octet-stream":$attach["content-type"];
     $dlfname = $attach["name"];
 }
 
