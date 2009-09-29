@@ -181,7 +181,7 @@ $jssource .= "
 <script type=\"text/javascript\">
 //<![CDATA[
 function deletemsg() { 
-    if(confirm('".reg_replace("/'/","\\'",$confirm_delete)."')) 
+    if(confirm('".preg_replace("/'/","\\'",$confirm_delete)."')) 
         with(document.move) { decision.value = 'delete'; submit(); } 
 }
 function reply() { document.msg.submit(); }
