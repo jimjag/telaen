@@ -227,7 +227,7 @@ class Telaen extends Telaen_core {
                 if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
                 while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
                     if(preg_match('|message-id: (.*)|i',$buffer,$regs))
-                        $current_id = preg_replace('|<(.*)>|',"\\1",$regs[1]);
+                        $current_id = preg_replace('|<(.*)>|',"${1}",$regs[1]);
                     $buffer = chop($this->mail_get_line());
                 }
 
@@ -339,7 +339,7 @@ class Telaen extends Telaen_core {
                 /* we need only the message id yet */
 
                 if(preg_match('|message-id: (.*)|i',$buffer,$regs))
-                    $current_id = preg_replace('|<(.*)>|',"\\1",$regs[1]);
+                    $current_id = preg_replace('|<(.*)>|',"${1}",$regs[1]);
 
                 $buffer = chop($this->mail_get_line());
             }
@@ -442,7 +442,7 @@ class Telaen extends Telaen_core {
                     /* we need only the message id yet */
     
                     if(preg_match('|message-id: (.*)|i',$buffer,$regs))
-                        $current_id = preg_replace('|<(.*)>|',"\\1",$regs[1]);
+                        $current_id = preg_replace('|<(.*)>|',"${1}",$regs[1]);
     
                     $buffer = chop($this->mail_get_line());
                 }
@@ -985,8 +985,8 @@ class Telaen extends Telaen_core {
                 $pos = strpos($buffer,")");
                 $rest = substr($buffer,$pos+2);
                 $pos = strpos($rest," ");
-                $tmp["prefix"] = preg_replace('|"(.*)"|',"\\1",substr($rest,0,$pos));
-                $tmp["name"] = $this->fix_prefix(trim(preg_replace('|"(.*)"|',"\\1",substr($rest,$pos+1))),0);
+                $tmp["prefix"] = preg_replace('|"(.*)"|',"${1}",substr($rest,0,$pos));
+                $tmp["name"] = $this->fix_prefix(trim(preg_replace('|"(.*)"|',"${1}",substr($rest,$pos+1))),0);
                 $buffer = $this->mail_get_line();
                 $boxlist[] = $tmp;
             }
@@ -1012,7 +1012,7 @@ class Telaen extends Telaen_core {
     function mail_select_box($boxname = "INBOX") {
         /* this function is used only for IMAP servers */
         if($this->mail_protocol == "imap") {
-            $original_name = preg_replace('|"(.*)"|',"\\1",$boxname);
+            $original_name = preg_replace('|"(.*)"|',"${1}",$boxname);
             $boxname = $this->fix_prefix($original_name,1);
             $this->mail_send_command("SELECT \"$boxname\"");
             $buffer = $this->mail_get_line();
@@ -1043,7 +1043,7 @@ class Telaen extends Telaen_core {
     function mail_subscribe_box($boxname = "INBOX") {
         /* this function is used only for IMAP servers */
         if($this->mail_protocol == "imap") {
-            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"\\1",$boxname),1);
+            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"${1}",$boxname),1);
             $this->mail_send_command("SUBSCRIBE \"$boxname\"");
             $buffer = $this->mail_get_line();
             if(preg_match("/^".$this->_sid." (NO|BAD)/i",$buffer)) { 
@@ -1057,7 +1057,7 @@ class Telaen extends Telaen_core {
 
     function mail_create_box($boxname) {
         if($this->mail_protocol == "imap") {
-            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"\\1",$boxname),1);
+            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"${1}",$boxname),1);
             $this->mail_send_command("CREATE \"$boxname\"");
             $buffer = $this->mail_get_line();
             if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
@@ -1077,7 +1077,7 @@ class Telaen extends Telaen_core {
 
     function mail_delete_box($boxname) {
         if($this->mail_protocol == "imap") {
-            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"\\1",$boxname),1);
+            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"${1}",$boxname),1);
             $this->mail_send_command("DELETE \"$boxname\"");
             $buffer = $this->mail_get_line();
 
@@ -1102,7 +1102,7 @@ class Telaen extends Telaen_core {
 
     function mail_save_message($boxname,$message,$flags = "") {
         if($this->mail_protocol == "imap") {
-            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"\\1",$boxname),1);
+            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"${1}",$boxname),1);
         
             // send an append command
             $mailcommand = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";

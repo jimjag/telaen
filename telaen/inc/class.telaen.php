@@ -276,7 +276,7 @@ class Telaen_core {
         }
 
         for($i=0;$i<count($armail);$i++) {
-            $thisPart = trim(preg_replace('|^"(.*)"$|iD', "\\1", trim($armail[$i])));
+            $thisPart = trim(preg_replace('|^"(.*)"$|iD', "${1}", trim($armail[$i])));
             if($thisPart != "") {
                 if (preg_match('|(.*)<(.*)>|i', $thisPart, $regs)) {
                     $email = trim($regs[2]);
@@ -289,9 +289,9 @@ class Telaen_core {
                         $email = $thisPart;
                 }
 
-                $email = preg_replace('|<(.*)\\>|', "\\1", $email);
-                $name = preg_replace('|"(.*)"|', "\\1", trim($name));
-                $name = preg_replace('|\((.*)\)|', "\\1", $name);
+                $email = preg_replace('|<(.*)\\>|', "${1}", $email);
+                $name = preg_replace('|"(.*)"|', "${1}", trim($name));
+                $name = preg_replace('|\((.*)\)|', "${1}", $name);
 
                 if ($name == "") $name = $email;
                 if ($email == "") $email = $name;
@@ -338,7 +338,7 @@ class Telaen_core {
             $armail = $strmail;
         }
 
-        $thisPart = trim(preg_replace('|^"(.*)"$|iD', "\\1", trim($armail)));
+        $thisPart = trim(preg_replace('|^"(.*)"$|iD', "${1}", trim($armail)));
         if($thisPart != "") {
             if (preg_match('|(.*)<(.*)>|i', $thisPart, $regs)) {
                 $email = trim($regs[2]);
@@ -351,9 +351,9 @@ class Telaen_core {
                     $email = $thisPart;
             }
 
-            $email = preg_replace('|<(.*)\\>|', "\\1", $email);
-            $name = preg_replace('|"(.*)"|', "\\1", trim($name));
-            $name = preg_replace('|\((.*)\)|', "\\1", $name);
+            $email = preg_replace('|<(.*)\\>|', "${1}", $email);
+            $name = preg_replace('|"(.*)"|', "${1}", trim($name));
+            $name = preg_replace('|\((.*)\)|', "${1}", $name);
 
             if ($name == "") $name = $email;
             if ($email == "") $email = $name;
@@ -516,7 +516,7 @@ class Telaen_core {
                 $tree       = array_merge((array)$this->current_level, array($thisattach["index"]));
                 $thisfile   = "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
                 $filename   = $thisattach["filename"];
-                $cid = preg_replace('|<(.*)\\>|', "\\1", $cid);
+                $cid = preg_replace('|<(.*)\\>|', "${1}", $cid);
 
                 if($cid != "") {
                     $cid = "cid:$cid";
@@ -541,7 +541,7 @@ class Telaen_core {
     */
 
     function build_text_body($body) {
-        $body = preg_replace('/(\r\n|\n|\r|\n\r)/',"<br>\\1",$this->make_link_clickable(htmlspecialchars($body)));
+        $body = preg_replace('/(\r\n|\n|\r|\n\r)/',"<br>${1}",$this->make_link_clickable(htmlspecialchars($body)));
         return "<font face=\"Courier New\" size=\"2\">$body</font>";
     }
 
@@ -559,13 +559,13 @@ class Telaen_core {
 
     function make_link_clickable($str){
 
-        $str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "\\1<a class=autolink href=\"\\2\" target=\"_blank\">\\2</a>", $str); //http 
-        $str = preg_replace("|(\s)(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "\\1<a class=autolink href=\"http://\\2\" target=\"_blank\">\\2</a>", $str); // www. 
-        $str = preg_replace("|(\s)([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","\\1<a class=autolink href=\"mailto:\\2\">\\2</a>", $str); // mail 
+        $str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "${1}<a class=autolink href=\"${2}\" target=\"_blank\">${2}</a>", $str); //http 
+        $str = preg_replace("|(\s)(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "${1}<a class=autolink href=\"http://${2}\" target=\"_blank\">${2}</a>", $str); // www. 
+        $str = preg_replace("|(\s)([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","${1}<a class=autolink href=\"mailto:${2}\">${2}</a>", $str); // mail 
 
-        $str = preg_replace("!^((f|ht)tp://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "<a href=\"\\1\" target=\"_blank\">\\1</a>", $str); //http 
-        $str = preg_replace("|^(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "<a class=autolink href=\"http://\\1\" target=\"_blank\">\\1</a>", $str); // www. 
-        $str = preg_replace("|^([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","<a class=autolink href=\"mailto:\\1\">\\1</a>", $str); // mail 
+        $str = preg_replace("!^((f|ht)tp://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "<a href=\"${1}\" target=\"_blank\">${1}</a>", $str); //http 
+        $str = preg_replace("|^(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "<a class=autolink href=\"http://${1}\" target=\"_blank\">${1}</a>", $str); // www. 
+        $str = preg_replace("|^([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","<a class=autolink href=\"mailto:${1}\">${1}</a>", $str); // mail 
 
         return $str;
     }
@@ -789,7 +789,7 @@ class Telaen_core {
         $myarray = Array();
         $headers = $this->decode_header($header);
 
-        $myarray["message-id"] = (array_key_exists("message-id",$headers))?preg_replace('|<(.*)>|',"\\1",trim($headers["message-id"])):null;
+        $myarray["message-id"] = (array_key_exists("message-id",$headers))?preg_replace('|<(.*)>|',"${1}",trim($headers["message-id"])):null;
         $myarray["content-type"] = (array_key_exists("content-type",$headers))?$headers["content-type"]:null;
         $myarray["priority"] = (array_key_exists("x-priority",$headers))?$headers["x-priority"][0]:null;
         $myarray["flags"]        = $headers["x-um-flags"]; // 
@@ -954,7 +954,7 @@ class Telaen_core {
 
     function get_boundary($ctype){
         if(preg_match('|boundary[ ]?=[ ]?["]?([^";]*)["]?.*$|iD',$ctype,$regs)) {    //preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
-            //$boundary = preg_replace('/^\"(.*)\"$/', "\\1", $regs[1])
+            //$boundary = preg_replace('/^\"(.*)\"$/', "${1}", $regs[1])
             return trim("--$regs[1]");
         }
     }

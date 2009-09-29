@@ -65,7 +65,7 @@ if(isset($tipo) && $tipo == "send") {
         if($is_html == "true")  {
             $mail->IsHTML(1);           
             if($footer != "") 
-                $body .= preg_replace('|(\r?\n)|',"<br>\\1",$footer);
+                $body .= preg_replace('|(\r?\n)|',"<br>${1}",$footer);
             // add html head and foot
             $body = $htmlHead . $body . $htmlFoot;
             $mail->AltBody = "
