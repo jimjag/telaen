@@ -166,16 +166,21 @@ function get_usage_graphic($used,$aval) {
     return $graph;
 }
 
+function create_http_url() {
+    $hurl = "http";
+    if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
+        $hurl .= "s://";
+    } else {
+        $hurl .= "://";
+    }
+    $hurl .= ($_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']);
+    return $hurl;
+}
+
 function create_abs_url ($url, $add_scheme_host = true) {
     $nurl = "";
     if ($add_scheme_host) {
-        $nurl .= "http";
-        if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
-            $nurl .= "s://";
-        } else {
-            $nurl .= "://";
-        }
-        $nurl .= $_SERVER['HTTP_HOST'];
+        $nurl .= create_http_url();
     }
     $nurl .= rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . '/' . $url ;
     $nurl = str_replace('\\','/', $nurl);   // Windows path fix
