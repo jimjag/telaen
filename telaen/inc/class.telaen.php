@@ -559,13 +559,13 @@ class Telaen_core {
 
     function make_link_clickable($str){
 
-        $str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "${1}<a class=autolink href=\"${2}\" target=\"_blank\">${2}</a>", $str); //http 
-        $str = preg_replace("|(\s)(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "${1}<a class=autolink href=\"http://${2}\" target=\"_blank\">${2}</a>", $str); // www. 
-        $str = preg_replace("|(\s)([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","${1}<a class=autolink href=\"mailto:${2}\">${2}</a>", $str); // mail 
+        $str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "$1<a class=autolink href=\"$2\" target=\"_blank\">$2</a>", $str); //http 
+        $str = preg_replace("|(\s)(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "$1<a class=autolink href=\"http://$2\" target=\"_blank\">$2</a>", $str); // www. 
+        $str = preg_replace("|(\s)([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","$1<a class=autolink href=\"mailto:$2\">$2</a>", $str); // mail 
 
-        $str = preg_replace("!^((f|ht)tp://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "<a href=\"${1}\" target=\"_blank\">${1}</a>", $str); //http 
-        $str = preg_replace("|^(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "<a class=autolink href=\"http://${1}\" target=\"_blank\">${1}</a>", $str); // www. 
-        $str = preg_replace("|^([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","<a class=autolink href=\"mailto:${1}\">${1}</a>", $str); // mail 
+        $str = preg_replace("!^((f|ht)tp://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "<a href=\"$1\" target=\"_blank\">$1</a>", $str); //http 
+        $str = preg_replace("|^(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "<a class=autolink href=\"http://$1\" target=\"_blank\">$1</a>", $str); // www. 
+        $str = preg_replace("|^([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","<a class=autolink href=\"mailto:$1\">$1</a>", $str); // mail 
 
         return $str;
     }
