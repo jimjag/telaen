@@ -89,7 +89,7 @@ $body   =   $email["body"];
 $redir_path = "redir.php";  // why not just relative?? Now is relative (due to problems on https servers)! 
 
 $body = preg_replace('|target=["]?[a-zA-Z_]+["]?|i',"target=\"blank\"",$body);
-$body = preg_replace('|href="http([s]?)://|i',"target=\"_blank\" href=\"$redir_path?http${1}://",$body);
+$body = preg_replace('|href="http([s]?)://|i',"target=\"_blank\" href=\"$redir_path?http$1://",$body);
 $body = preg_replace('|href="mailto:|i',"target=\"_top\" href=\"newmsg.php?to=",$body);
 
 // looking for browser type    --vola's note: add check for safari and opera??
