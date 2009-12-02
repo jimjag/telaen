@@ -868,7 +868,7 @@ class Telaen extends Telaen_core {
                 $messagescopy[$j]["uidl"]   = ((!$this->is_valid_md5($mail_info["uidl"])) ?
                                     $this->mail_get_uidl($messagescopy[$j]["msg"], $mail_info) :
                                     $mail_info["uidl"]);
-                $messagescopy[$j]["attach"] = (preg_match('/(multipart/mixed|multipart/related|application)/i',
+                $messagescopy[$j]["attach"] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                                     $mail_info["content-type"]))?1:0;
 
                 if ($messagescopy[$j]["localname"] == "") {
@@ -911,7 +911,7 @@ class Telaen extends Telaen_core {
                 $spamcopy[$y]["uidl"]       = ((!$this->is_valid_md5($mail_info["uidl"])) ?
                                     $this->mail_get_uidl($spamcopy[$y]["msg"], $mail_info) :
                                     $mail_info["uidl"]);
-                $spamcopy[$y]["attach"]     = (preg_match('/(multipart/mixed|multipart/related|application)/i',
+                $spamcopy[$y]["attach"]     = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                                      $mail_info["content-type"]))?1:0;
 
                 if ($spamcopy[$y]["localname"] == "") {
