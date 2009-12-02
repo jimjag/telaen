@@ -166,11 +166,11 @@ $newmsgs = 0;
 if($nummsg > 0) {
 
     for($i=0;$i<count($headers);$i++)
-        if(!preg_match('|\\\\SEEN|i',$headers[$i]["flags"])) $newmsgs++;
+        if(!stristr($headers[$i]["flags"], '\\SEEN')) $newmsgs++;
 
     for($i=$start_pos;$i<$end_pos;$i++) {
 
-        $read = (preg_match('|\\\\SEEN|i',$headers[$i]["flags"]))?"true":"false";
+        $read = (stristr($headers[$i]["flags"], '\\SEEN'))?"true":"false";
         $readlink = "javascript:readmsg($i,$read)";
         $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."";
         $composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["to"][0]["name"])."";
@@ -178,9 +178,9 @@ if($nummsg > 0) {
         $from = $headers[$i]["from"][0]["name"];
         $to = $headers[$i]["to"][0]["name"];
         $subject = $headers[$i]["subject"];
-        if(!preg_match('|\\\\SEEN|i',$headers[$i]["flags"])) {
+        if(!stristr($headers[$i]["flags"], '\\SEEN')) {
             $msg_img = "./images/msg_unread.gif";
-        } elseif (preg_match('|\\\\ANSWERED|i',$headers[$i]["flags"])) {
+        } elseif (stristr($headers[$i]["flags"], '\\ANSWERED')) {
             $msg_img = "./images/msg_answered.gif";
         } else {
             $msg_img = "./images/msg_read.gif";
