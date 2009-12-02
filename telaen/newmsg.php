@@ -387,7 +387,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     if(isset($rtype)) {
         $mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
 
-        if(!preg_match('|\\\\ANSWERED|i',$mail_info["flags"])) {
+        if(!stristr($mail_info["flags"], '\\ANSWERED')) {
 
             if(!$UM->mail_connect()) { 
                 redirect_and_exit("index.php?err=1", true);
