@@ -109,17 +109,17 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
             if($srcFrom != "") {
                 $from = $email["from"];
                 $srcString = $from[0]["name"]." ".$from[0]["mail"];
-                if(preg_match("/$srcFrom/i",$srcString)) $found = true;
+                if(stristr($srcString, $srcFrom)) $found = true;
             }
 
             if($srcSubject != "" && !$found) {
                 $srcString = $email["subject"];
-                if(preg_match("/$srcSubject/i",$srcString)) $found = true;
+                if(stristr($srcString, $srcSubject)) $found = true;
             }
 
             if($srcBody != "" && !$found) {
                 $srcString = strip_tags($email["body"]);
-                if(preg_match("/$srcBody/i",$srcString)) $found = true;
+                if(stristr($srcString, $srcBody)) $found = true;
             }
 
             if($found) {
@@ -133,7 +133,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
     $messagelist = Array();
 
     for($i=0;$i<count($headers);$i++) {
-        $read = (preg_match('|\\\\SEEN|i',$headers[$i]["flags"]))?"true":"false";
+        $read = (stristr($headers[$i]["flags"], '\\SEEN'))?"true":"false";
 
         $readlink = "javascript:readmsg(".$headers[$i]["ix"].",$read,'".urlencode($headers[$i]["folder"])."')";
         $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."";
@@ -143,9 +143,9 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $from = $headers[$i]["from"][0]["name"];
         $to = $headers[$i]["to"][0]["name"];
         $subject = $headers[$i]["subject"];
-        if(!preg_match('|\\\\SEEN|i',$headers[$i]["flags"])) {
+        if(!stristr($headers[$i]["flags"], '\\SEEN')) {
             $msg_img = "./images/msg_unread.gif";
-        } elseif (preg_match('|\\ANSWERED|i',$headers[$i]["flags"])) {
+        } elseif (stristr($headers[$i]["flags"], '\\ANSWERED')) {
             $msg_img = "./images/msg_answered.gif";
         } else {
             $msg_img = "./images/msg_read.gif";
