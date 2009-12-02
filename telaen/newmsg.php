@@ -387,7 +387,8 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     if(isset($rtype)) {
         $mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
 
-        if(!stristr($mail_info["flags"], '\\ANSWERED')) {
+        if( ($rtype == "forward" && !stristr($mail_info["flags"], '\\FORWARDED'))
+            || ($rtype != "forward" && !stristr($mail_info["flags"], '\\ANSWERED'))) {
 
             if(!$UM->mail_connect()) { 
                 redirect_and_exit("index.php?err=1", true);
@@ -395,7 +396,11 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             if(!$UM->mail_auth()) { 
                 redirect_and_exit("index.php?err=0");
             }
-            if($UM->mail_set_flag($mail_info,"\\ANSWERED","+")) {
+            if($rtype != "forward" && $UM->mail_set_flag($mail_info,"\\ANSWERED","+")) {
+                $sess["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
+                $SS->Save($sess);
+            }
+            if($rtype == "forward" && $UM->mail_set_flag($mail_info,"\\FORWARDED","+")) {
                 $sess["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
                 $SS->Save($sess);
             }

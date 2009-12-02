@@ -1138,8 +1138,8 @@ class Telaen extends Telaen_core {
 
     function mail_set_flag(&$msg,$flagname,$flagtype = "+") {
         $flagname = strtoupper($flagname);
-        if($this->mail_protocol == "imap") {
-
+        $allowed = array("\\ANSWERED", "\\SEEN", "\\DELETED", "\\DRAFT");
+        if($this->mail_protocol == "imap" && in_array($flagname, $allowed)) {
             if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
                 $this->mail_select_box($msg["folder"]);
 
