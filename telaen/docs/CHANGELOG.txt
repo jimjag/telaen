@@ -18,6 +18,8 @@ Telaen:
 
 1.2.1
 
+[New]   New Forwarded status flag and icon added.
+
 [New]	Since ereg* is deprecated, all regexes now use the
 	preg_* family.
 

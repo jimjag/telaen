@@ -182,6 +182,8 @@ if($nummsg > 0) {
             $msg_img = "./images/msg_unread.gif";
         } elseif (stristr($headers[$i]["flags"], '\\ANSWERED')) {
             $msg_img = "./images/msg_answered.gif";
+        } elseif (stristr($headers[$i]["flags"], '\\FORWARDED')) {
+            $msg_img = "./images/msg_forwarded.gif";
         } else {
             $msg_img = "./images/msg_read.gif";
         }
