@@ -23,7 +23,7 @@ Telaen:
 [New]	Since ereg* is deprecated, all regexes now use the
 	preg_* family.
 
-[New]	Smarty upgraded to 2.6.20
+[New]	Smarty upgraded to 2.6.26
 
 [New]	PHPMailer upgraded to 2.0.3
 
