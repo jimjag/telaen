@@ -22,7 +22,7 @@ especially the CHANGELOG.txt and INSTALL.txt files.
 DEVELOPER
 ----------------------------------------------------
 Core Developer: 
-- The Telaen Group (www.telaen.org)
+- The Telaen Group (www.telaen.com)
 
 
 ----------------------------------------------------

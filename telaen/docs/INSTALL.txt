@@ -34,7 +34,7 @@ INSTALL
   tasks:
       o Rename extra/check_install.php.txt to extra/check_install.php
       o Access check_install.php via your browser, eg:
-             http://www.telaen.org/telaen/extra/check_install.php
+             http://www.telaen.com/telaen/extra/check_install.php
       o Make any required changes.
       o Be SURE to REMOVE check_install.php or RENAME it back to
         check_install.php.txt !!!
@@ -75,7 +75,7 @@ If upgrading from 1.1.0 (or earlier) to 1.1.1 (or later) also note
 that the themes are NOT COMPATIBLE with the previous versions !!!
 You need to reconfigure your header and footer (if you have a 
 personalized one). See CHANGELOG.txt for details.
-Please ask on telean forum (www.telaen.org) if you need help.
+Please ask on telean forum (www.telaen.com) if you need help.
 
 
 
