@@ -72,7 +72,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $strSearch = trim($strSearch);
         if($strSearch != "") {
             $strSearch = quotemeta($strSearch);
-            $arSearch = split(" ",$strSearch);
+            $arSearch = explode(" ",$strSearch);
             unset($strSearch);
             for($n=0;$n<count($arSearch);$n++)
                 if($strSearch) $strSearch .= "|(".$arSearch[$n].")";

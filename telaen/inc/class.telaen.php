@@ -392,7 +392,7 @@ class Telaen_core {
             $parts[$index] = $email;
             $parts[$index]["headers"] = $headers = $this->decode_header($email["header"]);
             unset($email);
-            $ctype = split(";",$headers["content-type"]); $ctype = strtolower($ctype[0]);
+            $ctype = explode(";",$headers["content-type"]); $ctype = strtolower($ctype[0]);
             $parts[$index]["type"] = $ctype;
             
             // in this case the alternative is not html or text but multipart/*
@@ -476,8 +476,8 @@ class Telaen_core {
 
             $cid = $headers["content-id"];
 
-            $Actype = split(";",$headers["content-type"]);
-            $types = split("/",$Actype[0]); 
+            $Actype = explode(";",$headers["content-type"]);
+            $types = explode("/",$Actype[0]); 
             $rctype = strtolower($Actype[0]);
             
             $is_download = (preg_match('|name=|',$headers["content-disposition"].$headers["content-type"]) || $headers["content-id"] != "" || $rctype == "message/rfc822");
@@ -585,8 +585,8 @@ class Telaen_core {
 
         $type = $ctype;
 
-        $ctype = split(";",$ctype);
-        $types = split("/",$ctype[0]);
+        $ctype = explode(";",$ctype);
+        $types = explode("/",$ctype[0]);
 
         $maintype = trim(strtolower($types[0]));
         $subtype = trim(strtolower($types[1]));
