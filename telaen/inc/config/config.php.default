@@ -29,13 +29,13 @@ $languages      = Array();
 # Language & themes settings
 ########################################################################
 
-require("./inc/config.languages.php");
+require("./inc/config/config.languages.php");
 
 ########################################################################
 # Security related settings
 ########################################################################
 
-require("./inc/config.security.php");
+require("./inc/config/config.security.php");
 
 ########################################################################
 # Location of the Smarty template installation.
