@@ -1090,5 +1090,5 @@ class Telaen_core {
     }
     
 }
-require("./inc/class.telaen_mail.php");
+require("./inc/class/class.telaen_mail.php");
 ?>

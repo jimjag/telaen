@@ -12,8 +12,8 @@ session_name('telaen');
 session_start();
 $sid = session_id();
 
-require("./inc/config.php");
-require("./inc/class.telaen.php");
+require("./inc/config/config.php");
+require("./inc/class/class.telaen.php");
 require("./inc/lib.php");
 require("./inc/preinit.php");
 

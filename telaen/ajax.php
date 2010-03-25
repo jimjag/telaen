@@ -30,7 +30,7 @@ if(!$sess["auth"]) {
 if(isset($_POST['action'])) {
     
     // config
-    require("./inc/config.php");
+    require("./inc/config/config.php");
 
     $prefs = load_prefs();
         

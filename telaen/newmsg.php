@@ -14,8 +14,8 @@ $smarty->assign("pageMetas", $nocache);
 
 if(isset($tipo) && $tipo == "send") {
 
-    require("./inc/class.phpmailer.php");
-    require("./inc/class.phpmailer_extra.php");
+    require("./inc/class/class.phpmailer.php");
+    require("./inc/class/class.phpmailer_extra.php");
 
     $mail = new PHPMailer_extra;
     $mail->PluginDir = "./inc/";

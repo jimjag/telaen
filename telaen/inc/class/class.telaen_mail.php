@@ -16,7 +16,7 @@ class Telaen extends Telaen_core {
     var $_haveuidl          = false;        // boolean
 
     function Telaen() {
-        require("./inc/class.tnef.php");
+        require("./inc/class/class.tnef.php");
         $this->_tnef = new TNEF();
         $this->_sid = uniqid("");
     }
