@@ -178,7 +178,7 @@ if($nummsg > 0) {
         $from = $headers[$i]["from"][0]["name"];
         $to = $headers[$i]["to"][0]["name"];
         $subject = $headers[$i]["subject"];
-        if(!stristr($headers[$i]["flags"], '\\SEEN')) {
+        if ($read == "true") {
             $msg_img = "./images/msg_unread.gif";
         } elseif (stristr($headers[$i]["flags"], '\\ANSWERED')) {
             $msg_img = "./images/msg_answered.gif";
