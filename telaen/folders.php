@@ -133,10 +133,10 @@ for($n=0;$n<count($boxes);$n++) {
 
     $boxsize = 0;
     for($i=0;$i<count($thisbox);$i++) {
-        if(!preg_match('|\\SEEN|i',$thisbox[$i]["flags"])) $unread++;
-        $boxsize += $thisbox[$i]["size"];
-    }
-    $delete = "&nbsp;";
+		if(!preg_match('|\\SEEN|i',$thisbox[$i]["flags"])) $unread++;
+		$boxsize += $thisbox[$i]["size"];
+	}
+	$delete = "&nbsp;";
 
     if(!$UM->is_system_folder($entry))
         $delete = "<a href=\"folders.php?delfolder=$entry&folder=$folder\">OK</a>";

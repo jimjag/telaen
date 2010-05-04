@@ -17,38 +17,38 @@ if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) {
 $arrow = ($sortorder == "ASC")?"images/arrow_up.gif":"images/arrow_down.gif";
 $arrow = "&nbsp;<img src=\"$arrow\" width=\"8\" height=\"7\" border=\"0\" alt=\"\" />";
 
-$attach_arrow   = "";
-$subject_arrow  = "";
+$attach_arrow	= "";
+$subject_arrow	= "";
 $fromname_arrow = "";
-$date_arrow     = "";
-$size_arrow     = "";
-$toname_arrow   = "";
+$date_arrow		= "";
+$size_arrow		= "";
+$toname_arrow	= "";
 
 switch($sortby) {
-    case "subject":
-        $subject_arrow  = $arrow;
-        break;
-    case "fromname":
-        $fromname_arrow = $arrow;
-        break;
-    case "date":
-        $date_arrow = $arrow;
-        break;
-    case "size":
-        $size_arrow = $arrow;
-        break;
-    case "toname":
-        $toname_arrow   = $arrow;
-        break;
+	case "subject":
+		$subject_arrow	= $arrow;
+		break;
+	case "fromname":
+		$fromname_arrow = $arrow;
+		break;
+	case "date":
+		$date_arrow = $arrow;
+		break;
+	case "size":
+		$size_arrow = $arrow;
+		break;
+	case "toname":
+		$toname_arrow	= $arrow;
+		break;
 }
 
 $elapsedtime = (time()-$sess["last-update"])/60;
 $timeleft = ($prefs["refresh-time"]-$elapsedtime);
 
 if($timeleft > 0) {
-    $refreshMeta = "    <meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />"; 
+	$refreshMeta = "	<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />"; 
 } elseif ($prefs["refresh-time"]) {
-    redirect_and_exit("$refreshurl");
+	redirect_and_exit("$refreshurl");
 }
 
 // Assign metas to smarty, no more bad echos output
@@ -57,8 +57,8 @@ $smarty->assign("pageMetas", $nocache . "\n" . $refreshMeta);
 /* load total size */
 $totalused = 0;
 while(list($box,$info) = each($sess["headers"])) {
-    for($i=0;$i<count($info);$i++)
-        $totalused += $info[$i]["size"];
+	for($i=0;$i<count($info);$i++)
+		$totalused += $info[$i]["size"];
 }
 
 
@@ -83,7 +83,7 @@ $smarty->assign("umSizeArrow",$size_arrow);
 $nummsg = count($headers);
 if(!isset($pag) || !is_numeric(trim($pag))) $pag = 1;
 
-$reg_pp    = $prefs["rpp"];
+$reg_pp	   = $prefs["rpp"];
 $start_pos = ($pag-1)*$reg_pp;
 $end_pos   = (($start_pos+$reg_pp) > $nummsg)?$nummsg:$start_pos+$reg_pp;
 
@@ -99,10 +99,10 @@ $jssource .= "
 no_quota  = $jsquota;
 quota_msg = '".preg_replace("|'|","\\'",$quota_exceeded)."';
 function readmsg(ix,read) {
-    if(no_quota)
-        alert(quota_msg);
-    else
-        location = 'readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix='+ix+''; 
+	if(no_quota)
+		alert(quota_msg);
+	else
+		location = 'readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix='+ix+''; 
 }
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag' }
@@ -111,41 +111,41 @@ function delemsg() { document.form1.submit() }
 function search() { location = 'search.php'; }
 function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function movemsg() { 
-    if(no_quota) 
-        alert(quota_msg);
-    else {
-        with(document.form1) { decision.value = 'move'; submit(); } 
-    }
+	if(no_quota) 
+		alert(quota_msg);
+	else {
+		with(document.form1) { decision.value = 'move'; submit(); } 
+	}
 }
 function markmsg() {
-      with(document.form1) { decision.value = 'mark'; submit(); }
+	  with(document.form1) { decision.value = 'mark'; submit(); }
 };
 function unmarkmsg() {
-      with(document.form1) { decision.value = 'unmark'; submit(); }
+	  with(document.form1) { decision.value = 'unmark'; submit(); }
 };
 function sel() {
-    with(document.form1) {
-        for(i=0;i<elements.length;i++) {
-            thiselm = elements[i];
-            if(thiselm.name.substring(0,3) == 'msg')
-                thiselm.checked = !thiselm.checked
-        }
-    }
+	with(document.form1) {
+		for(i=0;i<elements.length;i++) {
+			thiselm = elements[i];
+			if(thiselm.name.substring(0,3) == 'msg')
+				thiselm.checked = !thiselm.checked
+		}
+	}
 }
 sort_colum = '$sortby';
 sort_order = '$sortorder';
 
 function sortby(col) {
-    if(col == sort_colum) ord = (sort_order == 'ASC')?'DESC':'ASC';
-    else ord = 'ASC';
-    location = 'process.php?folder=$folder&pag=$pag&sortby='+col+'&sortorder='+ord+'';
+	if(col == sort_colum) ord = (sort_order == 'ASC')?'DESC':'ASC';
+	else ord = 'ASC';
+	location = 'process.php?folder=$folder&pag=$pag&sortby='+col+'&sortorder='+ord+'';
 }
 //]]>
 </script>
 ";
 
 if(isset($msg))
-    $smarty->assign("umErrorMessage",$msg);
+	$smarty->assign("umErrorMessage",$msg);
 
 
 $forms = "<input type=\"hidden\" name=\"decision\" value=\"delete\" />
@@ -165,58 +165,58 @@ $messagelist = Array();$func($textout);
 $newmsgs = 0;
 if($nummsg > 0) {
 
-    for($i=0;$i<count($headers);$i++)
-        if(!stristr($headers[$i]["flags"], '\\SEEN')) $newmsgs++;
+	for($i=0;$i<count($headers);$i++)
+		if(!stristr($headers[$i]["flags"], '\\SEEN')) $newmsgs++;
 
-    for($i=$start_pos;$i<$end_pos;$i++) {
+	for($i=$start_pos;$i<$end_pos;$i++) {
 
-        $read = (stristr($headers[$i]["flags"], '\\SEEN'))?"true":"false";
-        $readlink = "javascript:readmsg($i,$read)";
-        $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."";
-        $composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["to"][0]["name"])."";
+		$read = (stristr($headers[$i]["flags"], '\\SEEN'))?"true":"false";
+		$readlink = "javascript:readmsg($i,$read)";
+		$composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["from"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["from"][0]["mail"])."";
+		$composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]["to"][0]["name"])."&mailto=".htmlspecialchars($headers[$i]["to"][0]["name"])."";
 
-        $from = $headers[$i]["from"][0]["name"];
-        $to = $headers[$i]["to"][0]["name"];
-        $subject = $headers[$i]["subject"];
-        if ($read == "true") {
-            $msg_img = "./images/msg_unread.gif";
-        } elseif (stristr($headers[$i]["flags"], '\\ANSWERED')) {
-            $msg_img = "./images/msg_answered.gif";
-        } elseif (stristr($headers[$i]["flags"], '\\FORWARDED')) {
-            $msg_img = "./images/msg_forwarded.gif";
-        } else {
-            $msg_img = "./images/msg_read.gif";
-        }
-        $prior = $headers[$i]["priority"];
-        if($prior == 4 || $prior == 5)
-            $img_prior = "&nbsp;<img src=\"./images/prior_low.gif\" width=\"5\" height=\"11\" border=\"0\" alt=\"\" />";
-        elseif($prior == 1 || $prior == 2)
-            $img_prior = "&nbsp;<img src=\"./images/prior_high.gif\" width=\"5\" height=\"11\" border=\"0\" alt=\"\" />";
-        else
-            $img_prior = "";
+		$from = $headers[$i]["from"][0]["name"];
+		$to = $headers[$i]["to"][0]["name"];
+		$subject = $headers[$i]["subject"];
+		if ($read == "true") {
+			$msg_img = "./images/msg_unread.gif";
+		} elseif (stristr($headers[$i]["flags"], '\\ANSWERED')) {
+			$msg_img = "./images/msg_answered.gif";
+		} elseif (stristr($headers[$i]["flags"], '\\FORWARDED')) {
+			$msg_img = "./images/msg_forwarded.gif";
+		} else {
+			$msg_img = "./images/msg_read.gif";
+		}
+		$prior = $headers[$i]["priority"];
+		if($prior == 4 || $prior == 5)
+			$img_prior = "&nbsp;<img src=\"./images/prior_low.gif\" width=\"5\" height=\"11\" border=\"0\" alt=\"\" />";
+		elseif($prior == 1 || $prior == 2)
+			$img_prior = "&nbsp;<img src=\"./images/prior_high.gif\" width=\"5\" height=\"11\" border=\"0\" alt=\"\" />";
+		else
+			$img_prior = "";
 
-        $msg_img = "&nbsp;<img src=\"$msg_img\" width=\"14\" height=\"14\" border=\"0\" alt=\"\" />";
-        $checkbox = "<input type=\"checkbox\" name=\"msg_$i\" value=\"1\" />";
-        $attachimg = ($headers[$i]["attach"])?"&nbsp;<img src=\"images/attach.gif\" border=\"0\" />":"";
+		$msg_img = "&nbsp;<img src=\"$msg_img\" width=\"14\" height=\"14\" border=\"0\" alt=\"\" />";
+		$checkbox = "<input type=\"checkbox\" name=\"msg_$i\" value=\"1\" />";
+		$attachimg = ($headers[$i]["attach"])?"&nbsp;<img src=\"images/attach.gif\" border=\"0\" />":"";
 
-        $date = $headers[$i]["date"];
-        $size = ceil($headers[$i]["size"]/1024);
-        $index = count($messagelist);
+		$date = $headers[$i]["date"];
+		$size = ceil($headers[$i]["size"]/1024);
+		$index = count($messagelist);
 
-        $messagelist[$index]["read"] = $read;
-        $messagelist[$index]["readlink"] = $readlink;
-        $messagelist[$index]["composelink"] = $composelink;
-        $messagelist[$index]["composelinksent"] = $composelinksent;
-        $messagelist[$index]["from"] = $from;
-        $messagelist[$index]["to"] = $to;
-        $messagelist[$index]["subject"] = $subject;
-        $messagelist[$index]["date"] = $date;
-        $messagelist[$index]["statusimg"] = $msg_img;
-        $messagelist[$index]["checkbox"] = $checkbox;
-        $messagelist[$index]["attachimg"] = $attachimg;
-        $messagelist[$index]["priorimg"] = $img_prior;
-        $messagelist[$index]["size"] = $size;
-    }
+		$messagelist[$index]["read"] = $read;
+		$messagelist[$index]["readlink"] = $readlink;
+		$messagelist[$index]["composelink"] = $composelink;
+		$messagelist[$index]["composelinksent"] = $composelinksent;
+		$messagelist[$index]["from"] = $from;
+		$messagelist[$index]["to"] = $to;
+		$messagelist[$index]["subject"] = $subject;
+		$messagelist[$index]["date"] = $date;
+		$messagelist[$index]["statusimg"] = $msg_img;
+		$messagelist[$index]["checkbox"] = $checkbox;
+		$messagelist[$index]["attachimg"] = $attachimg;
+		$messagelist[$index]["priorimg"] = $img_prior;
+		$messagelist[$index]["size"] = $size;
+	}
 
 } 
 $smarty->assign("umNumMessages",$nummsg);
@@ -225,42 +225,42 @@ $smarty->assign("umMessageList",$messagelist);
 
 switch(strtolower($folder)) {
 case "inbox":
-    $display = $inbox_extended;
-    break;
+	$display = $inbox_extended;
+	break;
 case "sent":
-    $display = $sent_extended;
-    break;
+	$display = $sent_extended;
+	break;
 case "trash":
-    $display = $trash_extended;
-    break;
+	$display = $trash_extended;
+	break;
 case "spam":
-    $display = ($spam_extended ? $spam_extended : "SPAM");
-    break;
+	$display = ($spam_extended ? $spam_extended : "SPAM");
+	break;
 default:
-    $display = $folder;
+	$display = $folder;
 }
 
 $smarty->assign("umBoxName",$display);
 
 // Page navigation
 if($nummsg > 0) {
-    if($pag > 1) {
-        $smarty->assign("umFirstLink","messages.php?folder=$folder&pag=1");
-        $smarty->assign("umPreviousLink","messages.php?folder=$folder&pag=".($pag-1)."");       
-    }
+	if($pag > 1) {
+		$smarty->assign("umFirstLink","messages.php?folder=$folder&pag=1");
+		$smarty->assign("umPreviousLink","messages.php?folder=$folder&pag=".($pag-1)."");		
+	}
 
-    for($i=1;$i<=ceil($nummsg / $reg_pp);$i++) 
-        if($pag == $i) 
-            $navigation .= "[<b>$i</b>] ";
-        else 
-            $navigation .= "<a href=\"messages.php?folder=$folder&pag=$i\" class=\"navigation\">$i</a> ";
+	for($i=1;$i<=ceil($nummsg / $reg_pp);$i++) 
+		if($pag == $i) 
+			$navigation .= "[<b>$i</b>] ";
+		else 
+			$navigation .= "<a href=\"messages.php?folder=$folder&pag=$i\" class=\"navigation\">$i</a> ";
 
-    $totPages = ceil($nummsg / $reg_pp);
-    if($end_pos < $nummsg) {
-        $smarty->assign("umNextLink","messages.php?folder=$folder&pag=".($pag+1)."");
-        $smarty->assign("umLastLink","messages.php?folder=$folder&pag=".$totPages."");
-    }
-    $navigation .= " ($pag/". $totPages .")";
+	$totPages = ceil($nummsg / $reg_pp);
+	if($end_pos < $nummsg) {
+		$smarty->assign("umNextLink","messages.php?folder=$folder&pag=".($pag+1)."");
+		$smarty->assign("umLastLink","messages.php?folder=$folder&pag=".$totPages."");
+	}
+	$navigation .= " ($pag/". $totPages .")";
 }
 
 $smarty->assign("umNavBar",$navigation);
@@ -268,31 +268,31 @@ $smarty->assign("umNavBar",$navigation);
 $avalfolders = Array();
 $d = dir($userfolder);
 while($entry=$d->read()) {
-    if( is_dir($userfolder.$entry) && 
-        $entry != ".." && 
-        $entry != "." && 
-        substr($entry,0,1) != "_" && 
-        $entry != $folder &&
-        ($UM->mail_protocol == "imap" || (($entry != "inbox") && ($entry != "spam"))) ) {
-        $entry = $UM->fix_prefix($entry,0);
-        switch(strtolower($entry)) {
-        case "inbox":
-            $display = $inbox_extended;
-            break;
-        case "sent":
-            $display = $sent_extended;
-            break;
-        case "trash":
-            $display = $trash_extended;
-            break;
-        case "spam":
-            $display = ($spam_extended ? $spam_extended : "SPAM");
-            break;
-        default:
-            $display = $entry;
-        }
-        $avalfolders[] = Array("path" => $entry, "display" => $display);
-    }
+	if( is_dir($userfolder.$entry) && 
+		$entry != ".." && 
+		$entry != "." && 
+		substr($entry,0,1) != "_" && 
+		$entry != $folder &&
+		($UM->mail_protocol == "imap" || (($entry != "inbox") && ($entry != "spam"))) ) {
+		$entry = $UM->fix_prefix($entry,0);
+		switch(strtolower($entry)) {
+		case "inbox":
+			$display = $inbox_extended;
+			break;
+		case "sent":
+			$display = $sent_extended;
+			break;
+		case "trash":
+			$display = $trash_extended;
+			break;
+		case "spam":
+			$display = ($spam_extended ? $spam_extended : "SPAM");
+			break;
+		default:
+			$display = $entry;
+		}
+		$avalfolders[] = Array("path" => $entry, "display" => $display);
+	}
 }
 $d->close();
 

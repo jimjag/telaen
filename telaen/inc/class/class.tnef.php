@@ -46,14 +46,14 @@ class TNEF {
 	var $TNEF_MAPI_ATTACH_DATA				= 0x3701;
 	
 	function TNEF() {
-		$this->TNEF_ASUBJECT					= $this->TNEF_DWORD  | 0x8004;
-		$this->TNEF_AMCLASS						= $this->TNEF_WORD   | 0x8008;
-		$this->TNEF_BODYTEXT					= $this->TNEF_TEXT   | 0x800c;
-		$this->TNEF_ATTACHDATA					= $this->TNEF_BYTE   | 0x800f;
+		$this->TNEF_ASUBJECT					= $this->TNEF_DWORD	 | 0x8004;
+		$this->TNEF_AMCLASS						= $this->TNEF_WORD	 | 0x8008;
+		$this->TNEF_BODYTEXT					= $this->TNEF_TEXT	 | 0x800c;
+		$this->TNEF_ATTACHDATA					= $this->TNEF_BYTE	 | 0x800f;
 		$this->TNEF_AFILENAME					= $this->TNEF_STRING | 0x8010;
-		$this->TNEF_ARENDDATA					= $this->TNEF_BYTE   | 0x9002;
-		$this->TNEF_AMAPIATTRS					= $this->TNEF_BYTE   | 0x9005;
-		$this->TNEF_AVERSION					= $this->TNEF_DWORD  | 0x9006;
+		$this->TNEF_ARENDDATA					= $this->TNEF_BYTE	 | 0x9002;
+		$this->TNEF_AMAPIATTRS					= $this->TNEF_BYTE	 | 0x9005;
+		$this->TNEF_AVERSION					= $this->TNEF_DWORD	 | 0x9006;
 	}
 	
 	function getx($size, &$buf) {
@@ -204,7 +204,7 @@ class TNEF {
 			echo("ATTACHMENT ");
 		}
 		$attribute = $this->geti32($buf);
-		switch($attribute) {    
+		switch($attribute) {	
 		case $this->TNEF_ARENDDATA: // marks start of new attachment
 			$length = $this->geti32($buf);
 			$this->getx($length, $buf);
@@ -215,8 +215,8 @@ class TNEF {
 			// add a new default data block to hold details of this attachment
 			// reverse order is easier to handle later!
 			array_unshift($attachment_data, array('type0'  => 'application',
-													'type1'  => 'octet-stream',
-													'name'   => 'unknown',
+													'type1'	 => 'octet-stream',
+													'name'	 => 'unknown',
 													'stream' => ''));
 			break;
 		

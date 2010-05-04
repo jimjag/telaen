@@ -4,7 +4,7 @@ $url = $_SERVER['QUERY_STRING'];
 ?>
 <html>
 <head>
-    <meta http-equiv="refresh" content="0; url=<?php echo $url; ?>">
+	<meta http-equiv="refresh" content="0; url=<?php echo $url; ?>">
 </head>
 <br>
 <blockquote>
