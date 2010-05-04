@@ -222,6 +222,7 @@ class Telaen extends Telaen_core {
 	function _mail_retr_msg_imap(&$msg,$check=1) {
 		global $mail_use_top,$error_retrieving;
 		$msgheader = $msg["header"];
+
 		if($check) {
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
 				$boxinfo = $this->mail_select_box($msg["folder"]);
@@ -278,7 +279,6 @@ class Telaen extends Telaen_core {
 				return 0;
 			}
 		}
-
 
 		if(file_exists($msg["localname"])) {
 			$msgcontent = $this->_read_file($msg["localname"]);
@@ -364,7 +364,6 @@ class Telaen extends Telaen_core {
 
 		/*if the pointer is here, no one problem occours*/
 
-		
 		if( $send_to_trash && 
 			strtoupper($msg["folder"]) != "TRASH" &&
 			(!$save_only_read || ($save_only_read && $read))) {
@@ -970,7 +969,6 @@ class Telaen extends Telaen_core {
 				 */
 
 				if($this->mail_protocol != "imap" && file_exists($spamcopy[$y]["localname"])) {
-
 					$iheaders = $this->_get_headers_from_cache($spamcopy[$y]["localname"]);
 					$iheaders = $this->decode_header($iheaders);
 					$spamcopy[$y]["flags"] = strtoupper($iheaders["x-um-flags"]);
