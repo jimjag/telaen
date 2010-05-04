@@ -96,7 +96,7 @@ $scounter = 0;
 $pcounter = 0;
 
 
-// Reset these arrays because are used on previuos included func!!
+// Reset these arrays because are used on previous included funcs!!
 $system = Array();
 $personal = Array();
 

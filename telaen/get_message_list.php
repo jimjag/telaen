@@ -15,7 +15,7 @@
 				$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
 				array_qsort2int($merged_array,"msg","ASC");
 
-				$merged_returnarray = $UM->mail_list_msgs("INBOX", $merged_array);
+				$merged_returnarray = $UM->mail_list_msgs("INBOX", $merged_array, $start_pos, $reg_pp);
 
 				/*
 				 * Keep the old array if we still got the same messages on the server
@@ -29,7 +29,7 @@
 			} elseif (strtolower($entry) == "spam") {
 				;
 			} else {
-				$merged_returnarray = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))]);
+				$merged_returnarray = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))], $start_pos, $reg_pp);
 				$sess["headers"][base64_encode(strtolower($entry))] = $merged_returnarray[0];
 			}
 			unset($merged_array);
@@ -46,7 +46,7 @@
 			 */
 			$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
 			array_qsort2int($merged_array,"msg","ASC");
-			$returnarray = $UM->mail_list_msgs("INBOX", $merged_array);
+			$returnarray = $UM->mail_list_msgs("INBOX", $merged_array, $start_pos, $reg_pp);
 
 			/*
 			 * Keep the old array if we still got the same messages on the server
@@ -59,7 +59,7 @@
 			}
 
 		} else {			
-			$returnarray = $UM->mail_list_msgs($folder, $sess["headers"][$folder_key]);		
+			$returnarray = $UM->mail_list_msgs($folder, $sess["headers"][$folder_key], $start_pos, $reg_pp);		
 			$sess["headers"][$folder_key] = $returnarray[0];			
 		}
 		unset($merged_array);
