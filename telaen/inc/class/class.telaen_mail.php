@@ -156,9 +156,9 @@ class Telaen extends Telaen_core {
 		$ret = 0;
 		if($this->mail_connected()) {
 			if ($this->mail_protocol == "imap") {
-				$ret = _mail_auth_imap($checkfolders);
+				$ret = $this->_mail_auth_imap($checkfolders);
 			} else {
-				$ret = _mail_auth_pop($checkfolders);
+				$ret = $this->_mail_auth_pop($checkfolders);
 			}
 		}
 		return $ret;
@@ -323,9 +323,9 @@ class Telaen extends Telaen_core {
 	function mail_retr_msg(&$msg,$check=1) {
 		$ret = "";
 		if($this->mail_protocol == "imap") {
-			$ret = _mail_retr_msg_imap(&$msg,$check);
+			$ret = $this->_mail_retr_msg_imap(&$msg,$check);
 		} else {
-			$ret = _mail_retr_msg_pop(&$msg,$check);
+			$ret = $this->_mail_retr_msg_pop(&$msg,$check);
 		}
 		
 		return $ret;
@@ -436,9 +436,9 @@ class Telaen extends Telaen_core {
 
 		$ret = 1;
 		if($this->mail_protocol == "imap") {
-			$ret = _mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
+			$ret = $this->_mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
 		} else {
-			$ret = _mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
+			$ret = $this->_mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
 		}
 		return $ret;
 	}
@@ -538,9 +538,9 @@ class Telaen extends Telaen_core {
 	function mail_move_msg($msg,$tofolder) {
 		$ret = 1;
 		if($this->mail_protocol == "imap") {
-			$ret = _mail_move_msg_imap($msg,$tofolder);
+			$ret = $this->_mail_move_msg_imap($msg,$tofolder);
 		} else {
-			$ret = _mail_move_msg_pop($msg,$tofolder);
+			$ret = $this->_mail_move_msg_pop($msg,$tofolder);
 		}
 		return $ret;
 	}
@@ -841,9 +841,9 @@ class Telaen extends Telaen_core {
 	function mail_list_msgs($boxname = "INBOX", $localmessages = Array()) {
 
 		if($this->mail_protocol == "imap") {
-			$messages = _mail_list_msgs_imap($boxname, $localmessages);
+			$messages = $this->_mail_list_msgs_imap($boxname, $localmessages);
 		} else {
-			$messages = _mail_list_msgs_pop($boxname, $localmessages);
+			$messages = $this->_mail_list_msgs_pop($boxname, $localmessages);
 			if (!is_array($messages)) {
 				$myreturnarray = Array();
 				$myreturnarray[0] = Array();
