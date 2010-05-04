@@ -265,6 +265,7 @@ class Telaen extends Telaen_core {
 			$this->_save_file($msg["localname"],$msgcontent);
 
 		}
+		return $msgcontent;
 	}
 
 	function _mail_retr_msg_pop(&$msg,$check=1) {
@@ -318,6 +319,7 @@ class Telaen extends Telaen_core {
 
 			$this->_save_file($msg["localname"],$msgcontent);
 		}
+		return $msgcontent;
 	}
 	
 	function mail_retr_msg(&$msg,$check=1) {
@@ -327,7 +329,6 @@ class Telaen extends Telaen_core {
 		} else {
 			$ret = $this->_mail_retr_msg_pop(&$msg,$check);
 		}
-		
 		return $ret;
 	}
 
