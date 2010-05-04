@@ -325,9 +325,9 @@ class Telaen extends Telaen_core {
 	function mail_retr_msg(&$msg,$check=1) {
 		$ret = "";
 		if($this->mail_protocol == "imap") {
-			$ret = $this->_mail_retr_msg_imap(&$msg,$check);
+			$ret = $this->_mail_retr_msg_imap($msg,$check);
 		} else {
-			$ret = $this->_mail_retr_msg_pop(&$msg,$check);
+			$ret = $this->_mail_retr_msg_pop($msg,$check);
 		}
 		return $ret;
 	}
