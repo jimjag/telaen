@@ -111,48 +111,57 @@ class Telaen extends Telaen_core {
 		} else return 1;
 	}
 
+	function _mail_auth_imap($checkfolders=false) {
+		$this->mail_send_command("LOGIN ".$this->mail_user." ".$this->mail_pass);
+		$buffer = $this->mail_get_line();
+		if(preg_match("/^(".$this->_sid." OK)/",$buffer)) { 
+			if($checkfolders)
+				$this->_check_folders();
+			return 1;
+		} else { 
+			$this->mail_error_msg = $buffer; 
+			return 0; 
+		}
+	}
+
+	function _mail_auth_pop($checkfolders=false) {
+		// APOP login mode, more secure
+		if ($this->_haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
+			$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
+		} 
+		// Classic login mode
+		else {
+			$this->mail_send_command("USER ".$this->mail_user);
+		
+			$buffer = $this->mail_get_line();
+			if (substr($buffer, 0, 3) == "+OK") {
+				$this->mail_send_command("PASS ".$this->mail_pass);
+			}	
+			else 
+				return 0;
+		}
+
+		$buffer = $this->mail_get_line();
+		if(substr($buffer, 0, 3) == "+OK") {
+			if($checkfolders)
+				$this->_check_folders();
+			return 1;
+		} else {
+			$this->mail_error_msg = $buffer;
+			return 0;
+		}
+	}
+
 	function mail_auth($checkfolders=false) {
+		$ret = 0;
 		if($this->mail_connected()) {
 			if ($this->mail_protocol == "imap") {
-				$this->mail_send_command("LOGIN ".$this->mail_user." ".$this->mail_pass);
-				$buffer = $this->mail_get_line();
-				if(preg_match("/^(".$this->_sid." OK)/",$buffer)) { 
-					if($checkfolders)
-						$this->_check_folders();
-					return 1;
-				} else { 
-					$this->mail_error_msg = $buffer; 
-					return 0; 
-				}
+				$ret = _mail_auth_imap($checkfolders);
 			} else {
-				// APOP login mode, more secure
-				if ($this->_haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
-					$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
-								} 
-				// Classic login mode
-				else {
-					$this->mail_send_command("USER ".$this->mail_user);
-				
-					$buffer = $this->mail_get_line();
-					if (substr($buffer, 0, 3) == "+OK") {
-						$this->mail_send_command("PASS ".$this->mail_pass);
-					}	
-					else 
-						return 0;
-				}
-
-				$buffer = $this->mail_get_line();
-				if(substr($buffer, 0, 3) == "+OK") {
-					if($checkfolders)
-						$this->_check_folders();
-					return 1;
-				} else {
-					$this->mail_error_msg = $buffer;
-					return 0;
-				}
+				$ret = _mail_auth_pop($checkfolders);
 			}
 		}
-		return 0;
+		return $ret;
 	}
 
 	function _check_folders() {
@@ -210,121 +219,233 @@ class Telaen extends Telaen_core {
 		}
 	}
 	
-	
-	function mail_retr_msg(&$msg,$check=1) {
+	function _mail_retr_msg_imap(&$msg,$check=1) {
+		global $mail_use_top,$error_retrieving;
+		$msgheader = $msg["header"];
+		if($check) {
+			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
+				$boxinfo = $this->mail_select_box($msg["folder"]);
 
+			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+			$buffer = chop($this->mail_get_line());
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				if(preg_match('|message-id: (.*)|i',$buffer,$regs))
+					$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
+				$buffer = chop($this->mail_get_line());
+			}
+
+			if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
+				$this->mail_error_msg = $error_retrieving;
+				return 0;
+			}
+		}
+
+		if(file_exists($msg["localname"])) {
+			$msgcontent = $this->_read_file($msg["localname"]);
+		} else {
+			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY[TEXT]");
+			$buffer = $this->mail_get_line();
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(preg_match('|\\{(.*)\\}|',$buffer,$regs))
+				$bytes = $regs[1];
+
+			$buffer = $this->mail_get_line();
+			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				if(!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i',$buffer))
+					$msgbody .= $buffer;
+				$buffer = $this->mail_get_line();
+			}
+			$pos = strrpos($msgbody, ")");
+			if(!($pos === false))
+				$msgbody = substr($msgbody,0,$pos);
+
+			$msgcontent = "$msgheader\r\n\r\n$msgbody";
+
+			$this->_save_file($msg["localname"],$msgcontent);
+
+		}
+	}
+
+	function _mail_retr_msg_pop(&$msg,$check=1) {
 		global $mail_use_top,$error_retrieving;
 		$msgheader = $msg["header"];
 
-		if($this->mail_protocol == "imap") {
-
-			if($check) {
-				if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
-					$boxinfo = $this->mail_select_box($msg["folder"]);
-
-				$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
-				$buffer = chop($this->mail_get_line());
-				if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
-				while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-					if(preg_match('|message-id: (.*)|i',$buffer,$regs))
-						$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
-					$buffer = chop($this->mail_get_line());
-				}
-
-				if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
-					$this->mail_error_msg = $error_retrieving;
-					return 0;
-				}
-			}
-
-			if(file_exists($msg["localname"])) {
-				$msgcontent = $this->_read_file($msg["localname"]);
-			} else {
-				$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY[TEXT]");
-				$buffer = $this->mail_get_line();
-				if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
-				if(preg_match('|\\{(.*)\\}|',$buffer,$regs))
-					$bytes = $regs[1];
-
-				$buffer = $this->mail_get_line();
-				while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-					if(!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i',$buffer))
-						$msgbody .= $buffer;
-					$buffer = $this->mail_get_line();
-				}
-				$pos = strrpos($msgbody, ")");
-				if(!($pos === false))
-					$msgbody = substr($msgbody,0,$pos);
-
-				$msgcontent = "$msgheader\r\n\r\n$msgbody";
-
-				$this->_save_file($msg["localname"],$msgcontent);
-
-			}
-
-		} else {
-
-			if($check && (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam")) {
-				if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
-					$this->mail_error_msg = $error_retrieving;
-					return 0;
-				}
-			}
-
-
-			if(file_exists($msg["localname"])) {
-				$msgcontent = $this->_read_file($msg["localname"]);
-			} elseif (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam") {
-
-				$command = ($mail_use_top)?"TOP ".$msg["msg"]." ".$msg["size"]:"RETR ".$msg["msg"];
-				$this->mail_send_command($command);
-
-				$buffer = $this->mail_get_line();
-
-				if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return 0; }
-				$last_buffer = 0;
-				$msgcontent = "";
-				while (!feof($this->mail_connection)) {
-					$buffer = $this->mail_get_line();
-					if(chop($buffer) == ".")
-						break;
-					$msgcontent .= $buffer;
-				}
-				$email		= $this->fetch_structure($msgcontent);
-				$header		= $email["header"];
-				$body		= $email["body"];
-				$mail_info	= $this->get_mail_info($header);
-
-				// Since we are pulling this message for the first
-				// time from the server, we need to add in our UIDL
-				// header. Thus, it will always now be available on
-				// the cached/local version.
-				$uidl = $this->mail_get_uidl($msg["msg"], $mail_info);
-				$header .= "\r\nX-UM-UIDL: $uidl";
-
-				// Update globally
-				$msg["header"]	= $header;
-				$msg["flags"]	= $flags;
-				$msg["uidl"]	= $uidl;
-
-				$msgcontent = "$header\r\n\r\n$body";
-
-				$this->_save_file($msg["localname"],$msgcontent);
+		if($check && (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam")) {
+			if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
+				$this->mail_error_msg = $error_retrieving;
+				return 0;
 			}
 		}
+
+
+		if(file_exists($msg["localname"])) {
+			$msgcontent = $this->_read_file($msg["localname"]);
+		} elseif (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam") {
+
+			$command = ($mail_use_top)?"TOP ".$msg["msg"]." ".$msg["size"]:"RETR ".$msg["msg"];
+			$this->mail_send_command($command);
+
+			$buffer = $this->mail_get_line();
+
+			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return 0; }
+			$last_buffer = 0;
+			$msgcontent = "";
+			while (!feof($this->mail_connection)) {
+				$buffer = $this->mail_get_line();
+				if(chop($buffer) == ".")
+					break;
+				$msgcontent .= $buffer;
+			}
+			$email		= $this->fetch_structure($msgcontent);
+			$header		= $email["header"];
+			$body		= $email["body"];
+			$mail_info	= $this->get_mail_info($header);
+
+			// Since we are pulling this message for the first
+			// time from the server, we need to add in our UIDL
+			// header. Thus, it will always now be available on
+			// the cached/local version.
+			$uidl = $this->mail_get_uidl($msg["msg"], $mail_info);
+			$header .= "\r\nX-UM-UIDL: $uidl";
+
+			// Update globally
+			$msg["header"]	= $header;
+			$msg["flags"]	= $flags;
+			$msg["uidl"]	= $uidl;
+
+			$msgcontent = "$header\r\n\r\n$body";
+
+			$this->_save_file($msg["localname"],$msgcontent);
+		}
+	}
+	
+	function mail_retr_msg(&$msg,$check=1) {
+		$ret = "";
+		if($this->mail_protocol == "imap") {
+			$ret = _mail_retr_msg_imap(&$msg,$check);
+		} else {
+			$ret = _mail_retr_msg_pop(&$msg,$check);
+		}
 		
-		return $msgcontent;
+		return $ret;
 	}
 
+	function _mail_delete_msg_imap($msg, $send_to_trash = 1, $save_only_read = 0) {
+	
+		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
+
+		/* check the message id to make sure that the messages still in the server */
+		if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
+			$boxinfo = $this->mail_select_box($msg["folder"]);
+
+		$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+		$buffer = chop($this->mail_get_line());
+
+		/* if any problem with the server, stop the function */
+		if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+
+		while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+			/* we need only the message id yet */
+
+			if(preg_match('|message-id: (.*)|i',$buffer,$regs))
+				$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
+
+			$buffer = chop($this->mail_get_line());
+		}
+
+
+		/* compare the old and the new message id, if different, stop*/
+		if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
+			$this->mail_error_msg = $error_retrieving;
+			return 0;
+		}
+
+		/*if the pointer is here, no one problem occours*/
+
+		
+		if( $send_to_trash && 
+			strtoupper($msg["folder"]) != "TRASH" &&
+			(!$save_only_read || ($save_only_read && $read))) {
+
+			$trash_folder = $this->fix_prefix("trash",1);
+
+			$this->mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$trash_folder\"");
+			$buffer = $this->mail_get_line();
+
+			/* if any problem with the server, stop the function */
+			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+
+			if(file_exists($msg["localname"])) {
+				$currentname = $msg["localname"];
+				$basename = basename($currentname);
+				$newfilename = $this->user_folder."trash/$basename";
+				copy($currentname,$newfilename);
+				unlink($currentname);
+			}
+		}
+		$this->mail_set_flag($msg,"\\DELETED","+");
+
+		return 1;
+	}
+
+	function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0) {
+	
+		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
+
+		/* now we are working with POP3 */
+		/* check the message id to make sure that the messages still in the server */
+		if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
+
+			/* compare the old and the new message uidl, if different, stop*/
+			if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
+				$this->mail_error_msg = $error_retrieving;
+				return 0;
+			}
+
+			if(!file_exists($msg["localname"])) {
+				if(!$this->mail_retr_msg($msg,0)) return 0;
+				$this->mail_set_flag($msg,"\\SEEN","-");
+			}
+
+			$this->mail_send_command("DELE ".$msg["msg"]);
+			$buffer = $this->mail_get_line();
+			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return 0; }
+		}
+
+		if( $send_to_trash && 
+			strtoupper($msg["folder"]) != "TRASH" &&
+			(!$save_only_read || ($save_only_read && $read))) {
+
+			if(file_exists($msg["localname"])) {
+				$currentname = $msg["localname"];
+				$basename = basename($currentname);
+				$newfilename = $this->user_folder."trash/$basename";
+				copy($currentname,$newfilename);
+				unlink($currentname);
+			}
+		} else {
+			if(file_exists($msg["localname"])) {
+				unlink($msg["localname"]);
+			}
+		}
+
+	}
 
 	function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
 
-		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
-
-		/* choose your protocol */
+		$ret = 1;
 		if($this->mail_protocol == "imap") {
-			
-			
+			$ret = _mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
+		} else {
+			$ret = _mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
+		}
+		return $ret;
+	}
+
+
+	function _mail_move_msg_imap($msg,$tofolder) {
+		if(strtolower($tofolder) != strtolower($msg["folder"])) {
 			/* check the message id to make sure that the messages still in the server */
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
 				$boxinfo = $this->mail_select_box($msg["folder"]);
@@ -351,39 +472,33 @@ class Telaen extends Telaen_core {
 				return 0;
 			}
 
-			/*if the pointer is here, no one problem occours*/
-
+			$tofolder = $this->fix_prefix($tofolder,1);
 			
-			if( $send_to_trash && 
-				strtoupper($msg["folder"]) != "TRASH" &&
-				(!$save_only_read || ($save_only_read && $read))) {
+			$this->mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$tofolder\"");
+			$buffer = $this->mail_get_line();
 
-				$trash_folder = $this->fix_prefix("trash",1);
+			/* if any problem with the server, stop the function */
+			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
 
-				$this->mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$trash_folder\"");
-				$buffer = $this->mail_get_line();
-
-				/* if any problem with the server, stop the function */
-				if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
-
-				if(file_exists($msg["localname"])) {
-					$currentname = $msg["localname"];
-					$basename = basename($currentname);
-					$newfilename = $this->user_folder."trash/$basename";
-					copy($currentname,$newfilename);
-					unlink($currentname);
-				}
+			if(file_exists($msg["localname"])) {
+				$currentname = $msg["localname"];
+				$basename = basename($currentname);
+				$newfilename = $this->user_folder."$tofolder/$basename";
+				copy($currentname,$newfilename);
+				unlink($currentname);
 			}
-			$this->mail_set_flag($msg,"\\DELETED","+");
+			$this->mail_set_flag($msg,"\\DELETED","+");	
+		}
+		return 1;
+	}
 
-			return 1;
-
-		} else {
+	function _mail_move_msg_pop($msg,$tofolder) {
+		if((strtoupper($tofolder) != "INBOX" && strtoupper($tofolder) != "SPAM") && strtolower($tofolder) != strtolower($msg["folder"])) {
 			/* now we are working with POP3 */
 			/* check the message id to make sure that the messages still in the server */
 			if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
-
-				/* compare the old and the new message uidl, if different, stop*/
+		
+				/* compare the old and the new message id, if different, stop*/
 				if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
 					$this->mail_error_msg = $error_retrieving;
 					return 0;
@@ -393,132 +508,326 @@ class Telaen extends Telaen_core {
 					if(!$this->mail_retr_msg($msg,0)) return 0;
 					$this->mail_set_flag($msg,"\\SEEN","-");
 				}
-
-				$this->mail_send_command("DELE ".$msg["msg"]);
-				$buffer = $this->mail_get_line();
-				if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return 0; }
-			}
-
-			if( $send_to_trash && 
-				strtoupper($msg["folder"]) != "TRASH" &&
-				(!$save_only_read || ($save_only_read && $read))) {
-
-				if(file_exists($msg["localname"])) {
-					$currentname = $msg["localname"];
-					$basename = basename($currentname);
-					$newfilename = $this->user_folder."trash/$basename";
-					copy($currentname,$newfilename);
+			}				
+			// ensure that the original file exist
+			if(file_exists($msg["localname"])) {
+				$currentname = $msg["localname"];
+				$basename = basename($currentname);
+				$newfilename = $this->user_folder."$tofolder/$basename";
+				copy($currentname, $newfilename);
+				// ensure that the copy exist
+				if(file_exists($newfilename)) {
 					unlink($currentname);
-				}
-			} else {
-				if(file_exists($msg["localname"])) {
-					unlink($msg["localname"]);
-				}
-			}
+					// delete from server if we are working on inbox or spam
+					if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
+						$this->mail_send_command("DELE ".$msg["msg"]);
+						$buffer = $this->mail_get_line();
+						if(substr($buffer, 0, 3) != "+OK") {
+							$this->mail_error_msg = $buffer;
+							return 0;
+						}
+					}
+				} else
+					return 0;
+			} else 
+				return 0;						
+		} else 
+			return 0;
+	}
 
+	function mail_move_msg($msg,$tofolder) {
+		$ret = 1;
+		if($this->mail_protocol == "imap") {
+			$ret = _mail_move_msg_imap($msg,$tofolder);
+		} else {
+			$ret = _mail_move_msg_pop($msg,$tofolder);
 		}
-		return 1;
+		return $ret;
 	}
 
 
-	function mail_move_msg($msg,$tofolder) {
+	function _mail_list_msgs_imap($boxname = "INBOX", $localmessages = Array()) {
+		global $userfolder;
+		$fetched_part = 0;
+		$parallelized = 0;
+		// $this->havespam = "";
 
-		/* choose your protocol */
+		if($this->is_system_folder($boxname))
+			$boxname = strtolower($boxname);
 
-		if($this->mail_protocol == "imap") {
+		$messages = Array();
 
-			if(strtolower($tofolder) != strtolower($msg["folder"])) {
-				/* check the message id to make sure that the messages still in the server */
-				if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
-					$boxinfo = $this->mail_select_box($msg["folder"]);
-		
-				$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
-				$buffer = chop($this->mail_get_line());
-	
-				/* if any problem with the server, stop the function */
-				if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
-	
+		/* select the mail box and make sure that it exists */
+		$boxinfo = $this->mail_select_box($boxname);
+
+		if(is_array($boxinfo) && $boxinfo["exists"]) {
+
+			/* if the box is ok, fetch the first to the last message, getting the size and the header */
+
+			$this->mail_send_command("FETCH 1:".$boxinfo["exists"]." (FLAGS RFC822.SIZE RFC822.HEADER)");
+			$buffer = $this->mail_get_line();
+
+			/* if any problem, stop the procedure */
+
+			if(!preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { 
+
+				$counter = 0;
+				
+				/* the end mark is <sid> OK FETCH, we are waiting for it*/
 				while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-					/* we need only the message id yet */
+					/* if the return is something such as * N FETCH, a new message will displayed  */
+					if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i',$buffer,$regs)) {
+						$curmsg = $regs[1];
+						preg_match('|SIZE[ ]?([0-9]+)|i',$buffer,$regs);
+						$size	= $regs[1];
+						preg_match('|FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs);
+						$flags	= $regs[1];
+					/* if any problem, add the current line to buffer */
+					} elseif(trim($buffer) != ")" && trim($buffer) != "") {
+						$header .= $buffer;
 	
-					if(preg_match('|message-id: (.*)|i',$buffer,$regs))
-						$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
-	
-					$buffer = chop($this->mail_get_line());
+					/*	the end of message header was reached, increment the counter and store the last message */
+					} elseif(trim($buffer) == ")") {
+						$messages[$counter]["id"] = $counter+1; //$msgs[0];
+						$messages[$counter]["msg"] = intval($curmsg);
+						$messages[$counter]["size"] = intval($size);
+						$messages[$counter]["flags"] = strtoupper($flags);
+						$messages[$counter]["header"] = $header;
+						$counter++;
+						$header = "";
+					}
+					$buffer = $this->mail_get_line();
 				}
-	
-	
-				/* compare the old and the new message id, if different, stop*/
-				if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
-					$this->mail_error_msg = $error_retrieving;
-					return 0;
-				}
+			}
+		}
+		return $messages;
 
-				$tofolder = $this->fix_prefix($tofolder,1);
-				
-				$this->mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$tofolder\"");
-				$buffer = $this->mail_get_line();
+	}
 
-				/* if any problem with the server, stop the function */
-				if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+	function _mail_list_msgs_pop($boxname = "INBOX", $localmessages = Array()) {
+		global $userfolder;
+		$fetched_part = 0;
+		$parallelized = 0;
+		// $this->havespam = "";
 
-				if(file_exists($msg["localname"])) {
-					$currentname = $msg["localname"];
-					$basename = basename($currentname);
-					$newfilename = $this->user_folder."$tofolder/$basename";
-					copy($currentname,$newfilename);
-					unlink($currentname);
-				}
-				$this->mail_set_flag($msg,"\\DELETED","+");
-				
+		if($this->is_system_folder($boxname))
+			$boxname = strtolower($boxname);
+
+		$messages = Array();
+
+		/* 
+		now working with POP3
+		if the boxname is "INBOX" or "SPAM", we can check in the server for messsages 
+		
+		NOTE how special INBOX is... This is the only Email box that lives on
+		the actual Email server (the pophost) and so we need to jump thru a lot
+		of hoops to determine which messages are there.
+		*/
+		if(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") {
+			$this->mail_send_command("LIST");
+			$buffer = $this->mail_get_line();
+			/* if any problem with this messages list, stop the procedure */
+
+			if(substr($buffer, 0, 3) != "+OK")	{
+				$this->mail_error_msg = $buffer;
+				$myreturnarray = Array();
+				$myreturnarray[0] = Array(); 
+				$myreturnarray[1] = Array();
+				$myreturnarray[2] = -1;
+				return $myreturnarray;
 			}
 
-			return 1;
+			$counter = 0;
 
-		} else {
+			while (!feof($this->mail_connection)) {
+				$buffer = $this->mail_get_line();
+				$buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
+				if($buffer == ".") 
+					break;
+				$msgs = explode(" ",$buffer);
+				if(is_numeric($msgs[0])) {
+					$messages[$counter]["id"] = $counter+1; //$msgs[0];
+					$messages[$counter]["msg"] = intval($msgs[0]);
+					$messages[$counter]["size"] = intval($msgs[1]);
+					$counter++;
+				}
+			}
 
-			if((strtoupper($tofolder) != "INBOX" && strtoupper($tofolder) != "SPAM") && strtolower($tofolder) != strtolower($msg["folder"])) {
-				/* now we are working with POP3 */
-				/* check the message id to make sure that the messages still in the server */
-				if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
-			
-					/* compare the old and the new message id, if different, stop*/
-					if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
-						$this->mail_error_msg = $error_retrieving;
-						return 0;
-					}
-	
-					if(!file_exists($msg["localname"])) {
-						if(!$this->mail_retr_msg($msg,0)) return 0;
-						$this->mail_set_flag($msg,"\\SEEN","-");
-					}
-				}				
-				// ensure that the original file exist
-				if(file_exists($msg["localname"])) {
-					$currentname = $msg["localname"];
-					$basename = basename($currentname);
-					$newfilename = $this->user_folder."$tofolder/$basename";
-					copy($currentname, $newfilename);
-					// ensure that the copy exist
-					if(file_exists($newfilename)) {
-						unlink($currentname);
-						// delete from server if we are working on inbox or spam
-						if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
-							$this->mail_send_command("DELE ".$msg["msg"]);
-							$buffer = $this->mail_get_line();
-							if(substr($buffer, 0, 3) != "+OK") {
-								$this->mail_error_msg = $buffer;
-								return 0;
-							}
+			if (!is_array($localmessages)) $localmessages = (array)$localmessages;
+			$localcount = count($localmessages);
+			$onservercount = count($messages);
+
+			/* OK, now we have id and size of messages, but we need the headers too */
+			if($onservercount == 0) {
+				return 1;
+			}
+							
+			if ($onservercount < $localcount || $localcount == 0) {
+				/*
+				 * Someone deleted some messages on the server, refetch all
+				 * headers via TOP, or we just didn't had any messages previously.
+				 */
+				$rescount = 0;
+			} else if ($onservercount >= $localcount) {
+				/*
+				 * More messages have arrived or we still have the same amount of messages.
+				 * Keep our old array and skip all the rest. Check if the last message
+				 * is still at the same place, else we refetch all message
+				 * headers again, because it is too complicated to see which messages we
+				 * have or haven't.
+				 */					
+				$header = "";
+
+				$oldid = $localmessages[$localcount - 1]["uidl"];
+				$newid = $this->mail_get_uidl($messages[$localcount - 1]["msg"]);
+
+				if ("$oldid" == "$newid") {
+				// Ok the ids are the same and we have new messages, fetch only the new part
+				
+					if ($onservercount == $localcount) {
+						// in this case return nothing, get_message_list.php handle this
+						return 0; 
+					}											
+
+					if ($this->_havepipelining) {
+						/*
+						 * Server with PIPELINING support, fast.
+						 */
+						$mailcommand = array();
+						for($i=$localcount;$i<$onservercount;$i++) {
+							$mcmd = "TOP ".$messages[$i]["msg"]." 0";
+							array_push($mailcommand, $mcmd);
 						}
-					} else
-						return 0;
-				} else 
-					return 0;						
-			} else 
-				return 0;
+						$parallelized = 1;
+					} else if ($this->_haveatop) {
+						/*
+						 * Server with ATOP support, very fast
+						 */
+						$mailcommand = "ATOP " . $messages[$localcount]["msg"] .
+								" " .
+								$messages[$onservercount - 1]["msg"];
+						$parallelized = 1;
+					}
+
+					if ($parallelized)
+						$this->mail_send_command($mailcommand);
+
+					// fetch only the new messages
+					for($i=$localcount; $i<$onservercount; $i++) {
+						$header = "";
+						if (! $parallelized) {
+							/*
+							 * Fetch headers serially. Very slow.
+							 */
+							$this->mail_send_command("TOP ".$messages[$i]["msg"]." 0");
+							$buffer = $this->mail_get_line();
+							/* if any problem with this messages list, stop the procedure */
+							if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return 0; }
+						}
+
+						while (!feof($this->mail_connection)) {
+							$buffer = $this->mail_get_line();
+							if(chop($buffer) == ".") 
+								break;
+							if(strlen($buffer) > 3) 
+								$header .= $buffer;
+						}
+						if(!($pos = strpos($header,"\r\n\r\n") === false)) 
+							$header = substr($header,0,$pos);
+			
+						/**
+						 * Add the basic info (index and size) and then msg header 
+						 * of the new msg to the old headers array
+						 */				 
+						$localmessages[$i] = $messages[$i]; 
+						$localmessages[$i]["header"] = $header;
+					}
+					$fetched_part = $localcount;
+					// now the localmessages are updated with the new ones						
+					$messages = $localmessages;
+
+					$rescount = $onservercount;
+				
+				} else {
+				// The ids differs, refetch all						
+					$rescount = 0;
+				}
+			}
+			
+			if (!$fetched_part) { // refetch all
+									
+				if ($this->_havepipelining) {
+					/*
+					 * Server with PIPELINING support, fast.
+					 */
+					$mailcommand = array();
+					for($i=$rescount;$i<count($messages);$i++) {
+						$mcmd = "TOP ".$messages[$i]["msg"] . " 0";
+						array_push($mailcommand, $mcmd);
+					}
+					$parallelized = 1;
+				} else if ($this->_haveatop) {
+					/*
+					 * Server with ATOP support, very fast
+					 */
+					$mailcommand = "ATOP " . $messages[$rescount]["msg"] .
+							" " .  $messages[$onservercount - 1]["msg"];
+					$parallelized = 1;
+				}
+
+				if ($parallelized)
+					$this->mail_send_command($mailcommand);
+
+				$endcount = count($messages);
+				for($i=$rescount;$i<$endcount;$i++) {
+					$header="";
+					if (! $parallelized) {
+						/*
+						 * Fetch headers serially. Very slow.
+						 */
+						$this->mail_send_command("TOP ".$messages[$i]["msg"]." 0");
+						$buffer = $this->mail_get_line();
+						if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return 0; }
+					}
+		
+					while (!feof($this->mail_connection)) {
+						$buffer = $this->mail_get_line();
+						if(chop($buffer) == ".")
+							break;
+						if(strlen($buffer) > 3) 
+							$header .= $buffer;
+					}
+					if(!($pos = strpos($header,"\r\n\r\n") === false)) 
+						$header = substr($header,0,$pos);
+			
+					$messages[$i]["header"] = $header;
+				}
+			}
+		} else {
+			/* otherwise (not inbox or spam), we need get the message list from a cache (currently, hard disk)*/
+
+			$datapath = $userfolder.$boxname;
+			$i = 0;
+			$messages = Array();
+			$d = dir($datapath);
+			$dirsize = 0;
+
+			while($entry=$d->read()) {
+				$fullpath = "$datapath/$entry";
+				if(is_file($fullpath)) {
+					$thisheader = $this->_get_headers_from_cache($fullpath);
+					$messages[$i]["id"]		= $i+1;
+					$messages[$i]["msg"]		= $i;
+					$messages[$i]["header"]		= $thisheader;
+					$messages[$i]["size"]		= filesize($fullpath);
+					$messages[$i]["localname"]	= $fullpath;
+					$i++;
+				}
+			}
+
+			$d->close();
 		}
-		return 1;
+		return $messages;
 	}
 
 	/*
@@ -531,283 +840,16 @@ class Telaen extends Telaen_core {
 	 */
 	function mail_list_msgs($boxname = "INBOX", $localmessages = Array()) {
 
-
-		global $userfolder;
-		$fetched_part = 0;
-		$parallelized = 0;
-		// $this->havespam = "";
-
-		if($this->is_system_folder($boxname))
-			$boxname = strtolower($boxname);
-
-		$messages = Array();
-		$messagescopy = Array();
-
-		/* choose the protocol */
-
 		if($this->mail_protocol == "imap") {
-
-			/* select the mail box and make sure that it exists */
-			$boxinfo = $this->mail_select_box($boxname);
-
-			if(is_array($boxinfo) && $boxinfo["exists"]) {
-
-				/* if the box is ok, fetch the first to the last message, getting the size and the header */
-	
-				$this->mail_send_command("FETCH 1:".$boxinfo["exists"]." (FLAGS RFC822.SIZE RFC822.HEADER)");
-				$buffer = $this->mail_get_line();
-	
-				/* if any problem, stop the procedure */
-	
-				if(!preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { 
-	
-					$counter = 0;
-					
-					/* the end mark is <sid> OK FETCH, we are waiting for it*/
-					while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-						/* if the return is something such as * N FETCH, a new message will displayed  */
-						if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i',$buffer,$regs)) {
-							$curmsg = $regs[1];
-							preg_match('|SIZE[ ]?([0-9]+)|i',$buffer,$regs);
-							$size	= $regs[1];
-							preg_match('|FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs);
-							$flags	= $regs[1];
-						/* if any problem, add the current line to buffer */
-						} elseif(trim($buffer) != ")" && trim($buffer) != "") {
-							$header .= $buffer;
-		
-						/*	the end of message header was reached, increment the counter and store the last message */
-						} elseif(trim($buffer) == ")") {
-							$messages[$counter]["id"] = $counter+1; //$msgs[0];
-							$messages[$counter]["msg"] = intval($curmsg);
-							$messages[$counter]["size"] = intval($size);
-							$messages[$counter]["flags"] = strtoupper($flags);
-							$messages[$counter]["header"] = $header;
-							$counter++;
-							$header = "";
-						}
-						$buffer = $this->mail_get_line();
-					}
-				}
-			}
+			$messages = _mail_list_msgs_imap($boxname, $localmessages);
 		} else {
-
-			/* 
-			now working with POP3
-			if the boxname is "INBOX" or "SPAM", we can check in the server for messsages 
-			*/
-			if(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") {
-				$this->mail_send_command("LIST");
-				$buffer = $this->mail_get_line();
-				/* if any problem with this messages list, stop the procedure */
-
-				if(substr($buffer, 0, 3) != "+OK")	{
-					$this->mail_error_msg = $buffer;
-					$myreturnarray = Array();
-					$myreturnarray[0] = Array(); 
-					$myreturnarray[1] = Array();
-					$myreturnarray[2] = -1;
-					return $myreturnarray;
-				}
-
-				$counter = 0;
-
-				while (!feof($this->mail_connection)) {
-					$buffer = $this->mail_get_line();
-					$buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
-					if($buffer == ".") 
-						break;
-					$msgs = explode(" ",$buffer);
-					if(is_numeric($msgs[0])) {
-						$messages[$counter]["id"] = $counter+1; //$msgs[0];
-						$messages[$counter]["msg"] = intval($msgs[0]);
-						$messages[$counter]["size"] = intval($msgs[1]);
-						$counter++;
-					}
-				}
-
-				if (!is_array($localmessages)) $localmessages = (array)$localmessages;
-				$localcount = count($localmessages);
-				$onservercount = count($messages);
-
-				/* OK, now we have id and size of messages, but we need the headers too */
-				if($onservercount == 0) {
-					
-					$myreturnarray = Array();
-					$myreturnarray[0] = Array();
-					$myreturnarray[1] = Array();
-					$myreturnarray[2] = 1;
-					return $myreturnarray;
-				}
-								
-				if ($onservercount < $localcount || $localcount == 0) {
-					/*
-					 * Someone deleted some messages on the server, refetch all
-					 * headers via TOP, or we just didn't had any messages previously.
-					 */
-					$rescount = 0;
-				} else if ($onservercount >= $localcount) {
-					/*
-					 * More messages have arrived or we still have the same amount of messages.
-					 * Keep our old array and skip all the rest. Check if the last message
-					 * is still at the same place, else we refetch all message
-					 * headers again, because it is too complicated to see which messages we
-					 * have or haven't.
-					 */					
-					$header = "";
-
-					$oldid = $localmessages[$localcount - 1]["uidl"];
-					$newid = $this->mail_get_uidl($messages[$localcount - 1]["msg"]);
-
-					if ("$oldid" == "$newid") {
-					// Ok the ids are the same and we have new messages, fetch only the new part
-					
-						if ($onservercount == $localcount) {
-							// in this case return nothing, get_message_list.php handle this
-							$myreturnarray = Array();
-							$myreturnarray[0] = Array();
-							$myreturnarray[1] = Array();
-							$myreturnarray[2] = 0; // zero 0 no changes
-							return $myreturnarray; 
-						}											
-	
-						if ($this->_havepipelining) {
-							/*
-							 * Server with PIPELINING support, fast.
-							 */
-							$mailcommand = array();
-							for($i=$localcount;$i<$onservercount;$i++) {
-								$mcmd = "TOP ".$messages[$i]["msg"]." 0";
-								array_push($mailcommand, $mcmd);
-							}
-							$parallelized = 1;
-						} else if ($this->_haveatop) {
-							/*
-							 * Server with ATOP support, very fast
-							 */
-							$mailcommand = "ATOP " . $messages[$localcount]["msg"] .
-									" " .
-									$messages[$onservercount - 1]["msg"];
-							$parallelized = 1;
-						}
-
-						if ($parallelized)
-							$this->mail_send_command($mailcommand);
-
-						// fetch only the new messages
-						for($i=$localcount; $i<$onservercount; $i++) {
-							$header = "";
-							if (! $parallelized) {
-								/*
-								 * Fetch headers serially. Very slow.
-								 */
-								$this->mail_send_command("TOP ".$messages[$i]["msg"]." 0");
-								$buffer = $this->mail_get_line();
-								/* if any problem with this messages list, stop the procedure */
-								if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return 0; }
-							}
-
-							while (!feof($this->mail_connection)) {
-								$buffer = $this->mail_get_line();
-								if(chop($buffer) == ".") 
-									break;
-								if(strlen($buffer) > 3) 
-									$header .= $buffer;
-							}
-							if(!($pos = strpos($header,"\r\n\r\n") === false)) 
-								$header = substr($header,0,$pos);
-				
-							/**
-							 * Add the basic info (index and size) and then msg header 
-							 * of the new msg to the old headers array
-							 */				 
-							$localmessages[$i] = $messages[$i]; 
-							$localmessages[$i]["header"] = $header;
-						}
-						$fetched_part = $localcount;
-						// now the localmessages are updated with the new ones						
-						$messages = $localmessages;
-
-						$rescount = $onservercount;
-					
-					} else {
-					// The ids differs, refetch all						
-						$rescount = 0;
-					}
-				}
-				
-				if (!$fetched_part) { // refetch all
-										
-					if ($this->_havepipelining) {
-						/*
-						 * Server with PIPELINING support, fast.
-						 */
-						$mailcommand = array();
-						for($i=$rescount;$i<count($messages);$i++) {
-							$mcmd = "TOP ".$messages[$i]["msg"] . " 0";
-							array_push($mailcommand, $mcmd);
-						}
-						$parallelized = 1;
-					} else if ($this->_haveatop) {
-						/*
-						 * Server with ATOP support, very fast
-						 */
-						$mailcommand = "ATOP " . $messages[$rescount]["msg"] .
-								" " .  $messages[$onservercount - 1]["msg"];
-						$parallelized = 1;
-					}
-
-					if ($parallelized)
-						$this->mail_send_command($mailcommand);
-
-					$endcount = count($messages);
-					for($i=$rescount;$i<$endcount;$i++) {
-						$header="";
-						if (! $parallelized) {
-							/*
-							 * Fetch headers serially. Very slow.
-							 */
-							$this->mail_send_command("TOP ".$messages[$i]["msg"]." 0");
-							$buffer = $this->mail_get_line();
-							if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return 0; }
-						}
-			
-						while (!feof($this->mail_connection)) {
-							$buffer = $this->mail_get_line();
-							if(chop($buffer) == ".")
-								break;
-							if(strlen($buffer) > 3) 
-								$header .= $buffer;
-						}
-						if(!($pos = strpos($header,"\r\n\r\n") === false)) 
-							$header = substr($header,0,$pos);
-				
-						$messages[$i]["header"] = $header;
-					}
-				}
-			} else {
-				/* otherwise (not inbox or spam), we need get the message list from a cache (currently, hard disk)*/
-
-				$datapath = $userfolder.$boxname;
-				$i = 0;
-				$messages = Array();
-				$d = dir($datapath);
-				$dirsize = 0;
-
-				while($entry=$d->read()) {
-					$fullpath = "$datapath/$entry";
-					if(is_file($fullpath)) {
-						$thisheader = $this->_get_headers_from_cache($fullpath);
-						$messages[$i]["id"]		= $i+1;
-						$messages[$i]["msg"]		= $i;
-						$messages[$i]["header"]		= $thisheader;
-						$messages[$i]["size"]		= filesize($fullpath);
-						$messages[$i]["localname"]	= $fullpath;
-						$i++;
-					}
-				}
-
-				$d->close();
+			$messages = _mail_list_msgs_pop($boxname, $localmessages);
+			if (!is_array($messages)) {
+				$myreturnarray = Array();
+				$myreturnarray[0] = Array();
+				$myreturnarray[1] = Array();
+				$myreturnarray[2] = $messages;
+				return $myreturnarray; 
 			}
 		}
 		/* 
