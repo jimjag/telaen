@@ -630,11 +630,7 @@ class Telaen extends Telaen_core {
 
 			if(substr($buffer, 0, 3) != "+OK")	{
 				$this->mail_error_msg = $buffer;
-				$myreturnarray = Array();
-				$myreturnarray[0] = Array(); 
-				$myreturnarray[1] = Array();
-				$myreturnarray[2] = -1;
-				return $myreturnarray;
+				return -1;
 			}
 
 			$counter = 0;
@@ -827,6 +823,7 @@ class Telaen extends Telaen_core {
 
 			$d->close();
 		}
+		$messages[] = $fetched_part;
 		return $messages;
 	}
 
@@ -840,6 +837,9 @@ class Telaen extends Telaen_core {
 	 */
 	function mail_list_msgs($boxname = "INBOX", $localmessages = Array()) {
 
+		global $userfolder;
+		$fetched_part = 0;
+
 		if($this->mail_protocol == "imap") {
 			$messages = $this->_mail_list_msgs_imap($boxname, $localmessages);
 		} else {
@@ -851,6 +851,7 @@ class Telaen extends Telaen_core {
 				$myreturnarray[2] = $messages;
 				return $myreturnarray; 
 			}
+			$fetched_part = array_pop($messages);
 		}
 		/* 
 		 * OK, now we have the message list, that contains id, size and header
@@ -865,7 +866,7 @@ class Telaen extends Telaen_core {
 		for($i=0;$i<count($messages);$i++) {
 			$mail_info = $this->get_mail_info($messages[$i]["header"]);
 
-			$havespam = 0;
+			$havespam = false;
 			$spamsubject = $mail_info["subject"];
 			$xspamlevel = $mail_info["x-spam-level"];
 			/*
@@ -877,7 +878,7 @@ class Telaen extends Telaen_core {
 				(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") ) {
 				foreach ($this->_spamregex as $spamregex) {
 					if (preg_match("/$spamregex/i",$spamsubject)) {
-						$havespam = 1;
+						$havespam = true;
 						$this->havespam = "TRUE";
 						break;
 					}
@@ -885,7 +886,7 @@ class Telaen extends Telaen_core {
 				if ($this->userspamlevel) {
 					preg_match('|[*+]+|', $xspamlevel, $matches);
 					if (strlen($matches[0]) >= $this->userspamlevel) {
-						$havespam = 1;
+						$havespam = true;
 						$this->havespam = "TRUE";						
 					}
 				}
