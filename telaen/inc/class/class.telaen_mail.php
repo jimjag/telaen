@@ -837,21 +837,284 @@ class Telaen extends Telaen_core {
 	 */
 	function mail_list_msgs($boxname = "INBOX", $localmessages = Array()) {
 
+
 		global $userfolder;
 		$fetched_part = 0;
+		$parallelized = 0;
+		// $this->havespam = "";
+
+		if($this->is_system_folder($boxname))
+			$boxname = strtolower($boxname);
+
+		$messages = Array();
+		$messagescopy = Array();
+
+		/* choose the protocol */
 
 		if($this->mail_protocol == "imap") {
-			$messages = $this->_mail_list_msgs_imap($boxname, $localmessages);
-		} else {
-			$messages = $this->_mail_list_msgs_pop($boxname, $localmessages);
-			if (!is_array($messages)) {
-				$myreturnarray = Array();
-				$myreturnarray[0] = Array();
-				$myreturnarray[1] = Array();
-				$myreturnarray[2] = $messages;
-				return $myreturnarray; 
+
+			/* select the mail box and make sure that it exists */
+			$boxinfo = $this->mail_select_box($boxname);
+
+			if(is_array($boxinfo) && $boxinfo["exists"]) {
+
+				/* if the box is ok, fetch the first to the last message, getting the size and the header */
+	
+				$this->mail_send_command("FETCH 1:".$boxinfo["exists"]." (FLAGS RFC822.SIZE RFC822.HEADER)");
+				$buffer = $this->mail_get_line();
+	
+				/* if any problem, stop the procedure */
+	
+				if(!preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { 
+	
+					$counter = 0;
+					
+					/* the end mark is <sid> OK FETCH, we are waiting for it*/
+					while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+						/* if the return is something such as * N FETCH, a new message will displayed  */
+						if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i',$buffer,$regs)) {
+							$curmsg = $regs[1];
+							preg_match('|SIZE[ ]?([0-9]+)|i',$buffer,$regs);
+							$size	= $regs[1];
+							preg_match('|FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs);
+							$flags	= $regs[1];
+						/* if any problem, add the current line to buffer */
+						} elseif(trim($buffer) != ")" && trim($buffer) != "") {
+							$header .= $buffer;
+		
+						/*	the end of message header was reached, increment the counter and store the last message */
+						} elseif(trim($buffer) == ")") {
+							$messages[$counter]["id"] = $counter+1; //$msgs[0];
+							$messages[$counter]["msg"] = intval($curmsg);
+							$messages[$counter]["size"] = intval($size);
+							$messages[$counter]["flags"] = strtoupper($flags);
+							$messages[$counter]["header"] = $header;
+							$counter++;
+							$header = "";
+						}
+						$buffer = $this->mail_get_line();
+					}
+				}
 			}
-			$fetched_part = array_pop($messages);
+		} else {
+
+			/* 
+			now working with POP3
+			if the boxname is "INBOX" or "SPAM", we can check in the server for messsages 
+			*/
+			if(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") {
+				$this->mail_send_command("LIST");
+				$buffer = $this->mail_get_line();
+				/* if any problem with this messages list, stop the procedure */
+
+				if(substr($buffer, 0, 3) != "+OK")	{
+					$this->mail_error_msg = $buffer;
+					$myreturnarray = Array();
+					$myreturnarray[0] = Array(); 
+					$myreturnarray[1] = Array();
+					$myreturnarray[2] = -1;
+					return $myreturnarray;
+				}
+
+				$counter = 0;
+
+				while (!feof($this->mail_connection)) {
+					$buffer = $this->mail_get_line();
+					$buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
+					if($buffer == ".") 
+						break;
+					$msgs = explode(" ",$buffer);
+					if(is_numeric($msgs[0])) {
+						$messages[$counter]["id"] = $counter+1; //$msgs[0];
+						$messages[$counter]["msg"] = intval($msgs[0]);
+						$messages[$counter]["size"] = intval($msgs[1]);
+						$counter++;
+					}
+				}
+
+				if (!is_array($localmessages)) $localmessages = (array)$localmessages;
+				$localcount = count($localmessages);
+				$onservercount = count($messages);
+
+				/* OK, now we have id and size of messages, but we need the headers too */
+				if($onservercount == 0) {
+					
+					$myreturnarray = Array();
+					$myreturnarray[0] = Array();
+					$myreturnarray[1] = Array();
+					$myreturnarray[2] = 1;
+					return $myreturnarray;
+				}
+								
+				if ($onservercount < $localcount || $localcount == 0) {
+					/*
+					 * Someone deleted some messages on the server, refetch all
+					 * headers via TOP, or we just didn't had any messages previously.
+					 */
+					$rescount = 0;
+				} else if ($onservercount >= $localcount) {
+					/*
+					 * More messages have arrived or we still have the same amount of messages.
+					 * Keep our old array and skip all the rest. Check if the last message
+					 * is still at the same place, else we refetch all message
+					 * headers again, because it is too complicated to see which messages we
+					 * have or haven't.
+					 */					
+					$header = "";
+
+					$oldid = $localmessages[$localcount - 1]["uidl"];
+					$newid = $this->mail_get_uidl($messages[$localcount - 1]["msg"]);
+
+					if ("$oldid" == "$newid") {
+					// Ok the ids are the same and we have new messages, fetch only the new part
+					
+						if ($onservercount == $localcount) {
+							// in this case return nothing, get_message_list.php handle this
+							$myreturnarray = Array();
+							$myreturnarray[0] = Array();
+							$myreturnarray[1] = Array();
+							$myreturnarray[2] = 0; // zero 0 no changes
+							return $myreturnarray; 
+						}											
+	
+						if ($this->_havepipelining) {
+							/*
+							 * Server with PIPELINING support, fast.
+							 */
+							$mailcommand = array();
+							for($i=$localcount;$i<$onservercount;$i++) {
+								$mcmd = "TOP ".$messages[$i]["msg"]." 0";
+								array_push($mailcommand, $mcmd);
+							}
+							$parallelized = 1;
+						} else if ($this->_haveatop) {
+							/*
+							 * Server with ATOP support, very fast
+							 */
+							$mailcommand = "ATOP " . $messages[$localcount]["msg"] .
+									" " .
+									$messages[$onservercount - 1]["msg"];
+							$parallelized = 1;
+						}
+
+						if ($parallelized)
+							$this->mail_send_command($mailcommand);
+
+						// fetch only the new messages
+						for($i=$localcount; $i<$onservercount; $i++) {
+							$header = "";
+							if (! $parallelized) {
+								/*
+								 * Fetch headers serially. Very slow.
+								 */
+								$this->mail_send_command("TOP ".$messages[$i]["msg"]." 0");
+								$buffer = $this->mail_get_line();
+								/* if any problem with this messages list, stop the procedure */
+								if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return 0; }
+							}
+
+							while (!feof($this->mail_connection)) {
+								$buffer = $this->mail_get_line();
+								if(chop($buffer) == ".") 
+									break;
+								if(strlen($buffer) > 3) 
+									$header .= $buffer;
+							}
+							if(!($pos = strpos($header,"\r\n\r\n") === false)) 
+								$header = substr($header,0,$pos);
+				
+							/**
+							 * Add the basic info (index and size) and then msg header 
+							 * of the new msg to the old headers array
+							 */				 
+							$localmessages[$i] = $messages[$i]; 
+							$localmessages[$i]["header"] = $header;
+						}
+						$fetched_part = $localcount;
+						// now the localmessages are updated with the new ones						
+						$messages = $localmessages;
+
+						$rescount = $onservercount;
+					
+					} else {
+					// The ids differs, refetch all						
+						$rescount = 0;
+					}
+				}
+				
+				if (!$fetched_part) { // refetch all
+										
+					if ($this->_havepipelining) {
+						/*
+						 * Server with PIPELINING support, fast.
+						 */
+						$mailcommand = array();
+						for($i=$rescount;$i<count($messages);$i++) {
+							$mcmd = "TOP ".$messages[$i]["msg"] . " 0";
+							array_push($mailcommand, $mcmd);
+						}
+						$parallelized = 1;
+					} else if ($this->_haveatop) {
+						/*
+						 * Server with ATOP support, very fast
+						 */
+						$mailcommand = "ATOP " . $messages[$rescount]["msg"] .
+								" " .  $messages[$onservercount - 1]["msg"];
+						$parallelized = 1;
+					}
+
+					if ($parallelized)
+						$this->mail_send_command($mailcommand);
+
+					$endcount = count($messages);
+					for($i=$rescount;$i<$endcount;$i++) {
+						$header="";
+						if (! $parallelized) {
+							/*
+							 * Fetch headers serially. Very slow.
+							 */
+							$this->mail_send_command("TOP ".$messages[$i]["msg"]." 0");
+							$buffer = $this->mail_get_line();
+							if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return 0; }
+						}
+			
+						while (!feof($this->mail_connection)) {
+							$buffer = $this->mail_get_line();
+							if(chop($buffer) == ".")
+								break;
+							if(strlen($buffer) > 3) 
+								$header .= $buffer;
+						}
+						if(!($pos = strpos($header,"\r\n\r\n") === false)) 
+							$header = substr($header,0,$pos);
+				
+						$messages[$i]["header"] = $header;
+					}
+				}
+			} else {
+				/* otherwise (not inbox or spam), we need get the message list from a cache (currently, hard disk)*/
+
+				$datapath = $userfolder.$boxname;
+				$i = 0;
+				$messages = Array();
+				$d = dir($datapath);
+				$dirsize = 0;
+
+				while($entry=$d->read()) {
+					$fullpath = "$datapath/$entry";
+					if(is_file($fullpath)) {
+						$thisheader = $this->_get_headers_from_cache($fullpath);
+						$messages[$i]["id"]		= $i+1;
+						$messages[$i]["msg"]		= $i;
+						$messages[$i]["header"]		= $thisheader;
+						$messages[$i]["size"]		= filesize($fullpath);
+						$messages[$i]["localname"]	= $fullpath;
+						$i++;
+					}
+				}
+
+				$d->close();
+			}
 		}
 		/* 
 		 * OK, now we have the message list, that contains id, size and header
@@ -866,7 +1129,7 @@ class Telaen extends Telaen_core {
 		for($i=0;$i<count($messages);$i++) {
 			$mail_info = $this->get_mail_info($messages[$i]["header"]);
 
-			$havespam = false;
+			$havespam = 0;
 			$spamsubject = $mail_info["subject"];
 			$xspamlevel = $mail_info["x-spam-level"];
 			/*
@@ -878,7 +1141,7 @@ class Telaen extends Telaen_core {
 				(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") ) {
 				foreach ($this->_spamregex as $spamregex) {
 					if (preg_match("/$spamregex/i",$spamsubject)) {
-						$havespam = true;
+						$havespam = 1;
 						$this->havespam = "TRUE";
 						break;
 					}
@@ -886,7 +1149,7 @@ class Telaen extends Telaen_core {
 				if ($this->userspamlevel) {
 					preg_match('|[*+]+|', $xspamlevel, $matches);
 					if (strlen($matches[0]) >= $this->userspamlevel) {
-						$havespam = true;
+						$havespam = 1;
 						$this->havespam = "TRUE";						
 					}
 				}
@@ -969,6 +1232,7 @@ class Telaen extends Telaen_core {
 				 */
 
 				if($this->mail_protocol != "imap" && file_exists($spamcopy[$y]["localname"])) {
+
 					$iheaders = $this->_get_headers_from_cache($spamcopy[$y]["localname"]);
 					$iheaders = $this->decode_header($iheaders);
 					$spamcopy[$y]["flags"] = strtoupper($iheaders["x-um-flags"]);
