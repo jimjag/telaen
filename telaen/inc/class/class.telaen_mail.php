@@ -769,7 +769,7 @@ class Telaen extends Telaen_core {
 	 *	   -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
 	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
 	 */
-	function mail_list_msgs($boxname = "INBOX", $localmessages = Array(), $start, $wcount) {
+	function mail_list_msgs($boxname = "INBOX", $localmessages = Array(), $start=0, $wcount=99999) {
 
 
 		global $userfolder;
