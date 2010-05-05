@@ -769,7 +769,7 @@ class Telaen extends Telaen_core {
 	 *	   -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
 	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
 	 */
-	function mail_list_msgs($boxname = "INBOX", $localmessages = Array()) {
+	function mail_list_msgs($boxname = "INBOX", $localmessages = Array(), $start, $wcount) {
 
 
 		global $userfolder;
@@ -805,7 +805,28 @@ class Telaen extends Telaen_core {
 		$y = 0;
 		$messagescopy = Array();
 		$spamcopy = Array();
-		for($i=0;$i<count($messages);$i++) {
+		$mcount = count($messages);
+		/*
+		 * For all entries outside of the view window, simply copy over
+		 * the messages, regardless if whether we have headers or not.
+		 */
+		for ($i=0; $i<$mcount; $i++) {
+			if ($i < $start || $j > $wcount) {
+				$messagescopy[$j] = $messages[$i];
+				$j++;
+				continue;
+			}
+			/*
+			 * At this point, we are within the view window. So we need
+			 * headers for the message list. We also check for SPAM here
+			 * as well
+			 */
+			if ($messages[$i]["header"] == "") {
+				$had_headers = false;
+				$messages[$i]["header"] = this->mail_retr_header($messages[$i]);
+			} else
+				$had_headers = true;
+
 			$mail_info = $this->get_mail_info($messages[$i]["header"]);
 
 			$havespam = 0;
@@ -837,7 +858,7 @@ class Telaen extends Telaen_core {
 			if (! $havespam) {
 				$messagescopy[$j]		= $messages[$i];
 				
-				if ($fetched_part && $i < $fetched_part ) {
+				if ($had_headers) {
 					$j++;
 					continue;
 				}
@@ -879,7 +900,7 @@ class Telaen extends Telaen_core {
 				$j++;
 			} else {
 				$spamcopy[$y]			= $messages[$i];
-				if ($fetched_part && $i < $fetched_part ) {
+				if ($had_headers) {
 					$y++;
 					continue;
 				}
