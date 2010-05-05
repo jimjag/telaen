@@ -356,7 +356,7 @@ class Telaen extends Telaen_core {
 		if(!($pos = strpos($header,"\r\n\r\n") === false)) 
 			$header = substr($header,0,$pos);
 
-		return $header
+		return $header;
 	}
 	
 	function mail_retr_header($msg) {
@@ -823,7 +823,7 @@ class Telaen extends Telaen_core {
 			 */
 			if ($messages[$i]["header"] == "") {
 				$had_headers = false;
-				$messages[$i]["header"] = this->mail_retr_header($messages[$i]);
+				$messages[$i]["header"] = $this->mail_retr_header($messages[$i]);
 			} else
 				$had_headers = true;
 
