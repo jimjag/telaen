@@ -27,7 +27,6 @@ $folder_key = base64_encode(strtolower($folder));
 $folder_key_inbox = base64_encode("inbox");
 $folder_key_spam = base64_encode("spam");
 $is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam);
-$logging_in = false;
 
 if(!array_key_exists("headers",$sess)) $sess["headers"] = array();
 	
@@ -36,7 +35,8 @@ if(array_key_exists($folder_key,$sess["headers"]))
 
 if( !is_array($headers) 
 	|| isset($decision)
-	|| isset($refr)) {
+	|| isset($refr)
+	|| isset($pag)) {
 
 	mail_connect();
 
@@ -44,12 +44,14 @@ if( !is_array($headers)
 	$sess["auth"] = true;
 	$expunge = false;
 	$require_update = false;
+	$reg_pp = $prefs["rpp"];
 
 	if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
 		cleanup_dirs($userfolder, 0);
-		$reg_pp = $prefs["rpp"];
 		$start_pos = 0;
 	}
+	if (isset($pag))
+		$start_pos = $pag*$reg_pp;
 
 	if ($UM->_autospamfolder) {
 		if ($folder_key == $folder_key_inbox) {
@@ -207,7 +209,7 @@ if( !is_array($headers)
 	/*
 	 * If we deleted mails, the message list has already been reloaded.
 	 */
-	if(!$expunge || !$is_inbox_or_spam) {
+	if(!$expunge || !$is_inbox_or_spam || isset($pag)) {
 		require("./get_message_list.php");
 		require("./apply_filters.php");
 	}
