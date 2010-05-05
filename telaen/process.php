@@ -35,7 +35,8 @@ if(array_key_exists($folder_key,$sess["headers"]))
 
 if( !is_array($headers) 
 	|| isset($decision)
-	|| isset($refr)) {
+	|| isset($refr)
+	|| isset($mlist)) {
 
 	mail_connect();
 
@@ -48,6 +49,10 @@ if( !is_array($headers)
 	if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
 		cleanup_dirs($userfolder, 0);
 		$start_pos = 0;
+	} else {
+		if (isset($pag) && isset($mlist) && !isset($start_pos)) {
+			$start_pos = ($pag-1)*$reg_pp;
+		}
 	}
 	if ($UM->_autospamfolder) {
 		if ($folder_key == $folder_key_inbox) {
@@ -205,7 +210,7 @@ if( !is_array($headers)
 	/*
 	 * If we deleted mails, the message list has already been reloaded.
 	 */
-	if(!$expunge || !$is_inbox_or_spam || $refr == "force") {
+	if(!$expunge || !$is_inbox_or_spam || $mlist) {
 		require("./get_message_list.php");
 		require("./apply_filters.php");
 	}
@@ -259,16 +264,15 @@ if ( (!$same_version) ||
 	exit;
 }
 
-
 if(!isset($pag) || !is_numeric(trim($pag))) $pag = 1;
 $refreshurl = "messages.php?folder=".urlencode($folder)."&pag=$pag";
-
 
 if (isset($back_to)) {
 	if (count($headers) > $back_to) {
 		redirect_and_exit("readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$back_to");
 	}
 }
+
 redirect_and_exit("$refreshurl");
 
 ?>

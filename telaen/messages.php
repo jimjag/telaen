@@ -101,7 +101,7 @@ for($i=$start_pos;$i<$end_pos;$i++) {
 		break;
 	}
 }
-if ($force_refresh) redirect_and_exit("process.php?folder=".urlencode($folder)."&start_pos=$start_pos&refr=force");
+if ($force_refresh) redirect_and_exit("process.php?folder=".urlencode($folder)."&pag=$pag&mlist=true");
 
 $jsquota = ($exceeded)?"true":"false";
 
