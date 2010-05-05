@@ -695,7 +695,9 @@ class Telaen extends Telaen_core {
 				 * Someone deleted some messages on the server, refetch all
 				 * headers via TOP, or we just didn't had any messages previously.
 				 */
-				return $messages;
+				 
+				; // pass;
+				
 			} else if ($onservercount >= $localcount) {
 				/*
 				 * More messages have arrived or we still have the same amount of messages.
@@ -733,7 +735,7 @@ class Telaen extends Telaen_core {
 						$localmessages[$i] = $messages[$i]; 
 						$localmessages[$i]["header"] = "";
 					}
-					// now the localmessages are updated with the new ones						
+					// now the localmessages are updated with the new ones
 					$messages = $localmessages;
 				}
 			}
@@ -760,6 +762,7 @@ class Telaen extends Telaen_core {
 
 			$d->close();
 		}
+		array_qsort2int($messages,"msg","DESC");
 		return $messages;
 	}
 
