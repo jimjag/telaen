@@ -35,8 +35,7 @@ if(array_key_exists($folder_key,$sess["headers"]))
 
 if( !is_array($headers) 
 	|| isset($decision)
-	|| isset($refr)
-	|| isset($pag)) {
+	|| isset($refr)) {
 
 	mail_connect();
 
