@@ -710,6 +710,21 @@ class Telaen extends Telaen_core {
 				if ("$oldid" == "$newid") {
 				// Ok the ids are the same and we have new messages
 				
+					/*
+					 * Quick check. If we have the same number and all
+					 * have been seen, no need to parse anything.
+					 */
+					if ($localcount == $onservercount) {
+						$seen_all = true;
+						for($i=$0; $i<$onservercount; $i++) {
+							if (!$messages[$i]["hparsed"]) {
+								$seen_all = false;
+								break;
+							}
+						}
+						if ($seen_all) return 0;
+					}
+
 					for($i=$localcount; $i<$onservercount; $i++) {
 						/**
 						 * Add the basic info (index and size) and then msg header 
@@ -793,12 +808,27 @@ class Telaen extends Telaen_core {
 		$messagescopy = Array();
 		$spamcopy = Array();
 		$mcount = count($messages);
+		$end_pos = $start + $wcount;
 		/*
 		 * For all entries outside of the view window, simply copy over
 		 * the messages, regardless if whether we have headers or not.
+		 *
+		 * Here's the idea: Starting from the begining, if the message is
+		 * outside of the view window, then only worry about SPAM
+		 * if the header has already been parsed. If not, then just
+		 * copy away.
 		 */
 		for ($i=0; $i<$mcount; $i++) {
-			if (($i < $start) || ($j > $wcount)) {
+
+			$workit = false;
+			if (($j < $start) && $messages[$i]["hparsed"])
+				$workit = true;
+			if (($j >= $start) && ($j < $end_pos))
+				$workit = true;
+			if (($j >= $end_pos) && $messages[$i]["hparsed"])
+				$workit = true;
+				
+			if (!$workit) {
 				$messagescopy[$j] = $messages[$i];
 				$j++;
 				continue;
