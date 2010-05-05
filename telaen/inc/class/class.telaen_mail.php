@@ -818,8 +818,10 @@ class Telaen extends Telaen_core {
 			 * headers for the message list. We also check for SPAM here
 			 * as well
 			 */
-			if ($messages[$i]["header"] == "")
-				$messages[$i]["header"] = $this->mail_retr_header($messages[$i]);
+			if ($messages[$i]["header"] == "") {
+				$header = $this->mail_retr_header($messages[$i]);
+				$messages[$i]["header"] = $header;
+			}
 
 			$mail_info = $this->get_mail_info($messages[$i]["header"]);
 
