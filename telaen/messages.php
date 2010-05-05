@@ -9,10 +9,15 @@ Telaen is a GPL'ed software developed by
 
 require("./inc/inc.php");
 
+$folder_key = base64_encode(strtolower($folder));
+$folder_key_inbox = base64_encode("inbox");
+$folder_key_spam = base64_encode("spam");
+$is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam);
+
 $smarty->assign("umUser",$f_user);
 $refreshurl = "process.php?folder=".urlencode($folder)."&pag=$pag&refr=true";
 
-if(!is_array($headers = $sess["headers"][base64_encode(strtolower($folder))])) { redirect_and_exit("index.php?err=3", true); }
+if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
 
 $arrow = ($sortorder == "ASC")?"images/arrow_up.gif":"images/arrow_down.gif";
 $arrow = "&nbsp;<img src=\"$arrow\" width=\"8\" height=\"7\" border=\"0\" alt=\"\" />";
@@ -24,22 +29,24 @@ $date_arrow		= "";
 $size_arrow		= "";
 $toname_arrow	= "";
 
-switch($sortby) {
-	case "subject":
-		$subject_arrow	= $arrow;
-		break;
-	case "fromname":
-		$fromname_arrow = $arrow;
-		break;
-	case "date":
-		$date_arrow = $arrow;
-		break;
-	case "size":
-		$size_arrow = $arrow;
-		break;
-	case "toname":
-		$toname_arrow	= $arrow;
-		break;
+if ($UM->mail_protocol == "imap" || !$is_inbox_or_spam) {
+	switch($sortby) {
+		case "subject":
+			$subject_arrow	= $arrow;
+			break;
+		case "fromname":
+			$fromname_arrow = $arrow;
+			break;
+		case "date":
+			$date_arrow = $arrow;
+			break;
+		case "size":
+			$size_arrow = $arrow;
+			break;
+		case "toname":
+			$toname_arrow	= $arrow;
+			break;
+	}
 }
 
 $elapsedtime = (time()-$sess["last-update"])/60;
