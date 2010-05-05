@@ -641,8 +641,6 @@ class Telaen extends Telaen_core {
 
 	function mail_list_msgs_pop($boxname = "INBOX", $localmessages = Array()) {
 		global $userfolder;
-		$fetched_part = 0;
-		$parallelized = 0;
 		// $this->havespam = "";
 
 		if($this->is_system_folder($boxname))
@@ -783,9 +781,9 @@ class Telaen extends Telaen_core {
 		/* choose the protocol */
 
 		if($this->mail_protocol == "imap") {
-			$messages = mail_list_msgs_imap($boxname, $localmessages);
+			$messages = $this-mail_list_msgs_imap($boxname, $localmessages);
 		} else {
-			$messages = mail_list_msgs_pop($boxname, $localmessages);
+			$messages = $this-mail_list_msgs_pop($boxname, $localmessages);
 			if (!is_array($messages)) {
 				$shortcut = Array();
 				$shortcut[0] = Array();
