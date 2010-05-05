@@ -716,7 +716,7 @@ class Telaen extends Telaen_core {
 					 */
 					if ($localcount == $onservercount) {
 						$seen_all = true;
-						for($i=$0; $i<$onservercount; $i++) {
+						for($i=0; $i<$onservercount; $i++) {
 							if (!$messages[$i]["hparsed"]) {
 								$seen_all = false;
 								break;
