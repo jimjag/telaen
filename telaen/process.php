@@ -231,12 +231,15 @@ if( !is_array($headers)
 if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
 
 /*
- * Sort the date and size fields with a natural sort
+ * Sort the date and size fields with a natural sort, but only
+ * for non-POP Inboxes
  */
-if ($sortby == "date" || $sortby == "size") {
-	array_qsort2($headers,$sortby,$sortorder);
-} else {
-	array_qsort2ic($headers,$sortby,$sortorder);
+if (!$is_inbox_or_spam || $UM->mail_protocol == "imap") {
+	if ($sortby == "date" || $sortby == "size") {
+		array_qsort2($headers,$sortby,$sortorder);
+	} else {
+		array_qsort2ic($headers,$sortby,$sortorder);
+	}
 }
 
 $sess["headers"][$folder_key] = $headers;

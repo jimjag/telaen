@@ -783,7 +783,6 @@ class Telaen extends Telaen_core {
 			$boxname = strtolower($boxname);
 
 		/* choose the protocol */
-
 		if($this->mail_protocol == "imap") {
 			$messages = $this->mail_list_msgs_imap($boxname, $localmessages);
 		} else {
@@ -813,7 +812,7 @@ class Telaen extends Telaen_core {
 		 * For all entries outside of the view window, simply copy over
 		 * the messages, regardless if whether we have headers or not.
 		 *
-		 * Here's the idea: Starting from the begining, if the message is
+		 * Here's the idea: Starting from the beginning, if the message is
 		 * outside of the view window, then only worry about SPAM
 		 * if the header has already been parsed. If not, then just
 		 * copy away.
@@ -821,11 +820,9 @@ class Telaen extends Telaen_core {
 		for ($i=0; $i<$mcount; $i++) {
 
 			$workit = false;
-			if (($j < $start) && $messages[$i]["hparsed"])
+			if ((($j < $start)||($j >= $end_pos)) && $messages[$i]["hparsed"])
 				$workit = true;
-			if (($j >= $start) && ($j < $end_pos))
-				$workit = true;
-			if (($j >= $end_pos) && $messages[$i]["hparsed"])
+			if (($j >= $start) && ($j <= $end_pos))
 				$workit = true;
 				
 			if (!$workit) {
