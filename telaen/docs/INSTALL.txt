@@ -77,5 +77,24 @@ You need to reconfigure your header and footer (if you have a
 personalized one). See CHANGELOG.txt for details.
 Please ask on telean forum (www.telaen.com) if you need help.
 
+---------------
+PERFORMANCE
+---------------
 
+The performance of Telaen, of course, depends on the speed of
+your Webserver, PHP and your POP3/IMAP Email server. Even so,
+here are some helpful hints:
 
+  a. Use Apache 2.2.
+  b. Just for Telaen, configure PHP with a large memory
+     allocation and a long (or non-existant) time-limit.
+  c. Use a good PHP cache, like XCache or APC.
+  d. If possible, host your Email server on your Web server,
+     so you can connect to the loopback address.
+  e. IMAP itself is a faster interface, so use that if you can.
+  f. If using POP3, there are some additional hints:
+     1. Encourage people to use Folders and to keep their
+        Inbox as small as possible.
+     2. Remove any SPAM as quickly as possible.
+  g. Enabling quotas involves some overhead which you
+     may wish to avoid.

@@ -1,6 +1,6 @@
 Telaen provides support for auto-SPAM detection and the
-automatic movement of detected SPAM messages to the user's
-SPAM folder. It does this via 2 methods:
+automatic movement of detected SPAM messages from the user's
+Inbox to the user's SPAM folder. It does this via 2 methods:
 
   1. System-wide:
      The Telaen Administrator sets a regular expression
