@@ -737,7 +737,6 @@ class Telaen extends Telaen_core {
 
 			$datapath = $userfolder.$boxname;
 			$i = 0;
-			$messages = Array();
 			$d = dir($datapath);
 			$dirsize = 0;
 
@@ -819,11 +818,8 @@ class Telaen extends Telaen_core {
 			 * headers for the message list. We also check for SPAM here
 			 * as well
 			 */
-			if ($messages[$i]["header"] == "") {
-				$had_headers = false;
+			if ($messages[$i]["header"] == "")
 				$messages[$i]["header"] = $this->mail_retr_header($messages[$i]);
-			} else
-				$had_headers = true;
 
 			$mail_info = $this->get_mail_info($messages[$i]["header"]);
 
@@ -856,10 +852,11 @@ class Telaen extends Telaen_core {
 			if (! $havespam) {
 				$messagescopy[$j] = $messages[$i];
 				
-				if ($had_headers) {
+				if ($messages[$i]["hparsed"]) {
 					$j++;
 					continue;
 				}
+				$messagescopy[$j]["hparsed"]	= 1;
 				$messagescopy[$j]["subject"]	= $mail_info["subject"];
 				$messagescopy[$j]["date"]	= $mail_info["date"];
 				$messagescopy[$j]["message-id"] = $mail_info["message-id"];
@@ -898,11 +895,12 @@ class Telaen extends Telaen_core {
 				$j++;
 			} else {
 				$spamcopy[$y]			= $messages[$i];
-				if ($had_headers) {
+				if ($messages[$i]["hparsed"]) {
 					$y++;
 					continue;
 				}
 
+				$spamcopy[$y]["hparsed"]	= 1;
 				$spamcopy[$y]["subject"]	= $mail_info["subject"];
 				$spamcopy[$y]["date"]		= $mail_info["date"];
 				$spamcopy[$y]["message-id"] = $mail_info["message-id"];
