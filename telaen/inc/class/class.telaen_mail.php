@@ -690,11 +690,6 @@ class Telaen extends Telaen_core {
 			$localcount = count($localmessages);
 			$onservercount = count($messages);
 
-			/* OK, now we have id and size of messages, but we need the headers too */
-			if($onservercount == 0) {
-				return 1;
-			}
-							
 			if ($onservercount < $localcount || $localcount == 0) {
 				/*
 				 * Someone deleted some messages on the server, refetch all
@@ -715,11 +710,6 @@ class Telaen extends Telaen_core {
 				if ("$oldid" == "$newid") {
 				// Ok the ids are the same and we have new messages
 				
-					if ($onservercount == $localcount) {
-						// in this case nothing's changed, get_message_list.php handle this
-						return 0; 
-					}											
-
 					for($i=$localcount; $i<$onservercount; $i++) {
 						/**
 						 * Add the basic info (index and size) and then msg header 
