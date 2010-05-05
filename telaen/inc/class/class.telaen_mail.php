@@ -811,7 +811,7 @@ class Telaen extends Telaen_core {
 		 * the messages, regardless if whether we have headers or not.
 		 */
 		for ($i=0; $i<$mcount; $i++) {
-			if ($i < $start || $j > $wcount) {
+			if (($i < $start) || ($j > $wcount)) {
 				$messagescopy[$j] = $messages[$i];
 				$j++;
 				continue;
@@ -856,7 +856,7 @@ class Telaen extends Telaen_core {
 			}
 
 			if (! $havespam) {
-				$messagescopy[$j]		= $messages[$i];
+				$messagescopy[$j] = $messages[$i];
 				
 				if ($had_headers) {
 					$j++;
