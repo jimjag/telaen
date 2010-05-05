@@ -27,6 +27,7 @@ $folder_key = base64_encode(strtolower($folder));
 $folder_key_inbox = base64_encode("inbox");
 $folder_key_spam = base64_encode("spam");
 $is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam);
+$logging_in = false;
 
 if(!array_key_exists("headers",$sess)) $sess["headers"] = array();
 	
@@ -46,6 +47,8 @@ if( !is_array($headers)
 
 	if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
 		cleanup_dirs($userfolder, 0);
+		$reg_pp = $prefs["rpp"];
+		$start_pos = 0;
 	}
 
 	if ($UM->_autospamfolder) {
