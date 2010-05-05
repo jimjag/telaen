@@ -781,9 +781,9 @@ class Telaen extends Telaen_core {
 		/* choose the protocol */
 
 		if($this->mail_protocol == "imap") {
-			$messages = $this-mail_list_msgs_imap($boxname, $localmessages);
+			$messages = $this->mail_list_msgs_imap($boxname, $localmessages);
 		} else {
-			$messages = $this-mail_list_msgs_pop($boxname, $localmessages);
+			$messages = $this->mail_list_msgs_pop($boxname, $localmessages);
 			if (!is_array($messages)) {
 				$shortcut = Array();
 				$shortcut[0] = Array();
