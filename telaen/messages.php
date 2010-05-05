@@ -89,6 +89,13 @@ $end_pos   = (($start_pos+$reg_pp) > $nummsg)?$nummsg:$start_pos+$reg_pp;
 
 if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
 
+/*
+ * If the start or end points lack header info, then we know we
+ * need get_message_list to grab them for us. So let process.php
+ * handle this.
+ */
+if (!$headers[$start_pos]["hparsed"] || !$headers[$end_pos-1]["hparsed"]) redirect_and_exit("process.php?refr=true&folder=$folder&pag=".$pag."");
+
 $jsquota = ($exceeded)?"true":"false";
 
 $jssource = $commonJS;
