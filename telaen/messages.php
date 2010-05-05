@@ -94,7 +94,7 @@ if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?fold
  * need get_message_list to grab them for us. So let process.php
  * handle this.
  */
-if (!$headers[$start_pos]["hparsed"] || !$headers[$end_pos-1]["hparsed"]) redirect_and_exit("process.php?refr=true&folder=$folder&pag=".$pag."");
+if (!$headers[$start_pos]["hparsed"] || !$headers[$end_pos-1]["hparsed"]) redirect_and_exit("process.php?folder=$folder&pag=".$pag."");
 
 $jsquota = ($exceeded)?"true":"false";
 
