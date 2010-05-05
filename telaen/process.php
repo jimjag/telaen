@@ -205,7 +205,7 @@ if( !is_array($headers)
 	/*
 	 * If we deleted mails, the message list has already been reloaded.
 	 */
-	if(!$expunge || !$is_inbox_or_spam || isset($pag)) {
+	if(!$expunge || !$is_inbox_or_spam || $refr == "force") {
 		require("./get_message_list.php");
 		require("./apply_filters.php");
 	}
