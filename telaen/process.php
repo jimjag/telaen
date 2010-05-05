@@ -49,9 +49,6 @@ if( !is_array($headers)
 		cleanup_dirs($userfolder, 0);
 		$start_pos = 0;
 	}
-	if (isset($pag))
-		$start_pos = $pag*$reg_pp;
-
 	if ($UM->_autospamfolder) {
 		if ($folder_key == $folder_key_inbox) {
 			$other_folder_key = $folder_key_spam;

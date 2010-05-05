@@ -94,7 +94,14 @@ if(($start_pos >= $end_pos) && ($pag != 1)) redirect_and_exit("messages.php?fold
  * need get_message_list to grab them for us. So let process.php
  * handle this.
  */
-if (!$headers[$start_pos]["hparsed"] || !$headers[$end_pos-1]["hparsed"]) redirect_and_exit($refreshurl);
+$force_refresh = false;
+for($i=$start_pos;$i<$end_pos;$i++) {
+	if (!$headers[$i]["hparsed"]) {
+		$force_refresh = true;
+		break;
+	}
+}
+if ($force_refresh) redirect_and_exit("process.php?folder=".urlencode($folder)."&start_pos=$start_pos&refr=true");
 
 $jsquota = ($exceeded)?"true":"false";
 
