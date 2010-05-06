@@ -46,12 +46,12 @@ $my_post_vars = ["f_email", "f_user", "f_pass", "tipo", "is_html",
 	"bt_enviar"];
 
 foreach $my_get_vars as $my_vars {
-	$$my_vars = $_GET[$my_vars];
-	if $$my_vars == "" unset($$my_vars);
+	${$my_vars} = $_GET[$my_vars];
+	if (${$my_vars} == "") unset(${$my_vars});
 }
 foreach $my_post_vars as $my_vars {
-	$$my_vars = $_POST[$my_vars];
-	if $$my_vars == "" unset($$my_vars);
+	${$my_vars} = $_POST[$my_vars];
+	if (${$my_vars} == "") unset(${$my_vars});
 }
 
 $textout = <<<EOF
