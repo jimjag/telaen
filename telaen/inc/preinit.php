@@ -39,17 +39,17 @@ $phpver = doubleval($phpver[0].".".$phpver[2]);
  * around via GET...
  */
 
-$my_get_vars = ["pag", "decision", "refr", "mlist", "folder", "sortby",
-	"sortorder", "err", "empty", "mailto", "nameto", ];
-$my_post_vars = ["f_email", "f_user", "f_pass", "tipo", "is_html",
+$my_get_vars = array("pag", "decision", "refr", "mlist", "folder", "sortby",
+	"sortorder", "err", "empty", "mailto", "nameto");
+$my_post_vars = array("f_email", "f_user", "f_pass", "tipo", "is_html",
 	"textmode", "sig", "to", "cc", "bcc", "subject", "requireReceipt",
-	"bt_enviar"];
+	"bt_enviar");
 
-foreach $my_get_vars as $my_vars {
+foreach ($my_get_vars as $my_vars) {
 	${$my_vars} = $_GET[$my_vars];
 	if (${$my_vars} == "") unset(${$my_vars});
 }
-foreach $my_post_vars as $my_vars {
+foreach ($my_post_vars as $my_vars) {
 	${$my_vars} = $_POST[$my_vars];
 	if (${$my_vars} == "") unset(${$my_vars});
 }
