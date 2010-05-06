@@ -36,7 +36,9 @@ $phpver = doubleval($phpver[0].".".$phpver[2]);
 
 /*
  * "emulate" register_globals ON: These are all the vars we pass
- * around via GET...
+ * around via GET and POST
+ *
+ * TODO: Make NOT universal...
  */
 
 $my_get_vars = array("pag", "decision", "refr", "mlist", "folder", "sortby",

@@ -11,6 +11,9 @@ require("./inc/inc.php");
 
 $smarty->assign("pageMetas", $nocache);
 
+if (isset($_GET['rem']) $rem = $_GET['rem'];
+if (isset($_POST['userfile']) $userfile = $_POST['userfile'];
+
 if (isset($rem) && $rem != "") {
 
 	$attchs = $sess["attachments"];
