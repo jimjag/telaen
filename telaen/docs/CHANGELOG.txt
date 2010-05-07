@@ -22,7 +22,7 @@ Telaen:
 	your Email in the POP3 Inbox, lots of people do which
 	slowed down Telaen.
 
-[New]	No longer extracts vars willy-nilly from $_GET,
+[Fix]	No longer extracts vars willy-nilly from $_GET,
 	$_POST, or $_FILES.
 
 1.2.1
