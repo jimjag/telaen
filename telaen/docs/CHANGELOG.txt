@@ -25,6 +25,10 @@ Telaen:
 [Fix]	No longer extracts vars willy-nilly from $_GET,
 	$_POST, or $_FILES.
 
+[Misc]	Moved all class.*.php files to ./inc/class/. and
+	all config.* files to ./inc/config/. This means that
+	upgrading may involve moving and/or deleting older
+	stale versions of files.
 1.2.1
 
 [New]	New Forwarded status flag and icon added.

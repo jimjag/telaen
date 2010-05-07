@@ -1,0 +1,48 @@
+---------------
+UPGRADING
+---------------
+
+Upgrading should be a painless affair. You can install
+the new tarball or zip file right over the old one. Since
+we do not bundle the "local" config files, just their
+"default" versions (see above, eg: config.php.default),
+your old configuration will be saved. However, if upgrading
+from pre-1.3.0 to 1.3.0 or later, see the below.
+
+Sometimes, after upgrading, especially if this is the
+first time you've installed Telean and have previously
+been using Uebimiau, you may be surprised by blank
+pages! This is because there is a mismatch between the
+pre-compiled Smarty templates and the "new" ones.
+To resolve this, delete all the directories in the
+temporary folder that start with '%%': These are the
+precompiled templates. By removing them, you force
+Smarty to re-recompile them again, fixing the blank-page
+problem.
+
+If upgrading from Telaen 1.1.0 (or earlier) to 1.1.1 (or later),
+please be sure to check your config.php file against the
+config.php.default file. In particular, ensure that you have
+the correct values for $default_umask, $dirperm and $webmail_title
+in your config.php file for backwards compatibility (the defaults
+need to be set).
+
+If upgrading from 1.1.0 (or earlier) to 1.1.1 (or later) also note 
+that the themes are NOT COMPATIBLE with the previous versions !!!
+You need to reconfigure your header and footer (if you have a 
+personalized one). See CHANGELOG.txt for details.
+Please ask on telean forum (www.telaen.com) if you need help.
+
+If upgrading from a pre-1.3.0 version of Telaen, please note
+that some files have changed their locations. In particular
+all class.*.php files are now located in ./inc/class/ and
+all config.*.php files are now located in ./inc/config/.
+These means that you will need to move/install your old config
+files to the new locations. You will for sure need to adjust
+config.php since the require() locations for the 2 other
+config files have changed.
+
+If you install the new version overtop the old one, you will also
+need to remove the class.*.php files that are left over from the
+older version and live in ./inc/ (eg: ./inc/class.telaen.php). In
+both cases, the check_install.php script will warn you.

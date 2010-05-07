@@ -67,7 +67,7 @@ define("SMARTY_DIR","/some/place/safe/smarty/");
 # folder !
 ########################################################################
 
-$temporary_directory = "./database/";
+$temporary_directory = "./ChangeMe!/";
 
 ########################################################################
 # Title prefix for webmail pages
