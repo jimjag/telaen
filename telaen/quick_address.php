@@ -7,7 +7,7 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
-require("./inc/inc.php");
+require("./inc/init.php");
 
 $filename = $userfolder."_infos/addressbook.ucf";
 $myfile = $UM->_read_file($filename);

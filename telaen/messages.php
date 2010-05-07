@@ -7,7 +7,7 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
-require("./inc/inc.php");
+require("./inc/init.php");
 
 $folder_key = base64_encode(strtolower($folder));
 $folder_key_inbox = base64_encode("inbox");

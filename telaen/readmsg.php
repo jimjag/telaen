@@ -8,7 +8,7 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 //defines
-require("./inc/inc.php");
+require("./inc/init.php");
 
 if(!isset($ix) || !isset($pag)) redirect_and_exit("index.php?err=3", true);
 

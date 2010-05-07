@@ -8,7 +8,7 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 // load session management
-require("./inc/inc.php");
+require("./inc/init.php");
 
 // server check
 if(!$UM->mail_connect()){ 

@@ -10,7 +10,7 @@ Telaen is a GPL'ed software developed by
 @ob_start();
 
 // load session management
-require("./inc/inc.php");
+require("./inc/init.php");
 
 // check for main parameters
 if(!isset($_GET['folder']) || !isset($_GET['ix']))
