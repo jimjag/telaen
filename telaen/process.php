@@ -70,7 +70,7 @@ if( !is_array($headers)
 	if(isset($start_pos) && isset($end_pos)) {
 		$delarray = Array();
 		for($i=0;$i<$messagecount;$i++) {
-			if(isset($_POST[${"msg_$i"}])) {
+			if(isset($_POST["msg_$i"])) {
 				if ($decision == "delete") {
 					$UM->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
 				} elseif ($decision == "move") {
