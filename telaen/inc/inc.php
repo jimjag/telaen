@@ -215,6 +215,7 @@ require_once("./folder_list.php");
 
 // Sort rules
 
+$need_save = false;
 if(!isset($sortby) || !preg_match('/(subject|fromname|date|size|toname)/',$sortby)) {
 	if(array_key_exists("sort-by",$prefs) && preg_match('/(subject|fromname|date|size|toname)/',$prefs["sort-by"]))
 		$sortby = $prefs["sort-by"];
