@@ -44,7 +44,7 @@ if (valid_folder_name($delfolder, true) &&
 
 if($require_update) $sess["folders"] = $UM->mail_list_boxes();
 
-require("./misc/folder_list.php");
+require("./folder_list.php");
 
 
 if(isset($empty)) {

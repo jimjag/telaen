@@ -211,7 +211,7 @@ $commonJS = "
 ";
 
 // Include also folder list
-require_once("./misc/folder_list.php");
+require_once("./folder_list.php");
 
 // Sort rules
 

@@ -215,8 +215,8 @@ if( !is_array($headers)
 	 * If we deleted mails, the message list has already been reloaded.
 	 */
 	if(!$expunge || !$is_inbox_or_spam || $mlist) {
-		require("./misc/get_message_list.php");
-		require("./misc/apply_filters.php");
+		require("./get_message_list.php");
+		require("./apply_filters.php");
 	}
 
 	/*
@@ -226,7 +226,7 @@ if( !is_array($headers)
 	if($require_update) {
 		$UM->mail_disconnect();
 		mail_connect();
-		require("./misc/get_message_list.php");
+		require("./get_message_list.php");
 	}
 
 	$UM->mail_disconnect();
