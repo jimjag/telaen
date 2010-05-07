@@ -11,8 +11,8 @@ require("./inc/init.php");
 
 $smarty->assign("pageMetas", $nocache);
 
-if (isset($_GET['rem']) $rem = $_GET['rem'];
-if (isset($_POST['userfile']) $userfile = $_POST['userfile'];
+extract(pull_from_get(Array("rem")));
+extract(pull_from_post(Array("userfile")));
 
 if (isset($rem) && $rem != "") {
 

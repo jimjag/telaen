@@ -9,6 +9,8 @@ Telaen is a GPL'ed software developed by
 
 require("./inc/init.php");
 
+extract(pull_from_post(Array("srcFrom", "srcSubject", "srcBody")));
+
 $smarty->assign("pageMetas", $nocache);
 
 $jsquota = ($exceeded)?"true":"false";
