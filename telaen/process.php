@@ -254,12 +254,14 @@ $SS->Save($sess);
  * If they used a different version (ignoring patchlevel) then
  * they really should checkout the preferences page, since
  * they have likely changed.
+ *
+ * HACK: 
  */
 $same_version = true;
 if ($prefs["version"] != $appversion) {
 	list($their_major, $their_minor, $patch_level) = explode('.', $prefs["version"]);
-	list($our_major, $our_minor, $patch_level) = explode('.', $appversion);
-	if (($their_minor != $our_minor) || ($their_major != $our_major)) {
+	list($our_major, $our_minor, $patch_level, $devver) = explode('.', $appversion);
+	if (!$devver && (($their_minor != $our_minor) || ($their_major != $our_major))) {
 		$same_version = false;
 	}
 }
