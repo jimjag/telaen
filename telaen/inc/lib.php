@@ -366,22 +366,32 @@ function valid_folder_name($name, $checksys = false) {
 	return !preg_match('/[^A-Za-z0-9\-]/',$name);
 }
 
-function pull_from_get($my_get_vars = Array()) {
+function pull_from_get($my_vars = Array()) {
 	$reta = Array();
-	foreach ($my_get_vars as $to_get) {
-		if (isset($_GET[$to_get]))
-			$reta[$to_get] = $_GET[$to_get];
+	foreach ($my_vars as $to_pull) {
+		if (isset($_GET[$to_pull]))
+			$reta[$to_pull] = $_GET[$to_pull];
 	}
 	return $reta;
 }
 
-function pull_from_post($my_post_vars = Array()) {
+function pull_from_post($my_vars = Array()) {
 	$reta = Array();
-	foreach ($my_post_vars as $to_get) {
-		if (isset($_POST[$to_get]))
-			$reta[$to_get] = $_POST[$to_get];
+	foreach ($my_vars as $to_pull) {
+		if (isset($_POST[$to_pull]))
+			$reta[$to_pull] = $_POST[$to_pull];
 	}
 	return $reta;
 }
+
+function pull_from_files($my_vars = Array()) {
+	$reta = Array();
+	foreach ($my_vars as $to_pull) {
+		if (isset($_FILES[$to_pull]))
+			$reta[$to_pull] = $_FILES[$to_pull];
+	}
+	return $reta;
+}
+
 
 ?>

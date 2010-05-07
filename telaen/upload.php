@@ -12,7 +12,7 @@ require("./inc/init.php");
 $smarty->assign("pageMetas", $nocache);
 
 extract(pull_from_get(Array("rem")));
-extract(pull_from_post(Array("userfile")));
+extract(pull_from_files(Array("userfile")));
 
 if (isset($rem) && $rem != "") {
 
