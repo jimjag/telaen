@@ -233,6 +233,19 @@ td.headerright {
 }
 
 #calendar {
+	border-top-width: 0px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #000033;
+	border-right-color: #000033;
+	border-bottom-color: #000033;
+	border-left-color: #000033;
+	background-color: #FFFFFF;
 	padding: 5px;
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -254,21 +267,20 @@ td.headerright {
     color:#fff;
 }
 
-
-.today{
+#calendar .today{
     color:#fff;
     font-weight:bold;
 }
 
-.regday{
+#calendar .regday{
     color:#fff;
 }
 
-.days{
+#calendar .days{
     background-color:#f1f1f1;
 }
 
-.month{
+#calendar .month{
     width:180px;
     float:left;
     border:1px solid #ccc;
