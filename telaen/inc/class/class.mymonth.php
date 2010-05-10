@@ -65,7 +65,7 @@ class MyMonth {
 	}
 	
 	function showMonth() {
-		echo $this->monthAsTable;
+		echo $this->monthAsTable();
 	}
 }
 ?>
