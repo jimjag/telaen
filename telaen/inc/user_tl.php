@@ -74,6 +74,7 @@ $catch_address_template	   = "themes/$selected_theme/catch-address.htm";	// Addr
 $print_message_template		= "themes/$selected_theme/print-message.htm";	 // Print friendly version
 
 $menu_template			= "$selected_theme/menu.htm";			// Menu
+$calendar_template		= "$selected_theme/calendar.htm";			// Menu
 $header_template		= "$selected_theme/header.htm";				// Page Header
 $footer_template			= "$selected_theme/footer.htm";				// Page Footer
 $popup_header_template		= "$selected_theme/popup-header.htm";			// Header for the popup wins
