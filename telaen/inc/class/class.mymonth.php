@@ -33,11 +33,11 @@ class MyMonth {
 		$this->_year = intval($year);
 	}
 	
-	function showMonth() {
+	function monthAsTable() {
 
-		echo "<table class='month'>";
-		echo "  <tr><th colspan='7'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th></tr>";
-		echo "  <tr class='days'><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>";
+        $ret = "<table class='month'>";
+		$ret .= "  <tr><th colspan='7'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th></tr>";
+		$ret .= "  <tr class='days'><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>";
 		
 		if (($this->_today['mon'] == $this->_month) && ($this->_today['year'] == $this->_year))
 			$today = $this->_today['mday'];
@@ -45,22 +45,27 @@ class MyMonth {
 			$today = -1;
 	
 		$weekday = $this->_firstday;
-		echo "<tr>";
-		if($weekday > 0) echo "<td class='regday' colspan='{$weekday}'>&nbsp;</td>";
+		$ret .= "<tr>";
+		if($weekday > 0) $ret .= "<td class='regday' colspan='{$weekday}'>&nbsp;</td>";
 		for($day=1; $day<=$this->_lastday; $day++,$weekday++){
 			if($weekday == 7) {
 				$weekday = 0;
-				echo "</tr>\n<tr>";
+				$ret .= "</tr>\n<tr>";
 			}
 			if ($day == $today) {
-				echo "<td class='today'> $day </td>";
+				$ret .= "<td class='today'> $day </td>";
 			} else {
-				echo "<td class='regday'> $day </td>";
+				$ret .= "<td class='regday'> $day </td>";
 			}
 		}
-		if($weekday != 7) echo "<td class='regday' colspan=".(7-$weekday).">&nbsp;</td>";
-		echo "</tr>";
-		echo "</table>";
+		if($weekday != 7) $ret .= "<td class='regday' colspan=".(7-$weekday).">&nbsp;</td>";
+		$ret .= "</tr>";
+		$ret .= "</table>";
+	}
+	return $ret;
+	
+	function showMonth() {
+		echo $this->monthAsTable;
 	}
 }
 ?>
