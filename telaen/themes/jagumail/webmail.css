@@ -242,14 +242,14 @@ table.month{
     border-collapse:collapse;
 }
 
-td.today {
-    border:1px solid #ddd;
-    color:#555;
-    padding:3px;
-    text-align:right;
-	background-color: 0000cc;
-    color:#fff;
-    font-weight:bold;
+td.today
+{
+	border: 1px solid #ddd;
+	padding: 3px;
+	text-align: right;
+	color: #fff;
+	font-weight: bold;
+	background-color: #30C;
 }
 
 td.regday {
@@ -257,13 +257,13 @@ td.regday {
     color:#555;
     padding:3px;
     text-align:right;
-	background-color: 0000cc;
+	background-color: #30C;
     color:#fff;
 }
 
 th.week {
     padding:5px;
-	background-color: 0000cc;
+	background-color: #30C;
     color:#fff;
 }
 
