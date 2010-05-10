@@ -1,0 +1,26 @@
+{config_load file=$umLanguageFile section="AddressBook"}
+
+{include file=$headerTemplate pageTitle=#adr_title#}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="2" align="center" bgcolor="white">
+	
+	<tr>
+		<td valign=top width="15%">
+			{include file=$menuTemplate refresh="false"}
+		</td>
+
+		<td bgcolor="white" valign="top">
+			<table width="500" border="0" cellspacing="1" cellpadding="0">
+				<tr><td class="headerright" size="20%">{#adr_name#} &nbsp;</td><td class=default> &nbsp;{$umAddrName|escape:"html"}</td></tr>
+				<tr><td class="headerright">{#adr_email#} &nbsp;</td><td class=default> &nbsp;{$umAddrEmail|escape:"html"}</td></tr>
+				<tr><td class="headerright">{#adr_street#} &nbsp;</td><td class=default> &nbsp;{$umAddrStreet|escape:"html"}</td></tr>
+				<tr><td class="headerright">{#adr_city#} &nbsp;</td><td class=default> &nbsp;{$umAddrCity|escape:"html"}</td></tr>
+				<tr><td class="headerright">{#adr_state#} &nbsp;</td><td class=default> &nbsp;{$umAddrState|escape:"html"}</td></tr>
+				<tr><td class="headerright">{#adr_work#} &nbsp;</td><td class=default> &nbsp;{$umAddrWork|escape:"html"}</td></tr>
+				<tr><td class="default9" colspan=2 align=center><br><a href="{$umGoBack}">{#adr_back#}</a></td></tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+{include file=$footerTemplate}
