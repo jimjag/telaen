@@ -35,8 +35,8 @@ class MyMonth {
 	
 	function monthAsTable() {
 
-        $ret = "<div id='calendar'><table class='month'>";
-		$ret .= "  <tr><th colspan='7'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th></tr>";
+        $ret = "<table class='month'>";
+		$ret .= "  <tr><th class='week' colspan='7'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th></tr>";
 		$ret .= "  <tr class='days'><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>";
 		
 		if (($this->_today['mon'] == $this->_month) && ($this->_today['year'] == $this->_year))
@@ -60,7 +60,7 @@ class MyMonth {
 		}
 		if($weekday != 7) $ret .= "<td class='regday' colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>";
-		$ret .= "</table></div>";
+		$ret .= "</table>";
 		return $ret;
 	}
 	

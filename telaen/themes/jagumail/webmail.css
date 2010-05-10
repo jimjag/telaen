@@ -232,58 +232,41 @@ td.headerright {
 	font-size: 11px;
 }
 
-#calendar {
-	border-top-width: 0px;
-	border-right-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #000033;
-	border-right-color: #000033;
-	border-bottom-color: #000033;
-	border-left-color: #000033;
-	background-color: #FFFFFF;
-	padding: 5px;
-	font-family: Geneva, Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	font-weight: normal;
-	color: #666666;
-}
+/** Calendar */
 
-#calendar td {
-    border:1px solid #ddd;
-    color:#555;
-    padding:3px;
-    text-align:right;
-}
-
-#calendar th {
-    padding:5px;
-	background-image: url(images/hbg.gif);
-	background-repeat: repeat-x;
-    color:#fff;
-}
-
-#calendar .today{
-    color:#fff;
-    font-weight:bold;
-}
-
-#calendar .regday{
-    color:#fff;
-}
-
-#calendar .days{
-    background-color:#f1f1f1;
-}
-
-#calendar .month{
+table.month{
     width:180px;
     float:left;
     border:1px solid #ccc;
     margin:8px;
     border-collapse:collapse;
+}
+
+td.today {
+    border:1px solid #ddd;
+    color:#555;
+    padding:3px;
+    text-align:right;
+	background-color: 0000cc;
+    color:#fff;
+    font-weight:bold;
+}
+
+td.regday {
+    border:1px solid #ddd;
+    color:#555;
+    padding:3px;
+    text-align:right;
+	background-color: 0000cc;
+    color:#fff;
+}
+
+th.week {
+    padding:5px;
+	background-color: 0000cc;
+    color:#fff;
+}
+
+tr.days{
+    background-color:#f1f1f1;
 }
