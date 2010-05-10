@@ -247,8 +247,14 @@ td.today
 	border: 1px solid #ddd;
 	padding: 3px;
 	text-align: right;
-	color: #fff;
+	color: #004080;
 	font-weight: bold;
+	background-color: #fff;
+}
+
+td.today:hover
+{
+	color: #fff;
 	background-color: #004080;
 }
 
@@ -257,9 +263,15 @@ td.regday {
 	color:#555;
 	padding:3px;
 	text-align:right;
+	background-color: #fff;
+	color:#004080;
+}
+
+td.regday:hover {
 	background-color: #004080;
 	color:#fff;
 }
+
 
 th.week {
 	text-align:center;
