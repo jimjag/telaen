@@ -200,13 +200,13 @@ if($nummsg > 0) {
 		$to = $headers[$i]["to"][0]["name"];
 		$subject = $headers[$i]["subject"];
 		if ($read == "true") {
-			$msg_img = "./images/msg_unread.gif";
+			$msg_img = "./images/msg_read.gif";
 		} elseif (stristr($headers[$i]["flags"], '\\ANSWERED')) {
 			$msg_img = "./images/msg_answered.gif";
 		} elseif (stristr($headers[$i]["flags"], '\\FORWARDED')) {
 			$msg_img = "./images/msg_forwarded.gif";
 		} else {
-			$msg_img = "./images/msg_read.gif";
+			$msg_img = "./images/msg_unread.gif";
 		}
 		$prior = $headers[$i]["priority"];
 		if($prior == 4 || $prior == 5)
