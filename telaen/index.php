@@ -13,7 +13,6 @@ require("./inc/preinit.php");
 require("./inc/user_tl.php");
 
 extract(pull_from_get(Array("f_email", "f_user", "lid", "tid", "six")));
-extract(pull_from_post(Array("f_email", "f_user")));
 
 require_once(SMARTY_DIR."Smarty.class.php");
 $smarty = new Smarty;
