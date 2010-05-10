@@ -16,6 +16,8 @@ require("./inc/config/config.php");
 require("./inc/class/class.telaen.php");
 require("./inc/lib.php");
 require("./inc/preinit.php");
+require("./inc/class/class.mymonth.php");
+
 
 require_once(SMARTY_DIR."Smarty.class.php");
 $smarty = new Smarty;
@@ -61,6 +63,9 @@ if (!isset($webmail_title) || trim($webmail_title) == "" ) {
 }
 $smarty->assign("webmailTitle", $webmail_title);
 
+$mycal = new MyMonth();
+$mycal = $mycal->monthAsTable();
+$smarty->assign("umCalendar",$mycal);
 
 $UM = new Telaen();
 

@@ -8,7 +8,6 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 require("./inc/init.php");
-require("./inc/class/class.mymonth.php");
 
 $folder_key = base64_encode(strtolower($folder));
 $folder_key_inbox = base64_encode("inbox");
@@ -321,11 +320,7 @@ $d->close();
 
 unset($UM);
 
-$mycal = new MyMonth();
-$mycal = $mycal->monthAsTable();
-
 $smarty->assign("umHaveSpam",$sess["havespam"]);
-$smarty->assign("umCalendar",$mycal);
 $smarty->assign("umAvalFolders",$avalfolders);
 $smarty->display("$selected_theme/messagelist.htm");
 
