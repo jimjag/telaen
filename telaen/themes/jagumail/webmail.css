@@ -272,6 +272,14 @@ td.regday:hover {
 	color:#fff;
 }
 
+td.blankday {
+	border:1px solid #ddd;
+	color:#555;
+	padding:3px;
+	text-align:right;
+	background-color: #fff;
+	color:#004080;
+}
 
 th.week {
 	text-align:center;

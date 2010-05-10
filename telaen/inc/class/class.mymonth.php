@@ -46,7 +46,7 @@ class MyMonth {
 	
 		$weekday = $this->_firstday;
 		$ret .= "<tr>";
-		if($weekday > 0) $ret .= "<td class='regday' colspan='{$weekday}'>&nbsp;</td>";
+		if($weekday > 0) $ret .= "<td class='blankday' colspan='{$weekday}'>&nbsp;</td>";
 		for($day=1; $day<=$this->_lastday; $day++,$weekday++){
 			if($weekday == 7) {
 				$weekday = 0;
@@ -58,7 +58,7 @@ class MyMonth {
 				$ret .= "<td class='regday'> $day </td>";
 			}
 		}
-		if($weekday != 7) $ret .= "<td class='regday' colspan=".(7-$weekday).">&nbsp;</td>";
+		if($weekday != 7) $ret .= "<td class='blankday' colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>";
 		$ret .= "</table>";
 		return $ret;
