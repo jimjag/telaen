@@ -61,8 +61,8 @@ class MyMonth {
 		if($weekday != 7) $ret .= "<td class='regday' colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>";
 		$ret .= "</table>";
+		return $ret;
 	}
-	return $ret;
 	
 	function showMonth() {
 		echo $this->monthAsTable;
