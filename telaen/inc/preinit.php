@@ -39,7 +39,7 @@ $phpver = doubleval($phpver[0].".".$phpver[2]);
  * vars used by just about all main entry points (see inc/init.php)
  */
 
-extract(pull_from_get(Array("pag", "folder", "sortby", "sortorder", "err", "ix")));
+extract(pull_from_get(Array("pag", "folder", "sortby", "sortorder", "err", "ix", "lng", "tem")));
 extract(pull_from_post(Array("pag", "folder", "f_email", "f_user", "f_pass", "six", "lng", "tem")));
 
 $textout = <<<EOF
