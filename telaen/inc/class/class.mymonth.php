@@ -18,11 +18,11 @@ class MyMonth {
 
 	function MyMonth($month=0, $year=0) {
 		if (($month <= 0) || ($month >= 13) || ($year <= 0) || $year >= 2050){
-		   $this->_mymonth	= getdate();
-		   $month = $this->_mymonth['mon'];
-		   $year = $this->_mymonth['year'];
+			$this->_mymonth	= getdate();
+			$month = $this->_mymonth['mon'];
+			$year = $this->_mymonth['year'];
 		} else {
-		   $this->_mymonth	= getdate(mktime(0,0,0,$month,1,$year));
+			$this->_mymonth	= getdate(mktime(0,0,0,$month,1,$year));
 		}
 		$fom = gmmktime(0,0,0,$this->_mymonth['mon'],1,$this->_mymonth['year']);
 		$wd = explode(',',gmstrftime('%m,%Y,%B,%w',$fom));
@@ -35,15 +35,15 @@ class MyMonth {
 	
 	function monthAsTable() {
 
-        $ret = "<table class='month'>";
+		$ret = "<div id='calendar'><table class='month'>\n";
 		$ret .= "  <tr><th class='week' colspan='7'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th></tr>";
 		$ret .= "  <tr class='days'><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>";
-		
+
 		if (($this->_today['mon'] == $this->_month) && ($this->_today['year'] == $this->_year))
 			$today = $this->_today['mday'];
 		else
 			$today = -1;
-	
+
 		$weekday = $this->_firstday;
 		$ret .= "<tr>";
 		if($weekday > 0) $ret .= "<td class='blankday' colspan='{$weekday}'>&nbsp;</td>";
@@ -59,11 +59,10 @@ class MyMonth {
 			}
 		}
 		if($weekday != 7) $ret .= "<td class='blankday' colspan=".(7-$weekday).">&nbsp;</td>";
-		$ret .= "</tr>";
-		$ret .= "</table>";
+		$ret .= "</tr>\n</table></div>";
 		return $ret;
 	}
-	
+
 	function showMonth() {
 		echo $this->monthAsTable();
 	}

@@ -248,7 +248,10 @@ td.headerright {
 
 /** Calendar */
 
-table.month{
+#calendar{
+}
+
+#calendar table.month{
 	width:180px;
 	float:left;
 	border:2px solid #004080;
@@ -256,7 +259,7 @@ table.month{
 	border-collapse:collapse;
 }
 
-td.today
+#calendar td.today
 {
 	border: 1px solid #ddd;
 	padding: 3px;
@@ -266,13 +269,13 @@ td.today
 	background-color: #fff;
 }
 
-td.today:hover
+#calendar td.today:hover
 {
 	color: #fff;
 	background-color: #004080;
 }
 
-td.regday {
+#calendar td.regday {
 	border:1px solid #ddd;
 	color:#555;
 	padding:3px;
@@ -281,12 +284,12 @@ td.regday {
 	color:#004080;
 }
 
-td.regday:hover {
+#calendar td.regday:hover {
 	background-color: #004080;
 	color:#fff;
 }
 
-td.blankday {
+#calendar td.blankday {
 	border:1px solid #ddd;
 	color:#555;
 	padding:3px;
@@ -295,14 +298,14 @@ td.blankday {
 	color:#004080;
 }
 
-th.week {
+#calendar th.week {
 	text-align:center;
 	padding:5px;
 	background-color: #004080;
 	color:#fff;
 }
 
-tr.days{
+#calendar tr.days{
 	text-align:right;
 	background-color:#f0f0f0;
 }
