@@ -11,15 +11,7 @@ Telaen is a GPL'ed software developed by
  * This file provides a support for ajax calls
  * All parameters must be sended via POST and the 'action' is mandatory
  */
-session_name('telaen');
-session_start();
-
-require("./inc/lib.php");
-require("./inc/version.php");
-
-// common session check, exit if no auth
-$SS = new Session();
-$sess = $SS->Load();
+require("./inc/init.php");
 
 if(!$sess["auth"]) {
 	echo "error: your session seems expired";
@@ -29,9 +21,6 @@ if(!$sess["auth"]) {
 // cheking for main param
 if(isset($_POST['action'])) {
 	
-	// config
-	require("./inc/config/config.php");
-
 	$prefs = load_prefs();
 		
 	$action = $_POST['action'];
@@ -46,11 +35,7 @@ if(isset($_POST['action'])) {
 			$receiptSubj = $_POST['receipt_subj'];
 			$receiptMsg = $_POST['receipt_msg'];
 			
-			require("./inc/class.telaen.php");
 			$UM = new Telaen();
-
-			require("./inc/class.phpmailer.php");
-				require("./inc/class.phpmailer_extra.php");
 
 			// init mailer
 				$mail = new PHPMailer_extra;
