@@ -108,7 +108,7 @@ if(isset($_POST['action'])) {
 		// Regen the calendar
 		case "replaceCal":
 			$newcal = new MyMonth($_POST['cal_month'], $_POST['cal_year']);
-			$newcal->showMonth();
+			$newcal->showMonth(1);
 			break;
 		default:
 			echo "error: this action does not exist";

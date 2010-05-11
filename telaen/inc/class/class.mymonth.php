@@ -59,10 +59,14 @@ function replaceCal(month, year) {
 		}
 	}
 
-	function monthAsTable() {
+	function monthAsTable($just_table = 0) {
 
-		$ret = $this->_ajax;
-		$ret .= "<div id='calendar'><table class='month'><tr>\n";
+		$ret = "";
+		if (!$just_table) {
+			$ret .= $this->_ajax;
+			$ret .= "<div id='calendar'>";
+		}
+		$ret .= "<table class='month'><tr>\n";
 		$ret .= "  <th class='week' onclick='replaceCal({$this->_pmonth}, {$this->_pyear});'> &laquo; </th>";
 		$ret .= "  <th class='week' colspan='5'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th>";
 		$ret .= "  <th class='week' onclick='replaceCal({$this->_nmonth}, {$this->_nyear});'> &raquo; </th>\n</tr>";
@@ -88,12 +92,13 @@ function replaceCal(month, year) {
 			}
 		}
 		if($weekday != 7) $ret .= "<td class='blankday' colspan=".(7-$weekday).">&nbsp;</td>";
-		$ret .= "</tr>\n</table></div>";
+		$ret .= "</tr>\n</table>";
+		if (!$just_table) $ret .= "</div>";
 		return $ret;
 	}
 
-	function showMonth() {
-		$month = $this->monthAsTable();
+	function showMonth($just_table = 0) {
+		$month = $this->monthAsTable($just_table);
 		echo $month;
 	}
 }
