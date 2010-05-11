@@ -107,7 +107,7 @@ if(isset($_POST['action'])) {
 
 		// Regen the calendar
 		case "replaceCal":
-			$newcal = new MyMonth($_POST['month'], $_POST['year']);
+			$newcal = new MyMonth($_POST['cal_month'], $_POST['cal_year']);
 			$newcal->showMonth();
 			break;
 		default:
