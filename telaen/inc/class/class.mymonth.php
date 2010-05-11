@@ -58,7 +58,7 @@ function replaceCal(month, year) {
 			$this->_nyear++;
 		}
 	}
-	&laquo;
+
 	function monthAsTable() {
 
 		$ret = $this->_ajax;
