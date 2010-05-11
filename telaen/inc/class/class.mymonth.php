@@ -93,7 +93,8 @@ function replaceCal(month, year) {
 	}
 
 	function showMonth() {
-		echo $this->monthAsTable();
+		$month = $this->monthAsTable();
+		echo $month;
 	}
 }
 ?>
