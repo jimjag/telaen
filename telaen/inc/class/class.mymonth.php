@@ -50,32 +50,33 @@ class MyMonth {
 
 	function monthAsTable() {
 
-		$ret = "<table class='month'><tr>\n";
-		$ret .= "  <th class='week' onclick='replaceCal({$this->_pmonth}, {$this->_pyear});'> &laquo; </th>";
-		$ret .= "  <th class='week' colspan='5'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th>";
-		$ret .= "  <th class='week' onclick='replaceCal({$this->_nmonth}, {$this->_nyear});'> &raquo; </th>\n</tr>";
-		$ret .= "  <tr class='days'><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>";
-
-		if (($this->_today['mon'] == $this->_month) && ($this->_today['year'] == $this->_year))
-			$today = $this->_today['mday'];
+		$ret = <<<EOT
+<table class="month"><tr>
+  <th class="week" onclick="replaceCal({$this->_pmonth}, {$this->_pyear});"> &laquo; </th>
+  <th class="week" colspan="5"> {$this->_mymonth["month"]} - {$this->_mymonth["year"]} </th>
+  <th class="week" onclick="replaceCal({$this->_nmonth}, {$this->_nyear});"> &raquo; </th>\n</tr>
+  <tr class="days"><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>
+EOT;
+		if (($this->_today["mon"] == $this->_month) && ($this->_today["year"] == $this->_year))
+			$today = $this->_today["mday"];
 		else
 			$today = -1;
 
 		$weekday = $this->_firstday;
 		$ret .= "<tr>";
-		if($weekday > 0) $ret .= "<td class='blankday' colspan='{$weekday}'>&nbsp;</td>";
+		if($weekday > 0) $ret .= "<td class=\"blankday\" colspan=\"{$weekday}\">&nbsp;</td>";
 		for($day=1; $day<=$this->_lastday; $day++,$weekday++){
 			if($weekday == 7) {
 				$weekday = 0;
 				$ret .= "</tr>\n<tr>";
 			}
 			if ($day == $today) {
-				$ret .= "<td class='today'> $day </td>";
+				$ret .= "<td class=\"today\"> $day </td>";
 			} else {
-				$ret .= "<td class='regday'> $day </td>";
+				$ret .= "<td class=\"regday\"> $day </td>";
 			}
 		}
-		if($weekday != 7) $ret .= "<td class='blankday' colspan=".(7-$weekday).">&nbsp;</td>";
+		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";
 		return $ret;
 	}
@@ -85,7 +86,13 @@ class MyMonth {
 	}
 
 	function monthAsDiv() {
-		$ret = "<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>\n<div id='calendar'>" . $this->monthAsTable() . "</div>";
+		$end = <<<EOT
+</div>
+<script type="text/javascript"><!--//
+doDays();
+//--></script>
+EOT;
+		$ret = "<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>\n<div id=\"calendar\">" . $this->monthAsTable() . $end;
 		return $ret;
 	}
 
