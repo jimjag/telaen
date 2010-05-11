@@ -64,7 +64,7 @@ if (!isset($webmail_title) || trim($webmail_title) == "" ) {
 $smarty->assign("webmailTitle", $webmail_title);
 
 $mycal = new MyMonth();
-$mycal = $mycal->monthAsTable();
+$mycal = $mycal->monthAsDiv();
 $smarty->assign("umCalendar",$mycal);
 
 $UM = new Telaen();

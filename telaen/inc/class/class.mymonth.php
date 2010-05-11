@@ -19,17 +19,6 @@ class MyMonth {
 	var $_pyear;
 	var $_nmonth;
 	var $_nyear;
-	var $_ajax = '<script language="javascript" type="text/javascript">
-//<![CDATA[
-function replaceCal(month, year) {
-  new Ajax.Updater("calendar", "ajax.php", {
-    method : "post",
-    parameters : {action: "replaceCal", cal_month: month, cal_year: year }
-    });
-}
-//]]>
-</script>	
-';
 
 	function MyMonth($month=0, $year=0) {
 		if (($month <= 0) || ($month >= 13) || ($year <= 0) || $year >= 2050){
@@ -59,14 +48,9 @@ function replaceCal(month, year) {
 		}
 	}
 
-	function monthAsTable($just_table = 0) {
+	function monthAsTable() {
 
-		$ret = "";
-		if (!$just_table) {
-			$ret .= $this->_ajax;
-			$ret .= "<div id='calendar'>";
-		}
-		$ret .= "<table class='month'><tr>\n";
+		$ret = "<table class='month'><tr>\n";
 		$ret .= "  <th class='week' onclick='replaceCal({$this->_pmonth}, {$this->_pyear});'> &laquo; </th>";
 		$ret .= "  <th class='week' colspan='5'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th>";
 		$ret .= "  <th class='week' onclick='replaceCal({$this->_nmonth}, {$this->_nyear});'> &raquo; </th>\n</tr>";
@@ -93,13 +77,21 @@ function replaceCal(month, year) {
 		}
 		if($weekday != 7) $ret .= "<td class='blankday' colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";
-		if (!$just_table) $ret .= "</div>";
 		return $ret;
 	}
 
-	function showMonth($just_table = 0) {
-		$month = $this->monthAsTable($just_table);
-		echo $month;
+	function showMonthAsTable() {
+		echo $this->monthAsTable();
 	}
+
+	function monthAsDiv() {
+		$ret = "<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>\n<div id='calendar'>" . $this->monthAsTable() . "</div>";
+		return $ret;
+	}
+
+	function showMonthAsDiv() {
+		echo $this->monthAsDiv();
+	}
+
 }
 ?>
