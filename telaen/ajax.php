@@ -104,7 +104,12 @@ if(isset($_POST['action'])) {
 				echo "success: session refreshed";
 		
 			break;
-		
+
+		// Regen the calendar
+		case "replaceCal":
+			$newcal = new MyMonth($_POST['month'], $_POST['year']);
+			$newcal->showMonth();
+			break;
 		default:
 			echo "error: this action does not exist";
 	}
