@@ -31,15 +31,13 @@ if(isset($_POST['action'])) {
 			if(!isset($_POST['recipient']))
 				break;
 
-			$recipient = $_POST['recipient'];			
+			$recipient = $_POST['recipient'];
 			$receiptSubj = $_POST['receipt_subj'];
 			$receiptMsg = $_POST['receipt_msg'];
 			
-			$UM = new Telaen();
-
 			// init mailer
-				$mail = new PHPMailer_extra;
-				$mail->PluginDir = "./inc/";
+			$mail = new PHPMailer_extra;
+			$mail->PluginDir = "./inc/";
 			$mail->SetLanguage("en","langs/");
 			$mail->CharSet = $default_char_set;
 			$mail->Hostname = getenv("SERVER_NAME");
@@ -53,7 +51,7 @@ if(isset($_POST['action'])) {
 			}
 			if ($phpmailer_timeout != 0) {
 				$mail->Timeout = $phpmailer_timeout;
-				}
+			}
 
 			// for password authenticated servers
 			$mail->SMTPAuth = $use_password_for_smtp;
@@ -63,7 +61,7 @@ if(isset($_POST['action'])) {
 			// build the email
 			$mail->From = ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$sess["email"];
 			$mail->FromName = $UM->mime_encode_headers($prefs["real-name"]);
-			$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));			
+			$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));
 			$mail->AddAddress($recipient);
 			
 			$mail->Subject = $UM->mime_encode_headers(stripslashes($receiptSubj));
@@ -72,7 +70,7 @@ if(isset($_POST['action'])) {
 			// send
 			if($mail->Send() === true) {
 				echo "success: receipt sent";
-			}			
+			}
 			else {
 				echo "error: " . $mail->ErrorInfo;
 			}
