@@ -15,6 +15,21 @@ class MyMonth {
 	var $_firstday;
 	var $_lastday;
 	var $_today;
+	var $_pmonth;
+	var $_pyear;
+	var $_nmonth;
+	var $_nyear;
+	var $_ajax = '<script language="javascript" type="text/javascript">
+//<![CDATA[
+function replaceCal(month, year) {
+  new Ajax.Updater("calendar", "ajax.php", {
+    method : "post",
+    parameters : {action: "replaceCal", cal_month: month, cal_year: year, }
+    });
+}
+//]]>
+</script>	
+';
 
 	function MyMonth($month=0, $year=0) {
 		if (($month <= 0) || ($month >= 13) || ($year <= 0) || $year >= 2050){
@@ -31,12 +46,26 @@ class MyMonth {
 		$this->_today = getdate();
 		$this->_month = intval($month);
 		$this->_year = intval($year);
+		$this->_pyear = $this->_nyear = $this->_year;
+		$this->_pmonth = $this->_month - 1;
+		if ($this->_pmonth <= 0) {
+			$this->_pmonth = 12;
+			$this->_pyear--;
+		}
+		$this->_nmonth = $this->_month + 1;
+		if ($this->_nmonth >= 13) {
+			$this->_nmonth = 1;
+			$this->_nyear++;
+		}
 	}
-	
+	&laquo;
 	function monthAsTable() {
 
-		$ret = "<div id='calendar'><table class='month'>\n";
-		$ret .= "  <tr><th class='week' colspan='7'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th></tr>";
+		$ret = $this->_ajax;
+		$ret .= "<div id='calendar'><table class='month'><tr>\n";
+		$ret .= "  <th class='week' onclick='replaceCal({$this->_pmonth}, {$this->_pyear});'> &laquo; </th>";
+		$ret .= "  <th class='week' colspan='5'> {$this->_mymonth['month']} - {$this->_mymonth['year']} </th>";
+		$ret .= "  <th class='week' onclick='replaceCal({$this->_nmonth}, {$this->_nyear});'> &raquo; </th>\n</tr>";
 		$ret .= "  <tr class='days'><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>";
 
 		if (($this->_today['mon'] == $this->_month) && ($this->_today['year'] == $this->_year))
