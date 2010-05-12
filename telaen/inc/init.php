@@ -63,10 +63,6 @@ if (!isset($webmail_title) || trim($webmail_title) == "" ) {
 }
 $smarty->assign("webmailTitle", $webmail_title);
 
-$mycal = new MyMonth();
-$mycal = $mycal->monthAsDiv();
-$smarty->assign("umCalendar",$mycal);
-
 $UM = new Telaen();
 
 if(isset($f_pass) && strlen($f_pass) > 0) {
@@ -176,6 +172,10 @@ $sess["start"] = time();
 $SS->Save($sess);
 
 $userfolder = $temporary_directory.preg_replace("/[^a-z0-9\._-]/","_",strtolower($f_user))."_".strtolower($f_server)."/";
+
+$mycal = new MyMonth();
+$mycal = $mycal->monthAsDiv();
+$smarty->assign("umCalendar",$mycal);
 
 $UM->debug			= $enable_debug;
 $UM->use_html			= $allow_html;
