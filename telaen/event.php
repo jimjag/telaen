@@ -64,7 +64,7 @@ if ($actionDone) {
 	$smarty->assign("umEventForm",1);
 }
 unset ($events);
-
+$smarty->assign("umPageTitle", "Calendar Event");
 $smarty->display("$selected_theme/event.htm");
 
 ?>
