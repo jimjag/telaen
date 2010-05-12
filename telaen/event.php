@@ -33,7 +33,7 @@ if (!$etext && $eaction != "delete")
 /*
  * Grab the event array and event, if any, for this date
  */
-$events = new CalEvents($year, $month);
+$events = new MyMonth($year, $month);
 
 $actionDone = false;
 switch($eaction) {

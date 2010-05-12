@@ -8,46 +8,6 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
-class CalEvents {
-	var $_edir;
-	var $_efile;
-	var $_events;
-
-	function CalEvents($year=2010, $month=1) {
-		global $UM, $userfolder;
-		if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050){
-			$mdate = getdate();
-			$month = $mdate['mon'];
-			$year = $mdate['year'];
-		}
-		$this->_edir = $userfolder."_infos/calendar/{$year}/{$month}";
-		$this->_efile = $this->_edir . "/events.ucf";
-		$events = Array();
-		$myfile = $UM->_read_file($this->_efile);
-		if ($myfile != "") 
-			$events = unserialize(base64_decode($myfile));
-		$this->_events = $events;
-	}
-	
-	function saveEvents() {
-		global $UM;
-		@mkdir($this->_edir, 0750, true);
-		$UM->_save_file($this->_efile,base64_encode(serialize($this->_events)));
-	}
-
-	function getEvent($day) {
-		return $this->_events["$day"];
-	}
-
-	function setEvent($day , $val) {
-		$this->_events["$day"] = $val;
-	}
-
-	function delEvent($day) {
-		unset ($this->_events["$day"]);
-	}
-}
-
 class MyMonth {
 	var $_month = 0;
 	var $_year = 0;
@@ -59,8 +19,12 @@ class MyMonth {
 	var $_pyear;
 	var $_nmonth;
 	var $_nyear;
+	var $_edir;
+	var $_efile;
+	var $_events;
 
 	function MyMonth($year=0, $month=0) {
+		global $UM, $userfolder;
 		if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050){
 			$this->_mymonth	= getdate();
 			$month = $this->_mymonth['mon'];
@@ -86,11 +50,16 @@ class MyMonth {
 			$this->_nmonth = 1;
 			$this->_nyear++;
 		}
+		$this->_edir = $userfolder."_infos/calendar/{$this->_year}/{$this->_month}";
+		$this->_efile = $this->_edir . "/events.ucf";
+		$events = Array();
+		$myfile = $UM->_read_file($this->_efile);
+		if ($myfile != "")
+			$events = unserialize(base64_decode($myfile));
+		$this->_events = $events;
 	}
 
 	function monthAsTable() {
-
-		$events = new CalEvents($this->_year, $this->_month);
 
 		$ret = <<<EOT
 <table class="month"><tr>
@@ -115,7 +84,7 @@ EOT;
 			$dclass = "regday";
 			if ($day == $today)
 				$dclass = "today";
-			$event = $events->getEvent($day);
+			$event = $this->getEvent($day);
 			if ($event) {
 				$dclass = "event";
 				if ($day == $today)
@@ -148,6 +117,24 @@ EOT;
 
 	function showMonthAsDiv() {
 		echo $this->monthAsDiv();
+	}
+
+	function saveEvents() {
+		global $UM;
+		@mkdir($this->_edir, 0750, true);
+		$UM->_save_file($this->_efile,base64_encode(serialize($this->_events)));
+	}
+
+	function getEvent($day) {
+		return $this->_events["$day"];
+	}
+
+	function setEvent($day , $val) {
+		$this->_events["$day"] = $val;
+	}
+
+	function delEvent($day) {
+		unset ($this->_events["$day"]);
 	}
 
 }
