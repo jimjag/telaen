@@ -8,11 +8,19 @@
 {if $umShowEventForm == "YES"}
 <form name="form1" action="event.php" method="post">
 	<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
+		<th colspan="2" align="center"> {$umEventHeader} </th>
 		<tr>
-			<td class="default">
+			<td class="default" colspan="2" align="center">
 				<textarea cols="50" rows="15" id="etext" name="etext">{$umeText|escape:"html"}</textarea>
 			</td>
 		<tr>
+		<tr>
+			<td colspam="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td align="left"><input type="submit" name="save" value="&nbsp;{#evt_save#}&nbsp;" /></td>
+			<td align="right"><input type="submit" name="delete" value="&nbsp;{#evt_delete#}&nbsp;" /></td>
+		</tr>
 	</table>
 </form>
 {else}
