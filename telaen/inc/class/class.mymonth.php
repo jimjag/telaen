@@ -64,7 +64,7 @@ class MyMonth {
 		$ret = <<<EOT
 <table class="month"><tr>
   <th class="week" onclick="replaceCal({$this->_pmonth}, {$this->_pyear});"> &laquo; </th>
-  <th class="week" colspan="5"> {$this->_mymonth["month"]} - {$this->_mymonth["year"]} </th>
+  <th class="week" onclick="replaceCal({$this->_month}, {$this->_year});" colspan="5"> {$this->_mymonth["month"]} - {$this->_mymonth["year"]} </th>
   <th class="week" onclick="replaceCal({$this->_nmonth}, {$this->_nyear});"> &raquo; </th>\n</tr>
   <tr class="days"><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>
 EOT;

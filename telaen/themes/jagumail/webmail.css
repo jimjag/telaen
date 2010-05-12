@@ -321,20 +321,18 @@ td.headerright {
 
 #calendar .einfo {
 	display:none;
-	margin:0 0 0 -50px;
 	padding:0.4em;
 	position:absolute;
-	width:180px;
+	width:200px;
 	color:#004080;
 	background-color:#fff;
 	text-align:left;
-	border:1px solid #ddd;
-	font-weight:bold;
+	border:2px solid #ddd;
 	font-size : 8pt;
+	font-weight: bold;
 	margin: auto;
-	float : left;
+	float : right;
 	border-collapse: collapse;
-	background: #FFFFFF;
 	overflow: auto;
 }
 
