@@ -1,17 +1,11 @@
 {config_load file=$umLanguageFile section="Event"}
 
-{include file=$popupHeaderTemplate pageTitle=#ctc_title# }
+{include file=$popupHeaderTemplate pageTitle=#evt_title# }
 
 <body>
 <div id="popup">
 
-<div id="logo">
-	<img src="images/telaen_logo.jpg" width="310" height="73" alt="logo">
-</div>
-
-
-{if $umEventForm}
-
+{if $umShowEventForm == "YES"}
 <form name="form1" action="event.php" method="post">
 	<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
 		<tr>
@@ -21,9 +15,7 @@
 		<tr>
 	</table>
 </form>
-
 {else}
-
 <script type="text/javascript">
 //<![CDATA[
 function refreshParent() {
@@ -38,7 +30,6 @@ function refreshParent() {
 refreshParent();
 //]]>
 </script>
-
 {/if}
 
 {include file=$footerTemplate}
