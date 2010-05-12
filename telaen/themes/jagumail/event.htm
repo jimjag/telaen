@@ -1,0 +1,32 @@
+{config_load file=$umLanguageFile section="Event"}
+
+{include file=$headerTemplate pageTitle=#event_title#}
+
+{if $umEventForm}
+<form name="form1" action="event.php" method="post">
+	<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
+		<tr>
+			<td class="default">
+				<textarea cols="50" rows="15" id="etext" name="etext">{$umeText|escape:"html"}</textarea>
+			</td>
+		<tr>
+	</table>
+</form>
+{else}
+<script type="text/javascript">
+//<![CDATA[
+function refreshParent() {
+	window.opener.location.reload();
+
+	if (window.opener.eventWindow) {
+		window.opener.eventWindow.close()
+	}
+  window.close();
+}
+
+refreshParent();
+//]]>
+</script>
+{/if}
+
+{include file=$footerTemplate}
