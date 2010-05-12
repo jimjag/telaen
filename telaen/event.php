@@ -52,7 +52,7 @@ switch($eaction) {
 }
 
 $jssource .= "
-<script type=\"text/javascript\" src=\"./js/prototype.js\"></script>
+	<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>
 ";
 $smarty->assign("pageMetas", $nocache);
 $smarty->assign("umJS",$jssource);
