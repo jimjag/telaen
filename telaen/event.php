@@ -51,7 +51,7 @@ switch($eaction) {
 		break;
 }
 
-if ($actionDone)
+if ($actionDone) {
 	$smarty->assign("umEventForm",0);
 } else {
 	$smarty->assign("pageMetas", $nocache);
