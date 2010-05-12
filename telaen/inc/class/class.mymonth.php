@@ -88,9 +88,11 @@ EOT;
 	function monthAsDiv() {
 		$end = <<<EOT
 </div>
-<script type="text/javascript"><!--//
-doDays();
-//--></script>
+<script type="text/javascript">
+//<![CDATA[
+	doDays();
+//]]>
+</script>
 EOT;
 		$ret = "<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>\n<div id=\"calendar\">" . $this->monthAsTable() . $end;
 		return $ret;
