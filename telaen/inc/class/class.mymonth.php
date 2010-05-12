@@ -90,7 +90,7 @@ class MyMonth {
 
 	function monthAsTable() {
 
-		// $events = new CalEvents($this->_year, $this->_month);
+		$events = new CalEvents($this->_year, $this->_month);
 
 		$ret = <<<EOT
 <table class="month"><tr>
@@ -112,11 +112,17 @@ EOT;
 				$weekday = 0;
 				$ret .= "</tr>\n<tr>";
 			}
-			if ($day == $today) {
-				$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"today\"> $day </td>";
-			} else {
-				$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"regday\"> $day </td>";
+			$dclass = "regday";
+			if ($day == $today)
+				$dclass = "today";
+			$event = $events->getEvent($day);
+			if ($event) {
+				$dclass = "event";
+				if ($day == $today)
+					$dclass = "event2";
+				$event = "<span class=\"einfo\">" . $event . "</span>";
 			}
+			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"{$dclass}\"> $day $event </td>";
 		}
 		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";

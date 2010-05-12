@@ -263,7 +263,6 @@ td.headerright {
 
 #calendar td.regday {
 	border:1px solid #ddd;
-	color:#555;
 	padding:3px;
 	text-align:right;
 	background-color: #fff;
@@ -277,7 +276,6 @@ td.headerright {
 
 #calendar td.blankday {
 	border:1px solid #ddd;
-	color:#555;
 	padding:3px;
 	text-align:right;
 	background-color: #fff;
@@ -295,3 +293,33 @@ td.headerright {
 	text-align:right;
 	background-color:#f0f0f0;
 }
+
+#calendar td.event2
+{
+	border: 1px solid #ddd;
+	padding: 3px;
+	text-align: right;
+	color: #900;
+	font-weight: bold;
+	background-color: #fff;
+}
+
+#calendar td.event2:hover
+{
+	color: #900;
+	background-color: #004080;
+}
+
+#calendar td.event {
+	border:1px solid #ddd;
+	padding:3px;
+	text-align:right;
+	background-color: #fff;
+	color:#900;
+}
+
+#calendar td.event:hover {
+	background-color: #004080;
+	color:#900;
+}
+
