@@ -18,3 +18,12 @@ function doDays() {
 		}
 	}
 }
+
+function refreshParent() {
+	window.opener.location.reload();
+
+	if (window.opener.eventWindow) {
+		window.opener.eventWindow.close()
+	}
+  window.close();
+}

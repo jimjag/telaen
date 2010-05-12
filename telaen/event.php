@@ -51,17 +51,17 @@ switch($eaction) {
 		break;
 }
 
+$jssource .= "
+<script type=\"text/javascript\" src=\"./js/prototype.js\"></script>
+";
+$smarty->assign("pageMetas", $nocache);
+$smarty->assign("umJS",$jssource);
+
 if ($actionDone) {
 	$smarty->assign("umShowEventForm","NO");
 } else {
-	$smarty->assign("pageMetas", $nocache);
-
-	$smarty->assign("umJS",$jssource);
-
-	//$event = $events->getEvent($day);
-
+	$event = $events->getEvent($day);
 	$smarty->assign("umeText",$event);
-
 	$smarty->assign("umShowEventForm","YES");
 }
 unset ($events);
