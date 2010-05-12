@@ -76,7 +76,7 @@ EOT;
 
 	$smarty->assign("umEventForm",1);
 }
-unset $events;
+unset ($events);
 
 $smarty->display("$selected_theme/search.htm");
 

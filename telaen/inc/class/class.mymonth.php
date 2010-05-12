@@ -44,7 +44,7 @@ class CalEvents {
 	}
 
 	function delEvent($day) {
-		unset $this->_events["$day"];
+		unset ($this->_events["$day"]);
 	}
 }
 
