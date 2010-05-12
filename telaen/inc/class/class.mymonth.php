@@ -20,7 +20,7 @@ class CalEvents {
 			$month = $mdate['mon'];
 			$year = $mdate['year'];
 		}
-		$this->_edir = $userfolder."_infos/calendar/{$year}/{$month}"
+		$this->_edir = $userfolder."_infos/calendar/{$year}/{$month}";
 		$this->_efile = $this->_edir . "/events.ucf";
 		$events = Array();
 		$myfile = $UM->_read_file($this->_efile);
@@ -90,7 +90,7 @@ class MyMonth {
 
 	function monthAsTable() {
 
-		$events = new CalEvents($this->_year, $this->_month);
+		// $events = new CalEvents($this->_year, $this->_month);
 
 		$ret = <<<EOT
 <table class="month"><tr>
