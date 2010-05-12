@@ -86,9 +86,9 @@ EOT;
 				$dclass = "today";
 			$event = $this->getEvent($day);
 			if ($event) {
-				$dclass = "event";
+				$dclass = "evt";
 				if ($day == $today)
-					$dclass = "event2";
+					$dclass = "evtt";
 				$event = "<span class=\"einfo\">" . $event . "</span>";
 			}
 			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"{$dclass}\"> $day $event </td>";

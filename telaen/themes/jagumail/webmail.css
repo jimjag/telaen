@@ -294,7 +294,7 @@ td.headerright {
 	background-color:#f0f0f0;
 }
 
-#calendar td.event2
+#calendar td.evtt
 {
 	border: 1px solid #ddd;
 	padding: 3px;
@@ -304,13 +304,13 @@ td.headerright {
 	background-color: #fff;
 }
 
-#calendar td.event2:hover
+#calendar td.evtt:hover
 {
 	color: #900;
 	background-color: #004080;
 }
 
-#calendar td.event {
+#calendar td.evt {
 	border:1px solid #ddd;
 	padding:3px;
 	text-align:right;
@@ -318,7 +318,7 @@ td.headerright {
 	color:#900;
 }
 
-#calendar td.event:hover {
+#calendar td.evt:hover {
 	background-color: #004080;
 	color:#900;
 }
