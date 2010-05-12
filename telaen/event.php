@@ -78,6 +78,6 @@ EOT;
 }
 unset ($events);
 
-$smarty->display("$selected_theme/search.htm");
+$smarty->display("$selected_theme/event.htm");
 
 ?>
