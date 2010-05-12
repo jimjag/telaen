@@ -327,3 +327,8 @@ blk_no_address					= No address available
 blk_close						= Close
 blk_save						= Save
 
+[Event]
+evt_title						= Calendar Event
+evt_save						= Save
+evt_delete						= Delete
+

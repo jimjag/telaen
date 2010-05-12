@@ -1,15 +1,15 @@
 # ***** GLOBAL VARS ****** #
 # User-friendly names to system folders
 
-inbox_extended					= Получени
-sent_extended					= Изпратени
-trash_extended					= Кошче
+inbox_extended					= Е“Г“ГЋГ›ЛњГ‚ГЊГ‹
+sent_extended					= В»ГЃГ”пЈївЂЎГљГ‚ГЊГ‹
+trash_extended					= В Г“ВЇЛњГ‚
 spam_extended					= Spam folder
 
 #Navigation texts
 
-previous_text					= Предишна
-next_text					= Следваща
+previous_text					= Е“пЈїГ‚вЂ°Г‹ВЇГЊвЂЎ
+next_text					= вЂ”ГЋГ‚вЂ°вЂљвЂЎЛвЂЎ
 pages_text                                      = Pages
 first_text                                      = First
 last_text                                       = Last
@@ -18,44 +18,44 @@ total_text                                      = Total
 err_login_msg                                   = Login error
 err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
-error_connect					= Грешка при връзка със сървъра
-error_retrieving				= Грешка при изтегляне на пощата
+error_connect					= в€љпЈїГ‚ВЇГЌвЂЎ Г”пЈїГ‹ вЂљпЈїЛ™ГЃГЌвЂЎ Г’Л™Г’ Г’Л™пЈївЂљЛ™пЈївЂЎ
+error_retrieving				= в€љпЈїГ‚ВЇГЌвЂЎ Г”пЈїГ‹ Г‹ГЃГљГ‚вЂћГЋЛ‡ГЊГ‚ ГЊвЂЎ Г”Г“ЛвЂЎГљвЂЎ
 error_session_expired				= Your session is expired, please login again
-error_other					= Системна грешка - свържете се със Ситемния администратор 
+error_other					= вЂ”Г‹Г’ГљГ‚ГЏГЊвЂЎ вЂћпЈїГ‚ВЇГЌвЂЎ - Г’вЂљЛ™пЈїГЉГ‚ГљГ‚ Г’Г‚ Г’Л™Г’ вЂ”Г‹ГљГ‚ГЏГЊГ‹Л‡ вЂЎвЂ°ГЏГ‹ГЊГ‹Г’ГљпЈївЂЎГљГ“пЈї 
 
 #Invalid name of mailbox
 
-error_invalid_name				= Невалидно име за папка - използвайте само A-Z, 0-9, .- и или интервал
+error_invalid_name				= Г•Г‚вЂљвЂЎГЋГ‹вЂ°ГЊГ“ Г‹ГЏГ‚ ГЃвЂЎ Г”вЂЎГ”ГЌвЂЎ - Г‹ГЃГ”Г“ГЋГЃвЂљвЂЎГ€ГљГ‚ Г’вЂЎГЏГ“ A-Z, 0-9, .- Г‹ Г‹ГЋГ‹ Г‹ГЊГљГ‚пЈївЂљвЂЎГЋ
 
 
 #Validations when sending mails            ;
 
-error_no_recipients				= Моля въведете валиден Е-mail адрес
-error_compose_invalid_mail1_s			= Вашият Е-mail изглежда валиден
-error_compose_invalid_mail1_p			= Следващите Е-mailс изглежда са невалидни
-error_compose_invalid_mail2_s			= Ще бъде проверен преди изпращане
-error_compose_invalid_mail2_p			= Ще бъдат проверени преди изпращане
+error_no_recipients				= ГѓГ“ГЋЛ‡ вЂљЛ™вЂљГ‚вЂ°Г‚ГљГ‚ вЂљвЂЎГЋГ‹вЂ°Г‚ГЊ в‰€-mail вЂЎвЂ°пЈїГ‚Г’
+error_compose_invalid_mail1_s			= В¬вЂЎВЇГ‹Л‡Гљ в‰€-mail Г‹ГЃвЂћГЋГ‚ГЉвЂ°вЂЎ вЂљвЂЎГЋГ‹вЂ°Г‚ГЊ
+error_compose_invalid_mail1_p			= вЂ”ГЋГ‚вЂ°вЂљвЂЎЛГ‹ГљГ‚ в‰€-mailГ’ Г‹ГЃвЂћГЋГ‚ГЉвЂ°вЂЎ Г’вЂЎ ГЊГ‚вЂљвЂЎГЋГ‹вЂ°ГЊГ‹
+error_compose_invalid_mail2_s			= ЕёГ‚ В·Л™вЂ°Г‚ Г”пЈїГ“вЂљГ‚пЈїГ‚ГЊ Г”пЈїГ‚вЂ°Г‹ Г‹ГЃГ”пЈївЂЎЛвЂЎГЊГ‚
+error_compose_invalid_mail2_p			= ЕёГ‚ В·Л™вЂ°вЂЎГљ Г”пЈїГ“вЂљГ‚пЈїГ‚ГЊГ‹ Г”пЈїГ‚вЂ°Г‹ Г‹ГЃГ”пЈївЂЎЛвЂЎГЊГ‚
 
 
 #Confirmation of delete                    ;
 
-confirm_delete					= Моля потвърдете изтриването на съобщението
+confirm_delete					= ГѓГ“ГЋЛ‡ Г”Г“ГљвЂљЛ™пЈївЂ°Г‚ГљГ‚ Г‹ГЃГљпЈїГ‹вЂљвЂЎГЊГ‚ГљГ“ ГЊвЂЎ Г’Л™Г“В·ЛГ‚ГЊГ‹Г‚ГљГ“
 
 
 # If the message no have a subject or sender;
 
-no_subject_text					= [Няма тема]
-no_sender_text					= [Няма изпращач]
-no_recipient_text				= [Няма съдържание]
+no_subject_text					= [Г•Л‡ГЏвЂЎ ГљГ‚ГЏвЂЎ]
+no_sender_text					= [Г•Л‡ГЏвЂЎ Г‹ГЃГ”пЈївЂЎЛвЂЎЛњ]
+no_recipient_text				= [Г•Л‡ГЏвЂЎ Г’Л™вЂ°Л™пЈїГЉвЂЎГЊГ‹Г‚]
 
 
 # If the quota limit was exceeded           ;
 
-quota_exceeded					= Квотата е запълнена. Моля изтрийте стари писма за да освободите място
-quota_usage_info				= Лимит
-quota_usage_used				= Използвани
-quota_usage_of					= от
-quota_usage_avail				= предоставени
+quota_exceeded					= В вЂљГ“ГљвЂЎГљвЂЎ Г‚ ГЃвЂЎГ”Л™ГЋГЊГ‚ГЊвЂЎ. ГѓГ“ГЋЛ‡ Г‹ГЃГљпЈїГ‹Г€ГљГ‚ Г’ГљвЂЎпЈїГ‹ Г”Г‹Г’ГЏвЂЎ ГЃвЂЎ вЂ°вЂЎ Г“Г’вЂљГ“В·Г“вЂ°Г‹ГљГ‚ ГЏЛ‡Г’ГљГ“
+quota_usage_info				= ГЂГ‹ГЏГ‹Гљ
+quota_usage_used				= В»ГЃГ”Г“ГЋГЃвЂљвЂЎГЊГ‹
+quota_usage_of					= Г“Гљ
+quota_usage_avail				= Г”пЈїГ‚вЂ°Г“Г’ГљвЂЎвЂљГ‚ГЊГ‹
 
 
 #********************************************************#
@@ -71,27 +71,27 @@ date_format 					= %d/%m/%y %H:%M
 
 default_char_set				= Windows-1251
 
-messages_mnu					= Съобщения
-compose_mnu					= Изпрати
-refresh_mnu					= Опресни
-folders_mnu					= Папки
-search_mnu					= Търси
-address_mnu					= Адреси
-empty_trash_mnu					= Изтрий кошчето
-prefs_mnu					= Настройки
-logoff_mnu 					= Изход
+messages_mnu					= вЂ”Л™Г“В·ЛГ‚ГЊГ‹Л‡
+compose_mnu					= В»ГЃГ”пЈївЂЎГљГ‹
+refresh_mnu					= Е’Г”пЈїГ‚Г’ГЊГ‹
+folders_mnu					= Е“вЂЎГ”ГЌГ‹
+search_mnu					= вЂњЛ™пЈїГ’Г‹
+address_mnu					= ВївЂ°пЈїГ‚Г’Г‹
+empty_trash_mnu					= В»ГЃГљпЈїГ‹Г€ ГЌГ“ВЇЛњГ‚ГљГ“
+prefs_mnu					= Г•вЂЎГ’ГљпЈїГ“Г€ГЌГ‹
+logoff_mnu 					= В»ГЃД±Г“вЂ°
 
 
 
-reply_prefix					= Отг:
-forward_prefix					= Пре:
+reply_prefix					= Е’ГљвЂћ:
+forward_prefix					= Е“пЈїГ‚:
 
-reply_delimiter					= --------- Оригинално съобщение --------
-reply_from_hea					= От:
-reply_to_hea					= До:
-reply_cc_hea					= Копие до:
-reply_date_hea					= Дата:
-reply_subject_hea				= Тема:
+reply_delimiter					= --------- Е’пЈїГ‹вЂћГ‹ГЊвЂЎГЋГЊГ“ Г’Л™Г“В·ЛГ‚ГЊГ‹Г‚ --------
+reply_from_hea					= Е’Гљ:
+reply_to_hea					= Ж’Г“:
+reply_cc_hea					= В Г“Г”Г‹Г‚ вЂ°Г“:
+reply_date_hea					= Ж’вЂЎГљвЂЎ:
+reply_subject_hea				= вЂњГ‚ГЏвЂЎ:
 
 # done
 
@@ -99,60 +99,60 @@ reply_subject_hea				= Тема:
 # page-specific vars
 [Headers]
 
-key_hea						= Ключ
-value_hea					= Стойност
+key_hea						= В ГЋЛ›Лњ
+value_hea					= вЂ”ГљГ“Г€ГЊГ“Г’Гљ
 
 [Folders]
 
-fld_name_hea					= Папки
-fld_messages_hea				= Съобщения
-fld_size_hea					= Големина
-fld_empty_hea					= Изчисти
-fld_delete_hea					= Изтрий
-fld_total					= Общо:
-fld_make_new					= Направи нова папка
-folders_to					= Папки за 
+fld_name_hea					= Е“вЂЎГ”ГЌГ‹
+fld_messages_hea				= вЂ”Л™Г“В·ЛГ‚ГЊГ‹Л‡
+fld_size_hea					= в€љГ“ГЋГ‚ГЏГ‹ГЊвЂЎ
+fld_empty_hea					= В»ГЃЛњГ‹Г’ГљГ‹
+fld_delete_hea					= В»ГЃГљпЈїГ‹Г€
+fld_total					= Е’В·ЛГ“:
+fld_make_new					= Г•вЂЎГ”пЈївЂЎвЂљГ‹ ГЊГ“вЂљвЂЎ Г”вЂЎГ”ГЌвЂЎ
+folders_to					= Е“вЂЎГ”ГЌГ‹ ГЃвЂЎ 
 
 
 [MessageList]
 
-messages_to					= Съобщения за 
-no_messages					= Няма съобщения 
+messages_to					= вЂ”Л™Г“В·ЛГ‚ГЊГ‹Л‡ ГЃвЂЎ 
+no_messages					= Г•Л‡ГЏвЂЎ Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡ 
 
-delete_selected_mnu				= Изтрий избраните
-move_selected_mnu				= Премести избраните в
+delete_selected_mnu				= В»ГЃГљпЈїГ‹Г€ Г‹ГЃВ·пЈївЂЎГЊГ‹ГљГ‚
+move_selected_mnu				= Е“пЈїГ‚ГЏГ‚Г’ГљГ‹ Г‹ГЃВ·пЈївЂЎГЊГ‹ГљГ‚ вЂљ
 mark_selected_mnu         			= Mark as read
 unmark_selected_mnu      			= Mark as unread
 move_selected_to_trash_mnu		= Move selected to Trash
 
-delete_mnu					= Изтрий
-move_mnu					= Премести в
-subject_hea					= Тема
-from_hea					= От
-to_hea						= До
-date_hea					= Дата
-size_hea					= Големина
+delete_mnu					= В»ГЃГљпЈїГ‹Г€
+move_mnu					= Е“пЈїГ‚ГЏГ‚Г’ГљГ‹ вЂљ
+subject_hea					= вЂњГ‚ГЏвЂЎ
+from_hea					= Е’Гљ
+to_hea						= Ж’Г“
+date_hea					= Ж’вЂЎГљвЂЎ
+size_hea					= в€љГ“ГЋГ‚ГЏГ‹ГЊвЂЎ
 have_spam						= You have Spam (check Spam folder)
 
-msg_you_have					= Имате
-msg_message					= съобщение
-msg_messages					= съобщения
+msg_you_have					= В»ГЏвЂЎГљГ‚
+msg_message					= Г’Л™Г“В·ЛГ‚ГЊГ‹Г‚
+msg_messages					= Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡
 
-msg_more_unread					= непрочетени
-msg_one_unread					= непрочетено
-msg_none_unread					= нямате непрочетени
-msg_in_the_folder				= в папка
+msg_more_unread					= ГЊГ‚Г”пЈїГ“ЛњГ‚ГљГ‚ГЊГ‹
+msg_one_unread					= ГЊГ‚Г”пЈїГ“ЛњГ‚ГљГ‚ГЊГ“
+msg_none_unread					= ГЊЛ‡ГЏвЂЎГљГ‚ ГЊГ‚Г”пЈїГ“ЛњГ‚ГљГ‚ГЊГ‹
+msg_in_the_folder				= вЂљ Г”вЂЎГ”ГЌвЂЎ
 
 [Login]
 
 
-lgn_title					= Вход
-lgn_welcome_msg					= Добре дошли. Моля въведете име и парола
-lng_user_email					= Е-поща
-lng_user_name					= Име
-lng_user_pwd					= Парола
-lng_theme					= Език
-lng_login_btn					= Вход &gt;&gt;
+lgn_title					= В¬Д±Г“вЂ°
+lgn_welcome_msg					= Ж’Г“В·пЈїГ‚ вЂ°Г“ВЇГЋГ‹. ГѓГ“ГЋЛ‡ вЂљЛ™вЂљГ‚вЂ°Г‚ГљГ‚ Г‹ГЏГ‚ Г‹ Г”вЂЎпЈїГ“ГЋвЂЎ
+lng_user_email					= в‰€-Г”Г“ЛвЂЎ
+lng_user_name					= В»ГЏГ‚
+lng_user_pwd					= Е“вЂЎпЈїГ“ГЋвЂЎ
+lng_theme					= в‰€ГЃГ‹ГЌ
+lng_login_btn					= В¬Д±Г“вЂ° &gt;&gt;
 lng_language					= Language
 lng_cookie_not_enabled			= Cookies must be enabled
 lng_cookie_not_valid			= Cookie Security Check Failed
@@ -162,66 +162,66 @@ lng_cookie_not_valid			= Cookie Security Check Failed
 
 newmsg_title                                  	= Compose mail
 
-to_hea						= До:
-cc_hea						= Копие до:
-bcc_hea						= 2 Копие до:
-subject_hea					= Тема:
-address_tip					= От адресната книга
+to_hea						= Ж’Г“:
+cc_hea						= В Г“Г”Г‹Г‚ вЂ°Г“:
+bcc_hea						= 2 В Г“Г”Г‹Г‚ вЂ°Г“:
+subject_hea					= вЂњГ‚ГЏвЂЎ:
+address_tip					= Е’Гљ вЂЎвЂ°пЈїГ‚Г’ГЊвЂЎГљвЂЎ ГЌГЊГ‹вЂћвЂЎ
 
 
-attach_hea					= Прикрепени файлове:
-attch_add_new					= Прикрепи нов файл
-attch_name_hea					= Име
-attch_size					= Големина
-attch_type_hea					= Тип
-attch_dele_hea					= Изтрий
-attch_no_hea					= Няма прикрепени файлове!
+attach_hea					= Е“пЈїГ‹ГЌпЈїГ‚Г”Г‚ГЊГ‹ Г™вЂЎГ€ГЋГ“вЂљГ‚:
+attch_add_new					= Е“пЈїГ‹ГЌпЈїГ‚Г”Г‹ ГЊГ“вЂљ Г™вЂЎГ€ГЋ
+attch_name_hea					= В»ГЏГ‚
+attch_size					= в€љГ“ГЋГ‚ГЏГ‹ГЊвЂЎ
+attch_type_hea					= вЂњГ‹Г”
+attch_dele_hea					= В»ГЃГљпЈїГ‹Г€
+attch_no_hea					= Г•Л‡ГЏвЂЎ Г”пЈїГ‹ГЌпЈїГ‚Г”Г‚ГЊГ‹ Г™вЂЎГ€ГЋГ“вЂљГ‚!
 
 require_receipt                                 = Return receipt
 
-add_signature					= Добави 
-send_text					= Изпрати
+add_signature					= Ж’Г“В·вЂЎвЂљГ‹ 
+send_text					= В»ГЃГ”пЈївЂЎГљГ‹
 
-result_error					= Грешка, не може да се изпрати писмото
-result_success					= Писмото е изпратено успешно
-nav_continue					= Продължи
-nav_back					= Назад
+result_error					= в€љпЈїГ‚ВЇГЌвЂЎ, ГЊГ‚ ГЏГ“ГЉГ‚ вЂ°вЂЎ Г’Г‚ Г‹ГЃГ”пЈївЂЎГљГ‹ Г”Г‹Г’ГЏГ“ГљГ“
+result_success					= Е“Г‹Г’ГЏГ“ГљГ“ Г‚ Г‹ГЃГ”пЈївЂЎГљГ‚ГЊГ“ Г›Г’Г”Г‚ВЇГЊГ“
+nav_continue					= Е“пЈїГ“вЂ°Л™ГЋГЉГ‹
+nav_back					= Г•вЂЎГЃвЂЎвЂ°
 
-up_title 					= Добави нов файл
-up_information_text				= Избери файл
-up_button_text					= Добави
+up_title 					= Ж’Г“В·вЂЎвЂљГ‹ ГЊГ“вЂљ Г™вЂЎГ€ГЋ
+up_information_text				= В»ГЃВ·Г‚пЈїГ‹ Г™вЂЎГ€ГЋ
+up_button_text					= Ж’Г“В·вЂЎвЂљГ‹
 
-priority_text					= Приоритет
-priority_low					= Нисък
-priority_normal					= Нормален
-priority_high					= Висок
+priority_text					= Е“пЈїГ‹Г“пЈїГ‹ГљГ‚Гљ
+priority_low					= Г•Г‹Г’Л™ГЌ
+priority_normal					= Г•Г“пЈїГЏвЂЎГЋГ‚ГЊ
+priority_high					= В¬Г‹Г’Г“ГЌ
 
 [Preferences]
 
-prf_title 					= Настройки
-prf_general_title				= Персонална информация
-prf_name					= Име
-prf_reply_to					= Адрес за отговор
-prf_time_zone					= Времева зона
-prf_trash_title					= Кошче за боклук
-prf_save_to_trash				= Премести <b>изтритите</b> съобщения в папка 
-prf_save_only_read				= Запиши само <b>прочетение</b> съобщения в папка 
-prf_empty_on_exit				= <b>Изтрий</b> Кошчето за боклук
+prf_title 					= Г•вЂЎГ’ГљпЈїГ“Г€ГЌГ‹
+prf_general_title				= Е“Г‚пЈїГ’Г“ГЊвЂЎГЋГЊвЂЎ Г‹ГЊГ™Г“пЈїГЏвЂЎЛ†Г‹Л‡
+prf_name					= В»ГЏГ‚
+prf_reply_to					= ВївЂ°пЈїГ‚Г’ ГЃвЂЎ Г“ГљвЂћГ“вЂљГ“пЈї
+prf_time_zone					= В¬пЈїГ‚ГЏГ‚вЂљвЂЎ ГЃГ“ГЊвЂЎ
+prf_trash_title					= В Г“ВЇЛњГ‚ ГЃвЂЎ В·Г“ГЌГЋГ›ГЌ
+prf_save_to_trash				= Е“пЈїГ‚ГЏГ‚Г’ГљГ‹ <b>Г‹ГЃГљпЈїГ‹ГљГ‹ГљГ‚</b> Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡ вЂљ Г”вЂЎГ”ГЌвЂЎ 
+prf_save_only_read				= В«вЂЎГ”Г‹ВЇГ‹ Г’вЂЎГЏГ“ <b>Г”пЈїГ“ЛњГ‚ГљГ‚ГЊГ‹Г‚</b> Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡ вЂљ Г”вЂЎГ”ГЌвЂЎ 
+prf_empty_on_exit				= <b>В»ГЃГљпЈїГ‹Г€</b> В Г“ВЇЛњГ‚ГљГ“ ГЃвЂЎ В·Г“ГЌГЋГ›ГЌ
 prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
 prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
-prf_sent_title					= Изпратени съобщения
-prf_save_sent					= Запиши <b>изпратените</b> съобщения в папка
-prf_messages_title				= Съобщения
-prf_page_limit					= Съобщения показвани на страница
-prf_signature_title				= Подпис
-prf_signature					= Персонализиран тескт за подпис
-prf_auto_add_sign				= Добави автоматично
-prf_save_button					= Запис
-prf_display_images				= Покажи картинките автоматично
-prf_default_editor_mode				= Нормлен режим на редактиране
-prf_default_editor_mode_text			= "Чист текст"
-prf_default_editor_mode_html			= "HTML Редактор (изсква минимум IE 5.0)"
-prf_time_to_refesh				= Време за автоматично опресняване на съобщенията (в минути)
+prf_sent_title					= В»ГЃГ”пЈївЂЎГљГ‚ГЊГ‹ Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡
+prf_save_sent					= В«вЂЎГ”Г‹ВЇГ‹ <b>Г‹ГЃГ”пЈївЂЎГљГ‚ГЊГ‹ГљГ‚</b> Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡ вЂљ Г”вЂЎГ”ГЌвЂЎ
+prf_messages_title				= вЂ”Л™Г“В·ЛГ‚ГЊГ‹Л‡
+prf_page_limit					= вЂ”Л™Г“В·ЛГ‚ГЊГ‹Л‡ Г”Г“ГЌвЂЎГЃвЂљвЂЎГЊГ‹ ГЊвЂЎ Г’ГљпЈївЂЎГЊГ‹Л†вЂЎ
+prf_signature_title				= Е“Г“вЂ°Г”Г‹Г’
+prf_signature					= Е“Г‚пЈїГ’Г“ГЊвЂЎГЋГ‹ГЃГ‹пЈївЂЎГЊ ГљГ‚Г’ГЌГљ ГЃвЂЎ Г”Г“вЂ°Г”Г‹Г’
+prf_auto_add_sign				= Ж’Г“В·вЂЎвЂљГ‹ вЂЎвЂљГљГ“ГЏвЂЎГљГ‹ЛњГЊГ“
+prf_save_button					= В«вЂЎГ”Г‹Г’
+prf_display_images				= Е“Г“ГЌвЂЎГЉГ‹ ГЌвЂЎпЈїГљГ‹ГЊГЌГ‹ГљГ‚ вЂЎвЂљГљГ“ГЏвЂЎГљГ‹ЛњГЊГ“
+prf_default_editor_mode				= Г•Г“пЈїГЏГЋГ‚ГЊ пЈїГ‚ГЉГ‹ГЏ ГЊвЂЎ пЈїГ‚вЂ°вЂЎГЌГљГ‹пЈївЂЎГЊГ‚
+prf_default_editor_mode_text			= "в—ЉГ‹Г’Гљ ГљГ‚ГЌГ’Гљ"
+prf_default_editor_mode_html			= "HTML вЂ“Г‚вЂ°вЂЎГЌГљГ“пЈї (Г‹ГЃГ’ГЌвЂљвЂЎ ГЏГ‹ГЊГ‹ГЏГ›ГЏ IE 5.0)"
+prf_time_to_refesh				= В¬пЈїГ‚ГЏГ‚ ГЃвЂЎ вЂЎвЂљГљГ“ГЏвЂЎГљГ‹ЛњГЊГ“ Г“Г”пЈїГ‚Г’ГЊЛ‡вЂљвЂЎГЊГ‚ ГЊвЂЎ Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡ГљвЂЎ (вЂљ ГЏГ‹ГЊГ›ГљГ‹)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 prf_auto_require_receipt                        = Require read receipt by default
 prf_msg_saved					= Preferences saved
@@ -256,87 +256,93 @@ filter_msg_deleted				= Filter deleted
 
 [Catch]
 
-ctc_title					= Запиши адреса
-ctc_information					= Само адресите, които не са записани в адресната книга все още се показват
-ctc_name					= Име
-ctc_email					= е-поща
-ctc_no_address					= Няма адрес
-ctc_close					= Затвори
-ctc_save					= Запис
+ctc_title					= В«вЂЎГ”Г‹ВЇГ‹ вЂЎвЂ°пЈїГ‚Г’вЂЎ
+ctc_information					= вЂ”вЂЎГЏГ“ вЂЎвЂ°пЈїГ‚Г’Г‹ГљГ‚, ГЌГ“Г‹ГљГ“ ГЊГ‚ Г’вЂЎ ГЃвЂЎГ”Г‹Г’вЂЎГЊГ‹ вЂљ вЂЎвЂ°пЈїГ‚Г’ГЊвЂЎГљвЂЎ ГЌГЊГ‹вЂћвЂЎ вЂљГ’Г‚ Г“ЛГ‚ Г’Г‚ Г”Г“ГЌвЂЎГЃвЂљвЂЎГљ
+ctc_name					= В»ГЏГ‚
+ctc_email					= Г‚-Г”Г“ЛвЂЎ
+ctc_no_address					= Г•Л‡ГЏвЂЎ вЂЎвЂ°пЈїГ‚Г’
+ctc_close					= В«вЂЎГљвЂљГ“пЈїГ‹
+ctc_save					= В«вЂЎГ”Г‹Г’
 
 [Readmsg]
 
-next_mnu					= Следващо
-previous_mnu					= Предишно
-back_mnu					= Назад
-reply_mnu					= Отговори
-reply_all_mnu					= Отговори на всички
-forward_mnu					= Препрати
+next_mnu					= вЂ”ГЋГ‚вЂ°вЂљвЂЎЛГ“
+previous_mnu					= Е“пЈїГ‚вЂ°Г‹ВЇГЊГ“
+back_mnu					= Г•вЂЎГЃвЂЎвЂ°
+reply_mnu					= Е’ГљвЂћГ“вЂљГ“пЈїГ‹
+reply_all_mnu					= Е’ГљвЂћГ“вЂљГ“пЈїГ‹ ГЊвЂЎ вЂљГ’Г‹ЛњГЌГ‹
+forward_mnu					= Е“пЈїГ‚Г”пЈївЂЎГљГ‹
 headers_mnu					= Header
-move_mnu					= Премести в
-delete_mnu					= Изтрий
-print_mnu					= Печат
+move_mnu					= Е“пЈїГ‚ГЏГ‚Г’ГљГ‹ вЂљ
+delete_mnu					= В»ГЃГљпЈїГ‹Г€
+print_mnu					= Е“Г‚ЛњвЂЎГљ
 
 download_mnu                                    = Download
 
-from_hea					= От:
-to_hea						= До:
-cc_hea						= Копие до:
-date_hea					= Дата:
-subject_hea					= Тема:
-attach_hea					= Прикрепени файлове:
+from_hea					= Е’Гљ:
+to_hea						= Ж’Г“:
+cc_hea						= В Г“Г”Г‹Г‚ вЂ°Г“:
+date_hea					= Ж’вЂЎГљвЂЎ:
+subject_hea					= вЂњГ‚ГЏвЂЎ:
+attach_hea					= Е“пЈїГ‹ГЌпЈїГ‚Г”Г‚ГЊГ‹ Г™вЂЎГ€ГЋГ“вЂљГ‚:
 
-attch_name_hea					= Име
-attch_force_hea					= изтегли
-attch_type_hea					= тип
-attch_size_hea					= Големина
-catch_address					= Добави адреса
+attch_name_hea					= В»ГЏГ‚
+attch_force_hea					= Г‹ГЃГљГ‚вЂћГЋГ‹
+attch_type_hea					= ГљГ‹Г”
+attch_size_hea					= в€љГ“ГЋГ‚ГЏГ‹ГЊвЂЎ
+catch_address					= Ж’Г“В·вЂЎвЂљГ‹ вЂЎвЂ°пЈїГ‚Г’вЂЎ
 
 [Search]
 
 sch_title                                     	= Search
-sch_information_text				= Въведете дума или фраза<br> Само съобщения в <br>локалните папки<br> и <b>прочетени съобщения</b> ще бъдат проверени
-sch_button_text					= Търси &gt;&gt;
-sch_subject_hea					= Тема
-sch_from_hea					= От
-sch_date_hea					= Дата
-sch_body_hea					= Съобщение
-sch_folder_hea					= Папка
-sch_no_results					= Няма намерени
+sch_information_text				= В¬Л™вЂљГ‚вЂ°Г‚ГљГ‚ вЂ°Г›ГЏвЂЎ Г‹ГЋГ‹ Г™пЈївЂЎГЃвЂЎ<br> вЂ”вЂЎГЏГ“ Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡ вЂљ <br>ГЋГ“ГЌвЂЎГЋГЊГ‹ГљГ‚ Г”вЂЎГ”ГЌГ‹<br> Г‹ <b>Г”пЈїГ“ЛњГ‚ГљГ‚ГЊГ‹ Г’Л™Г“В·ЛГ‚ГЊГ‹Л‡</b> ЛГ‚ В·Л™вЂ°вЂЎГљ Г”пЈїГ“вЂљГ‚пЈїГ‚ГЊГ‹
+sch_button_text					= вЂњЛ™пЈїГ’Г‹ &gt;&gt;
+sch_subject_hea					= вЂњГ‚ГЏвЂЎ
+sch_from_hea					= Е’Гљ
+sch_date_hea					= Ж’вЂЎГљвЂЎ
+sch_body_hea					= вЂ”Л™Г“В·ЛГ‚ГЊГ‹Г‚
+sch_folder_hea					= Е“вЂЎГ”ГЌвЂЎ
+sch_no_results					= Г•Л‡ГЏвЂЎ ГЊвЂЎГЏГ‚пЈїГ‚ГЊГ‹
 
 
 [QuickAddress]
 
-qad_title 					= Избери получатели
-qad_select_address				= Избери адрес
-qad_to						= До
-qad_cc						= Копие до
-qad_bcc						= 2 Копие до
+qad_title 					= В»ГЃВ·Г‚пЈїГ‹ Г”Г“ГЋГ›ЛњвЂЎГљГ‚ГЋГ‹
+qad_select_address				= В»ГЃВ·Г‚пЈїГ‹ вЂЎвЂ°пЈїГ‚Г’
+qad_to						= Ж’Г“
+qad_cc						= В Г“Г”Г‹Г‚ вЂ°Г“
+qad_bcc						= 2 В Г“Г”Г‹Г‚ вЂ°Г“
 
 [AddressBook]
 
 # edit/display
 
-adr_title					= Адресна книга
-adr_name					= Име
-adr_email					= е-поща
-adr_street					= Улица
-adr_city					= Град
-adr_state					= Окръг
-adr_work					= Професия
-adr_back					= Назад
-adr_save					= Запис
+adr_title					= ВївЂ°пЈїГ‚Г’ГЊвЂЎ ГЌГЊГ‹вЂћвЂЎ
+adr_name					= В»ГЏГ‚
+adr_email					= Г‚-Г”Г“ЛвЂЎ
+adr_street					= вЂќГЋГ‹Л†вЂЎ
+adr_city					= в€љпЈївЂЎвЂ°
+adr_state					= Е’ГЌпЈїЛ™вЂћ
+adr_work					= Е“пЈїГ“Г™Г‚Г’Г‹Л‡
+adr_back					= Г•вЂЎГЃвЂЎвЂ°
+adr_save					= В«вЂЎГ”Г‹Г’
 
 # list
 
-adr_name_hea					= Име
-adr_email_hea					= е-поща
-adr_edit_hea					= Редакция
-adr_expo_hea					= Експорт
-adr_dele_hea					= Изтриване
-adr_new_entry					= Нов запис
+adr_name_hea					= В»ГЏГ‚
+adr_email_hea					= Г‚-Г”Г“ЛвЂЎ
+adr_edit_hea					= вЂ“Г‚вЂ°вЂЎГЌЛ†Г‹Л‡
+adr_expo_hea					= в‰€ГЌГ’Г”Г“пЈїГљ
+adr_dele_hea					= В»ГЃГљпЈїГ‹вЂљвЂЎГЊГ‚
+adr_new_entry					= Г•Г“вЂљ ГЃвЂЎГ”Г‹Г’
 
 
-addr_saved					= Адреса е записан успешно
-addr_added					= Адреса е добавен успешно
-addr_deleted					= Адреса е изтрит
+addr_saved					= ВївЂ°пЈїГ‚Г’вЂЎ Г‚ ГЃвЂЎГ”Г‹Г’вЂЎГЊ Г›Г’Г”Г‚ВЇГЊГ“
+addr_added					= ВївЂ°пЈїГ‚Г’вЂЎ Г‚ вЂ°Г“В·вЂЎвЂљГ‚ГЊ Г›Г’Г”Г‚ВЇГЊГ“
+addr_deleted					= ВївЂ°пЈїГ‚Г’вЂЎ Г‚ Г‹ГЃГљпЈїГ‹Гљ
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= В«вЂЎГ”Г‹Г’
+evt_delete						= В»ГЃГљпЈїГ‹вЂљвЂЎГЊГ‚
+

@@ -347,3 +347,9 @@ adr_new_entry					= Ny Kontaktperson
 addr_saved					= Kontaktpersonen blev gemt
 addr_added					= Kontaktpersonen blev tilføjet
 addr_deleted					= Kontaktpersonen blev slettet
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Gem
+evt_delete						= Slet
+

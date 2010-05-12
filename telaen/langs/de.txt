@@ -343,3 +343,8 @@ blk_no_address				         = Keine Adresse verfügbar
 blk_close					             = Schließen
 blk_save					             = Speichern
 
+[Event]
+evt_title						= Calendar Event
+evt_save						= Speichern
+evt_delete						= Entfernen
+

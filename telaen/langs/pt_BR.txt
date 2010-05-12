@@ -372,3 +372,8 @@ blk_close						= Fechar
 blk_save						= Salvar
 
 
+[Event]
+evt_title						= Calendar Event
+evt_save						= Salvar
+evt_delete						= Apagar
+

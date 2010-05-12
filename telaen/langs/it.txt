@@ -352,3 +352,9 @@ adr_new_entry					= Nuovo Contatto
 addr_saved					= Il contatto è stato salvato
 addr_added					= Il contatto è stato aggiunto
 addr_deleted					= Il contatto è stato eliminato
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Salva
+evt_delete						= Cancella
+

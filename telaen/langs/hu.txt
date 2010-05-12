@@ -1,15 +1,15 @@
 # ***** GLOBAL VARS ****** #
 # User-friendly names to system folders
 
-inbox_extended					= Érkezett
-sent_extended					= Elküldött
+inbox_extended					= â€¦rkezett
+sent_extended					= ElkÂ¸ldË†tt
 trash_extended					= Kuka
 spam_extended					= Spam
 
 #Navigation texts
 
-previous_text					= Elõzõ
-next_text					= Következõ
+previous_text					= ElÄ±zÄ±
+next_text					= KË†vetkezÄ±
 pages_text                                      = Pages
 first_text                                      = First
 last_text                                       = Last
@@ -22,44 +22,44 @@ total_text                                      = Total
 err_login_msg                                   = Login error
 err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
-error_connect					= Nem sikerült a POP szerverhez kapcsolódás.
-error_retrieving				= Az üzenet nem lett letöltve.
+error_connect					= Nem sikerÂ¸lt a POP szerverhez kapcsolÃ›dÂ·s.
+error_retrieving				= Az Â¸zenet nem lett letË†ltve.
 error_session_expired				= Your session is expired, please login again
-error_other					= Váratlan hiba történt. Lépj kapcsolatba az adminisztrátorral.
+error_other					= VÂ·ratlan hiba tË†rtÃˆnt. LÃˆpj kapcsolatba az adminisztrÂ·torral.
 
 #Invalid name of mailbox
 
-error_invalid_name				= Hibás bejegyzés - csak A-Z, 0-9, .- és szóköz karaktereket használj
+error_invalid_name				= HibÂ·s bejegyzÃˆs - csak A-Z, 0-9, .- Ãˆs szÃ›kË†z karaktereket hasznÂ·lj
 
 
 #Validations when sending mails            ;
 
-error_no_recipients				= Adj meg egy e-mail címet!
-error_compose_invalid_mail1_s			= Hibás e-mail cím
-error_compose_invalid_mail1_p			= Hibás e-mail cím
-error_compose_invalid_mail2_s			= Ellenõrizd mielõtt elküldöd
-error_compose_invalid_mail2_p			= Ellenõrizd mielõtt elküldöd
+error_no_recipients				= Adj meg egy e-mail cÃŒmet!
+error_compose_invalid_mail1_s			= HibÂ·s e-mail cÃŒm
+error_compose_invalid_mail1_p			= HibÂ·s e-mail cÃŒm
+error_compose_invalid_mail2_s			= EllenÄ±rizd mielÄ±tt elkÂ¸ldË†d
+error_compose_invalid_mail2_p			= EllenÄ±rizd mielÄ±tt elkÂ¸ldË†d
 
 
 #Confirmation of delete                    ;
 
-confirm_delete					= Valóban törölni akarod ezt az üzenetet?
+confirm_delete					= ValÃ›ban tË†rË†lni akarod ezt az Â¸zenetet?
 
 
 # If the message no have a subject or sender;
 
-no_subject_text					= [nincs tárgy]
+no_subject_text					= [nincs tÂ·rgy]
 no_sender_text					= [ismeretlen]
-no_recipient_text				= [nincs törzse]
+no_recipient_text				= [nincs tË†rzse]
 
 
 # If the quota limit was exceeded           ;
 
-quota_exceeded					= A tárhelyed betelt. Töröld a régi üzeneteid a beérkezett üzenetek mappából és próbáld újra!
-quota_usage_info				= Tárhely használat
+quota_exceeded					= A tÂ·rhelyed betelt. TË†rË†ld a rÃˆgi Â¸zeneteid a beÃˆrkezett Â¸zenetek mappÂ·bÃ›l Ãˆs prÃ›bÂ·ld Ë™jra!
+quota_usage_info				= TÂ·rhely hasznÂ·lat
 quota_usage_used				= 
-quota_usage_of					= foglalt az engedélyezett
-quota_usage_avail				= -ból
+quota_usage_of					= foglalt az engedÃˆlyezett
+quota_usage_avail				= -bÃ›l
 
 
 #********************************************************#
@@ -75,26 +75,26 @@ date_format 					= %y/%m/%d %H:%M
 
 default_char_set				= iso-8859-2
 
-messages_mnu					= Érkezett
-read_menu						= Levelek olvasása
-compose_mnu					= Levél írása
-refresh_mnu					= Frissítés
-folders_mnu					= Mappák
-search_mnu					= Keresés
-address_mnu					= Címek
-empty_trash_mnu					= Kuka ürítése
-prefs_mnu					= Beállítások
-logoff_mnu 					= Kijelentkezés
+messages_mnu					= â€¦rkezett
+read_menu						= Levelek olvasÂ·sa
+compose_mnu					= LevÃˆl ÃŒrÂ·sa
+refresh_mnu					= FrissÃŒtÃˆs
+folders_mnu					= MappÂ·k
+search_mnu					= KeresÃˆs
+address_mnu					= CÃŒmek
+empty_trash_mnu					= Kuka Â¸rÃŒtÃˆse
+prefs_mnu					= BeÂ·llÃŒtÂ·sok
+logoff_mnu 					= KijelentkezÃˆs
 
 # Reply
 reply_prefix					= RE:
 forward_prefix					= FW:
-reply_delimiter					= --------- Eredeti üzenet --------
-reply_from_hea					= Küldõ:
-reply_to_hea					= Címzett:
-reply_cc_hea					= Másolatot kap:
-reply_date_hea					= Dátum:
-reply_subject_hea				= Tárgy:
+reply_delimiter					= --------- Eredeti Â¸zenet --------
+reply_from_hea					= KÂ¸ldÄ±:
+reply_to_hea					= CÃŒmzett:
+reply_cc_hea					= MÂ·solatot kap:
+reply_date_hea					= DÂ·tum:
+reply_subject_hea				= TÂ·rgy:
 
 # done
 
@@ -103,57 +103,57 @@ reply_subject_hea				= Tárgy:
 
 [Headers]
 key_hea						= Kulcs
-value_hea					= Érték
+value_hea					= â€¦rtÃˆk
 
 [Folders]
-fld_name_hea					= Mappák
-fld_messages_hea				= Üzenetek
-fld_size_hea					= Méret
-fld_empty_hea					= Kiürítés
-fld_delete_hea					= Törlés
-fld_total					= Összesen:
-fld_make_new					= Új mappa
-folders_to					= Mappák
+fld_name_hea					= MappÂ·k
+fld_messages_hea				= â€¹zenetek
+fld_size_hea					= MÃˆret
+fld_empty_hea					= KiÂ¸rÃŒtÃˆs
+fld_delete_hea					= TË†rlÃˆs
+fld_total					= Ã·sszesen:
+fld_make_new					= â„j mappa
+folders_to					= MappÂ·k
 
 [MessageList]
-messages_to					= Üzenetek
-no_messages					= Nincs üzenet a következõ mappában:
-delete_selected_mnu			= Kijelölt üzenetek törlése
-move_selected_to_trash_mnu	= Kijelölt üzenetek áthelyezése a Kukába
-move_selected_mnu			= Kijelölt üzenetek áthelyezése
-mark_selected_mnu 			= Megjelölés olvasottként
-unmark_selected_mnu 		= Megjelölés olvasatlanként
+messages_to					= â€¹zenetek
+no_messages					= Nincs Â¸zenet a kË†vetkezÄ± mappÂ·ban:
+delete_selected_mnu			= KijelË†lt Â¸zenetek tË†rlÃˆse
+move_selected_to_trash_mnu	= KijelË†lt Â¸zenetek Â·thelyezÃˆse a KukÂ·ba
+move_selected_mnu			= KijelË†lt Â¸zenetek Â·thelyezÃˆse
+mark_selected_mnu 			= MegjelË†lÃˆs olvasottkÃˆnt
+unmark_selected_mnu 		= MegjelË†lÃˆs olvasatlankÃˆnt
 
-delete_mnu					= Törlés
-move_mnu					= Áthelyezés
-subject_hea					= Tárgy
-from_hea					= Küldõ
-to_hea						= Címzett
-date_hea					= Dátum
-size_hea					= Méret
-have_spam						= Önnek spam levele érkezett (tekintse meg Spam mappáját)
+delete_mnu					= TË†rlÃˆs
+move_mnu					= Â¡thelyezÃˆs
+subject_hea					= TÂ·rgy
+from_hea					= KÂ¸ldÄ±
+to_hea						= CÃŒmzett
+date_hea					= DÂ·tum
+size_hea					= MÃˆret
+have_spam						= Ã·nnek spam levele Ãˆrkezett (tekintse meg Spam mappÂ·jÂ·t)
 
 msg_you_have					= 
-msg_message					= üzeneted van
-msg_messages					= üzeneted van
+msg_message					= Â¸zeneted van
+msg_messages					= Â¸zeneted van
 
 msg_more_unread					= olvasatlan
 msg_one_unread					= olvasatlan
 msg_none_unread					= nincs olvasatlan
-msg_in_the_folder				= a következõ mappában:
+msg_in_the_folder				= a kË†vetkezÄ± mappÂ·ban:
 
 [Login]
-lgn_title					= Bejelentkezés
-lgn_welcome_msg					= Üdv. Ird be a szükséges információkat:
+lgn_title					= BejelentkezÃˆs
+lgn_welcome_msg					= â€¹dv. Ird be a szÂ¸ksÃˆges informÂ·ciÃ›kat:
 lng_user_email					= E-mail
-lng_user_name					= Felhasználónév
-lng_user_pwd					= Jelszó
-lng_server						= Kiszolgáló
-lng_theme					= Stílus
+lng_user_name					= FelhasznÂ·lÃ›nÃˆv
+lng_user_pwd					= JelszÃ›
+lng_server						= KiszolgÂ·lÃ›
+lng_theme					= StÃŒlus
 lng_language					= Nyelv
-lng_login_btn					= Belépés &gt;&gt;
-lng_cookie_not_enabled				= A sütiket engedélyeznie kell
-lng_cookie_not_valid				= Sütik biztonsági ellenõrzése sikertelen
+lng_login_btn					= BelÃˆpÃˆs &gt;&gt;
+lng_cookie_not_enabled				= A sÂ¸tiket engedÃˆlyeznie kell
+lng_cookie_not_valid				= SÂ¸tik biztonsÂ·gi ellenÄ±rzÃˆse sikertelen
 
 
 [Newmessage]
@@ -161,64 +161,64 @@ lng_cookie_not_valid				= Sütik biztonsági ellenõrzése sikertelen
 newmsg_title                                  	= Compose mail
 
 to_hea						= Cimzett:
-cc_hea						= Másolatot kap:
-bcc_hea						= Rejtett másolatot kap:
-subject_hea					= Tárgy:
-address_tip					= Címlista
+cc_hea						= MÂ·solatot kap:
+bcc_hea						= Rejtett mÂ·solatot kap:
+subject_hea					= TÂ·rgy:
+address_tip					= CÃŒmlista
 
 attach_hea					= Csatol:
-attch_add_new					= Csatolt fájl hozzáadása
-attch_name_hea					= Név
-attch_size					= Méret
-attch_type_hea					= Típus
-attch_dele_hea					= Törlés
-attch_no_hea					= Nincs csatolt állomány!
+attch_add_new					= Csatolt fÂ·jl hozzÂ·adÂ·sa
+attch_name_hea					= NÃˆv
+attch_size					= MÃˆret
+attch_type_hea					= TÃŒpus
+attch_dele_hea					= TË†rlÃˆs
+attch_no_hea					= Nincs csatolt Â·llomÂ·ny!
 
 require_receipt                                 = Return receipt
 
-add_signature					= Aláírás hozzáadása
-send_text					= Küldés
+add_signature					= AlÂ·ÃŒrÂ·s hozzÂ·adÂ·sa
+send_text					= KÂ¸ldÃˆs
 
-result_error					= Hiba, az üzenet nem lett elküldve
-result_success					= Az üzenet sikeresen el lett küldve!
-nav_continue					= Folytatás
+result_error					= Hiba, az Â¸zenet nem lett elkÂ¸ldve
+result_success					= Az Â¸zenet sikeresen el lett kÂ¸ldve!
+nav_continue					= FolytatÂ·s
 nav_back					= Vissza
 
-up_title 					= Csatolt fájl hozzáadása
-up_information_text				= Kiválaszt
+up_title 					= Csatolt fÂ·jl hozzÂ·adÂ·sa
+up_information_text				= KivÂ·laszt
 up_button_text					= Csatol
 
-priority_text					= Prioritás
-priority_low					= Nem sürgõs
-priority_normal					= Átlagos
-priority_high					= Sürgõs
+priority_text					= PrioritÂ·s
+priority_low					= Nem sÂ¸rgÄ±s
+priority_normal					= Â¡tlagos
+priority_high					= SÂ¸rgÄ±s
 
 
 [Preferences]
-prf_title 					= Beállítások
-prf_general_title				= Személyes adatok
-prf_name					= Név
-prf_reply_to					= Válasz cím
-prf_time_zone					= Idõzóna
+prf_title 					= BeÂ·llÃŒtÂ·sok
+prf_general_title				= SzemÃˆlyes adatok
+prf_name					= NÃˆv
+prf_reply_to					= VÂ·lasz cÃŒm
+prf_time_zone					= IdÄ±zÃ›na
 prf_trash_title					= Kuka
-prf_save_to_trash				= A <b>Törölt</b> üzenetek kerüljenek a következõ mappába: 
-prf_save_only_read				= Az <b>olvasott</b> üzenetek mentése a következõ mappába: 
-prf_empty_on_exit				= <b>Kuka</b> ürítése kilépésnél
-prf_empty_spam_on_exit				= Spam mappa <b>ürítése</b> kilépéskor
-prf_unmark_read_on_exit				= <b>Olvasott</b> üzenetek <b>olvasatlanra</b> állítása kilépéskor
-prf_sent_title					= Elküldött üzenetek
-prf_save_sent					= Az <b>elküldött</b> üzenetek mentése a következõ mappába:
-prf_messages_title				= Üzenetek
-prf_page_limit					= Megjelenített üzenetek száma
-prf_signature_title				= Aláírás
-prf_signature					= Személyes aláírás
-prf_auto_add_sign				= Automatikus aláírás-hozzáadás
-prf_save_button					= Mentés
-prf_display_images				= Csatolt képek automatikus megjelenítése
-prf_default_editor_mode				= Szerkesztõ típusa
-prf_default_editor_mode_text			= "Sima szöveg"
-prf_default_editor_mode_html			= "HTML szerkesztõ"
-prf_time_to_refesh				= Beérkezett üzenetek automatikus frissítése (perc)
+prf_save_to_trash				= A <b>TË†rË†lt</b> Â¸zenetek kerÂ¸ljenek a kË†vetkezÄ± mappÂ·ba: 
+prf_save_only_read				= Az <b>olvasott</b> Â¸zenetek mentÃˆse a kË†vetkezÄ± mappÂ·ba: 
+prf_empty_on_exit				= <b>Kuka</b> Â¸rÃŒtÃˆse kilÃˆpÃˆsnÃˆl
+prf_empty_spam_on_exit				= Spam mappa <b>Â¸rÃŒtÃˆse</b> kilÃˆpÃˆskor
+prf_unmark_read_on_exit				= <b>Olvasott</b> Â¸zenetek <b>olvasatlanra</b> Â·llÃŒtÂ·sa kilÃˆpÃˆskor
+prf_sent_title					= ElkÂ¸ldË†tt Â¸zenetek
+prf_save_sent					= Az <b>elkÂ¸ldË†tt</b> Â¸zenetek mentÃˆse a kË†vetkezÄ± mappÂ·ba:
+prf_messages_title				= â€¹zenetek
+prf_page_limit					= MegjelenÃŒtett Â¸zenetek szÂ·ma
+prf_signature_title				= AlÂ·ÃŒrÂ·s
+prf_signature					= SzemÃˆlyes alÂ·ÃŒrÂ·s
+prf_auto_add_sign				= Automatikus alÂ·ÃŒrÂ·s-hozzÂ·adÂ·s
+prf_save_button					= MentÃˆs
+prf_display_images				= Csatolt kÃˆpek automatikus megjelenÃŒtÃˆse
+prf_default_editor_mode				= SzerkesztÄ± tÃŒpusa
+prf_default_editor_mode_text			= "Sima szË†veg"
+prf_default_editor_mode_html			= "HTML szerkesztÄ±"
+prf_time_to_refesh				= BeÃˆrkezett Â¸zenetek automatikus frissÃŒtÃˆse (perc)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 prf_auto_require_receipt                        = Require read receipt by default
 prf_msg_saved					= Preferences saved
@@ -255,91 +255,96 @@ filter_msg_deleted				= Filter deleted
 
 
 [Catch]
-ctc_title               			= új címek
-ctc_information         			= Csak azok a címek jelenítõdnek meg, amelyek még nincsenek a címlistában.
-ctc_name                			= Név
+ctc_title               			= Ë™j cÃŒmek
+ctc_information         			= Csak azok a cÃŒmek jelenÃŒtÄ±dnek meg, amelyek mÃˆg nincsenek a cÃŒmlistÂ·ban.
+ctc_name                			= NÃˆv
 ctc_email               			= E-mail
-ctc_no_address          			= Nincs cím	
-ctc_close               			= Bezár
-ctc_save                			= Mentés
+ctc_no_address          			= Nincs cÃŒm	
+ctc_close               			= BezÂ·r
+ctc_save                			= MentÃˆs
 
 [Readmsg]
-next_mnu                                        = Következõ
-previous_mnu                                    = Elõzõ
+next_mnu                                        = KË†vetkezÄ±
+previous_mnu                                    = ElÄ±zÄ±
 back_mnu                                        = Vissza
-reply_mnu                                       = Válasz
-reply_all_mnu                                   = Válasz mindenkinek
-forward_mnu                                     = Továbbküldés
-headers_mnu                                     = Fejléc
-move_mnu                                        = Áthelyez
-move_to_trash_mnu				= Kukába helyezés
-delete_mnu                                      = Törlés
-print_mnu					= Nyomtatás
+reply_mnu                                       = VÂ·lasz
+reply_all_mnu                                   = VÂ·lasz mindenkinek
+forward_mnu                                     = TovÂ·bbkÂ¸ldÃˆs
+headers_mnu                                     = FejlÃˆc
+move_mnu                                        = Â¡thelyez
+move_to_trash_mnu				= KukÂ·ba helyezÃˆs
+delete_mnu                                      = TË†rlÃˆs
+print_mnu					= NyomtatÂ·s
 download_mnu                                    = Download
 
-from_hea                                        = Küldõ:
+from_hea                                        = KÂ¸ldÄ±:
 to_hea                                          = Cimzett:
-cc_hea                                          = Másolatot kap:
-date_hea                                        = Dátum:
-subject_hea                                     = Tárgy:
-attach_hea                                      = Csatolt fájl:
+cc_hea                                          = MÂ·solatot kap:
+date_hea                                        = DÂ·tum:
+subject_hea                                     = TÂ·rgy:
+attach_hea                                      = Csatolt fÂ·jl:
 
-attch_name_hea                                  = Név
-attch_force_hea                                 = Letöltés
-attch_type_hea                                  = Típus
-attch_size_hea                                  = Méret
-catch_address                                   = Küldõ hozzáadása a Címlistához
-block_address					= Cím blokkolása
+attch_name_hea                                  = NÃˆv
+attch_force_hea                                 = LetË†ltÃˆs
+attch_type_hea                                  = TÃŒpus
+attch_size_hea                                  = MÃˆret
+catch_address                                   = KÂ¸ldÄ± hozzÂ·adÂ·sa a CÃŒmlistÂ·hoz
+block_address					= CÃŒm blokkolÂ·sa
 
 [Search]
 
 sch_title                                     	= Search
 
-sch_information_text                    	= Keresendõ szó, vagy kifejezés megadása a...
+sch_information_text                    	= KeresendÄ± szÃ›, vagy kifejezÃˆs megadÂ·sa a...
 sch_button_text                         	= Keres &gt;&gt;
-sch_subject_hea                        	 	= Levél tárgyában
-sch_from_hea                            	= Küldõ címében
-sch_date_hea                            	= Dátum
-sch_body_hea					= Levél szövegében
+sch_subject_hea                        	 	= LevÃˆl tÂ·rgyÂ·ban
+sch_from_hea                            	= KÂ¸ldÄ± cÃŒmÃˆben
+sch_date_hea                            	= DÂ·tum
+sch_body_hea					= LevÃˆl szË†vegÃˆben
 sch_folder_hea                          	= Mappa
-sch_no_results                          	= Nincs találat
+sch_no_results                          	= Nincs talÂ·lat
 
 [QuickAddress]
-qad_title                       		= Válassz cimzettet
-qad_select_address              		= Válassz címet
-qad_to                          		= Címzett
-qad_cc                          		= Másolatot kap
-qad_bcc                         		= Rejtett másolatot kap
+qad_title                       		= VÂ·lassz cimzettet
+qad_select_address              		= VÂ·lassz cÃŒmet
+qad_to                          		= CÃŒmzett
+qad_cc                          		= MÂ·solatot kap
+qad_bcc                         		= Rejtett mÂ·solatot kap
 
 [AddressBook]
 # edit/display
-adr_title                                       = Címek
-adr_name                                        = Név
+adr_title                                       = CÃŒmek
+adr_name                                        = NÃˆv
 adr_email                                       = E-mail
 adr_street                                      = Utca
-adr_city                                        = Város
+adr_city                                        = VÂ·ros
 adr_state                                       = Megye
-adr_work                                        = Foglalkozás
+adr_work                                        = FoglalkozÂ·s
 adr_back                                        = Vissza
-adr_save                                        = Mentés
+adr_save                                        = MentÃˆs
 
 # list
-adr_name_hea                                    = Név
+adr_name_hea                                    = NÃˆv
 adr_email_hea                                   = E-Mail
-adr_edit_hea                                    = Szerkesztés
+adr_edit_hea                                    = SzerkesztÃˆs
 adr_expo_hea                                    = Export
-adr_dele_hea                                    = Törlés
-adr_new_entry                                   = új bejegyzés
+adr_dele_hea                                    = TË†rlÃˆs
+adr_new_entry                                   = Ë™j bejegyzÃˆs
 
-addr_saved					= a cím sikeresen elmentve
-addr_added					= a cím sikeresen hozzáadva
-addr_deleted					= a cím törölve
+addr_saved					= a cÃŒm sikeresen elmentve
+addr_added					= a cÃŒm sikeresen hozzÂ·adva
+addr_deleted					= a cÃŒm tË†rË†lve
 
 [BlockSender]
-blk_title						= Küldõ blokkolása
-blk_information					= Csak azokat a leveleket mutassa, amik nincsenek még kiszûrve
+blk_title						= KÂ¸ldÄ± blokkolÂ·sa
+blk_information					= Csak azokat a leveleket mutassa, amik nincsenek mÃˆg kiszËšrve
 blk_email						= E-mail
-blk_no_address					= Nincs megadott cím
-blk_close						= Bezár
+blk_no_address					= Nincs megadott cÃŒm
+blk_close						= BezÂ·r
 blk_save						= Ment
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= MentÃˆs
+evt_delete						= TË†rlÃˆs
 

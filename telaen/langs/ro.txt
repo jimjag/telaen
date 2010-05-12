@@ -343,3 +343,9 @@ adr_new_entry					= Adauga contact
 addr_saved					= Intrare salvata.
 addr_added					= Contact adaugat cu succes.
 addr_deleted					= Intrare stearsa.
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Salveaza
+evt_delete						= Sterge
+

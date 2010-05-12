@@ -321,3 +321,9 @@ adr_new_entry					= צור איש-קשר חדש
 addr_saved						= פרטי איש הקשר נשמרו
 addr_added						= פרטי איש הקשר נוספו
 addr_deleted					= איש הקשר נמחק
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= שמור
+evt_delete						= מחק
+

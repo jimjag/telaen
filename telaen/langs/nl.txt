@@ -344,3 +344,9 @@ adr_new_entry					= Voeg contactpersoon toe
 addr_saved					= De veranderingen zijn opgeslagen.
 addr_added					= De contactpersoon is toegevoegd.
 addr_deleted					= De contactpersoon is verwijderd.
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Opslaan
+evt_delete						= Verwijder
+

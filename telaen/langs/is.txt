@@ -1,15 +1,15 @@
-# ***** GLOBAL VARS ****** #
+ï»¿# ***** GLOBAL VARS ****** #
 # User-friendly names to system folders
 
-inbox_extended					= Innhólf
-sent_extended					= Úthólf
+inbox_extended					= InnhÃ›lf
+sent_extended					= â„thÃ›lf
 trash_extended					= Rusl
 spam_extended					= Spam folder
 
 #Navigation texts
 
 previous_text					= Fyrri
-next_text					= Næsti
+next_text					= NÃŠsti
 pages_text                                      = Pages
 first_text                                      = First
 last_text                                       = Last
@@ -22,42 +22,42 @@ total_text                                      = Total
 err_login_msg                                   = Login error
 err_system_msg                                  = System error
 error_login                                     = Please check your username or password and try again
-error_connect					= Tenging viğ póstşjón mistókst
-error_retrieving				= Villa viğ ağ ná í póst, innhólf hefur breyst
+error_connect					= Tenging viï£¿ pÃ›stË›jÃ›n mistÃ›kst
+error_retrieving				= Villa viï£¿ aï£¿ nÂ· ÃŒ pÃ›st, innhÃ›lf hefur breyst
 error_session_expired				= Your session is expired, please login again
-error_other					= Kerfisvilla, vinsamlegast hafiğ samband viğ kerfisstjóra
+error_other					= Kerfisvilla, vinsamlegast hafiï£¿ samband viï£¿ kerfisstjÃ›ra
 
 #Invalid name of mailbox
 
-error_invalid_name				= Ólöglegt möppunafn - Notiğ ağeins stafi á bilunum  A-Z, 0-9, .- og bil
+error_invalid_name				= â€lË†glegt mË†ppunafn - Notiï£¿ aï£¿eins stafi Â· bilunum  A-Z, 0-9, .- og bil
 
 
 #Validations when sending mails            ;
 
-error_no_recipients				= Şú átt eftir ağ setja inn viğtakanda!
-error_compose_invalid_mail1_s	= Pósturinn inniheldur villur
-error_compose_invalid_mail1_p	= Şessi netföng eru ólögleg
-error_compose_invalid_mail2_s	= Hakağu viğ "semja" áğur en şú sendir
-error_compose_invalid_mail2_p	= Hakağu viğ "semja" áğur en şú sendir
+error_no_recipients				= ï¬Ë™ Â·tt eftir aï£¿ setja inn viï£¿takanda!
+error_compose_invalid_mail1_s	= PÃ›sturinn inniheldur villur
+error_compose_invalid_mail1_p	= ï¬essi netfË†ng eru Ã›lË†gleg
+error_compose_invalid_mail2_s	= Hakaï£¿u viï£¿ "semja" Â·ï£¿ur en Ë›Ë™ sendir
+error_compose_invalid_mail2_p	= Hakaï£¿u viï£¿ "semja" Â·ï£¿ur en Ë›Ë™ sendir
 
 
 #Confirmation of delete                    ;
 
-confirm_delete					= Viltu örugglega eyğa şessum pósti?
+confirm_delete					= Viltu Ë†rugglega eyï£¿a Ë›essum pÃ›sti?
 
 
 # If the message no have a subject or sender;
 
-no_subject_text					= [Án titils]
-no_sender_text					= [Sendandi óşekktur]
-no_recipient_text				= [Viğtakandi óşekktur]
+no_subject_text					= [Â¡n titils]
+no_sender_text					= [Sendandi Ã›Ë›ekktur]
+no_recipient_text				= [Viï£¿takandi Ã›Ë›ekktur]
 
 
 # If the quota limit was exceeded           ;
 
-quota_exceeded					= Ekki nóg pláss!\Vinsamlegast eyğiğ út gömlum póstum
-quota_usage_info				= Stærğartakmörk
-quota_usage_used				= Notuğ
+quota_exceeded					= Ekki nÃ›g plÂ·ss!\Vinsamlegast eyï£¿iï£¿ Ë™t gË†mlum pÃ›stum
+quota_usage_info				= StÃŠrï£¿artakmË†rk
+quota_usage_used				= Notuï£¿
 quota_usage_of					= af
 quota_usage_avail				= laus
 
@@ -75,23 +75,23 @@ date_format 					= %d/%m/%y %H:%M
 
 default_char_set				= iso-8859-1
 
-messages_mnu					= Skilaboğ
+messages_mnu					= Skilaboï£¿
 compose_mnu					= Skrifa
-refresh_mnu					= Endurhlağa
-folders_mnu					= Möppur
+refresh_mnu					= Endurhlaï£¿a
+folders_mnu					= MË†ppur
 search_mnu					= Leita
-address_mnu					= Nafnabók
-empty_trash_mnu					= Tæma rusl
+address_mnu					= NafnabÃ›k
+empty_trash_mnu					= TÃŠma rusl
 prefs_mnu					= Stillingar
-logoff_mnu 					= Útskráning
+logoff_mnu 					= â„tskrÂ·ning
 
 
 
 reply_prefix					= Svar:
-forward_prefix					= Áframsent:
+forward_prefix					= Â¡framsent:
 
-reply_delimiter					= --------- Şú skrifağir --------
-reply_from_hea					= Frá:
+reply_delimiter					= --------- ï¬Ë™ skrifaï£¿ir --------
+reply_from_hea					= FrÂ·:
 reply_to_hea					= Til:
 reply_cc_hea					= Afrit:
 reply_date_hea					= Dags:
@@ -109,52 +109,52 @@ value_hea					= Gildi
 [Folders]
 
 fld_name_hea					= Mappa
-fld_messages_hea				= Skilaboğ
-fld_size_hea					= Stærğ
-fld_empty_hea					= Tæma
-fld_delete_hea					= Eyğa
+fld_messages_hea				= Skilaboï£¿
+fld_size_hea					= StÃŠrï£¿
+fld_empty_hea					= TÃŠma
+fld_delete_hea					= Eyï£¿a
 fld_total					= Samtals:
-fld_make_new					= Búa til nıja möppu
-folders_to					= Möppur í
+fld_make_new					= BË™a til nËja mË†ppu
+folders_to					= MË†ppur ÃŒ
 
 [MessageList]
 
-messages_to					= Skilaboğ til
-no_messages					= Engin nı skilaboğ í 
+messages_to					= Skilaboï£¿ til
+no_messages					= Engin nË skilaboï£¿ ÃŒ 
 
-delete_selected_mnu				= Eyğa völdum skilaboğum
-move_selected_mnu				= Færa völd skilaboğ í 
+delete_selected_mnu				= Eyï£¿a vË†ldum skilaboï£¿um
+move_selected_mnu				= FÃŠra vË†ld skilaboï£¿ ÃŒ 
 mark_selected_mnu         			= Mark as read
 unmark_selected_mnu      			= Mark as unread
 
-delete_mnu					= Eyğa
-move_mnu					= Færa í
+delete_mnu					= Eyï£¿a
+move_mnu					= FÃŠra ÃŒ
 subject_hea					= Efni
-from_hea					= Frá
+from_hea					= FrÂ·
 to_hea						= Til
 date_hea					= Dags
-size_hea					= Stærğ
+size_hea					= StÃŠrï£¿
 have_spam						= You have Spam (check Spam folder)
 
-msg_you_have					= Şú átt
-msg_message					= skilaboğ
-msg_messages					= skilaboğ
+msg_you_have					= ï¬Ë™ Â·tt
+msg_message					= skilaboï£¿
+msg_messages					= skilaboï£¿
 
-msg_more_unread					= ólesin
-msg_one_unread					= ólesiğ
+msg_more_unread					= Ã›lesin
+msg_one_unread					= Ã›lesiï£¿
 msg_none_unread					= engin lesin
-msg_in_the_folder				= í möppunni
+msg_in_the_folder				= ÃŒ mË†ppunni
 [Login]
 
 
-lgn_title					= Innskráning
-lgn_welcome_msg					= Velkomin, skráğu şig inn
+lgn_title					= InnskrÂ·ning
+lgn_welcome_msg					= Velkomin, skrÂ·ï£¿u Ë›ig inn
 lng_user_email					= Netfang
 lng_user_name					= Notandanafn
-lng_user_pwd					= Lykilorğ
-lng_theme					= Útlit
-lng_language					= Tungumál
-lng_login_btn					= Innskráning &gt;&gt;
+lng_user_pwd					= Lykilorï£¿
+lng_theme					= â„tlit
+lng_language					= TungumÂ·l
+lng_login_btn					= InnskrÂ·ning &gt;&gt;
 lng_cookie_not_enabled				= Cookies must be enabled
 lng_cookie_not_valid				= Cookie Security Check Failed
 
@@ -167,32 +167,32 @@ to_hea						= Til:
 cc_hea						= Afrit:
 bcc_hea						= Blint afrit:
 subject_hea					= Efni:
-address_tip					= Úr nafnabók
+address_tip					= â„r nafnabÃ›k
 
-attach_hea					= Viğhengi:
-attch_add_new					= Bæta viğ nırri skrá
+attach_hea					= Viï£¿hengi:
+attch_add_new					= BÃŠta viï£¿ nËrri skrÂ·
 attch_name_hea					= Nafn
-attch_size					= Stærğ
+attch_size					= StÃŠrï£¿
 attch_type_hea					= Tegund
-attch_dele_hea					= Eyğa
-attch_no_hea					= Engin viğhengi
+attch_dele_hea					= Eyï£¿a
+attch_no_hea					= Engin viï£¿hengi
 
 require_receipt                                 = Return receipt
 
-add_signature					= Bæta viğ undirskrift
+add_signature					= BÃŠta viï£¿ undirskrift
 send_text					= Senda
 
-result_error					= Ekki tókst ağ senda!
-result_success					= Skilaboğ send!
-nav_continue					= Halda áfram
+result_error					= Ekki tÃ›kst aï£¿ senda!
+result_success					= Skilaboï£¿ send!
+nav_continue					= Halda Â·fram
 nav_back					= Til baka
 
-up_title 					= Bæta viğ skrá
-up_information_text				= Velja skrá
+up_title 					= BÃŠta viï£¿ skrÂ·
+up_information_text				= Velja skrÂ·
 up_button_text					= Senda
 
 priority_text					= Forgangur
-priority_low					= Lítill
+priority_low					= LÃŒtill
 priority_normal					= Venjulegur
 priority_high					= Mikill
 
@@ -200,29 +200,29 @@ priority_high					= Mikill
 [Preferences]
 
 prf_title 					= Stillingar
-prf_general_title				= Almennar upplısingar
+prf_general_title				= Almennar upplËsingar
 prf_name					= Nafn
 prf_reply_to					= Svar til netfangs
-prf_time_zone					= Tímasvæği
+prf_time_zone					= TÃŒmasvÃŠï£¿i
 prf_trash_title					= Rusl
-prf_save_to_trash				= Şegar skilaboğum er <b>eytt</b>, færa í 
-prf_save_only_read				= Vista ağeins <b>lesin skilaboğ</b> í 
-prf_empty_on_exit				= <b>Tæma</b> rusl viğ útskráningu
+prf_save_to_trash				= ï¬egar skilaboï£¿um er <b>eytt</b>, fÃŠra ÃŒ 
+prf_save_only_read				= Vista aï£¿eins <b>lesin skilaboï£¿</b> ÃŒ 
+prf_empty_on_exit				= <b>TÃŠma</b> rusl viï£¿ Ë™tskrÂ·ningu
 prf_empty_spam_on_exit				= <b>Empty</b> Spam folder when you logout
 prf_unmark_read_on_exit				= Reset READ messages as UNREAD when you logout
-prf_sent_title					= Úthólf
-prf_save_sent					= Vista <b>send skilaboğ</b> í 
-prf_messages_title				= Skilaboğ
-prf_page_limit					= Mesti fjöldi skilaboğa á síğu
+prf_sent_title					= â„thÃ›lf
+prf_save_sent					= Vista <b>send skilaboï£¿</b> ÃŒ 
+prf_messages_title				= Skilaboï£¿
+prf_page_limit					= Mesti fjË†ldi skilaboï£¿a Â· sÃŒï£¿u
 prf_signature_title				= Undirskrift
-prf_signature					= Búğu til undirskrift şína
-prf_auto_add_sign				= Bæta undirskrift viğ öll skilaboğ sem eru send
+prf_signature					= BË™ï£¿u til undirskrift Ë›ÃŒna
+prf_auto_add_sign				= BÃŠta undirskrift viï£¿ Ë†ll skilaboï£¿ sem eru send
 prf_save_button					= Vista
-prf_display_images				= Sına myndir sem fylgja meğ skilaboğum
+prf_display_images				= SËna myndir sem fylgja meï£¿ skilaboï£¿um
 prf_default_editor_mode				= Venjulegur ritill
 prf_default_editor_mode_text			= "Venjulegur texti"
-prf_default_editor_mode_html			= "HTML texti (Fyrir IE5 eğa nırri)"
-prf_time_to_refesh				= Athuga nı skilaboğ hverjar (mínútur)
+prf_default_editor_mode_html			= "HTML texti (Fyrir IE5 eï£¿a nËrri)"
+prf_time_to_refesh				= Athuga nË skilaboï£¿ hverjar (mÃŒnË™tur)
 prf_spam_level					= SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)
 prf_auto_require_receipt                        = Require read receipt by default
 prf_msg_saved					= Preferences saved
@@ -258,8 +258,8 @@ filter_msg_deleted				= Filter deleted
 
 [Catch]
 
-ctc_title					= Bæta viğ í nafnabók
-ctc_information					= Sınir ağeins netföng sem eru í nafnabók
+ctc_title					= BÃŠta viï£¿ ÃŒ nafnabÃ›k
+ctc_information					= SËnir aï£¿eins netfË†ng sem eru ÃŒ nafnabÃ›k
 ctc_name					= Nafn
 ctc_email					= Netfang
 ctc_no_address					= Ekkert netfang til
@@ -268,49 +268,49 @@ ctc_save					= Vista
 
 [Readmsg]
 
-next_mnu					= Næsti
+next_mnu					= NÃŠsti
 previous_mnu					= Fyrri
 back_mnu					= Til baka
 reply_mnu					= Svara
-reply_all_mnu					= Svara öllum
-forward_mnu					= Áframsenda
+reply_all_mnu					= Svara Ë†llum
+forward_mnu					= Â¡framsenda
 headers_mnu					= Haus
-move_mnu					= Færa í
-delete_mnu					= Eyğa
+move_mnu					= FÃŠra ÃŒ
+delete_mnu					= Eyï£¿a
 print_mnu					= Prenta
 download_mnu                                    = Download
 
-from_hea					= Frá:
+from_hea					= FrÂ·:
 to_hea						= Til:
 cc_hea						= Afrit:
 date_hea					= Dags:
 subject_hea					= Efni:
-attach_hea					= Viğhengi:
+attach_hea					= Viï£¿hengi:
 
 attch_name_hea					= Nafn
-attch_force_hea					= Vista á tölvu
+attch_force_hea					= Vista Â· tË†lvu
 attch_type_hea					= Tegund
-attch_size_hea					= Stærğ
-catch_address					= Bæta viğ í nafnabók
+attch_size_hea					= StÃŠrï£¿
+catch_address					= BÃŠta viï£¿ ÃŒ nafnabÃ›k
 
 [Search]
 
 sch_title                                    	= Search
 
-sch_information_text				= Settu inn orğ eğa orğasamband sem şú vilt leita eftir<br>Leitağ verğur í lesnum skilaboğum
+sch_information_text				= Settu inn orï£¿ eï£¿a orï£¿asamband sem Ë›Ë™ vilt leita eftir<br>Leitaï£¿ verï£¿ur ÃŒ lesnum skilaboï£¿um
 sch_button_text					= Leit &gt;&gt;
 sch_subject_hea					= Efni
-sch_from_hea					= Frá
+sch_from_hea					= FrÂ·
 sch_date_hea					= Dags
-sch_body_hea					= Skilaboğ
+sch_body_hea					= Skilaboï£¿
 sch_folder_hea					= Mappa
-sch_no_results					= Engin skilaboğ fundust
+sch_no_results					= Engin skilaboï£¿ fundust
 
 
 [QuickAddress]
 
-qad_title 			= Nafnabók
-qad_select_address		= Veldu tengiliğ
+qad_title 			= NafnabÃ›k
+qad_select_address		= Veldu tengiliï£¿
 qad_to				= Til
 qad_cc				= Afrit
 qad_bcc				= Blint afrit
@@ -319,7 +319,7 @@ qad_bcc				= Blint afrit
 
 # edit/display
 
-adr_title					= Nafnabók
+adr_title					= NafnabÃ›k
 adr_name					= Nafn
 adr_email					= Netfang
 adr_street					= Heimilisfang
@@ -334,11 +334,17 @@ adr_save					= Vista
 adr_name_hea					= Nafn
 adr_email_hea					= Netfang
 adr_edit_hea					= Breyta
-adr_expo_hea					= Flytja út
-adr_dele_hea					= Eyğa
-adr_new_entry					= Nır tengiliğur
+adr_expo_hea					= Flytja Ë™t
+adr_dele_hea					= Eyï£¿a
+adr_new_entry					= NËr tengiliï£¿ur
 
 
-addr_saved					= Tengiliğur hefur veriğ vistağur
-addr_added					= Tengiliğ hefur veriğ bætt viğ
-addr_deleted					= Tengiliğ hefur veiğ eytt
+addr_saved					= Tengiliï£¿ur hefur veriï£¿ vistaï£¿ur
+addr_added					= Tengiliï£¿ hefur veriï£¿ bÃŠtt viï£¿
+addr_deleted					= Tengiliï£¿ hefur veiï£¿ eytt
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Vista
+evt_delete						= Eyï£¿a
+

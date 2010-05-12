@@ -330,3 +330,8 @@ blk_no_address					= 주소 없음
 blk_close						= 닫기
 blk_save						= 저장
 
+[Event]
+evt_title						= Calendar Event
+evt_save						= 저장
+evt_delete						= 삭제
+

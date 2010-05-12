@@ -342,3 +342,9 @@ adr_new_entry					= Nový kontakt
 addr_saved					= Kontakt byl uložen
 addr_added					= Kontakt byl pøidán
 addr_deleted					= Kontakt byl smazán
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Uložit
+evt_delete						= Smazat
+

@@ -344,3 +344,9 @@ adr_new_entry = รายชื่อใหม่
 addr_saved = จัดเก็บข้อมูลรายชื่อแล้ว
 addr_added = เพิ่มรายชื่อแล้ว
 addr_deleted = ลบรายชื่อแล้ว
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= จัดเก็บ
+evt_delete						= ลบ
+

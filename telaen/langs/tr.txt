@@ -338,3 +338,9 @@ adr_new_entry					= Yeni Giriş
 addr_saved					= Bağlantı kayıt edildi
 addr_added					= Bağlantı eklendi
 addr_deleted					= Bu bağlantı ortadan kaldırıldı
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Kaydet
+evt_delete						= Sil
+

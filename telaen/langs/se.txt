@@ -345,3 +345,9 @@ adr_new_entry					= Ny adress
 addr_saved					= Adressen sparades
 addr_added					= Adressen lades till
 addr_deleted					= Adressen togs bort
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Spara
+evt_delete						= Ta bort
+

@@ -342,3 +342,9 @@ adr_new_entry					= Ny kontakt
 addr_saved					= Kontakten har blitt lagret
 addr_added					= Kontakten har blitt lagt til
 addr_deleted					= Kontakten har blitt slettet
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Lagre
+evt_delete						= Slett
+

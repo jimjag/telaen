@@ -348,3 +348,9 @@ adr_new_entry		= Новый контакт
 addr_saved			= Контакт сохранён
 addr_added			= Контакт добавлен
 addr_deleted		= Контакт уничтожен
+
+[Event]
+evt_title						= Calendar Event
+evt_save						= Сохранить
+evt_delete						= Удалить
+

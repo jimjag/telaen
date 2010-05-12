@@ -327,3 +327,8 @@ blk_no_address					= Tiada Alamat Emel
 blk_close						= Tutup
 blk_save						= Simpan
 
+[Event]
+evt_title						= Calendar Event
+evt_save						= Simpan
+evt_delete						= Delete
+Padam
