@@ -9,7 +9,7 @@ function replaceCal(month, year) {
 function doDays() {
 	var tds = document.getElementById("calendar").getElementsByTagName("td");
 	for (var i=0; i<tds.length; i++) {
-		if (tds[i].className=="regday" || tds[i].className=="today" || tds[i].className=="evt" || tds[i].className=="evtt") {
+		if (tds[i].className=="regday" || tds[i].className=="today" || tds[i].className=="evt" || tds[i].className=="tevt") {
 			tds[i].onclick = function() {
 				var url = "./event.php?edate=" + this.id;
 				window.open(url, "Event", "width=550, height=350, scrollbars=1, resizable=1");

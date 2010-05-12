@@ -237,7 +237,7 @@ td.headerright {
 #calendar{
 }
 
-#calendar table.month{
+#calendar table.month {
 	width:180px;
 	float:left;
 	border:2px solid #004080;
@@ -245,8 +245,7 @@ td.headerright {
 	border-collapse:collapse;
 }
 
-#calendar td.today
-{
+#calendar td.today {
 	border: 1px solid #ddd;
 	padding: 3px;
 	text-align: right;
@@ -255,8 +254,7 @@ td.headerright {
 	background-color: #fff;
 }
 
-#calendar td.today:hover
-{
+#calendar td.today:hover {
 	color: #fff;
 	background-color: #004080;
 }
@@ -294,8 +292,7 @@ td.headerright {
 	background-color:#f0f0f0;
 }
 
-#calendar td.evtt
-{
+#calendar td.tevt{
 	border: 1px solid #ddd;
 	padding: 3px;
 	text-align: right;
@@ -304,8 +301,7 @@ td.headerright {
 	background-color: #fff;
 }
 
-#calendar td.evtt:hover
-{
+#calendar td.tevt:hover {
 	color: #900;
 	background-color: #004080;
 }
