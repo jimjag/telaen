@@ -60,7 +60,7 @@ class MyMonth {
 	var $_nmonth;
 	var $_nyear;
 
-	function MyMonth($month=0, $year=0) {
+	function MyMonth($year=0, $month=0) {
 		if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050){
 			$this->_mymonth	= getdate();
 			$month = $this->_mymonth['mon'];
@@ -90,6 +90,8 @@ class MyMonth {
 
 	function monthAsTable() {
 
+		$events = new CalEvents($this->_year, $this->_month);
+
 		$ret = <<<EOT
 <table class="month"><tr>
   <th class="week" onclick="replaceCal({$this->_pmonth}, {$this->_pyear});"> &laquo; </th>
@@ -111,9 +113,9 @@ EOT;
 				$ret .= "</tr>\n<tr>";
 			}
 			if ($day == $today) {
-				$ret .= "<td class=\"today\"> $day </td>";
+				$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"today\"> $day </td>";
 			} else {
-				$ret .= "<td class=\"regday\"> $day </td>";
+				$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"regday\"> $day </td>";
 			}
 		}
 		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";

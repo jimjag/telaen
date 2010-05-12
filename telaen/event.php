@@ -14,7 +14,9 @@ if(!$sess["auth"]) {
 	die();
 }
 
+extract(pull_from_get(Array("edate")));
 extract(pull_from_post(Array("etext", "edate", "eaction")));
+
 $etext = trim($etext);
 
 list($dummy, $year, $month, $day) = explode("_", $edate);
@@ -31,7 +33,7 @@ if (!$etext && $eaction != "delete")
 /*
  * Grab the event array and event, if any, for this date
  */
-$events = CalEvents($year, $month);
+$events = new CalEvents($year, $month);
 
 $actionDone = false;
 switch($eaction) {

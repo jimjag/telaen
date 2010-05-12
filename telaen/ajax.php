@@ -85,12 +85,12 @@ if(isset($_POST['action'])) {
 				$SS->Save($sess);
 
 				echo "success: session refreshed";
-		
+
 			break;
 
 		// Regen the calendar
 		case "replaceCal":
-			$newcal = new MyMonth($_POST['cal_month'], $_POST['cal_year']);
+			$newcal = new MyMonth($_POST['cal_year'], $_POST['cal_month']);
 			$newcal->showMonthAsTable();
 			break;
 		default:
