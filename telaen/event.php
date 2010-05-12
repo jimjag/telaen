@@ -14,24 +14,6 @@ if(!$sess["auth"]) {
 	die();
 }
 
-function pullEvents($dir, $file) {
-	global $UM;
-	$filename = $dir . $file;
-	$events = Array();
-	$myfile = $UM->_read_file($filename);
-	if ($myfile != "") 
-		$events = unserialize(base64_decode($myfile));
-	return $events;
-}
-
-function pushEvents($events, $dir, $file) {
-	global $UM;
-	$filename = $dir . $file;
-	@mkdir($dir, 0750, true);
-	$UM->_save_file($filename,base64_encode(serialize($events)));
-}
-	
-	
 extract(pull_from_post(Array("etext", "edate", "eaction")));
 $etext = trim($etext);
 
@@ -45,25 +27,22 @@ if ($year <= 2009 || $year >= 2050 || $month <= 0 || $month >= 13 || $day <= 0 |
 if (!$etext && $eaction != "delete")
 	unset($eaction);
 
-$edir = $userfolder."_infos/calendar/{$year}/{$month}";
-$efile = "/events.ucf";
 
 /*
  * Grab the event array and event, if any, for this date
  */
-$events = pullEvents($edir, $efile);
+$events = CalEvents($year, $month);
 
 $actionDone = false;
 switch($eaction) {
 	case "delete":
-		unset $events["$day"];
-		pushEvents($events, $edir, $efile)
-		$UM->_save_file($filename,base64_encode(serialize($events)));
+		$events->delEvent($day);
+		$events->saveEvents();
 		$actionDone = true;
 		break;
 	case "save":
-		$events["$day"] = $etext;
-		pushEvents($events, $edir, $efile)
+		$events->setEvent($day, $etext);
+		$events->saveEvents();
 		$actionDone = true;
 		break;
 	default:
@@ -90,11 +69,13 @@ EOT;
 
 	$smarty->assign("umJS",$jssource);
 
-	$event = $events["$day"];
+	$event = $events->getEvent($day);
 	$smarty->assign("umeText",$event);
 
 	$smarty->assign("umEventForm",1);
 }
+unset $events;
+
 $smarty->display("$selected_theme/search.htm");
 
 ?>
