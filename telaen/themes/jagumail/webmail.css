@@ -319,3 +319,25 @@ td.headerright {
 	color:#900;
 }
 
+#calendar .einfo {
+	display:none;
+	margin:0 0 0 -50px;
+	padding:0.4em;
+	position:absolute;
+	width:180px;
+	color:#004080;
+	background-color:#fff;
+	text-align:left;
+	border:1px solid #ddd;
+	font-weight:bold;
+	font-size : 8pt;
+	margin: auto;
+	float : left;
+	border-collapse: collapse;
+	background: #FFFFFF;
+	overflow: auto;
+}
+
+#calendar td:hover > .einfo {
+	display:block;
+}
