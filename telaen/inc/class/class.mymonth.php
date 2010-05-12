@@ -64,7 +64,7 @@ class MyMonth {
 		$ret = <<<EOT
 <table class="month"><tr>
   <th class="week" onclick="replaceCal({$this->_pmonth}, {$this->_pyear});"> &laquo; </th>
-  <th class="week" onclick="replaceCal({$this->_month}, {$this->_year});" colspan="5"> {$this->_mymonth["month"]} - {$this->_mymonth["year"]} </th>
+  <th class="week" onclick="replaceCal({$this->_today["mon"]}, {$this->_today["year"]});" colspan="5"> {$this->_mymonth["month"]} - {$this->_mymonth["year"]} </th>
   <th class="week" onclick="replaceCal({$this->_nmonth}, {$this->_nyear});"> &raquo; </th>\n</tr>
   <tr class="days"><td>Su</td><td>Mo</td><td>Tu</td><td>We</td><td>Th</td><td>Fr</td><td>Sa</td></tr>
 EOT;
@@ -89,7 +89,7 @@ EOT;
 				$dclass = "evt";
 				if ($day == $today)
 					$dclass = "tevt";
-				$event = "<div class=\"einfo\">[EVENT {$this->_year}-{$this->_month}-{$day}]<br/><br/>" . nl2br($event) . "</div>";
+				$event = "<div class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>" . nl2br($event) . "</div>";
 			}
 			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"{$dclass}\"> $day $event </td>";
 		}
