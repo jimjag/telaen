@@ -56,19 +56,6 @@ if ($actionDone) {
 } else {
 	$smarty->assign("pageMetas", $nocache);
 
-	$show_advanced = ($prefs["editor-mode"] != "text") ? 1 : 0 ;
-	$js_advanced = ($show_advanced) ? "true" : "false" ;
-
-	$jssource = $commonJS;
-
-	if ($show_advanced) {
-		$jssource .=<<<EOT
-	<script type="text/javascript" src="editors/tiny_mce/tiny_mce_gzip.js"></script>
-	<script type="text/javascript" src="editors/tiny_mce/tiny_comp_init.js"></script>
-	<script type="text/javascript" src="editors/tiny_mce/tiny_init.js"></script>
-EOT;
-}
-
 	$smarty->assign("umJS",$jssource);
 
 	$event = $events->getEvent($day);
