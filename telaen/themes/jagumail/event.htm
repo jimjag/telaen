@@ -18,10 +18,11 @@
 			<td colspam="2">&nbsp;</td>
 		</tr>
 		<tr>
-			<td align="left"><input type="submit" name="save" value="&nbsp;{#evt_save#}&nbsp;" /></td>
-			<td align="right"><input type="submit" name="delete" value="&nbsp;{#evt_delete#}&nbsp;" /></td>
+			<td align="left"><input type="submit" name="evsave" value="&nbsp;{#evt_save#}&nbsp;" /></td>
+			<td align="right"><input type="submit" name="evdelete" value="&nbsp;{#evt_delete#}&nbsp;" /></td>
 		</tr>
 	</table>
+	<input type="hidden" name="edate" value="{$umEdate}">
 </form>
 {else}
 <script type="text/javascript">

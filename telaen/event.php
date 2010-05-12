@@ -15,42 +15,34 @@ if(!$sess["auth"]) {
 }
 
 extract(pull_from_get(Array("edate")));
-extract(pull_from_post(Array("etext", "edate", "eaction")));
+extract(pull_from_post(Array("etext", "edate", "evsave", "evdelete")));
 
 $etext = trim($etext);
 
 list($dummy, $year, $month, $day) = explode("_", $edate);
 $year=intval($year); $month=intval($month); $day=intval($day);
 
-// Minor error-check
-if ($year <= 2009 || $year >= 2050 || $month <= 0 || $month >= 13 || $day <= 0 || $day >= 32)
-	unset($eaction);
-
-if (!$etext && $eaction != "delete")
-	unset($eaction);
-
-
-/*
- * Grab the event array and event, if any, for this date
- */
-$events = new MyMonth($year, $month);
-
 $actionDone = false;
-switch($eaction) {
-	case "delete":
+$event = "";
+// Minor error-check
+if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $day < 32) {
+	/*
+	 * Grab the event array and event, if any, for this date
+	 */
+	$events = new MyMonth($year, $month);
+	$event = $events->getEvent($day);
+	
+	if (isset($evdelete)) {
 		$events->delEvent($day);
 		$events->saveEvents();
 		$actionDone = true;
-		break;
-	case "save":
+	}
+	if(isset($evsave) && $etext) {
 		$events->setEvent($day, $etext);
 		$events->saveEvents();
 		$actionDone = true;
-		break;
-	default:
-		break;
+	}
 }
-
 $jssource .= "
 	<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>
 ";
@@ -62,10 +54,10 @@ if ($actionDone) {
 } else {
 	$timestamp = mktime(0, 0, 0, $month, 1, 2010);
 	$mdate = date("M", $timestamp) . "$day, $year";
-	$event = $events->getEvent($day);
 	$smarty->assign("umeText",$event);
 	$smarty->assign("umShowEventForm","YES");
 	$smarty->assign("umEventHeader", $mdate);
+	$smarty->assign("umEdate", $edate);
 }
 unset ($events);
 
