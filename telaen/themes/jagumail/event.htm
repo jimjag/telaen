@@ -1,8 +1,9 @@
 {config_load file=$umLanguageFile section="Event"}
 
-{include file=$headerTemplate pageTitle=#event_title#}
+{include file=$popupHeaderTemplate pageTitle=$umPageTitle|escape:"html"}
 
-{if $umEventForm}
+{if $umEventForm gt 0}
+
 <form name="form1" action="event.php" method="post">
 	<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
 		<tr>
@@ -12,7 +13,9 @@
 		<tr>
 	</table>
 </form>
+
 {else}
+
 <script type="text/javascript">
 //<![CDATA[
 function refreshParent() {
@@ -27,6 +30,7 @@ function refreshParent() {
 refreshParent();
 //]]>
 </script>
+
 {/if}
 
 {include file=$footerTemplate}
