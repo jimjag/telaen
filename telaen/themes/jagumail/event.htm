@@ -1,12 +1,16 @@
 {config_load file=$umLanguageFile section="Event"}
 
-{include file=$popupHeaderTemplate pageTitle=$umPageTitle|escape:"html"}
+{include file=$popupHeaderTemplate pageTitle=#ctc_title# }
 
 <body>
-
 <div id="popup">
 
-{if $umEventForm gt 0}
+<div id="logo">
+	<img src="images/telaen_logo.jpg" width="310" height="73" alt="logo">
+</div>
+
+
+{if $umEventForm}
 
 <form name="form1" action="event.php" method="post">
 	<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
