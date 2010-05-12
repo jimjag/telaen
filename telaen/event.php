@@ -52,18 +52,20 @@ switch($eaction) {
 }
 
 if ($actionDone) {
-	$smarty->assign("umEventForm",0);
+	$smarty->assign("umShowEventForm","NO");
 } else {
 	$smarty->assign("pageMetas", $nocache);
 
 	$smarty->assign("umJS",$jssource);
 
-	$event = $events->getEvent($day);
+	//$event = $events->getEvent($day);
+
 	$smarty->assign("umeText",$event);
 
-	$smarty->assign("umEventForm",1);
+	$smarty->assign("umShowEventForm","YES");
 }
 unset ($events);
+
 $smarty->assign("umPageTitle", "Calendar Event");
 $smarty->display("$selected_theme/event.htm");
 
