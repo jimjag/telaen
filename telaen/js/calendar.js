@@ -18,22 +18,23 @@ function doDays() {
 				return false;
 			}
 
-			var elem = document.getElementById(tds[i].id);
-			if (grrr && elem!=null) {
-				tds[i].onmouseover = function() {
-					document.getElementById(this.id).style.display = "block";
-				}
-				tds[i].onmouseout = function() {
-					document.getElementById(this.id).style.display = "none";
-				}
-				elem.onmouseover = function() {
-					document.getElementById(this.id).style.display = "block";
-				}
-				elem.onmouseout = function() {
-					document.getElementById(this.id).style.display = "none";
+			if (tds[i].className=="evt" || tds[i].className=="tevt") {
+				var elem = document.getElementById(tds[i].id);
+				if (grrr && elem!=null) {
+					tds[i].onmouseover = function() {
+						document.getElementById(this.id).style.display = "block";
+					}
+					tds[i].onmouseout = function() {
+						document.getElementById(this.id).style.display = "none";
+					}
+					elem.onmouseover = function() {
+						document.getElementById(this.id).style.display = "block";
+					}
+					elem.onmouseout = function() {
+						document.getElementById(this.id).style.display = "none";
+					}
 				}
 			}
-
 
 		}
 	}
