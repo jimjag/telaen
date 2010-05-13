@@ -251,7 +251,7 @@ td.headerright {
 #calendar{
 }
 
-#calendar table.month{
+#calendar table.month {
 	width:180px;
 	float:left;
 	border:2px solid #004080;
@@ -259,8 +259,7 @@ td.headerright {
 	border-collapse:collapse;
 }
 
-#calendar td.today
-{
+#calendar td.today {
 	border: 1px solid #ddd;
 	padding: 3px;
 	text-align: right;
@@ -269,15 +268,13 @@ td.headerright {
 	background-color: #fff;
 }
 
-#calendar td.today:hover
-{
+#calendar td.today:hover {
 	color: #fff;
 	background-color: #004080;
 }
 
 #calendar td.regday {
 	border:1px solid #ddd;
-	color:#555;
 	padding:3px;
 	text-align:right;
 	background-color: #fff;
@@ -291,7 +288,6 @@ td.headerright {
 
 #calendar td.blankday {
 	border:1px solid #ddd;
-	color:#555;
 	padding:3px;
 	text-align:right;
 	background-color: #fff;
@@ -308,4 +304,52 @@ td.headerright {
 #calendar tr.days{
 	text-align:right;
 	background-color:#f0f0f0;
+}
+
+#calendar td.tevt{
+	border: 1px solid #ddd;
+	padding: 3px;
+	text-align: right;
+	color: #900;
+	font-weight: bold;
+	background-color: #fff;
+}
+
+#calendar td.tevt:hover {
+	color: #900;
+	background-color: #004080;
+}
+
+#calendar td.evt {
+	border:1px solid #ddd;
+	padding:3px;
+	text-align:right;
+	background-color: #fff;
+	color:#900;
+}
+
+#calendar td.evt:hover {
+	background-color: #004080;
+	color:#900;
+}
+
+#calendar .einfo {
+	display:none;
+	padding:0.4em;
+	position:absolute;
+	width:200px;
+	color:#004080;
+	background-color:#fff;
+	text-align:left;
+	border:2px solid #ddd;
+	font-size : 8pt;
+	font-weight: bold;
+	margin: auto;
+	float : right;
+	border-collapse: collapse;
+	overflow: auto;
+}
+
+#calendar td:hover > .einfo {
+	display:block;
 }
