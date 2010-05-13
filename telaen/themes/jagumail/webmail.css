@@ -354,3 +354,18 @@ td.headerright {
 	text-align: center;
 	color: #777;
 }
+
+#news th {
+	color:#004080;
+	background-color:#fff;
+	text-align:center;
+	font-size : 8pt;
+	font-weight: bold;
+}
+
+#news td {
+	color:#004080;
+	background-color:#fff;
+	text-align:left;
+	font-size : 8pt;
+}
