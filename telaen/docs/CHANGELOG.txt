@@ -34,6 +34,8 @@ Telaen:
 	all config.* files to ./inc/config/. This means that
 	upgrading may involve moving and/or deleting older
 	stale versions of files.
+
+[New]	Upgraded to latest TinyMce.
 1.2.1
 
 [New]	New Forwarded status flag and icon added.
