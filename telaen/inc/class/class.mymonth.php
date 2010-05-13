@@ -89,7 +89,7 @@ EOT;
 				$dclass = "evt";
 				if ($day == $today)
 					$dclass = "tevt";
-				$event = "<div class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>" . nl2br($event) . "</div>";
+				$event = "<div id=\"e_{$this->_year}_{$this->_month}_{$day}\" class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>" . nl2br($event) . "</div>";
 			}
 			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"{$dclass}\"> $day $event </td>";
 		}
