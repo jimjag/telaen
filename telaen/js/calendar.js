@@ -17,9 +17,12 @@ function doDays() {
 				window.open(url, "Event", "width=550, height=350, scrollbars=1, resizable=1");
 				return false;
 			}
-
-			if (tds[i].className=="evt" || tds[i].className=="tevt") {
-				var elem = document.getElementById(tds[i].id);
+		}
+	}
+	var einfo = document.getElementById("calendar").getElementsByTagName("div");
+	for (var i=0; i<einfo.length; i++) {
+			if (einfo[i].className=="einfo") {
+				var elem = document.getElementById(einfo[i].id);
 				if (grrr && elem!=null) {
 					tds[i].onmouseover = function() {
 						document.getElementById(this.id).style.display = "block";
