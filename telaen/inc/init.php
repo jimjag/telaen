@@ -174,11 +174,6 @@ $SS->Save($sess);
 
 $userfolder = $temporary_directory.preg_replace("/[^a-z0-9\._-]/","_",strtolower($f_user))."_".strtolower($f_server)."/";
 
-$mycal = new MyMonth();
-$mycal = $mycal->monthAsDiv();
-$smarty->assign("umCalendar",$mycal);
-$smarty->assign("umSystemNews",$systemNews);
-
 $UM->debug			= $enable_debug;
 $UM->use_html			= $allow_html;
 
@@ -192,6 +187,11 @@ if (isset($dirperm) && $dirperm != 0000) {
 }
 
 $prefs = load_prefs();
+
+$mycal = new MyMonth();     // needs $prefs[], $UM and $userfolder!
+$mycal = $mycal->monthAsDiv();
+$smarty->assign("umCalendar",$mycal);
+$smarty->assign("umSystemNews",$systemNews);
 
 $UM->timezone			= $prefs["timezone"];
 $UM->charset			= $default_char_set;

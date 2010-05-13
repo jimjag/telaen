@@ -203,17 +203,17 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
 	// adv editor
 	if(!isset($textmode))
-				$textmode = null;
+		$textmode = null;
 		$show_advanced = ((!$textmode) && ($prefs["editor-mode"] != "text")) ? 1 : 0 ;
 		$js_advanced = ($show_advanced) ? "true" : "false" ;
 
 		// signature
 		$signature = $prefs["signature"];
 		if($show_advanced)
-				$signature = nl2br($signature);
+			$signature = nl2br($signature);
 	
 		$add_sig = $prefs["add-sig"];
-	$addSignature = ($add_sig) ? 1 : 0 ;
+		$addSignature = ($add_sig) ? 1 : 0 ;
 		$smarty->assign("umAddSignature", $addSignature);
 
 		// return receipt

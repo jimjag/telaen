@@ -8,6 +8,7 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 require("./inc/init.php");
+require("./inc/htmlfilter.php");
 
 if(!$sess["auth"]) {
 	echo "error: your session seems expired";
@@ -38,14 +39,25 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 		$actionDone = true;
 	}
 	if(isset($evsave) && $etext) {
+		$etext = HTMLFilter($etext, "images/trans.gif", $block_external_images);
 		$events->setEvent($day, $etext);
 		$events->saveEvents();
 		$actionDone = true;
 	}
 }
+
 $jssource .= "
 	<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>
 ";
+
+if ($prefs["editor-mode"] != "text") {
+	$jssource .=<<<EOT
+	<script type="text/javascript" src="editors/tiny_mce/tiny_mce_gzip.js"></script>
+	<script type="text/javascript" src="editors/tiny_mce/tiny_comp__e_init.js"></script>
+	<script type="text/javascript" src="editors/tiny_mce/tiny_e_init.js"></script>
+EOT;
+}
+
 $smarty->assign("pageMetas", $nocache);
 $smarty->assign("umJS",$jssource);
 
