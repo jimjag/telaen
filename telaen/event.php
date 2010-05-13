@@ -51,8 +51,7 @@ $jssource .= "
 
 if ($prefs["editor-mode"] != "text") {
 	$jssource .=<<<EOT
-	<script type="text/javascript" src="editors/tiny_mce/tiny_mce_gzip.js"></script>
-	<script type="text/javascript" src="editors/tiny_mce/tiny_comp_e_init.js"></script>
+	<script type="text/javascript" src="editors/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="editors/tiny_mce/tiny_e_init.js"></script>
 EOT;
 }
