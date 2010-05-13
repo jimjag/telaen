@@ -17,6 +17,8 @@ function doDays() {
 				window.open(url, "Event", "width=550, height=350, scrollbars=1, resizable=1");
 				return false;
 			}
+		}
+		if (tds[i].className=="evt" || tds[i].className=="tevt") {
 			var einfo = document.getElementById("e" + tds[i].id.substring(1));
 			if (grrr && einfo!=null) {
 				tds[i].onmouseover = function() {
