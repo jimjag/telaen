@@ -19,6 +19,9 @@ Telaen:
 
 [New]	Now includes an embedded appointment/event Calendar.
 
+[New]	Ability to display a System-wide "news" banner
+	via inc/news/news.system.php
+
 [New]	Major speed improvements when handling the POP3
 	Inbox. Even though it's not recommended to store all
 	your Email in the POP3 Inbox, lots of people do which
