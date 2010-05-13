@@ -8,6 +8,7 @@ function replaceCal(month, year) {
 
 
 function doDays() {
+	var grrr = navigator.userAgent.indexOf("MSIE")>-1;
 	var tds = document.getElementById("calendar").getElementsByTagName("td");
 	for (var i=0; i<tds.length; i++) {
 		if (tds[i].className=="regday" || tds[i].className=="today" || tds[i].className=="evt" || tds[i].className=="tevt") {
@@ -16,6 +17,24 @@ function doDays() {
 				window.open(url, "Event", "width=550, height=350, scrollbars=1, resizable=1");
 				return false;
 			}
+
+			var elem = document.getElementById(tds[i].id);
+			if (grrr && elem!=null) {
+				tds[i].onmouseover = function() {
+					document.getElementById(this.id).style.display = "block";
+				}
+				tds[i].onmouseout = function() {
+					document.getElementById(this.id).style.display = "none";
+				}
+				elem.onmouseover = function() {
+					document.getElementById(this.id).style.display = "block";
+				}
+				elem.onmouseout = function() {
+					document.getElementById(this.id).style.display = "none";
+				}
+			}
+
+
 		}
 	}
 }
