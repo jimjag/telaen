@@ -17,6 +17,8 @@ Telaen:
 =======
 1.3.0
 
+[New]	Now includes an embedded appointment/event Calendar.
+
 [New]	Major speed improvements when handling the POP3
 	Inbox. Even though it's not recommended to store all
 	your Email in the POP3 Inbox, lots of people do which
