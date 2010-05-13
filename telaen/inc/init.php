@@ -48,6 +48,7 @@ require("./inc/user_tl.php");
 // Assing to smarty the paths for include dinamically menu/header/footer
 $smarty->assign("menuTemplate", $menu_template);
 $smarty->assign("calendarTemplate", $calendar_template);
+$smarty->assign("newsTemplate", $news_template);
 $smarty->assign("headerTemplate", $header_template);
 $smarty->assign("footerTemplate", $footer_template);
 $smarty->assign("popupHeaderTemplate", $popup_header_template);

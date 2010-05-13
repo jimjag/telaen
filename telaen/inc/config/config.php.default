@@ -38,6 +38,12 @@ require("./inc/config/config.languages.php");
 require("./inc/config/config.security.php");
 
 ########################################################################
+# Read in $systemNews (not required)
+########################################################################
+
+@include("./inc/news/news.system.php");
+
+########################################################################
 # Location of the Smarty template installation.
 # We bundle Smarty, but you can point it to your
 # locally installed version if you like. Not matter

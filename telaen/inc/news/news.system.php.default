@@ -1,0 +1,17 @@
+<?php
+/************************************************************************
+Telaen is a GPL'ed software developed by 
+
+ - The Telaen Group
+ - http://www.telaen.org/
+
+*************************************************************************/
+
+/*
+ * Set the below for system-related news that can be
+ * displayed should the selected theme support it.
+ */
+
+$systemNews = "Welcome";
+
+?>
