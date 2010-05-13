@@ -353,3 +353,16 @@ td.headerright {
 #calendar td:hover > .einfo {
 	display:block;
 }
+
+/** News */
+
+#news{
+}
+
+#news table.banner {
+	width:150px;
+	float:left;
+	border:2px solid #004080;
+	margin:10px;
+	border-collapse:collapse;
+}
