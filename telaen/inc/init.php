@@ -177,6 +177,7 @@ $userfolder = $temporary_directory.preg_replace("/[^a-z0-9\._-]/","_",strtolower
 $mycal = new MyMonth();
 $mycal = $mycal->monthAsDiv();
 $smarty->assign("umCalendar",$mycal);
+$smarty->assign("umSystemNews",$systemNews);
 
 $UM->debug			= $enable_debug;
 $UM->use_html			= $allow_html;
