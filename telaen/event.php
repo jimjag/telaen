@@ -45,16 +45,11 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 	}
 }
 
-$jssource .= "
-	<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>
-";
-
-if ($prefs["editor-mode"] != "text") {
-	$jssource .=<<<EOT
+$jssource .=<<<EOT
+	<script type="text/javascript" src="./js/calendar.js"></script>
 	<script type="text/javascript" src="editors/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="editors/tiny_mce/tiny_e_init.js"></script>
 EOT;
-}
 
 $smarty->assign("pageMetas", $nocache);
 $smarty->assign("umJS",$jssource);
