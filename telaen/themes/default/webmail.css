@@ -345,6 +345,8 @@ td.headerright {
 	float : right;
 	border-collapse: collapse;
 	overflow: auto;
+	text-align:left;
+	color:#000;
 }
 
 #calendar td:hover > .einfo {
