@@ -60,7 +60,6 @@ class MyMonth {
 	}
 
 	function monthAsTable() {
-		$ishtml = ($_GLOBALS['prefs']["editor-mode"] != "text")?true:false;
 		$ret = <<<EOT
 <table class="month"><tr>
   <th class="week" onclick="replaceCal({$this->_pmonth}, {$this->_pyear});"> &laquo; </th>
@@ -89,8 +88,6 @@ EOT;
 				$dclass = "evt";
 				if ($day == $today)
 					$dclass = "tevt";
-				if (!$ishtml)
-					$event = nl2br($event);
 				$event = "<div id=\"e_{$this->_year}_{$this->_month}_{$day}\" class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>" . $event . "</div>";
 			}
 			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"{$dclass}\"> $day $event </td>";
