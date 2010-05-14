@@ -58,7 +58,7 @@ if ($actionDone) {
 	$smarty->assign("umShowEventForm","NO");
 } else {
 	$timestamp = mktime(0, 0, 0, $month, 1, 2010);
-	$mdate = date("M", $timestamp) . " $day, $year";
+	$mdate = ":: &nbsp;&nbsp; ". date("M", $timestamp) . " $day, $year &nbsp;&nbsp; ::<br/>";
 	$smarty->assign("umeText",$event);
 	$smarty->assign("umShowEventForm","YES");
 	$smarty->assign("umEventHeader", $mdate);
