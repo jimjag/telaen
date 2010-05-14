@@ -338,12 +338,9 @@ td.headerright {
 	padding:0.4em;
 	position:absolute;
 	width:200px;
-	color:#004080;
 	background-color:#fff;
-	text-align:left;
 	border:2px solid #ddd;
 	font-size : 8pt;
-	font-weight: bold;
 	margin: auto;
 	float : right;
 	border-collapse: collapse;
