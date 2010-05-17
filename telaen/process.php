@@ -23,7 +23,7 @@ function mail_connect() {
 }
 
 extract(pull_from_get(Array("decision", "refr", "mlist")));
-extract(pull_from_post(Array("decision", "start_pos", "end_pos")));
+extract(pull_from_post(Array("decision", "start_pos", "end_pos", "aval_folders")));
 
 $headers = null;
 $folder_key = base64_encode(strtolower($folder));
