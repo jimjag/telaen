@@ -571,6 +571,7 @@ class Telaen extends Telaen_core {
 				return 0;						
 		} else 
 			return 0;
+		return 1;
 	}
 
 	function mail_move_msg($msg,$tofolder) {
