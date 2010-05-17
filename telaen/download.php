@@ -56,7 +56,7 @@ if($downAll) {
 	}
 	
 	$size = filesize($sourceFile);
-	$disposition = (!$down)?"inline":"attachment";
+	$disposition = (!$_GET["down"])?"inline":"attachment";
 	$type = (!preg_match('|[a-z0-9\-]+/[a-z0-9\-]+|i',$attach["content-type"]))?"application/octet-stream":$attach["content-type"];
 	$dlfname = $attach["name"];
 }
