@@ -38,8 +38,8 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 		$actionDone = true;
 	}
 	if(isset($evsave) && $etext) {
-		$starttime = $starthour . $startmin . "00";
-		$stoptime = $stopthour . $stopmin . "00";
+		$starttime = sprintf("%2d%2d00", $starthour . $startmin);
+		$stoptime = sprintf("%2d%2d00", $stopthour . $stopmin);
 		$etext = HTMLFilter($etext, "images/trans.gif", $block_external_images);
 		$events->setEvent($day, $starttime, $stoptime, $etext);
 		$events->saveEvents();
@@ -68,7 +68,7 @@ if ($actionDone) {
 	$smarty->assign("mins", array(0,5,10,15,20,25,30,35,40,45,50,55));
 	$smarty->assign("hours", array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23));
 	$smarty->assign("dhours", array("12am","1am","2am","3am", "4am","5am","6am","7am","8am","9am","10am","11am",
-									"12pm","1pm","2pm","3pm", "4pm","5pm","6pm","7pm","8pm","9pm","10pm","11pm"))
+									"12pm","1pm","2pm","3pm", "4pm","5pm","6pm","7pm","8pm","9pm","10pm","11pm"));
 }
 unset ($events);
 
