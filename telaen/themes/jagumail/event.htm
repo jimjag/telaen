@@ -9,6 +9,26 @@
 <form name="form1" action="event.php" method="post">
 	<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
 		<th colspan="2" align="center"> {$umEventHeader} </th>
+		<tr><td>{#evt_start#}</td>
+			<td>
+				<select name="starthour">
+					{html_options values=$hours output=$dhours}
+				</select>
+				<select name="startmin">
+					{html_options values=$mins output=$mins}
+				</select>
+			</td>
+		</tr>
+		<tr><td>{#evt_stop#}</td>
+			<td>
+				<select name="stophour">
+					{html_options values=$hours output=$dhours}
+				</select>
+				<select name="stopmin">
+					{html_options values=$mins output=$mins}
+				</select>
+			</td>
+		</tr>
 		<tr>
 			<td class="default" colspan="2" align="center">
 				<textarea cols="50" rows="15" id="etext" name="etext">{$umeText|escape:"html"}</textarea>
