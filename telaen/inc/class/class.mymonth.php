@@ -135,11 +135,17 @@ EOT;
 	function getEvent($day) {
 		$reta = Array();
 		$this->_vcal->sort();
-		$foo = $this->_vcal->selectComponents($this->_year, $this->_month, $day);
-		foreach ($foo as $bar) {
-			$dtstart = date("g:i a", strtotime($bar->getProperty("dtstart")));
-			$dtend = date("g:i a", strtotime($bar->getProperty("dtend")));
-			$reta[] = Array($bar->getProperty("uid"), $dtstart, $dtend, $bar->getProperty("description"));
+		$events_arr = $this->_vcal->selectComponents($this->_year, $this->_month, $day);
+		foreach( $events_arr as $year => $year_arr ) {
+			foreach( $year_arr as $month => $month_arr ) {
+				foreach( $month_arr as $day => $day_arr ) {
+					foreach( $day_arr as $event ) {
+						$dtstart = date("g:i a", strtotime($event->getProperty("dtstart")));
+						$dtend = date("g:i a", strtotime($event->getProperty("dtend")));
+						$reta[] = Array($event->getProperty("uid"), $dtstart, $dtend, $event->getProperty("description"));
+					}
+				}
+			}
 		}
 		return $reta;
 	}
