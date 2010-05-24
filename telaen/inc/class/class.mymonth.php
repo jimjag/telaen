@@ -72,6 +72,7 @@ EOT;
 			$today = -1;
 
 		$weekday = $this->_firstday;
+		$smonth = sprintf("%02s", $this->_month);
 		$ret .= "<tr>";
 		if($weekday > 0) $ret .= "<td class=\"blankday\" colspan=\"{$weekday}\">&nbsp;</td>";
 		for($day=1; $day<=$this->_lastday; $day++,$weekday++){
@@ -97,8 +98,8 @@ EOT;
 				}
 				$fullevent .= "</div>";
 			}
-			$sday = sprintf("%2d", $day);
-			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$sday}\" class=\"{$dclass}\"> $day $fullevent </td>";
+			$sday = sprintf("%02s", $day);
+			$ret .= "<td id=\"d_{$this->_year}_{$smonth}_{$sday}\" class=\"{$dclass}\"> $day $fullevent </td>";
 		}
 		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";
