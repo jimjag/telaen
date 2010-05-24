@@ -84,7 +84,7 @@ EOT;
 				$dclass = "today";
 			$fullevent = "";
 			$event = $this->getEvent($day);
-			if (count($event)) {
+			if ($event) {
 				$dclass = "evt";
 				if ($day == $today)
 					$dclass = "tevt";
@@ -93,11 +93,12 @@ EOT;
 					$fullevent .= "<div id=\"e_{$foo[0]}\">";
 					$fullevent .= "<div class=\"starttime\">Start: &nbsp;" . $foo[1] . "</div><br/>";
 					$fullevent .= "<div class=\"stoptime\">Stop: &nbsp;" . $foo[2] . "</div><br/>";
-					$fullevent .= $foo[3] . "<hr/>";
+					$fullevent .= $foo[3] . "</div><hr/>";
 				}
 				$fullevent .= "</div>";
 			}
-			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"{$dclass}\"> $day $fullevent </td>";
+			$sday = sprintf("%2d", $day);
+			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$sday}\" class=\"{$dclass}\"> $day $fullevent </td>";
 		}
 		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";
