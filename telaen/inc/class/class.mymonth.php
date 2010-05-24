@@ -156,8 +156,10 @@ EOT;
 		}
 		$uid = md5($day.$start.$stop.uniqid());
 		$v = new vevent();
-		$v->setProperty("dtstart", $this->_year.$this->_month.$day."T".$start);
-		$v->setProperty("dtend", $this->_year.$this->_month.$day."T".$stop);
+		$edate = sprinf("%4s%02s%02s", $this->_year.$this->_month.$day);
+		
+		$v->setProperty("dtstart", $edate."T".$start);
+		$v->setProperty("dtend", $edate."T".$stop);
 		$v->setProperty("uid", uid);
 		$v->setProperty("description", $val);
 		$this->_vcal->setComponent($v);
