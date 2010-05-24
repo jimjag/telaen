@@ -20,8 +20,7 @@ class MyMonth {
 	var $_nmonth;
 	var $_nyear;
 	var $_edir;
-	var $_efile;
-	var $_events;
+	var $_vcal;
 
 	function MyMonth($year=0, $month=0) {
 		global $UM, $userfolder;
@@ -51,12 +50,12 @@ class MyMonth {
 			$this->_nyear++;
 		}
 		$this->_edir = $userfolder."_infos/calendar/{$this->_year}/{$this->_month}";
-		$this->_efile = $this->_edir . "/events.ucf";
-		$events = Array();
-		$myfile = $UM->_read_file($this->_efile);
-		if ($myfile != "")
-			$events = unserialize(base64_decode($myfile));
-		$this->_events = $events;
+		$this->_vcal = new vcalendar();
+		$this->_vcal->setConfig( "unique_id", "Telaen" );
+		$this->_vcal->setConfig( "directory", $this->_edir );
+		$this->_vcal->setConfig( "filename",  "events.ics" );
+		$this->_vcal->parse();
+		$this->_vcal->sort();
 	}
 
 	function monthAsTable() {
@@ -83,14 +82,22 @@ EOT;
 			$dclass = "regday";
 			if ($day == $today)
 				$dclass = "today";
+			$fullevent = "";
 			$event = $this->getEvent($day);
-			if ($event) {
+			if (count($event)) {
 				$dclass = "evt";
 				if ($day == $today)
 					$dclass = "tevt";
-				$event = "<div id=\"e_{$this->_year}_{$this->_month}_{$day}\" class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>" . $event . "</div>";
+				$fullevent = "<div class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>";
+				foreach ($event as $foo) {
+					$fullevent .= "<div id=\"e_{$foo[0]}\">";
+					$fullevent .= "<div class=\"starttime\">Start: &nbsp;" . $foo[1] . "</div><br/>";
+					$fullevent .= "<div class=\"stoptime\">Stop: &nbsp;" . $foo[2] . "</div><br/>";
+					$fullevent .= $foo[3] . "<hr/>";
+				}
+				$fullevent .= "</div>";
 			}
-			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"{$dclass}\"> $day $event </td>";
+			$ret .= "<td id=\"d_{$this->_year}_{$this->_month}_{$day}\" class=\"{$dclass}\"> $day $fullevent </td>";
 		}
 		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";
@@ -119,21 +126,37 @@ EOT;
 	}
 
 	function saveEvents() {
-		global $UM;
 		@mkdir($this->_edir, 0750, true);
-		$UM->_save_file($this->_efile,base64_encode(serialize($this->_events)));
+		$this->_vcal->saveCalendar();
 	}
 
 	function getEvent($day) {
-		return $this->_events["$day"];
+		$reta = Array();
+		$this->_vcal->sort();
+		$foo = $this->_vcal->selectComponents($this->_year, $this->_month, $day);
+		foreach ($foo as $bar) {
+			$dtstart = date("g:i a", strtotime($bar->getProperty("dtstart")));
+			$dtend = date("g:i a", strtotime($bar->getProperty("dtend")));
+			$reta[] = Array($bar->getProperty("uid"), $dtstart, $dtend, $bar->getProperty("description"));
+		}
+		return $reta;
 	}
 
-	function setEvent($day , $val) {
-		$this->_events["$day"] = $val;
+	function setEvent($day, $start, $stop, $val, $uid="") {
+		if ($uid) {
+			$this->delEvent($uid);	// just simpler
+		}
+		$uid = md5($day.$start.$stop.uniqid());
+		$v = new vevent();
+		$v->setProperty("dtstart", $this->_year.$this->_month.$day."T".$start);
+		$v->setProperty("dtend", $this->_year.$this->_month.$day."T".$stop);
+		$v->setProperty("uid", uid);
+		$v->setProperty("description", $val);
+		$this->_vcal->setComponent($v);
 	}
 
-	function delEvent($day) {
-		unset ($this->_events["$day"]);
+	function delEvent($uid) {
+		return $this->_vcal->deleteComponent($uid);
 	}
 
 }

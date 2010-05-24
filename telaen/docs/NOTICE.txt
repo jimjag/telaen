@@ -76,35 +76,27 @@ S„o Paulo - Brasil
  * @copyright 2004 - 2008 Andy Prevost
  */
 
-########################################################################
-#
-# Project: libical
-# URL: http://www.nabber.org/projects/
-# E-mail: webmaster@nabber.org
-#
-# Copyright: (C) 2003-2007, Neil McNab
-# License: GNU General Public License Version 2
-#   (http://www.gnu.org/copyleft/gpl.html)
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-#
-# Filename: $URL: https://libical.svn.sourceforge.net/svnroot/libical/trunk/libical/ical.php $
-# Last Updated: $Date: 2007-08-14 18:41:07 -0700 (Tue, 14 Aug 2007) $
-# Author(s): Neil McNab
-#
-# Description:
-#   This file is a PHP implementation of RFC 2445.
-#
-########################################################################
+/*********************************************************************************/
+/**
+ * iCalcreator class v2.6
+ * copyright (c) 2007-2008 Kjell-Inge Gustafsson kigkonsult
+ * www.kigkonsult.se/iCalcreator/index.php
+ * ical@kigkonsult.se
+ *
+ * Description:
+ * This file is a PHP implementation of RFC 2445.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
