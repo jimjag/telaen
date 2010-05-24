@@ -16,6 +16,7 @@ require("./inc/config/config.php");
 require("./inc/class/class.telaen.php");
 require("./inc/lib.php");
 require("./inc/preinit.php");
+require("./inc/class/iCalcreator.class.php");
 require("./inc/class/class.mymonth.php");
 
 
