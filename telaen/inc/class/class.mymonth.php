@@ -59,8 +59,6 @@ class MyMonth {
 	}
 
 	function monthAsTable() {
-		$oldtz = getenv("TZ");
-		putenv("TZ=UTC");
 		$ret = <<<EOT
 <table class="month"><tr>
   <th class="week" onclick="replaceCal({$this->_pmonth}, {$this->_pyear});"> &laquo; </th>
@@ -93,8 +91,8 @@ EOT;
 					$dclass = "tevt";
 				$fullevent = "<div class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>";
 				foreach ($event as $foo) {
-					$start = date("g:i a", strtotime($foo[1]));
-					$stop = date("g:i a", strtotime($foo[2]));
+					$start = $this->_xtime($foo[1]);
+					$stop = $this->_xtime($foo[2]);
 					$fullevent .= "<div id=\"e_{$foo[0]}\">";
 					$fullevent .= "<div class=\"etimes\"> {$start} ==> {$stop} </div><br/>";
 					$fullevent .= $foo[3] . "</div><hr/>";
@@ -106,7 +104,6 @@ EOT;
 		}
 		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";
-		putenv("TZ={$oldtz}");
 		return $ret;
 	}
 
@@ -183,5 +180,19 @@ EOT;
 		return $this->_vcal->deleteComponent($eventuid);
 	}
 
+	/**
+	 * Returns time from DTstamp (eg: 20100311T071500)
+	 */
+	function _xtime($dt) {
+		$hour = substr($dt, 9,2);
+		$min = substr($dt, 11, 2);
+		if ($hour > 12) {
+			$hour -= 12;
+			$suf = "pm";
+		} else {
+			$suf = "am";
+		}
+		return (sprintf("%02s:%s %s", $hour, $min, $suf));
+	}
 }
 ?>
