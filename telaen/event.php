@@ -43,8 +43,8 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 		$actionDone = true;
 	}
 	if(isset($evsave) && $etext) {
-		$starttime = sprintf("%02s%02s00", $starthour . $startmin);
-		$stoptime = sprintf("%02s%02s00", $stopthour . $stopmin);
+		$starttime = sprintf("%02s%02s00", $starthour, $startmin);
+		$stoptime = sprintf("%02s%02s00", $stophour, $stopmin);
 		$etext = HTMLFilter($etext, "images/trans.gif", $block_external_images);
 		$events->setEvent($day, $starttime, $stoptime, $etext, $dayuid);
 		$events->saveEvents();
@@ -75,8 +75,8 @@ if ($actionDone) {
 	$smarty->assign("umEventHeader", $mdate);
 	$smarty->assign("mins", array("00","05",10,15,20,25,30,35,40,45,50,55));
 	$smarty->assign("hours", array("00","01","02","03","04","05","06","07","08","09",10,11,12,13,14,15,16,17,18,19,20,21,22,23));
-	$smarty->assign("dhours", array("12am","1am","2am","3am", "4am","5am","6am","7am","8am","9am","10am","11am",
-									"12pm","1pm","2pm","3pm", "4pm","5pm","6pm","7pm","8pm","9pm","10pm","11pm"));
+	$smarty->assign("dhours", array("12 am","1 am","2 am","3 am", "4 am","5 am","6 am","7 am","8 am","9 am","10 am","11 am",
+									"12 pm","1 pm","2 pm","3 pm", "4 pm","5 pm","6 pm","7 pm","8 pm","9 pm","10 pm","11 pm"));
 }
 unset ($events);
 
