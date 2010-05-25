@@ -92,14 +92,14 @@ EOT;
 				$fullevent = "<div class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>";
 				foreach ($event as $foo) {
 					$fullevent .= "<div id=\"e_{$foo[0]}\">";
-					$fullevent .= "<div class=\"starttime\">Start: &nbsp;" . $foo[1] . "</div><br/>";
-					$fullevent .= "<div class=\"stoptime\">Stop: &nbsp;" . $foo[2] . "</div><br/>";
+					$fullevent .= "<div class=\"starttime\">Start: &nbsp;" . date("g:i a", strtotime($foo[1])) . "</div><br/>";
+					$fullevent .= "<div class=\"stoptime\">Stop: &nbsp;" . date("g:i a", strtotime($foo[2])) . "</div><br/>";
 					$fullevent .= $foo[3] . "</div><hr/>";
 				}
 				$fullevent .= "</div>";
 			}
 			$sday = sprintf("%02s", $day);
-			$ret .= "<td id=\"d_{$this->_year}_{$smonth}_{$sday}\" class=\"{$dclass}\"> $day $fullevent </td>";
+			$ret .= "<td id=\"d_{$this->_year}{$smonth}{$sday}\" class=\"{$dclass}\"> $day $fullevent </td>";
 		}
 		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";
@@ -132,6 +132,9 @@ EOT;
 		$this->_vcal->saveCalendar();
 	}
 
+	/**
+	 * returns Array(uid, dtstart, dtend, desc, starthour, startmin, stophour, stopmin)
+	 */
 	function getEvent($day) {
 		$reta = Array();
 		$this->_vcal->sort();
@@ -140,9 +143,12 @@ EOT;
 			foreach( $year_arr as $month => $month_arr ) {
 				foreach( $month_arr as $day => $day_arr ) {
 					foreach( $day_arr as $event ) {
-						$dtstart = date("g:i a", strtotime($event->getProperty("dtstart")));
-						$dtend = date("g:i a", strtotime($event->getProperty("dtend")));
-						$reta[] = Array($event->getProperty("uid"), $dtstart, $dtend, $event->getProperty("description"));
+						$dtstart = $event->getProperty("dtstart");
+						$dtend = $event->getProperty("dtend");
+						$reta[] = Array($event->getProperty("uid"), $dtstart, $dtend,
+										$event->getProperty("description"), substr($dtstart, 10, 2),
+										substr($dtstart, 12, 2), substr($dtend, 10, 2),
+										substr($dtend, 12, 2));
 					}
 				}
 			}
@@ -152,14 +158,14 @@ EOT;
 
 	function setEvent($day, $start, $stop, $val, $uid="") {
 		if ($uid) {
-			$this->delEvent($uid);	// just simpler
+			@$this->delEvent($uid);	// just simpler
 		}
-		$uid = md5($day.$start.$stop.uniqid());
+		$ymd = sprintf("%4s%02s%02s%s", $this->_year, $this->_month, $day);
+		$uid = $ymd . uniqid();
 		$v = new vevent();
-		$edate = sprinf("%4s%02s%02s", $this->_year.$this->_month.$day);
 		
-		$v->setProperty("dtstart", $edate."T".$start);
-		$v->setProperty("dtend", $edate."T".$stop);
+		$v->setProperty("dtstart", $ymd."T".$start);
+		$v->setProperty("dtend", $ymd."T".$stop);
 		$v->setProperty("uid", uid);
 		$v->setProperty("description", $val);
 		$this->_vcal->setComponent($v);

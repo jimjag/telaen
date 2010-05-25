@@ -19,11 +19,14 @@ extract(pull_from_post(Array("etext", "edate", "evsave", "evdelete", "starthour"
 
 $etext = trim($etext);
 
-list($dummy, $year, $month, $day) = explode("_", $edate);
-$year=intval($year); $month=intval($month); $day=intval($day);
+list(, $foo, $uid) = explode("_", $edate);
+$year=intval(strstr($foo, 0, 4));
+$month=intval(strstr($foo, 4, 2));
+$day=intval(strstr($foo, 6, 2));
+$midnight = sprintf("%4s%02s%02s", $year, $month, $day) . "T000000";
 
 $actionDone = false;
-$event = Array();
+$event = Array("", $midnight, $midnight, "", "00", "00", "00", "00");
 // Minor error-check
 if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $day < 32) {
 	/*
@@ -32,8 +35,8 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 	$events = new MyMonth($year, $month);
 	$event = $events->getEvent($day);
 	
-	if (isset($evdelete)) {
-		$events->delEvent($day);
+	if (isset($evdelete) && $uid) {
+		$events->delEvent($uid);
 		$events->saveEvents();
 		$actionDone = true;
 	}
@@ -41,7 +44,7 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 		$starttime = sprintf("%2d%2d00", $starthour . $startmin);
 		$stoptime = sprintf("%2d%2d00", $stopthour . $stopmin);
 		$etext = HTMLFilter($etext, "images/trans.gif", $block_external_images);
-		$events->setEvent($day, $starttime, $stoptime, $etext);
+		$events->setEvent($day, $starttime, $stoptime, $etext, $uid);
 		$events->saveEvents();
 		$actionDone = true;
 	}
@@ -61,10 +64,9 @@ if ($actionDone) {
 } else {
 	$timestamp = mktime(0, 0, 0, $month, 1, 2010);
 	$mdate = ":: &nbsp;&nbsp; ". date("M", $timestamp) . " $day, $year &nbsp;&nbsp; ::<br/>";
-	$smarty->assign("umeText",$event);
+	$smarty->assign("umEvent",$event);
 	$smarty->assign("umShowEventForm","YES");
 	$smarty->assign("umEventHeader", $mdate);
-	$smarty->assign("umEdate", $edate);
 	$smarty->assign("mins", array(0,5,10,15,20,25,30,35,40,45,50,55));
 	$smarty->assign("hours", array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23));
 	$smarty->assign("dhours", array("12am","1am","2am","3am", "4am","5am","6am","7am","8am","9am","10am","11am",
