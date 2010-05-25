@@ -33,8 +33,9 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 	$events = new MyMonth($year, $month);
 	$event = $events->getEvent($day);
 	if (!$event) {
-		$midnight = sprintf("%4s%02s%02s", $year, $month, $day) . "T000000";
-		$event = Array( Array("", $midnight, $midnight, "", "00", "00", "00", "00"));
+		$ymd = sprintf("%4s%02s%02s", $year, $month, $day);
+		$midnight = $ymd . "T000000";
+		$event = Array( Array($ymd."_0", $midnight, $midnight, "", "00", "00", "00", "00"));
 	}
 	
 	if (isset($evdelete) && $uid) {

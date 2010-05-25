@@ -160,7 +160,7 @@ EOT;
 		if ($uid) {
 			@$this->delEvent($uid);	// just simpler
 		}
-		$ymd = sprintf("%4s%02s%02s%s", $this->_year, $this->_month, $day);
+		$ymd = sprintf("%4s%02s%02s", $this->_year, $this->_month, $day);
 		$uid = $ymd . uniqid();
 		$v = new vevent();
 		
