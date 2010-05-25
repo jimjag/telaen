@@ -20,9 +20,9 @@ extract(pull_from_post(Array("etext", "edate", "evsave", "evdelete", "starthour"
 $etext = trim($etext);
 
 list(, $foo, $uid) = explode("_", $edate);
-$year=intval(strstr($foo, 0, 4));
-$month=intval(strstr($foo, 4, 2));
-$day=intval(strstr($foo, 6, 2));
+$year=intval(substr($foo, 0, 4));
+$month=intval(substr($foo, 4, 2));
+$day=intval(substr($foo, 6, 2));
 $midnight = sprintf("%4s%02s%02s", $year, $month, $day) . "T000000";
 
 $actionDone = false;
