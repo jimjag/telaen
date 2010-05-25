@@ -17,7 +17,7 @@ if(!$sess["auth"]) {
 extract(pull_from_get(Array("edate")));
 extract(pull_from_post(Array("eventn", "edate", "evsave", "evdelete", "starthour", "stophour", "startmin", "stopmin")));
 
-$etext = trim($_POST("etext_{$eventn}"));
+$etext = trim($_POST["etext_{$eventn}"]);
 
 list(, $foo, $dayuid) = explode("_", $edate);
 $year=intval(substr($foo, 0, 4));
