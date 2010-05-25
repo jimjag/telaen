@@ -339,6 +339,10 @@ td.headerright {
 	display:block;
 }
 
+#calendar .etimes {
+	font-size : 8pt;
+	color: #004080
+}
 /** News */
 
 #news{
