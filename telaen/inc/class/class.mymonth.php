@@ -91,9 +91,10 @@ EOT;
 					$dclass = "tevt";
 				$fullevent = "<div class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>";
 				foreach ($event as $foo) {
+					$start = date("g:i a", strtotime($foo[1]));
+					$stop = date("g:i a", strtotime($foo[2]));
 					$fullevent .= "<div id=\"e_{$foo[0]}\">";
-					$fullevent .= "<div class=\"starttime\">Start: &nbsp;" . date("g:i a", strtotime($foo[1])) . "</div><br/>";
-					$fullevent .= "<div class=\"stoptime\">Stop: &nbsp;" . date("g:i a", strtotime($foo[2])) . "</div><br/>";
+					$fullevent .= "<div class=\"etimes\"> {$start} ==> {$stop} </div><br/>";
 					$fullevent .= $foo[3] . "</div><hr/>";
 				}
 				$fullevent .= "</div>";
@@ -161,7 +162,7 @@ EOT;
 		$ymd = sprintf("%4s%02s%02s", $this->_year, $this->_month, $day);
 		if ($dayuid) {
 			$eventuid = $ymd ."_". $dayuid;
-			// @$this->delEvent($uid);	// just simpler
+			@$this->delEvent($eventuid);	// just simpler
 		} else {
 			/* new event, new id */
 			$eventuid = $ymd ."_". uniqid();
