@@ -17,7 +17,8 @@ Telaen:
 =======
 1.3.0
 
-[New]	Now includes an embedded appointment/event Calendar.
+[New]	Now includes an embedded appointment/event Calendar
+	using the iCal format under the hood.
 
 [New]	Ability to display a System-wide "news" banner
 	via inc/news/news.system.php
@@ -36,6 +37,7 @@ Telaen:
 	stale versions of files.
 
 [New]	Upgraded to latest TinyMce.
+
 1.2.1
 
 [New]	New Forwarded status flag and icon added.
