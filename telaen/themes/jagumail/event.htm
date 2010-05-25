@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td class="default" colspan="2" align="center">
-				<textarea cols="50" rows="15" id="etext" name="etext">{$umEvent[i][3]|escape:"html"}</textarea>
+				<textarea cols="50" rows="15" id="etext_{$smarty.section.i.index}" name="etext_{$smarty.section.i.index}">{$umEvent[i][3]|escape:"html"}</textarea>
 			</td>
 		<tr>
 		<tr>
@@ -44,6 +44,7 @@
 		</tr>
 	</table>
 	<input type="hidden" name="edate" value="e_{$umEvent[i][0]}">
+	<input type="hidden" name="eventn" value="{$smarty.section.i.index}">
 </form>
 <hr align="center" width="75%">
 {/section}
