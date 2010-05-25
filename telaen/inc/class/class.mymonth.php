@@ -59,6 +59,8 @@ class MyMonth {
 	}
 
 	function monthAsTable() {
+		$oldtz = getenv("TZ");
+		putenv("TZ=UTC");
 		$ret = <<<EOT
 <table class="month"><tr>
   <th class="week" onclick="replaceCal({$this->_pmonth}, {$this->_pyear});"> &laquo; </th>
@@ -104,6 +106,7 @@ EOT;
 		}
 		if($weekday != 7) $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
 		$ret .= "</tr>\n</table>";
+		putenv("TZ={$oldtz}");
 		return $ret;
 	}
 
