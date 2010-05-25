@@ -145,8 +145,8 @@ EOT;
 			foreach( $year_arr as $month => $month_arr ) {
 				foreach( $month_arr as $day => $day_arr ) {
 					foreach( $day_arr as $event ) {
-						$dtstart = $event->getProperty("dtstart");
-						$dtend = $event->getProperty("dtend");
+						$dtstart = $this->_xdtime($event->getProperty("dtstart"));
+						$dtend = $this->_xdtime($event->getProperty("dtend"));
 						$reta[] = Array($event->getProperty("uid"), $dtstart, $dtend,
 										base64_decode($event->getProperty("description")),
 										substr($dtstart, 9, 2), substr($dtstart, 11, 2),
@@ -181,7 +181,17 @@ EOT;
 	}
 
 	/**
-	 * Returns time from DTstamp (eg: 20100311T071500)
+	 * Returns time from DTstamp array
+	 */
+	function _xdtime($dt) {
+		$ret = sprintf("%4s%02s%02sT%02s%02s%02s",
+					   $dt['year'],$dt['month'], $dt['day'],
+					   $dt['hour'], $dt['min'], $dt['sec']);
+		return $ret;
+	}
+
+	/**
+	 * Returns time from DTstamp string (eg: 20100311T071500)
 	 */
 	function _xtime($dt) {
 		$hour = substr($dt, 9,2);
