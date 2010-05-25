@@ -347,4 +347,6 @@ addr_deleted					= Kontakt byl smazán
 evt_title						= Calendar Event
 evt_save						= Uložit
 evt_delete						= Smazat
+evt_stop                        = Stop time
+evt_start                       = Start time
 

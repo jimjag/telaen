@@ -348,4 +348,6 @@ addr_deleted					= Intrare stearsa.
 evt_title						= Calendar Event
 evt_save						= Salveaza
 evt_delete						= Sterge
+evt_stop                        = Stop time
+evt_start                       = Start time
 

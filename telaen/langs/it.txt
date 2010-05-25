@@ -357,4 +357,6 @@ addr_deleted					= Il contatto è stato eliminato
 evt_title						= Calendar Event
 evt_save						= Salva
 evt_delete						= Cancella
+evt_stop                        = Stop time
+evt_start                       = Start time
 

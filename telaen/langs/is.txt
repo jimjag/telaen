@@ -347,4 +347,6 @@ addr_deleted					= Tengili hefur vei eytt
 evt_title						= Calendar Event
 evt_save						= Vista
 evt_delete						= Eya
+evt_stop                        = Stop time
+evt_start                       = Start time
 

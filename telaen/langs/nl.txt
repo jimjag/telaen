@@ -349,4 +349,6 @@ addr_deleted					= De contactpersoon is verwijderd.
 evt_title						= Calendar Event
 evt_save						= Opslaan
 evt_delete						= Verwijder
+evt_stop                        = Stop time
+evt_start                       = Start time
 

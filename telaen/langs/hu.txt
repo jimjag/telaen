@@ -347,4 +347,6 @@ blk_save						= Ment
 evt_title						= Calendar Event
 evt_save						= MentÈs
 evt_delete						= TˆrlÈs
+evt_stop                        = Stop time
+evt_start                       = Start time
 

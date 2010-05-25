@@ -331,4 +331,6 @@ blk_save						= Save
 evt_title						= Calendar Event
 evt_save						= Save
 evt_delete						= Delete
+evt_stop                        = Stop time
+evt_start                       = Start time
 

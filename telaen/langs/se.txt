@@ -350,4 +350,6 @@ addr_deleted					= Adressen togs bort
 evt_title						= Calendar Event
 evt_save						= Spara
 evt_delete						= Ta bort
+evt_stop                        = Stop time
+evt_start                       = Start time
 

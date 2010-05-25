@@ -347,4 +347,6 @@ addr_deleted					= Kontakten har blitt slettet
 evt_title						= Calendar Event
 evt_save						= Lagre
 evt_delete						= Slett
+evt_stop                        = Stop time
+evt_start                       = Start time
 

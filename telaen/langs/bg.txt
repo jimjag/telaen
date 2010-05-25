@@ -345,4 +345,5 @@ addr_deleted					= ¿‰ÂÒ‡ Â ËÁÚËÚ
 evt_title						= Calendar Event
 evt_save						= «‡ÔËÒ
 evt_delete						= »ÁÚË‚‡ÌÂ
-
+evt_stop                        = Stop time
+evt_start                       = Start time

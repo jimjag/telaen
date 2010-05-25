@@ -334,4 +334,6 @@ blk_save						= 저장
 evt_title						= Calendar Event
 evt_save						= 저장
 evt_delete						= 삭제
+evt_stop                        = Stop time
+evt_start                       = Start time
 

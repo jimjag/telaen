@@ -350,4 +350,6 @@ addr_deleted					= Adres zosta³ usuniêty
 evt_title						= Calendar Event
 evt_save						= Zapisz
 evt_delete						= Usuñ
+evt_stop                        = Stop time
+evt_start                       = Start time
 

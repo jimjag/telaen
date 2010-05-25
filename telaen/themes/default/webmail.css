@@ -353,6 +353,13 @@ td.headerright {
 	display:block;
 }
 
+#calendar .etimes {
+	font-size : 7pt;
+	color: #004080;
+	text-align:left;
+	font-weight: bold;
+}
+
 /** News */
 
 #news{

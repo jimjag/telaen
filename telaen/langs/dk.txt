@@ -352,4 +352,5 @@ addr_deleted					= Kontaktpersonen blev slettet
 evt_title						= Calendar Event
 evt_save						= Gem
 evt_delete						= Slet
-
+evt_stop                        = Stop time
+evt_start                       = Start time

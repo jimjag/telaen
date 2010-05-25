@@ -343,4 +343,6 @@ addr_deleted					= Bu baðlantý ortadan kaldýrýldý
 evt_title						= Calendar Event
 evt_save						= Kaydet
 evt_delete						= Sil
+evt_stop                        = Stop time
+evt_start                       = Start time
 

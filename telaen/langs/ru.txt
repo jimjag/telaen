@@ -353,4 +353,6 @@ addr_deleted		= Контакт уничтожен
 evt_title						= Calendar Event
 evt_save						= Сохранить
 evt_delete						= Удалить
+evt_stop                        = Stop time
+evt_start                       = Start time
 

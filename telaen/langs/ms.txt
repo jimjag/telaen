@@ -331,4 +331,5 @@ blk_save						= Simpan
 evt_title						= Calendar Event
 evt_save						= Simpan
 evt_delete						= Delete
-Padam
+evt_stop                        = Stop time
+evt_start                       = Start time

@@ -356,4 +356,6 @@ addr_deleted					= 此聯絡人郵件位址已經刪除
 evt_title						= Calendar Event
 evt_save						= 儲存
 evt_delete						= 刪除
+evt_stop                        = Stop time
+evt_start                       = Start time
 

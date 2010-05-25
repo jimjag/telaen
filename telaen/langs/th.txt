@@ -349,4 +349,6 @@ addr_deleted = ลบรายชื่อแล้ว
 evt_title						= Calendar Event
 evt_save						= จัดเก็บ
 evt_delete						= ลบ
+evt_stop                        = Stop time
+evt_start                       = Start time
 

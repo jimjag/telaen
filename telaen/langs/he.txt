@@ -326,4 +326,6 @@ addr_deleted					= איש הקשר נמחק
 evt_title						= Calendar Event
 evt_save						= שמור
 evt_delete						= מחק
+evt_stop                        = Stop time
+evt_start                       = Start time
 
