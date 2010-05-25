@@ -7,7 +7,7 @@
 
 {if $umShowEventForm == "YES"}
 {section name=i loop=$umEvent}
-<form name="form{i}" action="event.php" method="post">
+<form name="form{$smarty.section.i.index}" action="event.php" method="post">
 	<table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
 		<th colspan="2" align="center"> {$umEventHeader} </th>
 		<tr><td>{#evt_start#}</td>

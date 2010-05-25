@@ -23,10 +23,8 @@ list(, $foo, $uid) = explode("_", $edate);
 $year=intval(substr($foo, 0, 4));
 $month=intval(substr($foo, 4, 2));
 $day=intval(substr($foo, 6, 2));
-$midnight = sprintf("%4s%02s%02s", $year, $month, $day) . "T000000";
 
 $actionDone = false;
-$event = Array("", $midnight, $midnight, "", "00", "00", "00", "00");
 // Minor error-check
 if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $day < 32) {
 	/*
@@ -34,6 +32,10 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 	 */
 	$events = new MyMonth($year, $month);
 	$event = $events->getEvent($day);
+	if (!$event) {
+		$midnight = sprintf("%4s%02s%02s", $year, $month, $day) . "T000000";
+		$event = Array( Array("", $midnight, $midnight, "", "00", "00", "00", "00"));
+	}
 	
 	if (isset($evdelete) && $uid) {
 		$events->delEvent($uid);
@@ -48,6 +50,9 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 		$events->saveEvents();
 		$actionDone = true;
 	}
+} else {
+	/* if out of bounds, just ignore */
+	$actiondone = true;
 }
 
 $jssource .=<<<EOT
@@ -67,7 +72,7 @@ if ($actionDone) {
 	$smarty->assign("umEvent",$event);
 	$smarty->assign("umShowEventForm","YES");
 	$smarty->assign("umEventHeader", $mdate);
-	$smarty->assign("mins", array(0,5,10,15,20,25,30,35,40,45,50,55));
+	$smarty->assign("mins", array("00","05",10,15,20,25,30,35,40,45,50,55));
 	$smarty->assign("hours", array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23));
 	$smarty->assign("dhours", array("12am","1am","2am","3am", "4am","5am","6am","7am","8am","9am","10am","11am",
 									"12pm","1pm","2pm","3pm", "4pm","5pm","6pm","7pm","8pm","9pm","10pm","11pm"));
