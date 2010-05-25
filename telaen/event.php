@@ -19,10 +19,12 @@ extract(pull_from_post(Array("etext", "edate", "evsave", "evdelete", "starthour"
 
 $etext = trim($etext);
 
-list(, $foo, $uid) = explode("_", $edate);
+list(, $foo, $dayuid) = explode("_", $edate);
 $year=intval(substr($foo, 0, 4));
 $month=intval(substr($foo, 4, 2));
 $day=intval(substr($foo, 6, 2));
+$ymd = sprintf("%4s%02s%02s", $year, $month, $day);
+$eventuid = $ymd ."_". $dayuid;
 
 $actionDone = false;
 // Minor error-check
@@ -38,8 +40,8 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 		$event = Array( Array($ymd."_0", $midnight, $midnight, "", "00", "00", "00", "00"));
 	}
 	
-	if (isset($evdelete) && $uid) {
-		$events->delEvent($uid);
+	if (isset($evdelete) && $dayuid) {
+		$events->delEvent($eventuid);
 		$events->saveEvents();
 		$actionDone = true;
 	}
@@ -47,7 +49,7 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 		$starttime = sprintf("%2d%2d00", $starthour . $startmin);
 		$stoptime = sprintf("%2d%2d00", $stopthour . $stopmin);
 		$etext = HTMLFilter($etext, "images/trans.gif", $block_external_images);
-		$events->setEvent($day, $starttime, $stoptime, $etext, $uid);
+		$events->setEvent($day, $starttime, $stoptime, $etext, $dayuid);
 		$events->saveEvents();
 		$actionDone = true;
 	}

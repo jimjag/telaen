@@ -133,7 +133,8 @@ EOT;
 	}
 
 	/**
-	 * returns Array(uid, dtstart, dtend, desc, starthour, startmin, stophour, stopmin)
+	 * returns Array(eventuid, dtstart, dtend, desc, starthour, startmin, stophour, stopmin)
+	 *    The eventuid always contains the date... eg: 20100311_76987 (date + the day uid)
 	 */
 	function getEvent($day) {
 		$reta = Array();
@@ -156,23 +157,26 @@ EOT;
 		return $reta;
 	}
 
-	function setEvent($day, $start, $stop, $val, $uid="") {
-		if ($uid) {
-			@$this->delEvent($uid);	// just simpler
-		}
+	function setEvent($day, $start, $stop, $val, $dayuid="") {
 		$ymd = sprintf("%4s%02s%02s", $this->_year, $this->_month, $day);
-		$uid = $ymd . uniqid();
+		if ($dayuid) {
+			$eventuid = $ymd ."_". $dayuid;
+			// @$this->delEvent($uid);	// just simpler
+		} else {
+			/* new event, new id */
+			$eventuid = $ymd ."_". uniqid();
+		}
 		$v = new vevent();
 		
 		$v->setProperty("dtstart", $ymd."T".$start);
 		$v->setProperty("dtend", $ymd."T".$stop);
-		$v->setProperty("uid", uid);
+		$v->setProperty("uid", $eventuid);
 		$v->setProperty("description", $val);
 		$this->_vcal->setComponent($v);
 	}
 
-	function delEvent($uid) {
-		return $this->_vcal->deleteComponent($uid);
+	function delEvent($eventuid) {
+		return $this->_vcal->deleteComponent($eventuid);
 	}
 
 }
