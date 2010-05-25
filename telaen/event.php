@@ -25,7 +25,9 @@ $month=intval(substr($foo, 4, 2));
 $day=intval(substr($foo, 6, 2));
 $ymd = sprintf("%4s%02s%02s", $year, $month, $day);
 $eventuid = $ymd ."_". $dayuid;
-
+$midnight = $ymd . "T000000";
+$newevent = Array( Array($ymd."_0", $midnight, $midnight, "-- new event --", "00", "00", "00", "00"));
+$event = Array();
 $actionDone = false;
 // Minor error-check
 if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $day < 32) {
@@ -34,11 +36,6 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 	 */
 	$events = new MyMonth($year, $month);
 	$event = $events->getEvent($day);
-	if (!$event) {
-		$ymd = sprintf("%4s%02s%02s", $year, $month, $day);
-		$midnight = $ymd . "T000000";
-		$event = Array( Array($ymd."_0", $midnight, $midnight, "", "00", "00", "00", "00"));
-	}
 	
 	if (isset($evdelete) && $dayuid) {
 		$events->delEvent($eventuid);
@@ -70,6 +67,7 @@ $smarty->assign("umJS",$jssource);
 if ($actionDone) {
 	$smarty->assign("umShowEventForm","NO");
 } else {
+	$event[] = $newevent;	// tack on new event at bottom of list
 	$timestamp = mktime(0, 0, 0, $month, 1, 2010);
 	$mdate = ":: &nbsp;&nbsp; ". date("M", $timestamp) . " $day, $year &nbsp;&nbsp; ::<br/>";
 	$smarty->assign("umEvent",$event);

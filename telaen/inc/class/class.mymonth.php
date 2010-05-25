@@ -147,9 +147,9 @@ EOT;
 						$dtstart = $event->getProperty("dtstart");
 						$dtend = $event->getProperty("dtend");
 						$reta[] = Array($event->getProperty("uid"), $dtstart, $dtend,
-										$event->getProperty("description"), substr($dtstart, 10, 2),
-										substr($dtstart, 12, 2), substr($dtend, 10, 2),
-										substr($dtend, 12, 2));
+										base64_decode($event->getProperty("description")),
+										substr($dtstart, 9, 2), substr($dtstart, 11, 2),
+										substr($dtend, 9, 2), substr($dtend, 11, 2));
 					}
 				}
 			}
@@ -171,7 +171,7 @@ EOT;
 		$v->setProperty("dtstart", $ymd."T".$start);
 		$v->setProperty("dtend", $ymd."T".$stop);
 		$v->setProperty("uid", $eventuid);
-		$v->setProperty("description", $val);
+		$v->setProperty("description", base64_encode($val));
 		$this->_vcal->setComponent($v);
 	}
 
