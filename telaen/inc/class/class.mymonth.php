@@ -191,7 +191,7 @@ EOT;
 	}
 
 	/**
-	 * Returns time from DTstamp string (eg: 20100311T071500)
+	 * Returns time (eg: 07:43 am) from DTstamp string (eg: 20100311T071500)
 	 */
 	function _xtime($dt) {
 		$hour = substr($dt, 9,2);
