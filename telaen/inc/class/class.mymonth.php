@@ -181,7 +181,7 @@ EOT;
 	}
 
 	/**
-	 * Returns time from DTstamp array
+	 * Returns time from DTstamp array (from iCalcreator)
 	 */
 	function _xdtime($dt) {
 		$ret = sprintf("%4s%02s%02sT%02s%02s%02s",
