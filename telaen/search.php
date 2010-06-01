@@ -80,7 +80,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 				if($strSearch) $strSearch .= "|(".$arSearch[$n].")";
 				else $strSearch .= "(".$arSearch[$n].")";
 		}
-		return $strSearch;
+		return '/'.$strSearch.'/i';
 	}
 
 
@@ -111,17 +111,17 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 			if($srcFrom != "") {
 				$from = $email["from"];
 				$srcString = $from[0]["name"]." ".$from[0]["mail"];
-				if(stristr($srcString, $srcFrom)) $found = true;
+				if(preg_match($srcString, $srcFrom)) $found = true;
 			}
 
 			if($srcSubject != "" && !$found) {
 				$srcString = $email["subject"];
-				if(stristr($srcString, $srcSubject)) $found = true;
+				if(preg_match($srcString, $srcSubject)) $found = true;
 			}
 
 			if($srcBody != "" && !$found) {
 				$srcString = strip_tags($email["body"]);
-				if(stristr($srcString, $srcBody)) $found = true;
+				if(preg_match($srcString, $srcBody)) $found = true;
 			}
 
 			if($found) {
