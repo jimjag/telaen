@@ -111,17 +111,17 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 			if($srcFrom != "") {
 				$from = $email["from"];
 				$srcString = $from[0]["name"]." ".$from[0]["mail"];
-				if(preg_match($srcString, $srcFrom)) $found = true;
+				if(preg_match($srcFrom, $srcString)) $found = true;
 			}
 
 			if($srcSubject != "" && !$found) {
 				$srcString = $email["subject"];
-				if(preg_match($srcString, $srcSubject)) $found = true;
+				if(preg_match($srcSubject, $srcString)) $found = true;
 			}
 
 			if($srcBody != "" && !$found) {
 				$srcString = strip_tags($email["body"]);
-				if(preg_match($srcString, $srcBody)) $found = true;
+				if(preg_match($srcBody, $srcString)) $found = true;
 			}
 
 			if($found) {
