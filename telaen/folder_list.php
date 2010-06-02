@@ -1,5 +1,5 @@
 <?php
-$folders = $sess["folders"];
+$folders = (array)$sess["folders"];
 $scounter = 0;
 $pcounter = 0;
 $system = Array();
