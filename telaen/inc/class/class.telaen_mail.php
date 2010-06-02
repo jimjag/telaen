@@ -273,7 +273,7 @@ class Telaen extends Telaen_core {
 		global $mail_use_top,$error_retrieving;
 
 		if($check && (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam")) {
-			if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
+			if ($msg["uidl"] && ($msg["uidl"] != $this->mail_get_uidl($msg["msg"]))) {
 				$this->mail_error_msg = $error_retrieving;
 				return 0;
 			}
