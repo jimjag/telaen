@@ -140,7 +140,7 @@ EOT;
 	function getEvent($day) {
 		$reta = Array();
 		$this->_vcal->sort();
-		$events_arr = $this->_vcal->selectComponents($this->_year, $this->_month, $day);
+		$events_arr = (array)$this->_vcal->selectComponents($this->_year, $this->_month, $day);
 		foreach( $events_arr as $year => $year_arr ) {
 			foreach( $year_arr as $month => $month_arr ) {
 				foreach( $month_arr as $day => $day_arr ) {
