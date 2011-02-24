@@ -1639,7 +1639,7 @@ class vcalendar {
       header( 'Content-Length: '.$filesize );
       header( 'Content-Disposition: attachment; filename="'.$filename.'"' );
       header( 'Cache-Control: max-age=10' );
-      $fp = @$fopen( $dirfile, 'r' );
+      $fp = @fopen( $dirfile, 'r' );
       if( $fp ) {
         fpassthru( $fp );
         fclose( $fp );
