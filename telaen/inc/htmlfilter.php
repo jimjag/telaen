@@ -28,6 +28,10 @@
  */
 
 /**
+ * @Author  Jim Jagielski <jim@jaguNET.com / jimjag@gmail.com>
+ */
+
+/**
  * This function returns the final tag out of the tag name, an array
  * of attributes, and the type of the tag. This function is called by 
  * tln_sanitize internally.
