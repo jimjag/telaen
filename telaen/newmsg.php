@@ -147,7 +147,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		$mail->Body = stripslashes($body);
 		$mail->Mailer = $mailer_type;
 
-		if(($mail->Send()) === false) {
+		if(($mail->TelaenSend()) === false) {
 			$smarty->assign("umMailSent",false);
 			$smarty->assign("umErrorMessage",$mail->ErrorInfo);
 
@@ -168,7 +168,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 					redirect_and_exit("index.php?err=1", true);
 				}
 				if(!$UM->mail_auth(false)) { redirect_and_exit("index.php?err=0"); }
-				$UM->mail_save_message("sent",$mail->FormattedMail,"\\SEEN");
+				$UM->mail_save_message("sent",$mail->TelaenGetEmail(),"\\SEEN");
 				unset($sess["headers"][base64_encode("sent")]);
 				$UM->mail_disconnect();
 				$SS->Save($sess);
