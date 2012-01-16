@@ -54,7 +54,7 @@ class PHPMailer_extra extends PHPMailer {
 					$fheader .= $this->HeaderLine("To", "undisclosed-recipients:;");
 	
 				// Add in the Subject and CC lines
-				$fheader .= $this->HeaderLine("Subject", $this->EncodeHeader(trim($this->Subject)));
+				$fheader .= $this->HeaderLine('Subject', $this->EncodeHeader($this->SecureHeader(trim($this->Subject))));
 				if(count($this->cc) > 0) {
 					$fheader .= $this->AddrAppend("Cc", $this->cc);
 					if ($this->Version < 2) {
