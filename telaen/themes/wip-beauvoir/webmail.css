@@ -1,0 +1,90 @@
+@charset "iso-8859-1";
+<!--
+BODY {
+	scrollbar-arrow-color: #FFFFFF;
+	scrollbar-3dlight-color: #FFFFFF;
+	scrollbar-darkshadow-color: #FFFFFF;
+	scrollbar-face-color: #999999;
+	scrollbar-highlight-color: #999999;
+	scrollbar-shadow-color: #999999;
+	scrollbar-track-color: #FFFFFF;
+	background: url(fond.gif);
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 8.5pt;
+	font-weight: normal;
+	color: #000000;
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	marginwidth: 0;
+	marginheight: 0;
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: yes;
+	topmargin: 0;
+	leftmargin: 0 }
+	
+form { display: inline }
+
+TABLE, TR, TD, SELECT {
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 8.5pt;
+	color: #000000 }
+
+a:link, a:visited, a:active {
+	text-decoration: none;
+	color: #6D7792 }
+
+a:hover { color: #4F576A }
+
+.lien {
+	color: #000000;
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 8.5pt}
+
+a:link.lien {text-decoration: none; color: #000000}
+a:visited.lien {text-decoration: none; color: #000000}
+a:active.lien {text-decoration: none; color: #000000}
+a:hover.lien {text-decoration: none; color: #4F576A}
+
+.normal {
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 8.5pt;
+	color: #000000 }
+
+.titre {
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 8.5pt;
+	color: #3A4F6C }
+
+.inactive {
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 8.5pt;
+	color: #6D7792 }
+	
+.error {
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 8.5pt;
+	color: #FF0000 }
+
+.button {
+	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+	font-size: 8.5pt;
+	background-color: #FFFFFF;
+	border: 1 solid #999999}
+
+#text {
+	margin : 10px 10px 10px 10px;
+	text-ident : 5%;
+	text-align : justify}
+
+#compteur {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 24px;
+	height: 96px;
+	visibility: hidden }
+
+-->

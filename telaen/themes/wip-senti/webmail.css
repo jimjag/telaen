@@ -1,0 +1,107 @@
+		.mainContentTable
+		{
+		background-image: url('images/background.gif');
+		background-repeat: repeat-y;
+		padding: 0px;
+		padding-left: 10px;
+		padding-top: 10px;
+		padding-right: 10px;
+		font-family: arial,trebuchet MS,comic sans ms,sans-serif;
+		font-size: 11pt;
+		}
+
+		BODY{
+			padding: 0px;
+			margin: 0px;
+			margin-top: 20px;
+		}
+		
+		.mainLoginTable
+		{
+		background-color: #DDDCDC;
+		border-bottom: none;
+		border-left: 1px solid #0C1C6E;
+		border-right: 1px solid #0C1C6E;
+		border-top: none;
+		padding: 2px;
+		padding-left: 100px;
+		padding-right: 12px;
+		font-family: arial,trebuchet MS,comic sans ms,sans-serif;
+		font-size: 11pt;
+		}
+
+		.bottomEdge
+		{
+		border-bottom: none;
+		border-left: none;
+		border-right: none;
+		border-top: none;
+		border-width: 0px;
+		background-image: url('images/bottom-middle.gif');
+		background-repeat: repeat-x;
+		}
+
+		.topEdge
+		{
+		border-bottom: none;
+		border-left: none;
+		border-right: none;
+		border-top: none;
+		border-width: 0px;
+		background-image: url('images/top-middle.gif');
+		background-repeat: repeat-x;
+		}
+		.footer
+		{
+		padding-top: 20px;	
+		font-family: arial,trebuchet MS,comic sans ms,sans-serif;
+		color: #0C1C6E;
+		font-size: 10pt;		
+		}		
+		
+	.textbox {
+		color : Black;
+		background-color : #ffffff;
+		height : 19px;
+		font-size : 12px;
+	}
+	.formfield {
+		border-color : #666699 #666699 #666699 #666699;
+		border-width : 1 1 1 1;
+		color : Black; background-color : #ffffff;
+		height : 19px; font-size : 12px;
+	}
+	.button{
+		height : 19px;
+		font-size : 12px;
+	}
+	BODY {font-family : Verdana, Arial, sans-serif; text-decoration : none; color : Black;  font-size : 8pt;}
+	A { font-family : Verdana, Arial, sans-serif; text-decoration : none; color : Black; }
+	A:HOVER { font-family : Verdana, Arial, sans-serif; color : Black; }
+
+	.menu { font-family : Verdana, Arial, sans-serif; font-size : 8pt; color : #004080; }
+	.menu:link { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.menu:hover { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.menu:visited { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+		
+	.navigation { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080; }
+	.navigation:link { text-decoration: none; font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.navigation:hover { text-decoration: none; font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #000000;  }
+	.navigation:visited { text-decoration: none; font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080; }
+
+	.autolink:link { text-decoration: underline; font-family : Courier New, Verdana, Arial, sans-serif; font-size : 9pt; color : #004080; }
+	.autolink:hover { text-decoration: underline; font-family : Courier New, Verdana, Arial, sans-serif; font-size : 9pt; color : #004080; }
+	.autolink:visited { text-decoration: underline; font-family : Courier New, Verdana, Arial, sans-serif; font-size : 9pt; color : #004080; }
+
+	TD.rempli { font-family : Verdana, Arial, sans-serif; background-color : #DDDCDC;}
+	TD.memo { font-family : Verdana, Arial, sans-serif; background-color: #DDDCDC;}
+	TD.cent { font-family : Verdana, Arial, sans-serif; background-color: #DDDCDC; text-align: center; font-size : 8pt; color: Black;}
+	TD.right { font-family : Verdana, Arial, sans-serif; background-color: #DDDCDC; text-align: right; font-size : 8pt; color: Black;}
+	TD.header { font-family : Verdana, Arial, sans-serif; background-color : #DDDCDC; text-align : left; font-size : 8pt; color:  #000000; font-weight:bold; }
+	TD.headers { font-family : Verdana, Arial, sans-serif; background-color : #F2F2F2; text-align : center; font-size : 8pt; color:  #004080;  }
+	TD.light { font-family : Verdana, Arial, sans-serif; background-color : #e1e1e1; text-align : center; font-size : 8pt; color:  #004080;  }
+	TD.default { font-family : Verdana, Arial, sans-serif; background-color : #DDDCDC; font-size : 8pt;color : Black; }
+	TD.default9 { font-family : Verdana, Arial, sans-serif; background-color : #DDDCDC; font-size : 9pt;color : Black; }
+	TD.title { font-family : Verdana, Arial, sans-serif; color: #191970; background-color : #DDDCDC; text-align :left; font-size : 8pt;}
+	TD.headerright { font-family : Verdana, Arial, sans-serif; color: #004080; background-color : #DDDCDC; text-align : right;  font-size : 8pt; }
+	SELECT 	{ font-size : 8pt; }

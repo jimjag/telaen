@@ -1,0 +1,60 @@
+Installing Senti Theme
+
+This document assumes that you have a working Uebimiau installation & that the directory structure has not been altered.
+
+1 - After you have expanded the senti.zip file, copy the entire senti theme directory into the themes directory of your Uebimiau installation.
+
+2 - In a text editor such as Pico (*nix OS) or Notepad (Windows), open the file - /inc/config.languages.php
+
+3 - Look for lines which start with $theme & look like this:
+$themes['default'] = Array(
+        "name"          => "UebiMiau Default",
+        "path"          => "uebimiau"
+);
+
+4 - Below that line, paste or enter the following:
+$themes['sentimail'] = Array(
+   "name" => "Sentimail",
+   "path" => "senti"
+);
+
+5 - Save the file - that's it.
+
+Now, using your web browser, head to your Uebimiau login page & from the Theme menu, you should now have the Uebimiau default theme & Sentimail listed.
+
+		-------------------------------------
+
+If you wish to use Senti as your Default theme, after step 3 above, use this step instead:
+
+4 - Change those lines, so that they look like the following:
+$themes['default'] = Array(
+        "name"          => "Sentimail",
+        "path"          => "senti"
+);
+
+After you have saved the file, Sentimail should be the only theme listed.
+
+		-------------------------------------
+
+To set the language default, you need to edit the file inc/config/languages.php with a text editor.
+
+1 - Near the top of the file, you will see the line which starts with: $default_language
+2 - Set the language in the quotes to the language of your choice, so it follows the existing format - e.g. to set the default language to English, change this line so it looks like this:
+
+$default_language                                       = 'en_UK';
+
+3 - Save the file & your default language will now be set to English.
+
+		-------------------------------------
+
+To change the date format (e.g. from UK format to US style format), open the file langs/en_UK in a text editor.
+
+1 - Look for the line which starts with date_format & has the following format:
+date_format                                     = %d/%m/%y %H:%M
+
+2 - Rearrange the end of the line so it looks like this:
+date_format                                     = %m/%d/%y %H:%M
+
+3 - Save the file.
+
+When you now view dates etc..., they will be listed in month:day:year - to change this so that the dates are listed in another format, change the letters around to suit your own format - d=day, m=month, y=year

@@ -1,0 +1,153 @@
+{config_load file=$umLanguageFile section="QuickAddress"}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {#qad_title#}</title>
+<link rel="stylesheet" href="themes/beauvoir/webmail.css" type="text/css">
+</head>
+<!--
+Skinned by Arnaud BEAUVOIR -  - 
+
+Thank you to let the copyright in place on the login page and in all sources of pages.
+This skin is the work of an author, thank you to respect it and not to remove the
+copyright, or worse, to put your name at the place.
+-->
+<body>
+{literal}
+<script language=javascript>
+
+function addItem(obj,strText,strValue,blSel,intPos){
+	var newOpt,i,ArTemp,selIndex;
+	selIndex = (blSel)?intPos:obj.selectedIndex;
+	newOpt = new Option(strText,strValue);
+	Len = obj.options.length+1
+	if (intPos > Len) return
+	obj.options.length = Len
+	if (intPos != Len) {
+		ArTemp = new Array();
+		for(i=intPos;i<obj.options.length-1;i++)
+			ArTemp[i] = Array(obj.options[i].text,obj.options[i].value);
+		for(i=intPos+1;i<Len;i++)
+			obj.options[i] = new Option(ArTemp[i-1][0],ArTemp[i-1][1]);
+	}
+	obj.options[intPos] = newOpt;
+	if (selIndex > intPos)
+		obj.selectedIndex = selIndex+1;
+	else if (selIndex == intPos) 
+		obj.selectedIndex = intPos;
+}
+function delItem(obj,intPos){
+	if(intPos > obj.length) return;
+	obj.options[intPos] = null
+}
+
+function Add(sTipo) {
+	frm = document.forms[0];
+	dest = eval("frm."+sTipo)
+	orig = frm.contacts;
+	if(orig.selectedIndex == -1) {
+{/literal}
+		alert("{#qad_select_address#}");
+{literal}
+		return
+	}
+	addItem(dest,orig.options[orig.selectedIndex].text,orig.options[orig.selectedIndex].text,false,dest.length)
+}
+
+function Dele(sTipo) {
+	frm = document.forms[0];
+	orig = eval("frm."+sTipo)
+	if(orig.selectedIndex == -1) {
+{/literal}
+		alert("{#qad_select_address#}");
+{literal}
+		return
+	}
+	delItem(orig,orig.selectedIndex)
+}
+
+function AddAndExit() {
+	frm = document.forms[0];
+	typs = new Array("to","cc","bcc");
+	for(i=0;i<typs.length;i++) {
+		orig = eval("frm."+typs[i]);
+		for(n=0;n<orig.length;n++)
+			window.opener.AddAddress(typs[i],orig.options[n].value);
+	}
+	self.close();
+}
+
+function ns_clean() {
+	frm = document.forms[0];
+	typs = new Array("to","cc","bcc");
+	for(i=0;i<typs.length;i++) {
+		orig = eval("frm."+typs[i]);
+		orig.selectedIndex = 0;
+		Dele(typs[i]);
+	}
+}
+
+</script>
+{/literal}
+<table cellspacing="1" cellpadding="0" width="100%" border="0" class="normal" bgcolor="#F5F4F4">
+	<form name="form1">
+	<tr>
+		<td width="50%" align="center" valign="middle">{$umContacts}<br><br><input type="button" class="normal" value="&nbsp;OK&nbsp;" onClick="AddAndExit()"></td>
+		<td valign="top" width="225">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0">
+				<tr>
+					<td colspan="2"><b>{#qad_to#}</b></td>
+				</tr>
+				<tr>
+					<td width="5%" valign="middle">
+						<input type="button" value="&gt;&gt;" class="normal" onClick="Add('to')"><br>
+						<input type="button" value="&lt;&lt;" class="normal" onClick="Dele('to')"><br>
+					</td>
+					<td valign="middle">
+						<select name="to" size="3" style="width: 200px;" onDblClick="Dele('to')">
+						<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><b>{#qad_cc#}</b></td>
+				</tr>
+				<tr>
+					<td width="5%" valign="middle">
+						<input type="button" value="&gt;&gt;" class="normal" onClick="Add('cc')"><br>
+						<input type="button" value="&lt;&lt;" class="normal" onClick="Dele('cc')"><br>
+					</td>
+					<td valign="middle">
+						<select name="cc" size="3" style="width: 200px;" onDblClick="Dele('cc')">
+						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><b>{#qad_bcc#}</b></td>
+				</tr>
+				<tr>
+					<td width="5%" valign="middle">
+						<input type="button" value="&gt;&gt;" class="normal" onClick="Add('bcc')"><br>
+						<input type="button" value="&lt;&lt;" class="normal" onClick="Dele('bcc')"><br>
+					</td>
+					<td valign="middle">
+						<select name="bcc" size="3" style="width: 200px;" onDblClick="Dele('bcc')">
+						<option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</form>
+</table>
+<script>
+ns_clean();
+</script>
+	

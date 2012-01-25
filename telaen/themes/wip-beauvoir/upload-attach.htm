@@ -1,0 +1,26 @@
+{config_load file=$umLanguageFile section="Newmessage"}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {#up_title#}</title>
+<link rel="stylesheet" href="themes/beauvoir/webmail.css" type="text/css">
+</head>
+<!--
+Skinned by Arnaud BEAUVOIR -  - 
+
+Thank you to let the copyright in place on the login page and in all sources of pages.
+This skin is the work of an author, thank you to respect it and not to remove the
+copyright, or worse, to put your name at the place.
+-->
+<body>
+<br>
+<table width="95%" border="0" cellspacing="1" cellpadding="0" align="center" class="normal" bgcolor="#999999">
+<form enctype="multipart/form-data" action="upload.php?sid={$umSid}&lid={$umLid}&tid={$umTid}" method="POST">
+<tr bgcolor="#ACB6D1"><td align="center"><b>{#up_information_text#}</b></td></tr>
+<tr bgcolor="#EAEAEA"><td align="center"><input type="file" name="userfile" size="22" style="width: 220px;"><br><input type="submit" value="{#up_button_text#}" name="submit"></td></tr>
+</form>
+</table>
+</body>
+</html>
