@@ -1,0 +1,70 @@
+@charset "iso-8859-1";
+<!--
+body {
+	font: Verdana;
+	text-transform: lowercase;
+	background: #FFFFFF;
+	font-size: 8.5pt;
+	font-weight: normal;
+	color: #000000;
+	margin: 0;
+}
+	
+form { display: inline }
+
+TABLE, TR, TD, SELECT {
+	font-size: 10pt;
+	color: #000000 }
+
+a:link, a:visited, a:active {
+	text-decoration: none;
+	color: #000000 }
+
+a:hover { 
+color: #2D3443 
+}
+
+.normal {
+	vertical-align: bottom;
+	vertical-align: text-bottom;
+	font-size: 10pt;
+	color: #000000 }
+
+.titre {
+	font-size: 10pt;
+	color: #2D3443 }
+
+.inactive {
+	font-size: 10pt;
+	color: #78879C }
+	
+.error {
+	font-size: 10pt;
+	color: #FF0000 }
+	
+#text {
+	margin : 10px 10px 10px 10px;
+	text-ident : 5%;
+	text-align : justify}
+
+#compteur {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 24px;
+	height: 96px;
+	visibility: hidden }
+img{
+	border: none;
+}
+.frame{
+    border-right:1px solid #ccc;
+    border-left:1px solid #ccc;    
+}
+.top{
+    border-top:1px solid #ccc; 
+}
+.bot{
+    border-bottom:1px solid #ccc; 
+}
+-->
