@@ -10,9 +10,9 @@ Telaen is a GPL'ed software developed by
 require("./inc/config/config.php");
 require("./inc/lib.php");
 require("./inc/preinit.php");
-require("./inc/user_tl.php");
 
 extract(pull_from_get(Array("f_email", "f_user", "lid", "tid", "six")));
+require("./inc/user_tl.php");
 
 require_once(SMARTY_DIR."Smarty.class.php");
 $smarty = new Smarty;
