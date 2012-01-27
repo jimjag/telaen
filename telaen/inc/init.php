@@ -215,7 +215,7 @@ $nocache = "
 
 // Common js included system-wide
 $commonJS = "
-	<script type=\"text/javascript\" src=\"./js/prototype.js\"></script>
+	<script type=\"text/javascript\" src=\"./js/ajax_prototype.js\"></script>
 	<script type=\"text/javascript\" src=\"./js/common.js\"></script>
 ";
 
