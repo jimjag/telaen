@@ -25,7 +25,11 @@ $smarty->use_sub_dirs = true;
 
 $smarty->assign("umLanguageFile",$selected_language.".txt");
 
-$smarty->assign("umEmail",$f_email);
+if (is_valid_email($f_email)) {
+		$smarty->assign("umEmail",$f_email);
+} else {
+		$smarty->assign("umEmail","unknown");
+}
 
 // Assign also the webmail title to smarty, check for empty title before
 if (!isset($webmail_title) || trim($webmail_title) == "" ) {

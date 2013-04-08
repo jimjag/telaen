@@ -1,6 +1,7 @@
 <?php
+require("./inc/lib.php");
 // very bad method to get params... the url is passed without the param name...
-$url = $_SERVER['QUERY_STRING'];
+$url = create_abs_url($_SERVER['QUERY_STRING']);
 ?>
 <html>
 <head>
