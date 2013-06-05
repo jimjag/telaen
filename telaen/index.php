@@ -76,7 +76,7 @@ $jssource = "
 			sLocation = 'index.php?lid='+sLanguage+'&tid='+sTheme+'&f_user='+escape(sUser)+'&six='+sSix+'&f_email='+sEmail;
 			location.replace(sLocation);
 		} catch(err) {
-			alert('Your brownser do not support JS'); // Vola: this is stupid... if js doesn't work also alert doesn't work :)
+			alert('Your browser do not support JS'); // Vola: this is stupid... if js doesn't work also alert doesn't work :)
 		}
 	}
 //]]> 
