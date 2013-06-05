@@ -12,7 +12,7 @@ multiple themes (or "skins").
 Telaen 1.3.x is compatible with PHP4 and PHP5. Starting with Telaen
 2.x, support for PHP4 will be dropped.
 
-Telaen is free software distributed under GPL terms; see www.gnu.org for
+Telaen is free software distributed under GPLv2 terms; see www.gnu.org for
 more informations. You can use or redistribute this software, but need to
 preserve the credits of author.
 
