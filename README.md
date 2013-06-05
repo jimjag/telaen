@@ -85,4 +85,4 @@ and PHP5.2.
 
 ## Changelog
 
-See changelog.md
+See CHANGELOG.md in ./docs/

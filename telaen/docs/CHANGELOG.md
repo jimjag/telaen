@@ -15,6 +15,12 @@ CHANGELOG:
 ----------------------------------------------------------------
 Telaen:
 =======
+1.3.2-dev
+
+ [New] Update to Smarty 2.6.27
+
+ [Fix] Correct bug w/ PHPMailer 5 compatibility
+
 1.3.1
 
 [Fix]	Sanitize f_email and redir url
