@@ -27,6 +27,13 @@ if(isset($show_errors) && $show_errors) {
 	@ini_set('display_errors', 0); 
 }
 
+// Time Zone fix for php 5.3 and above
+if (!ini_get('date.timezone') &&
+	function_exists("date_default_timezone_set") &&
+	function_exists("date_default_timezone_get")) {
+	@date_default_timezone_set(@date_default_timezone_get());
+}
+
 //$old_error_handler = set_error_handler("err_handler");
 
 @set_magic_quotes_runtime(0);			// Smarty and magic_quotes_runtime ON do not mix.
