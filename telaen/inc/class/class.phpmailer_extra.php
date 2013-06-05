@@ -12,7 +12,7 @@ class PHPMailer_extra extends PHPMailer {
 		if (method_exists(PHPMailer, 'GetSentMIMEMessage')) {
 			return $this->GetSentMIMEMessage();
 		} else {
-			return $this->$FormattedMail;
+			return $this->FormattedMail;
 		}
 	}
 	function TelaenSend() {
