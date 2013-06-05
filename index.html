@@ -1,0 +1,160 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Telaen</title>
+  <meta name="description" content="Telaen is a webmail interface written in PHP. It does not require any database and is compatible with POP3 or IMAP so it runs under any Server supporting PHP with Sendmail or QMAIL. Additional skins and languages can be easily integrated.">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Telaen</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Telaen is a webmail interface written in PHP. It does not require any database and is compatible with POP3 or IMAP so it runs under any Server supporting PHP with Sendmail or QMAIL. Additional skins and languages can be easily integrated.</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/jimjag/telaen/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/jimjag/telaen/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/jimjag/telaen" class="code">View Telaen on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a name="telaen---a-full-featured-yet-simple-web-based-e-mail-client-written-in-php" class="anchor" href="#telaen---a-full-featured-yet-simple-web-based-e-mail-client-written-in-php"><span class="octicon octicon-link"></span></a>Telaen - A full-featured yet simple web-based e-mail client written in PHP</h1>
+
+<h2>
+<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>Telaen is a web-based e-mail client written in PHP. What is particularly
+nice about Telaen is that it is fast, lean and simple, but also extremely
+powerful. It does not require much more than a "standard" PHP
+installation, nor does it require a database. It supports multiple
+folders, POP3 and IMAP, is SPAM aware and incorporates a WYSIWYG editor
+for Email composition. It supports multiple languages as well as
+multiple themes (or "skins").</p>
+
+<p>Telaen 1.3.x is compatible with PHP4 and PHP5. Starting with Telaen
+2.x, support for PHP4 will be dropped.</p>
+
+<p>Telaen was originally based on Uebimiau.</p>
+
+<p>We recommend that you read the other documents in the docs/ subdirectory,
+especially the CHANGELOG.txt and INSTALL.txt files.</p>
+
+<h2>
+<a name="why-you-might-need-it" class="anchor" href="#why-you-might-need-it"><span class="octicon octicon-link"></span></a>Why you might need it</h2>
+
+<p>Other PHP-based webmails require database support as well as a long
+laundry-list of other PHP libs and extensions; not Telaen. If
+you need an expandable, powerful yet simple webmail system,
+Telaen will likely fit the bill.</p>
+
+<p>And, if you are stuck running ancient Uebimiau, you should
+really move to Telaen asap.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Telaen is free software distributed under GPLv2 terms; see <a href="http://www.gnu.org">www.gnu.org</a> for
+more informations. You can use or redistribute this software, but need to
+preserve the credits of author. Please read LICENSE for information on the
+software availability and distribution.</p>
+
+<h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>SMTP Compatible</li>
+<li>POP3 Compatible</li>
+<li>IMAP Compatible</li>
+<li>MIME Compatible</li>
+<li>Receive Attachments</li>
+<li>Send Attachments</li>
+<li>Folders/E-mail management support (Trash/Inbox/Sent/[Personal])</li>
+<li>Address book</li>
+<li>Language support</li>
+<li>Themes support</li>
+<li>Search in messages</li>
+<li>Personalized order messages</li>
+<li>Personal preferences</li>
+<li>Send HTML e-mails</li>
+<li>Quota Limit</li>
+<li>Auto population of SPAM folder for tagged SPAM messages</li>
+</ul><h2>
+<a name="localization" class="anchor" href="#localization"><span class="octicon octicon-link"></span></a>Localization</h2>
+
+<p>PHPMailer defaults to English, but supports other language and UI themes (or 'skins').</p>
+
+<h2>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>You'll find some basic user-level docs in the docs folder</p>
+
+<h2>
+<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>Telaen is designed to work with as a vanilla, bare-bones build of PHP as
+possible. The below external dependencies are bundled for convenience:</p>
+
+<ul>
+<li>Smarty</li>
+<li>TinyMCE</li>
+<li>PHPMailer</li>
+<li>iCalCreator</li>
+</ul><p>Telaen is designed to work with both the bundled as well as the system-provided
+versions of these tools.</p>
+
+<p>No database is required.</p>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Please submit bug reports, suggestions and pull requests to the <a href="https://github.com/jimjag/telaen/issues">GitHub issue tracker</a>.</p>
+
+<p>We're particularly interested in fixing edge-cases, expanding test coverage and dropping support for PHP4, PHP5.1
+and PHP5.2.</p>
+
+<h2>
+<a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>Changelog</h2>
+
+<p>See CHANGELOG.md in ./docs/</p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/jimjag" class="avatar"><img src="https://secure.gravatar.com/avatar/a86203bd1e538f2a4e58eb8850fb66ef?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/jimjag">jimjag</a> maintains <a href="https://github.com/jimjag/telaen">Telaen</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/jimjag/telaen/tarball/master" class="tar">tar</a><a href="https://github.com/jimjag/telaen/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
