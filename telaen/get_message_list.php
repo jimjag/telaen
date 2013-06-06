@@ -66,5 +66,5 @@
 		unset($returnarray);
 	}
 	// load the headers for the folder
-	$headers = $sess["headers"][$folder_key];
+	$headers =& $sess["headers"][$folder_key];
 ?>

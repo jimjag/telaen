@@ -233,7 +233,7 @@ if( !is_array($headers)
 	$UM->mail_disconnect();
 }
 
-if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
+if(!is_array($headers =& $sess["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
 
 /*
  * Sort the date and size fields with a natural sort, but only
@@ -247,7 +247,7 @@ if (!$is_inbox_or_spam || $UM->mail_protocol == "imap") {
 	}
 }
 
-$sess["headers"][$folder_key] = $headers;
+// $sess["headers"][$folder_key] = $headers;
 $sess["havespam"] = ($UM->havespam || count($sess["headers"][$folder_key_spam]));
 $SS->Save($sess);
 
