@@ -10,8 +10,8 @@ Telaen is a GPL'ed software developed by
 // load session management
 require("./inc/init.php");
 
-extract(pull_from_get(Array("empty", "goback", "nameto", "mailto")));
-extract(pull_from_post(Array("newfolder")));
+extract(pull_from_array($_GET, Array("empty", "goback", "nameto", "mailto"), "s"));
+extract(pull_from_array($_POST, Array("newfolder"), "s"));
 
 // server check
 if(!$UM->mail_connect()){ 

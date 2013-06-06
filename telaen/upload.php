@@ -11,8 +11,8 @@ require("./inc/init.php");
 
 $smarty->assign("pageMetas", $nocache);
 
-extract(pull_from_get(Array("rem")));
-extract(pull_from_files(Array("userfile")));
+extract(pull_from_array($_GET, Array("rem"), "str"));
+extract(pull_from_array($_FILES, Array("userfile"), "str"));
 
 if (isset($rem) && $rem != "") {
 

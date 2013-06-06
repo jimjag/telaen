@@ -12,9 +12,9 @@ require("./inc/init.php");
 // assign metas
 $smarty->assign("pageMetas", $nocache);
 
-extract(pull_from_get(Array("nameto", "mailto")));
-extract(pull_from_post(Array("to", "cc", "bcc", "subject", "requireReceipt",
-		"priority", "body", "is_html", "textmode", "sig", "tipo", "rtype", "ix")));
+extract(pull_from_array($_GET, Array("nameto", "mailto"), "str"));
+extract(pull_from_array($_POST, Array("to", "cc", "bcc", "subject", "requireReceipt",
+		"priority", "body", "is_html", "textmode", "sig", "tipo", "rtype", "ix"), "str"));
 
 if(isset($tipo) && $tipo == "send") {
 

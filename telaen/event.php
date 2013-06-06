@@ -14,8 +14,8 @@ if(!$sess["auth"]) {
 	die();
 }
 
-extract(pull_from_get(Array("edate")));
-extract(pull_from_post(Array("eventn", "edate", "evsave", "evdelete", "starthour", "stophour", "startmin", "stopmin")));
+extract(pull_from_array($_GET, Array("edate"), "str"));
+extract(pull_from_array($_POST, Array("eventn", "edate", "evsave", "evdelete", "starthour", "stophour", "startmin", "stopmin"), "str"));
 
 $etext = trim($_POST["etext_{$eventn}"]);
 

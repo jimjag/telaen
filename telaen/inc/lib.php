@@ -366,29 +366,31 @@ function valid_folder_name($name, $checksys = false) {
 	return !preg_match('/[^A-Za-z0-9\-]/',$name);
 }
 
-function pull_from_get($my_vars = Array(), $trim=false) {
-	$reta = Array();
-	foreach ($my_vars as $to_pull) {
-		if (isset($_GET[$to_pull]))
-			$reta[$to_pull] = ($trim ? trim($_GET[$to_pull]) : $_GET[$to_pull]);
+function caster ($var, $cast="string") {
+	switch (gettype($cast)) {
+		case "boolean":
+			$var = (boolean)$var; break;
+		case "integer":
+			$var = (integer)$var; break;
+		case "double":
+			$var = (double)$var; break;
+		case "string":
+			$var = trim((string)$var);
+			$var = preg_replace('/[^[:print:]]+/', '_' , $var);
+			break;
+		case "array":
+			$var = (array)$var; break;
+		case "object":
+			$var = (object)$var; break;
 	}
-	return $reta;
+	return $var;
 }
 
-function pull_from_post($my_vars = Array(), $trim=false) {
+function pull_from_array($whofrom, $my_vars = Array(), $cast="string") {
 	$reta = Array();
 	foreach ($my_vars as $to_pull) {
-		if (isset($_POST[$to_pull]))
-			$reta[$to_pull] = ($trim ? trim($_POST[$to_pull]) : $_POST[$to_pull]);
-	}
-	return $reta;
-}
-
-function pull_from_files($my_vars = Array(), $trim=false) {
-	$reta = Array();
-	foreach ($my_vars as $to_pull) {
-		if (isset($_FILES[$to_pull]))
-			$reta[$to_pull] = ($trim ? trim($_FILES[$to_pull]) : $_FILES[$to_pull]);
+		if (isset($whofrom[$to_pull]))
+			$reta[$to_pull] = caster($whofrom[$to_pull], $cast);
 	}
 	return $reta;
 }

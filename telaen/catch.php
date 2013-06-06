@@ -13,7 +13,7 @@ require("./inc/init.php");
 if(!isset($ix) || !isset($folder))
 	redirect_and_exit("index.php?err=3", true);
 
-extract(pull_from_post(Array("ckaval")));
+extract(pull_from_array($_POST, Array("ckaval"), 1));
 
 $filename = $userfolder."_infos/addressbook.ucf";
 $myfile = $UM->_read_file($filename);

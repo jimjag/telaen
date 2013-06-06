@@ -11,7 +11,7 @@ require("./inc/config/config.php");
 require("./inc/lib.php");
 require("./inc/preinit.php");
 
-extract(pull_from_get(Array("f_email", "f_user", "lid", "tid", "six")));
+extract(pull_from_array($_GET, Array("f_email", "f_user", "lid", "tid", "six"), "s"));
 require("./inc/user_tl.php");
 
 require_once(SMARTY_DIR."Smarty.class.php");

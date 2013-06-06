@@ -9,7 +9,7 @@ Telaen is a GPL'ed software developed by
 
 require("./inc/init.php");
 
-extract(pull_from_post(Array("srcFrom", "srcSubject", "srcBody")));
+extract(pull_from_array($_POST, Array("srcFrom", "srcSubject", "srcBody"), "str"));
 
 $smarty->assign("pageMetas", $nocache);
 

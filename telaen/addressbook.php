@@ -37,8 +37,8 @@ function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($
 $smarty->assign("umJS",$jssource);
 $smarty->assign("umGoBack","addressbook.php");
 
-extract(pull_from_get(Array("opt", "id")));
-extract(pull_from_post(Array("name", "email", "street", "city", "state", "work", "opt", "id"), true));
+extract(pull_from_array($_GET, Array("opt", "id"), "str"));
+extract(pull_from_array($_POST, Array("name", "email", "street", "city", "state", "work", "opt", "id"), "str"));
 
 switch($opt) {
 	// save an edited contact

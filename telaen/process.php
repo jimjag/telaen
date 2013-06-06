@@ -22,8 +22,10 @@ function mail_connect() {
 	}
 }
 
-extract(pull_from_get(Array("decision", "refr", "mlist")));
-extract(pull_from_post(Array("decision", "start_pos", "end_pos", "aval_folders")));
+extract(pull_from_array($_GET, Array("decision"), "str"));
+extract(pull_from_array($_GET, Array("refr", "mlist"), TRUE));
+extract(pull_from_array($_POST, Array("decision", "aval_folders"), "str"));
+extract(pull_from_array($_POST, Array("start_pos", "end_pos"), 1));
 
 $headers = null;
 $folder_key = base64_encode(strtolower($folder));
