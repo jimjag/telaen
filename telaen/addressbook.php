@@ -37,8 +37,10 @@ function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($
 $smarty->assign("umJS",$jssource);
 $smarty->assign("umGoBack","addressbook.php");
 
-extract(pull_from_array($_GET, Array("opt", "id"), "str"));
-extract(pull_from_array($_POST, Array("name", "email", "street", "city", "state", "work", "opt", "id"), "str"));
+extract(pull_from_array($_GET, Array("opt"), "str"));
+extract(pull_from_array($_POST, Array("name", "email", "street", "city", "state", "work", "opt"), "str"));
+extract(pull_from_array($_GET, Array("id"), 1));
+extract(pull_from_array($_POST, Array("id"), 1));
 
 switch($opt) {
 	// save an edited contact
@@ -145,7 +147,7 @@ switch($opt) {
 		$smarty->assign("umNew","addressbook.php?opt=new");
 
 		$addresslist = Array();
-				for($i=0;$i<count($addressbook);$i++) {
+		for($i=0;$i<count($addressbook);$i++) {
 			$ind = count($addresslist);
 			$addresslist[$ind]["viewlink"] = "addressbook.php?opt=display&id=$i";
 			$addresslist[$ind]["composelink"] = "newmsg.php?nameto=".htmlspecialchars($addressbook[$i]["name"])."&mailto=".htmlspecialchars($addressbook[$i]["email"])."";
@@ -154,7 +156,7 @@ switch($opt) {
 
 			$addresslist[$ind]["name"] = $addressbook[$i]["name"];
 			$addresslist[$ind]["email"] = $addressbook[$i]["email"];
-				}
+		}
 		$templatename = "address-list.htm";
 		$smarty->assign("umAddressList",$addresslist);
 }
