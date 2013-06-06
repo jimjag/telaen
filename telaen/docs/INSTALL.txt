@@ -34,7 +34,7 @@ INSTALL
   tasks:
       o Rename extra/check_install.php.txt to extra/check_install.php
       o Access check_install.php via your browser, eg:
-             http://www.telaen.com/telaen/extra/check_install.php
+             http://jimjag.github.io/telaen/telaen/extra/check_install.php
       o Make any required changes.
       o Be SURE to REMOVE check_install.php or RENAME it back to
         check_install.php.txt !!!

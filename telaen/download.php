@@ -3,7 +3,7 @@
 Telaen is a GPL'ed software developed by 
 
  - The Telaen Group
- - http://www.telaen.com/
+ - http://jimjag.github.io/telaen/
 
 *************************************************************************/
 @ini_set ( 'output_buffering',	  1024 );
