@@ -386,7 +386,7 @@ function caster ($var, $cast="string") {
 	return $var;
 }
 
-function pull_from_array($whofrom, $my_vars = Array(), $cast="string") {
+function pull_from_array(&$whofrom, $my_vars = Array(), $cast="string") {
 	$reta = Array();
 	foreach ($my_vars as $to_pull) {
 		if (isset($whofrom[$to_pull]))
