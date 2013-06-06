@@ -1,4 +1,7 @@
 <?php
+
+if (!defined('I_AM_TELAEN')) {die('Direct access not permitted');}
+
 ########################################################################
 # Enable visualization of HTML messages
 # *This option afect only incoming messages, the  HTML editor

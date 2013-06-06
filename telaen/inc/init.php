@@ -7,6 +7,8 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
+if (!defined('I_AM_TELAEN')) {die('Direct access not permitted');}
+
 @set_time_limit(0);
 session_name('telaen');
 session_start();

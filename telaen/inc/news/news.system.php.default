@@ -3,9 +3,11 @@
 Telaen is a GPL'ed software developed by 
 
  - The Telaen Group
- - http://www.telaen.org/
+ - http://jimjag.github.io/telaen/
 
 *************************************************************************/
+
+if (!defined('I_AM_TELAEN')) {die('Direct access not permitted');}
 
 /*
  * Set the below for system-related news that can be

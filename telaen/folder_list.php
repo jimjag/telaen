@@ -1,4 +1,6 @@
 <?php
+if (!defined('I_AM_TELAEN')) {die('Direct access not permitted');}
+
 $folders = (array)$sess["folders"];
 $scounter = 0;
 $pcounter = 0;

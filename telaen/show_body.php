@@ -6,6 +6,7 @@ Telaen is a GPL'ed software developed by
  - http://jimjag.github.io/telaen/
 
 *************************************************************************/
+if (!defined('I_AM_TELAEN')) {die('Direct access not permitted');}
 
 require("./inc/init.php");
 if(!isset($folder) || !isset($ix)) die("Expected parameters");

@@ -12,6 +12,8 @@ Telaen is a GPL'ed software developed by
  * various aspects of Telaen that should be universal.
  */
 
+if (!defined('I_AM_TELAEN')) {die('Direct access not premitted');}
+
 umask($default_umask);
 
 $error_flags = E_ALL & ~E_NOTICE;
