@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('I_AM_TELAEN')) {die('Direct access not permitted');}
+defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 	$sess["last-update"] = time();
 	if($quota_limit) {

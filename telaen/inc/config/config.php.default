@@ -7,7 +7,7 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
-if (!defined('I_AM_TELAEN')) {die('Direct access not permitted');}
+defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 ########################################################################
 # Load in the version information

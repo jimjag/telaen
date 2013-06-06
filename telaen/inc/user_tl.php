@@ -12,7 +12,7 @@ Telaen is a GPL'ed software developed by
  * the user's language and template prefs
  */
 
-if (!defined('I_AM_TELAEN')) {die('Direct access not permitted');}
+defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 if (isset($sess) && is_array($sess) && $sess['thm_lang_inited']) {
 	$tid = $sess['tid'];
