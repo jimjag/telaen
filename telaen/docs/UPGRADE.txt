@@ -46,3 +46,10 @@ If you install the new version overtop the old one, you will also
 need to remove the class.*.php files that are left over from the
 older version and live in ./inc/ (eg: ./inc/class.telaen.php). In
 both cases, the check_install.php script will warn you.
+
+Finally, be SURE that the ./inc/ directory is disabled, ala:
+
+<Location /webmail/inc>
+  order allow,deny
+  deny from all
+</Location>

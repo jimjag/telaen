@@ -44,6 +44,14 @@ INSTALL
   directory file to your Smarty plugins folder (rename it to
   function.um_welcome_message.php)!
 
+- Ensure that the ./inc/ directory cannot be accessed directly.
+  There are many ways to do this, but the easiest is using
+  ACLs:
+    <Location /webmail/inc>  # or whatever
+      order allow,deny
+      deny from all
+    </Location>
+
 ---------------
 PERFORMANCE
 ---------------
