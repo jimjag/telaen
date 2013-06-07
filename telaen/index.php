@@ -26,12 +26,6 @@ $smarty->use_sub_dirs = true;
 
 $smarty->assign("umLanguageFile",$selected_language.".txt");
 
-if (is_valid_email($f_email)) {
-		$smarty->assign("umEmail",$f_email);
-} else {
-		$smarty->assign("umEmail","unknown");
-}
-
 // Assign also the webmail title to smarty, check for empty title before
 if (!isset($webmail_title) || trim($webmail_title) == "" ) {
 		$webmail_title = "Telaen Webmail";
@@ -117,6 +111,11 @@ switch(strtoupper($mail_server_type)) {
 		die("Unknown server mode, please see config.php");
 }
 
+// Protect from XSS
+if(isset($f_email) && !is_valid_email($f_email)) { $f_email = "unknown@example.com"; }
+if(isset($f_user) && !is_valid_email("$f_user@example.com")) { $f_user = "unknown"; }
+
+$smarty->assign("umEmail",$f_email);
 $smarty->assign("umUser",$f_user);
 $smarty->assign("umPass",$f_pass);
 $smarty->assign("umJS",$jssource);
