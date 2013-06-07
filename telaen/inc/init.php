@@ -71,7 +71,16 @@ $smarty->assign("webmailTitle", $webmail_title);
 
 $UM = new Telaen();
 
+if(isset($f_pass)) { $f_pass = stripslashes($f_pass); }
 if(isset($f_pass) && strlen($f_pass) > 0) {
+
+	// Clean up
+	if(isset($f_email)) { $f_email = stripslashes($f_email); }
+	if(isset($f_user)) { $f_user = stripslashes($f_user); }
+	if(isset($f_server)) { $f_server = stripslashes($f_server); }
+
+	if(isset($f_email) && !is_valid_email($f_email)) { $f_email = "unknown@example.com"; }
+	if(isset($f_user) && !is_valid_email("$f_user@example.com")) { $f_user = "unknown"; }
 
 	switch(strtoupper($mail_server_type)) {
 
@@ -79,7 +88,6 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		$f_server	= strtolower(getenv("HTTP_HOST"));
 		$f_server	= str_replace($mail_detect_remove,"",$f_server);
 		$f_server	= $mail_detect_prefix.$f_server;
-		$f_email	= trim($f_email);
 
 		if(preg_match('|(.*)@(.*)|',$f_email,$regs)) {
 			$f_user = trim($regs[1]);
@@ -94,7 +102,6 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		break;
 
 	case "ONE-FOR-EACH": 
-		$f_user			= trim($f_user);
 		$domain			= trim($mail_servers[$six]["domain"]);
 		$f_email		= $f_user."@".$domain;
 		$f_server		= $mail_servers[$six]["server"];
@@ -108,7 +115,6 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		break;
 
 	case "ONE-FOR-ALL": 
-		$f_email	= trim($f_email);
 		if(preg_match('|(.*)@(.*)|',$f_email,$regs)) {
 			$f_user = trim($regs[1]);
 			$domain = trim($regs[2]);
