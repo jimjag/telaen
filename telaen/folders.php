@@ -8,7 +8,7 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 // load session management
-define('I_AM_TELAEN', TRUE);
+define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require("./inc/init.php");
 

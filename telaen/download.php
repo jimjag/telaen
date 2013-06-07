@@ -6,13 +6,15 @@ Telaen is a GPL'ed software developed by
  - http://jimjag.github.io/telaen/
 
 *************************************************************************/
-define('I_AM_TELAEN', TRUE);
+define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 @ini_set ( 'output_buffering',	  1024 );
 @ob_start();
 
 // load session management
 require("./inc/init.php");
+
+if(!$sess["auth"]) { die("error: your session seems expired"); }
 
 // check for main parameters
 if(!isset($_GET['folder']) || !isset($_GET['ix']))

@@ -9,6 +9,7 @@ Telaen is a GPL'ed software developed by
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 require("./inc/init.php");
+
 if(!isset($folder) || !isset($ix)) die("Expected parameters");
 $body = $sess["currentbody"];
 $meta_charset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=" . $default_char_set . "\">";

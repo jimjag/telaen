@@ -6,7 +6,7 @@ Telaen is a GPL'ed software developed by
  - http://jimjag.github.io/telaen/
 
 *************************************************************************/
-define('I_AM_TELAEN', TRUE);
+define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require("./inc/config/config.php");
 require("./inc/lib.php");

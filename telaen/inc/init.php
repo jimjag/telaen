@@ -38,6 +38,8 @@ $SS->timeout		= $idle_timeout;
 
 $sess = $SS->Load();
 
+// Only process.php is allowed to be run with expired sessions (for login)
+if((I_AM_TELAEN != "process.php") && (!$sess["auth"])) { die("error: your session seems expired"); }
 
 if(!array_key_exists("start",$sess)) $sess["start"] = time();
 $start = $sess["start"];

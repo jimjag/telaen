@@ -1,7 +1,8 @@
 <?php
-define('I_AM_TELAEN', TRUE);
+define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require("./inc/lib.php");
+
 // very bad method to get params... the url is passed without the param name...
 $url = create_abs_url($_SERVER['QUERY_STRING']);
 ?>

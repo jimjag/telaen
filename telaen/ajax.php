@@ -6,18 +6,13 @@ Telaen is a GPL'ed software developed by
  - http://jimjag.github.io/telaen/
 
 *************************************************************************/
-define('I_AM_TELAEN', TRUE);
+define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 /**
  * This file provides a support for ajax calls
  * All parameters must be sended via POST and the 'action' is mandatory
  */
 require("./inc/init.php");
-
-if(!$sess["auth"]) {
-	echo "error: your session seems expired";
-	die();
-}
 
 // cheking for main param
 if(isset($_POST['action'])) {

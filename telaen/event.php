@@ -10,11 +10,6 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 require("./inc/init.php");
 
-if(!$sess["auth"]) {
-	echo "error: your session seems expired";
-	die();
-}
-
 extract(pull_from_array($_GET, Array("edate"), "str"));
 extract(pull_from_array($_POST, Array("eventn", "edate", "evsave", "evdelete", "starthour", "stophour", "startmin", "stopmin"), "str"));
 
