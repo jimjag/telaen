@@ -69,5 +69,5 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 		unset($returnarray);
 	}
 	// load the headers for the folder
-	$headers =& $sess["headers"][$folder_key];
+	$headers = $sess["headers"][$folder_key];
 ?>
