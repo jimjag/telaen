@@ -21,7 +21,7 @@ class Telaen_core {
 	var $mail_protocol		= "pop3";
 	var $mail_prefix		= "";
 
-	var $sanitize		= true;
+	var $sanitize			= true;
 	var $use_html			= false;
 	var $charset			= "iso-8859-1";
 	var $timezone			= "+0000";
@@ -122,8 +122,8 @@ class Telaen_core {
 
 	function mime_encode_headers($string) {
 		if($string == "") return;
-		if(!preg_match('|^([\x20-\x7E]*)$|iD',$string))
-		$string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
+		if(!preg_match("/^([[:print:]]*)$/",$string))
+			$string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
 		return $string;
 	}
 
@@ -150,7 +150,7 @@ class Telaen_core {
 	*/
 
 	function convert_charset($string, $from, $to) {
-		$string = htmlentities($string, ENT_COMPAT, $from);
+		$string = @htmlentities($string, ENT_COMPAT, $from);
 		if(function_exists('html_entity_decode')) { //PHP 4.3+
 			return html_entity_decode($string, ENT_COMPAT, $to);
 		} else {
@@ -401,9 +401,9 @@ class Telaen_core {
 								$multipartSub = true;
 				break;
 			// if html enabled use it
-						} elseif($this->use_html && $ctype == "text/html") {
-								$part = $parts[$index];
-								break;
+			} elseif($this->use_html && $ctype == "text/html") {
+				$part = $parts[$index];
+				break;
 			// else use the text part
 			} elseif (!$this->use_html && $ctype == "text/plain") {
 				$part = $parts[$index];
@@ -453,7 +453,7 @@ class Telaen_core {
 
 		for($i=0;$i<count($part);$i++) {
 
-			$email = $this->fetch_structure($part[$i]);			
+			$email = $this->fetch_structure($part[$i]);
 
 			$header = $email["header"];
 			$body = $email["body"];
@@ -513,10 +513,10 @@ class Telaen_core {
 			} elseif($is_download) {
 
 				$thisattach		= $this->build_attach($header,$body,$boundary,$i);
-				$tree		= array_merge((array)$this->current_level, array($thisattach["index"]));
-				$thisfile	= "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
-				$filename	= $thisattach["filename"];
-				$cid = preg_replace('|<(.*)\\>|', "$1", $cid);
+				$tree			= array_merge((array)$this->current_level, array($thisattach["index"]));
+				$thisfile		= "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
+				$filename		= $thisattach["filename"];
+				$cid 			= preg_replace('|<(.*)\\>|', "$1", $cid);
 
 				if($cid != "") {
 					$cid = "cid:$cid";
@@ -524,7 +524,7 @@ class Telaen_core {
 
 				} elseif($this->displayimages) {
 					$ext = strtolower(substr($thisattach["name"],-4));
-					$allowed_ext = Array(".gif",".jpg",".png");
+					$allowed_ext = Array(".gif",".jpg",".png",".bmp");
 					if(in_array($ext,$allowed_ext)) {
 						$this->add_body("<img src=\"$thisfile\" alt=\"\">");
 					}
@@ -607,7 +607,7 @@ class Telaen_core {
 			$this->add_body($msgbody);
 			break;
 		case "multipart":
-			if(preg_match("/$subtype/","signed,mixed,related,report"))
+			if(preg_match("/$subtype/","signed,mixed,related,report,appledouble"))
 				$subtype = "complex";
 
 			switch($subtype) {
@@ -649,7 +649,7 @@ class Telaen_core {
 		// if the first not work, same regex without duoblequote
 		if(!$filename) {
 			preg_match('|filename ?= ?(.+)|i',$cdisp,$matches);
-					$filename = trim($matches[1]);
+			$filename = trim($matches[1]);
 		}
 		
 		// try to extract from content-type
@@ -665,7 +665,7 @@ class Telaen_core {
 		$content_disposition	= $matches[0];
 
 		// extract content-type		(ex "text/plain" or "application/vnd.ms-excel" note the DOT)
-		preg_match('|[a-z0-9/\.-]+|i',$ctype,$matches);	   
+		preg_match('|[a-z0-9/\.-]+|i',$ctype,$matches);
 		$content_type	= $matches[0];
 
 		$tmp			= explode("/",$content_type);
@@ -792,7 +792,7 @@ class Telaen_core {
 		$myarray["message-id"] = (array_key_exists("message-id",$headers))?preg_replace('|<(.*)>|',"$1",trim($headers["message-id"])):null;
 		$myarray["content-type"] = (array_key_exists("content-type",$headers))?$headers["content-type"]:null;
 		$myarray["priority"] = (array_key_exists("x-priority",$headers))?$headers["x-priority"][0]:null;
-		$myarray["flags"]		 = $headers["x-um-flags"]; // 
+		$myarray["flags"]		 = $headers["x-um-flags"];
 		$myarray["content-transfer-encoding"] = (array_key_exists("content-transfer-encoding",$headers))?str_replace("GM","-",$headers["content-transfer-encoding"]):null;
 
 		$received	= preg_replace('|  |'," ",$headers["received"]);
@@ -1080,10 +1080,14 @@ class Telaen_core {
 			$this->mail_prefix && 
 			!preg_match('|^_|',$folder)) {
 
-			if($add)
-				return $this->mail_prefix.$folder;
+			if($add) {
+				if(!preg_match('/^'.preg_quote($this->mail_prefix).'/',$folder))
+					return $this->mail_prefix.$folder;
+				else
+					return $folder;
+			}
 			else 
-				return preg_replace("/^".quotemeta($this->mail_prefix)."/","",$folder);
+				return preg_replace("/^".preg_quote($this->mail_prefix)."/","",$folder);
 
 		} else 
 			return $folder;

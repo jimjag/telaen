@@ -24,7 +24,6 @@ class Telaen extends Telaen_core {
 	function mail_connected() {
 		if(!empty($this->mail_connection)) {
 			$sock_status = @socket_get_status($this->mail_connection);
-
 			if($sock_status["eof"]) {
 				@fclose($this->mail_connection);
 				return 0;
@@ -193,7 +192,7 @@ class Telaen extends Telaen_core {
 			}
 			
 			while(list($index,$value) = each($tmp)) {
-				$this->mail_create_box($value);
+				$this->mail_create_box($this->fix_prefix($value,1));
 			}
 
 			for($i=0;$i<count($boxes);$i++) {
@@ -202,9 +201,6 @@ class Telaen extends Telaen_core {
 					if(!file_exists($this->user_folder.$current_folder)) 
 						mkdir($this->user_folder.$current_folder,$this->dirperm);
 			}
-
-
-
 		}
 
 		$system_folders = array_merge((array)$this->_system_folders,Array("_attachments","_infos"));
@@ -1012,6 +1008,8 @@ class Telaen extends Telaen_core {
 				$pos = strpos($rest," ");
 				$tmp["prefix"] = preg_replace('|"(.*)"|',"$1",substr($rest,0,$pos));
 				$tmp["name"] = $this->fix_prefix(trim(preg_replace('|"(.*)"|',"$1",substr($rest,$pos+1))),0);
+				if(function_exists(mb_convert_encoding))
+					$tmp["name"] = mb_convert_encoding( $tmp["name"], "ISO_8859-1", "UTF7-IMAP" );
 				$buffer = $this->mail_get_line();
 				$boxlist[] = $tmp;
 			}
@@ -1086,7 +1084,7 @@ class Telaen extends Telaen_core {
 			$this->mail_send_command("CREATE \"$boxname\"");
 			$buffer = $this->mail_get_line();
 			if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-				@mkdir($this->user_folder.$boxname,$this->dirperm);
+				@mkdir($this->user_folder.$this->fix_prefix($boxname,0),$this->dirperm);
 				return 1;
 			} else { 
 				$this->mail_error_msg = $buffer; return 0; 
@@ -1164,6 +1162,12 @@ class Telaen extends Telaen_core {
 	function mail_set_flag(&$msg,$flagname,$flagtype = "+") {
 		$flagname = strtoupper($flagname);
 		$allowed = array("\\ANSWERED", "\\SEEN", "\\DELETED", "\\DRAFT");
+
+		if($flagtype == '+' && strstr($msg['flags'], $flagname))
+			return 1;
+		if($flagtype == '-' && !strstr($msg['flags'], $flagname))
+			return 1;
+
 		if($this->mail_protocol == "imap" && in_array($flagname, $allowed)) {
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
 				$this->mail_select_box($msg["folder"]);
@@ -1175,7 +1179,6 @@ class Telaen extends Telaen_core {
 			while(!preg_match("/^(".$this->_sid." (OK|NO|BAD))/i",$buffer)) { 
 				$buffer = $this->mail_get_line();
 			}
-
 			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return 0;}
 
 		} elseif (!file_exists($msg["localname"]))

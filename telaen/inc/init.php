@@ -9,6 +9,9 @@ Telaen is a GPL'ed software developed by
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
+if(function_exists("date_default_timezone_set") && function_exists("date_default_timezone_get"))
+        @date_default_timezone_set(@date_default_timezone_get());
+
 @set_time_limit(0);
 session_name('telaen');
 session_start();
@@ -62,6 +65,8 @@ $smarty->assign("popupHeaderTemplate", $popup_header_template);
 //$smarty->debugging = true;
 
 $smarty->assign("umLanguageFile",$selected_language.".txt");
+
+// setlocale(LC_ALL, $languages[$lid]['locale']);
 
 // Assign also the webmail title to smarty, check for empty title before
 if (!isset($webmail_title) || trim($webmail_title) == "" ) {
@@ -210,7 +215,7 @@ $UM->userspamlevel		= $prefs["spamlevel"];
 
 
 /*
-Don't remove the fallowing lines, or you will be problems with browser's cache 
+Don't remove the following lines, or you will have problems with browser's cache
 */
 Header("Expires: Wed, 11 Nov 1998 11:11:11 GMT");
 Header("Cache-Control: no-cache");

@@ -230,24 +230,24 @@ ENDOFREDIRECT;
 function array_qsort2ic (&$array, $column=0, $order="ASC") {
 	if (!is_array($array)) return;
 	$oper = ($order == "ASC") ? (1) : (-1) ;
-	usort($array, create_function('$a,$b',"return strcasecmp(\$a['$column'],\$b['$column']) * $oper;")); 
+	usort($array, create_function('$a,$b',"return strcasecmp(\$a['$column'],\$b['$column']) * $oper;"));
 	reset($array);
 }
 
 function array_qsort2 (&$array, $column=0, $order="ASC") {
 	if (!is_array($array)) return;
 	$oper = ($order == "ASC") ? (1) : (-1) ;
-	usort($array, create_function('$a,$b',"return strnatcmp(\$a['$column'],\$b['$column']) * $oper;")); 
+	usort($array, create_function('$a,$b',"return strnatcmp(\$a['$column'],\$b['$column']) * $oper;"));
 	reset($array);
 }
 
 function array_qsort2int (&$array, $column=0, $order="ASC") {
 		// The column value must be an int value
 	if (!is_array($array)) return;
-		if ($order == "ASC")
-				usort($array, create_function('$a,$b',"return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']<\$b['$column'])?-1:1));")); 
-		else
-				usort($array, create_function('$a,$b',"return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']>\$b['$column'])?-1:1));")); 
+	if ($order == "ASC")
+		usort($array, create_function('$a,$b',"return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']<\$b['$column'])?-1:1));"));
+	else
+		usort($array, create_function('$a,$b',"return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']>\$b['$column'])?-1:1));"));
 	reset($array);
 }
 
