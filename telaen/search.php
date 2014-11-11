@@ -10,7 +10,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require("./inc/init.php");
 
-extract(pull_from_array($_POST, Array("srcFrom", "srcSubject", "srcBody"), "str"));
+extract(pull_from_array($_POST, array("srcFrom", "srcSubject", "srcBody"), "str"));
 
 $smarty->assign("pageMetas", $nocache);
 
@@ -46,11 +46,11 @@ $smarty->assign("umInputBody",$srcBody);
 
 if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
-	$boxes = $sess["folders"];
+	$boxes = $auth["folders"];
 
 	for($n=0;$n<count($boxes);$n++) {
 		$entry = $boxes[$n]["name"];
-		if(!is_array($sess["headers"][base64_encode(strtolower($entry))])) {
+		if(!is_array($auth["headers"][base64_encode(strtolower($entry))])) {
 			if(!$UM->mail_connected()) {
 				if(!$UM->mail_connect()) {
 					redirect_and_exit("index.php?err=1", true);
@@ -58,10 +58,10 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 				if(!$UM->mail_auth()) { redirect_and_exit("index.php?err=0"); }
 			}
 			$retbox = $UM->mail_list_msgs($entry);
-			$sess["headers"][base64_encode(strtolower($entry))] = $retbox[0];
+			$auth["headers"][base64_encode(strtolower($entry))] = $retbox[0];
 			$thisbox = $retbox[0];
 		} else 
-			$thisbox = $sess["headers"][base64_encode(strtolower($entry))];
+			$thisbox = $auth["headers"][base64_encode(strtolower($entry))];
 	}
 	if($UM->mail_connected()) {
 		$UM->mail_disconnect(); 
@@ -69,7 +69,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 	}
 
 
-	$boxlist = $sess["headers"];
+	$boxlist = $auth["headers"];
 
 	function build_regex($strSearch) {
 		$strSearch = trim($strSearch);
@@ -86,7 +86,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
 
 	if(trim($srcBody) != "") $get_body = 1;
-	$search_results = Array();
+	$search_results = array();
 	$start = _get_microtime();
 	$UM->use_html = false;
 
@@ -133,7 +133,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
 	}
 	
-	$messagelist = Array();
+	$messagelist = array();
 
 	for($i=0;$i<count($headers);$i++) {
 		$read = (stristr($headers[$i]["flags"], '\\SEEN'))?"true":"false";

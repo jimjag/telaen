@@ -10,8 +10,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require("./inc/init.php");
 
-extract(pull_from_array($_GET, Array("where"), "str"));
-extract(pull_from_array($_POST, Array("contacts"), "str"));
+extract(pull_from_array($_GET, array("where"), "str"));
+extract(pull_from_array($_POST, array("contacts"), "str"));
 
 $filename = $userfolder."_infos/addressbook.ucf";
 $myfile = $UM->_read_file($filename);

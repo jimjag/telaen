@@ -14,9 +14,9 @@ Telaen is a GPL'ed software developed by
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-if (isset($sess) && is_array($sess) && $sess['thm_lang_inited']) {
-	$tid = $sess['tid'];
-	$lid = $sess['lid'];
+if (isset($sess) && is_array($sess) && $auth['thm_lang_inited']) {
+	$tid = $auth['tid'];
+	$lid = $auth['lid'];
 } else {	
 	if(isset($f_pass) && strlen($f_pass) > 0) {
 
@@ -38,9 +38,9 @@ if(!is_numeric($tid) || $tid >= count($themes)) $tid = $default_theme;
 if(!is_numeric($lid) || $lid >= count($languages)) $lid = $default_language;
 
 if (isset($sess) && is_array($sess)) {
-	$sess['thm_lang_inited'] = true;
-	$sess['tid'] = $tid;
-	$sess['lid'] = $lid;
+	$auth['thm_lang_inited'] = true;
+	$auth['tid'] = $tid;
+	$auth['lid'] = $lid;
 }
 
 $selected_theme		= $themes[$tid]["path"];

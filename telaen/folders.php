@@ -12,8 +12,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require("./inc/init.php");
 
-extract(pull_from_array($_GET, Array("empty", "goback", "nameto", "mailto"), "s"));
-extract(pull_from_array($_POST, Array("newfolder"), "s"));
+extract(pull_from_array($_GET, array("empty", "goback", "nameto", "mailto"), "s"));
+extract(pull_from_array($_POST, array("newfolder"), "s"));
 
 // server check
 if(!$UM->mail_connect()){ 
@@ -39,28 +39,28 @@ if(valid_folder_name($newfolder, true) &&
 if (valid_folder_name($delfolder, true) &&
    (strpos($delfolder,"..") === false)) {
 	if($UM->mail_delete_box($delfolder)) {
-		unset($sess["headers"][base64_encode(strtolower($delfolder))]);
+		unset($auth["headers"][base64_encode(strtolower($delfolder))]);
 		$require_update = true;
 	}
 }
 
-if($require_update) $sess["folders"] = $UM->mail_list_boxes();
+if($require_update) $auth["folders"] = $UM->mail_list_boxes();
 
 require("./folder_list.php");
 
 
 if(isset($empty)) {
-	$headers = $sess["headers"][base64_encode(strtolower($empty))];
+	$headers = $auth["headers"][base64_encode(strtolower($empty))];
 	for($i=0;$i<count($headers);$i++) {
 		$UM->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
 		$expunge = true;
 	}
 	if($expunge) {
 		$UM->mail_expunge();
-		unset($sess["headers"][base64_encode(strtolower($empty))]);
+		unset($auth["headers"][base64_encode(strtolower($empty))]);
 		/* ops.. you have sent anything to trash, then you need refresh it */
 		if($prefs["save-to-trash"])
-			unset($sess["headers"][base64_encode("trash")]);
+			unset($auth["headers"][base64_encode("trash")]);
 		$SS->Save($sess);
 	}
 	if(isset($goback)) redirect_and_exit("process.php?folder=".urlencode($folder)."");
@@ -92,7 +92,7 @@ function create() {
 
 
 $smarty->assign("umJS",$jssource);
-$smarty->assign("umUserEmail",$sess["email"]);
+$smarty->assign("umUserEmail",$auth["email"]);
 
 
 $boxes = $UM->mail_list_boxes();
@@ -102,8 +102,8 @@ $pcounter = 0;
 
 
 // Reset these arrays because are used on previous included funcs!!
-$system = Array();
-$personal = Array();
+$system = array();
+$personal = array();
 
 for($n=0;$n<count($boxes);$n++) {
 
@@ -111,30 +111,30 @@ for($n=0;$n<count($boxes);$n++) {
 
 	$unread = 0;
 
-	if(!is_array($sess["headers"][base64_encode(strtolower($entry))])) {
-		$merged_array = Array();
-		$merged_returnarray = Array();
+	if(!is_array($auth["headers"][base64_encode(strtolower($entry))])) {
+		$merged_array = array();
+		$merged_returnarray = array();
 		if (strtolower($entry) == "inbox") {
 			/*
 			 * Sort the arrays and fit them together again.
 			 */
-			$merged_array = array_merge($sess["headers"][base64_encode("inbox")], $sess["headers"][base64_encode("spam")]);
+			$merged_array = array_merge($auth["headers"][base64_encode("inbox")], $auth["headers"][base64_encode("spam")]);
 			array_qsort2int($merged_array,"msg","ASC");
 
 			$merged_returnarray = $UM->mail_list_msgs("INBOX", $merged_array);
 			$thisbox = $merged_returnarray[0];
-			$sess["headers"][base64_encode("spam")] = $merged_returnarray[1];
+			$auth["headers"][base64_encode("spam")] = $merged_returnarray[1];
 		} elseif (strtolower($entry) == "spam") {
 			;
 		} else {
-			$merged_returnarray = $UM->mail_list_msgs($entry, $sess["headers"][base64_encode(strtolower($entry))]);
+			$merged_returnarray = $UM->mail_list_msgs($entry, $auth["headers"][base64_encode(strtolower($entry))]);
 			$thisbox = $merged_returnarray[0];
 		}
 			
 		unset($merged_array);
 		unset($merged_returnarray);
-		$sess["headers"][base64_encode(strtolower($entry))] = $thisbox;
-	} else $thisbox = $sess["headers"][base64_encode(strtolower($entry))];
+		$auth["headers"][base64_encode(strtolower($entry))] = $thisbox;
+	} else $thisbox = $auth["headers"][base64_encode(strtolower($entry))];
 
 	$boxsize = 0;
 	for($i=0;$i<count($thisbox);$i++) {

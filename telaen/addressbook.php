@@ -38,10 +38,10 @@ function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($
 $smarty->assign("umJS",$jssource);
 $smarty->assign("umGoBack","addressbook.php");
 
-extract(pull_from_array($_GET, Array("opt"), "str"));
-extract(pull_from_array($_POST, Array("name", "email", "street", "city", "state", "work", "opt"), "str"));
-extract(pull_from_array($_GET, Array("id"), 1));
-extract(pull_from_array($_POST, Array("id"), 1));
+extract(pull_from_array($_GET, array("opt"), "str"));
+extract(pull_from_array($_POST, array("name", "email", "street", "city", "state", "work", "opt"), "str"));
+extract(pull_from_array($_GET, array("id"), 1));
+extract(pull_from_array($_POST, array("id"), 1));
 
 switch($opt) {
 	// save an edited contact
@@ -81,7 +81,7 @@ switch($opt) {
 	//delete an existing contact
 	case "dele":
 		unset($addressbook[$id]);
-		$newaddr = Array();
+		$newaddr = array();
 		while(list($l,$value) = each($addressbook))
 			$newaddr[] = $value;
 		$addressbook = $newaddr;
@@ -147,7 +147,7 @@ switch($opt) {
 
 		$smarty->assign("umNew","addressbook.php?opt=new");
 
-		$addresslist = Array();
+		$addresslist = array();
 		for($i=0;$i<count($addressbook);$i++) {
 			$ind = count($addresslist);
 			$addresslist[$ind]["viewlink"] = "addressbook.php?opt=display&id=$i";

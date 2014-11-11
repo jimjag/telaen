@@ -31,10 +31,10 @@ class Telaen_core {
 	public $timeout			= 10;
 	public $displayimages		= false;
 	public $save_temp_attachs		= true;
-	public $current_level		= Array();
+	public $current_level		= array();
 	// internal
 	private $_msgbody			= "";
-	private $_content			= Array();
+	private $_content			= array();
 	private $_sid			= "";
 	private $_tnef			= "";
 
@@ -212,7 +212,7 @@ class Telaen_core {
 	*/
 	private function decode_header($header) {
 		$headers = explode("\r\n",$header);
-		$decodedheaders = Array();
+		$decodedheaders = array();
 		for($i=0;$i<count($headers);$i++) {
 			
 			// If current header starts with a TAB or is not very standard, 
@@ -248,12 +248,12 @@ class Telaen_core {
 	*/
 
 	public function get_names($strmail) {
-		$ARfrom = Array();
+		$ARfrom = array();
 		$strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
 
 		if(trim($strmail) == "") return $ARfrom;
 
-		$armail = Array();
+		$armail = array();
 		$counter = 0;  $inthechar = 0;
 		$chartosplit = ",;"; $protectchar = "\""; $temp = "";
 		$lt = "<"; $gt = ">";
@@ -312,7 +312,7 @@ class Telaen_core {
 	*/
 
 	private function get_first_of_names($strmail) {
-		$ARfrom = Array();
+		$ARfrom = array();
 		$strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
 
 		if(trim($strmail) == "") return $ARfrom;
@@ -524,7 +524,7 @@ class Telaen_core {
 
 				} elseif($this->displayimages) {
 					$ext = strtolower(substr($thisattach["name"],-4));
-					$allowed_ext = Array(".gif",".jpg",".png",".bmp");
+					$allowed_ext = array(".gif",".jpg",".png",".bmp");
 					if(in_array($ext,$allowed_ext)) {
 						$this->add_body("<img src=\"$thisfile\" alt=\"\">");
 					}
@@ -786,7 +786,7 @@ class Telaen_core {
 	
 	public function get_mail_info($header, $first="ALL") {
 
-		$myarray = Array();
+		$myarray = array();
 		$headers = $this->decode_header($header);
 
 		$myarray["message-id"] = (array_key_exists("message-id",$headers))?preg_replace('|<(.*)>|',"$1",trim($headers["message-id"])):null;
@@ -938,7 +938,7 @@ class Telaen_core {
 	*/
 
 	public function fetch_structure($email) {
-		$ARemail = Array();
+		$ARemail = array();
 		$separador = "\r\n\r\n";
 		$header = trim(substr($email,0,strpos($email,$separador)));
 		$bodypos = strlen($header)+strlen($separador);
@@ -974,13 +974,13 @@ class Telaen_core {
 	*/
 	private function html2text($str) {
 		return $this->unhtmlentities(preg_replace(
-				Array(	"'<(SCRIPT|STYLE)[^>]*?>.*?</(SCRIPT|STYLE)[^>]*?>'si",
+				array(	"'<(SCRIPT|STYLE)[^>]*?>.*?</(SCRIPT|STYLE)[^>]*?>'si",
 						"'(\r|\n)'",
 						"'<BR[^>]*?>'i",
 						"'<P[^>]*?>'i",
 						"'<\/?\w+[^>]*>'e"
 						),
-				Array(	"",
+				array(	"",
 						"",
 						"\r\n",
 						"\r\n\r\n",

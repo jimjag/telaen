@@ -13,8 +13,8 @@ require("./inc/init.php");
 // assign metas
 $smarty->assign("pageMetas", $nocache);
 
-extract(pull_from_array($_GET, Array("nameto", "mailto"), "str"));
-extract(pull_from_array($_POST, Array("to", "cc", "bcc", "subject", "requireReceipt",
+extract(pull_from_array($_GET, array("nameto", "mailto"), "str"));
+extract(pull_from_array($_POST, array("to", "cc", "bcc", "subject", "requireReceipt",
 		"priority", "body", "is_html", "textmode", "sig", "tipo", "rtype", "ix"), "str"));
 
 if(isset($tipo) && $tipo == "send") {
@@ -62,8 +62,8 @@ if(isset($tipo) && $tipo == "send") {
 			$mail->Username = $smtp_static_user;
 					$mail->Password = $smtp_static_password;
 		} else {		
-			$mail->Username = $sess["user"];
-			$mail->Password = $sess["pass"];
+			$mail->Username = $auth["user"];
+			$mail->Password = $auth["pass"];
 		}
 
 		// if using the advanced editor
@@ -81,7 +81,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
 		$mail->CharSet		= $default_char_set;
 		$mail->Hostname		= getenv("SERVER_NAME");
-		$mail->From			= ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$sess["email"];
+		$mail->From			= ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
 		$mail->FromName		= $UM->mime_encode_headers($prefs["real-name"]);
 		$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));
 
@@ -136,7 +136,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		}
 
 		if(array_key_exists("attachments",$sess)) {
-			$attachs = $sess["attachments"];
+			$attachs = $auth["attachments"];
 			for($i=0;$i<count($attachs);$i++) {
 				if(file_exists($attachs[$i]["localname"])) {
 					$mail->AddAttachment($attachs[$i]["localname"], $attachs[$i]["name"], "base64", $attachs[$i]["type"]);
@@ -157,7 +157,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			$smarty->assign("umMailSent",true);
 
 			if(array_key_exists("attachments",$sess)) {
-				unset($sess["attachments"]);
+				unset($auth["attachments"]);
 				reset($sess);
 				$SS->Save($sess);
 			}
@@ -170,7 +170,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 				}
 				if(!$UM->mail_auth(false)) { redirect_and_exit("index.php?err=0"); }
 				$UM->mail_save_message("sent",$mail->TelaenGetEmail(),"\\SEEN");
-				unset($sess["headers"][base64_encode("sent")]);
+				unset($auth["headers"][base64_encode("sent")]);
 				$UM->mail_disconnect();
 				$SS->Save($sess);
 
@@ -282,7 +282,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	}
 
 	function enviar() {
-		error_msg = new Array();
+		error_msg = new array();
 		frm = document.composeForm;
 		check_mail(frm.to.value);
 		check_mail(frm.cc.value);
@@ -330,7 +330,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		chartosplit = ',;';
 		protectchar = '\"';
 		temp = '';
-		armail = new Array();
+		armail = new array();
 		inthechar = false; 
 		lt = '<';
 		gt = '>'; 
@@ -390,7 +390,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	$body = stripslashes($body);
 
 	if(isset($rtype)) {
-		$mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
+		$mail_info = $auth["headers"][base64_encode(strtolower($folder))][$ix];
 
 		if( ($rtype == "forward" && !stristr($mail_info["flags"], '\\FORWARDED'))
 			|| ($rtype != "forward" && !stristr($mail_info["flags"], '\\ANSWERED'))) {
@@ -402,11 +402,11 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 				redirect_and_exit("index.php?err=0");
 			}
 			if($rtype != "forward" && $UM->mail_set_flag($mail_info,"\\ANSWERED","+")) {
-				$sess["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
+				$auth["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
 				$SS->Save($sess);
 			}
 			if($rtype == "forward" && $UM->mail_set_flag($mail_info,"\\FORWARDED","+")) {
-				$sess["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
+				$auth["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
 				$SS->Save($sess);
 			}
 			$UM->mail_disconnect(); 
@@ -430,7 +430,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
 		$ARReplyTo = $email["reply-to"];
 		$ARFrom = $email["from"];
-		$useremail = $sess["email"];
+		$useremail = $auth["email"];
 
 		// From
 		if($ARReplyTo[0]["mail"] != "") {
@@ -455,7 +455,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			$thismail = $ARTo[$i]["mail"];
 
 			// avoid to add my address in the TO list
-						if ($thismail != $sess["email"] && $thismail != $prefs["reply-to"]) {
+						if ($thismail != $auth["email"] && $thismail != $prefs["reply-to"]) {
 				if(isset($toreply)) 
 					$toreply .= ", \"$name\" <$thismail>";
 				else 
@@ -472,7 +472,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			$thismail = $ARCC[$i]["mail"];
 
 			// avoid to add my address in the CC list
-			if ($thismail != $sess["email"] && $thismail != $prefs["reply-to"]) {
+			if ($thismail != $auth["email"] && $thismail != $prefs["reply-to"]) {
 				if(isset($ccreply)) 
 					$ccreply .= ", \"$name\" <$thismail>";
 				else 
@@ -581,11 +581,11 @@ $tmpbody";
 			if(count($email["attachments"]) > 0) {
 				for($i = 0; $i < count($email["attachments"]); $i++) {
 					$current = $email["attachments"][$i];
-					$ind = count($sess["attachments"]);
-					$sess["attachments"][$ind]["localname"] = $current["filename"];
-					$sess["attachments"][$ind]["name"] = $current["name"];
-					$sess["attachments"][$ind]["type"] = $current["content-type"];
-					$sess["attachments"][$ind]["size"] = $current["size"];
+					$ind = count($auth["attachments"]);
+					$auth["attachments"][$ind]["localname"] = $current["filename"];
+					$auth["attachments"][$ind]["name"] = $current["name"];
+					$auth["attachments"][$ind]["type"] = $current["content-type"];
+					$auth["attachments"][$ind]["size"] = $current["size"];
 				}
 				$SS->Save($sess);
 			}
@@ -619,10 +619,10 @@ $tmpbody";
 	$strsubject = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"subject\" value=\"".htmlspecialchars(stripslashes($subject))."\" />";
 
 
-	if(array_key_exists("attachments", $sess) && count($attachs = $sess["attachments"]) > 0) {
+	if(array_key_exists("attachments", $sess) && count($attachs = $auth["attachments"]) > 0) {
 
 		$smarty->assign("umHaveAttachs",1);
-		$attachlist = Array();
+		$attachlist = array();
 		for($i=0;$i<count($attachs);$i++) {
 			$index = count($attachlist);
 

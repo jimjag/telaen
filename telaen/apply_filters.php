@@ -8,7 +8,7 @@ if($folder == "inbox") {
 
 	$filename = $userfolder."_infos/filters.ucf";
 	$myfile = $UM->_read_file($filename);
-	$filters = Array();
+	$filters = array();
 
 	if($myfile != "") 
 		$filters = unserialize(base64_decode($myfile));
@@ -17,14 +17,14 @@ if($folder == "inbox") {
 	
 	examples:
 	
-	$filters = Array( 
-		Array(
+	$filters = array(
+		array(
 				"type"		=> 1,
 				"field"		=> 2,
 				"match"		=> "filtering",
 				"moveto"	=> "Test"
 				),
-		Array(
+		array(
 				"type"		=> 2,
 				"field"		=> 2,
 				"match"		=> "ok",
@@ -60,8 +60,8 @@ if($folder == "inbox") {
 					case FL_TYPE_MOVE:
 	
 						$UM->mail_move_msg($message,$filter["moveto"]);
-						unset($sess["headers"][base64_encode(strtolower($folder))]);
-						unset($sess["headers"][base64_encode(strtolower($filter["moveto"]))]);
+						unset($auth["headers"][base64_encode(strtolower($folder))]);
+						unset($auth["headers"][base64_encode(strtolower($filter["moveto"]))]);
 	
 						$require_update = true;
 	
@@ -69,8 +69,8 @@ if($folder == "inbox") {
 					case FL_TYPE_DELETE:
 	
 						$UM->mail_delete_msg($message,$prefs["save-to-trash"],$prefs["st-only-read"]);
-						unset($sess["headers"][base64_encode(strtolower($folder))]);
-						unset($sess["headers"][base64_encode("trash")]);
+						unset($auth["headers"][base64_encode(strtolower($folder))]);
+						unset($auth["headers"][base64_encode("trash")]);
 	
 						$require_update = true;
 	
@@ -79,7 +79,7 @@ if($folder == "inbox") {
 	
 						if(!preg_match('|SEEN|i',$message["flags"])) {
 							$UM->mail_set_flag($message,"SEEN","+");
-							$sess["headers"][base64_encode(strtolower($folder))][$index] = $message;
+							$auth["headers"][base64_encode(strtolower($folder))][$index] = $message;
 						}
 	
 						break;

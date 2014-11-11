@@ -13,11 +13,11 @@ require("./inc/init.php");
 if(!isset($ix) || !isset($folder))
 	redirect_and_exit("index.php?err=3", true);
 
-extract(pull_from_array($_POST, Array("ckaval"), 1));
+extract(pull_from_array($_POST, array("ckaval"), 1));
 
 $filename = $userfolder."_infos/addressbook.ucf";
 $myfile = $UM->_read_file($filename);
-$addressbook = Array();
+$addressbook = array();
 
 if($myfile != "") 
 	$addressbook = unserialize(base64_decode($myfile));
@@ -35,9 +35,9 @@ function valid_email($thismail) {
 	return 1;
 }
 
-$mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
+$mail_info = $auth["headers"][base64_encode(strtolower($folder))][$ix];
 
-$emails = Array();
+$emails = array();
 $from = $mail_info["from"];
 $to = $mail_info["to"];
 $cc = $mail_info["cc"];

@@ -12,20 +12,20 @@ require("./inc/init.php");
 
 $smarty->assign("pageMetas", $nocache);
 
-extract(pull_from_array($_GET, Array("rem"), "str"));
-extract(pull_from_array($_FILES, Array("userfile"), "str"));
+extract(pull_from_array($_GET, array("rem"), "str"));
+extract(pull_from_array($_FILES, array("userfile"), "str"));
 
 if (isset($rem) && $rem != "") {
 
-	$attchs = $sess["attachments"];
+	$attchs = $auth["attachments"];
 	@unlink($attchs[$rem]["localname"]);
 	unset($attchs[$rem]);
 	$c = 0;
-	$newlist = Array();
+	$newlist = array();
 	while(list($key,$value) =  each($attchs)) {
 		$newlist[$c] = $value; $c++;
 	}
-	$sess["attachments"] = $newlist;
+	$auth["attachments"] = $newlist;
 	$SS->Save($sess);
 	echo("
 	<script language=javascript>\n
@@ -47,17 +47,17 @@ if (isset($rem) && $rem != "") {
 	$userfile	= $userfile["tmp_name"];
 
 
-	if(!is_array($sess["attachments"])) $ind = 0;
-	else $ind = count($sess["attachments"]);
+	if(!is_array($auth["attachments"])) $ind = 0;
+	else $ind = count($auth["attachments"]);
 
 	$filename = $userfolder."_attachments/".md5(uniqid("")).$userfile_name;
 
 	move_uploaded_file($userfile, $filename);
 
-	$sess["attachments"][$ind]["localname"] = $filename;
-	$sess["attachments"][$ind]["name"] = $userfile_name;
-	$sess["attachments"][$ind]["type"] = $userfile_type;
-	$sess["attachments"][$ind]["size"] = $userfile_size;
+	$auth["attachments"][$ind]["localname"] = $filename;
+	$auth["attachments"][$ind]["name"] = $userfile_name;
+	$auth["attachments"][$ind]["type"] = $userfile_type;
+	$auth["attachments"][$ind]["size"] = $userfile_size;
 
 	$SS->Save($sess);
 

@@ -14,7 +14,7 @@ if(!isset($ix) || !isset($folder)) redirect_and_exit("index.php?err=3", true);
 
 $filename = $userfolder."_infos/filters.ucf";
 $myfile = $UM->_read_file($filename);
-$filters = Array();
+$filters = array();
 
 if($myfile != "") 
 	$filters = unserialize(base64_decode($myfile));
@@ -28,9 +28,9 @@ function is_in_filter($email) {
 	return false;
 }
 
-$mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
+$mail_info = $auth["headers"][base64_encode(strtolower($folder))][$ix];
 
-$emails = Array();
+$emails = array();
 $from = $mail_info["from"];
 $to = $mail_info["to"];
 $cc = $mail_info["cc"];
@@ -48,7 +48,7 @@ $aval = array();
 if(isset($fFilter)) {
 	for($i=0;$i<count($fFilter);$i++) {
 
-		$filters[] = Array(
+		$filters[] = array(
 					"type"		=> 2,
 					"field"		=> 1,
 					"match"		=>	$emails[$fFilter[$i]]["mail"],

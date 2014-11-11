@@ -2,9 +2,9 @@
 class Telaen extends Telaen_core {
 
 	private $_autospamfolder	= true;		// boolean
-	private $_spamregex		= Array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
+	private $_spamregex		= array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
 	public $havespam		= "";		// NOTE: This is a STRING!
-	private $_system_folders	= Array("inbox","trash","sent","spam");
+	private $_system_folders	= array("inbox","trash","sent","spam");
 	private $_current_folder	= "";
 	public $CRLF		= "\r\n";
 	public $userspamlevel	= 0;		// Disabled
@@ -203,7 +203,7 @@ class Telaen extends Telaen_core {
 			}
 		}
 
-		$system_folders = array_merge((array)$this->_system_folders,Array("_attachments","_infos"));
+		$system_folders = array_merge((array)$this->_system_folders,array("_attachments","_infos"));
 
 		while(list($index,$value) = each($system_folders)) {
 			$value = $this->fix_prefix($value,1);
@@ -581,12 +581,12 @@ class Telaen extends Telaen_core {
 	}
 
 
-	private function mail_list_msgs_imap($boxname = "INBOX", $localmessages = Array()) {
+	private function mail_list_msgs_imap($boxname = "INBOX", $localmessages = array()) {
 
 		if($this->is_system_folder($boxname))
 			$boxname = strtolower($boxname);
 
-		$messages = Array();
+		$messages = array();
 
 		/* select the mail box and make sure that it exists */
 		$boxinfo = $this->mail_select_box($boxname);
@@ -636,14 +636,14 @@ class Telaen extends Telaen_core {
 
 	}
 
-	private function mail_list_msgs_pop($boxname = "INBOX", $localmessages = Array()) {
+	private function mail_list_msgs_pop($boxname = "INBOX", $localmessages = array()) {
 		global $userfolder;
 		// $this->havespam = "";
 
 		if($this->is_system_folder($boxname))
 			$boxname = strtolower($boxname);
 
-		$messages = Array();
+		$messages = array();
 
 		/* 
 		now working with POP3
@@ -771,7 +771,7 @@ class Telaen extends Telaen_core {
 	 *	   -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
 	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
 	 */
-	public function mail_list_msgs($boxname = "INBOX", $localmessages = Array(), $start=0, $wcount=99999) {
+	public function mail_list_msgs($boxname = "INBOX", $localmessages = array(), $start=0, $wcount=99999) {
 
 
 		global $userfolder;
@@ -788,9 +788,9 @@ class Telaen extends Telaen_core {
 		} else {
 			$messages = $this->mail_list_msgs_pop($boxname, $localmessages);
 			if (!is_array($messages)) {
-				$shortcut = Array();
-				$shortcut[0] = Array();
-				$shortcut[1] = Array();
+				$shortcut = array();
+				$shortcut[0] = array();
+				$shortcut[1] = array();
 				$shortcut[2] = $messages;
 				return $shortcut; 
 			}
@@ -804,8 +804,8 @@ class Telaen extends Telaen_core {
 		$i = 0;
 		$j = 0;
 		$y = 0;
-		$messagescopy = Array();
-		$spamcopy = Array();
+		$messagescopy = array();
+		$spamcopy = array();
 		$mcount = count($messages);
 		$end_pos = $start + $wcount;
 		/*
@@ -958,7 +958,7 @@ class Telaen extends Telaen_core {
 				$y++;
 			}
 		}
-		$myreturnarray = Array();
+		$myreturnarray = array();
 		/*
 		 * Special Hack: if we are listing the SPAM folder for any
 		 * reason, ensure that the 1st array *IS* the SPAM folder
@@ -986,7 +986,7 @@ class Telaen extends Telaen_core {
 	}
 
 	public function mail_list_boxes($boxname = "*") {
-		$boxlist = Array();
+		$boxlist = array();
 		/* choose the protocol*/
 		if($this->mail_protocol == "imap") {
 			$this->mail_send_command("LIST \"\" $boxname");
@@ -995,7 +995,7 @@ class Telaen extends Telaen_core {
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
 			/* loop throught the list and split the parts */
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-				$tmp = Array();
+				$tmp = array();
 				preg_match('|\\((.*)\\)|',$buffer,$regs);
 				$flags = $regs[1];
 				$tmp["flags"] = $flags;
@@ -1046,7 +1046,7 @@ class Telaen extends Telaen_core {
 				}
 			}
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
-			$boxinfo = Array();
+			$boxinfo = array();
 			/* get total, recent messages and flags */
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]EXISTS|i',$buffer,$regs))
@@ -1194,7 +1194,7 @@ class Telaen extends Telaen_core {
 
 			$strFlags	= trim(strtoupper($msg["flags"]));
 
-			$flags = Array();
+			$flags = array();
 			if(!empty($strFlags))
 				$flags = explode(" ",$strFlags);
 
@@ -1281,7 +1281,7 @@ class Telaen extends Telaen_core {
 	 * squeezed down to a single "_".
 	 */
 	public function mail_pop3_capa() {
-		$capa = Array();
+		$capa = array();
 		$this->mail_connect();
 		if ($this->mail_protocol == "pop3") {
 			$this->mail_send_command("CAPA");
@@ -1314,7 +1314,7 @@ class Telaen extends Telaen_core {
 	 * to query the server. Note that the provided array
 	 * only makes sense for single UIDL lookups.
 	 */
-	private function mail_get_uidl ($id = "", $message = Array()) {
+	private function mail_get_uidl ($id = "", $message = array()) {
 		if(!empty($id)) {
 			if ($this->_haveuidl) {
 				$this->mail_send_command("UIDL $id");
@@ -1399,4 +1399,5 @@ class Telaen extends Telaen_core {
 	}
 
 }
+
 ?>

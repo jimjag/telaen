@@ -24,10 +24,10 @@ function mail_connect() {
 	}
 }
 
-extract(pull_from_array($_GET, Array("decision"), "str"));
-extract(pull_from_array($_GET, Array("refr", "mlist"), TRUE));
-extract(pull_from_array($_POST, Array("decision", "aval_folders"), "str"));
-extract(pull_from_array($_POST, Array("start_pos", "end_pos"), 1));
+extract(pull_from_array($_GET, array("decision"), "str"));
+extract(pull_from_array($_GET, array("refr", "mlist"), TRUE));
+extract(pull_from_array($_POST, array("decision", "aval_folders"), "str"));
+extract(pull_from_array($_POST, array("start_pos", "end_pos"), 1));
 
 $headers = null;
 $folder_key = base64_encode(strtolower($folder));
@@ -35,10 +35,10 @@ $folder_key_inbox = base64_encode("inbox");
 $folder_key_spam = base64_encode("spam");
 $is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam);
 
-if(!array_key_exists("headers",$sess)) $sess["headers"] = array();
+if(!array_key_exists("headers",$sess)) $auth["headers"] = array();
 	
-if(array_key_exists($folder_key,$sess["headers"]))
-	$headers = $sess["headers"][$folder_key];
+if(array_key_exists($folder_key,$auth["headers"]))
+	$headers = $auth["headers"][$folder_key];
 
 if( !is_array($headers) 
 	|| isset($decision)
@@ -48,7 +48,7 @@ if( !is_array($headers)
 	mail_connect();
 
 	$deletecount = 0;
-	$sess["auth"] = true;
+	$auth["auth"] = true;
 	$expunge = false;
 	$require_update = false;
 	$reg_pp = $prefs["rpp"];
@@ -71,7 +71,7 @@ if( !is_array($headers)
 	$messagecount = count($headers);
 
 	if(isset($start_pos) && isset($end_pos)) {
-		$delarray = Array();
+		$delarray = array();
 		for($i=0;$i<$messagecount;$i++) {
 			if(isset($_POST["msg_$i"])) {
 				if ($decision == "delete") {
@@ -110,9 +110,9 @@ if( !is_array($headers)
 			 */
 			if ($UM->_autospamfolder && $is_inbox_or_spam) {
 				$j = count($delarray);
-				$othercount = count($sess["headers"][$other_folder_key]);
+				$othercount = count($auth["headers"][$other_folder_key]);
 				for($i=0;$i<$othercount;$i++) {
-					$msgid = $sess["headers"][$other_folder_key][$i]["msg"];
+					$msgid = $auth["headers"][$other_folder_key][$i]["msg"];
 					$delarray[$j]["ubiid"] = $i;
 					$delarray[$j]["msgid"] = $msgid;
 					$delarray[$j]["folder"] = "$other_folder_key";
@@ -180,10 +180,10 @@ if( !is_array($headers)
 
 					if ($del) {
 						$subtract++;
-						unset ($sess["headers"][$myfold][$ubiid]);
+						unset ($auth["headers"][$myfold][$ubiid]);
 					} else {
-						$sess["headers"][$myfold][$ubiid]["msg"] -= $subtract;
-						$sess["headers"][$myfold][$ubiid]["id"] -= $subtract;
+						$auth["headers"][$myfold][$ubiid]["msg"] -= $subtract;
+						$auth["headers"][$myfold][$ubiid]["id"] -= $subtract;
 					}
 				}
 
@@ -192,19 +192,19 @@ if( !is_array($headers)
 				 * We dont have many messages. Unset the array and fetch everything
 				 * from scratch.
 				 */
-				unset ($sess["headers"][$folder_key]);
-				$sess["headers"][$folder_key] = Array();
+				unset ($auth["headers"][$folder_key]);
+				$auth["headers"][$folder_key] = array();
 				if ($UM->_autospamfolder && $is_inbox_or_spam) {
-					unset ($sess["headers"][$other_folder_key]);
-					$sess["headers"][$other_folder_key] = Array();
+					unset ($auth["headers"][$other_folder_key]);
+					$auth["headers"][$other_folder_key] = array();
 				}
 				$expunge = false;
 				$require_update = false;
 			}
 			if($prefs["save-to-trash"])
-				unset($sess["headers"][base64_encode("trash")]);
+				unset($auth["headers"][base64_encode("trash")]);
 			if ($decision == "move")
-				unset($sess["headers"][base64_encode(strtolower($aval_folders))]);
+				unset($auth["headers"][base64_encode(strtolower($aval_folders))]);
 			$SS->Save($sess);
 			if ($back)
 				$back_to = $start_pos;
@@ -212,7 +212,7 @@ if( !is_array($headers)
 	}
 
 	$boxes = $UM->mail_list_boxes();
-	$sess["folders"] = $boxes;
+	$auth["folders"] = $boxes;
 
 	/*
 	 * If we deleted mails, the message list has already been reloaded.
@@ -235,7 +235,7 @@ if( !is_array($headers)
 	$UM->mail_disconnect();
 }
 
-if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
+if(!is_array($headers = $auth["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
 
 /*
  * Sort the date and size fields with a natural sort, but only
@@ -249,8 +249,8 @@ if (!$is_inbox_or_spam || $UM->mail_protocol == "imap") {
 	}
 }
 
-$sess["headers"][$folder_key] = $headers;
-$sess["havespam"] = ($UM->havespam || count($sess["headers"][$folder_key_spam]));
+$auth["headers"][$folder_key] = $headers;
+$auth["havespam"] = ($UM->havespam || count($auth["headers"][$folder_key_spam]));
 $SS->Save($sess);
 
 /*

@@ -14,7 +14,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 // load session management
 require("./inc/init.php");
 
-if(!$sess["auth"]) { die("error: your session seems expired"); }
+if(!$auth["auth"]) { die("error: your session seems expired"); }
 
 // check for main parameters
 if(!isset($_GET['folder']) || !isset($_GET['ix']))
@@ -24,7 +24,7 @@ $folder = $_GET['folder'];
 $ix = $_GET['ix'];
 
 // ensure we have email infos
-$mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
+$mail_info = $auth["headers"][base64_encode(strtolower($folder))][$ix];
 if(!is_array($mail_info))
 	die();
 

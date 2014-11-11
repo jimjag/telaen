@@ -18,7 +18,7 @@ $is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_
 $smarty->assign("umUser",$f_user);
 $refreshurl = "process.php?folder=".urlencode($folder)."&pag=$pag&refr=true";
 
-if(!is_array($headers = $sess["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
+if(!is_array($headers = $auth["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
 
 $arrow = ($sortorder == "ASC")?"images/arrow_up.gif":"images/arrow_down.gif";
 $arrow = "&nbsp;<img src=\"$arrow\" width=\"8\" height=\"7\" border=\"0\" alt=\"\" />";
@@ -50,7 +50,7 @@ if ($UM->mail_protocol == "imap" || !$is_inbox_or_spam) {
 	}
 }
 
-$elapsedtime = (time()-$sess["last-update"])/60;
+$elapsedtime = (time()-$auth["last-update"])/60;
 $timeleft = ($prefs["refresh-time"]-$elapsedtime);
 
 if($timeleft > 0) {
@@ -64,7 +64,7 @@ $smarty->assign("pageMetas", $nocache . "\n" . $refreshMeta);
 
 /* load total size */
 $totalused = 0;
-while(list($box,$info) = each($sess["headers"])) {
+while(list($box,$info) = each($auth["headers"])) {
 	for($i=0;$i<count($info);$i++)
 		$totalused += $info[$i]["size"];
 }
@@ -179,10 +179,10 @@ $forms = "<input type=\"hidden\" name=\"decision\" value=\"delete\" />
 
 $smarty->assign("umJS",$jssource);
 $smarty->assign("umForms",$forms);
-$smarty->assign("umUserEmail",$sess["email"]);
+$smarty->assign("umUserEmail",$auth["email"]);
 $smarty->assign("umFolder",$folder);
 
-$messagelist = Array();$func($textout);
+$messagelist = array();$func($textout);
 
 $newmsgs = 0;
 if($nummsg > 0) {
@@ -287,7 +287,7 @@ if($nummsg > 0) {
 
 $smarty->assign("umNavBar",$navigation);
 
-$avalfolders = Array();
+$avalfolders = array();
 $d = dir($userfolder);
 while($entry=$d->read()) {
 	if( is_dir($userfolder.$entry) && 
@@ -313,7 +313,7 @@ while($entry=$d->read()) {
 		default:
 			$display = $entry;
 		}
-		$avalfolders[] = Array("path" => $entry, "display" => $display);
+		$avalfolders[] = array("path" => $entry, "display" => $display);
 	}
 }
 $d->close();
@@ -321,7 +321,7 @@ $d->close();
 
 unset($UM);
 
-$smarty->assign("umHaveSpam",$sess["havespam"]);
+$smarty->assign("umHaveSpam",$auth["havespam"]);
 $smarty->assign("umAvalFolders",$avalfolders);
 $smarty->display("$selected_theme/messagelist.htm");
 

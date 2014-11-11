@@ -55,15 +55,15 @@ function cleanup_dirs ($userfolder, $logout) {
 	cleanup_dir($cleanme);
 
 	if ($logout) {
-		if(is_array($sess["headers"]) && file_exists($userfolder)) {
-		
-			if(is_array($sess["folders"])) {
-				$boxes = $sess["folders"];
+		if(is_array($auth["headers"]) && file_exists($userfolder)) {
+
+			if(is_array($auth["folders"])) {
+				$boxes = $auth["folders"];
 				for($n=0;$n<count($boxes);$n++) {
 					$entry = $UM->fix_prefix($boxes[$n]["name"],1);
-					$file_list = Array();
+					$file_list = array();
 		
-					if(is_array($curfolder = $sess["headers"][base64_encode(strtolower($entry))])) {
+					if(is_array($curfolder = $auth["headers"][base64_encode(strtolower($entry))])) {
 		
 						if ($UM->is_system_folder($entry))
 							$entry = strtolower($entry);
@@ -96,11 +96,11 @@ function cleanup_dirs ($userfolder, $logout) {
 					}
 				}
 				$trash = "trash";
-				if(!is_array($sess["headers"][base64_encode($trash)])) {
+				if(!is_array($auth["headers"][base64_encode($trash)])) {
 					$retbox = $UM->mail_list_msgs($trash);
-					$sess["headers"][base64_encode($trash)] = $retbox[0];
+					$auth["headers"][base64_encode($trash)] = $retbox[0];
 				}
-				$trash = $sess["headers"][base64_encode($trash)];
+				$trash = $auth["headers"][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
 					for($j=0;$j<count($trash);$j++) {
@@ -119,11 +119,11 @@ function cleanup_dirs ($userfolder, $logout) {
 					 redirect_and_exit("index.php?err=0");
 				}
 				$trash = "spam";
-				if(!is_array($sess["headers"][base64_encode($trash)])) {
+				if(!is_array($auth["headers"][base64_encode($trash)])) {
 					$retbox = $UM->mail_list_msgs($trash);
-					$sess["headers"][base64_encode($trash)] = $retbox[0];
+					$auth["headers"][base64_encode($trash)] = $retbox[0];
 				}
-				$trash = $sess["headers"][base64_encode($trash)];
+				$trash = $auth["headers"][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
 					for($j=0;$j<count($trash);$j++) {
@@ -253,27 +253,26 @@ function array_qsort2int (&$array, $column=0, $order="ASC") {
 
 class Session {
 
-	var $temp_folder;
-	var $sid;
-	var $timeout = 0;
-	var $ss = null;
+	private $ss = null;
+	private $index = "default";
 	
 	function Session() {
 		$this->ss = &$_SESSION;
 	}
-	function Load() {
-		if(!is_array($this->ss['telaen_sess']))
-			$this->ss['telaen_sess'] = Array();
-		return $this->ss['telaen_sess'];
+	function &Load($index = "default") {
+		$this->index = $index;
+		if(!is_array($this->ss[$this->index]))
+			$this->ss[$this->index] = array();
+		return $this->ss[$this->index];
 	}
 
 	function Save(&$array2save) {
-		$this->ss['telaen_sess'] = $array2save;
+		$this->ss[$this->index] = $array2save;
 	}		
 
 	function Kill() {
 		@session_destroy();
-		$_SESSION = Array();
+		$_SESSION = array();
 	}
 }
 
@@ -290,8 +289,8 @@ function load_prefs() {
 	$pref_file = $userfolder."_infos/prefs.upf";
 
 	if(!file_exists($pref_file)) {
-		$prefs["real-name"]		= UCFirst(substr($sess["email"],0,strpos($sess["email"],"@")));
-		$prefs["reply-to"]		= $sess["email"];
+		$prefs["real-name"]		= UCFirst(substr($auth["email"],0,strpos($auth["email"],"@")));
+		$prefs["reply-to"]		= $auth["email"];
 		$prefs["save-to-trash"] = $send_to_trash_default;
 		$prefs["st-only-read"]	= $st_only_ready_default;
 		$prefs["empty-trash"]	= $empty_trash_default;
@@ -387,7 +386,7 @@ function caster ($var, $cast="string") {
 }
 
 function pull_from_array(&$whofrom, $my_vars = Array(), $cast="string") {
-	$reta = Array();
+	$reta = array();
 	foreach ($my_vars as $to_pull) {
 		if (isset($whofrom[$to_pull]))
 			$reta[$to_pull] = caster($whofrom[$to_pull], $cast);

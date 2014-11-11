@@ -1,11 +1,11 @@
 <?php
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-$folders = (array)$sess["folders"];
+$folders = (array)$auth["folders"];
 $scounter = 0;
 $pcounter = 0;
-$system = Array();
-$personal = Array();
+$system = array();
+$personal = array();
 foreach($folders as $entry) {
 	$entry = $entry["name"];
 	$boxname = $entry;

@@ -15,9 +15,9 @@ if(!isset($ix) || !isset($pag)) redirect_and_exit("index.php?err=3", true);
 
 $folderkey = base64_encode(strtolower($folder));
 
-$mysess			= $sess["headers"][$folderkey];
+$mysess			= $auth["headers"][$folderkey];
 $mail_info		= $mysess[$ix];
-$arAttachment	= Array();
+$arAttachment	= array();
 
 if(isset($attachment)) {
 
@@ -38,7 +38,7 @@ if(isset($attachment)) {
 
 } else {
 	$is_attached = false;
-	$arAttachment = Array();
+	$arAttachment = array();
 	if(!$UM->mail_connect()) {
 		redirect_and_exit("index.php?err=1", true);
 	}
@@ -46,7 +46,7 @@ if(isset($attachment)) {
 
 	if(!($result = $UM->mail_retr_msg($mail_info,1))) { redirect_and_exit("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true"); }
 	if($UM->mail_set_flag($mail_info,"\\SEEN","+")) {
-		$sess["headers"][$folderkey][$ix] = $mail_info;
+		$auth["headers"][$folderkey][$ix] = $mail_info;
 	}
 
 	$UM->mail_disconnect(); 
@@ -121,13 +121,13 @@ if ($other) {
 } 
 // with ie4+/mozilla/ns6+ use iframe for display body  
 elseif($ie4up || $ns6moz) {
-	$sess["currentbody"] = $body;;
+	$auth["currentbody"] = $body;;
 	$body = "<iframe src=\"show_body.php?folder=".htmlspecialchars($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
 
 } 
 // with ns4 use ilayer
 elseif($ns4) {
-	$sess["currentbody"] = $body;;
+	$auth["currentbody"] = $body;;
 	$body = "<ilayer width=\"100%\" left=\"0\" top=\"0\">$body</ilayer>";
 }
 
@@ -139,7 +139,7 @@ if ($email["receipt-to"]) {
 }
 
 $ARFrom = $email["from"];
-$useremail = $sess["email"];
+$useremail = $auth["email"];
 
 // from
 $name = $ARFrom[0]["name"];
@@ -256,10 +256,10 @@ if(count($anexos) > 0) {
 	}
 
 	$root = $email["attachments"];
-	$sess["headers"][$folderkey][$ix] = $mail_info;
+	$auth["headers"][$folderkey][$ix] = $mail_info;
 
 	$nIndex = count($arAttachment);
-	$attachAr = Array();
+	$attachAr = array();
 
 	for($i=0;$i<count($anexos);$i++) {
 
@@ -286,7 +286,7 @@ if(count($anexos) > 0) {
 $SS->Save($sess);
 
 
-$avalfolders = Array();
+$avalfolders = array();
 $d = dir($userfolder);
 while($entry=$d->read()) {
 	if( is_dir($userfolder.$entry) && 
@@ -312,7 +312,7 @@ while($entry=$d->read()) {
 		default:
 			$display = $entry;
 		}
-		$avalfolders[] = Array("path" => $entry, "display" => $display);
+		$avalfolders[] = array("path" => $entry, "display" => $display);
 
 	}
 }

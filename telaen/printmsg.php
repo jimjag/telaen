@@ -11,7 +11,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require("./inc/init.php");
 
 if(!isset($folder) || !isset($ix)) die("Expected parameters");
-$mail_info = $sess["headers"][base64_encode(strtolower($folder))][$ix];
+$mail_info = $auth["headers"][base64_encode(strtolower($folder))][$ix];
 
 $smarty->assign("pageMetas", $nocache);
 
@@ -40,7 +40,7 @@ $smarty->assign("umMessageBody",$body);
 
 
 $ARFrom = $email["from"];
-$useremail = $sess["email"];
+$useremail = $auth["email"];
 // from
 $name = $ARFrom[0]["name"];
 $thismail = $ARFrom[0]["mail"];

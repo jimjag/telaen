@@ -51,11 +51,11 @@ if(isset($_POST['action'])) {
 
 			// for password authenticated servers
 			$mail->SMTPAuth = $use_password_for_smtp;
-			$mail->Username = $sess["user"];
-			$mail->Password = $sess["pass"];
+			$mail->Username = $auth["user"];
+			$mail->Password = $auth["pass"];
 
 			// build the email
-			$mail->From = ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$sess["email"];
+			$mail->From = ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
 			$mail->FromName = $UM->mime_encode_headers($prefs["real-name"]);
 			$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));
 			$mail->AddAddress($recipient);
@@ -76,7 +76,7 @@ if(isset($_POST['action'])) {
 		// just refresh the session timeout
 		case "pingSession":
 			// refresh time
-				$sess["start"] = time();
+				$auth["start"] = time();
 				// save
 				$SS->Save($sess);
 

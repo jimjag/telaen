@@ -34,18 +34,14 @@ $smarty->template_dir =	 './themes';
 $smarty->config_dir = './langs';
 $smarty->use_sub_dirs = true;
 
-$SS = New Session();
-$SS->temp_folder	= $temporary_directory;
-$SS->sid		= $sid;
-$SS->timeout		= $idle_timeout;
-
-$sess = $SS->Load();
+$AuthSession = New Session();
+$auth = &$AuthSession->Load('telaen_sess');
 
 // Only process.php is allowed to be run with expired sessions (for login)
-if((I_AM_TELAEN != "process.php") && (!$sess["auth"])) { die("error: your session seems expired"); }
+if((I_AM_TELAEN != "process.php") && (!$auth["auth"])) { die("error: your session seems expired"); }
 
-if(!array_key_exists("start",$sess)) $sess["start"] = time();
-$start = $sess["start"];
+if(!array_key_exists("start",$auth)) $auth["start"] = time();
+$start = $auth["start"];
 
 /*
  * Now load in stored tid and lid, if they exist.
@@ -134,20 +130,20 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		break;
 	}
 
-	$UM->mail_email		= $sess["email"]	= $f_email	= trim(stripslashes($f_email));
-	$UM->mail_user		= $sess["user"]		= $f_user	= trim(stripslashes($f_user));
-	$UM->mail_pass		= $sess["pass"]		= $f_pass	= stripslashes($f_pass); 
-	$UM->mail_server	= $sess["server"]	= $f_server = stripslashes($f_server); 
+	$UM->mail_email		= $auth["email"]	= $f_email	= trim(stripslashes($f_email));
+	$UM->mail_user		= $auth["user"]		= $f_user	= trim(stripslashes($f_user));
+	$UM->mail_pass		= $auth["pass"]		= $f_pass	= stripslashes($f_pass);
+	$UM->mail_server	= $auth["server"]	= $f_server = stripslashes($f_server);
 
-	$UM->mail_port		= $sess["port"]			= $f_port; 
-	$UM->mail_protocol	= $sess["protocol"]			= $f_protocol; 
-	$UM->mail_prefix	= $sess["folder_prefix"]	= $f_prefix; 
+	$UM->mail_port		= $auth["port"]			= $f_port;
+	$UM->mail_protocol	= $auth["protocol"]			= $f_protocol;
+	$UM->mail_prefix	= $auth["folder_prefix"]	= $f_prefix;
 
 	$pop3capa = $UM->mail_pop3_capa();
-	$UM->_havepipelining	= $sess["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
-	$UM->_haveatop		= $sess["haveatop"]			= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
-	$UM->_haveuidl		= $sess["haveuidl"]			= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
-	$UM->_haveapop		= $sess["haveapop"]			= ( isset($mail_use_apop) ? $mail_use_apop : $pop3capa["APOP"] );
+	$UM->_havepipelining	= $auth["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
+	$UM->_haveatop		= $auth["haveatop"]			= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
+	$UM->_haveuidl		= $auth["haveuidl"]			= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
+	$UM->_haveapop		= $auth["haveapop"]			= ( isset($mail_use_apop) ? $mail_use_apop : $pop3capa["APOP"] );
 
 	$refr = 1;
 
@@ -159,34 +155,34 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 		}
 	}
 	
-	$sess["quota_limit"] = $quota_limit;
+	$auth["quota_limit"] = $quota_limit;
 	
-} elseif ($sess["auth"] && ((time() - $start) < ($idle_timeout * 60)) ) {
+} elseif ($auth["auth"] && ((time() - $start) < ($idle_timeout * 60)) ) {
 
-	$UM->mail_user		= $f_user		= $sess["user"];
-	$UM->mail_pass		= $f_pass		= $sess["pass"];
-	$UM->mail_server	= $f_server		= $sess["server"];
-	$UM->mail_email		= $f_email		= $sess["email"];
+	$UM->mail_user		= $f_user		= $auth["user"];
+	$UM->mail_pass		= $f_pass		= $auth["pass"];
+	$UM->mail_server	= $f_server		= $auth["server"];
+	$UM->mail_email		= $f_email		= $auth["email"];
 
-	$UM->mail_port		= $f_port	= $sess["port"]; 
-	$UM->mail_protocol	= $f_protocol	= $sess["protocol"]; 
-	$UM->mail_prefix	= $f_prefix		= $sess["folder_prefix"]; 
+	$UM->mail_port		= $f_port	= $auth["port"];
+	$UM->mail_protocol	= $f_protocol	= $auth["protocol"];
+	$UM->mail_prefix	= $f_prefix		= $auth["folder_prefix"];
 
-	$UM->_havepipelining	= $sess["havepipelining"];
-	$UM->_haveatop		= $sess["haveatop"];
-	$UM->_haveuidl		= $sess["haveuidl"];
-	$UM->_haveapop		= $sess["haveapop"];
+	$UM->_havepipelining	= $auth["havepipelining"];
+	$UM->_haveatop		= $auth["haveatop"];
+	$UM->_haveuidl		= $auth["haveuidl"];
+	$UM->_haveapop		= $auth["haveapop"];
 	
-	$quota_limit		= $sess["quota_limit"];
+	$quota_limit		= $auth["quota_limit"];
 
 } else {		
 		// session expired
 		redirect_and_exit("index.php?err=4");
 }
 
-$sess["start"] = time();
+$auth["start"] = time();
 
-$SS->Save($sess);
+// $AuthSession->Save($sess);
 
 $userfolder = $temporary_directory.preg_replace("/[^a-z0-9\._-]/","_",strtolower($f_user))."_".strtolower($f_server)."/";
 

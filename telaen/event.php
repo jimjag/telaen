@@ -10,8 +10,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require("./inc/init.php");
 
-extract(pull_from_array($_GET, Array("edate"), "str"));
-extract(pull_from_array($_POST, Array("eventn", "edate", "evsave", "evdelete", "starthour", "stophour", "startmin", "stopmin"), "str"));
+extract(pull_from_array($_GET, array("edate"), "str"));
+extract(pull_from_array($_POST, array("eventn", "edate", "evsave", "evdelete", "starthour", "stophour", "startmin", "stopmin"), "str"));
 
 $etext = trim($_POST["etext_{$eventn}"]);
 
@@ -22,8 +22,8 @@ $day=intval(substr($foo, 6, 2));
 $ymd = sprintf("%4s%02s%02s", $year, $month, $day);
 $eventuid = $ymd ."_". $dayuid;
 $midnight = $ymd . "T000000";
-$newevent = Array($ymd."_0", $midnight, $midnight, "-- new event --", "00", "00", "00", "00");
-$event = Array();
+$newevent = array($ymd."_0", $midnight, $midnight, "-- new event --", "00", "00", "00", "00");
+$event = array();
 $actionDone = false;
 // Minor error-check
 if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $day < 32) {
