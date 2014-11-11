@@ -16,6 +16,7 @@ if(function_exists("date_default_timezone_set") && function_exists("date_default
 session_name('telaen');
 session_start();
 $sid = session_id();
+/* We grab the actual session data below with the Session class */
 
 require("./inc/config/config.php");
 require("./inc/class/class.telaen.php");
@@ -185,6 +186,9 @@ $auth["start"] = time();
 // $AuthSession->Save($sess);
 
 $userfolder = $temporary_directory.preg_replace("/[^a-z0-9\._-]/","_",strtolower($f_user))."_".strtolower($f_server)."/";
+
+$UserMbox = new Mbox();
+$mbox = &$UserMbox->Load($userfolder."_infos/mboxes.ucf");
 
 $UM->debug			= $enable_debug;
 $UM->use_html			= $allow_html;

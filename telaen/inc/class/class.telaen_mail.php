@@ -21,18 +21,27 @@ class Telaen extends Telaen_core {
 		$this->_sid = uniqid("");
 	}
 
+	/**
+     * Check if we are connected to email server
+     * @return boolean
+     */
 	public function mail_connected() {
 		if(!empty($this->mail_connection)) {
 			$sock_status = @socket_get_status($this->mail_connection);
 			if($sock_status["eof"]) {
 				@fclose($this->mail_connection);
-				return 0;
+				return false;
 			}
-			return 1; 
+			return true;
 		} 
-		return 0;
+		return false;
 	}
 
+	/**
+     * Check if supplied folder name is a system folder.
+     * @param string $name The folder name to check
+     * @return boolean
+     */
 	public function is_system_folder($name) {
 		return (in_array(strtolower($name), $this->_system_folders));
 	}
@@ -81,11 +90,15 @@ class Telaen extends Telaen_core {
 					flush();
 				}
 			}
-			return 1;
+			return true;
 		}
-		return 0;
+		return false;
 	}
 
+	/**
+     * Connect to email server. TRUE if successful
+     * @return boolean
+     */
 	public function mail_connect() {
 		if($this->debug)
 			for($i=0;$i<20;$i++)
@@ -102,12 +115,12 @@ class Telaen extends Telaen_core {
 					$this->greeting = $buffer;
 				}
 				if(preg_match($regexp,$buffer)) 
-					return 1;
+					return true;
 				else 
-					return 0;
+					return false;
 			}
-			return 0;
-		} else return 1;
+			return false;
+		} else return true;
 	}
 
 	private function _mail_auth_imap($checkfolders=false) {
@@ -116,10 +129,10 @@ class Telaen extends Telaen_core {
 		if(preg_match("/^(".$this->_sid." OK)/",$buffer)) { 
 			if($checkfolders)
 				$this->_check_folders();
-			return 1;
+			return true;
 		} else { 
 			$this->mail_error_msg = $buffer; 
-			return 0; 
+			return false;
 		}
 	}
 
@@ -137,22 +150,27 @@ class Telaen extends Telaen_core {
 				$this->mail_send_command("PASS ".$this->mail_pass);
 			}	
 			else 
-				return 0;
+				return false;
 		}
 
 		$buffer = $this->mail_get_line();
 		if(substr($buffer, 0, 3) == "+OK") {
 			if($checkfolders)
 				$this->_check_folders();
-			return 1;
+			return true;
 		} else {
 			$this->mail_error_msg = $buffer;
-			return 0;
+			return false;
 		}
 	}
 
+	/**
+     * Check if user is authenticated to the email server
+     * @param boolean $checkfolders Check folder access as well
+     * @return boolean
+     */
 	public function mail_auth($checkfolders=false) {
-		$ret = 0;
+		$ret = false;
 		if($this->mail_connected()) {
 			if ($this->mail_protocol == "imap") {
 				$ret = $this->_mail_auth_imap($checkfolders);
@@ -225,7 +243,7 @@ class Telaen extends Telaen_core {
 
 			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
 			$buffer = chop($this->mail_get_line());
-			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				if(preg_match('|message-id: (.*)|i',$buffer,$regs))
 					$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
@@ -234,7 +252,7 @@ class Telaen extends Telaen_core {
 
 			if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
 				$this->mail_error_msg = $error_retrieving;
-				return 0;
+				return false;
 			}
 		}
 
@@ -243,7 +261,7 @@ class Telaen extends Telaen_core {
 		} else {
 			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY[TEXT]");
 			$buffer = $this->mail_get_line();
-			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			if(preg_match('|\\{(.*)\\}|',$buffer,$regs))
 				$bytes = $regs[1];
 
@@ -271,7 +289,7 @@ class Telaen extends Telaen_core {
 		if($check && (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam")) {
 			if ($msg["uidl"] && ($msg["uidl"] != $this->mail_get_uidl($msg["msg"]))) {
 				$this->mail_error_msg = $error_retrieving;
-				return 0;
+				return false;
 			}
 		}
 
@@ -284,7 +302,7 @@ class Telaen extends Telaen_core {
 
 			$buffer = $this->mail_get_line();
 
-			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return 0; }
+			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return false; }
 			$last_buffer = 0;
 			$msgcontent = "";
 			while (!feof($this->mail_connection)) {
@@ -317,6 +335,12 @@ class Telaen extends Telaen_core {
 		return $msgcontent;
 	}
 	
+	/**
+     * Retrieve and return specific email message
+     * @param string $msg The message to obtain
+     * @param boolean $check if it exists
+     * @return string
+     */
 	public function mail_retr_msg(&$msg,$check=1) {
 		$ret = "";
 		if($this->mail_protocol == "imap") {
@@ -339,7 +363,7 @@ class Telaen extends Telaen_core {
 		$this->mail_send_command("TOP ".$msg["msg"]." 0");
 		$buffer = $this->mail_get_line();
 		/* if any problem with this messages list, stop the procedure */
-		if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return 0; }
+		if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return false; }
 
 		while (!feof($this->mail_connection)) {
 			$buffer = $this->mail_get_line();
@@ -355,6 +379,11 @@ class Telaen extends Telaen_core {
 		return $header;
 	}
 	
+	/**
+     * Retrieve and return specific email message headers
+     * @param string $msg The message to obtain
+     * @return string
+     */
 	public function mail_retr_header($msg) {
 		$ret = "";
 		if($this->mail_protocol == "imap") {
@@ -378,7 +407,7 @@ class Telaen extends Telaen_core {
 		$buffer = chop($this->mail_get_line());
 
 		/* if any problem with the server, stop the function */
-		if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+		if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 
 		while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 			/* we need only the message id yet */
@@ -393,7 +422,7 @@ class Telaen extends Telaen_core {
 		/* compare the old and the new message id, if different, stop*/
 		if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
 			$this->mail_error_msg = $error_retrieving;
-			return 0;
+			return false;
 		}
 
 		/*if the pointer is here, no one problem occours*/
@@ -408,7 +437,7 @@ class Telaen extends Telaen_core {
 			$buffer = $this->mail_get_line();
 
 			/* if any problem with the server, stop the function */
-			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 
 			if(file_exists($msg["localname"])) {
 				$currentname = $msg["localname"];
@@ -420,7 +449,7 @@ class Telaen extends Telaen_core {
 		}
 		$this->mail_set_flag($msg,"\\DELETED","+");
 
-		return 1;
+		return true;
 	}
 
 	private function mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0) {
@@ -434,17 +463,17 @@ class Telaen extends Telaen_core {
 			/* compare the old and the new message uidl, if different, stop*/
 			if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
 				$this->mail_error_msg = $error_retrieving;
-				return 0;
+				return false;
 			}
 
 			if(!file_exists($msg["localname"])) {
-				if(!$this->mail_retr_msg($msg,0)) return 0;
+				if(!$this->mail_retr_msg($msg,0)) return false;
 				$this->mail_set_flag($msg,"\\SEEN","-");
 			}
 
 			$this->mail_send_command("DELE ".$msg["msg"]);
 			$buffer = $this->mail_get_line();
-			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return 0; }
+			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return false; }
 		}
 
 		if( $send_to_trash && 
@@ -463,9 +492,17 @@ class Telaen extends Telaen_core {
 				unlink($msg["localname"]);
 			}
 		}
+		return true;
 
 	}
 
+	/**
+     * Delete specific email message
+     * @param string $msg The message to delete
+     * @param boolean $send_to_trash
+     * @param boolean $save_only_read
+     * @return boolean
+     */
 	public function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
 
 		$ret = 1;
@@ -488,7 +525,7 @@ class Telaen extends Telaen_core {
 			$buffer = chop($this->mail_get_line());
 
 			/* if any problem with the server, stop the function */
-			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				/* we need only the message id yet */
@@ -503,7 +540,7 @@ class Telaen extends Telaen_core {
 			/* compare the old and the new message id, if different, stop*/
 			if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
 				$this->mail_error_msg = $error_retrieving;
-				return 0;
+				return false;
 			}
 
 			$tofolder = $this->fix_prefix($tofolder,1);
@@ -512,7 +549,7 @@ class Telaen extends Telaen_core {
 			$buffer = $this->mail_get_line();
 
 			/* if any problem with the server, stop the function */
-			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 
 			if(file_exists($msg["localname"])) {
 				$currentname = $msg["localname"];
@@ -523,7 +560,7 @@ class Telaen extends Telaen_core {
 			}
 			$this->mail_set_flag($msg,"\\DELETED","+");	
 		}
-		return 1;
+		return true;
 	}
 
 	private function mail_move_msg_pop($msg,$tofolder) {
@@ -535,11 +572,11 @@ class Telaen extends Telaen_core {
 				/* compare the old and the new message id, if different, stop*/
 				if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
 					$this->mail_error_msg = $error_retrieving;
-					return 0;
+					return false;
 				}
 
 				if(!file_exists($msg["localname"])) {
-					if(!$this->mail_retr_msg($msg,0)) return 0;
+					if(!$this->mail_retr_msg($msg,0)) return false;
 					$this->mail_set_flag($msg,"\\SEEN","-");
 				}
 			}				
@@ -558,18 +595,24 @@ class Telaen extends Telaen_core {
 						$buffer = $this->mail_get_line();
 						if(substr($buffer, 0, 3) != "+OK") {
 							$this->mail_error_msg = $buffer;
-							return 0;
+							return false;
 						}
 					}
 				} else
-					return 0;
+					return false;
 			} else 
-				return 0;						
+				return false;
 		} else 
-			return 0;
-		return 1;
+			return false;
+		return true;
 	}
 
+	/**
+     * Move specific email message
+     * @param string $msg The message to move
+     * @param string $tofolder
+     * @return boolean
+     */
 	public function mail_move_msg($msg,$tofolder) {
 		$ret = 1;
 		if($this->mail_protocol == "imap") {
@@ -721,7 +764,7 @@ class Telaen extends Telaen_core {
 								break;
 							}
 						}
-						if ($seen_all) return 0;
+						if ($seen_all) return false;
 					}
 
 					for($i=$localcount; $i<$onservercount; $i++) {
@@ -771,6 +814,14 @@ class Telaen extends Telaen_core {
 	 *	   -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
 	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
 	 */
+	/**
+     * List all messages in emailbox
+     * @param string $boxname The name of emailbox
+     * @param array $localmessages
+     * @param integer $start
+     * @param integer $wcount
+     * @return array
+     */
 	public function mail_list_msgs($boxname = "INBOX", $localmessages = array(), $start=0, $wcount=99999) {
 
 
@@ -985,6 +1036,11 @@ class Telaen extends Telaen_core {
 		return $flocalname;
 	}
 
+	/**
+     * List available emailboxes
+     * @param string $boxname If specific name or glob
+     * @return array
+     */
 	public function mail_list_boxes($boxname = "*") {
 		$boxlist = array();
 		/* choose the protocol*/
@@ -992,7 +1048,7 @@ class Telaen extends Telaen_core {
 			$this->mail_send_command("LIST \"\" $boxname");
 			$buffer = $this->mail_get_line();
 			/* if any problem, stop the script */
-			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			/* loop throught the list and split the parts */
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				$tmp = array();
@@ -1032,6 +1088,11 @@ class Telaen extends Telaen_core {
 		return $boxlist;
 	}
 
+	/**
+     * Change to specific default emailbox
+     * @param string $boxname Emailbox name to select
+     * @return array
+     */
 	public function mail_select_box($boxname = "INBOX") {
 		/* this function is used only for IMAP servers */
 		if($this->mail_protocol == "imap") {
@@ -1045,7 +1106,7 @@ class Telaen extends Telaen_core {
 					$buffer = $this->mail_get_line();
 				}
 			}
-			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			$boxinfo = array();
 			/* get total, recent messages and flags */
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
@@ -1063,6 +1124,11 @@ class Telaen extends Telaen_core {
 	}
 
 
+	/**
+     * Subscribe to specific default emailbox
+     * @param string $boxname Emailbox name to subscribe to
+     * @return boolean
+     */
 	public function mail_subscribe_box($boxname = "INBOX") {
 		/* this function is used only for IMAP servers */
 		if($this->mail_protocol == "imap") {
@@ -1071,13 +1137,18 @@ class Telaen extends Telaen_core {
 			$buffer = $this->mail_get_line();
 			if(preg_match("/^".$this->_sid." (NO|BAD)/i",$buffer)) { 
 				$this->mail_error_msg = $buffer; 
-				return 0; 
+				return false;
 			}
 		}
-		return 1;
+		return true;
 	}
 
 
+	/**
+     * Create a specific default emailbox
+     * @param string $boxname Emailbox name to create
+     * @return boolean
+     */
 	public function mail_create_box($boxname) {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
@@ -1085,19 +1156,24 @@ class Telaen extends Telaen_core {
 			$buffer = $this->mail_get_line();
 			if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				@mkdir($this->user_folder.$this->fix_prefix($boxname,0),$this->dirperm);
-				return 1;
+				return true;
 			} else { 
-				$this->mail_error_msg = $buffer; return 0; 
+				$this->mail_error_msg = $buffer; return false;
 			}
 
 		} else {
 			/* if POP3, only make a new folder */
-			if(@mkdir($this->user_folder.$boxname,$this->dirperm)) return 1;
-			else return 0;
+			if(@mkdir($this->user_folder.$boxname,$this->dirperm)) return true;
+			else return false;
 
 		}
 	}
 
+	/**
+     * Delete a specific default emailbox
+     * @param string $boxname Emailbox name to delete
+     * @return boolean
+     */
 	public function mail_delete_box($boxname) {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
@@ -1106,23 +1182,30 @@ class Telaen extends Telaen_core {
 
 			if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				$this->_RmDirR($this->user_folder.$boxname);
-				return 1;
+				return true;
 			} else { 
 				$this->mail_error_msg = $buffer; 
-				return 0; 
+				return false;
 			}
 
 		} else {
 			if(is_dir($this->user_folder.$boxname)) {
 				$this->_RmDirR($this->user_folder.$boxname);
-				return 1;
+				return true;
 			} else {
-				return 0;
+				return false;
 			}
 		}
 	}
 
 
+	/**
+     * Save email message to specific emailbox
+     * @param string $boxname Emailbox name to save to
+     * @param string $message Message to save
+     * @param string $flags
+     * @return boolean
+     */
 	public function mail_save_message($boxname,$message,$flags = "") {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
@@ -1134,7 +1217,7 @@ class Telaen extends Telaen_core {
 			// wait for a "+ Something" here and not after the msg sent!!
 			$buffer = $this->mail_get_line();
 			if($buffer[0] != "+") {
-				return 0;	// problem appending
+				return false;	// problem appending
 			}			
 
 			// send the msg 
@@ -1144,7 +1227,7 @@ class Telaen extends Telaen_core {
 			$buffer = $this->mail_get_line();
 			
 			if(!preg_match("/^(".$this->_sid." OK)/i", $buffer)) 
-				return 0; 
+				return false;
 		}
 
 		if(is_dir($this->user_folder.$boxname)) {
@@ -1155,18 +1238,25 @@ class Telaen extends Telaen_core {
 				$message = trim($email["header"])."\r\nX-UM-Flags: $flags\r\n\r\n".$email["body"];
 			unset($email);
 			$this->_save_file($filename,$message);
-			return 1;
+			return true;
 		}
 	}
 
+	/**
+     * Set flags on specific email message
+     * @param string $msg Email message to set flag for
+     * @param string $flagname Flag to set
+     * @param string $flagtype Set + or Unset -
+     * @return boolean
+     */
 	public function mail_set_flag(&$msg,$flagname,$flagtype = "+") {
 		$flagname = strtoupper($flagname);
 		$allowed = array("\\ANSWERED", "\\SEEN", "\\DELETED", "\\DRAFT");
 
 		if($flagtype == '+' && strstr($msg['flags'], $flagname))
-			return 1;
+			return true;
 		if($flagtype == '-' && !strstr($msg['flags'], $flagname))
-			return 1;
+			return true;
 
 		if($this->mail_protocol == "imap" && in_array($flagname, $allowed)) {
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
@@ -1179,7 +1269,7 @@ class Telaen extends Telaen_core {
 			while(!preg_match("/^(".$this->_sid." (OK|NO|BAD))/i",$buffer)) { 
 				$buffer = $this->mail_get_line();
 			}
-			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return 0;}
+			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false;}
 
 		} elseif (!file_exists($msg["localname"]))
 			$this->mail_retr_msg($msg,0);
@@ -1218,7 +1308,7 @@ class Telaen extends Telaen_core {
 			$msg["header"]	= $header;
 			$msg["flags"]	= $flags;
 
-			//print_struc($msg);
+			//debug_print_struc($msg);
 
 			$email = "$header\r\n\r\n$body";
 
@@ -1226,9 +1316,13 @@ class Telaen extends Telaen_core {
 
 			unset($email,$header,$body,$flags,$headerinfo);
 		}
-		return 1;
+		return true;
 	}
 
+	/**
+     * Disconnect/logout from Email server
+     * @return boolean
+     */
 	public function mail_disconnect() {
 		if($this->mail_connected()) {
 			if($this->mail_protocol == "imap") {
@@ -1243,11 +1337,15 @@ class Telaen extends Telaen_core {
 			fclose($this->mail_connection);
 			$this->mail_connection = "";
 			//usleep(500);
-			return 1;
-		} else return 0;
+			return true;
+		} else return false;
 	
 	}
 
+	/**
+     * Disconnect/logout from Email server
+     * @return boolean
+     */
 	public function mail_disconnect_force() {
 		if($this->mail_connected()) {
 			$this->mail_send_command("FORCEDQUIT");
@@ -1256,21 +1354,25 @@ class Telaen extends Telaen_core {
 			$this->mail_connection = "";
 			// Sleep to make it possible that the server can resume.
 			sleep(2);
-			return 1;
-		} else return 0;
+			return true;
+		} else return false;
 	
 	}
 
+	/**
+     * EXPUNGE email from Email server
+     * @return boolean
+     */
 	public function mail_expunge() {
 		if($this->mail_protocol == "imap") {
 			$this->mail_send_command("EXPUNGE");
 			$buffer = $this->mail_get_line();
-			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return 0; }
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				$buffer = $this->mail_get_line();
 			}
 		}
-		return 1;
+		return true;
 	}
 
 	/*
@@ -1280,6 +1382,10 @@ class Telaen extends Telaen_core {
 	 * NOTE: Any whitespace within a capability string is
 	 * squeezed down to a single "_".
 	 */
+	/**
+     * List CAPA output of POP3 server
+     * @return array
+     */
 	public function mail_pop3_capa() {
 		$capa = array();
 		$this->mail_connect();
@@ -1314,6 +1420,12 @@ class Telaen extends Telaen_core {
 	 * to query the server. Note that the provided array
 	 * only makes sense for single UIDL lookups.
 	 */
+	/**
+     * Get UIDL of specific message or of all
+     * @param string $id ID of message
+     * @param array $message
+     * @return array
+     */
 	private function mail_get_uidl ($id = "", $message = array()) {
 		if(!empty($id)) {
 			if ($this->_haveuidl) {
@@ -1397,6 +1509,99 @@ class Telaen extends Telaen_core {
 			return $retarray;
 		}
 	}
+
+    /**
+     * Check that a string looks like an email address.
+     * @param string $address The email address to check
+     * @param string $patternselect A selector for the validation pattern to use :
+     * * `auto` Pick strictest one automatically;
+     * * `pcre8` Use the squiloople.com pattern, requires PCRE > 8.0, PHP >= 5.3.2, 5.2.14;
+     * * `pcre` Use old PCRE implementation;
+     * * `php` Use PHP built-in FILTER_VALIDATE_EMAIL; same as pcre8 but does not allow 'dotless' domains;
+     * * `html5` Use the pattern given by the HTML5 spec for 'email' type form input elements.
+     * * `noregex` Don't use a regex: super fast, really dumb.
+     * @return boolean
+     */
+    public function is_valid_email($address, $patternselect = 'auto')
+    {
+        if (!$patternselect or $patternselect == 'auto') {
+            //Check this constant first so it works when extension_loaded() is disabled by safe mode
+            //Constant was added in PHP 5.2.4
+            if (defined('PCRE_VERSION')) {
+                //This pattern can get stuck in a recursive loop in PCRE <= 8.0.2
+                if (version_compare(PCRE_VERSION, '8.0.3') >= 0) {
+                    $patternselect = 'pcre8';
+                } else {
+                    $patternselect = 'pcre';
+                }
+            } elseif (function_exists('extension_loaded') and extension_loaded('pcre')) {
+                //Fall back to older PCRE
+                $patternselect = 'pcre';
+            } else {
+                //Filter_var appeared in PHP 5.2.0 and does not require the PCRE extension
+                if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
+                    $patternselect = 'php';
+                } else {
+                    $patternselect = 'noregex';
+                }
+            }
+        }
+        switch ($patternselect) {
+            case 'pcre8':
+                /**
+                 * Uses the same RFC5322 regex on which FILTER_VALIDATE_EMAIL is based, but allows dotless domains.
+                 * @link http://squiloople.com/2009/12/20/email-address-validation/
+                 * @copyright 2009-2010 Michael Rushton
+                 * Feel free to use and redistribute this code. But please keep this copyright notice.
+                 */
+                return (boolean)preg_match(
+                    '/^(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){255,})(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){65,}@)' .
+                    '((?>(?>(?>((?>(?>(?>\x0D\x0A)?[\t ])+|(?>[\t ]*\x0D\x0A)?[\t ]+)?)(\((?>(?2)' .
+                    '(?>[\x01-\x08\x0B\x0C\x0E-\'*-\[\]-\x7F]|\\\[\x00-\x7F]|(?3)))*(?2)\)))+(?2))|(?2))?)' .
+                    '([!#-\'*+\/-9=?^-~-]+|"(?>(?2)(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\x7F]))*' .
+                    '(?2)")(?>(?1)\.(?1)(?4))*(?1)@(?!(?1)[a-z0-9-]{64,})(?1)(?>([a-z0-9](?>[a-z0-9-]*[a-z0-9])?)' .
+                    '(?>(?1)\.(?!(?1)[a-z0-9-]{64,})(?1)(?5)){0,126}|\[(?:(?>IPv6:(?>([a-f0-9]{1,4})(?>:(?6)){7}' .
+                    '|(?!(?:.*[a-f0-9][:\]]){8,})((?6)(?>:(?6)){0,6})?::(?7)?))|(?>(?>IPv6:(?>(?6)(?>:(?6)){5}:' .
+                    '|(?!(?:.*[a-f0-9]:){6,})(?8)?::(?>((?6)(?>:(?6)){0,4}):)?))?(25[0-5]|2[0-4][0-9]|1[0-9]{2}' .
+                    '|[1-9]?[0-9])(?>\.(?9)){3}))\])(?1)$/isD',
+                    $address
+                );
+            case 'pcre':
+                //An older regex that doesn't need a recent PCRE
+                return (boolean)preg_match(
+                    '/^(?!(?>"?(?>\\\[ -~]|[^"])"?){255,})(?!(?>"?(?>\\\[ -~]|[^"])"?){65,}@)(?>' .
+                    '[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*")' .
+                    '(?>\.(?>[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*"))*' .
+                    '@(?>(?![a-z0-9-]{64,})(?>[a-z0-9](?>[a-z0-9-]*[a-z0-9])?)(?>\.(?![a-z0-9-]{64,})' .
+                    '(?>[a-z0-9](?>[a-z0-9-]*[a-z0-9])?)){0,126}|\[(?:(?>IPv6:(?>(?>[a-f0-9]{1,4})(?>:' .
+                    '[a-f0-9]{1,4}){7}|(?!(?:.*[a-f0-9][:\]]){8,})(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,6})?' .
+                    '::(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,6})?))|(?>(?>IPv6:(?>[a-f0-9]{1,4}(?>:' .
+                    '[a-f0-9]{1,4}){5}:|(?!(?:.*[a-f0-9]:){6,})(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,4})?' .
+                    '::(?>(?:[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,4}):)?))?(?>25[0-5]|2[0-4][0-9]|1[0-9]{2}' .
+                    '|[1-9]?[0-9])(?>\.(?>25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}))\])$/isD',
+                    $address
+                );
+            case 'html5':
+                /**
+                 * This is the pattern used in the HTML5 spec for validation of 'email' type form input elements.
+                 * @link http://www.whatwg.org/specs/web-apps/current-work/#e-mail-state-(type=email)
+                 */
+                return (boolean)preg_match(
+                    '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}' .
+                    '[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/sD',
+                    $address
+                );
+            case 'noregex':
+                //No PCRE! Do something _very_ approximate!
+                //Check the address is 3 chars or longer and contains an @ that's not the first or last char
+                return (strlen($address) >= 3
+                    and strpos($address, '@') >= 1
+                    and strpos($address, '@') != strlen($address) - 1);
+            case 'php':
+            default:
+                return (boolean)filter_var($address, FILTER_VALIDATE_EMAIL);
+        }
+    }
 
 }
 

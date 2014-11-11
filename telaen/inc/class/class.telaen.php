@@ -83,11 +83,22 @@ class Telaen_core {
 	Save the specified $content to disk using the $filename path
 	*/
 
-	private function _save_file($filename,$content) {
+	/**
+     * Save content to file
+     * @param string $filename The filename to write to
+     * @param string $content The content to write
+     * @return boolean
+     */
+	public function save_file($filename,$content) {
+		$ret = false;
 		$tmpfile = fopen($filename,"wb");
-		fwrite($tmpfile,$content);
-		fclose($tmpfile);
-		unset($content,$tmpfile);
+		if ($tmpfile) {
+			fwrite($tmpfile,$content);
+			fclose($tmpfile);
+			unset($content,$tmpfile);
+			$ret = true;
+		}
+		return $ret;
 	}
 
 
@@ -120,6 +131,11 @@ class Telaen_core {
 	TODO: i18n: Implement base64 encoding according to charsets
 	*/
 
+	/**
+     * Encode header strings to be compliant with MIME format
+     * @param string $string The string to encode
+     * @return string
+     */
 	public function mime_encode_headers($string) {
 		if($string == "") return;
 		if(!preg_match("/^([[:print:]]*)$/",$string))
