@@ -5,17 +5,17 @@ class PHPMailer_extra extends PHPMailer {
 	 *	Read only - return a formatted mail to the client
 	 *	@var string
 	 */
-	var $FormattedMail	 = "";
-	var $LE				 = "\n";
+	private $FormattedMail	 = "";
+	public $LE				 = "\n";
 
-	function TelaenGetEmail() {
+	public function TelaenGetEmail() {
 		if (method_exists(PHPMailer, 'GetSentMIMEMessage')) {
 			return $this->GetSentMIMEMessage();
 		} else {
 			return $this->FormattedMail;
 		}
 	}
-	function TelaenSend() {
+	public function TelaenSend() {
 		if (method_exists(PHPMailer, 'GetSentMIMEMessage')) {
 			return $this->Send();
 		} else {

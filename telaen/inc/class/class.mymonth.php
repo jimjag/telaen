@@ -9,20 +9,20 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 class MyMonth {
-	var $_month = 0;
-	var $_year = 0;
-	var $_mymonth;
-	var $_firstday;
-	var $_lastday;
-	var $_today;
-	var $_pmonth;
-	var $_pyear;
-	var $_nmonth;
-	var $_nyear;
-	var $_edir;
-	var $_vcal;
+	private $_month = 0;
+	private $_year = 0;
+	private $_mymonth;
+	private $_firstday;
+	private $_lastday;
+	private $_today;
+	private $_pmonth;
+	private $_pyear;
+	private $_nmonth;
+	private $_nyear;
+	private $_edir;
+	private $_vcal;
 
-	function MyMonth($year=0, $month=0) {
+	public function MyMonth($year=0, $month=0) {
 		global $UM, $userfolder;
 		if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050){
 			$this->_mymonth	= getdate();
@@ -58,7 +58,7 @@ class MyMonth {
 		$this->_vcal->sort();
 	}
 
-	function monthAsTable() {
+	public function monthAsTable() {
 		$ret = <<<EOT
 <table class="month"><tr>
   <th class="week" onclick="replaceCal({$this->_pmonth}, {$this->_pyear});"> &laquo; </th>
@@ -107,11 +107,11 @@ EOT;
 		return $ret;
 	}
 
-	function showMonthAsTable() {
+	public function showMonthAsTable() {
 		echo $this->monthAsTable();
 	}
 
-	function monthAsDiv() {
+	public function monthAsDiv() {
 		$end = <<<EOT
 </div>
 <script type="text/javascript">
@@ -124,11 +124,11 @@ EOT;
 		return $ret;
 	}
 
-	function showMonthAsDiv() {
+	public function showMonthAsDiv() {
 		echo $this->monthAsDiv();
 	}
 
-	function saveEvents() {
+	public function saveEvents() {
 		@mkdir($this->_edir, 0750, true);
 		$this->_vcal->saveCalendar();
 	}
@@ -137,7 +137,7 @@ EOT;
 	 * returns Array(eventuid, dtstart, dtend, desc, starthour, startmin, stophour, stopmin)
 	 *    The eventuid always contains the date... eg: 20100311_76987 (date + the day uid)
 	 */
-	function getEvent($day) {
+	public function getEvent($day) {
 		$reta = Array();
 		$this->_vcal->sort();
 		$events_arr = (array)$this->_vcal->selectComponents($this->_year, $this->_month, $day);
@@ -158,7 +158,7 @@ EOT;
 		return $reta;
 	}
 
-	function setEvent($day, $start, $stop, $val, $dayuid="") {
+	public function setEvent($day, $start, $stop, $val, $dayuid="") {
 		$ymd = sprintf("%4s%02s%02s", $this->_year, $this->_month, $day);
 		if ($dayuid) {
 			$eventuid = $ymd ."_". $dayuid;
@@ -176,14 +176,14 @@ EOT;
 		$this->_vcal->setComponent($v);
 	}
 
-	function delEvent($eventuid) {
+	public function delEvent($eventuid) {
 		return $this->_vcal->deleteComponent($eventuid);
 	}
 
 	/**
 	 * Returns time from DTstamp array (from iCalcreator)
 	 */
-	function _xdtime($dt) {
+	private function _xdtime($dt) {
 		$ret = sprintf("%4s%02s%02sT%02s%02s%02s",
 					   $dt['year'],$dt['month'], $dt['day'],
 					   $dt['hour'], $dt['min'], $dt['sec']);
@@ -193,7 +193,7 @@ EOT;
 	/**
 	 * Returns time (eg: 07:43 am) from DTstamp string (eg: 20100311T071500)
 	 */
-	function _xtime($dt) {
+	private function _xtime($dt) {
 		$hour = substr($dt, 9,2);
 		$min = substr($dt, 11, 2);
 		if ($hour > 12) {

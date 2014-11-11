@@ -1,27 +1,27 @@
 <?php
 class Telaen extends Telaen_core {
 
-	var $_autospamfolder	= true;		// boolean
-	var $_spamregex		= Array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
-	var $havespam		= "";		// NOTE: This is a STRING!
-	var $_system_folders	= Array("inbox","trash","sent","spam");
-	var $_current_folder	= "";	
-	var $CRLF		= "\r\n";
-	var $userspamlevel	= 0;		// Disabled
-	var $dirperm		= 0700;		// recall affected by umask value
-	var $greeting		= "";		// Internally used for store pop3 APOP greeting message
-	var $_haveatop		= false;	// boolean
-	var $_havepipelining	= false;	// boolean
-	var $_haveapop		= false;	// boolean
-	var $_haveuidl			= false;		// boolean
+	private $_autospamfolder	= true;		// boolean
+	private $_spamregex		= Array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
+	public $havespam		= "";		// NOTE: This is a STRING!
+	private $_system_folders	= Array("inbox","trash","sent","spam");
+	private $_current_folder	= "";
+	public $CRLF		= "\r\n";
+	public $userspamlevel	= 0;		// Disabled
+	public $dirperm		= 0700;		// recall affected by umask value
+	public $greeting		= "";		// Internally used for store pop3 APOP greeting message
+	private $_haveatop		= false;	// boolean
+	private $_havepipelining	= false;	// boolean
+	private $_haveapop		= false;	// boolean
+	private $_haveuidl			= false;		// boolean
 
-	function Telaen() {
+	public function Telaen() {
 		require("./inc/class/class.tnef.php");
 		$this->_tnef = new TNEF();
 		$this->_sid = uniqid("");
 	}
 
-	function mail_connected() {
+	public function mail_connected() {
 		if(!empty($this->mail_connection)) {
 			$sock_status = @socket_get_status($this->mail_connection);
 			if($sock_status["eof"]) {
@@ -33,11 +33,11 @@ class Telaen extends Telaen_core {
 		return 0;
 	}
 
-	function is_system_folder($name) {
+	public function is_system_folder($name) {
 		return (in_array(strtolower($name), $this->_system_folders));
 	}
 
-	function mail_get_line() {
+	private function mail_get_line() {
 		$buffer = fgets($this->mail_connection,8192);
 		$buffer = preg_replace('|\r?\n|',"\r\n",$buffer);
 		if($this->debug) {
@@ -62,7 +62,7 @@ class Telaen extends Telaen_core {
 	 * send or an array of command strings that will be
 	 * sent one after another in order.
 	 */
-	function mail_send_command($cmds, $killSid = false) {
+	private function mail_send_command($cmds, $killSid = false) {
 
 		if($this->mail_connected()) {
 			if (!is_array($cmds)) {
@@ -86,7 +86,7 @@ class Telaen extends Telaen_core {
 		return 0;
 	}
 
-	function mail_connect() {
+	public function mail_connect() {
 		if($this->debug)
 			for($i=0;$i<20;$i++)
 				echo("<!-- buffer sux -->\r\n");
@@ -110,7 +110,7 @@ class Telaen extends Telaen_core {
 		} else return 1;
 	}
 
-	function _mail_auth_imap($checkfolders=false) {
+	private function _mail_auth_imap($checkfolders=false) {
 		$this->mail_send_command("LOGIN ".$this->mail_user." ".$this->mail_pass);
 		$buffer = $this->mail_get_line();
 		if(preg_match("/^(".$this->_sid." OK)/",$buffer)) { 
@@ -123,7 +123,7 @@ class Telaen extends Telaen_core {
 		}
 	}
 
-	function _mail_auth_pop($checkfolders=false) {
+	private function _mail_auth_pop($checkfolders=false) {
 		// APOP login mode, more secure
 		if ($this->_haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
 			$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
@@ -151,7 +151,7 @@ class Telaen extends Telaen_core {
 		}
 	}
 
-	function mail_auth($checkfolders=false) {
+	public function mail_auth($checkfolders=false) {
 		$ret = 0;
 		if($this->mail_connected()) {
 			if ($this->mail_protocol == "imap") {
@@ -163,7 +163,7 @@ class Telaen extends Telaen_core {
 		return $ret;
 	}
 
-	function _check_folders() {
+	private function _check_folders() {
 		$userfolder				= $this->user_folder;
 		$temporary_directory	= $this->temp_folder;
 		$idle_timeout			= $this->timeout;
@@ -215,7 +215,7 @@ class Telaen extends Telaen_core {
 		}
 	}
 	
-	function mail_retr_msg_imap(&$msg,$check=1) {
+	private function mail_retr_msg_imap(&$msg,$check=1) {
 		global $error_retrieving;
 		$msgheader = $msg["header"];
 
@@ -265,7 +265,7 @@ class Telaen extends Telaen_core {
 		return $msgcontent;
 	}
 
-	function mail_retr_msg_pop(&$msg,$check=1) {
+	private function mail_retr_msg_pop(&$msg,$check=1) {
 		global $mail_use_top,$error_retrieving;
 
 		if($check && (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam")) {
@@ -317,7 +317,7 @@ class Telaen extends Telaen_core {
 		return $msgcontent;
 	}
 	
-	function mail_retr_msg(&$msg,$check=1) {
+	public function mail_retr_msg(&$msg,$check=1) {
 		$ret = "";
 		if($this->mail_protocol == "imap") {
 			$ret = $this->mail_retr_msg_imap($msg,$check);
@@ -327,12 +327,12 @@ class Telaen extends Telaen_core {
 		return $ret;
 	}
 
-	function mail_retr_header_imap($msg) {
+	private function mail_retr_header_imap($msg) {
 		/* This assumes that we read in the entire boxes in imap. */
 		return $msg["header"];
 	}
 
-	function mail_retr_header_pop($msg) {
+	private function mail_retr_header_pop($msg) {
 		/*
 		 * Fetch headers serially. Very slow.
 		 */
@@ -355,7 +355,7 @@ class Telaen extends Telaen_core {
 		return $header;
 	}
 	
-	function mail_retr_header($msg) {
+	public function mail_retr_header($msg) {
 		$ret = "";
 		if($this->mail_protocol == "imap") {
 			$ret = $this->mail_retr_header_imap($msg);
@@ -366,7 +366,7 @@ class Telaen extends Telaen_core {
 	}
 
 
-	function mail_delete_msg_imap($msg, $send_to_trash = 1, $save_only_read = 0) {
+	private function mail_delete_msg_imap($msg, $send_to_trash = 1, $save_only_read = 0) {
 	
 		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
 
@@ -423,7 +423,7 @@ class Telaen extends Telaen_core {
 		return 1;
 	}
 
-	function mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0) {
+	private function mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0) {
 	
 		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
 
@@ -466,7 +466,7 @@ class Telaen extends Telaen_core {
 
 	}
 
-	function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
+	public function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
 
 		$ret = 1;
 		if($this->mail_protocol == "imap") {
@@ -478,7 +478,7 @@ class Telaen extends Telaen_core {
 	}
 
 
-	function mail_move_msg_imap($msg,$tofolder) {
+	private function mail_move_msg_imap($msg,$tofolder) {
 		if(strtolower($tofolder) != strtolower($msg["folder"])) {
 			/* check the message id to make sure that the messages still in the server */
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
@@ -526,7 +526,7 @@ class Telaen extends Telaen_core {
 		return 1;
 	}
 
-	function mail_move_msg_pop($msg,$tofolder) {
+	private function mail_move_msg_pop($msg,$tofolder) {
 		if((strtoupper($tofolder) != "INBOX" && strtoupper($tofolder) != "SPAM") && strtolower($tofolder) != strtolower($msg["folder"])) {
 			/* now we are working with POP3 */
 			/* check the message id to make sure that the messages still in the server */
@@ -570,7 +570,7 @@ class Telaen extends Telaen_core {
 		return 1;
 	}
 
-	function mail_move_msg($msg,$tofolder) {
+	public function mail_move_msg($msg,$tofolder) {
 		$ret = 1;
 		if($this->mail_protocol == "imap") {
 			$ret = $this->mail_move_msg_imap($msg,$tofolder);
@@ -581,7 +581,7 @@ class Telaen extends Telaen_core {
 	}
 
 
-	function mail_list_msgs_imap($boxname = "INBOX", $localmessages = Array()) {
+	private function mail_list_msgs_imap($boxname = "INBOX", $localmessages = Array()) {
 
 		if($this->is_system_folder($boxname))
 			$boxname = strtolower($boxname);
@@ -636,7 +636,7 @@ class Telaen extends Telaen_core {
 
 	}
 
-	function mail_list_msgs_pop($boxname = "INBOX", $localmessages = Array()) {
+	private function mail_list_msgs_pop($boxname = "INBOX", $localmessages = Array()) {
 		global $userfolder;
 		// $this->havespam = "";
 
@@ -771,7 +771,7 @@ class Telaen extends Telaen_core {
 	 *	   -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
 	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
 	 */
-	function mail_list_msgs($boxname = "INBOX", $localmessages = Array(), $start=0, $wcount=99999) {
+	public function mail_list_msgs($boxname = "INBOX", $localmessages = Array(), $start=0, $wcount=99999) {
 
 
 		global $userfolder;
@@ -976,7 +976,7 @@ class Telaen extends Telaen_core {
 		return $myreturnarray;
 	}
 
-	function _get_local_name($message,$boxname) {
+	private function _get_local_name($message,$boxname) {
 
 		if (is_array($message))
 			$flocalname = trim($this->user_folder."$boxname/".md5(trim($message["subject"].$message["date"].$message["message-id"])).".eml");
@@ -985,7 +985,7 @@ class Telaen extends Telaen_core {
 		return $flocalname;
 	}
 
-	function mail_list_boxes($boxname = "*") {
+	public function mail_list_boxes($boxname = "*") {
 		$boxlist = Array();
 		/* choose the protocol*/
 		if($this->mail_protocol == "imap") {
@@ -1032,7 +1032,7 @@ class Telaen extends Telaen_core {
 		return $boxlist;
 	}
 
-	function mail_select_box($boxname = "INBOX") {
+	public function mail_select_box($boxname = "INBOX") {
 		/* this function is used only for IMAP servers */
 		if($this->mail_protocol == "imap") {
 			$original_name = preg_replace('|"(.*)"|',"$1",$boxname);
@@ -1063,7 +1063,7 @@ class Telaen extends Telaen_core {
 	}
 
 
-	function mail_subscribe_box($boxname = "INBOX") {
+	public function mail_subscribe_box($boxname = "INBOX") {
 		/* this function is used only for IMAP servers */
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
@@ -1078,7 +1078,7 @@ class Telaen extends Telaen_core {
 	}
 
 
-	function mail_create_box($boxname) {
+	public function mail_create_box($boxname) {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
 			$this->mail_send_command("CREATE \"$boxname\"");
@@ -1098,7 +1098,7 @@ class Telaen extends Telaen_core {
 		}
 	}
 
-	function mail_delete_box($boxname) {
+	public function mail_delete_box($boxname) {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
 			$this->mail_send_command("DELETE \"$boxname\"");
@@ -1123,7 +1123,7 @@ class Telaen extends Telaen_core {
 	}
 
 
-	function mail_save_message($boxname,$message,$flags = "") {
+	public function mail_save_message($boxname,$message,$flags = "") {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
 		
@@ -1159,7 +1159,7 @@ class Telaen extends Telaen_core {
 		}
 	}
 
-	function mail_set_flag(&$msg,$flagname,$flagtype = "+") {
+	public function mail_set_flag(&$msg,$flagname,$flagtype = "+") {
 		$flagname = strtoupper($flagname);
 		$allowed = array("\\ANSWERED", "\\SEEN", "\\DELETED", "\\DRAFT");
 
@@ -1229,7 +1229,7 @@ class Telaen extends Telaen_core {
 		return 1;
 	}
 
-	function mail_disconnect() {
+	public function mail_disconnect() {
 		if($this->mail_connected()) {
 			if($this->mail_protocol == "imap") {
 				if($this->_require_expunge)
@@ -1248,7 +1248,7 @@ class Telaen extends Telaen_core {
 	
 	}
 
-	function mail_disconnect_force() {
+	public function mail_disconnect_force() {
 		if($this->mail_connected()) {
 			$this->mail_send_command("FORCEDQUIT");
 			$tmp = $this->mail_get_line();
@@ -1261,7 +1261,7 @@ class Telaen extends Telaen_core {
 	
 	}
 
-	function mail_expunge() {
+	public function mail_expunge() {
 		if($this->mail_protocol == "imap") {
 			$this->mail_send_command("EXPUNGE");
 			$buffer = $this->mail_get_line();
@@ -1280,7 +1280,7 @@ class Telaen extends Telaen_core {
 	 * NOTE: Any whitespace within a capability string is
 	 * squeezed down to a single "_".
 	 */
-	function mail_pop3_capa() {
+	public function mail_pop3_capa() {
 		$capa = Array();
 		$this->mail_connect();
 		if ($this->mail_protocol == "pop3") {
@@ -1314,7 +1314,7 @@ class Telaen extends Telaen_core {
 	 * to query the server. Note that the provided array
 	 * only makes sense for single UIDL lookups.
 	 */
-	function mail_get_uidl ($id = "", $message = Array()) {
+	private function mail_get_uidl ($id = "", $message = Array()) {
 		if(!empty($id)) {
 			if ($this->_haveuidl) {
 				$this->mail_send_command("UIDL $id");

@@ -2,50 +2,50 @@
 
 class TNEF {
 
-	var $debug		= false;
-	var $download	= false;
+	public $debug		= false;
+	public $download	= false;
 
-	var $TNEF_SIGNATURE						= 0x223e9f78;
-	var $TNEF_LVL_MESSAGE					= 0x01;
-	var $TNEF_LVL_ATTACHMENT				= 0x02;
-	
-	var $TNEF_STRING						= 0x00010000;
-	var $TNEF_TEXT							= 0x00020000;
-	var $TNEF_BYTE							= 0x00060000;
-	var $TNEF_WORD							= 0x00070000;
-	var $TNEF_DWORD							= 0x00080000;
-	
-	var $TNEF_ASUBJECT						= 0;
-	var $TNEF_AMCLASS						= 0;
-	var $TNEF_BODYTEXT						= 0;
-	var $TNEF_ATTACHDATA					= 0;
-	var $TNEF_AFILENAME						= 0;
-	var $TNEF_ARENDDATA						= 0;
-	var $TNEF_AMAPIATTRS					= 0;
-	var $TNEF_AVERSION						= 0;
-	
-	var $TNEF_MAPI_NULL						= 0x0001;
-	var $TNEF_MAPI_SHORT					= 0x0002;
-	var $TNEF_MAPI_INT						= 0x0003;
-	var $TNEF_MAPI_FLOAT					= 0x0004;
-	var $TNEF_MAPI_DOUBLE					= 0x0005;
-	var $TNEF_MAPI_CURRENCY					= 0x0006;
-	var $TNEF_MAPI_APPTIME					= 0x0007;
-	var $TNEF_MAPI_ERROR					= 0x000a;
-	var $TNEF_MAPI_BOOLEAN					= 0x000b;
-	var $TNEF_MAPI_OBJECT					= 0x000d;
-	var $TNEF_MAPI_INT8BYTE					= 0x0014;
-	var $TNEF_MAPI_STRING					= 0x001e;
-	var $TNEF_MAPI_UNICODE_STRING			= 0x001f;
-	var $TNEF_MAPI_SYSTIME					= 0x0040;
-	var $TNEF_MAPI_CLSID					= 0x0048;
-	var $TNEF_MAPI_BINARY					= 0x0102;
-	
-	var $TNEF_MAPI_ATTACH_MIME_TAG			= 0x370E;
-	var $TNEF_MAPI_ATTACH_LONG_FILENAME		= 0x3707;
-	var $TNEF_MAPI_ATTACH_DATA				= 0x3701;
-	
-	function TNEF() {
+	public $TNEF_SIGNATURE						= 0x223e9f78;
+	public $TNEF_LVL_MESSAGE					= 0x01;
+	public $TNEF_LVL_ATTACHMENT					= 0x02;
+
+	public $TNEF_STRING							= 0x00010000;
+	public $TNEF_TEXT							= 0x00020000;
+	public $TNEF_BYTE							= 0x00060000;
+	public $TNEF_WORD							= 0x00070000;
+	public $TNEF_DWORD							= 0x00080000;
+
+	public $TNEF_ASUBJECT						= 0;
+	public $TNEF_AMCLASS						= 0;
+	public $TNEF_BODYTEXT						= 0;
+	public $TNEF_ATTACHDATA						= 0;
+	public $TNEF_AFILENAME						= 0;
+	public $TNEF_ARENDDATA						= 0;
+	public $TNEF_AMAPIATTRS						= 0;
+	public $TNEF_AVERSION						= 0;
+
+	public $TNEF_MAPI_NULL						= 0x0001;
+	public $TNEF_MAPI_SHORT						= 0x0002;
+	public $TNEF_MAPI_INT						= 0x0003;
+	public $TNEF_MAPI_FLOAT						= 0x0004;
+	public $TNEF_MAPI_DOUBLE					= 0x0005;
+	public $TNEF_MAPI_CURRENCY					= 0x0006;
+	public $TNEF_MAPI_APPTIME					= 0x0007;
+	public $TNEF_MAPI_ERROR						= 0x000a;
+	public $TNEF_MAPI_BOOLEAN					= 0x000b;
+	public $TNEF_MAPI_OBJECT					= 0x000d;
+	public $TNEF_MAPI_INT8BYTE					= 0x0014;
+	public $TNEF_MAPI_STRING					= 0x001e;
+	public $TNEF_MAPI_UNICODE_STRING			= 0x001f;
+	public $TNEF_MAPI_SYSTIME					= 0x0040;
+	public $TNEF_MAPI_CLSID						= 0x0048;
+	public $TNEF_MAPI_BINARY					= 0x0102;
+
+	public $TNEF_MAPI_ATTACH_MIME_TAG			= 0x370E;
+	public $TNEF_MAPI_ATTACH_LONG_FILENAME		= 0x3707;
+	public $TNEF_MAPI_ATTACH_DATA				= 0x3701;
+
+	public function TNEF() {
 		$this->TNEF_ASUBJECT					= $this->TNEF_DWORD	 | 0x8004;
 		$this->TNEF_AMCLASS						= $this->TNEF_WORD	 | 0x8008;
 		$this->TNEF_BODYTEXT					= $this->TNEF_TEXT	 | 0x800c;
@@ -56,7 +56,7 @@ class TNEF {
 		$this->TNEF_AVERSION					= $this->TNEF_DWORD	 | 0x9006;
 	}
 	
-	function getx($size, &$buf) {
+	public function getx($size, &$buf) {
 		$value = null;
 		if (strlen($buf) >= $size) {
 			$value = substr($buf, 0, $size);
@@ -65,7 +65,7 @@ class TNEF {
 		return $value;
 	}
 	
-	function geti8(&$buf) {
+	public function geti8(&$buf) {
 		$value = null;
 		if (strlen($buf) >= 1) {
 			$value = ord($buf[0]);
@@ -75,7 +75,7 @@ class TNEF {
 	}
 	
 	
-	function geti16(&$buf) {
+	public function geti16(&$buf) {
 		$value = null;
 		if (strlen($buf) >= 2) {
 			$value = ord($buf[0]) +
@@ -85,7 +85,7 @@ class TNEF {
 		return $value;
 	}
 	
-	function geti32(&$buf) {
+	public function geti32(&$buf) {
 		$value = null;
 		if (strlen($buf) >= 4) {
 			$value = ord($buf[0]) +
@@ -98,7 +98,7 @@ class TNEF {
 	}
 	
 	
-	function decode_attribute($attribute, &$buf) {
+	public function decode_attribute($attribute, &$buf) {
 		global $debug, $download;
 		$length = $this->geti32($buf);
 		$value = $this->getx($length, $buf); //data
@@ -115,7 +115,7 @@ class TNEF {
 		}
 	}
 
-	function extract_mapi_attrs($buf, &$attachment_data) {
+	public function extract_mapi_attrs($buf, &$attachment_data) {
 
 		$this->geti32($buf); // number of attributes
 		while(strlen($buf) > 0) {
@@ -187,7 +187,7 @@ class TNEF {
 			}
 		}
 	}
-	function decode_message(&$buf) {
+	public function decode_message(&$buf) {
 		if ($this->debug) {
 			echo("MESSAGE ");
 		}
@@ -198,7 +198,7 @@ class TNEF {
 	
 	
 	
-	function decode_attachment(&$buf, &$attachment_data) {
+	public function decode_attachment(&$buf, &$attachment_data) {
 	
 		if ($this->debug) {
 			echo("ATTACHMENT ");
@@ -257,7 +257,7 @@ class TNEF {
 	}
 	
 	
-	function do_tnef_decode(&$buf, &$attachment_data) {
+	public function do_tnef_decode(&$buf, &$attachment_data) {
 		$tnef_signature = $this->geti32($buf);
 		if ($tnef_signature == $this->TNEF_SIGNATURE) {
 			$tnef_key = $this->geti16($buf);
@@ -290,7 +290,7 @@ class TNEF {
 	}
 	
 	
-	function Decode($buf) {
+	public function Decode($buf) {
 		$attachment_data = array();
 		if ($this->debug) {
 			echo("<pre>");
