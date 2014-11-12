@@ -22,6 +22,12 @@ class MyMonth {
 	private $_edir;
 	private $_vcal;
 
+/**
+ * Initialize
+ * @param integer $year  year
+ * @param integer $month month
+ * @return void
+ */
 	public function MyMonth($year=0, $month=0) {
 		global $UM, $userfolder;
 		if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050){
@@ -58,6 +64,10 @@ class MyMonth {
 		$this->_vcal->sort();
 	}
 
+	/**
+	 * Return string which has calendar month as HTML table element
+	 * @return string
+	 */
 	public function monthAsTable() {
 		$ret = <<<EOT
 <table class="month"><tr>
@@ -107,10 +117,18 @@ EOT;
 		return $ret;
 	}
 
+	/**
+	 * Output calendar month as HTML table element
+	 * @return void
+	 */
 	public function showMonthAsTable() {
 		echo $this->monthAsTable();
 	}
 
+	/**
+	 * Return string of calendar month as HTML DIV element
+	 * @return string
+	 */
 	public function monthAsDiv() {
 		$end = <<<EOT
 </div>
@@ -124,10 +142,18 @@ EOT;
 		return $ret;
 	}
 
+	/**
+	 * Output calendar month as HTML DIV element
+	 * @return void
+	 */
 	public function showMonthAsDiv() {
 		echo $this->monthAsDiv();
 	}
 
+	/**
+	 * Save calendar events
+	 * @return void
+	 */
 	public function saveEvents() {
 		@mkdir($this->_edir, 0750, true);
 		$this->_vcal->saveCalendar();
@@ -136,6 +162,8 @@ EOT;
 	/**
 	 * returns Array(eventuid, dtstart, dtend, desc, starthour, startmin, stophour, stopmin)
 	 *    The eventuid always contains the date... eg: 20100311_76987 (date + the day uid)
+	 * @param string $day Day
+	 * @return array
 	 */
 	public function getEvent($day) {
 		$reta = array();
@@ -158,7 +186,16 @@ EOT;
 		return $reta;
 	}
 
-	public function setEvent($day, $start, $stop, $val, $dayuid="") {
+	/**
+	 * Create and set an event
+	 * @param  string $day           Day
+	 * @param  string $start         Start time
+	 * @param  string $stop          Stop time
+	 * @param  string $description   Description of event
+	 * @param  string $dayuid        Day ID
+	 * @return boolean
+	 */
+	public function setEvent($day, $start, $stop, $description, $dayuid="") {
 		$ymd = sprintf("%4s%02s%02s", $this->_year, $this->_month, $day);
 		if ($dayuid) {
 			$eventuid = $ymd ."_". $dayuid;
@@ -172,10 +209,15 @@ EOT;
 		$v->setProperty("dtstart", $ymd."T".$start);
 		$v->setProperty("dtend", $ymd."T".$stop);
 		$v->setProperty("uid", $eventuid);
-		$v->setProperty("description", base64_encode($val));
-		$this->_vcal->setComponent($v);
+		$v->setProperty("description", base64_encode($description));
+		return $this->_vcal->setComponent($v);
 	}
 
+	/**
+	 * Delete event from calendar
+	 * @param  string] $eventuid Event ID
+	 * @return boolean
+	 */
 	public function delEvent($eventuid) {
 		return $this->_vcal->deleteComponent($eventuid);
 	}

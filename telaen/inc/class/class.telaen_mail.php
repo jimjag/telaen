@@ -22,9 +22,9 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Check if we are connected to email server
-     * @return boolean
-     */
+	 * Check if we are connected to email server
+	 * @return boolean
+	 */
 	public function mail_connected() {
 		if(!empty($this->mail_connection)) {
 			$sock_status = @socket_get_status($this->mail_connection);
@@ -38,10 +38,10 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Check if supplied folder name is a system folder.
-     * @param string $name The folder name to check
-     * @return boolean
-     */
+	 * Check if supplied folder name is a system folder.
+	 * @param string $name The folder name to check
+	 * @return boolean
+	 */
 	public function is_system_folder($name) {
 		return (in_array(strtolower($name), $this->_system_folders));
 	}
@@ -96,9 +96,9 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Connect to email server. TRUE if successful
-     * @return boolean
-     */
+	 * Connect to email server. TRUE if successful
+	 * @return boolean
+	 */
 	public function mail_connect() {
 		if($this->debug)
 			for($i=0;$i<20;$i++)
@@ -123,6 +123,11 @@ class Telaen extends Telaen_core {
 		} else return true;
 	}
 
+	/**
+	 * Authentication for IMAP
+	 * @param  boolean $checkfolders
+	 * @return booean
+	 */
 	private function _mail_auth_imap($checkfolders=false) {
 		$this->mail_send_command("LOGIN ".$this->mail_user." ".$this->mail_pass);
 		$buffer = $this->mail_get_line();
@@ -136,6 +141,11 @@ class Telaen extends Telaen_core {
 		}
 	}
 
+	/**
+	 * Authentication for POP3
+	 * @param  boolean $checkfolders
+	 * @return booean
+	 */
 	private function _mail_auth_pop($checkfolders=false) {
 		// APOP login mode, more secure
 		if ($this->_haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
@@ -165,10 +175,10 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Check if user is authenticated to the email server
-     * @param boolean $checkfolders Check folder access as well
-     * @return boolean
-     */
+	 * Check if user is authenticated to the email server
+	 * @param boolean $checkfolders Check folder access as well
+	 * @return boolean
+	 */
 	public function mail_auth($checkfolders=false) {
 		$ret = false;
 		if($this->mail_connected()) {
@@ -182,9 +192,9 @@ class Telaen extends Telaen_core {
 	}
 
 	private function _check_folders() {
-		$userfolder				= $this->user_folder;
+		$userfolder		= $this->user_folder;
 		$temporary_directory	= $this->temp_folder;
-		$idle_timeout			= $this->timeout;
+		$idle_timeout		= $this->timeout;
 
 		if(!file_exists($this->user_folder))
 			if(!@mkdir($this->user_folder,$this->dirperm)) die("<h1><br><br><br><center>$error_permiss</center></h1>");
@@ -336,11 +346,11 @@ class Telaen extends Telaen_core {
 	}
 	
 	/**
-     * Retrieve and return specific email message
-     * @param string $msg The message to obtain
-     * @param boolean $check if it exists
-     * @return string
-     */
+	 * Retrieve and return specific email message
+	 * @param string $msg The message to obtain
+	 * @param boolean $check if it exists
+	 * @return string
+	 */
 	public function mail_retr_msg(&$msg,$check=1) {
 		$ret = "";
 		if($this->mail_protocol == "imap") {
@@ -380,10 +390,10 @@ class Telaen extends Telaen_core {
 	}
 	
 	/**
-     * Retrieve and return specific email message headers
-     * @param string $msg The message to obtain
-     * @return string
-     */
+	 * Retrieve and return specific email message headers
+	 * @param string $msg The message to obtain
+	 * @return string
+	 */
 	public function mail_retr_header($msg) {
 		$ret = "";
 		if($this->mail_protocol == "imap") {
@@ -497,12 +507,12 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Delete specific email message
-     * @param string $msg The message to delete
-     * @param boolean $send_to_trash
-     * @param boolean $save_only_read
-     * @return boolean
-     */
+	 * Delete specific email message
+	 * @param string $msg The message to delete
+	 * @param boolean $send_to_trash
+	 * @param boolean $save_only_read
+	 * @return boolean
+	 */
 	public function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
 
 		$ret = 1;
@@ -608,11 +618,11 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Move specific email message
-     * @param string $msg The message to move
-     * @param string $tofolder
-     * @return boolean
-     */
+	 * Move specific email message
+	 * @param string $msg The message to move
+	 * @param string $tofolder
+	 * @return boolean
+	 */
 	public function mail_move_msg($msg,$tofolder) {
 		$ret = 1;
 		if($this->mail_protocol == "imap") {
@@ -815,13 +825,13 @@ class Telaen extends Telaen_core {
 	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
 	 */
 	/**
-     * List all messages in emailbox
-     * @param string $boxname The name of emailbox
-     * @param array $localmessages
-     * @param integer $start
-     * @param integer $wcount
-     * @return array
-     */
+	 * List all messages in emailbox
+	 * @param string $boxname The name of emailbox
+	 * @param array $localmessages
+	 * @param integer $start
+	 * @param integer $wcount
+	 * @return array
+	 */
 	public function mail_list_msgs($boxname = "INBOX", $localmessages = array(), $start=0, $wcount=99999) {
 
 
@@ -1037,10 +1047,10 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * List available emailboxes
-     * @param string $boxname If specific name or glob
-     * @return array
-     */
+	 * List available emailboxes
+	 * @param string $boxname If specific name or glob
+	 * @return array
+	 */
 	public function mail_list_boxes($boxname = "*") {
 		$boxlist = array();
 		/* choose the protocol*/
@@ -1089,10 +1099,10 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Change to specific default emailbox
-     * @param string $boxname Emailbox name to select
-     * @return array
-     */
+	 * Change to specific default emailbox
+	 * @param string $boxname Emailbox name to select
+	 * @return array
+	 */
 	public function mail_select_box($boxname = "INBOX") {
 		/* this function is used only for IMAP servers */
 		if($this->mail_protocol == "imap") {
@@ -1125,10 +1135,10 @@ class Telaen extends Telaen_core {
 
 
 	/**
-     * Subscribe to specific default emailbox
-     * @param string $boxname Emailbox name to subscribe to
-     * @return boolean
-     */
+	 * Subscribe to specific default emailbox
+	 * @param string $boxname Emailbox name to subscribe to
+	 * @return boolean
+	 */
 	public function mail_subscribe_box($boxname = "INBOX") {
 		/* this function is used only for IMAP servers */
 		if($this->mail_protocol == "imap") {
@@ -1145,10 +1155,10 @@ class Telaen extends Telaen_core {
 
 
 	/**
-     * Create a specific default emailbox
-     * @param string $boxname Emailbox name to create
-     * @return boolean
-     */
+	 * Create a specific default emailbox
+	 * @param string $boxname Emailbox name to create
+	 * @return boolean
+	 */
 	public function mail_create_box($boxname) {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
@@ -1170,10 +1180,10 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Delete a specific default emailbox
-     * @param string $boxname Emailbox name to delete
-     * @return boolean
-     */
+	 * Delete a specific default emailbox
+	 * @param string $boxname Emailbox name to delete
+	 * @return boolean
+	 */
 	public function mail_delete_box($boxname) {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
@@ -1200,12 +1210,12 @@ class Telaen extends Telaen_core {
 
 
 	/**
-     * Save email message to specific emailbox
-     * @param string $boxname Emailbox name to save to
-     * @param string $message Message to save
-     * @param string $flags
-     * @return boolean
-     */
+	 * Save email message to specific emailbox
+	 * @param string $boxname Emailbox name to save to
+	 * @param string $message Message to save
+	 * @param string $flags
+	 * @return boolean
+	 */
 	public function mail_save_message($boxname,$message,$flags = "") {
 		if($this->mail_protocol == "imap") {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
@@ -1243,12 +1253,12 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Set flags on specific email message
-     * @param string $msg Email message to set flag for
-     * @param string $flagname Flag to set
-     * @param string $flagtype Set + or Unset -
-     * @return boolean
-     */
+	 * Set flags on specific email message
+	 * @param string $msg Email message to set flag for
+	 * @param string $flagname Flag to set
+	 * @param string $flagtype Set + or Unset -
+	 * @return boolean
+	 */
 	public function mail_set_flag(&$msg,$flagname,$flagtype = "+") {
 		$flagname = strtoupper($flagname);
 		$allowed = array("\\ANSWERED", "\\SEEN", "\\DELETED", "\\DRAFT");
@@ -1320,9 +1330,9 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Disconnect/logout from Email server
-     * @return boolean
-     */
+	 * Disconnect/logout from Email server
+	 * @return boolean
+	 */
 	public function mail_disconnect() {
 		if($this->mail_connected()) {
 			if($this->mail_protocol == "imap") {
@@ -1343,9 +1353,9 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * Disconnect/logout from Email server
-     * @return boolean
-     */
+	 * Disconnect/logout from Email server
+	 * @return boolean
+	 */
 	public function mail_disconnect_force() {
 		if($this->mail_connected()) {
 			$this->mail_send_command("FORCEDQUIT");
@@ -1360,9 +1370,9 @@ class Telaen extends Telaen_core {
 	}
 
 	/**
-     * EXPUNGE email from Email server
-     * @return boolean
-     */
+	 * EXPUNGE email from Email server
+	 * @return boolean
+	 */
 	public function mail_expunge() {
 		if($this->mail_protocol == "imap") {
 			$this->mail_send_command("EXPUNGE");
@@ -1383,9 +1393,9 @@ class Telaen extends Telaen_core {
 	 * squeezed down to a single "_".
 	 */
 	/**
-     * List CAPA output of POP3 server
-     * @return array
-     */
+	 * List CAPA output of POP3 server
+	 * @return array
+	 */
 	public function mail_pop3_capa() {
 		$capa = array();
 		$this->mail_connect();
@@ -1421,11 +1431,11 @@ class Telaen extends Telaen_core {
 	 * only makes sense for single UIDL lookups.
 	 */
 	/**
-     * Get UIDL of specific message or of all
-     * @param string $id ID of message
-     * @param array $message
-     * @return array
-     */
+	 * Get UIDL of specific message or of all
+ 	 * @param string $id ID of message
+	 * @param array $message
+	 * @return array
+	 */
 	private function mail_get_uidl ($id = "", $message = array()) {
 		if(!empty($id)) {
 			if ($this->_haveuidl) {
@@ -1510,98 +1520,97 @@ class Telaen extends Telaen_core {
 		}
 	}
 
-    /**
-     * Check that a string looks like an email address.
-     * @param string $address The email address to check
-     * @param string $patternselect A selector for the validation pattern to use :
-     * * `auto` Pick strictest one automatically;
-     * * `pcre8` Use the squiloople.com pattern, requires PCRE > 8.0, PHP >= 5.3.2, 5.2.14;
-     * * `pcre` Use old PCRE implementation;
-     * * `php` Use PHP built-in FILTER_VALIDATE_EMAIL; same as pcre8 but does not allow 'dotless' domains;
-     * * `html5` Use the pattern given by the HTML5 spec for 'email' type form input elements.
-     * * `noregex` Don't use a regex: super fast, really dumb.
-     * @return boolean
-     */
-    public function is_valid_email($address, $patternselect = 'auto')
-    {
-        if (!$patternselect or $patternselect == 'auto') {
-            //Check this constant first so it works when extension_loaded() is disabled by safe mode
-            //Constant was added in PHP 5.2.4
-            if (defined('PCRE_VERSION')) {
-                //This pattern can get stuck in a recursive loop in PCRE <= 8.0.2
-                if (version_compare(PCRE_VERSION, '8.0.3') >= 0) {
-                    $patternselect = 'pcre8';
-                } else {
-                    $patternselect = 'pcre';
-                }
-            } elseif (function_exists('extension_loaded') and extension_loaded('pcre')) {
-                //Fall back to older PCRE
-                $patternselect = 'pcre';
-            } else {
-                //Filter_var appeared in PHP 5.2.0 and does not require the PCRE extension
-                if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
-                    $patternselect = 'php';
-                } else {
-                    $patternselect = 'noregex';
-                }
-            }
-        }
-        switch ($patternselect) {
-            case 'pcre8':
-                /**
-                 * Uses the same RFC5322 regex on which FILTER_VALIDATE_EMAIL is based, but allows dotless domains.
-                 * @link http://squiloople.com/2009/12/20/email-address-validation/
-                 * @copyright 2009-2010 Michael Rushton
-                 * Feel free to use and redistribute this code. But please keep this copyright notice.
-                 */
-                return (boolean)preg_match(
-                    '/^(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){255,})(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){65,}@)' .
-                    '((?>(?>(?>((?>(?>(?>\x0D\x0A)?[\t ])+|(?>[\t ]*\x0D\x0A)?[\t ]+)?)(\((?>(?2)' .
-                    '(?>[\x01-\x08\x0B\x0C\x0E-\'*-\[\]-\x7F]|\\\[\x00-\x7F]|(?3)))*(?2)\)))+(?2))|(?2))?)' .
-                    '([!#-\'*+\/-9=?^-~-]+|"(?>(?2)(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\x7F]))*' .
-                    '(?2)")(?>(?1)\.(?1)(?4))*(?1)@(?!(?1)[a-z0-9-]{64,})(?1)(?>([a-z0-9](?>[a-z0-9-]*[a-z0-9])?)' .
-                    '(?>(?1)\.(?!(?1)[a-z0-9-]{64,})(?1)(?5)){0,126}|\[(?:(?>IPv6:(?>([a-f0-9]{1,4})(?>:(?6)){7}' .
-                    '|(?!(?:.*[a-f0-9][:\]]){8,})((?6)(?>:(?6)){0,6})?::(?7)?))|(?>(?>IPv6:(?>(?6)(?>:(?6)){5}:' .
-                    '|(?!(?:.*[a-f0-9]:){6,})(?8)?::(?>((?6)(?>:(?6)){0,4}):)?))?(25[0-5]|2[0-4][0-9]|1[0-9]{2}' .
-                    '|[1-9]?[0-9])(?>\.(?9)){3}))\])(?1)$/isD',
-                    $address
-                );
-            case 'pcre':
-                //An older regex that doesn't need a recent PCRE
-                return (boolean)preg_match(
-                    '/^(?!(?>"?(?>\\\[ -~]|[^"])"?){255,})(?!(?>"?(?>\\\[ -~]|[^"])"?){65,}@)(?>' .
-                    '[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*")' .
-                    '(?>\.(?>[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*"))*' .
-                    '@(?>(?![a-z0-9-]{64,})(?>[a-z0-9](?>[a-z0-9-]*[a-z0-9])?)(?>\.(?![a-z0-9-]{64,})' .
-                    '(?>[a-z0-9](?>[a-z0-9-]*[a-z0-9])?)){0,126}|\[(?:(?>IPv6:(?>(?>[a-f0-9]{1,4})(?>:' .
-                    '[a-f0-9]{1,4}){7}|(?!(?:.*[a-f0-9][:\]]){8,})(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,6})?' .
-                    '::(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,6})?))|(?>(?>IPv6:(?>[a-f0-9]{1,4}(?>:' .
-                    '[a-f0-9]{1,4}){5}:|(?!(?:.*[a-f0-9]:){6,})(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,4})?' .
-                    '::(?>(?:[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,4}):)?))?(?>25[0-5]|2[0-4][0-9]|1[0-9]{2}' .
-                    '|[1-9]?[0-9])(?>\.(?>25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}))\])$/isD',
-                    $address
-                );
-            case 'html5':
-                /**
-                 * This is the pattern used in the HTML5 spec for validation of 'email' type form input elements.
-                 * @link http://www.whatwg.org/specs/web-apps/current-work/#e-mail-state-(type=email)
-                 */
-                return (boolean)preg_match(
-                    '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}' .
-                    '[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/sD',
-                    $address
-                );
-            case 'noregex':
-                //No PCRE! Do something _very_ approximate!
-                //Check the address is 3 chars or longer and contains an @ that's not the first or last char
-                return (strlen($address) >= 3
-                    and strpos($address, '@') >= 1
-                    and strpos($address, '@') != strlen($address) - 1);
-            case 'php':
-            default:
-                return (boolean)filter_var($address, FILTER_VALIDATE_EMAIL);
-        }
-    }
+	/**
+	* Check that a string looks like an email address.
+	* @param string $address The email address to check
+	* @param string $patternselect A selector for the validation pattern to use :
+	* * `auto` Pick strictest one automatically;
+	* * `pcre8` Use the squiloople.com pattern, requires PCRE > 8.0, PHP >= 5.3.2, 5.2.14;
+	* * `pcre` Use old PCRE implementation;
+	* * `php` Use PHP built-in FILTER_VALIDATE_EMAIL; same as pcre8 but does not allow 'dotless' domains;
+	* * `html5` Use the pattern given by the HTML5 spec for 'email' type form input elements.
+	* * `noregex` Don't use a regex: super fast, really dumb.
+	* @return boolean
+	*/
+	public function is_valid_email($address, $patternselect = 'auto') {
+		if (!$patternselect or $patternselect == 'auto') {
+			//Check this constant first so it works when extension_loaded() is disabled by safe mode
+			//Constant was added in PHP 5.2.4
+			if (defined('PCRE_VERSION')) {
+				//This pattern can get stuck in a recursive loop in PCRE <= 8.0.2
+				if (version_compare(PCRE_VERSION, '8.0.3') >= 0) {
+				    $patternselect = 'pcre8';
+				} else {
+				    $patternselect = 'pcre';
+				}
+			} elseif (function_exists('extension_loaded') and extension_loaded('pcre')) {
+				//Fall back to older PCRE
+				$patternselect = 'pcre';
+			} else {
+				//Filter_var appeared in PHP 5.2.0 and does not require the PCRE extension
+				if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
+				    $patternselect = 'php';
+				} else {
+				    $patternselect = 'noregex';
+				}
+			}
+		}
+		switch ($patternselect) {
+			case 'pcre8':
+				/**
+				 * Uses the same RFC5322 regex on which FILTER_VALIDATE_EMAIL is based, but allows dotless domains.
+				 * @link http://squiloople.com/2009/12/20/email-address-validation/
+				 * @copyright 2009-2010 Michael Rushton
+				 * Feel free to use and redistribute this code. But please keep this copyright notice.
+				 */
+				return (boolean)preg_match(
+				    '/^(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){255,})(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){65,}@)' .
+				    '((?>(?>(?>((?>(?>(?>\x0D\x0A)?[\t ])+|(?>[\t ]*\x0D\x0A)?[\t ]+)?)(\((?>(?2)' .
+				    '(?>[\x01-\x08\x0B\x0C\x0E-\'*-\[\]-\x7F]|\\\[\x00-\x7F]|(?3)))*(?2)\)))+(?2))|(?2))?)' .
+				    '([!#-\'*+\/-9=?^-~-]+|"(?>(?2)(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\x7F]))*' .
+				    '(?2)")(?>(?1)\.(?1)(?4))*(?1)@(?!(?1)[a-z0-9-]{64,})(?1)(?>([a-z0-9](?>[a-z0-9-]*[a-z0-9])?)' .
+				    '(?>(?1)\.(?!(?1)[a-z0-9-]{64,})(?1)(?5)){0,126}|\[(?:(?>IPv6:(?>([a-f0-9]{1,4})(?>:(?6)){7}' .
+				    '|(?!(?:.*[a-f0-9][:\]]){8,})((?6)(?>:(?6)){0,6})?::(?7)?))|(?>(?>IPv6:(?>(?6)(?>:(?6)){5}:' .
+				    '|(?!(?:.*[a-f0-9]:){6,})(?8)?::(?>((?6)(?>:(?6)){0,4}):)?))?(25[0-5]|2[0-4][0-9]|1[0-9]{2}' .
+				    '|[1-9]?[0-9])(?>\.(?9)){3}))\])(?1)$/isD',
+				    $address
+				);
+			case 'pcre':
+				//An older regex that doesn't need a recent PCRE
+				return (boolean)preg_match(
+				    '/^(?!(?>"?(?>\\\[ -~]|[^"])"?){255,})(?!(?>"?(?>\\\[ -~]|[^"])"?){65,}@)(?>' .
+				    '[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*")' .
+				    '(?>\.(?>[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*"))*' .
+				    '@(?>(?![a-z0-9-]{64,})(?>[a-z0-9](?>[a-z0-9-]*[a-z0-9])?)(?>\.(?![a-z0-9-]{64,})' .
+				    '(?>[a-z0-9](?>[a-z0-9-]*[a-z0-9])?)){0,126}|\[(?:(?>IPv6:(?>(?>[a-f0-9]{1,4})(?>:' .
+				    '[a-f0-9]{1,4}){7}|(?!(?:.*[a-f0-9][:\]]){8,})(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,6})?' .
+				    '::(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,6})?))|(?>(?>IPv6:(?>[a-f0-9]{1,4}(?>:' .
+				    '[a-f0-9]{1,4}){5}:|(?!(?:.*[a-f0-9]:){6,})(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,4})?' .
+				    '::(?>(?:[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,4}):)?))?(?>25[0-5]|2[0-4][0-9]|1[0-9]{2}' .
+				    '|[1-9]?[0-9])(?>\.(?>25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}))\])$/isD',
+				    $address
+				);
+			case 'html5':
+				/**
+				 * This is the pattern used in the HTML5 spec for validation of 'email' type form input elements.
+				 * @link http://www.whatwg.org/specs/web-apps/current-work/#e-mail-state-(type=email)
+				 */
+				return (boolean)preg_match(
+				    '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}' .
+				    '[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/sD',
+				    $address
+				);
+			case 'noregex':
+				//No PCRE! Do something _very_ approximate!
+				//Check the address is 3 chars or longer and contains an @ that's not the first or last char
+				return (strlen($address) >= 3
+				    and strpos($address, '@') >= 1
+				    and strpos($address, '@') != strlen($address) - 1);
+			case 'php':
+			default:
+				return (boolean)filter_var($address, FILTER_VALIDATE_EMAIL);
+		}
+	}
 
 }
 

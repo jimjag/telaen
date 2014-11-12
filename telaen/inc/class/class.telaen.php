@@ -42,10 +42,10 @@ class Telaen_core {
 
 
 	/**
-	Open a file and read it until a double line break
-	is reached.
-	Used to get the list of cached messages from cache
-	*/
+	 * Open a file and read it until a double line break
+	 * is reached.
+	 * Used to get the list of cached messages from cache
+	 */
 
 	private function _get_headers_from_cache($strfile) {
 		if(!file_exists($strfile)) return;
@@ -65,9 +65,9 @@ class Telaen_core {
 
 
 	/**
-	Open a file and read it fixing possible mistakes 
-	on the line breaks. A single variable is returned
-	*/
+	 * Open a file and read it fixing possible mistakes
+	 * on the line breaks. A single variable is returned
+	 */
 
 	private function _read_file($strfile) {
 		if($strfile == "" || !file_exists($strfile)) return;
@@ -80,15 +80,11 @@ class Telaen_core {
 	}
 
 	/**
-	Save the specified $content to disk using the $filename path
-	*/
-
-	/**
-     * Save content to file
-     * @param string $filename The filename to write to
-     * @param string $content The content to write
-     * @return boolean
-     */
+	 * Save content to file
+	 * @param string $filename The filename to write to
+	 * @param string $content The content to write
+	 * @return boolean
+	 */
 	public function save_file($filename,$content) {
 		$ret = false;
 		$tmpfile = fopen($filename,"wb");
@@ -103,8 +99,8 @@ class Telaen_core {
 
 
 	/**
-	Recursivelly remove files and directories
-	*/
+	 * Recursivelly remove files and directories
+	 */
 
 	private function _RmdirR($location) {
 
@@ -126,16 +122,11 @@ class Telaen_core {
 
 
 	/**
-	Encode header strings to be compliant with MIME format
-	
-	TODO: i18n: Implement base64 encoding according to charsets
-	*/
-
-	/**
-     * Encode header strings to be compliant with MIME format
-     * @param string $string The string to encode
-     * @return string
-     */
+	 * Encode header strings to be compliant with MIME format
+	 * TODO: i18n: Implement base64 encoding according to charsets
+	 * @param string $string The string to encode
+	 * @return string
+	 */
 	public function mime_encode_headers($string) {
 		if($string == "") return;
 		if(!preg_match("/^([[:print:]]*)$/",$string))
@@ -145,10 +136,10 @@ class Telaen_core {
 
 
 	/**
-	Add a body, to a container. 
-	Some malformed messages have more than one body. 
-	Used to display inline attachments (images) too.
-	*/
+	 * Add a body, to a container. 
+	 * Some malformed messages have more than one body. 
+	 * Used to display inline attachments (images) too.
+	 */
 	private function add_body($strbody) {
 		global $block_external_images;
 		if($this->sanitize)
@@ -161,10 +152,9 @@ class Telaen_core {
 
 
 	/**
-	This function, if running under PHP 4.3+ will convert any string between charsets.
-	If running under PHP < 4.3, will convert the string to PHP's default charset (iso-8859-1)
-	*/
-
+	 * This function, if running under PHP 4.3+ will convert any string between charsets.
+	 * If running under PHP < 4.3, will convert the string to PHP's default charset (iso-8859-1)
+	 */
 	private function convert_charset($string, $from, $to) {
 		$string = @htmlentities($string, ENT_COMPAT, $from);
 		if(function_exists('html_entity_decode')) { //PHP 4.3+
@@ -177,9 +167,8 @@ class Telaen_core {
 	}
 
 	/**
-	Decode headers strings. Inverse of mime_encode_headers()
-	*/
-
+	 * Decode headers strings. Inverse of mime_encode_headers()
+	 */
 	private function decode_mime_string($subject) {
 		$string = $subject;
 
@@ -216,16 +205,16 @@ class Telaen_core {
 
 
 	/**
-	Split headers into an array, where the key is the same found in the header.
-	
-	Subject: Hi 
-	
-		will be converted in
-	
-	$decodedheaders["subject"] = "Hi";
-	
-	Some headers are broken into multiples lines, prefixed with a TAB (\t)
-	*/
+	 * Split headers into an array, where the key is the same found in the header.
+	 * 
+	 * Subject: Hi 
+	 * 
+	 * 	will be converted in
+	 * 
+	 * $decodedheaders["subject"] = "Hi";
+	 * 
+	 * Some headers are broken into multiples lines, prefixed with a TAB (\t)
+	 */
 	private function decode_header($header) {
 		$headers = explode("\r\n",$header);
 		$decodedheaders = array();
@@ -258,11 +247,10 @@ class Telaen_core {
 
 
 	/**
-	Try to extract all names in a specified field (from, to, cc)
-	In order to guess what is the format (the RFC support 3), it will
-	try different ways to get an array with name and email
-	*/
-
+	 * Try to extract all names in a specified field (from, to, cc)
+	 * In order to guess what is the format (the RFC support 3), it will
+	 * try different ways to get an array with name and email
+	 */
 	public function get_names($strmail) {
 		$ARfrom = array();
 		$strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
@@ -322,11 +310,10 @@ class Telaen_core {
 	}
 
 	/**
-	Try to extract the first name in a specified field (from, to, cc)
-	In order to guess what is the format (the RFC support 3), it will
-	try different ways to get the name and email
-	*/
-
+	 * Try to extract the first name in a specified field (from, to, cc)
+	 * In order to guess what is the format (the RFC support 3), it will
+	 * try different ways to get the name and email
+	 */
 	private function get_first_of_names($strmail) {
 		$ARfrom = array();
 		$strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
@@ -384,10 +371,9 @@ class Telaen_core {
 	}
 
 	/**
-	Compile a body for multipart/alternative format.
-	Guess the format we want and add it to the bod container
-	*/
-
+	 * Compile a body for multipart/alternative format.
+	 * Guess the format we want and add it to the bod container
+	 */
 	private function build_alternative_body($ctype,$body) {
 
 		// get the boundary
@@ -445,11 +431,10 @@ class Telaen_core {
 	}
 
 	/**
-	Recursively compile the parts of multipart/* emails.
-	'complex' means multipart/signed|mixed|related|report and other 
-	types that can be added in the future
-	*/
-
+	 *  Recursively compile the parts of multipart/* emails.
+	 * 'complex' means multipart/signed|mixed|related|report and other 
+	 * types that can be added in the future
+	 */
 	private function build_complex_body($ctype,$body) {
 
 		global $sid,$lid,$ix,$folder;
@@ -553,26 +538,24 @@ class Telaen_core {
 
 
 	/**
-	Format a plain text string into a HTML formated string
-	*/
-
+	 * Format a plain text string into a HTML formated string
+	 */
 	private function build_text_body($body) {
 		$body = preg_replace('/(\r\n|\n|\r|\n\r)/',"<br>$1",$this->make_link_clickable(htmlspecialchars($body)));
 		return "<font face=\"Courier New\" size=\"2\">$body</font>";
 	}
 
 	/**
-	Decode Quoted-Printable strings
-	*/
+	 * Decode Quoted-Printable strings
+	 */
 	private function decode_qp($str) {
 		return quoted_printable_decode(preg_replace('|=\r?\n|', "", $str));
 	}
 
 
 	/**
-	Convert URL and Emails into clickable links
-	*/
-
+	 * Convert URL and Emails into clickable links
+	 */
 	private function make_link_clickable($str){
 
 		$str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "$1<a class=autolink href=\"$2\" target=\"_blank\">$2</a>", $str); //http 
@@ -588,10 +571,9 @@ class Telaen_core {
 
 
 	/**
-	Guess the type of the part and call the apropriated 
-	method
-	*/
-
+	 * Guess the type of the part and call the apropriated 
+	 * method
+	 */
 	private function process_message($header,$body) {
 		$mail_info = $this->get_mail_info($header);
 		$ctype = $mail_info["content-type"];
@@ -643,10 +625,9 @@ class Telaen_core {
 	}
 
 	/**
-	Compile the attachment, saving it to cache and 
-	add it to the $attachments array if needed
-	*/
-
+	 * Compile the attachment, saving it to cache and 
+	 * add it to the $attachments array if needed
+	 */
 	private function build_attach($header,$body,$boundary,$part) {
 
 		global $mail,$temporary_directory,$userfolder;
@@ -727,9 +708,8 @@ class Telaen_core {
 
 
 	/**
-	Compile a string following the encoded method
-	*/
-
+	 * Compile a string following the encoded method
+	 */
 	private function compile_body($body,$enctype,$ctype) {
 
 		$enctype = explode(" ",$enctype); $enctype = $enctype[0];
@@ -776,9 +756,8 @@ class Telaen_core {
 	*/
 
 	/**
-	Guess the attachment format and call the specific method
-	*/
-
+	 * Guess the attachment format and call the specific method
+	 */
 	private function save_attach($header,&$body,$filename,$type="mime",$tnef="-1",$bound) {
 		switch($type) {
 		case "uue": 
@@ -792,14 +771,21 @@ class Telaen_core {
 		}
 	}
 
+	/**
+	 * True if string is a valid MD5 hash
+	 * @param  string  $val Possible MD5 hash
+	 * @return boolean
+	 */
 	public function is_valid_md5($val) {
 		return preg_match('|^[A-Fa-f0-9]{32}$|D',$val);
 	}
 
 	/**
-	Guess all needed information about this mail
-	*/
-	
+	 * Get all needed info about an email message
+	 * @param  string $header Header of email
+	 * @param  string $first  Names
+	 * @return array
+	 */
 	public function get_mail_info($header, $first="ALL") {
 
 		$myarray = array();
@@ -868,10 +854,9 @@ class Telaen_core {
 
 
 	/**
-	Convert a TIMESTAMP value into a RFC-compliant date
-	Vola's note: I think it does exactly the opposite...
-	*/
-
+	 * Convert a TIMESTAMP value into a RFC-compliant date
+	 * Vola's note: I think it does exactly the opposite...
+	 */
 	public function build_mime_date($mydate,$timezone = "+0000") {
 
 		global $server_timezone_offset;
@@ -912,8 +897,10 @@ class Telaen_core {
 
 
 	/**
-	Main method called by script, start the decoding process
-	*/
+	 * Main method called by script, start the decoding process
+	 * @param string $email Email message
+	 * @return array
+	 */
 	public function Decode($email) {
 		$email = $this->fetch_structure($email);
 		$this->_msgbody = "";
@@ -939,9 +926,8 @@ class Telaen_core {
 	}
 
 	/**
-	Split an email by its boundary
-	*/
-
+	 * Split an email by its boundary
+	 */
 	private function split_parts($boundary,$body) {
 		$startpos = strpos($body,$boundary)+strlen($boundary)+2;
 		$lenbody = strpos($body,"\r\n$boundary--") - $startpos;
@@ -950,9 +936,10 @@ class Telaen_core {
 	}
 
 	/**
-	Split header and body into an array
-	*/
-
+	 * Split header and body into an array
+	 * @param  string $email Email message
+	 * @return array
+	 */
 	public function fetch_structure($email) {
 		$ARemail = array();
 		$separador = "\r\n\r\n";
@@ -965,9 +952,8 @@ class Telaen_core {
 	}
 
 	/**
-	Guess the boundary from header
-	*/
-
+	 * Guess the boundary from header
+	 */
 	private function get_boundary($ctype){
 		if(preg_match('|boundary[ ]?=[ ]?["]?([^";]*)["]?.*$|iD',$ctype,$regs)) {	 //preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
 			//$boundary = preg_replace('/^\"(.*)\"$/', "$1", $regs[1])
@@ -976,9 +962,8 @@ class Telaen_core {
 	}
 
 	/**
-	Oposite of htmlentities.
-	*/
-
+	 * Oposite of htmlentities.
+	 */
 	private function unhtmlentities ($string) {
 		$trans_tbl = get_html_translation_table (HTML_ENTITIES);
 		$trans_tbl = array_flip ($trans_tbl);
@@ -986,8 +971,8 @@ class Telaen_core {
 	}
 
 	/**
-	Format a HTML message to be displayed as text if allow_html is off
-	*/
+	 * Format a HTML message to be displayed as text if allow_html is off
+	 */
 	private function html2text($str) {
 		return $this->unhtmlentities(preg_replace(
 				array(	"'<(SCRIPT|STYLE)[^>]*?>.*?</(SCRIPT|STYLE)[^>]*?>'si",
@@ -1005,8 +990,8 @@ class Telaen_core {
 	}
 	
 	/**
-	Decode UUEncoded attachments
-	*/
+	 * Decode UUEncoded attachments
+	 */
 	private function UUDecode($data) {
 		$b64chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/A';
 		$uudchars='`!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_ ';
@@ -1027,9 +1012,8 @@ class Telaen_core {
 	}
 
 	/**
-	Guess all UUEncoded in the body
-	*/
-
+	 * Guess all UUEncoded in the body
+	 */
 	private function extract_uuencoded(&$body) {
 		$regex = "/(begin ([0-7]{3}) (.+))\r?\n(.+)\r?\nend/Us";
 		preg_match_all($regex, $body, $matches);
@@ -1058,9 +1042,8 @@ class Telaen_core {
 
 
 	/**
-	Extract all attachmentes contained in a MS-TNEF attachment
-	*/
-
+	 * Extract all attachmentes contained in a MS-TNEF attachment
+	 */
 	private function extract_tnef(&$body,$boundary,$part) {
 		$tnefobj = $this->_tnef->Decode($body);
 
@@ -1086,11 +1069,12 @@ class Telaen_core {
 	}
 
 	/**
-	Used for IMAP servers wich uses INBOX. as prefix for folder names
-	Removes or add the prefix to the folder
-	*/
-
-	public function fix_prefix($folder,$add = 0) {
+	 * Removes or Add prefix to INBOX folder names as required
+	 * @param  string  $folder Folder name
+	 * @param  boolean $add    Add prefix?
+	 * @return string
+	 */
+	public function fix_prefix($folder,$add = false) {
 		if($this->mail_protocol == "imap" &&
 			!preg_match('|^inbox$|i',$folder) && 
 			$this->mail_prefix && 
