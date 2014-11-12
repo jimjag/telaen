@@ -48,7 +48,7 @@ class Telaen extends Telaen_core {
 		return (in_array(strtolower($name), $this->_system_folders));
 	}
 
-	private function mail_get_line() {
+	private function _mail_get_line() {
 		$buffer = fgets($this->mail_connection,8192);
 		$buffer = preg_replace('|\r?\n|',"\r\n",$buffer);
 		if($this->debug) {
@@ -73,7 +73,7 @@ class Telaen extends Telaen_core {
 	 * send or an array of command strings that will be
 	 * sent one after another in order.
 	 */
-	private function mail_send_command($cmds, $killSid = false) {
+	private function _mail_send_command($cmds, $killSid = false) {
 
 		if($this->mail_connected()) {
 			if (!is_array($cmds)) {
@@ -108,7 +108,7 @@ class Telaen extends Telaen_core {
 		if(!$this->mail_connected()) {
 			$this->mail_connection = fsockopen($this->mail_server, $this->mail_port, $errno, $errstr, 15);
 			if($this->mail_connection) {
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 				if($this->mail_protocol == IMAP)
 					$regexp = "/^([ ]?\\*[ ]?OK)/";
 				else { 
@@ -130,9 +130,9 @@ class Telaen extends Telaen_core {
 	 * @param  boolean $checkfolders
 	 * @return booean
 	 */
-	private function mail_auth_imap($checkfolders=false) {
-		$this->mail_send_command("LOGIN ".$this->mail_user." ".$this->mail_pass);
-		$buffer = $this->mail_get_line();
+	private function _mail_auth_imap($checkfolders=false) {
+		$this->_mail_send_command("LOGIN ".$this->mail_user." ".$this->mail_pass);
+		$buffer = $this->_mail_get_line();
 		if(preg_match("/^(".$this->_sid." OK)/",$buffer)) { 
 			if($checkfolders)
 				$this->_check_folders();
@@ -148,24 +148,24 @@ class Telaen extends Telaen_core {
 	 * @param  boolean $checkfolders
 	 * @return booean
 	 */
-	private function mail_auth_pop($checkfolders=false) {
+	private function _mail_auth_pop($checkfolders=false) {
 		// APOP login mode, more secure
 		if ($this->haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
-			$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
+			$this->_mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
 		} 
 		// Classic login mode
 		else {
-			$this->mail_send_command("USER ".$this->mail_user);
+			$this->_mail_send_command("USER ".$this->mail_user);
 		
-			$buffer = $this->mail_get_line();
+			$buffer = $this->_mail_get_line();
 			if (substr($buffer, 0, 3) == "+OK") {
-				$this->mail_send_command("PASS ".$this->mail_pass);
+				$this->_mail_send_command("PASS ".$this->mail_pass);
 			}	
 			else 
 				return false;
 		}
 
-		$buffer = $this->mail_get_line();
+		$buffer = $this->_mail_get_line();
 		if(substr($buffer, 0, 3) == "+OK") {
 			if($checkfolders)
 				$this->_check_folders();
@@ -185,9 +185,9 @@ class Telaen extends Telaen_core {
 		$ret = false;
 		if($this->mail_connected()) {
 			if ($this->mail_protocol == IMAP) {
-				$ret = $this->mail_auth_imap($checkfolders);
+				$ret = $this->_mail_auth_imap($checkfolders);
 			} else {
-				$ret = $this->mail_auth_pop($checkfolders);
+				$ret = $this->_mail_auth_pop($checkfolders);
 			}
 		}
 		return $ret;
@@ -245,7 +245,7 @@ class Telaen extends Telaen_core {
 		}
 	}
 	
-	private function mail_retr_msg_imap(&$msg,$check=1) {
+	private function _mail_retr_msg_imap(&$msg,$check=1) {
 		global $error_retrieving;
 		$msgheader = $msg["header"];
 
@@ -253,13 +253,13 @@ class Telaen extends Telaen_core {
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
 				$boxinfo = $this->mail_select_box($msg["folder"]);
 
-			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
-			$buffer = chop($this->mail_get_line());
+			$this->_mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+			$buffer = chop($this->_mail_get_line());
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				if(preg_match('|message-id: (.*)|i',$buffer,$regs))
 					$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
-				$buffer = chop($this->mail_get_line());
+				$buffer = chop($this->_mail_get_line());
 			}
 
 			if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
@@ -271,17 +271,17 @@ class Telaen extends Telaen_core {
 		if(file_exists($msg["localname"])) {
 			$msgcontent = $this->read_file($msg["localname"]);
 		} else {
-			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY[TEXT]");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY[TEXT]");
+			$buffer = $this->_mail_get_line();
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			if(preg_match('|\\{(.*)\\}|',$buffer,$regs))
 				$bytes = $regs[1];
 
-			$buffer = $this->mail_get_line();
+			$buffer = $this->_mail_get_line();
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				if(!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i',$buffer))
 					$msgbody .= $buffer;
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 			}
 			$pos = strrpos($msgbody, ")");
 			if(!($pos === false))
@@ -295,11 +295,11 @@ class Telaen extends Telaen_core {
 		return $msgcontent;
 	}
 
-	private function mail_retr_msg_pop(&$msg,$check=1) {
+	private function _mail_retr_msg_pop(&$msg,$check=1) {
 		global $mail_use_top,$error_retrieving;
 
 		if($check && (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam")) {
-			if ($msg["uidl"] && ($msg["uidl"] != $this->mail_get_uidl($msg["msg"]))) {
+			if ($msg["uidl"] && ($msg["uidl"] != $this->_mail_get_uidl($msg["msg"]))) {
 				$this->mail_error_msg = $error_retrieving;
 				return false;
 			}
@@ -310,15 +310,15 @@ class Telaen extends Telaen_core {
 		} elseif (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam") {
 
 			$command = ($mail_use_top)?"TOP ".$msg["msg"]." ".$msg["size"]:"RETR ".$msg["msg"];
-			$this->mail_send_command($command);
+			$this->_mail_send_command($command);
 
-			$buffer = $this->mail_get_line();
+			$buffer = $this->_mail_get_line();
 
 			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return false; }
 			$last_buffer = 0;
 			$msgcontent = "";
 			while (!feof($this->mail_connection)) {
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 				if(chop($buffer) == ".")
 					break;
 				$msgcontent .= $buffer;
@@ -332,7 +332,7 @@ class Telaen extends Telaen_core {
 			// time from the server, we need to add in our UIDL
 			// header. Thus, it will always now be available on
 			// the cached/local version.
-			$uidl = $this->mail_get_uidl($msg["msg"], $mail_info);
+			$uidl = $this->_mail_get_uidl($msg["msg"], $mail_info);
 			$header .= "\r\nX-UM-UIDL: $uidl";
 
 			// Update globally
@@ -356,29 +356,29 @@ class Telaen extends Telaen_core {
 	public function mail_retr_msg(&$msg,$check=1) {
 		$ret = "";
 		if($this->mail_protocol == IMAP) {
-			$ret = $this->mail_retr_msg_imap($msg,$check);
+			$ret = $this->_mail_retr_msg_imap($msg,$check);
 		} else {
-			$ret = $this->mail_retr_msg_pop($msg,$check);
+			$ret = $this->_mail_retr_msg_pop($msg,$check);
 		}
 		return $ret;
 	}
 
-	private function mail_retr_header_imap($msg) {
+	private function _mail_retr_header_imap($msg) {
 		/* This assumes that we read in the entire boxes in imap. */
 		return $msg["header"];
 	}
 
-	private function mail_retr_header_pop($msg) {
+	private function _mail_retr_header_pop($msg) {
 		/*
 		 * Fetch headers serially. Very slow.
 		 */
-		$this->mail_send_command("TOP ".$msg["msg"]." 0");
-		$buffer = $this->mail_get_line();
+		$this->_mail_send_command("TOP ".$msg["msg"]." 0");
+		$buffer = $this->_mail_get_line();
 		/* if any problem with this messages list, stop the procedure */
 		if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return false; }
 
 		while (!feof($this->mail_connection)) {
-			$buffer = $this->mail_get_line();
+			$buffer = $this->_mail_get_line();
 			if(chop($buffer) == ".") 
 				break;
 			if(strlen($buffer) > 3) 
@@ -399,15 +399,15 @@ class Telaen extends Telaen_core {
 	public function mail_retr_header($msg) {
 		$ret = "";
 		if($this->mail_protocol == IMAP) {
-			$ret = $this->mail_retr_header_imap($msg);
+			$ret = $this->_mail_retr_header_imap($msg);
 		} else {
-			$ret = $this->mail_retr_header_pop($msg);
+			$ret = $this->_mail_retr_header_pop($msg);
 		}
 		return $ret;
 	}
 
 
-	private function mail_delete_msg_imap($msg, $send_to_trash = 1, $save_only_read = 0) {
+	private function _mail_delete_msg_imap($msg, $send_to_trash = 1, $save_only_read = 0) {
 	
 		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
 
@@ -415,8 +415,8 @@ class Telaen extends Telaen_core {
 		if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
 			$boxinfo = $this->mail_select_box($msg["folder"]);
 
-		$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
-		$buffer = chop($this->mail_get_line());
+		$this->_mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+		$buffer = chop($this->_mail_get_line());
 
 		/* if any problem with the server, stop the function */
 		if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
@@ -427,7 +427,7 @@ class Telaen extends Telaen_core {
 			if(preg_match('|message-id: (.*)|i',$buffer,$regs))
 				$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
 
-			$buffer = chop($this->mail_get_line());
+			$buffer = chop($this->_mail_get_line());
 		}
 
 
@@ -445,8 +445,8 @@ class Telaen extends Telaen_core {
 
 			$trash_folder = $this->fix_prefix("trash",1);
 
-			$this->mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$trash_folder\"");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$trash_folder\"");
+			$buffer = $this->_mail_get_line();
 
 			/* if any problem with the server, stop the function */
 			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
@@ -464,7 +464,7 @@ class Telaen extends Telaen_core {
 		return true;
 	}
 
-	private function mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0) {
+	private function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0) {
 	
 		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
 
@@ -473,7 +473,7 @@ class Telaen extends Telaen_core {
 		if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
 
 			/* compare the old and the new message uidl, if different, stop*/
-			if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
+			if ($msg["uidl"] != $this->_mail_get_uidl($msg["msg"])) {
 				$this->mail_error_msg = $error_retrieving;
 				return false;
 			}
@@ -483,8 +483,8 @@ class Telaen extends Telaen_core {
 				$this->mail_set_flag($msg,"\\SEEN","-");
 			}
 
-			$this->mail_send_command("DELE ".$msg["msg"]);
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("DELE ".$msg["msg"]);
+			$buffer = $this->_mail_get_line();
 			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return false; }
 		}
 
@@ -519,22 +519,22 @@ class Telaen extends Telaen_core {
 
 		$ret = 1;
 		if($this->mail_protocol == IMAP) {
-			$ret = $this->mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
+			$ret = $this->_mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
 		} else {
-			$ret = $this->mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
+			$ret = $this->_mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
 		}
 		return $ret;
 	}
 
 
-	private function mail_move_msg_imap($msg,$tofolder) {
+	private function _mail_move_msg_imap($msg,$tofolder) {
 		if(strtolower($tofolder) != strtolower($msg["folder"])) {
 			/* check the message id to make sure that the messages still in the server */
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
 				$boxinfo = $this->mail_select_box($msg["folder"]);
 	
-			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
-			$buffer = chop($this->mail_get_line());
+			$this->_mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+			$buffer = chop($this->_mail_get_line());
 
 			/* if any problem with the server, stop the function */
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
@@ -545,7 +545,7 @@ class Telaen extends Telaen_core {
 				if(preg_match('|message-id: (.*)|i',$buffer,$regs))
 					$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
 
-				$buffer = chop($this->mail_get_line());
+				$buffer = chop($this->_mail_get_line());
 			}
 
 
@@ -557,8 +557,8 @@ class Telaen extends Telaen_core {
 
 			$tofolder = $this->fix_prefix($tofolder,1);
 			
-			$this->mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$tofolder\"");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$tofolder\"");
+			$buffer = $this->_mail_get_line();
 
 			/* if any problem with the server, stop the function */
 			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
@@ -575,14 +575,14 @@ class Telaen extends Telaen_core {
 		return true;
 	}
 
-	private function mail_move_msg_pop($msg,$tofolder) {
+	private function _mail_move_msg_pop($msg,$tofolder) {
 		if((strtoupper($tofolder) != "INBOX" && strtoupper($tofolder) != "SPAM") && strtolower($tofolder) != strtolower($msg["folder"])) {
 			/* now we are working with POP3 */
 			/* check the message id to make sure that the messages still in the server */
 			if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
 		
 				/* compare the old and the new message id, if different, stop*/
-				if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
+				if ($msg["uidl"] != $this->_mail_get_uidl($msg["msg"])) {
 					$this->mail_error_msg = $error_retrieving;
 					return false;
 				}
@@ -603,8 +603,8 @@ class Telaen extends Telaen_core {
 					unlink($currentname);
 					// delete from server if we are working on inbox or spam
 					if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
-						$this->mail_send_command("DELE ".$msg["msg"]);
-						$buffer = $this->mail_get_line();
+						$this->_mail_send_command("DELE ".$msg["msg"]);
+						$buffer = $this->_mail_get_line();
 						if(substr($buffer, 0, 3) != "+OK") {
 							$this->mail_error_msg = $buffer;
 							return false;
@@ -628,15 +628,15 @@ class Telaen extends Telaen_core {
 	public function mail_move_msg($msg,$tofolder) {
 		$ret = 1;
 		if($this->mail_protocol == IMAP) {
-			$ret = $this->mail_move_msg_imap($msg,$tofolder);
+			$ret = $this->_mail_move_msg_imap($msg,$tofolder);
 		} else {
-			$ret = $this->mail_move_msg_pop($msg,$tofolder);
+			$ret = $this->_mail_move_msg_pop($msg,$tofolder);
 		}
 		return $ret;
 	}
 
 
-	private function mail_list_msgs_imap($boxname = "INBOX", $localmessages = array()) {
+	private function _mail_list_msgs_imap($boxname = "INBOX", $localmessages = array()) {
 
 		if($this->is_system_folder($boxname))
 			$boxname = strtolower($boxname);
@@ -651,8 +651,8 @@ class Telaen extends Telaen_core {
 			/* if the box is ok, fetch the first to the last message, getting the size and the header */
 			/* This is FAST under IMAP, so we scarf the whole dataset */
 
-			$this->mail_send_command("FETCH 1:".$boxinfo["exists"]." (FLAGS RFC822.SIZE RFC822.HEADER)");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("FETCH 1:".$boxinfo["exists"]." (FLAGS RFC822.SIZE RFC822.HEADER)");
+			$buffer = $this->_mail_get_line();
 
 			/* if any problem, stop the procedure */
 
@@ -683,7 +683,7 @@ class Telaen extends Telaen_core {
 						$counter++;
 						$header = "";
 					}
-					$buffer = $this->mail_get_line();
+					$buffer = $this->_mail_get_line();
 				}
 			}
 		}
@@ -691,7 +691,7 @@ class Telaen extends Telaen_core {
 
 	}
 
-	private function mail_list_msgs_pop($boxname = "INBOX", $localmessages = array()) {
+	private function _mail_list_msgs_pop($boxname = "INBOX", $localmessages = array()) {
 		global $userfolder;
 		// $this->havespam = "";
 
@@ -713,8 +713,8 @@ class Telaen extends Telaen_core {
 		need to.
 		*/
 		if(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") {
-			$this->mail_send_command("LIST");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("LIST");
+			$buffer = $this->_mail_get_line();
 			/* if any problem with this messages list, stop the procedure */
 
 			if(substr($buffer, 0, 3) != "+OK")	{
@@ -725,7 +725,7 @@ class Telaen extends Telaen_core {
 			$counter = 0;
 
 			while (!feof($this->mail_connection)) {
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 				$buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
 				if($buffer == ".") 
 					break;
@@ -759,7 +759,7 @@ class Telaen extends Telaen_core {
 				 * have or haven't.
 				 */	
 				$oldid = $localmessages[$localcount - 1]["uidl"];
-				$newid = $this->mail_get_uidl($messages[$localcount - 1]["msg"]);
+				$newid = $this->_mail_get_uidl($messages[$localcount - 1]["msg"]);
 
 				if ("$oldid" == "$newid") {
 				// Ok the ids are the same and we have new messages
@@ -847,9 +847,9 @@ class Telaen extends Telaen_core {
 
 		/* choose the protocol */
 		if($this->mail_protocol == IMAP) {
-			$messages = $this->mail_list_msgs_imap($boxname, $localmessages);
+			$messages = $this->_mail_list_msgs_imap($boxname, $localmessages);
 		} else {
-			$messages = $this->mail_list_msgs_pop($boxname, $localmessages);
+			$messages = $this->_mail_list_msgs_pop($boxname, $localmessages);
 			if (!is_array($messages)) {
 				$shortcut = array();
 				$shortcut[0] = array();
@@ -949,7 +949,7 @@ class Telaen extends Telaen_core {
 				$messagescopy[$j]["cc"]		= $mail_info["cc"];
 				$messagescopy[$j]["priority"]	= $mail_info["priority"];
 				$messagescopy[$j]["uidl"]	= ((!$this->is_valid_md5($mail_info["uidl"])) ?
-									$this->mail_get_uidl($messagescopy[$j]["msg"], $mail_info) :
+									$this->_mail_get_uidl($messagescopy[$j]["msg"], $mail_info) :
 									$mail_info["uidl"]);
 				$messagescopy[$j]["attach"] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
 									$mail_info["content-type"]))?1:0;
@@ -993,7 +993,7 @@ class Telaen extends Telaen_core {
 				$spamcopy[$y]["cc"]		= $mail_info["cc"];
 				$spamcopy[$y]["priority"]	= $mail_info["priority"];
 				$spamcopy[$y]["uidl"]		= ((!$this->is_valid_md5($mail_info["uidl"])) ?
-									$this->mail_get_uidl($spamcopy[$y]["msg"], $mail_info) :
+									$this->_mail_get_uidl($spamcopy[$y]["msg"], $mail_info) :
 									$mail_info["uidl"]);
 				$spamcopy[$y]["attach"]		= (preg_match('#(multipart/mixed|multipart/related|application)#i',
 									 $mail_info["content-type"]))?1:0;
@@ -1057,8 +1057,8 @@ class Telaen extends Telaen_core {
 		$boxlist = array();
 		/* choose the protocol*/
 		if($this->mail_protocol == IMAP) {
-			$this->mail_send_command("LIST \"\" $boxname");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("LIST \"\" $boxname");
+			$buffer = $this->_mail_get_line();
 			/* if any problem, stop the script */
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			/* loop throught the list and split the parts */
@@ -1078,7 +1078,7 @@ class Telaen extends Telaen_core {
 				$tmp["name"] = $this->fix_prefix(trim(preg_replace('|"(.*)"|',"$1",substr($rest,$pos+1))),0);
 				if(function_exists(mb_convert_encoding))
 					$tmp["name"] = mb_convert_encoding( $tmp["name"], "ISO_8859-1", "UTF7-IMAP" );
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 				$boxlist[] = $tmp;
 			}
 		} else {
@@ -1110,12 +1110,12 @@ class Telaen extends Telaen_core {
 		if($this->mail_protocol == IMAP) {
 			$original_name = preg_replace('|"(.*)"|',"$1",$boxname);
 			$boxname = $this->fix_prefix($original_name,1);
-			$this->mail_send_command("SELECT \"$boxname\"");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("SELECT \"$boxname\"");
+			$buffer = $this->_mail_get_line();
 			if(preg_match("/^".$this->_sid." NO/i",$buffer)) { 
 				if($this->mail_subscribe_box($original_name)) {
-					$this->mail_send_command("SELECT \"$boxname\"");
-					$buffer = $this->mail_get_line();
+					$this->_mail_send_command("SELECT \"$boxname\"");
+					$buffer = $this->_mail_get_line();
 				}
 			}
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
@@ -1128,7 +1128,7 @@ class Telaen extends Telaen_core {
 					$boxinfo["recent"] = $regs[1];
 				if(preg_match('|[ ]?\\*[ ]?FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs))
 					$boxinfo["flags"] = $regs[1];
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 			}
 		}
 		$this->_current_folder = $boxname;
@@ -1145,8 +1145,8 @@ class Telaen extends Telaen_core {
 		/* this function is used only for IMAP servers */
 		if($this->mail_protocol == IMAP) {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
-			$this->mail_send_command("SUBSCRIBE \"$boxname\"");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("SUBSCRIBE \"$boxname\"");
+			$buffer = $this->_mail_get_line();
 			if(preg_match("/^".$this->_sid." (NO|BAD)/i",$buffer)) { 
 				$this->mail_error_msg = $buffer; 
 				return false;
@@ -1164,8 +1164,8 @@ class Telaen extends Telaen_core {
 	public function mail_create_box($boxname) {
 		if($this->mail_protocol == IMAP) {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
-			$this->mail_send_command("CREATE \"$boxname\"");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("CREATE \"$boxname\"");
+			$buffer = $this->_mail_get_line();
 			if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				@mkdir($this->user_folder.$this->fix_prefix($boxname,0),$this->dirperm);
 				return true;
@@ -1189,8 +1189,8 @@ class Telaen extends Telaen_core {
 	public function mail_delete_box($boxname) {
 		if($this->mail_protocol == IMAP) {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
-			$this->mail_send_command("DELETE \"$boxname\"");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("DELETE \"$boxname\"");
+			$buffer = $this->_mail_get_line();
 
 			if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
 				$this->_RmDirR($this->user_folder.$boxname);
@@ -1224,19 +1224,19 @@ class Telaen extends Telaen_core {
 		
 			// send an append command
 			$mailcommand = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
-			$this->mail_send_command($mailcommand);
+			$this->_mail_send_command($mailcommand);
 
 			// wait for a "+ Something" here and not after the msg sent!!
-			$buffer = $this->mail_get_line();
+			$buffer = $this->_mail_get_line();
 			if($buffer[0] != "+") {
 				return false;	// problem appending
 			}			
 
 			// send the msg 
 			$mailcommand = "$message";
-			$this->mail_send_command($mailcommand, true);	// not send the session id here!
+			$this->_mail_send_command($mailcommand, true);	// not send the session id here!
 
-			$buffer = $this->mail_get_line();
+			$buffer = $this->_mail_get_line();
 			
 			if(!preg_match("/^(".$this->_sid." OK)/i", $buffer)) 
 				return false;
@@ -1275,11 +1275,11 @@ class Telaen extends Telaen_core {
 				$this->mail_select_box($msg["folder"]);
 
 			if($flagtype != "+") $flagtype = "-";
-			$this->mail_send_command("STORE ".$msg["msg"].":".$msg["msg"]." ".$flagtype."FLAGS ($flagname)");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("STORE ".$msg["msg"].":".$msg["msg"]." ".$flagtype."FLAGS ($flagname)");
+			$buffer = $this->_mail_get_line();
 
 			while(!preg_match("/^(".$this->_sid." (OK|NO|BAD))/i",$buffer)) { 
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 			}
 			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false;}
 
@@ -1340,11 +1340,11 @@ class Telaen extends Telaen_core {
 			if($this->mail_protocol == IMAP) {
 				if($this->_require_expunge)
 					$this->mail_expunge();
-				$this->mail_send_command("LOGOUT");
-				$tmp = $this->mail_get_line();
+				$this->_mail_send_command("LOGOUT");
+				$tmp = $this->_mail_get_line();
 			} else {
-				$this->mail_send_command("QUIT");
-				$tmp = $this->mail_get_line();
+				$this->_mail_send_command("QUIT");
+				$tmp = $this->_mail_get_line();
 			}
 			fclose($this->mail_connection);
 			$this->mail_connection = "";
@@ -1360,8 +1360,8 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_disconnect_force() {
 		if($this->mail_connected()) {
-			$this->mail_send_command("FORCEDQUIT");
-			$tmp = $this->mail_get_line();
+			$this->_mail_send_command("FORCEDQUIT");
+			$tmp = $this->_mail_get_line();
 			fclose($this->mail_connection);
 			$this->mail_connection = "";
 			// Sleep to make it possible that the server can resume.
@@ -1377,11 +1377,11 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_expunge() {
 		if($this->mail_protocol == IMAP) {
-			$this->mail_send_command("EXPUNGE");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("EXPUNGE");
+			$buffer = $this->_mail_get_line();
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 			}
 		}
 		return true;
@@ -1402,11 +1402,11 @@ class Telaen extends Telaen_core {
 		$capa = array();
 		$this->mail_connect();
 		if ($this->mail_protocol == POP3) {
-			$this->mail_send_command("CAPA");
-			$buffer = $this->mail_get_line();
+			$this->_mail_send_command("CAPA");
+			$buffer = $this->_mail_get_line();
 						if (substr($buffer, 0, 3) == "+OK") {
 							   while (!feof($this->mail_connection)) {
-					$buffer = $this->mail_get_line();
+					$buffer = $this->_mail_get_line();
 					$buffer = trim($buffer);
 					if($buffer == ".")
 						break;
@@ -1438,11 +1438,11 @@ class Telaen extends Telaen_core {
 	 * @param array $message
 	 * @return array
 	 */
-	private function mail_get_uidl ($id = "", $message = array()) {
+	private function _mail_get_uidl ($id = "", $message = array()) {
 		if(!empty($id)) {
 			if ($this->haveuidl) {
-				$this->mail_send_command("UIDL $id");
-				$buffer = $this->mail_get_line();
+				$this->_mail_send_command("UIDL $id");
+				$buffer = $this->_mail_get_line();
 				list ($resp,$num,$uidl) = explode(" ",$buffer);
 				if ($resp == "+OK")
 					return md5($uidl);
@@ -1451,14 +1451,14 @@ class Telaen extends Telaen_core {
 			if (count($message))	// provided a header hash
 				return md5(trim($message["subject"].$message["date"].$message["message-id"]));
 			else {
-				$this->mail_send_command("TOP " . $id . " 0");
-				$buffer = $this->mail_get_line();
+				$this->_mail_send_command("TOP " . $id . " 0");
+				$buffer = $this->_mail_get_line();
 	
 				/* if any problem with the server, stop the function */
 				if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return ""; }
 				unset($header);
 				while (!feof($this->mail_connection)) {
-					$buffer = $this->mail_get_line();
+					$buffer = $this->_mail_get_line();
 					if(chop($buffer) == ".")
 						break;
 					$header .= $buffer;
@@ -1470,12 +1470,12 @@ class Telaen extends Telaen_core {
 		} else {
 			$retarray = array();
 			if ($this->haveuidl) {
-				$this->mail_send_command("UIDL");
+				$this->_mail_send_command("UIDL");
 	
-				$buffer = $this->mail_get_line();
+				$buffer = $this->_mail_get_line();
 				if (substr($buffer, 0, 3) == "+OK") {
 					while (!feof($this->mail_connection)) {
-						$buffer = $this->mail_get_line();
+						$buffer = $this->_mail_get_line();
 						if(trim($buffer) == ".")
 							break;
 						list ($num,$uidl) = explode(" ",$buffer);
@@ -1486,13 +1486,13 @@ class Telaen extends Telaen_core {
 			}
 			// Drop through if we got a UIDL error (the array is still empty)
 			if (!count($retarray)) {
-				$this->mail_send_command("LIST");
-				$buffer = $this->mail_get_line();
+				$this->_mail_send_command("LIST");
+				$buffer = $this->_mail_get_line();
 
 				if(substr($buffer, 0, 3) == "+OK")	{
 					$messages = array();
 					while (!feof($this->mail_connection)) {
-						$buffer = $this->mail_get_line();
+						$buffer = $this->_mail_get_line();
 						if(trim($buffer) == ".")
 							break;
 						$msgs = explode(" ",$buffer);
@@ -1501,13 +1501,13 @@ class Telaen extends Telaen_core {
 					}
 					// now grab the header info
 					foreach ($messages as $id) {
-						$this->mail_send_command("TOP " . $id . " 0");
-						$buffer = $this->mail_get_line();
+						$this->_mail_send_command("TOP " . $id . " 0");
+						$buffer = $this->_mail_get_line();
 			
 						if(substr($buffer, 0, 3) == "+OK")	{
 							unset($header);
 							while (!feof($this->mail_connection)) {
-								$buffer = $this->mail_get_line();
+								$buffer = $this->_mail_get_line();
 								if(trim($buffer) == ".")
 									break;
 								$header .= $buffer;

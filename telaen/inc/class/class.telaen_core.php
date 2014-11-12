@@ -108,7 +108,6 @@ class Telaen_core {
 	/**
 	 * Recursivelly remove files and directories
 	 */
-
 	private function _RmdirR($location) {
 
 		if (substr($location,-1) <> "/") $location = $location."/";
@@ -133,7 +132,7 @@ class Telaen_core {
 	 * Some malformed messages have more than one body. 
 	 * Used to display inline attachments (images) too.
 	 */
-	private function add_body($strbody) {
+	private function _add_body($strbody) {
 		global $block_external_images;
 		if($this->sanitize)
 			$strbody	=	HTMLFilter($strbody, "images/trans.gif", $block_external_images);
@@ -148,7 +147,7 @@ class Telaen_core {
 	 * This function, if running under PHP 4.3+ will convert any string between charsets.
 	 * If running under PHP < 4.3, will convert the string to PHP's default charset (iso-8859-1)
 	 */
-	private function convert_charset($string, $from, $to) {
+	private function _convert_charset($string, $from, $to) {
 		$string = @htmlentities($string, ENT_COMPAT, $from);
 		if(function_exists('html_entity_decode')) { //PHP 4.3+
 			return html_entity_decode($string, ENT_COMPAT, $to);
@@ -162,7 +161,7 @@ class Telaen_core {
 	/**
 	 * Decode headers strings. Inverse of mime_encode_headers()
 	 */
-	private function decode_mime_string($subject) {
+	private function _decode_mime_string($subject) {
 		$string = $subject;
 
 		if(($pos = strpos($string,"=?")) === false) return $string;
@@ -181,7 +180,7 @@ class Telaen_core {
 			if($enctype == "q") $mystring = quoted_printable_decode(preg_replace('|_|'," ",$mystring)); 
 			else if ($enctype == "b") $mystring = base64_decode($mystring);
 
-			if($charset != $this->charset) $mystring = $this->convert_charset($mystring, $charset, $this->charset);
+			if($charset != $this->charset) $mystring = $this->_convert_charset($mystring, $charset, $this->charset);
 
 			$newresult .= $mystring;
 			$pos = strpos($string,"=?");
@@ -208,7 +207,7 @@ class Telaen_core {
 	 * 
 	 * Some headers are broken into multiples lines, prefixed with a TAB (\t)
 	 */
-	private function decode_header($header) {
+	private function _decode_header($header) {
 		$headers = explode("\r\n",$header);
 		$decodedheaders = array();
 		for($i=0;$i<count($headers);$i++) {
@@ -292,7 +291,7 @@ class Telaen_core {
 
 				if ($name == "") $name = $email;
 				if ($email == "") $email = $name;
-				$ARfrom[$i]["name"] = $this->decode_mime_string($name);
+				$ARfrom[$i]["name"] = $this->_decode_mime_string($name);
 				$ARfrom[$i]["mail"] = $email;
 				unset($name);unset($email);
 			}
@@ -307,7 +306,7 @@ class Telaen_core {
 	 * In order to guess what is the format (the RFC support 3), it will
 	 * try different ways to get the name and email
 	 */
-	private function get_first_of_names($strmail) {
+	private function _get_first_of_names($strmail) {
 		$ARfrom = array();
 		$strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
 
@@ -353,7 +352,7 @@ class Telaen_core {
 
 			if ($name == "") $name = $email;
 			if ($email == "") $email = $name;
-			$ARfrom[0]["name"] = $this->decode_mime_string($name);
+			$ARfrom[0]["name"] = $this->_decode_mime_string($name);
 			$ARfrom[0]["mail"] = $email;
 
 			unset($name);unset($email);
@@ -367,12 +366,12 @@ class Telaen_core {
 	 * Compile a body for multipart/alternative format.
 	 * Guess the format we want and add it to the bod container
 	 */
-	private function build_alternative_body($ctype,$body) {
+	private function _build_alternative_body($ctype,$body) {
 
 		// get the boundary
-		$boundary = $this->get_boundary($ctype);
+		$boundary = $this->_get_boundary($ctype);
 		// split the parts
-		$parts = $this->split_parts($boundary,$body);
+		$parts = $this->_split_parts($boundary,$body);
 
 		// not needed.. $thispart = ($this->use_html)?$parts[1]:$parts[0];
 
@@ -385,7 +384,7 @@ class Telaen_core {
 			$email = $this->fetch_structure($value);
 
 			$parts[$index] = $email;
-			$parts[$index]["headers"] = $headers = $this->decode_header($email["header"]);
+			$parts[$index]["headers"] = $headers = $this->_decode_header($email["header"]);
 			unset($email);
 			$ctype = explode(";",$headers["content-type"]); $ctype = strtolower($ctype[0]);
 			$parts[$index]["type"] = $ctype;
@@ -413,13 +412,13 @@ class Telaen_core {
 		// if the subcontent is multipart go to multipart function
 		if($multipartSub) {
 			unset($body);
-			$this->build_complex_body($part["headers"]["content-type"], $part["body"]);
+			$this->_build_complex_body($part["headers"]["content-type"], $part["body"]);
 		}
 		else {
-			$body = $this->compile_body($part["body"],$part["headers"]["content-transfer-encoding"],$part["headers"]["content-type"]);
-			if(!$this->use_html && $part["type"] != "text/plain") $body = $this->html2text($body);
-			if(!$this->use_html) $body = $this->build_text_body($body);
-			$this->add_body($body);
+			$body = $this->_compile_body($part["body"],$part["headers"]["content-transfer-encoding"],$part["headers"]["content-type"]);
+			if(!$this->use_html && $part["type"] != "text/plain") $body = $this->_html2text($body);
+			if(!$this->use_html) $body = $this->_build_text_body($body);
+			$this->_add_body($body);
 		}
 	}
 
@@ -428,7 +427,7 @@ class Telaen_core {
 	 * 'complex' means multipart/signed|mixed|related|report and other 
 	 * types that can be added in the future
 	 */
-	private function build_complex_body($ctype,$body) {
+	private function _build_complex_body($ctype,$body) {
 
 		global $sid,$lid,$ix,$folder;
 
@@ -439,8 +438,8 @@ class Telaen_core {
 		if(substr($Rtype,0,1) == "\"" && substr($Rtype,-1) == "\"")
 			$Rtype = substr($Rtype,1,strlen($Rtype)-2);
 
-		$boundary = $this->get_boundary($ctype);	
-		$part = $this->split_parts($boundary,$body);
+		$boundary = $this->_get_boundary($ctype);	
+		$part = $this->_split_parts($boundary,$body);
 		
 		// only for debug
 		//echo "<br>Boundary: " . $boundary . " parts count: " . count($part);
@@ -455,7 +454,7 @@ class Telaen_core {
 			// free unused vars
 			unset($email);
 
-			$headers = $this->decode_header($header);
+			$headers = $this->_decode_header($header);
 			$ctype = $headers["content-type"];
 
 			//echo "<br>Part: $i - ctype: $ctype";
@@ -478,35 +477,35 @@ class Telaen_core {
 
 			if($rctype == "multipart/alternative") {
 
-				$this->build_alternative_body($ctype,$body);
+				$this->_build_alternative_body($ctype,$body);
 
 			} elseif($rctype == "multipart/appledouble") {
 
 				/*
 				 * Special case for mac with resource and data fork
 				 */
-				$this->build_complex_body($ctype,$body);
+				$this->_build_complex_body($ctype,$body);
 
 			} elseif($rctype == "text/plain" && !$is_download) {
 
-				$body = $this->compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
-				$this->add_body($this->build_text_body($body));
+				$body = $this->_compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
+				$this->_add_body($this->_build_text_body($body));
 
 			} elseif($rctype == "text/html" &&	!$is_download) {
 
-				$body = $this->compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
+				$body = $this->_compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
 
-				if(!$this->use_html) $body = $this->build_text_body($this->html2text($body));
-				$this->add_body($body);
+				if(!$this->use_html) $body = $this->_build_text_body($this->_html2text($body));
+				$this->_add_body($body);
 
 			} elseif($rctype == "application/ms-tnef") {
 
-				$body = $this->compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
-				$this->extract_tnef($body,$boundary,$i);
+				$body = $this->_compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
+				$this->_extract_tnef($body,$boundary,$i);
 
 			} elseif($is_download) {
 
-				$thisattach		= $this->build_attach($header,$body,$boundary,$i);
+				$thisattach		= $this->_build_attach($header,$body,$boundary,$i);
 				$tree			= array_merge((array)$this->current_level, array($thisattach["index"]));
 				$thisfile		= "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
 				$filename		= $thisattach["filename"];
@@ -520,11 +519,11 @@ class Telaen_core {
 					$ext = strtolower(substr($thisattach["name"],-4));
 					$allowed_ext = array(".gif",".jpg",".png",".bmp");
 					if(in_array($ext,$allowed_ext)) {
-						$this->add_body("<img src=\"$thisfile\" alt=\"\">");
+						$this->_add_body("<img src=\"$thisfile\" alt=\"\">");
 					}
 				}
 			} else
-				$this->process_message($header,$body);
+				$this->_process_message($header,$body);
 
 		}
 	}
@@ -533,15 +532,15 @@ class Telaen_core {
 	/**
 	 * Format a plain text string into a HTML formated string
 	 */
-	private function build_text_body($body) {
-		$body = preg_replace('/(\r\n|\n|\r|\n\r)/',"<br>$1",$this->make_link_clickable(htmlspecialchars($body)));
+	private function _build_text_body($body) {
+		$body = preg_replace('/(\r\n|\n|\r|\n\r)/',"<br>$1",$this->_make_link_clickable(htmlspecialchars($body)));
 		return "<font face=\"Courier New\" size=\"2\">$body</font>";
 	}
 
 	/**
 	 * Decode Quoted-Printable strings
 	 */
-	private function decode_qp($str) {
+	private function _decode_qp($str) {
 		return quoted_printable_decode(preg_replace('|=\r?\n|', "", $str));
 	}
 
@@ -549,7 +548,7 @@ class Telaen_core {
 	/**
 	 * Convert URL and Emails into clickable links
 	 */
-	private function make_link_clickable($str){
+	private function _make_link_clickable($str){
 
 		$str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "$1<a class=autolink href=\"$2\" target=\"_blank\">$2</a>", $str); //http 
 		$str = preg_replace("|(\s)(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "$1<a class=autolink href=\"http://$2\" target=\"_blank\">$2</a>", $str); // www. 
@@ -567,7 +566,7 @@ class Telaen_core {
 	 * Guess the type of the part and call the apropriated 
 	 * method
 	 */
-	private function process_message($header,$body) {
+	private function _process_message($header,$body) {
 		$mail_info = $this->get_mail_info($header);
 		$ctype = $mail_info["content-type"];
 		$ctenc = $mail_info["content-transfer-encoding"];
@@ -584,18 +583,18 @@ class Telaen_core {
 
 		switch($maintype) {
 		case "text":
-			$body = $this->compile_body($body,$ctenc,$mail_info["content-type"]);
+			$body = $this->_compile_body($body,$ctenc,$mail_info["content-type"]);
 			switch($subtype) {
 			case "html":
-				if(!$this->use_html) $body = $this->build_text_body($this->html2text($body));
+				if(!$this->use_html) $body = $this->_build_text_body($this->_html2text($body));
 				$msgbody = $body;
 				break;
 			default:
-				$this->extract_uuencoded($body);
-				$msgbody = $this->build_text_body($body);
+				$this->_extract_uuencoded($body);
+				$msgbody = $this->_build_text_body($body);
 				break;
 			}
-			$this->add_body($msgbody);
+			$this->_add_body($msgbody);
 			break;
 		case "multipart":
 			if(preg_match("/$subtype/","signed,mixed,related,report,appledouble"))
@@ -603,17 +602,17 @@ class Telaen_core {
 
 			switch($subtype) {
 			case "alternative":
-				$msgbody = $this->build_alternative_body($ctype[1],$body);
+				$msgbody = $this->_build_alternative_body($ctype[1],$body);
 				break;
 			case "complex":
-				$msgbody = $this->build_complex_body($type,$body);
+				$msgbody = $this->_build_complex_body($type,$body);
 				break;
 			default:
-				$thisattach = $this->build_attach($header,$body,"",0);
+				$thisattach = $this->_build_attach($header,$body,"",0);
 			}
 			break;
 		default:
-			$thisattach = $this->build_attach($header,$body,"",0);
+			$thisattach = $this->_build_attach($header,$body,"",0);
 		}
 	}
 
@@ -621,11 +620,11 @@ class Telaen_core {
 	 * Compile the attachment, saving it to cache and 
 	 * add it to the $attachments array if needed
 	 */
-	private function build_attach($header,$body,$boundary,$part) {
+	private function _build_attach($header,$body,$boundary,$part) {
 
 		global $mail,$temporary_directory,$userfolder;
 
-		$headers = $this->decode_header($header);
+		$headers = $this->_decode_header($header);
 		$cdisp = $headers["content-disposition"];
 		$ctype = $headers["content-type"]; 
 
@@ -666,18 +665,18 @@ class Telaen_core {
 		// Note: added check for use it only for images, some clients adds id where not necessary
 		$is_embed = ($main_type == "image" && $headers["content-id"] != "")?1:0;
 
-		$body = $this->compile_body($body,$tenc,$ctype);
+		$body = $this->_compile_body($body,$tenc,$ctype);
 
 		if($filename == "" && $main_type == "message") {
 			$attachheader = $this->fetch_structure($body);
-			$attachheader = $this->decode_header($attachheader["header"]);
+			$attachheader = $this->_decode_header($attachheader["header"]);
 			$filename = $attachheader["subject"].".eml";
 			unset($attachheader);
 		} elseif($filename == "") {
 			$filename = uniqid("").".tmp";
 		}
 
-		$filename = preg_replace('|[.]{2,}|',".",preg_replace("'(/|\\\\)+'","_",trim($this->decode_mime_string($filename))));
+		$filename = preg_replace('|[.]{2,}|',".",preg_replace("'(/|\\\\)+'","_",trim($this->_decode_mime_string($filename))));
 		$safefilename = preg_replace('|[ \t\.\W]+|', "_", $filename);
 		$nIndex						= count($this->_content["attachments"]);
 		$temp_array["name"]					= trim($filename);
@@ -703,20 +702,20 @@ class Telaen_core {
 	/**
 	 * Compile a string following the encoded method
 	 */
-	private function compile_body($body,$enctype,$ctype) {
+	private function _compile_body($body,$enctype,$ctype) {
 
 		$enctype = explode(" ",$enctype); $enctype = $enctype[0];
 		if(strtolower($enctype) == "base64")
 			$body = base64_decode($body);
 		elseif(strtolower($enctype) == "quoted-printable")
-			$body = $this->decode_qp($body);
+			$body = $this->_decode_qp($body);
 
 		if(preg_match('|koi8|', $ctype))
 			$body = convert_cyr_string($body, "k", "w");
 		else
 			if(preg_match('|charset ?= ?"?([a-z0-9-]+)"?|i',$ctype,$regs)) {
 				if($regs[1] != $this->charset) {
-					$body = $this->convert_charset($body,$regs[1],$this->charset);
+					$body = $this->_convert_charset($body,$regs[1],$this->charset);
 				}
 			}
 
@@ -751,7 +750,7 @@ class Telaen_core {
 	/**
 	 * Guess the attachment format and call the specific method
 	 */
-	private function save_attach($header,&$body,$filename,$type="mime",$tnef="-1",$bound) {
+	private function _save_attach($header,&$body,$filename,$type="mime",$tnef="-1",$bound) {
 		switch($type) {
 		case "uue": 
 			$this->get_uuencoded($body,$bound,0,"save",$filename);
@@ -760,7 +759,7 @@ class Telaen_core {
 			$this->get_tnef($header,$body,$tnef,0,$mode="save",$filename);
 			break;
 		default:
-			$this->build_attach($header,$body,"",0,$mode="save",0,$filename);
+			$this->_build_attach($header,$body,"",0,$mode="save",0,$filename);
 		}
 	}
 
@@ -782,7 +781,7 @@ class Telaen_core {
 	public function get_mail_info($header, $first="ALL") {
 
 		$myarray = array();
-		$headers = $this->decode_header($header);
+		$headers = $this->_decode_header($header);
 
 		$myarray["message-id"] = (array_key_exists("message-id",$headers))?preg_replace('|<(.*)>|',"$1",trim($headers["message-id"])):null;
 		$myarray["content-type"] = (array_key_exists("content-type",$headers))?$headers["content-type"]:null;
@@ -818,12 +817,12 @@ class Telaen_core {
 		}
 
 		$myarray["date"] = $this->build_mime_date($mydate,$mytimezone);
-		$myarray["subject"] = $this->decode_mime_string($headers["subject"]);
+		$myarray["subject"] = $this->_decode_mime_string($headers["subject"]);
 		if ($first == "FIRST_ONLY") {
-			$myarray["from"] = $this->get_first_of_names($headers["from"]);
-			$myarray["to"] = $this->get_first_of_names($headers["to"]);
-			$myarray["cc"] = $this->get_first_of_names($headers["cc"]);
-			$myarray["reply-to"] = $this->get_first_of_names($headers["reply-to"]);
+			$myarray["from"] = $this->_get_first_of_names($headers["from"]);
+			$myarray["to"] = $this->_get_first_of_names($headers["to"]);
+			$myarray["cc"] = $this->_get_first_of_names($headers["cc"]);
+			$myarray["reply-to"] = $this->_get_first_of_names($headers["reply-to"]);
 		} else {
 			$myarray["from"] = $this->get_names($headers["from"]);
 			$myarray["to"] = $this->get_names($headers["to"]);
@@ -834,7 +833,7 @@ class Telaen_core {
 		$myarray["read"] = $headers["x-um-status"];
 		$myarray["x-spam-level"] = $headers["x-spam-level"];
 		
-		$receiptTo = $this->get_first_of_names($headers["disposition-notification-to"]);
+		$receiptTo = $this->_get_first_of_names($headers["disposition-notification-to"]);
 		$myarray["receipt-to"] = $receiptTo[0]["mail"];
 		
 		$uidl = $headers["x-um-uidl"];
@@ -900,7 +899,7 @@ class Telaen_core {
 		$body = $email["body"];
 		$header = $email["header"];
 		$mail_info = $this->get_mail_info($header);
-		$this->process_message($header,$body);
+		$this->_process_message($header,$body);
 		$this->_content["headers"] = $header;
 		$this->_content["date"] = $mail_info["date"];
 		$this->_content["subject"] = $mail_info["subject"];
@@ -921,7 +920,7 @@ class Telaen_core {
 	/**
 	 * Split an email by its boundary
 	 */
-	private function split_parts($boundary,$body) {
+	private function _split_parts($boundary,$body) {
 		$startpos = strpos($body,$boundary)+strlen($boundary)+2;
 		$lenbody = strpos($body,"\r\n$boundary--") - $startpos;
 		$body = substr($body,$startpos,$lenbody);
@@ -947,7 +946,7 @@ class Telaen_core {
 	/**
 	 * Guess the boundary from header
 	 */
-	private function get_boundary($ctype){
+	private function _get_boundary($ctype){
 		if(preg_match('|boundary[ ]?=[ ]?["]?([^";]*)["]?.*$|iD',$ctype,$regs)) {	 //preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
 			//$boundary = preg_replace('/^\"(.*)\"$/', "$1", $regs[1])
 			return trim("--$regs[1]");
@@ -957,7 +956,7 @@ class Telaen_core {
 	/**
 	 * Oposite of htmlentities.
 	 */
-	private function unhtmlentities ($string) {
+	private function _unhtmlentities ($string) {
 		$trans_tbl = get_html_translation_table (HTML_ENTITIES);
 		$trans_tbl = array_flip ($trans_tbl);
 		return strtr ($string, $trans_tbl);
@@ -966,8 +965,8 @@ class Telaen_core {
 	/**
 	 * Format a HTML message to be displayed as text if allow_html is off
 	 */
-	private function html2text($str) {
-		return $this->unhtmlentities(preg_replace(
+	private function _html2text($str) {
+		return $this->_unhtmlentities(preg_replace(
 				array(	"'<(SCRIPT|STYLE)[^>]*?>.*?</(SCRIPT|STYLE)[^>]*?>'si",
 						"'(\r|\n)'",
 						"'<BR[^>]*?>'i",
@@ -985,7 +984,7 @@ class Telaen_core {
 	/**
 	 * Decode UUEncoded attachments
 	 */
-	private function UUDecode($data) {
+	private function _UUDecode($data) {
 		$b64chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/A';
 		$uudchars='`!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_ ';
 		$lines = preg_split('/\r?\n/',$data);
@@ -1007,7 +1006,7 @@ class Telaen_core {
 	/**
 	 * Guess all UUEncoded in the body
 	 */
-	private function extract_uuencoded(&$body) {
+	private function _extract_uuencoded(&$body) {
 		$regex = "/(begin ([0-7]{3}) (.+))\r?\n(.+)\r?\nend/Us";
 		preg_match_all($regex, $body, $matches);
 		for ($i = 0; $i < count($matches[3]); $i++) {
@@ -1015,7 +1014,7 @@ class Telaen_core {
 			$boundary	= $matches[1][$i];
 			$fileperm	= $matches[2][$i];
 			$filename	= $matches[3][$i];
-			$stream		= $this->UUDecode($matches[4][$i]);
+			$stream		= $this->_UUDecode($matches[4][$i]);
 
 			$temp_array["index"] = count($this->_content["attachments"]);
 			$temp_array["name"] = $filename;
@@ -1037,7 +1036,7 @@ class Telaen_core {
 	/**
 	 * Extract all attachmentes contained in a MS-TNEF attachment
 	 */
-	private function extract_tnef(&$body,$boundary,$part) {
+	private function _extract_tnef(&$body,$boundary,$part) {
 		$tnefobj = $this->_tnef->Decode($body);
 
 		for($i=0;$i<count($tnefobj);$i++) {
