@@ -61,7 +61,7 @@ function cleanup_dir ($folder) {
  * @return void
  */
 function cleanup_dirs ($userfolder, $logout) {
-	global $TLN,$sid,$tid,$lid,$sess,$prefs;
+	global $TLN, $prefs;
 
 	if ( ($force_unmark_read_overrule && $force_unmark_read_setting) ||
 			 ($prefs["unmark-read"] && !$force_unmark_read_overrule) ) {
@@ -156,7 +156,7 @@ function cleanup_dirs ($userfolder, $logout) {
 	}
 }
 
-function _get_microtime() {
+function get_microtime() {
 	$mtime = microtime();
 	$mtime = explode(" ", $mtime);
 	$mtime = (double)($mtime[1]) + (double)($mtime[0]);
@@ -220,11 +220,11 @@ function redirect_and_exit($location, $killsession = false) {
 	global $enable_debug;
 	global $redirects_use_meta;
 	global $redirects_are_relative;
-	global $SS;
+	global $AuthSession;
 
 	// on error the session should be killed, on badlogin no, i want my selected theme/lang
 	if ($killsession)
-		$SS->Kill();
+		$AuthSession->Kill();
 
 	if ($redirects_are_relative) {
 		$url = $location;
@@ -366,7 +366,7 @@ class Mbox {
 function load_prefs() {
 
 	global	$userfolder,
-		$sess,
+		$auth,
 		$default_preferences,
 		$appversion;
 
@@ -375,25 +375,25 @@ function load_prefs() {
 	$pref_file = $userfolder."_infos/prefs.upf";
 
 	if(!file_exists($pref_file)) {
-		$prefs["real-name"]		= UCFirst(substr($auth["email"],0,strpos($auth["email"],"@")));
-		$prefs["reply-to"]		= $auth["email"];
+		$prefs["real-name"]	= UCFirst(substr($auth["email"],0,strpos($auth["email"],"@")));
+		$prefs["reply-to"]	= $auth["email"];
 		$prefs["save-to-trash"] = $send_to_trash_default;
 		$prefs["st-only-read"]	= $st_only_ready_default;
 		$prefs["empty-trash"]	= $empty_trash_default;
 		$prefs["empty-spam"]	= $empty_spam_default;
 		$prefs["unmark-read"]	= $unmark_read_default;
 		$prefs["save-to-sent"]	= $save_to_sent_default;
-		$prefs["sort-by"]		= $sortby_default;
+		$prefs["sort-by"]	= $sortby_default;
 		$prefs["sort-order"]	= $sortorder_default;
-		$prefs["rpp"]			= $rpp_default;
-		$prefs["add-sig"]		= $add_signature_default;
-		$prefs["signature"]		= $signature_default;
+		$prefs["rpp"]		= $rpp_default;
+		$prefs["add-sig"]	= $add_signature_default;
+		$prefs["signature"]	= $signature_default;
 		$prefs["require-receipt"] = $require_receipt_default;
 		$prefs["timezone"]	= $timezone_default;
 		$prefs["display-images"]= $display_images_default;
 		$prefs["editor-mode"]	= $editor_mode_default;
 		$prefs["refresh-time"]	= $refresh_time_default;
-		$prefs["spamlevel"] = $spamlevel_default;
+		$prefs["spamlevel"]	= $spamlevel_default;
 		$prefs["version"]	= $appversion;
 	} else {
 		$prefs = file($pref_file);

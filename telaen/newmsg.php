@@ -135,7 +135,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			}
 		}
 
-		if(array_key_exists("attachments",$sess)) {
+		if(array_key_exists("attachments",$auth)) {
 			$attachs = $auth["attachments"];
 			for($i=0;$i<count($attachs);$i++) {
 				if(file_exists($attachs[$i]["localname"])) {
@@ -156,10 +156,10 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		
 			$smarty->assign("umMailSent",true);
 
-			if(array_key_exists("attachments",$sess)) {
+			if(array_key_exists("attachments",$auth)) {
 				unset($auth["attachments"]);
-				reset($sess);
-				$SS->Save($sess);
+				reset($auth);
+				$AuthSession->Save($auth);
 			}
 			
 			
@@ -170,9 +170,9 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 				}
 				if(!$TLN->mail_auth(false)) { redirect_and_exit("index.php?err=0"); }
 				$TLN->mail_save_message("sent",$mail->TelaenGetEmail(),"\\SEEN");
-				unset($auth["headers"][base64_encode("sent")]);
+				unset($mbox["headers"][base64_encode("sent")]);
 				$TLN->mail_disconnect();
-				$SS->Save($sess);
+				$AuthSession->Save($auth);
 
 			}
 		}
@@ -390,7 +390,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	$body = stripslashes($body);
 
 	if(isset($rtype)) {
-		$mail_info = $auth["headers"][base64_encode(strtolower($folder))][$ix];
+		$mail_info = $mbox["headers"][base64_encode(strtolower($folder))][$ix];
 
 		if( ($rtype == "forward" && !stristr($mail_info["flags"], '\\FORWARDED'))
 			|| ($rtype != "forward" && !stristr($mail_info["flags"], '\\ANSWERED'))) {
@@ -402,12 +402,12 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 				redirect_and_exit("index.php?err=0");
 			}
 			if($rtype != "forward" && $TLN->mail_set_flag($mail_info,"\\ANSWERED","+")) {
-				$auth["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
-				$SS->Save($sess);
+				$mbox["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
+				$AuthSession->Save($auth);
 			}
 			if($rtype == "forward" && $TLN->mail_set_flag($mail_info,"\\FORWARDED","+")) {
-				$auth["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
-				$SS->Save($sess);
+				$mbox["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
+				$AuthSession->Save($auth);
 			}
 			$TLN->mail_disconnect(); 
 
@@ -587,7 +587,7 @@ $tmpbody";
 					$auth["attachments"][$ind]["type"] = $current["content-type"];
 					$auth["attachments"][$ind]["size"] = $current["size"];
 				}
-				$SS->Save($sess);
+				$AuthSession->Save($auth);
 			}
 			break;
 		}
@@ -619,7 +619,7 @@ $tmpbody";
 	$strsubject = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"subject\" value=\"".htmlspecialchars(stripslashes($subject))."\" />";
 
 
-	if(array_key_exists("attachments", $sess) && count($attachs = $auth["attachments"]) > 0) {
+	if(array_key_exists("attachments", $auth) && count($attachs = $auth["attachments"]) > 0) {
 
 		$smarty->assign("umHaveAttachs",1);
 		$attachlist = array();

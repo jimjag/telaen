@@ -203,8 +203,8 @@ if (isset($dirperm) && $dirperm != 0000) {
 
 $prefs = load_prefs();
 
-$mycal = new MyMonth();     // needs $prefs[], $UM and $userfolder!
-$mycal = $mycal->monthAsDiv();
+$mymo = new MyMonth();     // needs $prefs[], $UM and $userfolder!
+$mycal = $mymo->monthAsDiv();
 $smarty->assign("umCalendar",$mycal);
 $smarty->assign("umSystemNews",$systemNews);
 

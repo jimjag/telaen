@@ -65,7 +65,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 	}
 	if($TLN->mail_connected()) {
 		$TLN->mail_disconnect(); 
-		$SS->Save($sess);
+		$AuthSession->Save($auth);
 	}
 
 
@@ -87,7 +87,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
 	if(trim($srcBody) != "") $get_body = 1;
 	$search_results = array();
-	$start = _get_microtime();
+	$start = get_microtime();
 	$TLN->use_html = false;
 
 	if($srcFrom != "") $srcFrom = build_regex($srcFrom);

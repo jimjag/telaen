@@ -26,7 +26,7 @@ if (isset($rem) && $rem != "") {
 		$newlist[$c] = $value; $c++;
 	}
 	$auth["attachments"] = $newlist;
-	$SS->Save($sess);
+	$AuthSession->Save($auth);
 	echo("
 	<script language=javascript>\n
 		if(window.opener) window.opener.doupload();\n
@@ -59,7 +59,7 @@ if (isset($rem) && $rem != "") {
 	$auth["attachments"][$ind]["type"] = $userfile_type;
 	$auth["attachments"][$ind]["size"] = $userfile_size;
 
-	$SS->Save($sess);
+	$AuthSession->Save($auth);
 
 	echo("
 	<script language=javascript>\n

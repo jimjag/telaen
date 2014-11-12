@@ -35,7 +35,7 @@ function valid_email($thismail) {
 	return 1;
 }
 
-$mail_info = $auth["headers"][base64_encode(strtolower($folder))][$ix];
+$mail_info = $mbox["headers"][base64_encode(strtolower($folder))][$ix];
 
 $emails = array();
 $from = $mail_info["from"];

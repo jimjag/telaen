@@ -15,7 +15,7 @@ if(!isset($ix) || !isset($pag)) redirect_and_exit("index.php?err=3", true);
 
 $folderkey = base64_encode(strtolower($folder));
 
-$mysess			= $auth["headers"][$folderkey];
+$mysess			= $mbox["headers"][$folderkey];
 $mail_info		= $mysess[$ix];
 $arAttachment	= array();
 
@@ -46,7 +46,7 @@ if(isset($attachment)) {
 
 	if(!($result = $TLN->mail_retr_msg($mail_info,1))) { redirect_and_exit("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true"); }
 	if($TLN->mail_set_flag($mail_info,"\\SEEN","+")) {
-		$auth["headers"][$folderkey][$ix] = $mail_info;
+		$mbox["headers"][$folderkey][$ix] = $mail_info;
 	}
 
 	$TLN->mail_disconnect(); 
@@ -256,7 +256,7 @@ if(count($anexos) > 0) {
 	}
 
 	$root = $email["attachments"];
-	$auth["headers"][$folderkey][$ix] = $mail_info;
+	$mbox["headers"][$folderkey][$ix] = $mail_info;
 
 	$nIndex = count($arAttachment);
 	$attachAr = array();
@@ -283,7 +283,7 @@ if(count($anexos) > 0) {
 	$smarty->assign("umAttachList",$attachAr);
 }
 
-$SS->Save($sess);
+$AuthSession->Save($auth);
 
 
 $avalfolders = array();

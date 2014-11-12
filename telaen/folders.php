@@ -39,7 +39,7 @@ if(valid_folder_name($newfolder, true) &&
 if (valid_folder_name($delfolder, true) &&
    (strpos($delfolder,"..") === false)) {
 	if($TLN->mail_delete_box($delfolder)) {
-		unset($auth["headers"][base64_encode(strtolower($delfolder))]);
+		unset($mbox["headers"][base64_encode(strtolower($delfolder))]);
 		$require_update = true;
 	}
 }
@@ -50,18 +50,18 @@ require("./folder_list.php");
 
 
 if(isset($empty)) {
-	$headers = $auth["headers"][base64_encode(strtolower($empty))];
+	$headers = $mbox["headers"][base64_encode(strtolower($empty))];
 	for($i=0;$i<count($headers);$i++) {
 		$TLN->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
 		$expunge = true;
 	}
 	if($expunge) {
 		$TLN->mail_expunge();
-		unset($auth["headers"][base64_encode(strtolower($empty))]);
+		unset($mbox["headers"][base64_encode(strtolower($empty))]);
 		/* ops.. you have sent anything to trash, then you need refresh it */
 		if($prefs["save-to-trash"])
-			unset($auth["headers"][base64_encode("trash")]);
-		$SS->Save($sess);
+			unset($mbox["headers"][base64_encode("trash")]);
+		$AuthSession->Save($auth);
 	}
 	if(isset($goback)) redirect_and_exit("process.php?folder=".urlencode($folder)."");
 
@@ -111,30 +111,30 @@ for($n=0;$n<count($boxes);$n++) {
 
 	$unread = 0;
 
-	if(!is_array($auth["headers"][base64_encode(strtolower($entry))])) {
+	if(!is_array($mbox["headers"][base64_encode(strtolower($entry))])) {
 		$merged_array = array();
 		$merged_returnarray = array();
 		if (strtolower($entry) == "inbox") {
 			/*
 			 * Sort the arrays and fit them together again.
 			 */
-			$merged_array = array_merge($auth["headers"][base64_encode("inbox")], $auth["headers"][base64_encode("spam")]);
+			$merged_array = array_merge($mbox["headers"][base64_encode("inbox")], $mbox["headers"][base64_encode("spam")]);
 			array_qsort2int($merged_array,"msg","ASC");
 
 			$merged_returnarray = $TLN->mail_list_msgs("INBOX", $merged_array);
 			$thisbox = $merged_returnarray[0];
-			$auth["headers"][base64_encode("spam")] = $merged_returnarray[1];
+			$mbox["headers"][base64_encode("spam")] = $merged_returnarray[1];
 		} elseif (strtolower($entry) == "spam") {
 			;
 		} else {
-			$merged_returnarray = $TLN->mail_list_msgs($entry, $auth["headers"][base64_encode(strtolower($entry))]);
+			$merged_returnarray = $TLN->mail_list_msgs($entry, $mbox["headers"][base64_encode(strtolower($entry))]);
 			$thisbox = $merged_returnarray[0];
 		}
 			
 		unset($merged_array);
 		unset($merged_returnarray);
-		$auth["headers"][base64_encode(strtolower($entry))] = $thisbox;
-	} else $thisbox = $auth["headers"][base64_encode(strtolower($entry))];
+		$mbox["headers"][base64_encode(strtolower($entry))] = $thisbox;
+	} else $thisbox = $mbox["headers"][base64_encode(strtolower($entry))];
 
 	$boxsize = 0;
 	for($i=0;$i<count($thisbox);$i++) {
@@ -192,9 +192,9 @@ for($n=0;$n<count($boxes);$n++) {
 
 
 
-$SS->Save($sess);
+$AuthSession->Save($auth);
 $TLN->mail_disconnect();
-unset($SS,$TLN);
+unset($AuthSession,$TLN);
 
 // Sort and merge the 2 folders arrays
 array_qsort2ic ($system,"name");

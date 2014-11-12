@@ -78,7 +78,7 @@ if(isset($_POST['action'])) {
 			// refresh time
 				$auth["start"] = time();
 				// save
-				$SS->Save($sess);
+				$AuthSession->Save($auth);
 
 				echo "success: session refreshed";
 

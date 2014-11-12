@@ -13,7 +13,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require("./inc/init.php");
 
 function mail_connect() {
-	global $TLN,$sid,$tid,$lid;
+	global $TLN;
 	
 	// server check
 	if(!$TLN->mail_connect()){
@@ -35,10 +35,10 @@ $folder_key_inbox = base64_encode("inbox");
 $folder_key_spam = base64_encode("spam");
 $is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam);
 
-if(!array_key_exists("headers",$sess)) $auth["headers"] = array();
+if(!array_key_exists("headers",$mbox)) $mbox["headers"] = array();
 	
-if(array_key_exists($folder_key,$auth["headers"]))
-	$headers = $auth["headers"][$folder_key];
+if(array_key_exists($folder_key,$mbox["headers"]))
+	$headers = $mbox["headers"][$folder_key];
 
 if( !is_array($headers) 
 	|| isset($decision)
@@ -110,9 +110,9 @@ if( !is_array($headers)
 			 */
 			if ($TLN->_autospamfolder && $is_inbox_or_spam) {
 				$j = count($delarray);
-				$othercount = count($auth["headers"][$other_folder_key]);
+				$othercount = count($mbox["headers"][$other_folder_key]);
 				for($i=0;$i<$othercount;$i++) {
-					$msgid = $auth["headers"][$other_folder_key][$i]["msg"];
+					$msgid = $mbox["headers"][$other_folder_key][$i]["msg"];
 					$delarray[$j]["ubiid"] = $i;
 					$delarray[$j]["msgid"] = $msgid;
 					$delarray[$j]["folder"] = "$other_folder_key";
@@ -180,10 +180,10 @@ if( !is_array($headers)
 
 					if ($del) {
 						$subtract++;
-						unset ($auth["headers"][$myfold][$ubiid]);
+						unset ($mbox["headers"][$myfold][$ubiid]);
 					} else {
-						$auth["headers"][$myfold][$ubiid]["msg"] -= $subtract;
-						$auth["headers"][$myfold][$ubiid]["id"] -= $subtract;
+						$mbox["headers"][$myfold][$ubiid]["msg"] -= $subtract;
+						$mbox["headers"][$myfold][$ubiid]["id"] -= $subtract;
 					}
 				}
 
@@ -192,20 +192,20 @@ if( !is_array($headers)
 				 * We dont have many messages. Unset the array and fetch everything
 				 * from scratch.
 				 */
-				unset ($auth["headers"][$folder_key]);
-				$auth["headers"][$folder_key] = array();
+				unset ($mbox["headers"][$folder_key]);
+				$mbox["headers"][$folder_key] = array();
 				if ($TLN->_autospamfolder && $is_inbox_or_spam) {
-					unset ($auth["headers"][$other_folder_key]);
-					$auth["headers"][$other_folder_key] = array();
+					unset ($mbox["headers"][$other_folder_key]);
+					$mbox["headers"][$other_folder_key] = array();
 				}
 				$expunge = false;
 				$require_update = false;
 			}
 			if($prefs["save-to-trash"])
-				unset($auth["headers"][base64_encode("trash")]);
+				unset($mbox["headers"][base64_encode("trash")]);
 			if ($decision == "move")
-				unset($auth["headers"][base64_encode(strtolower($aval_folders))]);
-			$SS->Save($sess);
+				unset($mbox["headers"][base64_encode(strtolower($aval_folders))]);
+			$AuthSession->Save($auth);
 			if ($back)
 				$back_to = $start_pos;
 		}
@@ -235,7 +235,7 @@ if( !is_array($headers)
 	$TLN->mail_disconnect();
 }
 
-if(!is_array($headers = $auth["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
+if(!is_array($headers = $mbox["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
 
 /*
  * Sort the date and size fields with a natural sort, but only
@@ -249,9 +249,9 @@ if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
 	}
 }
 
-$auth["headers"][$folder_key] = $headers;
-$auth["havespam"] = ($TLN->havespam || count($auth["headers"][$folder_key_spam]));
-$SS->Save($sess);
+$mbox["headers"][$folder_key] = $headers;
+$auth["havespam"] = ($TLN->havespam || count($mbox["headers"][$folder_key_spam]));
+$AuthSession->Save($auth);
 
 /*
  * If they used a different version (ignoring patchlevel) then

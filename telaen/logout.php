@@ -12,6 +12,6 @@ require("./inc/init.php");
 
 cleanup_dirs($userfolder, 1);
 	
-$SS->Kill();
+$AuthSession->Kill();
 redirect_and_exit("./index.php");
 ?> 

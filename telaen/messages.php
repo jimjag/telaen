@@ -18,7 +18,7 @@ $is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_
 $smarty->assign("umUser",$f_user);
 $refreshurl = "process.php?folder=".urlencode($folder)."&pag=$pag&refr=true";
 
-if(!is_array($headers = $auth["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
+if(!is_array($headers = $mbox["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
 
 $arrow = ($sortorder == "ASC")?"images/arrow_up.gif":"images/arrow_down.gif";
 $arrow = "&nbsp;<img src=\"$arrow\" width=\"8\" height=\"7\" border=\"0\" alt=\"\" />";
@@ -64,7 +64,7 @@ $smarty->assign("pageMetas", $nocache . "\n" . $refreshMeta);
 
 /* load total size */
 $totalused = 0;
-while(list($box,$info) = each($auth["headers"])) {
+while(list($box,$info) = each($mbox["headers"])) {
 	for($i=0;$i<count($info);$i++)
 		$totalused += $info[$i]["size"];
 }
