@@ -76,13 +76,13 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
 		} elseif ($footer != "") $body .= $footer;
 
-		$mail->CharSet		= $default_char_set;
+		$mail->CharSet		= $TLN->charset;
 		$mail->Hostname		= getenv("SERVER_NAME");
-		$mail->From			= ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
-		$mail->FromName		= $TLN->mime_encode_headers($prefs["real-name"]);
+		$mail->From		= ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
+		$mail->FromName		= $mail->encodeHeader($prefs["real-name"]);
 		$mail->AddReplyTo($prefs["reply-to"], $TLN->mime_encode_headers($prefs["real-name"]));
 
-		$mail->Host			= $smtp_server;
+		$mail->Host		= $smtp_server;
 		$mail->WordWrap		= 76;
 		$mail->Priority		= $priority;
 		

@@ -7,9 +7,9 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
-require("./inc/htmlfilter.php");
-require("./inc/class/class.phpmailer.php");
-require("./inc/class/class.phpmailer_extra.php");
+require_once("./inc/htmlfilter.php");
+require_once("./inc/class/class.phpmailer.php");
+require_once("./inc/class/class.phpmailer_extra.php");
 
 define(IMAP, 1);
 define(POP3, 2);
@@ -123,20 +123,6 @@ class Telaen_core {
 		closedir($all); 
 		unset($all);
 		rmdir($location);
-	}
-
-
-	/**
-	 * Encode header strings to be compliant with MIME format
-	 * TODO: i18n: Implement base64 encoding according to charsets
-	 * @param string $string The string to encode
-	 * @return string
-	 */
-	public function mime_encode_headers($string) {
-		if($string == "") return;
-		if(!preg_match("/^([[:print:]]*)$/",$string))
-			$string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
-		return $string;
 	}
 
 

@@ -81,8 +81,8 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	if(isset($f_user)) { $f_user = stripslashes($f_user); }
 	if(isset($f_server)) { $f_server = stripslashes($f_server); }
 
-	if(isset($f_email) && !is_valid_email($f_email)) { $f_email = "unknown@example.com"; }
-	if(isset($f_user) && !is_valid_email("$f_user@example.com")) { $f_user = "unknown"; }
+	if(isset($f_email) && !PHPMailer::validateAddress($f_email)) { $f_email = "unknown@example.com"; }
+	if(isset($f_user) && !PHPMailer::validateAddress("$f_user@example.com")) { $f_user = "unknown"; }
 
 	switch(strtoupper($mail_server_type)) {
 

@@ -35,7 +35,7 @@ if(isset($_POST['action'])) {
 			$mail = new PHPMailer_extra;
 			$mail->PluginDir = "./inc/";
 			$mail->SetLanguage("en","langs/");
-			$mail->CharSet = $default_char_set;
+			$mail->CharSet = $TLN->charset;
 			$mail->Hostname = getenv("SERVER_NAME");
 			$mail->Host = $smtp_server;
 			$mail->WordWrap = 76;
@@ -56,11 +56,11 @@ if(isset($_POST['action'])) {
 
 			// build the email
 			$mail->From = ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
-			$mail->FromName = $TLN->mime_encode_headers($prefs["real-name"]);
-			$mail->AddReplyTo($prefs["reply-to"], $TLN->mime_encode_headers($prefs["real-name"]));
+			$mail->FromName = $mail->encodeHeader($prefs["real-name"]);
+			$mail->AddReplyTo($prefs["reply-to"], $mail->encodeHeader($prefs["real-name"]));
 			$mail->AddAddress($recipient);
 			
-			$mail->Subject = $TLN->mime_encode_headers(stripslashes($receiptSubj));
+			$mail->Subject = $mail->encodeHeader(stripslashes($receiptSubj));
 			$mail->Body = stripslashes($receiptText);
 
 			// send

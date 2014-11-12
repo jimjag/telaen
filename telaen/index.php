@@ -8,12 +8,13 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
-require("./inc/config/config.php");
-require("./inc/lib.php");
-require("./inc/preinit.php");
+require_once("./inc/config/config.php");
+require_once("./inc/lib.php");
+require_once("./inc/preinit.php");
+require_once("./inc/class/class.phpmailer.php");
 
 extract(pull_from_array($_GET, array("f_email", "f_user", "lid", "tid", "six"), "s"));
-require("./inc/user_tl.php");
+require_once("./inc/user_tl.php");
 
 require_once(SMARTY_DIR."Smarty.class.php");
 $smarty = new Smarty;
@@ -112,8 +113,8 @@ switch(strtoupper($mail_server_type)) {
 }
 
 // Protect from XSS
-if(isset($f_email) && !is_valid_email($f_email)) { $f_email = "unknown@example.com"; }
-if(isset($f_user) && !is_valid_email("$f_user@example.com")) { $f_user = "unknown"; }
+if(isset($f_email) && !PHPMailer::validateAddress($f_email)) { $f_email = "unknown@example.com"; }
+if(isset($f_user) && !PHPMailer::validateAddress("$f_user@example.com")) { $f_user = "unknown"; }
 
 $smarty->assign("umEmail",$f_email);
 $smarty->assign("umUser",$f_user);
