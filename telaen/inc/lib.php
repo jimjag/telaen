@@ -12,6 +12,14 @@ Telaen is a GPL'ed software developed by
  * functions
  */
 
+/**
+ * Error handler to print out error strings
+ * @param  string $errno   Error number
+ * @param  string $errstr  Error string
+ * @param  string $errfile Error file
+ * @param  string $errline Line of error
+ * @return void
+ */
 function err_handler ($errno, $errstr, $errfile, $errline) {
 	global $display_errors;
 
@@ -30,6 +38,11 @@ function err_handler ($errno, $errstr, $errfile, $errline) {
 
 }
 
+/**
+ * Remove all files within a directory
+ * @param  string $folder Directory to clean up
+ * @return void
+ */
 function cleanup_dir ($folder) {
 	if (file_exists($folder)) {
 		$d = dir($folder."/");
@@ -41,6 +54,12 @@ function cleanup_dir ($folder) {
 	}	
 }
 
+/**
+ * Cleanup a set of directorys
+ * @param  string  $userfolder The user's local webmail directory
+ * @param  boolean $logout     TRUE if we also log user out
+ * @return void
+ */
 function cleanup_dirs ($userfolder, $logout) {
 	global $UM,$sid,$tid,$lid,$sess,$prefs;
 
@@ -166,6 +185,10 @@ function get_usage_graphic($used,$aval) {
 	return $graph;
 }
 
+/**
+ * Create TLS/SSL aware URL for server (eg: http://www.example.com/)
+ * @return string
+ */
 function create_http_url() {
 	$hurl = "http";
 	if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
@@ -177,6 +200,12 @@ function create_http_url() {
 	return $hurl;
 }
 
+/**
+ * Create absolute URL of PHP script
+ * @param  string  $url             URL to add
+ * @param  boolean $add_scheme_host Whether we need http: part
+ * @return string
+ */
 function create_abs_url ($url, $add_scheme_host = true) {
 	$nurl = "";
 	if ($add_scheme_host) {
@@ -259,9 +288,18 @@ class Session {
 	private $ss = null;
 	private $index = "default";
 	
+	/**
+	 * Session creator
+	 */
 	function Session() {
 		$this->ss = &$_SESSION;
 	}
+
+	/**
+	 * Load PHP Session data
+	 * @param string $index key of Session superglobal
+	 * @return  string
+	 */
 	function &Load($index = "default") {
 		$this->index = $index;
 		if(!is_array($this->ss[$this->index]))
@@ -269,6 +307,10 @@ class Session {
 		return $this->ss[$this->index];
 	}
 
+	/**
+	 * Reset Session key/value
+	 * @param array $array2save Array to save in Session
+	 */
 	function Save(&$array2save) {
 		$this->ss[$this->index] = $array2save;
 	}		
@@ -288,6 +330,12 @@ class Mbox {
 
 	function Mbox() {
 	}
+
+	/**
+	 * Load in Array from file
+	 * @param  string $path File to read
+	 * @return array
+	 */
 	function &Load($path) {
 		$this->path = $path;
 		$ret = array();
@@ -300,6 +348,11 @@ class Mbox {
 		return $ret;
 	}
 
+	/**
+	 * Save array to file
+	 * @param  array $array2save Array to tuck away
+	 * @return void
+	 */
 	function Save(&$array2save) {
 		$f = fopen($this->path, "w");
 		if ($f) {

@@ -14,7 +14,7 @@ Telaen is a GPL'ed software developed by
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-$appversion = "1.3.2-dev";
+$appversion = "2.0.0-dev";
 $appname = "Telaen Webmail";
 
 ?>
