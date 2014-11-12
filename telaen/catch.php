@@ -16,7 +16,7 @@ if(!isset($ix) || !isset($folder))
 extract(pull_from_array($_POST, array("ckaval"), 1));
 
 $filename = $userfolder."_infos/addressbook.ucf";
-$myfile = $UM->_read_file($filename);
+$myfile = $TLN->_read_file($filename);
 $addressbook = array();
 
 if($myfile != "") 
@@ -66,7 +66,7 @@ if(isset($ckaval)) {
 		$addressbook[$id]["email"] = $aval[$idchecked]["mail"];
 	}
 
-	$UM->_save_file($filename,base64_encode(serialize($addressbook)));
+	$TLN->_save_file($filename,base64_encode(serialize($addressbook)));
 
 	echo("
 	<script language=javascript>

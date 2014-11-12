@@ -16,7 +16,7 @@ require("./inc/init.php");
 $smarty->assign("pageMetas", $nocache);
 
 $filename = $userfolder."_infos/addressbook.ucf";
-$myfile = $UM->_read_file($filename);
+$myfile = $TLN->_read_file($filename);
 
 if($myfile != "")
 	$addressbook = unserialize(base64_decode($myfile));
@@ -54,7 +54,7 @@ switch($opt) {
 		$addressbook[$id]["state"] = $state;
 		$addressbook[$id]["work"] = $work;
 
-		$UM->_save_file($filename,base64_encode(serialize($addressbook)));
+		$TLN->_save_file($filename,base64_encode(serialize($addressbook)));
 
 		$smarty->assign("umOpt",1);
 		$templatename = "address-results.htm";
@@ -71,7 +71,7 @@ switch($opt) {
 		$addressbook[$id]["state"] = $state;
 		$addressbook[$id]["work"] = $work;
 
-		$UM->_save_file($filename,base64_encode(serialize($addressbook)));
+		$TLN->_save_file($filename,base64_encode(serialize($addressbook)));
 
 		$smarty->assign("umOpt",2);
 		$templatename = "address-results.htm";
@@ -85,7 +85,7 @@ switch($opt) {
 		while(list($l,$value) = each($addressbook))
 			$newaddr[] = $value;
 		$addressbook = $newaddr;
-		$UM->_save_file($filename,base64_encode(serialize($addressbook)));
+		$TLN->_save_file($filename,base64_encode(serialize($addressbook)));
 
 		$smarty->assign("umOpt",3);
 		$templatename = "address-results.htm";

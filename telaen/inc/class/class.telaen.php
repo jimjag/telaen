@@ -8,33 +8,35 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 require("./inc/htmlfilter.php");
+define(IMAP, 1);
+define(POP3, 2);
 
 class Telaen_core {
 
-	public $mail_connection	= 0;
+	public $mail_connection		= 0;
 	public $mail_server		= "localhost";
-	public $mail_port			= 110;
+	public $mail_port		= 110;
 	public $mail_error_msg		= "";
-	public $mail_user			= "unknown";
-	public $mail_pass			= "";
-	public $mail_email			= "unknown@localhost";
-	public $mail_protocol		= "pop3";
+	public $mail_user		= "unknown";
+	public $mail_pass		= "";
+	public $mail_email		= "unknown@localhost";
+	public $mail_protocol		= POP3;
 	public $mail_prefix		= "";
 
-	public $sanitize			= true;
+	public $sanitize		= true;
 	public $use_html			= false;
 	public $charset			= "iso-8859-1";
-	public $timezone			= "+0000";
+	public $timezone		= "+0000";
 	public $debug			= false;
 	public $user_folder		= "./";
 	public $temp_folder		= "./";
 	public $timeout			= 10;
 	public $displayimages		= false;
-	public $save_temp_attachs		= true;
+	public $save_temp_attachs	= true;
 	public $current_level		= array();
 	// internal
-	private $_msgbody			= "";
-	private $_content			= array();
+	private $_msgbody		= "";
+	private $_content		= array();
 	private $_sid			= "";
 	private $_tnef			= "";
 
@@ -1075,7 +1077,7 @@ class Telaen_core {
 	 * @return string
 	 */
 	public function fix_prefix($folder,$add = false) {
-		if($this->mail_protocol == "imap" &&
+		if($this->mail_protocol == IMAP &&
 			!preg_match('|^inbox$|i',$folder) && 
 			$this->mail_prefix && 
 			!preg_match('|^_|',$folder)) {

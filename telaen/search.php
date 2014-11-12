@@ -51,20 +51,20 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 	for($n=0;$n<count($boxes);$n++) {
 		$entry = $boxes[$n]["name"];
 		if(!is_array($auth["headers"][base64_encode(strtolower($entry))])) {
-			if(!$UM->mail_connected()) {
-				if(!$UM->mail_connect()) {
+			if(!$TLN->mail_connected()) {
+				if(!$TLN->mail_connect()) {
 					redirect_and_exit("index.php?err=1", true);
 				}
-				if(!$UM->mail_auth()) { redirect_and_exit("index.php?err=0"); }
+				if(!$TLN->mail_auth()) { redirect_and_exit("index.php?err=0"); }
 			}
-			$retbox = $UM->mail_list_msgs($entry);
+			$retbox = $TLN->mail_list_msgs($entry);
 			$auth["headers"][base64_encode(strtolower($entry))] = $retbox[0];
 			$thisbox = $retbox[0];
 		} else 
 			$thisbox = $auth["headers"][base64_encode(strtolower($entry))];
 	}
-	if($UM->mail_connected()) {
-		$UM->mail_disconnect(); 
+	if($TLN->mail_connected()) {
+		$TLN->mail_disconnect(); 
 		$SS->Save($sess);
 	}
 
@@ -88,7 +88,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 	if(trim($srcBody) != "") $get_body = 1;
 	$search_results = array();
 	$start = _get_microtime();
-	$UM->use_html = false;
+	$TLN->use_html = false;
 
 	if($srcFrom != "") $srcFrom = build_regex($srcFrom);
 	if($srcSubject != "") $srcSubject = build_regex($srcSubject);
@@ -102,8 +102,8 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 			$localname = $email["localname"];
 
 			if($get_body && file_exists($localname)) {
-				$thisfile = $UM->_read_file($localname);
-				$email = $UM->Decode($thisfile);
+				$thisfile = $TLN->_read_file($localname);
+				$email = $TLN->Decode($thisfile);
 				unset($thisfile);
 			}
 

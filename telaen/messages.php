@@ -30,7 +30,7 @@ $date_arrow		= "";
 $size_arrow		= "";
 $toname_arrow	= "";
 
-if ($UM->mail_protocol == "imap" || !$is_inbox_or_spam) {
+if ($TLN->mail_protocol == IMAP || !$is_inbox_or_spam) {
 	switch($sortby) {
 		case "subject":
 			$subject_arrow	= $arrow;
@@ -295,8 +295,8 @@ while($entry=$d->read()) {
 		$entry != "." && 
 		substr($entry,0,1) != "_" && 
 		$entry != $folder &&
-		($UM->mail_protocol == "imap" || (($entry != "inbox") && ($entry != "spam"))) ) {
-		$entry = $UM->fix_prefix($entry,0);
+		($TLN->mail_protocol == IMAP || (($entry != "inbox") && ($entry != "spam"))) ) {
+		$entry = $TLN->fix_prefix($entry,0);
 		switch(strtolower($entry)) {
 		case "inbox":
 			$display = $inbox_extended;
@@ -319,7 +319,7 @@ while($entry=$d->read()) {
 $d->close();
 
 
-unset($UM);
+unset($TLN);
 
 $smarty->assign("umHaveSpam",$auth["havespam"]);
 $smarty->assign("umAvalFolders",$avalfolders);

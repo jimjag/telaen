@@ -71,7 +71,7 @@ if (!isset($webmail_title) || trim($webmail_title) == "" ) {
 }
 $smarty->assign("webmailTitle", $webmail_title);
 
-$UM = new Telaen();
+$TLN = new Telaen();
 
 if(isset($f_pass)) { $f_pass = stripslashes($f_pass); }
 if(isset($f_pass) && strlen($f_pass) > 0) {
@@ -97,7 +97,7 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 			if($mail_detect_login_type != "") $f_user = preg_replace("/%user%/i",$f_user,preg_replace("/%domain%/i",$domain,$mail_detect_login_type));
 		}
 
-		$f_protocol = $mail_detect_protocol;
+		$f_protocol	= $mail_detect_protocol;
 		$f_port		= $mail_detect_port;
 		$f_prefix	= $mail_detect_folder_prefix;
 
@@ -123,34 +123,33 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 			if($one_for_all_login_type != "") $f_user = preg_replace("/%user%/i",$f_user,preg_replace("/%domain%/i",$domain,$one_for_all_login_type));
 		}
 		$f_server	= $default_mail_server;
-
-		$f_protocol = $default_protocol;
+		$f_protocol	= $default_protocol;
 		$f_port		= $default_port;
 		$f_prefix	= $default_folder_prefix;
 
 		break;
 	}
 
-	$UM->mail_email		= $auth["email"]	= $f_email	= trim(stripslashes($f_email));
-	$UM->mail_user		= $auth["user"]		= $f_user	= trim(stripslashes($f_user));
-	$UM->mail_pass		= $auth["pass"]		= $f_pass	= stripslashes($f_pass);
-	$UM->mail_server	= $auth["server"]	= $f_server = stripslashes($f_server);
+	$TLN->mail_email		= $auth["email"]	= $f_email	= trim(stripslashes($f_email));
+	$TLN->mail_user		= $auth["user"]		= $f_user	= trim(stripslashes($f_user));
+	$TLN->mail_pass		= $auth["pass"]		= $f_pass	= stripslashes($f_pass);
+	$TLN->mail_server	= $auth["server"]	= $f_server	= stripslashes($f_server);
 
-	$UM->mail_port		= $auth["port"]			= $f_port;
-	$UM->mail_protocol	= $auth["protocol"]			= $f_protocol;
-	$UM->mail_prefix	= $auth["folder_prefix"]	= $f_prefix;
+	$TLN->mail_port		= $auth["port"]			= $f_port;
+	$TLN->mail_protocol	= $auth["protocol"]		= $f_protocol;
+	$TLN->mail_prefix	= $auth["folder_prefix"]	= $f_prefix;
 
-	$pop3capa = $UM->mail_pop3_capa();
-	$UM->_havepipelining	= $auth["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
-	$UM->_haveatop		= $auth["haveatop"]			= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
-	$UM->_haveuidl		= $auth["haveuidl"]			= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
-	$UM->_haveapop		= $auth["haveapop"]			= ( isset($mail_use_apop) ? $mail_use_apop : $pop3capa["APOP"] );
+	$pop3capa = $TLN->mail_pop3_capa();
+	$TLN->_havepipelining	= $auth["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
+	$TLN->_haveatop		= $auth["haveatop"]		= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
+	$TLN->_haveuidl		= $auth["haveuidl"]		= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
+	$TLN->_haveapop		= $auth["haveapop"]		= ( isset($mail_use_apop) ? $mail_use_apop : $pop3capa["APOP"] );
 
 	$refr = 1;
 
 	if (is_array($quota_limits)) {
 		foreach ($quota_limits as $quota) {
-			if (preg_match($quota[0], $UM->mail_user)) {
+			if (preg_match($quota[0], $TLN->mail_user)) {
 				$quota_limit = $quota[1];
 			}
 		}
@@ -160,19 +159,19 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	
 } elseif ($auth["auth"] && ((time() - $start) < ($idle_timeout * 60)) ) {
 
-	$UM->mail_user		= $f_user		= $auth["user"];
-	$UM->mail_pass		= $f_pass		= $auth["pass"];
-	$UM->mail_server	= $f_server		= $auth["server"];
-	$UM->mail_email		= $f_email		= $auth["email"];
+	$TLN->mail_user		= $f_user	= $auth["user"];
+	$TLN->mail_pass		= $f_pass	= $auth["pass"];
+	$TLN->mail_server	= $f_server	= $auth["server"];
+	$TLN->mail_email		= $f_email	= $auth["email"];
 
-	$UM->mail_port		= $f_port	= $auth["port"];
-	$UM->mail_protocol	= $f_protocol	= $auth["protocol"];
-	$UM->mail_prefix	= $f_prefix		= $auth["folder_prefix"];
+	$TLN->mail_port		= $f_port	= $auth["port"];
+	$TLN->mail_protocol	= $f_protocol	= $auth["protocol"];
+	$TLN->mail_prefix	= $f_prefix	= $auth["folder_prefix"];
 
-	$UM->_havepipelining	= $auth["havepipelining"];
-	$UM->_haveatop		= $auth["haveatop"];
-	$UM->_haveuidl		= $auth["haveuidl"];
-	$UM->_haveapop		= $auth["haveapop"];
+	$TLN->_havepipelining	= $auth["havepipelining"];
+	$TLN->_haveatop		= $auth["haveatop"];
+	$TLN->_haveuidl		= $auth["haveuidl"];
+	$TLN->_haveapop		= $auth["haveapop"];
 	
 	$quota_limit		= $auth["quota_limit"];
 
@@ -190,16 +189,16 @@ $userfolder = $temporary_directory.preg_replace("/[^a-z0-9\._-]/","_",strtolower
 $UserMbox = new Mbox();
 $mbox = &$UserMbox->Load($userfolder."_infos/mboxes.ucf");
 
-$UM->debug			= $enable_debug;
-$UM->use_html			= $allow_html;
+$TLN->debug			= $enable_debug;
+$TLN->use_html			= $allow_html;
 
-$UM->user_folder		= $userfolder;
-$UM->temp_folder		= $temporary_directory;
-$UM->timeout			= $idle_timeout;
+$TLN->user_folder		= $userfolder;
+$TLN->temp_folder		= $temporary_directory;
+$TLN->timeout			= $idle_timeout;
 
 // avoid missing settings allow dirs creation with 000 perms
 if (isset($dirperm) && $dirperm != 0000) {
-	$UM->dirperm = $dirperm;
+	$TLN->dirperm = $dirperm;
 }
 
 $prefs = load_prefs();
@@ -209,9 +208,9 @@ $mycal = $mycal->monthAsDiv();
 $smarty->assign("umCalendar",$mycal);
 $smarty->assign("umSystemNews",$systemNews);
 
-$UM->timezone			= $prefs["timezone"];
-$UM->charset			= $default_char_set;
-$UM->userspamlevel		= $prefs["spamlevel"];
+$TLN->timezone			= $prefs["timezone"];
+$TLN->charset			= $default_char_set;
+$TLN->userspamlevel		= $prefs["spamlevel"];
 
 
 /*
@@ -265,7 +264,7 @@ if(isset($need_save))
 
 if(!isset($folder) || $folder == "" || strpos($folder,"..") !== false ) 
 	$folder = "inbox";
-elseif (!file_exists($userfolder.$UM->fix_prefix($folder,1))) { 
+elseif (!file_exists($userfolder.$TLN->fix_prefix($folder,1))) { 
 	redirect_and_exit("logout.php"); 
 }
 

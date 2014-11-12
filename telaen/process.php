@@ -13,13 +13,13 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require("./inc/init.php");
 
 function mail_connect() {
-	global $UM,$sid,$tid,$lid;
+	global $TLN,$sid,$tid,$lid;
 	
 	// server check
-	if(!$UM->mail_connect()){
+	if(!$TLN->mail_connect()){
 		redirect_and_exit("index.php?err=1", true);
 	}	
-	if(!$UM->mail_auth(true)) {
+	if(!$TLN->mail_auth(true)) {
 		redirect_and_exit("index.php?err=0");
 	}
 }
@@ -61,7 +61,7 @@ if( !is_array($headers)
 			$start_pos = ($pag-1)*$reg_pp;
 		}
 	}
-	if ($UM->_autospamfolder) {
+	if ($TLN->_autospamfolder) {
 		if ($folder_key == $folder_key_inbox) {
 			$other_folder_key = $folder_key_spam;
 		} else {
@@ -75,13 +75,13 @@ if( !is_array($headers)
 		for($i=0;$i<$messagecount;$i++) {
 			if(isset($_POST["msg_$i"])) {
 				if ($decision == "delete") {
-					$UM->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
+					$TLN->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
 				} elseif ($decision == "move") {
-					$UM->mail_move_msg($headers[$i],$aval_folders);
+					$TLN->mail_move_msg($headers[$i],$aval_folders);
 				} elseif ($decision == "mark") {
-					$UM->mail_set_flag($headers[$i],"\\SEEN","+");
+					$TLN->mail_set_flag($headers[$i],"\\SEEN","+");
 				} elseif ($decision == "unmark") {
-					$UM->mail_set_flag($headers[$i],"\\SEEN","-");
+					$TLN->mail_set_flag($headers[$i],"\\SEEN","-");
 				}
 
 				/*
@@ -108,7 +108,7 @@ if( !is_array($headers)
 			/*
 			 * Add the spamfolder if we have one.
 			 */
-			if ($UM->_autospamfolder && $is_inbox_or_spam) {
+			if ($TLN->_autospamfolder && $is_inbox_or_spam) {
 				$j = count($delarray);
 				$othercount = count($auth["headers"][$other_folder_key]);
 				for($i=0;$i<$othercount;$i++) {
@@ -125,8 +125,8 @@ if( !is_array($headers)
 			 * With Imap we need to expunge ALWAYS when move or delete,
 			 * because all the folders are on server. 
 			 */
-			if ($UM->mail_protocol == "imap" && $expunge) {
-				$UM->mail_expunge();
+			if ($TLN->mail_protocol == IMAP && $expunge) {
+				$TLN->mail_expunge();
 			}
 
 			/*
@@ -134,13 +134,13 @@ if( !is_array($headers)
 			 * but only if we are working on inbox or spam folders. Else
 			 * our internal list does not match what we got on the server.
 			 */
-			if ($UM->mail_protocol == "pop3" && $expunge 
+			if ($TLN->mail_protocol == POP3 && $expunge
 				&& $is_inbox_or_spam) {
 			
 				if ($mail_use_forcedquit) {
-					$UM->mail_disconnect_force();					
+					$TLN->mail_disconnect_force();					
 				} else {
-					$UM->mail_disconnect();					
+					$TLN->mail_disconnect();					
 				}
 				mail_connect();
 			}
@@ -194,7 +194,7 @@ if( !is_array($headers)
 				 */
 				unset ($auth["headers"][$folder_key]);
 				$auth["headers"][$folder_key] = array();
-				if ($UM->_autospamfolder && $is_inbox_or_spam) {
+				if ($TLN->_autospamfolder && $is_inbox_or_spam) {
 					unset ($auth["headers"][$other_folder_key]);
 					$auth["headers"][$other_folder_key] = array();
 				}
@@ -211,7 +211,7 @@ if( !is_array($headers)
 		}
 	}
 
-	$boxes = $UM->mail_list_boxes();
+	$boxes = $TLN->mail_list_boxes();
 	$auth["folders"] = $boxes;
 
 	/*
@@ -227,12 +227,12 @@ if( !is_array($headers)
 	 * we use filters.
 	 */
 	if($require_update) {
-		$UM->mail_disconnect();
+		$TLN->mail_disconnect();
 		mail_connect();
 		require("./get_message_list.php");
 	}
 
-	$UM->mail_disconnect();
+	$TLN->mail_disconnect();
 }
 
 if(!is_array($headers = $auth["headers"][$folder_key])) { redirect_and_exit("index.php?err=3", true); }
@@ -241,7 +241,7 @@ if(!is_array($headers = $auth["headers"][$folder_key])) { redirect_and_exit("ind
  * Sort the date and size fields with a natural sort, but only
  * for non-POP Inboxes
  */
-if (!$is_inbox_or_spam || $UM->mail_protocol == "imap") {
+if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
 	if ($sortby == "date" || $sortby == "size") {
 		array_qsort2($headers,$sortby,$sortorder);
 	} else {
@@ -250,7 +250,7 @@ if (!$is_inbox_or_spam || $UM->mail_protocol == "imap") {
 }
 
 $auth["headers"][$folder_key] = $headers;
-$auth["havespam"] = ($UM->havespam || count($auth["headers"][$folder_key_spam]));
+$auth["havespam"] = ($TLN->havespam || count($auth["headers"][$folder_key_spam]));
 $SS->Save($sess);
 
 /*

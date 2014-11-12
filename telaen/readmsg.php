@@ -24,7 +24,7 @@ if(isset($attachment)) {
 	$is_attached = true;
 	$arAttachment	= explode(",",$attachment);
 
-	$UM->current_level = $arAttachment;
+	$TLN->current_level = $arAttachment;
 
 	$root = $mail_info;
 	foreach($arAttachment as $item )
@@ -34,32 +34,32 @@ if(isset($attachment)) {
 	if( !is_array($root) || 
 		!file_exists($root["filename"])) redirect_and_exit("index.php?err=3");
 
-	$result = $UM->_read_file($root["filename"]);
+	$result = $TLN->_read_file($root["filename"]);
 
 } else {
 	$is_attached = false;
 	$arAttachment = array();
-	if(!$UM->mail_connect()) {
+	if(!$TLN->mail_connect()) {
 		redirect_and_exit("index.php?err=1", true);
 	}
-	if(!$UM->mail_auth()) { redirect_and_exit("index.php?err=0"); }
+	if(!$TLN->mail_auth()) { redirect_and_exit("index.php?err=0"); }
 
-	if(!($result = $UM->mail_retr_msg($mail_info,1))) { redirect_and_exit("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true"); }
-	if($UM->mail_set_flag($mail_info,"\\SEEN","+")) {
+	if(!($result = $TLN->mail_retr_msg($mail_info,1))) { redirect_and_exit("messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true"); }
+	if($TLN->mail_set_flag($mail_info,"\\SEEN","+")) {
 		$auth["headers"][$folderkey][$ix] = $mail_info;
 	}
 
-	$UM->mail_disconnect(); 
+	$TLN->mail_disconnect(); 
 
 }
 
 // metas assigned to smarty
 $smarty->assign("pageMetas", $nocache);
 
-$UM->displayimages = $prefs["display-images"];
-$UM->sanitize = ($sanitize_html || !$allow_scripts);
+$TLN->displayimages = $prefs["display-images"];
+$TLN->sanitize = ($sanitize_html || !$allow_scripts);
 
-$email = $UM->Decode($result);
+$email = $TLN->Decode($result);
 
 if($ix > 0) {
 
@@ -294,8 +294,8 @@ while($entry=$d->read()) {
 		$entry != "." && 
 		substr($entry,0,1) != "_" && 
 		$entry != $folder &&
-		($UM->mail_protocol == "imap" || ($entry != "inbox" && $entry != "spam"))) {
-		$entry = $UM->fix_prefix($entry,0);
+		($TLN->mail_protocol == "imap" || ($entry != "inbox" && $entry != "spam"))) {
+		$entry = $TLN->fix_prefix($entry,0);
 		switch(strtolower($entry)) {
 		case "inbox":
 			$display = $inbox_extended;
@@ -318,7 +318,7 @@ while($entry=$d->read()) {
 }
 $d->close();
 $smarty->assign("umAvalFolders",$avalfolders);
-unset($UM);
+unset($TLN);
 
 if($is_attached)
 	$smarty->display("$selected_theme/readmsg_popup.htm");

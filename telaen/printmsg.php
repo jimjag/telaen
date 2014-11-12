@@ -16,12 +16,12 @@ $mail_info = $auth["headers"][base64_encode(strtolower($folder))][$ix];
 $smarty->assign("pageMetas", $nocache);
 
 if(!file_exists($mail_info["localname"])) die("File not found");;
-$email = $UM->_read_file($mail_info["localname"]);
+$email = $TLN->_read_file($mail_info["localname"]);
 
-$UM->displayimages = $prefs["display-images"];
-$UM->sanitize = ($sanitize_html || !$allow_scripts);
+$TLN->displayimages = $prefs["display-images"];
+$TLN->sanitize = ($sanitize_html || !$allow_scripts);
 
-$email = $UM->Decode($email);
+$email = $TLN->Decode($email);
 $body = $email["body"];
 
 //cleanning bad tags to show
@@ -99,7 +99,7 @@ if(count($anexos) > 0) {
 	$smarty->assign("umAttachList",$anexos);
 }
 
-unset($UM);
+unset($TLN);
 
 $smarty->display("$selected_theme/print-message.htm");
 

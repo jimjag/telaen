@@ -9,7 +9,7 @@ $personal = array();
 foreach($folders as $entry) {
 	$entry = $entry["name"];
 	$boxname = $entry;
-	if ($UM->is_system_folder($entry)) {
+	if ($TLN->is_system_folder($entry)) {
 		$entry = strtolower($entry);
 		switch ($entry) {
 		case "inbox":

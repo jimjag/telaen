@@ -29,7 +29,7 @@ class MyMonth {
  * @return void
  */
 	public function MyMonth($year=0, $month=0) {
-		global $UM, $userfolder;
+		global $userfolder;
 		if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050){
 			$this->_mymonth	= getdate();
 			$month = $this->_mymonth['mon'];

@@ -4,16 +4,16 @@ class Telaen extends Telaen_core {
 	private $_autospamfolder	= true;		// boolean
 	private $_spamregex		= array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
 	public $havespam		= "";		// NOTE: This is a STRING!
-	private $_system_folders	= array("inbox","trash","sent","spam");
+	private $_system_folders		= array("inbox","trash","sent","spam");
 	private $_current_folder	= "";
-	public $CRLF		= "\r\n";
-	public $userspamlevel	= 0;		// Disabled
-	public $dirperm		= 0700;		// recall affected by umask value
+	public $CRLF			= "\r\n";
+	public $userspamlevel		= 0;		// Disabled
+	public $dirperm			= 0700;		// recall affected by umask value
 	public $greeting		= "";		// Internally used for store pop3 APOP greeting message
 	private $_haveatop		= false;	// boolean
 	private $_havepipelining	= false;	// boolean
 	private $_haveapop		= false;	// boolean
-	private $_haveuidl			= false;		// boolean
+	private $_haveuidl		= false;	// boolean
 
 	public function Telaen() {
 		require("./inc/class/class.tnef.php");
@@ -80,7 +80,7 @@ class Telaen extends Telaen_core {
 			foreach ($cmds as $cmd) {
 				$cmd = trim($cmd) . $this->CRLF;
 				$output = (preg_match('/^(PASS|LOGIN)/',$cmd,$regs))?$regs[1]." ****":$cmd;
-				if($this->mail_protocol == "imap" && !$killSid) {
+				if($this->mail_protocol == IMAP && !$killSid) {
 					$cmd = $this->_sid." ".$cmd;
 					$output = $this->_sid." ".$output;
 				}
@@ -107,7 +107,7 @@ class Telaen extends Telaen_core {
 			$this->mail_connection = fsockopen($this->mail_server, $this->mail_port, $errno, $errstr, 15);
 			if($this->mail_connection) {
 				$buffer = $this->mail_get_line();
-				if($this->mail_protocol == "imap") 
+				if($this->mail_protocol == IMAP)
 					$regexp = "/^([ ]?\\*[ ]?OK)/";
 				else { 
 					$regexp = "/^(\\+OK)/";
@@ -182,7 +182,7 @@ class Telaen extends Telaen_core {
 	public function mail_auth($checkfolders=false) {
 		$ret = false;
 		if($this->mail_connected()) {
-			if ($this->mail_protocol == "imap") {
+			if ($this->mail_protocol == IMAP) {
 				$ret = $this->_mail_auth_imap($checkfolders);
 			} else {
 				$ret = $this->_mail_auth_pop($checkfolders);
@@ -201,7 +201,7 @@ class Telaen extends Telaen_core {
 
 		$boxes = $this->mail_list_boxes();
 
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 		
 			$tmp = $this->_system_folders;
 
@@ -353,7 +353,7 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_retr_msg(&$msg,$check=1) {
 		$ret = "";
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$ret = $this->mail_retr_msg_imap($msg,$check);
 		} else {
 			$ret = $this->mail_retr_msg_pop($msg,$check);
@@ -396,7 +396,7 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_retr_header($msg) {
 		$ret = "";
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$ret = $this->mail_retr_header_imap($msg);
 		} else {
 			$ret = $this->mail_retr_header_pop($msg);
@@ -516,7 +516,7 @@ class Telaen extends Telaen_core {
 	public function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
 
 		$ret = 1;
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$ret = $this->mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
 		} else {
 			$ret = $this->mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
@@ -625,7 +625,7 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_move_msg($msg,$tofolder) {
 		$ret = 1;
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$ret = $this->mail_move_msg_imap($msg,$tofolder);
 		} else {
 			$ret = $this->mail_move_msg_pop($msg,$tofolder);
@@ -844,7 +844,7 @@ class Telaen extends Telaen_core {
 			$boxname = strtolower($boxname);
 
 		/* choose the protocol */
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$messages = $this->mail_list_msgs_imap($boxname, $localmessages);
 		} else {
 			$messages = $this->mail_list_msgs_pop($boxname, $localmessages);
@@ -1054,7 +1054,7 @@ class Telaen extends Telaen_core {
 	public function mail_list_boxes($boxname = "*") {
 		$boxlist = array();
 		/* choose the protocol*/
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$this->mail_send_command("LIST \"\" $boxname");
 			$buffer = $this->mail_get_line();
 			/* if any problem, stop the script */
@@ -1105,7 +1105,7 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_select_box($boxname = "INBOX") {
 		/* this function is used only for IMAP servers */
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$original_name = preg_replace('|"(.*)"|',"$1",$boxname);
 			$boxname = $this->fix_prefix($original_name,1);
 			$this->mail_send_command("SELECT \"$boxname\"");
@@ -1141,7 +1141,7 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_subscribe_box($boxname = "INBOX") {
 		/* this function is used only for IMAP servers */
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
 			$this->mail_send_command("SUBSCRIBE \"$boxname\"");
 			$buffer = $this->mail_get_line();
@@ -1160,7 +1160,7 @@ class Telaen extends Telaen_core {
 	 * @return boolean
 	 */
 	public function mail_create_box($boxname) {
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
 			$this->mail_send_command("CREATE \"$boxname\"");
 			$buffer = $this->mail_get_line();
@@ -1185,7 +1185,7 @@ class Telaen extends Telaen_core {
 	 * @return boolean
 	 */
 	public function mail_delete_box($boxname) {
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
 			$this->mail_send_command("DELETE \"$boxname\"");
 			$buffer = $this->mail_get_line();
@@ -1217,7 +1217,7 @@ class Telaen extends Telaen_core {
 	 * @return boolean
 	 */
 	public function mail_save_message($boxname,$message,$flags = "") {
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
 		
 			// send an append command
@@ -1268,7 +1268,7 @@ class Telaen extends Telaen_core {
 		if($flagtype == '-' && !strstr($msg['flags'], $flagname))
 			return true;
 
-		if($this->mail_protocol == "imap" && in_array($flagname, $allowed)) {
+		if($this->mail_protocol == IMAP && in_array($flagname, $allowed)) {
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
 				$this->mail_select_box($msg["folder"]);
 
@@ -1335,7 +1335,7 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_disconnect() {
 		if($this->mail_connected()) {
-			if($this->mail_protocol == "imap") {
+			if($this->mail_protocol == IMAP) {
 				if($this->_require_expunge)
 					$this->mail_expunge();
 				$this->mail_send_command("LOGOUT");
@@ -1374,7 +1374,7 @@ class Telaen extends Telaen_core {
 	 * @return boolean
 	 */
 	public function mail_expunge() {
-		if($this->mail_protocol == "imap") {
+		if($this->mail_protocol == IMAP) {
 			$this->mail_send_command("EXPUNGE");
 			$buffer = $this->mail_get_line();
 			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
@@ -1399,7 +1399,7 @@ class Telaen extends Telaen_core {
 	public function mail_pop3_capa() {
 		$capa = array();
 		$this->mail_connect();
-		if ($this->mail_protocol == "pop3") {
+		if ($this->mail_protocol == POP3) {
 			$this->mail_send_command("CAPA");
 			$buffer = $this->mail_get_line();
 						if (substr($buffer, 0, 3) == "+OK") {

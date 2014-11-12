@@ -61,7 +61,7 @@ function cleanup_dir ($folder) {
  * @return void
  */
 function cleanup_dirs ($userfolder, $logout) {
-	global $UM,$sid,$tid,$lid,$sess,$prefs;
+	global $TLN,$sid,$tid,$lid,$sess,$prefs;
 
 	if ( ($force_unmark_read_overrule && $force_unmark_read_setting) ||
 			 ($prefs["unmark-read"] && !$force_unmark_read_overrule) ) {
@@ -79,12 +79,12 @@ function cleanup_dirs ($userfolder, $logout) {
 			if(is_array($auth["folders"])) {
 				$boxes = $auth["folders"];
 				for($n=0;$n<count($boxes);$n++) {
-					$entry = $UM->fix_prefix($boxes[$n]["name"],1);
+					$entry = $TLN->fix_prefix($boxes[$n]["name"],1);
 					$file_list = array();
 		
 					if(is_array($curfolder = $auth["headers"][base64_encode(strtolower($entry))])) {
 		
-						if ($UM->is_system_folder($entry))
+						if ($TLN->is_system_folder($entry))
 							$entry = strtolower($entry);
 						for($j=0;$j<count($curfolder);$j++) {
 							$file_list[] = $curfolder[$j]["localname"];
@@ -108,49 +108,49 @@ function cleanup_dirs ($userfolder, $logout) {
 		
 		
 			if($prefs["empty-trash"]) {
-				if ($UM->mail_protocol == "imap") {
-					if(!$UM->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
-					if(!$UM->mail_auth()) { 
+				if ($TLN->mail_protocol == IMAP) {
+					if(!$TLN->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
+					if(!$TLN->mail_auth()) { 
 						redirect_and_exit("index.php?err=0");
 					}
 				}
 				$trash = "trash";
 				if(!is_array($auth["headers"][base64_encode($trash)])) {
-					$retbox = $UM->mail_list_msgs($trash);
+					$retbox = $TLN->mail_list_msgs($trash);
 					$auth["headers"][base64_encode($trash)] = $retbox[0];
 				}
 				$trash = $auth["headers"][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
 					for($j=0;$j<count($trash);$j++) {
-						$UM->mail_delete_msg($trash[$j],false);
+						$TLN->mail_delete_msg($trash[$j],false);
 					}
-					$UM->mail_expunge();
+					$TLN->mail_expunge();
 				}
-				if ($UM->mail_protocol == "imap") {
-					$UM->mail_disconnect();
+				if ($TLN->mail_protocol == IMAP) {
+					$TLN->mail_disconnect();
 				}
 			}
 	
 			if($prefs["empty-spam"]) {
-				if(!$UM->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
-				if(!$UM->mail_auth()) {
+				if(!$TLN->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
+				if(!$TLN->mail_auth()) {
 					 redirect_and_exit("index.php?err=0");
 				}
 				$trash = "spam";
 				if(!is_array($auth["headers"][base64_encode($trash)])) {
-					$retbox = $UM->mail_list_msgs($trash);
+					$retbox = $TLN->mail_list_msgs($trash);
 					$auth["headers"][base64_encode($trash)] = $retbox[0];
 				}
 				$trash = $auth["headers"][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
 					for($j=0;$j<count($trash);$j++) {
-						$UM->mail_delete_msg($trash[$j],false);
+						$TLN->mail_delete_msg($trash[$j],false);
 					}
-					$UM->mail_expunge();
+					$TLN->mail_expunge();
 				}
-				$UM->mail_disconnect();
+				$TLN->mail_disconnect();
 			}
 		}
 	}
@@ -436,10 +436,10 @@ function debug_print_struc($obj) {
 }
 
 function valid_folder_name($name, $checksys = false) {
-	global $UM;
+	global $TLN;
 	if ($name == "") return false;
 	// Folder names that match system folder names are NOT valid
-	if ($checksys && $UM->is_system_folder($name)) return false;
+	if ($checksys && $TLN->is_system_folder($name)) return false;
 	return !preg_match('/[^A-Za-z0-9\-]/',$name);
 }
 

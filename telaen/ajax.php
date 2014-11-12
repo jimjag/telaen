@@ -56,11 +56,11 @@ if(isset($_POST['action'])) {
 
 			// build the email
 			$mail->From = ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
-			$mail->FromName = $UM->mime_encode_headers($prefs["real-name"]);
-			$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));
+			$mail->FromName = $TLN->mime_encode_headers($prefs["real-name"]);
+			$mail->AddReplyTo($prefs["reply-to"], $TLN->mime_encode_headers($prefs["real-name"]));
 			$mail->AddAddress($recipient);
 			
-			$mail->Subject = $UM->mime_encode_headers(stripslashes($receiptSubj));
+			$mail->Subject = $TLN->mime_encode_headers(stripslashes($receiptSubj));
 			$mail->Body = stripslashes($receiptText);
 
 			// send

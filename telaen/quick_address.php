@@ -14,7 +14,7 @@ extract(pull_from_array($_GET, array("where"), "str"));
 extract(pull_from_array($_POST, array("contacts"), "str"));
 
 $filename = $userfolder."_infos/addressbook.ucf";
-$myfile = $UM->_read_file($filename);
+$myfile = $TLN->_read_file($filename);
 if($myfile != "") 
 	$addressbook = unserialize(base64_decode($myfile));
 array_qsort2ic($addressbook,"name");

@@ -32,9 +32,9 @@ if(isset($tipo) && $tipo == "send") {
 		$mail->Timeout = $phpmailer_timeout;
 	}
 	
-	$ARTo = $UM->get_names(stripslashes($to));
-	$ARCc = $UM->get_names(stripslashes($cc));
-	$ARBcc = $UM->get_names(stripslashes($bcc));
+	$ARTo = $TLN->get_names(stripslashes($to));
+	$ARCc = $TLN->get_names(stripslashes($cc));
+	$ARBcc = $TLN->get_names(stripslashes($bcc));
 
 	// html head and foot to add, the editor can do it, but causes some problems with sign and footer
 	$htmlHead = "
@@ -82,8 +82,8 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		$mail->CharSet		= $default_char_set;
 		$mail->Hostname		= getenv("SERVER_NAME");
 		$mail->From			= ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
-		$mail->FromName		= $UM->mime_encode_headers($prefs["real-name"]);
-		$mail->AddReplyTo($prefs["reply-to"], $UM->mime_encode_headers($prefs["real-name"]));
+		$mail->FromName		= $TLN->mime_encode_headers($prefs["real-name"]);
+		$mail->AddReplyTo($prefs["reply-to"], $TLN->mime_encode_headers($prefs["real-name"]));
 
 		$mail->Host			= $smtp_server;
 		$mail->WordWrap		= 76;
@@ -107,7 +107,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 				$name = $ARTo[$i]["name"];
 				$email = $ARTo[$i]["mail"];
 				if($name != $email)
-					$mail->AddAddress($email,$UM->mime_encode_headers($name));
+					$mail->AddAddress($email,$TLN->mime_encode_headers($name));
 				else
 					$mail->AddAddress($email);
 			}
@@ -118,7 +118,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 				$name = $ARCc[$i]["name"];
 				$email = $ARCc[$i]["mail"];
 				if($name != $email)
-					$mail->AddCC($email,$UM->mime_encode_headers($name));
+					$mail->AddCC($email,$TLN->mime_encode_headers($name));
 				else
 					$mail->AddCC($email);
 			}
@@ -129,7 +129,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 				$name = $ARBcc[$i]["name"];
 				$email = $ARBcc[$i]["mail"];
 				if($name != $email)
-					$mail->AddBCC($email,$UM->mime_encode_headers($name));
+					$mail->AddBCC($email,$TLN->mime_encode_headers($name));
 				else
 					$mail->AddBCC($email);
 			}
@@ -144,7 +144,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			}
 		}
 
-		$mail->Subject = $UM->mime_encode_headers(stripslashes($subject));
+		$mail->Subject = $TLN->mime_encode_headers(stripslashes($subject));
 		$mail->Body = stripslashes($body);
 		$mail->Mailer = $mailer_type;
 
@@ -165,13 +165,13 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			
 			if($prefs["save-to-sent"]) {
 
-				if(!$UM->mail_connect()) {				
+				if(!$TLN->mail_connect()) {				
 					redirect_and_exit("index.php?err=1", true);
 				}
-				if(!$UM->mail_auth(false)) { redirect_and_exit("index.php?err=0"); }
-				$UM->mail_save_message("sent",$mail->TelaenGetEmail(),"\\SEEN");
+				if(!$TLN->mail_auth(false)) { redirect_and_exit("index.php?err=0"); }
+				$TLN->mail_save_message("sent",$mail->TelaenGetEmail(),"\\SEEN");
 				unset($auth["headers"][base64_encode("sent")]);
-				$UM->mail_disconnect();
+				$TLN->mail_disconnect();
 				$SS->Save($sess);
 
 			}
@@ -395,21 +395,21 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		if( ($rtype == "forward" && !stristr($mail_info["flags"], '\\FORWARDED'))
 			|| ($rtype != "forward" && !stristr($mail_info["flags"], '\\ANSWERED'))) {
 
-			if(!$UM->mail_connect()) { 
+			if(!$TLN->mail_connect()) { 
 				redirect_and_exit("index.php?err=1", true);
 			}
-			if(!$UM->mail_auth()) { 
+			if(!$TLN->mail_auth()) { 
 				redirect_and_exit("index.php?err=0");
 			}
-			if($rtype != "forward" && $UM->mail_set_flag($mail_info,"\\ANSWERED","+")) {
+			if($rtype != "forward" && $TLN->mail_set_flag($mail_info,"\\ANSWERED","+")) {
 				$auth["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
 				$SS->Save($sess);
 			}
-			if($rtype == "forward" && $UM->mail_set_flag($mail_info,"\\FORWARDED","+")) {
+			if($rtype == "forward" && $TLN->mail_set_flag($mail_info,"\\FORWARDED","+")) {
 				$auth["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
 				$SS->Save($sess);
 			}
-			$UM->mail_disconnect(); 
+			$TLN->mail_disconnect(); 
 
 		}
 
@@ -417,12 +417,12 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		$filename = $mail_info["localname"];
 
 		if(!file_exists($filename)) die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true';</script>");
-		$result = $UM->_read_file($filename);
+		$result = $TLN->_read_file($filename);
 
-				$UM->sanitize = ($sanitize_html || !$allow_scripts);
-		$email = $UM->Decode($result);
+				$TLN->sanitize = ($sanitize_html || !$allow_scripts);
+		$email = $TLN->Decode($result);
 
-		$result = $UM->fetch_structure($result);
+		$result = $TLN->fetch_structure($result);
 
 
 		$tmpbody = $email["body"];
@@ -484,8 +484,8 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		}
 
 		function clear_names($strMail) {
-			global $UM;
-			$strMail = $UM->get_names($strMail);
+			global $TLN;
+			$strMail = $TLN->get_names($strMail);
 			for($i=0;$i<count($strMail);$i++) {
 				$thismail = $strMail[$i];
 				$thisline = ($thismail["mail"] != $thismail["name"])?"\"".$thismail["name"]."\""." <".$thismail["mail"].">":$thismail["mail"];

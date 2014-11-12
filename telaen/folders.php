@@ -16,10 +16,10 @@ extract(pull_from_array($_GET, array("empty", "goback", "nameto", "mailto"), "s"
 extract(pull_from_array($_POST, array("newfolder"), "s"));
 
 // server check
-if(!$UM->mail_connect()){ 
+if(!$TLN->mail_connect()){ 
 	redirect_and_exit("index.php?err=1", true);
 }
-if(!$UM->mail_auth()) { 
+if(!$TLN->mail_auth()) { 
 	redirect_and_exit("index.php?err=0");
 }
 
@@ -30,7 +30,7 @@ $require_update = false;
 
 if(valid_folder_name($newfolder, true) && 
    !file_exists($userfolder.$newfolder)) {
-	$UM->mail_create_box($newfolder);
+	$TLN->mail_create_box($newfolder);
 	$require_update = true;
 }
 
@@ -38,13 +38,13 @@ if(valid_folder_name($newfolder, true) &&
 // check and delete the especified folder: system folders can not be deleted
 if (valid_folder_name($delfolder, true) &&
    (strpos($delfolder,"..") === false)) {
-	if($UM->mail_delete_box($delfolder)) {
+	if($TLN->mail_delete_box($delfolder)) {
 		unset($auth["headers"][base64_encode(strtolower($delfolder))]);
 		$require_update = true;
 	}
 }
 
-if($require_update) $auth["folders"] = $UM->mail_list_boxes();
+if($require_update) $auth["folders"] = $TLN->mail_list_boxes();
 
 require("./folder_list.php");
 
@@ -52,11 +52,11 @@ require("./folder_list.php");
 if(isset($empty)) {
 	$headers = $auth["headers"][base64_encode(strtolower($empty))];
 	for($i=0;$i<count($headers);$i++) {
-		$UM->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
+		$TLN->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
 		$expunge = true;
 	}
 	if($expunge) {
-		$UM->mail_expunge();
+		$TLN->mail_expunge();
 		unset($auth["headers"][base64_encode(strtolower($empty))]);
 		/* ops.. you have sent anything to trash, then you need refresh it */
 		if($prefs["save-to-trash"])
@@ -95,7 +95,7 @@ $smarty->assign("umJS",$jssource);
 $smarty->assign("umUserEmail",$auth["email"]);
 
 
-$boxes = $UM->mail_list_boxes();
+$boxes = $TLN->mail_list_boxes();
 
 $scounter = 0;
 $pcounter = 0;
@@ -121,13 +121,13 @@ for($n=0;$n<count($boxes);$n++) {
 			$merged_array = array_merge($auth["headers"][base64_encode("inbox")], $auth["headers"][base64_encode("spam")]);
 			array_qsort2int($merged_array,"msg","ASC");
 
-			$merged_returnarray = $UM->mail_list_msgs("INBOX", $merged_array);
+			$merged_returnarray = $TLN->mail_list_msgs("INBOX", $merged_array);
 			$thisbox = $merged_returnarray[0];
 			$auth["headers"][base64_encode("spam")] = $merged_returnarray[1];
 		} elseif (strtolower($entry) == "spam") {
 			;
 		} else {
-			$merged_returnarray = $UM->mail_list_msgs($entry, $auth["headers"][base64_encode(strtolower($entry))]);
+			$merged_returnarray = $TLN->mail_list_msgs($entry, $auth["headers"][base64_encode(strtolower($entry))]);
 			$thisbox = $merged_returnarray[0];
 		}
 			
@@ -143,14 +143,14 @@ for($n=0;$n<count($boxes);$n++) {
 	}
 	$delete = "&nbsp;";
 
-	if(!$UM->is_system_folder($entry))
+	if(!$TLN->is_system_folder($entry))
 		$delete = "<a href=\"folders.php?delfolder=$entry&folder=$folder\">OK</a>";
 
 	$boxname = $entry;
 
 	if($unread != 0) $unread = "<b>$unread</b>";
 
-	if ($UM->is_system_folder($entry)) {
+	if ($TLN->is_system_folder($entry)) {
 		$entry = strtolower($entry);
 		switch ($entry) {
 		case "inbox":
@@ -193,8 +193,8 @@ for($n=0;$n<count($boxes);$n++) {
 
 
 $SS->Save($sess);
-$UM->mail_disconnect();
-unset($SS,$UM);
+$TLN->mail_disconnect();
+unset($SS,$TLN);
 
 // Sort and merge the 2 folders arrays
 array_qsort2ic ($system,"name");
