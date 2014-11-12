@@ -9288,7 +9288,7 @@ class iCalUtilityFunctions {
  * $param string $ext, vCard file extension (default 'vcf')
  * @return mixed
  */
-public function iCal2vCard( $email, $version='2.1', $directory=FALSE, $ext='vcf' ) {
+function iCal2vCard( $email, $version='2.1', $directory=FALSE, $ext='vcf' ) {
   if( FALSE === ( $pos = strpos( $email, '@' )))
     return FALSE;
   if( $directory ) {
@@ -9376,7 +9376,7 @@ public function iCal2vCard( $email, $version='2.1', $directory=FALSE, $ext='vcf'
  * $param string $ext, vCard file extension (default 'vcf')
  * @return mixed
  */
-public function iCal2vCards( & $calendar, $version='2.1', $directory=FALSE, $ext='vcf' ) {
+function iCal2vCards( & $calendar, $version='2.1', $directory=FALSE, $ext='vcf' ) {
   $hits   = array();
   $vCardP = array( 'ATTENDEE', 'CONTACT', 'ORGANIZER' );
   foreach( $vCardP as $prop ) {
@@ -9421,7 +9421,7 @@ public function iCal2vCards( & $calendar, $version='2.1', $directory=FALSE, $ext
  * @param object $calendar, iCalcreator vcalendar instance reference
  * @return string
  */
-public function iCal2XML( & $calendar ) {
+function iCal2XML( & $calendar ) {
             /** fix an SimpleXMLElement instance and create root element */
   $xmlstr       = '<?xml version="1.0" encoding="utf-8"?><icalendar xmlns="urn:ietf:params:xml:ns:icalendar-2.0">';
   $xmlstr      .= '<!-- created '.gmdate( 'Ymd\THis\Z' );
@@ -9724,7 +9724,7 @@ public function iCal2XML( & $calendar ) {
  * @param array  $params,  new element 'attributes'
  * @return void
  */
-public function _addXMLchild( & $parent, $name, $type, $content, $params=array()) {
+function _addXMLchild( & $parent, $name, $type, $content, $params=array()) {
             /** create new child node */
   $name  = strtolower( $name );
   $child = $parent->addChild( $name );
@@ -9926,7 +9926,7 @@ public function _addXMLchild( & $parent, $name, $type, $content, $params=array()
  * @param  array  $iCalcfg iCalcreator config array (opt)
  * @return mixediCalcreator instance or FALSE on error
  */
-public function XMLfile2iCal( $xmlfile, $iCalcfg=array()) {
+function XMLfile2iCal( $xmlfile, $iCalcfg=array()) {
   if( FALSE === ( $xmlstr = file_get_contents( $xmlfile )))
     return FALSE;
   return xml2iCal( $xmlstr, $iCalcfg );
@@ -9940,7 +9940,7 @@ public function XMLfile2iCal( $xmlfile, $iCalcfg=array()) {
  * @param  array  $iCalcfg iCalcreator config array (opt)
  * @return mixed  iCalcreator instance or FALSE on error
  */
-public function XMLstr2iCal( $xmlstr, $iCalcfg=array()) {
+function XMLstr2iCal( $xmlstr, $iCalcfg=array()) {
   return XML2iCal( $xmlstr, $iCalcfg);
 }
 /**
@@ -9952,7 +9952,7 @@ public function XMLstr2iCal( $xmlstr, $iCalcfg=array()) {
  * @param  array  $iCalcfg iCalcreator config array (opt)
  * @return mixed  iCalcreator instance or FALSE on error
  */
-public function XML2iCal( $xmlstr, $iCalcfg=array()) {
+function XML2iCal( $xmlstr, $iCalcfg=array()) {
   $xmlstr  = str_replace( array( "\r\n", "\n\r", "\n", "\r" ), '', $xmlstr );
   $xml     = XMLgetTagContent1( $xmlstr, 'vcalendar', $endIx );
   $iCal    = new vcalendar( $iCalcfg );
@@ -9969,7 +9969,7 @@ public function XML2iCal( $xmlstr, $iCalcfg=array()) {
  * @param string $xml
  * @return bool
  */
-public function XMLgetComps( $iCal, $xml ) {
+function XMLgetComps( $iCal, $xml ) {
   static $comps = array( 'vtimezone', 'standard', 'daylight', 'vevent', 'vtodo', 'vjournal', 'vfreebusy', 'valarm' );
   $sx      = 0;
   while(( FALSE !== substr( $xml, ( $sx + 11 ), 1 )) &&
@@ -10002,7 +10002,7 @@ public function XMLgetComps( $iCal, $xml ) {
  * @param  string $xml
  * @return void
  */
-public function XMLgetProps( $iCal, $xml) {
+function XMLgetProps( $iCal, $xml) {
   while( ! empty( $xml )) {
     $xml2         = XMLgetTagContent2( $xml, $propName, $endIx );
     $propName     = strtoupper( $propName );
@@ -10171,7 +10171,7 @@ public function XMLgetProps( $iCal, $xml) {
  * @param int $endIx
  * @return mixed
  */
-public function XMLgetTagContent1( $xml, $tagName, & $endIx=0 ) {
+function XMLgetTagContent1( $xml, $tagName, & $endIx=0 ) {
   $strlen    = strlen( $tagName );
   $sx1       = 0;
   while( FALSE !== substr( $xml, $sx1, 1 )) {
@@ -10211,7 +10211,7 @@ public function XMLgetTagContent1( $xml, $tagName, & $endIx=0 ) {
  * @param int $endIx
  * @return mixed
  */
-public function XMLgetTagContent2( $xml, & $tagName, & $endIx ) {
+function XMLgetTagContent2( $xml, & $tagName, & $endIx ) {
   $endIx       = strlen( $xml ) + 1; // just in case.. .
   $sx1         = 0;
   while( FALSE !== substr( $xml, $sx1, 1 )) {
@@ -10295,7 +10295,7 @@ public function XMLgetTagContent2( $xml, & $tagName, & $endIx ) {
  * @return array, time zone data with keys for 'offsetHis', 'offsetSec' and 'tzname'
  *
  */
-public function getTzOffsetForDate($timezonesarray, $tzid, $timestamp) {
+function getTzOffsetForDate($timezonesarray, $tzid, $timestamp) {
     if( is_array( $timestamp )) {
 //$disp = sprintf( '%04d%02d%02d %02d%02d%02d', $timestamp['year'], $timestamp['month'], $timestamp['day'], $timestamp['hour'], $timestamp['min'], $timestamp['sec'] ); // test ###
       $timestamp = gmmktime(
@@ -10351,7 +10351,7 @@ public function getTzOffsetForDate($timezonesarray, $tzid, $timestamp) {
  *                based on the timezone data in the vcalendar object
  *
  */
-public function getTimezonesAsDateArrays($vcalendar) {
+function getTimezonesAsDateArrays($vcalendar) {
     $timezonedata = array();
     while( $vtz = $vcalendar->getComponent( 'vtimezone' )) {
         $tzid       = $vtz->getProperty('tzid');
@@ -10376,7 +10376,7 @@ public function getTimezonesAsDateArrays($vcalendar) {
  * @return array, time zone data; array before(offsetHis, offsetSec), array after(offsetHis, offsetSec, tzname)
  *
  */
-public function expandTimezoneDates($vtzc) {
+function expandTimezoneDates($vtzc) {
     $tzdates = array();
     // prepare time zone "description" to attach to each change
     $tzbefore = array();
