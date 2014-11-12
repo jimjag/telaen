@@ -18,12 +18,12 @@ session_start();
 $sid = session_id();
 /* We grab the actual session data below with the Session class */
 
-require("./inc/config/config.php");
-require("./inc/class/class.telaen.php");
-require("./inc/lib.php");
-require("./inc/preinit.php");
-require("./inc/class/iCalcreator.class.php");
-require("./inc/class/class.mymonth.php");
+require_once("./inc/config/config.php");
+require_once("./inc/class/class.telaen.php");
+require_once("./inc/lib.php");
+require_once("./inc/preinit.php");
+require_once("./inc/class/iCalcreator.class.php");
+require_once("./inc/class/class.mymonth.php");
 
 
 require_once(SMARTY_DIR."Smarty.class.php");

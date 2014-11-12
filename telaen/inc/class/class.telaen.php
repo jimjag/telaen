@@ -1,1100 +1,1617 @@
 <?php
-/************************************************************************
-Telaen is a GPL'ed software developed by 
+class Telaen extends Telaen_core {
 
- - The Telaen Group
- - http://jimjag.github.io/telaen/
+	private $_autospamfolder	= true;		// boolean
+	private $_spamregex		= array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
+	public $havespam		= "";		// NOTE: This is a STRING!
+	private $_system_folders		= array("inbox","trash","sent","spam");
+	private $_current_folder	= "";
+	public $CRLF			= "\r\n";
+	public $userspamlevel		= 0;		// Disabled
+	public $dirperm			= 0700;		// recall affected by umask value
+	public $greeting		= "";		// Internally used for store pop3 APOP greeting message
+	private $_haveatop		= false;	// boolean
+	private $_havepipelining	= false;	// boolean
+	private $_haveapop		= false;	// boolean
+	private $_haveuidl		= false;	// boolean
 
-*************************************************************************/
-
-require("./inc/htmlfilter.php");
-define(IMAP, 1);
-define(POP3, 2);
-
-class Telaen_core {
-
-	public $mail_connection		= 0;
-	public $mail_server		= "localhost";
-	public $mail_port		= 110;
-	public $mail_error_msg		= "";
-	public $mail_user		= "unknown";
-	public $mail_pass		= "";
-	public $mail_email		= "unknown@localhost";
-	public $mail_protocol		= POP3;
-	public $mail_prefix		= "";
-
-	public $sanitize		= true;
-	public $use_html			= false;
-	public $charset			= "iso-8859-1";
-	public $timezone		= "+0000";
-	public $debug			= false;
-	public $user_folder		= "./";
-	public $temp_folder		= "./";
-	public $timeout			= 10;
-	public $displayimages		= false;
-	public $save_temp_attachs	= true;
-	public $current_level		= array();
-	// internal
-	private $_msgbody		= "";
-	private $_content		= array();
-	private $_sid			= "";
-	private $_tnef			= "";
-
-	/*******************/
-
-
-	/**
-	 * Open a file and read it until a double line break
-	 * is reached.
-	 * Used to get the list of cached messages from cache
-	 */
-
-	private function _get_headers_from_cache($strfile) {
-		if(!file_exists($strfile)) return;
-		$f = fopen($strfile,"rb");
-		while(!feof($f)) {
-			$result .= preg_replace('/\r?\n/',"\r\n",fread($f,4096));
-			$pos = strpos($result,"\r\n\r\n");
-			if(!($pos === false)) {
-				$result = substr($result,0,$pos);
-				break;
-			}
-		}
-		fclose($f);
-		unset($f); unset($pos); unset($strfile);
-		return $result;
-	}
-
-
-	/**
-	 * Open a file and read it fixing possible mistakes
-	 * on the line breaks. A single variable is returned
-	 */
-
-	private function _read_file($strfile) {
-		if($strfile == "" || !file_exists($strfile)) return;
-		$fp = fopen($strfile,"rb"); fseek($fp,0,SEEK_END);
-		$size = ftell($fp); rewind($fp);
-		$result =  preg_replace('|\r?\n|',"\r\n",fread($fp,$size)); 
-		fclose($fp);
-		unset($fp); unset($size);
-		return $result;
+	public function Telaen() {
+		require("./inc/class/class.tnef.php");
+		$this->_tnef = new TNEF();
+		$this->_sid = uniqid("");
 	}
 
 	/**
-	 * Save content to file
-	 * @param string $filename The filename to write to
-	 * @param string $content The content to write
+	 * Check if we are connected to email server
 	 * @return boolean
 	 */
-	public function save_file($filename,$content) {
+	public function mail_connected() {
+		if(!empty($this->mail_connection)) {
+			$sock_status = @socket_get_status($this->mail_connection);
+			if($sock_status["eof"]) {
+				@fclose($this->mail_connection);
+				return false;
+			}
+			return true;
+		} 
+		return false;
+	}
+
+	/**
+	 * Check if supplied folder name is a system folder.
+	 * @param string $name The folder name to check
+	 * @return boolean
+	 */
+	public function is_system_folder($name) {
+		return (in_array(strtolower($name), $this->_system_folders));
+	}
+
+	private function mail_get_line() {
+		$buffer = fgets($this->mail_connection,8192);
+		$buffer = preg_replace('|\r?\n|',"\r\n",$buffer);
+		if($this->debug) {
+			$sendtodebug = true;
+			if(preg_match('|^(\\* )|i',$buffer) || preg_match('/^([A-Za-z0-9]+ (OK|NO|BAD))/i',$buffer) || preg_match('/^(\\+OK|\\-ERR)/i',$buffer)) {
+				$output = "<- <b>".htmlspecialchars($buffer)."</b>";
+			} else {
+				$sendtodebug = ($this->debug > 1)?false:true;
+				$output = htmlspecialchars($buffer);
+			}
+			if ($sendtodebug)
+				echo("<font style=\"font-size:12px; font-family: Courier New; background-color: white; color: black;\"> $output</font><br>\r\n");
+			flush();
+		}
+		return $buffer;
+	}
+
+	/*
+	 * Send the supplied command to the mail server. Auto-
+	 * appends the required EOL chars to the command.
+	 * The provided parameter is either the command string to
+	 * send or an array of command strings that will be
+	 * sent one after another in order.
+	 */
+	private function mail_send_command($cmds, $killSid = false) {
+
+		if($this->mail_connected()) {
+			if (!is_array($cmds)) {
+				$cmds = (array)$cmds;
+			}
+			foreach ($cmds as $cmd) {
+				$cmd = trim($cmd) . $this->CRLF;
+				$output = (preg_match('/^(PASS|LOGIN)/',$cmd,$regs))?$regs[1]." ****":$cmd;
+				if($this->mail_protocol == IMAP && !$killSid) {
+					$cmd = $this->_sid." ".$cmd;
+					$output = $this->_sid." ".$output;
+				}
+				fwrite($this->mail_connection,$cmd);
+				if($this->debug) {
+					echo("<font style=\"font-size:12px; font-family: Courier New; background-color: white; color: black;\">-&gt; <em><b>".htmlspecialchars($output)."</b></em></font><br>\r\n");
+					flush();
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Connect to email server. TRUE if successful
+	 * @return boolean
+	 */
+	public function mail_connect() {
+		if($this->debug)
+			for($i=0;$i<20;$i++)
+				echo("<!-- buffer sux -->\r\n");
+		if(!$this->mail_connected()) {
+			$this->mail_connection = fsockopen($this->mail_server, $this->mail_port, $errno, $errstr, 15);
+			if($this->mail_connection) {
+				$buffer = $this->mail_get_line();
+				if($this->mail_protocol == IMAP)
+					$regexp = "/^([ ]?\\*[ ]?OK)/";
+				else { 
+					$regexp = "/^(\\+OK)/";
+					// save the greeting message
+					$this->greeting = $buffer;
+				}
+				if(preg_match($regexp,$buffer)) 
+					return true;
+				else 
+					return false;
+			}
+			return false;
+		} else return true;
+	}
+
+	/**
+	 * Authentication for IMAP
+	 * @param  boolean $checkfolders
+	 * @return booean
+	 */
+	private function _mail_auth_imap($checkfolders=false) {
+		$this->mail_send_command("LOGIN ".$this->mail_user." ".$this->mail_pass);
+		$buffer = $this->mail_get_line();
+		if(preg_match("/^(".$this->_sid." OK)/",$buffer)) { 
+			if($checkfolders)
+				$this->_check_folders();
+			return true;
+		} else { 
+			$this->mail_error_msg = $buffer; 
+			return false;
+		}
+	}
+
+	/**
+	 * Authentication for POP3
+	 * @param  boolean $checkfolders
+	 * @return booean
+	 */
+	private function _mail_auth_pop($checkfolders=false) {
+		// APOP login mode, more secure
+		if ($this->_haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
+			$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
+		} 
+		// Classic login mode
+		else {
+			$this->mail_send_command("USER ".$this->mail_user);
+		
+			$buffer = $this->mail_get_line();
+			if (substr($buffer, 0, 3) == "+OK") {
+				$this->mail_send_command("PASS ".$this->mail_pass);
+			}	
+			else 
+				return false;
+		}
+
+		$buffer = $this->mail_get_line();
+		if(substr($buffer, 0, 3) == "+OK") {
+			if($checkfolders)
+				$this->_check_folders();
+			return true;
+		} else {
+			$this->mail_error_msg = $buffer;
+			return false;
+		}
+	}
+
+	/**
+	 * Check if user is authenticated to the email server
+	 * @param boolean $checkfolders Check folder access as well
+	 * @return boolean
+	 */
+	public function mail_auth($checkfolders=false) {
 		$ret = false;
-		$tmpfile = fopen($filename,"wb");
-		if ($tmpfile) {
-			fwrite($tmpfile,$content);
-			fclose($tmpfile);
-			unset($content,$tmpfile);
-			$ret = true;
+		if($this->mail_connected()) {
+			if ($this->mail_protocol == IMAP) {
+				$ret = $this->_mail_auth_imap($checkfolders);
+			} else {
+				$ret = $this->_mail_auth_pop($checkfolders);
+			}
+		}
+		return $ret;
+	}
+
+	private function _check_folders() {
+		$userfolder		= $this->user_folder;
+		$temporary_directory	= $this->temp_folder;
+		$idle_timeout		= $this->timeout;
+
+		if(!file_exists($this->user_folder))
+			if(!@mkdir($this->user_folder,$this->dirperm)) die("<h1><br><br><br><center>$error_permiss</center></h1>");
+
+		$boxes = $this->mail_list_boxes();
+
+		if($this->mail_protocol == IMAP) {
+		
+			$tmp = $this->_system_folders;
+
+			for($i=0;$i<count($boxes);$i++) {
+				$current_folder = $boxes[$i]["name"];
+
+				if ($this->is_system_folder($current_folder)) 
+					$current_folder = strtolower($current_folder);
+
+				while(list($index,$value) = each($tmp)) {
+					if(strtolower($current_folder) == strtolower($value)) {
+						unset($tmp[$index]);
+					}
+				}
+				reset($tmp);
+			}
+			
+			while(list($index,$value) = each($tmp)) {
+				$this->mail_create_box($this->fix_prefix($value,1));
+			}
+
+			for($i=0;$i<count($boxes);$i++) {
+				$current_folder = $this->fix_prefix($boxes[$i]["name"],1);
+				if(!$this->is_system_folder($current_folder))
+					if(!file_exists($this->user_folder.$current_folder)) 
+						mkdir($this->user_folder.$current_folder,$this->dirperm);
+			}
+		}
+
+		$system_folders = array_merge((array)$this->_system_folders,array("_attachments","_infos"));
+
+		while(list($index,$value) = each($system_folders)) {
+			$value = $this->fix_prefix($value,1);
+			if(!file_exists($this->user_folder.$value)) {
+				if($this->is_system_folder($value)) 
+					$value = strtolower($value);
+				mkdir($this->user_folder.$value,$this->dirperm);
+			}
+		}
+	}
+	
+	private function mail_retr_msg_imap(&$msg,$check=1) {
+		global $error_retrieving;
+		$msgheader = $msg["header"];
+
+		if($check) {
+			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
+				$boxinfo = $this->mail_select_box($msg["folder"]);
+
+			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+			$buffer = chop($this->mail_get_line());
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				if(preg_match('|message-id: (.*)|i',$buffer,$regs))
+					$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
+				$buffer = chop($this->mail_get_line());
+			}
+
+			if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
+				$this->mail_error_msg = $error_retrieving;
+				return false;
+			}
+		}
+
+		if(file_exists($msg["localname"])) {
+			$msgcontent = $this->_read_file($msg["localname"]);
+		} else {
+			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY[TEXT]");
+			$buffer = $this->mail_get_line();
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+			if(preg_match('|\\{(.*)\\}|',$buffer,$regs))
+				$bytes = $regs[1];
+
+			$buffer = $this->mail_get_line();
+			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				if(!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i',$buffer))
+					$msgbody .= $buffer;
+				$buffer = $this->mail_get_line();
+			}
+			$pos = strrpos($msgbody, ")");
+			if(!($pos === false))
+				$msgbody = substr($msgbody,0,$pos);
+
+			$msgcontent = "$msgheader\r\n\r\n$msgbody";
+
+			$this->_save_file($msg["localname"],$msgcontent);
+
+		}
+		return $msgcontent;
+	}
+
+	private function mail_retr_msg_pop(&$msg,$check=1) {
+		global $mail_use_top,$error_retrieving;
+
+		if($check && (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam")) {
+			if ($msg["uidl"] && ($msg["uidl"] != $this->mail_get_uidl($msg["msg"]))) {
+				$this->mail_error_msg = $error_retrieving;
+				return false;
+			}
+		}
+
+		if(file_exists($msg["localname"])) {
+			$msgcontent = $this->_read_file($msg["localname"]);
+		} elseif (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam") {
+
+			$command = ($mail_use_top)?"TOP ".$msg["msg"]." ".$msg["size"]:"RETR ".$msg["msg"];
+			$this->mail_send_command($command);
+
+			$buffer = $this->mail_get_line();
+
+			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return false; }
+			$last_buffer = 0;
+			$msgcontent = "";
+			while (!feof($this->mail_connection)) {
+				$buffer = $this->mail_get_line();
+				if(chop($buffer) == ".")
+					break;
+				$msgcontent .= $buffer;
+			}
+			$email		= $this->fetch_structure($msgcontent);
+			$header		= $email["header"];
+			$body		= $email["body"];
+			$mail_info	= $this->get_mail_info($header);
+
+			// Since we are pulling this message for the first
+			// time from the server, we need to add in our UIDL
+			// header. Thus, it will always now be available on
+			// the cached/local version.
+			$uidl = $this->mail_get_uidl($msg["msg"], $mail_info);
+			$header .= "\r\nX-UM-UIDL: $uidl";
+
+			// Update globally
+			$msg["header"]	= $header;
+			$msg["flags"]	= $flags;
+			$msg["uidl"]	= $uidl;
+
+			$msgcontent = "$header\r\n\r\n$body";
+
+			$this->_save_file($msg["localname"],$msgcontent);
+		}
+		return $msgcontent;
+	}
+	
+	/**
+	 * Retrieve and return specific email message
+	 * @param string $msg The message to obtain
+	 * @param boolean $check if it exists
+	 * @return string
+	 */
+	public function mail_retr_msg(&$msg,$check=1) {
+		$ret = "";
+		if($this->mail_protocol == IMAP) {
+			$ret = $this->mail_retr_msg_imap($msg,$check);
+		} else {
+			$ret = $this->mail_retr_msg_pop($msg,$check);
+		}
+		return $ret;
+	}
+
+	private function mail_retr_header_imap($msg) {
+		/* This assumes that we read in the entire boxes in imap. */
+		return $msg["header"];
+	}
+
+	private function mail_retr_header_pop($msg) {
+		/*
+		 * Fetch headers serially. Very slow.
+		 */
+		$this->mail_send_command("TOP ".$msg["msg"]." 0");
+		$buffer = $this->mail_get_line();
+		/* if any problem with this messages list, stop the procedure */
+		if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return false; }
+
+		while (!feof($this->mail_connection)) {
+			$buffer = $this->mail_get_line();
+			if(chop($buffer) == ".") 
+				break;
+			if(strlen($buffer) > 3) 
+				$header .= $buffer;
+		}
+
+		if(!($pos = strpos($header,"\r\n\r\n") === false)) 
+			$header = substr($header,0,$pos);
+
+		return $header;
+	}
+	
+	/**
+	 * Retrieve and return specific email message headers
+	 * @param string $msg The message to obtain
+	 * @return string
+	 */
+	public function mail_retr_header($msg) {
+		$ret = "";
+		if($this->mail_protocol == IMAP) {
+			$ret = $this->mail_retr_header_imap($msg);
+		} else {
+			$ret = $this->mail_retr_header_pop($msg);
 		}
 		return $ret;
 	}
 
 
-	/**
-	 * Recursivelly remove files and directories
-	 */
-
-	private function _RmdirR($location) {
-
-		if (substr($location,-1) <> "/") $location = $location."/";
-		$all=opendir($location);
-		while ($file=readdir($all)) { 
-			if (is_dir($location.$file) && $file <> ".." && $file <> ".") { 
-				$this->_RmdirR($location.$file);
-				unset($file); 
-			} elseif (!is_dir($location.$file)) { 
-				unlink($location.$file); 
-				unset($file); 
-			}
-		}
-		closedir($all); 
-		unset($all);
-		rmdir($location);
-	}
-
-
-	/**
-	 * Encode header strings to be compliant with MIME format
-	 * TODO: i18n: Implement base64 encoding according to charsets
-	 * @param string $string The string to encode
-	 * @return string
-	 */
-	public function mime_encode_headers($string) {
-		if($string == "") return;
-		if(!preg_match("/^([[:print:]]*)$/",$string))
-			$string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
-		return $string;
-	}
-
-
-	/**
-	 * Add a body, to a container. 
-	 * Some malformed messages have more than one body. 
-	 * Used to display inline attachments (images) too.
-	 */
-	private function add_body($strbody) {
-		global $block_external_images;
-		if($this->sanitize)
-			$strbody	=	HTMLFilter($strbody, "images/trans.gif", $block_external_images);
-		if($this->_msgbody == "")
-			$this->_msgbody = $strbody;
-		else
-			$this->_msgbody .= "\r\n<br>\r\n<br>\r\n<hr>\r\n<br>\r\n$strbody";
-	}
-
-
-	/**
-	 * This function, if running under PHP 4.3+ will convert any string between charsets.
-	 * If running under PHP < 4.3, will convert the string to PHP's default charset (iso-8859-1)
-	 */
-	private function convert_charset($string, $from, $to) {
-		$string = @htmlentities($string, ENT_COMPAT, $from);
-		if(function_exists('html_entity_decode')) { //PHP 4.3+
-			return html_entity_decode($string, ENT_COMPAT, $to);
-		} else {
-			$trans_tbl = get_html_translation_table (HTML_ENTITIES);
-			$trans_tbl = array_flip ($trans_tbl);
-			return strtr ($string, $trans_tbl);
-		}
-	}
-
-	/**
-	 * Decode headers strings. Inverse of mime_encode_headers()
-	 */
-	private function decode_mime_string($subject) {
-		$string = $subject;
-
-		if(($pos = strpos($string,"=?")) === false) return $string;
-
-		while(!($pos === false)) {
-
-			$newresult .= substr($string,0,$pos);
-			$string = substr($string,$pos+2,strlen($string));
-			$intpos = strpos($string,"?");
-			$charset = substr($string,0,$intpos);
-			$enctype = strtolower(substr($string,$intpos+1,1));
-			$string = substr($string,$intpos+3,strlen($string));
-			$endpos = strpos($string,"?=");
-			$mystring = substr($string,0,$endpos);
-			$string = substr($string,$endpos+2,strlen($string));
-			if($enctype == "q") $mystring = quoted_printable_decode(preg_replace('|_|'," ",$mystring)); 
-			else if ($enctype == "b") $mystring = base64_decode($mystring);
-
-			if($charset != $this->charset) $mystring = $this->convert_charset($mystring, $charset, $this->charset);
-
-			$newresult .= $mystring;
-			$pos = strpos($string,"=?");
-			unset($intpos); unset($endpos); unset($charset); unset($enctype); unset($mystring);
-		}
-		$result = $newresult.$string;
-		unset($mystring); unset($newresult); unset($pos);
-		
-		if(preg_match('|koi8|', $subject)) $result = convert_cyr_string($result, "k", "w");
-		unset($subject);
-		return $result;
-
-	}
-
-
-	/**
-	 * Split headers into an array, where the key is the same found in the header.
-	 * 
-	 * Subject: Hi 
-	 * 
-	 * 	will be converted in
-	 * 
-	 * $decodedheaders["subject"] = "Hi";
-	 * 
-	 * Some headers are broken into multiples lines, prefixed with a TAB (\t)
-	 */
-	private function decode_header($header) {
-		$headers = explode("\r\n",$header);
-		$decodedheaders = array();
-		for($i=0;$i<count($headers);$i++) {
-			
-			// If current header starts with a TAB or is not very standard, 
-			// attach it at the prev header			
-			if(($headers[$i][0] == "\t") || !preg_match('|^[A-Z0-9a-z_-]+:|',trim($headers[$i])) ) {
-				$decodedheaders[$lasthead] .= " ".trim($headers[$i]);
-			}
-			else { // otherwise extract the header
-				$thisheader = trim($headers[$i]);
-				if(!empty($thisheader)) {				
-					$dbpoint = strpos($thisheader,":");
-					$headname = strtolower(substr($thisheader,0,$dbpoint));
-					$headvalue = trim(substr($thisheader,$dbpoint+1));
-					if(array_key_exists($headname, $decodedheaders))
-						$decodedheaders[$headname] .= "; $headvalue";
-					else 
-						$decodedheaders[$headname] = $headvalue;
-					$lasthead = $headname;										
-				}
-				unset($thisheader);
-			}
-
-		}
-		unset($headers);
-		return $decodedheaders;
-	}
-
-
-	/**
-	 * Try to extract all names in a specified field (from, to, cc)
-	 * In order to guess what is the format (the RFC support 3), it will
-	 * try different ways to get an array with name and email
-	 */
-	public function get_names($strmail) {
-		$ARfrom = array();
-		$strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
-
-		if(trim($strmail) == "") return $ARfrom;
-
-		$armail = array();
-		$counter = 0;  $inthechar = 0;
-		$chartosplit = ",;"; $protectchar = "\""; $temp = "";
-		$lt = "<"; $gt = ">";
-		$closed = 1;
-
-		for($i=0;$i<strlen($strmail);$i++) {
-			$thischar = $strmail[$i];
-			if($thischar == $lt && $closed) $closed = 0;
-			if($thischar == $gt && !$closed) $closed = 1;
-			if($thischar == $protectchar) $inthechar = ($inthechar)?0:1;
-			if(!(strpos($chartosplit,$thischar) === false) && !$inthechar && $closed) {
-				$armail[] = $temp; $temp = "";
-			} else 
-				$temp .= $thischar;
-		}
-
-		if(trim($temp) != "") {
-			$armail[] = trim($temp);
-			unset($temp);
-		}
-
-		for($i=0;$i<count($armail);$i++) {
-			$thisPart = trim(preg_replace('|^"(.*)"$|iD', "$1", trim($armail[$i])));
-			if($thisPart != "") {
-				if (preg_match('|(.*)<(.*)>|i', $thisPart, $regs)) {
-					$email = trim($regs[2]);
-					$name = trim($regs[1]);
-				} else {
-					if (preg_match('|([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_]+)((.*))|i', $thisPart, $regs)) {
-						$email = $regs[1];
-						$name = $regs[2];
-					} else
-						$email = $thisPart;
-				}
-
-				$email = preg_replace('|<(.*)\\>|', "$1", $email);
-				$name = preg_replace('|"(.*)"|', "$1", trim($name));
-				$name = preg_replace('|\((.*)\)|', "$1", $name);
-
-				if ($name == "") $name = $email;
-				if ($email == "") $email = $name;
-				$ARfrom[$i]["name"] = $this->decode_mime_string($name);
-				$ARfrom[$i]["mail"] = $email;
-				unset($name);unset($email);
-			}
-		}
-		unset($armail); 
-		unset ($thisPart);
-		return $ARfrom;
-	}
-
-	/**
-	 * Try to extract the first name in a specified field (from, to, cc)
-	 * In order to guess what is the format (the RFC support 3), it will
-	 * try different ways to get the name and email
-	 */
-	private function get_first_of_names($strmail) {
-		$ARfrom = array();
-		$strmail = stripslashes(preg_replace('/(\t|\r|\n)/',"",$strmail));
-
-		if(trim($strmail) == "") return $ARfrom;
-
-		$counter = 0;  $inthechar = 0;
-		$chartosplit = ",;"; $protectchar = "\""; $temp = "";
-		$lt = "<"; $gt = ">";
-		$closed = 1;
-
-		if (preg_match("/[$chartosplit]/i", $strmail)) {
-			for($i=0;$i<strlen($strmail);$i++) {
-				$thischar = $strmail[$i];
-				if($thischar == $lt && $closed) $closed = 0;
-				if($thischar == $gt && !$closed) $closed = 1;
-				if($thischar == $protectchar) $inthechar = ($inthechar)?0:1;
-				if(!(strpos($chartosplit,$thischar) === false) && !$inthechar && $closed) {
-					$armail = $temp; $temp = "";
-					$i = strlen($strmail);
-				} else 
-					$temp .= $thischar;
-			}
-		} else {
-			$armail = $strmail;
-		}
-
-		$thisPart = trim(preg_replace('|^"(.*)"$|iD', "$1", trim($armail)));
-		if($thisPart != "") {
-			if (preg_match('|(.*)<(.*)>|i', $thisPart, $regs)) {
-				$email = trim($regs[2]);
-				$name = trim($regs[1]);
-			} else {
-				if (preg_match('|([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_]+)((.*))|i', $thisPart, $regs)) {
-					$email = $regs[1];
-					$name = $regs[2];
-				} else
-					$email = $thisPart;
-			}
-
-			$email = preg_replace('|<(.*)\\>|', "$1", $email);
-			$name = preg_replace('|"(.*)"|', "$1", trim($name));
-			$name = preg_replace('|\((.*)\)|', "$1", $name);
-
-			if ($name == "") $name = $email;
-			if ($email == "") $email = $name;
-			$ARfrom[0]["name"] = $this->decode_mime_string($name);
-			$ARfrom[0]["mail"] = $email;
-
-			unset($name);unset($email);
-		}
-		unset($armail);
-		unset ($thisPart);
-		return $ARfrom;
-	}
-
-	/**
-	 * Compile a body for multipart/alternative format.
-	 * Guess the format we want and add it to the bod container
-	 */
-	private function build_alternative_body($ctype,$body) {
-
-		// get the boundary
-		$boundary = $this->get_boundary($ctype);
-		// split the parts
-		$parts = $this->split_parts($boundary,$body);
-
-		// not needed.. $thispart = ($this->use_html)?$parts[1]:$parts[0];
-
-		// multipart flag
-		$multipartSub = false;
-		
-		// look at the better part we can display
-		foreach($parts as $index => $value) {
-		
-			$email = $this->fetch_structure($value);
-
-			$parts[$index] = $email;
-			$parts[$index]["headers"] = $headers = $this->decode_header($email["header"]);
-			unset($email);
-			$ctype = explode(";",$headers["content-type"]); $ctype = strtolower($ctype[0]);
-			$parts[$index]["type"] = $ctype;
-			
-			// in this case the alternative is not html or text but multipart/*
-			if(preg_match('!^multipart/(mixed|signed|related|report)!i',$ctype)) {
-				$part = $parts[$index];
-								$multipartSub = true;
-				break;
-			// if html enabled use it
-			} elseif($this->use_html && $ctype == "text/html") {
-				$part = $parts[$index];
-				break;
-			// else use the text part
-			} elseif (!$this->use_html && $ctype == "text/plain") {
-				$part = $parts[$index];
-				break;
-			}
-		}
-
-		// no recognizable content, use first part, usually text only
-		if(!isset($part)) $part = $parts[0];
-		unset($parts);
-
-		// if the subcontent is multipart go to multipart function
-		if($multipartSub) {
-			unset($body);
-			$this->build_complex_body($part["headers"]["content-type"], $part["body"]);
-		}
-		else {
-			$body = $this->compile_body($part["body"],$part["headers"]["content-transfer-encoding"],$part["headers"]["content-type"]);
-			if(!$this->use_html && $part["type"] != "text/plain") $body = $this->html2text($body);
-			if(!$this->use_html) $body = $this->build_text_body($body);
-			$this->add_body($body);
-		}
-	}
-
-	/**
-	 *  Recursively compile the parts of multipart/* emails.
-	 * 'complex' means multipart/signed|mixed|related|report and other 
-	 * types that can be added in the future
-	 */
-	private function build_complex_body($ctype,$body) {
-
-		global $sid,$lid,$ix,$folder;
-
-		$Rtype = trim(substr($ctype,strpos($ctype,"type=")+5,strlen($ctype)));
-
-		if(strpos($Rtype,";") != 0)
-			$Rtype = substr($Rtype,0,strpos($Rtype,";"));
-		if(substr($Rtype,0,1) == "\"" && substr($Rtype,-1) == "\"")
-			$Rtype = substr($Rtype,1,strlen($Rtype)-2);
-
-		$boundary = $this->get_boundary($ctype);	
-		$part = $this->split_parts($boundary,$body);
-		
-		// only for debug
-		//echo "<br>Boundary: " . $boundary . " parts count: " . count($part);
-
-		for($i=0;$i<count($part);$i++) {
-
-			$email = $this->fetch_structure($part[$i]);
-
-			$header = $email["header"];
-			$body = $email["body"];
-
-			// free unused vars
-			unset($email);
-
-			$headers = $this->decode_header($header);
-			$ctype = $headers["content-type"];
-
-			//echo "<br>Part: $i - ctype: $ctype";
-
-			/*
-			 * Special case for mac with resource and data fork
-			 * Ignore apple data parts.
-			 */
-			if (preg_match('|application/applefile|i',$ctype)) {
-				continue;
-			}
-
-			$cid = $headers["content-id"];
-
-			$Actype = explode(";",$headers["content-type"]);
-			$types = explode("/",$Actype[0]); 
-			$rctype = strtolower($Actype[0]);
-			
-			$is_download = (preg_match('|name=|',$headers["content-disposition"].$headers["content-type"]) || $headers["content-id"] != "" || $rctype == "message/rfc822");
-
-			if($rctype == "multipart/alternative") {
-
-				$this->build_alternative_body($ctype,$body);
-
-			} elseif($rctype == "multipart/appledouble") {
-
-				/*
-				 * Special case for mac with resource and data fork
-				 */
-				$this->build_complex_body($ctype,$body);
-
-			} elseif($rctype == "text/plain" && !$is_download) {
-
-				$body = $this->compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
-				$this->add_body($this->build_text_body($body));
-
-			} elseif($rctype == "text/html" &&	!$is_download) {
-
-				$body = $this->compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
-
-				if(!$this->use_html) $body = $this->build_text_body($this->html2text($body));
-				$this->add_body($body);
-
-			} elseif($rctype == "application/ms-tnef") {
-
-				$body = $this->compile_body($body,$headers["content-transfer-encoding"],$headers["content-type"]);
-				$this->extract_tnef($body,$boundary,$i);
-
-			} elseif($is_download) {
-
-				$thisattach		= $this->build_attach($header,$body,$boundary,$i);
-				$tree			= array_merge((array)$this->current_level, array($thisattach["index"]));
-				$thisfile		= "download.php?folder=".urlencode($folder)."&ix=".$ix."&attach=".join(",",$tree);
-				$filename		= $thisattach["filename"];
-				$cid 			= preg_replace('|<(.*)\\>|', "$1", $cid);
-
-				if($cid != "") {
-					$cid = "cid:$cid";
-					$this->_msgbody = preg_replace("/" . preg_quote($cid, "/") . "/i", $thisfile, $this->_msgbody);
-
-				} elseif($this->displayimages) {
-					$ext = strtolower(substr($thisattach["name"],-4));
-					$allowed_ext = array(".gif",".jpg",".png",".bmp");
-					if(in_array($ext,$allowed_ext)) {
-						$this->add_body("<img src=\"$thisfile\" alt=\"\">");
-					}
-				}
-			} else
-				$this->process_message($header,$body);
-
-		}
-	}
-
-
-	/**
-	 * Format a plain text string into a HTML formated string
-	 */
-	private function build_text_body($body) {
-		$body = preg_replace('/(\r\n|\n|\r|\n\r)/',"<br>$1",$this->make_link_clickable(htmlspecialchars($body)));
-		return "<font face=\"Courier New\" size=\"2\">$body</font>";
-	}
-
-	/**
-	 * Decode Quoted-Printable strings
-	 */
-	private function decode_qp($str) {
-		return quoted_printable_decode(preg_replace('|=\r?\n|', "", $str));
-	}
-
-
-	/**
-	 * Convert URL and Emails into clickable links
-	 */
-	private function make_link_clickable($str){
-
-		$str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "$1<a class=autolink href=\"$2\" target=\"_blank\">$2</a>", $str); //http 
-		$str = preg_replace("|(\s)(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "$1<a class=autolink href=\"http://$2\" target=\"_blank\">$2</a>", $str); // www. 
-		$str = preg_replace("|(\s)([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","$1<a class=autolink href=\"mailto:$2\">$2</a>", $str); // mail 
-
-		$str = preg_replace("!^((f|ht)tp://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "<a href=\"$1\" target=\"_blank\">$1</a>", $str); //http 
-		$str = preg_replace("|^(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "<a class=autolink href=\"http://$1\" target=\"_blank\">$1</a>", $str); // www. 
-		$str = preg_replace("|^([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})|i","<a class=autolink href=\"mailto:$1\">$1</a>", $str); // mail 
-
-		return $str;
-	}
-
-
-	/**
-	 * Guess the type of the part and call the apropriated 
-	 * method
-	 */
-	private function process_message($header,$body) {
-		$mail_info = $this->get_mail_info($header);
-		$ctype = $mail_info["content-type"];
-		$ctenc = $mail_info["content-transfer-encoding"];
-
-		if($ctype == "") $ctype = "text/plain";
-
-		$type = $ctype;
-
-		$ctype = explode(";",$ctype);
-		$types = explode("/",$ctype[0]);
-
-		$maintype = trim(strtolower($types[0]));
-		$subtype = trim(strtolower($types[1]));
-
-		switch($maintype) {
-		case "text":
-			$body = $this->compile_body($body,$ctenc,$mail_info["content-type"]);
-			switch($subtype) {
-			case "html":
-				if(!$this->use_html) $body = $this->build_text_body($this->html2text($body));
-				$msgbody = $body;
-				break;
-			default:
-				$this->extract_uuencoded($body);
-				$msgbody = $this->build_text_body($body);
-				break;
-			}
-			$this->add_body($msgbody);
-			break;
-		case "multipart":
-			if(preg_match("/$subtype/","signed,mixed,related,report,appledouble"))
-				$subtype = "complex";
-
-			switch($subtype) {
-			case "alternative":
-				$msgbody = $this->build_alternative_body($ctype[1],$body);
-				break;
-			case "complex":
-				$msgbody = $this->build_complex_body($type,$body);
-				break;
-			default:
-				$thisattach = $this->build_attach($header,$body,"",0);
-			}
-			break;
-		default:
-			$thisattach = $this->build_attach($header,$body,"",0);
-		}
-	}
-
-	/**
-	 * Compile the attachment, saving it to cache and 
-	 * add it to the $attachments array if needed
-	 */
-	private function build_attach($header,$body,$boundary,$part) {
-
-		global $mail,$temporary_directory,$userfolder;
-
-		$headers = $this->decode_header($header);
-		$cdisp = $headers["content-disposition"];
-		$ctype = $headers["content-type"]; 
-
-		// for debug 
-		//echo "<br>CDisp: ". $cdisp . " - CType: " . $ctype;
-
-		// try to extract filename from content-disposition
-		preg_match('|filename ?= ?"(.+)"|i',$cdisp,$matches);
-		$filename = trim($matches[1]);
+	private function mail_delete_msg_imap($msg, $send_to_trash = 1, $save_only_read = 0) {
 	
-		// if the first not work, same regex without duoblequote
-		if(!$filename) {
-			preg_match('|filename ?= ?(.+)|i',$cdisp,$matches);
-			$filename = trim($matches[1]);
-		}
-		
-		// try to extract from content-type
-		if(!$filename) {
-			preg_match('|name ?= ?"(.+)"|i',$ctype,$matches);
-			$filename = trim($matches[1]);
-		}
+		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
 
-		$tenc = $headers["content-transfer-encoding"];
+		/* check the message id to make sure that the messages still in the server */
+		if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
+			$boxinfo = $this->mail_select_box($msg["folder"]);
 
-		// extract content-disposition	(ex "attachment")
-		preg_match('|[a-z0-9]+|i',$cdisp,$matches);
-		$content_disposition	= $matches[0];
+		$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+		$buffer = chop($this->mail_get_line());
 
-		// extract content-type		(ex "text/plain" or "application/vnd.ms-excel" note the DOT)
-		preg_match('|[a-z0-9/\.-]+|i',$ctype,$matches);
-		$content_type	= $matches[0];
+		/* if any problem with the server, stop the function */
+		if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
 
-		$tmp			= explode("/",$content_type);
-		$main_type		= $tmp[0];
-		$sub_type		= $tmp[1];
+		while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+			/* we need only the message id yet */
 
-		// This set determine if an attachement is embedded (like some images) so there no download link	
-		// Note: added check for use it only for images, some clients adds id where not necessary
-		$is_embed = ($main_type == "image" && $headers["content-id"] != "")?1:0;
+			if(preg_match('|message-id: (.*)|i',$buffer,$regs))
+				$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
 
-		$body = $this->compile_body($body,$tenc,$ctype);
-
-		if($filename == "" && $main_type == "message") {
-			$attachheader = $this->fetch_structure($body);
-			$attachheader = $this->decode_header($attachheader["header"]);
-			$filename = $attachheader["subject"].".eml";
-			unset($attachheader);
-		} elseif($filename == "") {
-			$filename = uniqid("").".tmp";
+			$buffer = chop($this->mail_get_line());
 		}
 
-		$filename = preg_replace('|[.]{2,}|',".",preg_replace("'(/|\\\\)+'","_",trim($this->decode_mime_string($filename))));
-		$safefilename = preg_replace('|[ \t\.\W]+|', "_", $filename);
-		$nIndex						= count($this->_content["attachments"]);
-		$temp_array["name"]					= trim($filename);
-		$temp_array["size"]					= strlen($body);
-		$temp_array["temp"]					= $is_embed;
-		$temp_array["content-type"]			= strtolower(trim($content_type));
-		$temp_array["content-disposition"]	= strtolower(trim($content_disposition));
-		$temp_array["boundary"]				= $boundary;
-		$temp_array["part"]					= $part;
-		$temp_array["filename"]				= $this->user_folder."_attachments/".md5($temp_array["boundary"])."_".$safefilename;
-		$temp_array["type"]					= "mime";
-		$temp_array["index"]				= $nIndex;
 
-		$this->_save_file($temp_array["filename"],$body);
-		unset($body);
-		$this->_content["attachments"][$nIndex] = $temp_array;
+		/* compare the old and the new message id, if different, stop*/
+		if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
+			$this->mail_error_msg = $error_retrieving;
+			return false;
+		}
 
-		return $temp_array;
+		/*if the pointer is here, no one problem occours*/
 
+		if( $send_to_trash && 
+			strtoupper($msg["folder"]) != "TRASH" &&
+			(!$save_only_read || ($save_only_read && $read))) {
+
+			$trash_folder = $this->fix_prefix("trash",1);
+
+			$this->mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$trash_folder\"");
+			$buffer = $this->mail_get_line();
+
+			/* if any problem with the server, stop the function */
+			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+
+			if(file_exists($msg["localname"])) {
+				$currentname = $msg["localname"];
+				$basename = basename($currentname);
+				$newfilename = $this->user_folder."trash/$basename";
+				copy($currentname,$newfilename);
+				unlink($currentname);
+			}
+		}
+		$this->mail_set_flag($msg,"\\DELETED","+");
+
+		return true;
 	}
 
+	private function mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0) {
+	
+		$read = (preg_match('|\\SEEN|',$msg["flags"]))?1:0;
 
-	/**
-	 * Compile a string following the encoded method
-	 */
-	private function compile_body($body,$enctype,$ctype) {
+		/* now we are working with POP3 */
+		/* check the message id to make sure that the messages still in the server */
+		if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
 
-		$enctype = explode(" ",$enctype); $enctype = $enctype[0];
-		if(strtolower($enctype) == "base64")
-			$body = base64_decode($body);
-		elseif(strtolower($enctype) == "quoted-printable")
-			$body = $this->decode_qp($body);
-
-		if(preg_match('|koi8|', $ctype))
-			$body = convert_cyr_string($body, "k", "w");
-		else
-			if(preg_match('|charset ?= ?"?([a-z0-9-]+)"?|i',$ctype,$regs)) {
-				if($regs[1] != $this->charset) {
-					$body = $this->convert_charset($body,$regs[1],$this->charset);
-				}
+			/* compare the old and the new message uidl, if different, stop*/
+			if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
+				$this->mail_error_msg = $error_retrieving;
+				return false;
 			}
 
-		return $body;
-
-	}
-
-	/**
-	TODO: Remove this function
-
-	private function download_attach($header,&$body,$bound="",$part=0,$down=1,$type,$tnef) {
-		if ($type == "uue") {
-			$this->get_uuencoded($body,$bound,$down,"down");
-		}else {
-			if ($bound != "") {
-				$parts = $this->split_parts($bound,$body);
-				// split the especified part of mail, body and headers
-				$email = $this->fetch_structure($parts[$part]);
-				$header = $email["header"];
-				$body = $email["body"];
-				unset($email);
+			if(!file_exists($msg["localname"])) {
+				if(!$this->mail_retr_msg($msg,0)) return false;
+				$this->mail_set_flag($msg,"\\SEEN","-");
 			}
-			if($type == "tnef" && is_numeric($tnef)) 
-				$this->get_tnef($header,$body,$tnef,$down,"down");
-			else
-				$this->build_attach($header,$body,"",0,$mode="down",$down);
+
+			$this->mail_send_command("DELE ".$msg["msg"]);
+			$buffer = $this->mail_get_line();
+			if(substr($buffer, 0, 3) != "+OK") { $this->mail_error_msg = $buffer; return false; }
 		}
+
+		if( $send_to_trash && 
+			strtoupper($msg["folder"]) != "TRASH" &&
+			(!$save_only_read || ($save_only_read && $read))) {
+
+			if(file_exists($msg["localname"])) {
+				$currentname = $msg["localname"];
+				$basename = basename($currentname);
+				$newfilename = $this->user_folder."trash/$basename";
+				copy($currentname,$newfilename);
+				unlink($currentname);
+			}
+		} else {
+			if(file_exists($msg["localname"])) {
+				unlink($msg["localname"]);
+			}
+		}
+		return true;
+
 	}
 
-	*/
-
 	/**
-	 * Guess the attachment format and call the specific method
-	 */
-	private function save_attach($header,&$body,$filename,$type="mime",$tnef="-1",$bound) {
-		switch($type) {
-		case "uue": 
-			$this->get_uuencoded($body,$bound,0,"save",$filename);
-			break;
-		case "tnef":
-			$this->get_tnef($header,$body,$tnef,0,$mode="save",$filename);
-			break;
-		default:
-			$this->build_attach($header,$body,"",0,$mode="save",0,$filename);
-		}
-	}
-
-	/**
-	 * True if string is a valid MD5 hash
-	 * @param  string  $val Possible MD5 hash
+	 * Delete specific email message
+	 * @param string $msg The message to delete
+	 * @param boolean $send_to_trash
+	 * @param boolean $save_only_read
 	 * @return boolean
 	 */
-	public function is_valid_md5($val) {
-		return preg_match('|^[A-Fa-f0-9]{32}$|D',$val);
-	}
+	public function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
 
-	/**
-	 * Get all needed info about an email message
-	 * @param  string $header Header of email
-	 * @param  string $first  Names
-	 * @return array
-	 */
-	public function get_mail_info($header, $first="ALL") {
-
-		$myarray = array();
-		$headers = $this->decode_header($header);
-
-		$myarray["message-id"] = (array_key_exists("message-id",$headers))?preg_replace('|<(.*)>|',"$1",trim($headers["message-id"])):null;
-		$myarray["content-type"] = (array_key_exists("content-type",$headers))?$headers["content-type"]:null;
-		$myarray["priority"] = (array_key_exists("x-priority",$headers))?$headers["x-priority"][0]:null;
-		$myarray["flags"]		 = $headers["x-um-flags"];
-		$myarray["content-transfer-encoding"] = (array_key_exists("content-transfer-encoding",$headers))?str_replace("GM","-",$headers["content-transfer-encoding"]):null;
-
-		$received	= preg_replace('|  |'," ",$headers["received"]);
-		$user_date	= preg_replace('|  |'," ",$headers["date"]);
-
-		if(preg_match('/([0-9]{1,2}[ ]+[A-Z]{3}[ ]+[0-9]{4}[ ]+[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]?((\+|-)[0-9]{4})?/',$received,$regs)) {
-			//eg. Tue, 4 Sep 2001 16:22:31 -0000
-			$mydate = $regs[1];
-			$mytimezone = $regs[2];
-			if(empty($mytimezone))
-				if(preg_match('/((\\+|-)[0-9]{4})/i',$user_date,$regs)) $mytimezone = $regs[1];
-				else $mytimezone = $this->timezone;
-		} elseif(preg_match('|(([A-Z]{3})[ ]+([0-9]{1,2})[ ]+([0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]+([0-9]{4}))|i',$received,$regs)) {
-			//eg. Tue Sep 4 16:26:17 2001 (Cubic Circle's style)
-			$mydate = $regs[3]." ".$regs[2]." ".$regs[5]." ".$regs[4];
-			if(preg_match('/((\\+|-)[0-9]{4})/i',$user_date,$regs)) $mytimezone = $regs[1];
-			else $mytimezone = $this->timezone;
-		} elseif(preg_match('/([0-9]{1,2}[ ]+[A-Z]{3}[ ]+[0-9]{4}[ ]+[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]?((\+|-)[0-9]{4})?/i',$user_date,$regs)) {
-			//eg. Tue, 4 Sep 2001 16:22:31 -0000 (from Date header)
-			$mydate = $regs[1];
-			$mytimezone = $regs[2];
-			if(empty($mytimezone))
-				if(preg_match('/((\\+|-)[0-9]{4})/i',$user_date,$regs)) $mytimezone = $regs[1];
-				else $mytimezone = $this->timezone;
+		$ret = 1;
+		if($this->mail_protocol == IMAP) {
+			$ret = $this->mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
 		} else {
-			$mydate		= date("d M Y H:i");
-			$mytimezone = $this->timezone;
+			$ret = $this->mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
 		}
-
-		$myarray["date"] = $this->build_mime_date($mydate,$mytimezone);
-		$myarray["subject"] = $this->decode_mime_string($headers["subject"]);
-		if ($first == "FIRST_ONLY") {
-			$myarray["from"] = $this->get_first_of_names($headers["from"]);
-			$myarray["to"] = $this->get_first_of_names($headers["to"]);
-			$myarray["cc"] = $this->get_first_of_names($headers["cc"]);
-			$myarray["reply-to"] = $this->get_first_of_names($headers["reply-to"]);
-		} else {
-			$myarray["from"] = $this->get_names($headers["from"]);
-			$myarray["to"] = $this->get_names($headers["to"]);
-			$myarray["cc"] = $this->get_names($headers["cc"]);
-			$myarray["reply-to"] = $this->get_names($headers["reply-to"]);
-		}
-		$myarray["status"] = $headers["status"];
-		$myarray["read"] = $headers["x-um-status"];
-		$myarray["x-spam-level"] = $headers["x-spam-level"];
-		
-		$receiptTo = $this->get_first_of_names($headers["disposition-notification-to"]);
-		$myarray["receipt-to"] = $receiptTo[0]["mail"];
-		
-		$uidl = $headers["x-um-uidl"];
-		if ($this->is_valid_md5($uidl))
-			$myarray["uidl"] = $uidl;
-		unset($headers);
-		return $myarray;
-
+		return $ret;
 	}
 
 
-	/**
-	 * Convert a TIMESTAMP value into a RFC-compliant date
-	 * Vola's note: I think it does exactly the opposite...
-	 */
-	public function build_mime_date($mydate,$timezone = "+0000") {
-
-		global $server_timezone_offset;
-
-		// check if $timezone is valid
-		if(!preg_match('/((\\+|-)[0-9]{4})/',$timezone)) 
-			$timezone = "+0000";
-		// check if $mydate is valid, if no return current server time
-		if(!$intdate = @strtotime($mydate)) 
-			return time();
-		if(preg_match('/(\\+|-)+([0-9]{2})([0-9]{2})/',$timezone,$regs)) 
-			$datetimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
-		else 
-			$datetimezone = 0;
-		if(preg_match('/(\\+|-)+([0-9]{2})([0-9]{2})/',$this->timezone,$regs)) 
-			$usertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
-		else 
-			$usertimezone = 0;
-		if(preg_match('/(\\+|-)+([0-9]{2})([0-9]{2})/',$server_timezone_offset,$regs)) 
-			$servertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
-		else 
-			$servertimezone = 0;
-
-		/** Umm... the out time must be:
-			mailTime - mailTimeOffset = UTCmailtime (es: 10.00 AM +0200 = 8.00 AM UTC or 10.00 AM -0400 = 2.00 PM... 10-(-4) = 14)
-			UTCmailtime + useroffset = UserMailTime (es: user zone +0200, mailUTC 8.00 AM = 10.00 AM or with -0400 = 6.00 AM) 
-		*/
-
-		// debug echos
-/**		echo "Server offset time config:" .$server_timezone_offset ."<br>";
-		echo "Date time offset:" . $timezone ."<br>";
-		echo "Date on function:" . $mydate ."<br>";
-		echo "Converted date + date offset + user offset  + server offset:".$intdate." ". $datetimezone ." ". $usertimezone ." ". $servertimezone ."<br>";
-		echo "Returned time:" . ($intdate - $datetimezone + $usertimezone + $servertimezone) ."<br>"; */
-
-		return ($intdate - $datetimezone + $usertimezone + $servertimezone);
-	}
-
-
-	/**
-	 * Main method called by script, start the decoding process
-	 * @param string $email Email message
-	 * @return array
-	 */
-	public function Decode($email) {
-		$email = $this->fetch_structure($email);
-		$this->_msgbody = "";
-		$body = $email["body"];
-		$header = $email["header"];
-		$mail_info = $this->get_mail_info($header);
-		$this->process_message($header,$body);
-		$this->_content["headers"] = $header;
-		$this->_content["date"] = $mail_info["date"];
-		$this->_content["subject"] = $mail_info["subject"];
-		$this->_content["message-id"] = $mail_info["message-id"];
-		$this->_content["from"] = $mail_info["from"];
-		$this->_content["to"] = $mail_info["to"];
-		$this->_content["cc"] = $mail_info["cc"];
-		$this->_content["reply-to"] = $mail_info["reply-to"];
-		$this->_content["body"] = $this->_msgbody;
-		$this->_content["read"] = $mail_info["read"];
-		$this->_content["priority"] = $mail_info["priority"];
-		$this->_content["flags"] = $mail_info["flags"];
-		$this->_content["x-spam-level"] = $mail_info["x-spam-level"];
-		$this->_content["receipt-to"] = $mail_info["receipt-to"];
-		return $this->_content;
-	}
-
-	/**
-	 * Split an email by its boundary
-	 */
-	private function split_parts($boundary,$body) {
-		$startpos = strpos($body,$boundary)+strlen($boundary)+2;
-		$lenbody = strpos($body,"\r\n$boundary--") - $startpos;
-		$body = substr($body,$startpos,$lenbody);
-		return explode($boundary."\r\n",$body);
-	}
-
-	/**
-	 * Split header and body into an array
-	 * @param  string $email Email message
-	 * @return array
-	 */
-	public function fetch_structure($email) {
-		$ARemail = array();
-		$separador = "\r\n\r\n";
-		$header = trim(substr($email,0,strpos($email,$separador)));
-		$bodypos = strlen($header)+strlen($separador);
-		$body = substr($email,$bodypos,strlen($email)-$bodypos);
-		$ARemail["header"] = $header; $ARemail["body"] = $body;
-		unset($header); unset($body);
-		return $ARemail;
-	}
-
-	/**
-	 * Guess the boundary from header
-	 */
-	private function get_boundary($ctype){
-		if(preg_match('|boundary[ ]?=[ ]?["]?([^";]*)["]?.*$|iD',$ctype,$regs)) {	 //preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
-			//$boundary = preg_replace('/^\"(.*)\"$/', "$1", $regs[1])
-			return trim("--$regs[1]");
-		}
-	}
-
-	/**
-	 * Oposite of htmlentities.
-	 */
-	private function unhtmlentities ($string) {
-		$trans_tbl = get_html_translation_table (HTML_ENTITIES);
-		$trans_tbl = array_flip ($trans_tbl);
-		return strtr ($string, $trans_tbl);
-	}
-
-	/**
-	 * Format a HTML message to be displayed as text if allow_html is off
-	 */
-	private function html2text($str) {
-		return $this->unhtmlentities(preg_replace(
-				array(	"'<(SCRIPT|STYLE)[^>]*?>.*?</(SCRIPT|STYLE)[^>]*?>'si",
-						"'(\r|\n)'",
-						"'<BR[^>]*?>'i",
-						"'<P[^>]*?>'i",
-						"'<\/?\w+[^>]*>'e"
-						),
-				array(	"",
-						"",
-						"\r\n",
-						"\r\n\r\n",
-						""),
-				$str));
-	}
+	private function mail_move_msg_imap($msg,$tofolder) {
+		if(strtolower($tofolder) != strtolower($msg["folder"])) {
+			/* check the message id to make sure that the messages still in the server */
+			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
+				$boxinfo = $this->mail_select_box($msg["folder"]);
 	
-	/**
-	 * Decode UUEncoded attachments
-	 */
-	private function UUDecode($data) {
-		$b64chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/A';
-		$uudchars='`!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_ ';
-		$lines = preg_split('/\r?\n/',$data);
-		$encode = "";
-		foreach ($lines as $line) {
-			if($line != '') {
-				$count	 = (ord($line[0])-32)%64;
-				$count	 = ceil(($count*4)/3);
-				$encode .= substr(ltrim($line), 1, $count);
+			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+			$buffer = chop($this->mail_get_line());
+
+			/* if any problem with the server, stop the function */
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+
+			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				/* we need only the message id yet */
+
+				if(preg_match('|message-id: (.*)|i',$buffer,$regs))
+					$current_id = preg_replace('|<(.*)>|',"$1",$regs[1]);
+
+				$buffer = chop($this->mail_get_line());
 			}
-		}
-		$encode = strtr($encode, $uudchars, $b64chars);
-		while(strlen($encode) % 4) {
-			$encode .= '=';
-		}
-		return base64_decode($encode);
-	}
-
-	/**
-	 * Guess all UUEncoded in the body
-	 */
-	private function extract_uuencoded(&$body) {
-		$regex = "/(begin ([0-7]{3}) (.+))\r?\n(.+)\r?\nend/Us";
-		preg_match_all($regex, $body, $matches);
-		for ($i = 0; $i < count($matches[3]); $i++) {
-
-			$boundary	= $matches[1][$i];
-			$fileperm	= $matches[2][$i];
-			$filename	= $matches[3][$i];
-			$stream		= $this->UUDecode($matches[4][$i]);
-
-			$temp_array["index"] = count($this->_content["attachments"]);
-			$temp_array["name"] = $filename;
-			$temp_array["size"] = strlen($stream);
-			$temp_array["content-type"] = "application/unknown";
-			$temp_array["content-disposition"] = "attachment";
-			$temp_array["boundary"] = $boundary;
-			$temp_array["part"] = 0;
-			$temp_array["type"] = "uue";
-			$temp_array["filename"] = $this->user_folder."_attachments/".md5($temp_array["boundary"])."_".$temp_array["name"];
-			$this->_content["attachments"][] = $temp_array;
-			$this->_save_file($temp_array["filename"],$stream);
-			unset($temp_array);
-		}
-		$body = preg_replace($regex, "", $body);
-	}
 
 
-	/**
-	 * Extract all attachmentes contained in a MS-TNEF attachment
-	 */
-	private function extract_tnef(&$body,$boundary,$part) {
-		$tnefobj = $this->_tnef->Decode($body);
+			/* compare the old and the new message id, if different, stop*/
+			if(base64_encode($current_id) != base64_encode($msg["message-id"])) {
+				$this->mail_error_msg = $error_retrieving;
+				return false;
+			}
 
-		for($i=0;$i<count($tnefobj);$i++) {
-			$content				= $tnefobj[$i]["stream"];
-			$temp_array["index"]			= count($this->_content["attachments"]);
-			$temp_array["name"]				= $tnefobj[$i]["name"];
-			$temp_array["size"]				= $tnefobj[$i]["size"];
-			$temp_array["content-type"]			= $tnefobj[$i]["type0"]."/".$tnefobj[$i]["type1"];
-			$temp_array["content-disposition"]	= "attachment";
-			$temp_array["boundary"]			= $boundary;
-			$temp_array["part"]				= $part;
-			$temp_array["type"]				= "tnef";
-			$temp_array["tnef"]				= $i;
-			$temp_array["filename"]			= $this->user_folder."_attachments/".md5($temp_array["boundary"])."_".$temp_array["name"];
+			$tofolder = $this->fix_prefix($tofolder,1);
 			
-			$this->_content["attachments"][]	= $temp_array;
+			$this->mail_send_command("COPY ".$msg["msg"].":".$msg["msg"]." \"$tofolder\"");
+			$buffer = $this->mail_get_line();
 
-			$this->_save_file($temp_array["filename"],$content);
-			unset($temp_array);
+			/* if any problem with the server, stop the function */
+			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+
+			if(file_exists($msg["localname"])) {
+				$currentname = $msg["localname"];
+				$basename = basename($currentname);
+				$newfilename = $this->user_folder."$tofolder/$basename";
+				copy($currentname,$newfilename);
+				unlink($currentname);
+			}
+			$this->mail_set_flag($msg,"\\DELETED","+");	
 		}
+		return true;
+	}
 
+	private function mail_move_msg_pop($msg,$tofolder) {
+		if((strtoupper($tofolder) != "INBOX" && strtoupper($tofolder) != "SPAM") && strtolower($tofolder) != strtolower($msg["folder"])) {
+			/* now we are working with POP3 */
+			/* check the message id to make sure that the messages still in the server */
+			if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
+		
+				/* compare the old and the new message id, if different, stop*/
+				if ($msg["uidl"] != $this->mail_get_uidl($msg["msg"])) {
+					$this->mail_error_msg = $error_retrieving;
+					return false;
+				}
+
+				if(!file_exists($msg["localname"])) {
+					if(!$this->mail_retr_msg($msg,0)) return false;
+					$this->mail_set_flag($msg,"\\SEEN","-");
+				}
+			}				
+			// ensure that the original file exist
+			if(file_exists($msg["localname"])) {
+				$currentname = $msg["localname"];
+				$basename = basename($currentname);
+				$newfilename = $this->user_folder."$tofolder/$basename";
+				copy($currentname, $newfilename);
+				// ensure that the copy exist
+				if(file_exists($newfilename)) {
+					unlink($currentname);
+					// delete from server if we are working on inbox or spam
+					if(strtoupper($msg["folder"]) == "INBOX" || strtoupper($msg["folder"]) == "SPAM") {
+						$this->mail_send_command("DELE ".$msg["msg"]);
+						$buffer = $this->mail_get_line();
+						if(substr($buffer, 0, 3) != "+OK") {
+							$this->mail_error_msg = $buffer;
+							return false;
+						}
+					}
+				} else
+					return false;
+			} else 
+				return false;
+		} else 
+			return false;
+		return true;
 	}
 
 	/**
-	 * Removes or Add prefix to INBOX folder names as required
-	 * @param  string  $folder Folder name
-	 * @param  boolean $add    Add prefix?
-	 * @return string
+	 * Move specific email message
+	 * @param string $msg The message to move
+	 * @param string $tofolder
+	 * @return boolean
 	 */
-	public function fix_prefix($folder,$add = false) {
-		if($this->mail_protocol == IMAP &&
-			!preg_match('|^inbox$|i',$folder) && 
-			$this->mail_prefix && 
-			!preg_match('|^_|',$folder)) {
-
-			if($add) {
-				if(!preg_match('/^'.preg_quote($this->mail_prefix).'/',$folder))
-					return $this->mail_prefix.$folder;
-				else
-					return $folder;
-			}
-			else 
-				return preg_replace("/^".preg_quote($this->mail_prefix)."/","",$folder);
-
-		} else 
-			return $folder;
+	public function mail_move_msg($msg,$tofolder) {
+		$ret = 1;
+		if($this->mail_protocol == IMAP) {
+			$ret = $this->mail_move_msg_imap($msg,$tofolder);
+		} else {
+			$ret = $this->mail_move_msg_pop($msg,$tofolder);
+		}
+		return $ret;
 	}
+
+
+	private function mail_list_msgs_imap($boxname = "INBOX", $localmessages = array()) {
+
+		if($this->is_system_folder($boxname))
+			$boxname = strtolower($boxname);
+
+		$messages = array();
+
+		/* select the mail box and make sure that it exists */
+		$boxinfo = $this->mail_select_box($boxname);
+
+		if(is_array($boxinfo) && $boxinfo["exists"]) {
+
+			/* if the box is ok, fetch the first to the last message, getting the size and the header */
+			/* This is FAST under IMAP, so we scarf the whole dataset */
+
+			$this->mail_send_command("FETCH 1:".$boxinfo["exists"]." (FLAGS RFC822.SIZE RFC822.HEADER)");
+			$buffer = $this->mail_get_line();
+
+			/* if any problem, stop the procedure */
+
+			if(!preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { 
+
+				$counter = 0;
+				
+				/* the end mark is <sid> OK FETCH, we are waiting for it*/
+				while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+					/* if the return is something such as * N FETCH, a new message will displayed  */
+					if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i',$buffer,$regs)) {
+						$curmsg = $regs[1];
+						preg_match('|SIZE[ ]?([0-9]+)|i',$buffer,$regs);
+						$size	= $regs[1];
+						preg_match('|FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs);
+						$flags	= $regs[1];
+					/* if any problem, add the current line to buffer */
+					} elseif(trim($buffer) != ")" && trim($buffer) != "") {
+						$header .= $buffer;
 	
+					/*	the end of message header was reached, increment the counter and store the last message */
+					} elseif(trim($buffer) == ")") {
+						$messages[$counter]["id"] = $counter+1; //$msgs[0];
+						$messages[$counter]["msg"] = intval($curmsg);
+						$messages[$counter]["size"] = intval($size);
+						$messages[$counter]["flags"] = strtoupper($flags);
+						$messages[$counter]["header"] = $header;
+						$counter++;
+						$header = "";
+					}
+					$buffer = $this->mail_get_line();
+				}
+			}
+		}
+		return $messages;
+
+	}
+
+	private function mail_list_msgs_pop($boxname = "INBOX", $localmessages = array()) {
+		global $userfolder;
+		// $this->havespam = "";
+
+		if($this->is_system_folder($boxname))
+			$boxname = strtolower($boxname);
+
+		$messages = array();
+
+		/* 
+		now working with POP3
+		if the boxname is "INBOX" or "SPAM", we can check in the server for messsages 
+		
+		NOTE how special INBOX is... This is the only Email box that lives on
+		the actual Email server (the pophost) and so we need to jump thru a lot
+		of hoops to determine which messages are there.
+		
+		Due to how SLOW POP is, we simply read in the full list of message
+		but don't worry about headers at all, until we really, really
+		need to.
+		*/
+		if(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") {
+			$this->mail_send_command("LIST");
+			$buffer = $this->mail_get_line();
+			/* if any problem with this messages list, stop the procedure */
+
+			if(substr($buffer, 0, 3) != "+OK")	{
+				$this->mail_error_msg = $buffer;
+				return -1;
+			}
+
+			$counter = 0;
+
+			while (!feof($this->mail_connection)) {
+				$buffer = $this->mail_get_line();
+				$buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
+				if($buffer == ".") 
+					break;
+				$msgs = explode(" ",$buffer);
+				if(is_numeric($msgs[0])) {
+					$messages[$counter]["id"] = $counter+1; //$msgs[0];
+					$messages[$counter]["msg"] = intval($msgs[0]);
+					$messages[$counter]["size"] = intval($msgs[1]);
+					$counter++;
+				}
+			}
+
+			if (!is_array($localmessages)) $localmessages = (array)$localmessages;
+			$localcount = count($localmessages);
+			$onservercount = count($messages);
+
+			if ($onservercount < $localcount || $localcount == 0) {
+				/*
+				 * Someone deleted some messages on the server, refetch all
+				 * headers via TOP, or we just didn't had any messages previously.
+				 */
+				 
+				; // pass;
+				
+			} else if ($onservercount >= $localcount) {
+				/*
+				 * More messages have arrived or we still have the same amount of messages.
+				 * Keep our old array and skip all the rest. Check if the last message
+				 * is still at the same place, else we refetch all message
+				 * headers again, because it is too complicated to see which messages we
+				 * have or haven't.
+				 */	
+				$oldid = $localmessages[$localcount - 1]["uidl"];
+				$newid = $this->mail_get_uidl($messages[$localcount - 1]["msg"]);
+
+				if ("$oldid" == "$newid") {
+				// Ok the ids are the same and we have new messages
+				
+					/*
+					 * Quick check. If we have the same number and all
+					 * have been seen, no need to parse anything.
+					 */
+					if ($localcount == $onservercount) {
+						$seen_all = true;
+						for($i=0; $i<$onservercount; $i++) {
+							if (!$messages[$i]["hparsed"]) {
+								$seen_all = false;
+								break;
+							}
+						}
+						if ($seen_all) return false;
+					}
+
+					for($i=$localcount; $i<$onservercount; $i++) {
+						/**
+						 * Add the basic info (index and size) and then msg header 
+						 * of the new msg to the old headers array
+						 */				 
+						$localmessages[$i] = $messages[$i]; 
+						$localmessages[$i]["header"] = "";
+					}
+					// now the localmessages are updated with the new ones
+					$messages = $localmessages;
+				}
+			}
+		} else {
+			/* otherwise (not inbox or spam), we need get the message list from a cache (currently, hard disk)*/
+
+			$datapath = $userfolder.$boxname;
+			$i = 0;
+			$d = dir($datapath);
+			$dirsize = 0;
+
+			while($entry=$d->read()) {
+				$fullpath = "$datapath/$entry";
+				if(is_file($fullpath)) {
+					$thisheader = $this->_get_headers_from_cache($fullpath);
+					$messages[$i]["id"]		= $i+1;
+					$messages[$i]["msg"]		= $i;
+					$messages[$i]["header"]		= $thisheader;
+					$messages[$i]["size"]		= filesize($fullpath);
+					$messages[$i]["localname"]	= $fullpath;
+					$i++;
+				}
+			}
+
+			$d->close();
+		}
+		array_qsort2int($messages,"msg","DESC");
+		return $messages;
+	}
+
+	/*
+	 * The below returns an 3 element array:
+	 *	 $myreturnarray[0] == The message list
+	 *	 $myreturnarray[1] == the auto-spam populated list
+	 *	 $myreturnarray[2] == return status where:
+	 *	   -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
+	 * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
+	 */
+	/**
+	 * List all messages in emailbox
+	 * @param string $boxname The name of emailbox
+	 * @param array $localmessages
+	 * @param integer $start
+	 * @param integer $wcount
+	 * @return array
+	 */
+	public function mail_list_msgs($boxname = "INBOX", $localmessages = array(), $start=0, $wcount=99999) {
+
+
+		global $userfolder;
+		$fetched_part = 0;
+		$parallelized = 0;
+		// $this->havespam = "";
+
+		if($this->is_system_folder($boxname))
+			$boxname = strtolower($boxname);
+
+		/* choose the protocol */
+		if($this->mail_protocol == IMAP) {
+			$messages = $this->mail_list_msgs_imap($boxname, $localmessages);
+		} else {
+			$messages = $this->mail_list_msgs_pop($boxname, $localmessages);
+			if (!is_array($messages)) {
+				$shortcut = array();
+				$shortcut[0] = array();
+				$shortcut[1] = array();
+				$shortcut[2] = $messages;
+				return $shortcut; 
+			}
+		}
+		/* 
+		 * OK, now we have the message list, that contains id and size and possibly
+		 * the header as well (if not, we grab as needed).
+		 * This script will process the header to get subject, date and other
+		 * informations formatted to be displayed in the message list when needed
+		 */
+		$i = 0;
+		$j = 0;
+		$y = 0;
+		$messagescopy = array();
+		$spamcopy = array();
+		$mcount = count($messages);
+		$end_pos = $start + $wcount;
+		/*
+		 * For all entries outside of the view window, simply copy over
+		 * the messages, regardless if whether we have headers or not.
+		 *
+		 * Here's the idea: Starting from the beginning, if the message is
+		 * outside of the view window, then only worry about SPAM
+		 * if the header has already been parsed. If not, then just
+		 * copy away.
+		 */
+		for ($i=0; $i<$mcount; $i++) {
+
+			$workit = false;
+			if ((($j < $start)||($j >= $end_pos)) && $messages[$i]["hparsed"])
+				$workit = true;
+			if (($j >= $start) && ($j <= $end_pos))
+				$workit = true;
+				
+			if (!$workit) {
+				$messagescopy[$j] = $messages[$i];
+				$j++;
+				continue;
+			}
+			/*
+			 * At this point, we are within the view window. So we need
+			 * headers for the message list. We also check for SPAM here
+			 * as well
+			 */
+			if ($messages[$i]["header"] == "") {
+				$header = $this->mail_retr_header($messages[$i]);
+				$messages[$i]["header"] = $header;
+			}
+
+			$mail_info = $this->get_mail_info($messages[$i]["header"]);
+
+			$havespam = 0;
+			$spamsubject = $mail_info["subject"];
+			$xspamlevel = $mail_info["x-spam-level"];
+			/*
+			 * Only auto-populate the SPAM folder if
+			 * we are checking the INBOX and we have _autospamfolder
+			 * set :)
+			 */
+			if ( ($this->_autospamfolder) &&
+				(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") ) {
+				foreach ($this->_spamregex as $spamregex) {
+					if (preg_match("/$spamregex/i",$spamsubject)) {
+						$havespam = 1;
+						$this->havespam = "TRUE";
+						break;
+					}
+				}
+				if ($this->userspamlevel) {
+					preg_match('|[*+]+|', $xspamlevel, $matches);
+					if (strlen($matches[0]) >= $this->userspamlevel) {
+						$havespam = 1;
+						$this->havespam = "TRUE";						
+					}
+				}
+			}
+
+			if (! $havespam) {
+				$messagescopy[$j] = $messages[$i];
+				
+				if ($messages[$i]["hparsed"]) {
+					$j++;
+					continue;
+				}
+				$messagescopy[$j]["hparsed"]	= 1;
+				$messagescopy[$j]["subject"]	= $mail_info["subject"];
+				$messagescopy[$j]["date"]	= $mail_info["date"];
+				$messagescopy[$j]["message-id"] = $mail_info["message-id"];
+				$messagescopy[$j]["from"]	= $mail_info["from"];
+				$messagescopy[$j]["to"]		= $mail_info["to"];
+				$messagescopy[$j]["fromname"]	= $mail_info["from"][0]["name"];
+				$messagescopy[$j]["to"]		= $mail_info["to"];
+				$messagescopy[$j]["cc"]		= $mail_info["cc"];
+				$messagescopy[$j]["priority"]	= $mail_info["priority"];
+				$messagescopy[$j]["uidl"]	= ((!$this->is_valid_md5($mail_info["uidl"])) ?
+									$this->mail_get_uidl($messagescopy[$j]["msg"], $mail_info) :
+									$mail_info["uidl"]);
+				$messagescopy[$j]["attach"] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
+									$mail_info["content-type"]))?1:0;
+
+				if ($messagescopy[$j]["localname"] == "") {
+					$messagescopy[$j]["localname"] = $this->_get_local_name($messagescopy[$j]["uidl"],$boxname);
+				}
+
+				// $messagescopy[$j]["read"] = file_exists($messagescopy[$j]["localname"])?1:0;
+
+				/* 
+				 * ops, a trick. if the message is not imap, the flags are stored in
+				 * a special field on headers 
+				 */
+
+				if($this->mail_protocol != IMAP && file_exists($messagescopy[$j]["localname"])) {
+
+					$iheaders = $this->_get_headers_from_cache($messagescopy[$j]["localname"]);
+					$iheaders = $this->decode_header($iheaders);
+					$messagescopy[$j]["flags"] = strtoupper($iheaders["x-um-flags"]);
+					unset($iheaders);
+				}
+				$messagescopy[$j]["folder"] = $boxname;
+
+				$j++;
+			} else {
+				$spamcopy[$y]			= $messages[$i];
+				if ($messages[$i]["hparsed"]) {
+					$y++;
+					continue;
+				}
+
+				$spamcopy[$y]["hparsed"]	= 1;
+				$spamcopy[$y]["subject"]	= $mail_info["subject"];
+				$spamcopy[$y]["date"]		= $mail_info["date"];
+				$spamcopy[$y]["message-id"] = $mail_info["message-id"];
+				$spamcopy[$y]["from"]		= $mail_info["from"];
+				$spamcopy[$y]["to"]		= $mail_info["to"];
+				$spamcopy[$y]["fromname"]	= $mail_info["from"][0]["name"];
+				$spamcopy[$y]["to"]		= $mail_info["to"];
+				$spamcopy[$y]["cc"]		= $mail_info["cc"];
+				$spamcopy[$y]["priority"]	= $mail_info["priority"];
+				$spamcopy[$y]["uidl"]		= ((!$this->is_valid_md5($mail_info["uidl"])) ?
+									$this->mail_get_uidl($spamcopy[$y]["msg"], $mail_info) :
+									$mail_info["uidl"]);
+				$spamcopy[$y]["attach"]		= (preg_match('#(multipart/mixed|multipart/related|application)#i',
+									 $mail_info["content-type"]))?1:0;
+
+				if ($spamcopy[$y]["localname"] == "") {
+					$spamcopy[$y]["localname"] = $this->_get_local_name($spamcopy[$y]["uidl"],$boxname);
+				}
+
+				// $spamcopy[$y]["read"] = file_exists($spamcopy[$y]["localname"])?1:0;
+
+				/* 
+				 * ops, a trick. if the message is not imap, the flags are stored in
+				 * a special field on headers 
+				 */
+
+				if($this->mail_protocol != IMAP && file_exists($spamcopy[$y]["localname"])) {
+
+					$iheaders = $this->_get_headers_from_cache($spamcopy[$y]["localname"]);
+					$iheaders = $this->decode_header($iheaders);
+					$spamcopy[$y]["flags"] = strtoupper($iheaders["x-um-flags"]);
+					unset($iheaders);
+				}
+				$spamcopy[$y]["folder"] = "spam";
+
+				$y++;
+			}
+		}
+		$myreturnarray = array();
+		/*
+		 * Special Hack: if we are listing the SPAM folder for any
+		 * reason, ensure that the 1st array *IS* the SPAM folder
+		 */
+		if (strtoupper($boxname) == "SPAM") {
+			$myreturnarray[0] = $spamcopy; 
+			$myreturnarray[1] = $messagescopy;
+		} else {
+			$myreturnarray[0] = $messagescopy; 
+			$myreturnarray[1] = $spamcopy;
+		}
+		$myreturnarray[2] = 1;
+		unset($messagescopy);
+		unset($spamcopy);
+		return $myreturnarray;
+	}
+
+	private function _get_local_name($message,$boxname) {
+
+		if (is_array($message))
+			$flocalname = trim($this->user_folder."$boxname/".md5(trim($message["subject"].$message["date"].$message["message-id"])).".eml");
+		else
+			$flocalname = trim($this->user_folder."$boxname/".$message.".eml");
+		return $flocalname;
+	}
+
+	/**
+	 * List available emailboxes
+	 * @param string $boxname If specific name or glob
+	 * @return array
+	 */
+	public function mail_list_boxes($boxname = "*") {
+		$boxlist = array();
+		/* choose the protocol*/
+		if($this->mail_protocol == IMAP) {
+			$this->mail_send_command("LIST \"\" $boxname");
+			$buffer = $this->mail_get_line();
+			/* if any problem, stop the script */
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+			/* loop throught the list and split the parts */
+			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				$tmp = array();
+				preg_match('|\\((.*)\\)|',$buffer,$regs);
+				$flags = $regs[1];
+				$tmp["flags"] = $flags;
+
+				preg_match('|\\((.*)\\)|',$buffer,$regs);
+				$flags = $regs[1];
+				
+				$pos = strpos($buffer,")");
+				$rest = substr($buffer,$pos+2);
+				$pos = strpos($rest," ");
+				$tmp["prefix"] = preg_replace('|"(.*)"|',"$1",substr($rest,0,$pos));
+				$tmp["name"] = $this->fix_prefix(trim(preg_replace('|"(.*)"|',"$1",substr($rest,$pos+1))),0);
+				if(function_exists(mb_convert_encoding))
+					$tmp["name"] = mb_convert_encoding( $tmp["name"], "ISO_8859-1", "UTF7-IMAP" );
+				$buffer = $this->mail_get_line();
+				$boxlist[] = $tmp;
+			}
+		} else {
+			/* if POP3, only list the available folders */
+			$d = dir($this->user_folder);
+			while($entry=$d->read()) {
+				if($this->is_system_folder($entry)) 
+					$entry = strtolower($entry);
+
+				if( is_dir($this->user_folder.$entry) && 
+					$entry != ".." && 
+					substr($entry,0,1) != "_" && 
+					$entry != ".") {
+					$boxlist[]["name"] = $entry;
+				}
+			}
+			$d->close();
+		}
+		return $boxlist;
+	}
+
+	/**
+	 * Change to specific default emailbox
+	 * @param string $boxname Emailbox name to select
+	 * @return array
+	 */
+	public function mail_select_box($boxname = "INBOX") {
+		/* this function is used only for IMAP servers */
+		if($this->mail_protocol == IMAP) {
+			$original_name = preg_replace('|"(.*)"|',"$1",$boxname);
+			$boxname = $this->fix_prefix($original_name,1);
+			$this->mail_send_command("SELECT \"$boxname\"");
+			$buffer = $this->mail_get_line();
+			if(preg_match("/^".$this->_sid." NO/i",$buffer)) { 
+				if($this->mail_subscribe_box($original_name)) {
+					$this->mail_send_command("SELECT \"$boxname\"");
+					$buffer = $this->mail_get_line();
+				}
+			}
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+			$boxinfo = array();
+			/* get total, recent messages and flags */
+			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]EXISTS|i',$buffer,$regs))
+					$boxinfo["exists"] = $regs[1];
+				if(preg_match('|[ ]?\\*[ ]?([0-9])+[ ]RECENT|i',$buffer,$regs))
+					$boxinfo["recent"] = $regs[1];
+				if(preg_match('|[ ]?\\*[ ]?FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs))
+					$boxinfo["flags"] = $regs[1];
+				$buffer = $this->mail_get_line();
+			}
+		}
+		$this->_current_folder = $boxname;
+		return $boxinfo;
+	}
+
+
+	/**
+	 * Subscribe to specific default emailbox
+	 * @param string $boxname Emailbox name to subscribe to
+	 * @return boolean
+	 */
+	public function mail_subscribe_box($boxname = "INBOX") {
+		/* this function is used only for IMAP servers */
+		if($this->mail_protocol == IMAP) {
+			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
+			$this->mail_send_command("SUBSCRIBE \"$boxname\"");
+			$buffer = $this->mail_get_line();
+			if(preg_match("/^".$this->_sid." (NO|BAD)/i",$buffer)) { 
+				$this->mail_error_msg = $buffer; 
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	/**
+	 * Create a specific default emailbox
+	 * @param string $boxname Emailbox name to create
+	 * @return boolean
+	 */
+	public function mail_create_box($boxname) {
+		if($this->mail_protocol == IMAP) {
+			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
+			$this->mail_send_command("CREATE \"$boxname\"");
+			$buffer = $this->mail_get_line();
+			if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				@mkdir($this->user_folder.$this->fix_prefix($boxname,0),$this->dirperm);
+				return true;
+			} else { 
+				$this->mail_error_msg = $buffer; return false;
+			}
+
+		} else {
+			/* if POP3, only make a new folder */
+			if(@mkdir($this->user_folder.$boxname,$this->dirperm)) return true;
+			else return false;
+
+		}
+	}
+
+	/**
+	 * Delete a specific default emailbox
+	 * @param string $boxname Emailbox name to delete
+	 * @return boolean
+	 */
+	public function mail_delete_box($boxname) {
+		if($this->mail_protocol == IMAP) {
+			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
+			$this->mail_send_command("DELETE \"$boxname\"");
+			$buffer = $this->mail_get_line();
+
+			if(preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				$this->_RmDirR($this->user_folder.$boxname);
+				return true;
+			} else { 
+				$this->mail_error_msg = $buffer; 
+				return false;
+			}
+
+		} else {
+			if(is_dir($this->user_folder.$boxname)) {
+				$this->_RmDirR($this->user_folder.$boxname);
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+
+	/**
+	 * Save email message to specific emailbox
+	 * @param string $boxname Emailbox name to save to
+	 * @param string $message Message to save
+	 * @param string $flags
+	 * @return boolean
+	 */
+	public function mail_save_message($boxname,$message,$flags = "") {
+		if($this->mail_protocol == IMAP) {
+			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
+		
+			// send an append command
+			$mailcommand = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
+			$this->mail_send_command($mailcommand);
+
+			// wait for a "+ Something" here and not after the msg sent!!
+			$buffer = $this->mail_get_line();
+			if($buffer[0] != "+") {
+				return false;	// problem appending
+			}			
+
+			// send the msg 
+			$mailcommand = "$message";
+			$this->mail_send_command($mailcommand, true);	// not send the session id here!
+
+			$buffer = $this->mail_get_line();
+			
+			if(!preg_match("/^(".$this->_sid." OK)/i", $buffer)) 
+				return false;
+		}
+
+		if(is_dir($this->user_folder.$boxname)) {
+			$email = $this->fetch_structure($message);
+			$mail_info = $this->get_mail_info($email["header"]);
+			$filename = $this->_get_local_name($mail_info,$boxname);
+			if(!empty($flags))
+				$message = trim($email["header"])."\r\nX-UM-Flags: $flags\r\n\r\n".$email["body"];
+			unset($email);
+			$this->_save_file($filename,$message);
+			return true;
+		}
+	}
+
+	/**
+	 * Set flags on specific email message
+	 * @param string $msg Email message to set flag for
+	 * @param string $flagname Flag to set
+	 * @param string $flagtype Set + or Unset -
+	 * @return boolean
+	 */
+	public function mail_set_flag(&$msg,$flagname,$flagtype = "+") {
+		$flagname = strtoupper($flagname);
+		$allowed = array("\\ANSWERED", "\\SEEN", "\\DELETED", "\\DRAFT");
+
+		if($flagtype == '+' && strstr($msg['flags'], $flagname))
+			return true;
+		if($flagtype == '-' && !strstr($msg['flags'], $flagname))
+			return true;
+
+		if($this->mail_protocol == IMAP && in_array($flagname, $allowed)) {
+			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
+				$this->mail_select_box($msg["folder"]);
+
+			if($flagtype != "+") $flagtype = "-";
+			$this->mail_send_command("STORE ".$msg["msg"].":".$msg["msg"]." ".$flagtype."FLAGS ($flagname)");
+			$buffer = $this->mail_get_line();
+
+			while(!preg_match("/^(".$this->_sid." (OK|NO|BAD))/i",$buffer)) { 
+				$buffer = $this->mail_get_line();
+			}
+			if(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) { $this->mail_error_msg = $buffer; return false;}
+
+		} elseif (!file_exists($msg["localname"]))
+			$this->mail_retr_msg($msg,0);
+
+		if(file_exists($msg["localname"])) {
+
+			$email		= $this->_read_file($msg["localname"]);
+			$email		= $this->fetch_structure($email);
+			$header		= $email["header"];
+			$body		= $email["body"];
+			$headerinfo = $this->decode_header($header);
+
+			$strFlags	= trim(strtoupper($msg["flags"]));
+
+			$flags = array();
+			if(!empty($strFlags))
+				$flags = explode(" ",$strFlags);
+
+			if($flagtype == "+") {
+				if(!in_array($flagname,$flags))
+					$flags[] = $flagname;
+			} else {
+				while(list($key,$value) = each($flags))
+					if(strtoupper($value) == $flagname) 
+						$pos = $key;
+				if(isset($pos)) unset($flags[$pos]);
+			}
+
+			$flags = join(" ",$flags);
+			if(!preg_match('|X-UM-Flags|i',$header)) {
+				$header .= "\r\nX-UM-Flags: $flags";
+			} else {
+				$header = preg_replace("/".quotemeta("X-UM-Flags:")."(.*)/i","X-UM-Flags: $flags",$header);
+			}
+
+			$msg["header"]	= $header;
+			$msg["flags"]	= $flags;
+
+			//debug_print_struc($msg);
+
+			$email = "$header\r\n\r\n$body";
+
+			$this->_save_file($msg["localname"],$email);
+
+			unset($email,$header,$body,$flags,$headerinfo);
+		}
+		return true;
+	}
+
+	/**
+	 * Disconnect/logout from Email server
+	 * @return boolean
+	 */
+	public function mail_disconnect() {
+		if($this->mail_connected()) {
+			if($this->mail_protocol == IMAP) {
+				if($this->_require_expunge)
+					$this->mail_expunge();
+				$this->mail_send_command("LOGOUT");
+				$tmp = $this->mail_get_line();
+			} else {
+				$this->mail_send_command("QUIT");
+				$tmp = $this->mail_get_line();
+			}
+			fclose($this->mail_connection);
+			$this->mail_connection = "";
+			//usleep(500);
+			return true;
+		} else return false;
+	
+	}
+
+	/**
+	 * Disconnect/logout from Email server
+	 * @return boolean
+	 */
+	public function mail_disconnect_force() {
+		if($this->mail_connected()) {
+			$this->mail_send_command("FORCEDQUIT");
+			$tmp = $this->mail_get_line();
+			fclose($this->mail_connection);
+			$this->mail_connection = "";
+			// Sleep to make it possible that the server can resume.
+			sleep(2);
+			return true;
+		} else return false;
+	
+	}
+
+	/**
+	 * EXPUNGE email from Email server
+	 * @return boolean
+	 */
+	public function mail_expunge() {
+		if($this->mail_protocol == IMAP) {
+			$this->mail_send_command("EXPUNGE");
+			$buffer = $this->mail_get_line();
+			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+				$buffer = $this->mail_get_line();
+			}
+		}
+		return true;
+	}
+
+	/*
+	 * Use the optional POP3 CAPA command to determine
+	 * what extensions the pop server supports. Returns
+	 * a hash of supported options.
+	 * NOTE: Any whitespace within a capability string is
+	 * squeezed down to a single "_".
+	 */
+	/**
+	 * List CAPA output of POP3 server
+	 * @return array
+	 */
+	public function mail_pop3_capa() {
+		$capa = array();
+		$this->mail_connect();
+		if ($this->mail_protocol == POP3) {
+			$this->mail_send_command("CAPA");
+			$buffer = $this->mail_get_line();
+						if (substr($buffer, 0, 3) == "+OK") {
+							   while (!feof($this->mail_connection)) {
+					$buffer = $this->mail_get_line();
+					$buffer = trim($buffer);
+					if($buffer == ".")
+						break;
+					$key = preg_replace('|\s+|', "_", $buffer);
+					$capa[$key] = 1;
+							   }
+			}
+		}
+		$this->mail_disconnect();
+		return ($capa);
+	}
+
+	/*
+	 * Get the UIDL for the specified message. If none
+	 * provided, then return an array of all UIDLs for
+	 * all non-deleted messages, indexed by message id.
+	 *
+	 * If the server does not provide for the UIDL command,
+	 * then we generate our own by reading the message
+	 * headers and using the Message-ID, Date and Subject
+	 * headers to craft one. If passed a message header
+	 * hash, we grab them from there, otherwise we need
+	 * to query the server. Note that the provided array
+	 * only makes sense for single UIDL lookups.
+	 */
+	/**
+	 * Get UIDL of specific message or of all
+ 	 * @param string $id ID of message
+	 * @param array $message
+	 * @return array
+	 */
+	private function mail_get_uidl ($id = "", $message = array()) {
+		if(!empty($id)) {
+			if ($this->_haveuidl) {
+				$this->mail_send_command("UIDL $id");
+				$buffer = $this->mail_get_line();
+				list ($resp,$num,$uidl) = explode(" ",$buffer);
+				if ($resp == "+OK")
+					return md5($uidl);
+				// If we DON'T get the OK response, we drop through
+			}
+			if (count($message))	// provided a header hash
+				return md5(trim($message["subject"].$message["date"].$message["message-id"]));
+			else {
+				$this->mail_send_command("TOP " . $id . " 0");
+				$buffer = $this->mail_get_line();
+	
+				/* if any problem with the server, stop the function */
+				if(substr($buffer, 0, 3) != "+OK")	{ $this->mail_error_msg = $buffer; return ""; }
+				unset($header);
+				while (!feof($this->mail_connection)) {
+					$buffer = $this->mail_get_line();
+					if(chop($buffer) == ".")
+						break;
+					$header .= $buffer;
+				}
+				$mail_info = $this->get_mail_info($header);
+				return md5(trim($mail_info["subject"].$mail_info["date"].$mail_info["message-id"]));
+			}
+
+		} else {
+			$retarray = array();
+			if ($this->_haveuidl) {
+				$this->mail_send_command("UIDL");
+	
+				$buffer = $this->mail_get_line();
+				if (substr($buffer, 0, 3) == "+OK") {
+					while (!feof($this->mail_connection)) {
+						$buffer = $this->mail_get_line();
+						if(trim($buffer) == ".")
+							break;
+						list ($num,$uidl) = explode(" ",$buffer);
+						if (!empty($uidl))
+							$retarray[intval($num)] = md5($uidl);
+					}
+				}
+			}
+			// Drop through if we got a UIDL error (the array is still empty)
+			if (!count($retarray)) {
+				$this->mail_send_command("LIST");
+				$buffer = $this->mail_get_line();
+
+				if(substr($buffer, 0, 3) == "+OK")	{
+					$messages = array();
+					while (!feof($this->mail_connection)) {
+						$buffer = $this->mail_get_line();
+						if(trim($buffer) == ".")
+							break;
+						$msgs = explode(" ",$buffer);
+						if(is_numeric($msgs[0]))	// store message number
+							$messages[] = $msgs[0];
+					}
+					// now grab the header info
+					foreach ($messages as $id) {
+						$this->mail_send_command("TOP " . $id . " 0");
+						$buffer = $this->mail_get_line();
+			
+						if(substr($buffer, 0, 3) == "+OK")	{
+							unset($header);
+							while (!feof($this->mail_connection)) {
+								$buffer = $this->mail_get_line();
+								if(trim($buffer) == ".")
+									break;
+								$header .= $buffer;
+							}
+							$mail_info = $this->get_mail_info($header);
+							$retarray[intval($id)] = md5(trim($mail_info["subject"].$mail_info["date"].$mail_info["message-id"]));
+						}
+					}
+				}
+			}
+			return $retarray;
+		}
+	}
+
+	/**
+	* Check that a string looks like an email address.
+	* @param string $address The email address to check
+	* @param string $patternselect A selector for the validation pattern to use :
+	* * `auto` Pick strictest one automatically;
+	* * `pcre8` Use the squiloople.com pattern, requires PCRE > 8.0, PHP >= 5.3.2, 5.2.14;
+	* * `pcre` Use old PCRE implementation;
+	* * `php` Use PHP built-in FILTER_VALIDATE_EMAIL; same as pcre8 but does not allow 'dotless' domains;
+	* * `html5` Use the pattern given by the HTML5 spec for 'email' type form input elements.
+	* * `noregex` Don't use a regex: super fast, really dumb.
+	* @return boolean
+	*/
+	public function is_valid_email($address, $patternselect = 'auto') {
+		if (!$patternselect or $patternselect == 'auto') {
+			//Check this constant first so it works when extension_loaded() is disabled by safe mode
+			//Constant was added in PHP 5.2.4
+			if (defined('PCRE_VERSION')) {
+				//This pattern can get stuck in a recursive loop in PCRE <= 8.0.2
+				if (version_compare(PCRE_VERSION, '8.0.3') >= 0) {
+				    $patternselect = 'pcre8';
+				} else {
+				    $patternselect = 'pcre';
+				}
+			} elseif (function_exists('extension_loaded') and extension_loaded('pcre')) {
+				//Fall back to older PCRE
+				$patternselect = 'pcre';
+			} else {
+				//Filter_var appeared in PHP 5.2.0 and does not require the PCRE extension
+				if (version_compare(PHP_VERSION, '5.2.0') >= 0) {
+				    $patternselect = 'php';
+				} else {
+				    $patternselect = 'noregex';
+				}
+			}
+		}
+		switch ($patternselect) {
+			case 'pcre8':
+				/**
+				 * Uses the same RFC5322 regex on which FILTER_VALIDATE_EMAIL is based, but allows dotless domains.
+				 * @link http://squiloople.com/2009/12/20/email-address-validation/
+				 * @copyright 2009-2010 Michael Rushton
+				 * Feel free to use and redistribute this code. But please keep this copyright notice.
+				 */
+				return (boolean)preg_match(
+				    '/^(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){255,})(?!(?>(?1)"?(?>\\\[ -~]|[^"])"?(?1)){65,}@)' .
+				    '((?>(?>(?>((?>(?>(?>\x0D\x0A)?[\t ])+|(?>[\t ]*\x0D\x0A)?[\t ]+)?)(\((?>(?2)' .
+				    '(?>[\x01-\x08\x0B\x0C\x0E-\'*-\[\]-\x7F]|\\\[\x00-\x7F]|(?3)))*(?2)\)))+(?2))|(?2))?)' .
+				    '([!#-\'*+\/-9=?^-~-]+|"(?>(?2)(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\x7F]))*' .
+				    '(?2)")(?>(?1)\.(?1)(?4))*(?1)@(?!(?1)[a-z0-9-]{64,})(?1)(?>([a-z0-9](?>[a-z0-9-]*[a-z0-9])?)' .
+				    '(?>(?1)\.(?!(?1)[a-z0-9-]{64,})(?1)(?5)){0,126}|\[(?:(?>IPv6:(?>([a-f0-9]{1,4})(?>:(?6)){7}' .
+				    '|(?!(?:.*[a-f0-9][:\]]){8,})((?6)(?>:(?6)){0,6})?::(?7)?))|(?>(?>IPv6:(?>(?6)(?>:(?6)){5}:' .
+				    '|(?!(?:.*[a-f0-9]:){6,})(?8)?::(?>((?6)(?>:(?6)){0,4}):)?))?(25[0-5]|2[0-4][0-9]|1[0-9]{2}' .
+				    '|[1-9]?[0-9])(?>\.(?9)){3}))\])(?1)$/isD',
+				    $address
+				);
+			case 'pcre':
+				//An older regex that doesn't need a recent PCRE
+				return (boolean)preg_match(
+				    '/^(?!(?>"?(?>\\\[ -~]|[^"])"?){255,})(?!(?>"?(?>\\\[ -~]|[^"])"?){65,}@)(?>' .
+				    '[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*")' .
+				    '(?>\.(?>[!#-\'*+\/-9=?^-~-]+|"(?>(?>[\x01-\x08\x0B\x0C\x0E-!#-\[\]-\x7F]|\\\[\x00-\xFF]))*"))*' .
+				    '@(?>(?![a-z0-9-]{64,})(?>[a-z0-9](?>[a-z0-9-]*[a-z0-9])?)(?>\.(?![a-z0-9-]{64,})' .
+				    '(?>[a-z0-9](?>[a-z0-9-]*[a-z0-9])?)){0,126}|\[(?:(?>IPv6:(?>(?>[a-f0-9]{1,4})(?>:' .
+				    '[a-f0-9]{1,4}){7}|(?!(?:.*[a-f0-9][:\]]){8,})(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,6})?' .
+				    '::(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,6})?))|(?>(?>IPv6:(?>[a-f0-9]{1,4}(?>:' .
+				    '[a-f0-9]{1,4}){5}:|(?!(?:.*[a-f0-9]:){6,})(?>[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,4})?' .
+				    '::(?>(?:[a-f0-9]{1,4}(?>:[a-f0-9]{1,4}){0,4}):)?))?(?>25[0-5]|2[0-4][0-9]|1[0-9]{2}' .
+				    '|[1-9]?[0-9])(?>\.(?>25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}))\])$/isD',
+				    $address
+				);
+			case 'html5':
+				/**
+				 * This is the pattern used in the HTML5 spec for validation of 'email' type form input elements.
+				 * @link http://www.whatwg.org/specs/web-apps/current-work/#e-mail-state-(type=email)
+				 */
+				return (boolean)preg_match(
+				    '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}' .
+				    '[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/sD',
+				    $address
+				);
+			case 'noregex':
+				//No PCRE! Do something _very_ approximate!
+				//Check the address is 3 chars or longer and contains an @ that's not the first or last char
+				return (strlen($address) >= 3
+				    and strpos($address, '@') >= 1
+				    and strpos($address, '@') != strlen($address) - 1);
+			case 'php':
+			default:
+				return (boolean)filter_var($address, FILTER_VALIDATE_EMAIL);
+		}
+	}
+
 }
-require("./inc/class/class.telaen_mail.php");
+
 ?>
