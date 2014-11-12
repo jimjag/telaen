@@ -140,10 +140,10 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$TLN->mail_prefix	= $auth["folder_prefix"]	= $f_prefix;
 
 	$pop3capa = $TLN->mail_pop3_capa();
-	$TLN->_havepipelining	= $auth["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
-	$TLN->_haveatop		= $auth["haveatop"]		= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
-	$TLN->_haveuidl		= $auth["haveuidl"]		= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
-	$TLN->_haveapop		= $auth["haveapop"]		= ( isset($mail_use_apop) ? $mail_use_apop : $pop3capa["APOP"] );
+	$TLN->havepipelining	= $auth["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
+	$TLN->haveatop		= $auth["haveatop"]		= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
+	$TLN->haveuidl		= $auth["haveuidl"]		= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
+	$TLN->haveapop		= $auth["haveapop"]		= ( isset($mail_use_apop) ? $mail_use_apop : $pop3capa["APOP"] );
 
 	$refr = 1;
 
@@ -168,10 +168,10 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$TLN->mail_protocol	= $f_protocol	= $auth["protocol"];
 	$TLN->mail_prefix	= $f_prefix	= $auth["folder_prefix"];
 
-	$TLN->_havepipelining	= $auth["havepipelining"];
-	$TLN->_haveatop		= $auth["haveatop"];
-	$TLN->_haveuidl		= $auth["haveuidl"];
-	$TLN->_haveapop		= $auth["haveapop"];
+	$TLN->havepipelining	= $auth["havepipelining"];
+	$TLN->haveatop		= $auth["haveatop"];
+	$TLN->haveuidl		= $auth["haveuidl"];
+	$TLN->haveapop		= $auth["haveapop"];
 	
 	$quota_limit		= $auth["quota_limit"];
 
@@ -182,7 +182,7 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 
 $auth["start"] = time();
 
-// $AuthSession->Save($sess);
+$AuthSession->Save($auth);
 
 $userfolder = $temporary_directory.preg_replace("/[^a-z0-9\._-]/","_",strtolower($f_user))."_".strtolower($f_server)."/";
 

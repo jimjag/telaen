@@ -280,7 +280,7 @@ function array_qsort2int (&$array, $column=0, $order="ASC") {
 	reset($array);
 }
 
-/*
+/**
  * Simple PHP Helper for sessions
  */
 class Session {
@@ -321,8 +321,8 @@ class Session {
 	}
 }
 
-/*
- * Simple PHP Helper for Email DB
+/**
+ * Simple PHP Helper for file-based Email data
  */
 class Mbox {
 
@@ -340,7 +340,7 @@ class Mbox {
 		$this->path = $path;
 		$ret = array();
 		if ($this->path) {
-			$str = get_file_contents($this->path);
+			$str = @file_get_contents($this->path);
 			if ($str) {
 				$ret = unserialize($str);
 			}

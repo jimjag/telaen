@@ -3,7 +3,7 @@ require_once("./inc/class/class.telaen_core.php");
 
 class Telaen extends Telaen_core {
 
-	private $_autospamfolder	= true;		// boolean
+	public $autospamfolder		= true;		// boolean
 	private $_spamregex		= array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
 	public $havespam		= "";		// NOTE: This is a STRING!
 	private $_system_folders		= array("inbox","trash","sent","spam");
@@ -12,10 +12,10 @@ class Telaen extends Telaen_core {
 	public $userspamlevel		= 0;		// Disabled
 	public $dirperm			= 0700;		// recall affected by umask value
 	public $greeting		= "";		// Internally used for store pop3 APOP greeting message
-	private $_haveatop		= false;	// boolean
-	private $_havepipelining	= false;	// boolean
-	private $_haveapop		= false;	// boolean
-	private $_haveuidl		= false;	// boolean
+	public $haveatop		= false;	// boolean
+	public $havepipelining		= false;	// boolean
+	public $haveapop		= false;	// boolean
+	public $haveuidl			= false;	// boolean
 
 	public function Telaen() {
 		require("./inc/class/class.tnef.php");
@@ -150,7 +150,7 @@ class Telaen extends Telaen_core {
 	 */
 	private function mail_auth_pop($checkfolders=false) {
 		// APOP login mode, more secure
-		if ($this->_haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
+		if ($this->haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens) ) {
 			$this->mail_send_command("APOP ".$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
 		} 
 		// Classic login mode
@@ -913,7 +913,7 @@ class Telaen extends Telaen_core {
 			 * we are checking the INBOX and we have _autospamfolder
 			 * set :)
 			 */
-			if ( ($this->_autospamfolder) &&
+			if ( ($this->autospamfolder) &&
 				(strtoupper($boxname) == "INBOX" || strtoupper($boxname) == "SPAM") ) {
 				foreach ($this->_spamregex as $spamregex) {
 					if (preg_match("/$spamregex/i",$spamsubject)) {
@@ -1440,7 +1440,7 @@ class Telaen extends Telaen_core {
 	 */
 	private function mail_get_uidl ($id = "", $message = array()) {
 		if(!empty($id)) {
-			if ($this->_haveuidl) {
+			if ($this->haveuidl) {
 				$this->mail_send_command("UIDL $id");
 				$buffer = $this->mail_get_line();
 				list ($resp,$num,$uidl) = explode(" ",$buffer);
@@ -1469,7 +1469,7 @@ class Telaen extends Telaen_core {
 
 		} else {
 			$retarray = array();
-			if ($this->_haveuidl) {
+			if ($this->haveuidl) {
 				$this->mail_send_command("UIDL");
 	
 				$buffer = $this->mail_get_line();

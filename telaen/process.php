@@ -61,7 +61,7 @@ if( !is_array($headers)
 			$start_pos = ($pag-1)*$reg_pp;
 		}
 	}
-	if ($TLN->_autospamfolder) {
+	if ($TLN->autospamfolder) {
 		if ($folder_key == $folder_key_inbox) {
 			$other_folder_key = $folder_key_spam;
 		} else {
@@ -108,7 +108,7 @@ if( !is_array($headers)
 			/*
 			 * Add the spamfolder if we have one.
 			 */
-			if ($TLN->_autospamfolder && $is_inbox_or_spam) {
+			if ($TLN->autospamfolder && $is_inbox_or_spam) {
 				$j = count($delarray);
 				$othercount = count($mbox["headers"][$other_folder_key]);
 				for($i=0;$i<$othercount;$i++) {
@@ -194,7 +194,7 @@ if( !is_array($headers)
 				 */
 				unset ($mbox["headers"][$folder_key]);
 				$mbox["headers"][$folder_key] = array();
-				if ($TLN->_autospamfolder && $is_inbox_or_spam) {
+				if ($TLN->autospamfolder && $is_inbox_or_spam) {
 					unset ($mbox["headers"][$other_folder_key]);
 					$mbox["headers"][$other_folder_key] = array();
 				}
@@ -205,7 +205,7 @@ if( !is_array($headers)
 				unset($mbox["headers"][base64_encode("trash")]);
 			if ($decision == "move")
 				unset($mbox["headers"][base64_encode(strtolower($aval_folders))]);
-			$AuthSession->Save($auth);
+			$UserMbox->Save($mbox);
 			if ($back)
 				$back_to = $start_pos;
 		}
@@ -252,6 +252,7 @@ if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
 $mbox["headers"][$folder_key] = $headers;
 $auth["havespam"] = ($TLN->havespam || count($mbox["headers"][$folder_key_spam]));
 $AuthSession->Save($auth);
+$UserMbox->Save($mbox);
 
 /*
  * If they used a different version (ignoring patchlevel) then
