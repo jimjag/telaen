@@ -136,7 +136,7 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$TLN->mail_server	= $auth["server"]	= $f_server	= stripslashes($f_server);
 
 	$TLN->mail_port		= $auth["port"]			= $f_port;
-	$TLN->mail_protocol	= $auth["protocol"]		= $f_protocol;
+	$TLN->mail_protocol	= $auth["protocol"]		= (strcasecmp($f_protocol, "pop3") ? IMAP : POP3);
 	$TLN->mail_prefix	= $auth["folder_prefix"]	= $f_prefix;
 
 	$pop3capa = $TLN->mail_pop3_capa();

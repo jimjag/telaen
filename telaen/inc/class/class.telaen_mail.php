@@ -963,7 +963,7 @@ class Telaen extends Telaen_core {
 				 * a special field on headers 
 				 */
 
-				if($this->mail_protocol != "imap" && file_exists($messagescopy[$j]["localname"])) {
+				if($this->mail_protocol != IMAP && file_exists($messagescopy[$j]["localname"])) {
 
 					$iheaders = $this->_get_headers_from_cache($messagescopy[$j]["localname"]);
 					$iheaders = $this->decode_header($iheaders);
@@ -1007,7 +1007,7 @@ class Telaen extends Telaen_core {
 				 * a special field on headers 
 				 */
 
-				if($this->mail_protocol != "imap" && file_exists($spamcopy[$y]["localname"])) {
+				if($this->mail_protocol != IMAP && file_exists($spamcopy[$y]["localname"])) {
 
 					$iheaders = $this->_get_headers_from_cache($spamcopy[$y]["localname"]);
 					$iheaders = $this->decode_header($iheaders);

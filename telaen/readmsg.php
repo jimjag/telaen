@@ -294,7 +294,7 @@ while($entry=$d->read()) {
 		$entry != "." && 
 		substr($entry,0,1) != "_" && 
 		$entry != $folder &&
-		($TLN->mail_protocol == "imap" || ($entry != "inbox" && $entry != "spam"))) {
+		($TLN->mail_protocol == IMAP || ($entry != "inbox" && $entry != "spam"))) {
 		$entry = $TLN->fix_prefix($entry,0);
 		switch(strtolower($entry)) {
 		case "inbox":
