@@ -46,11 +46,11 @@ $smarty->assign("umInputBody",$srcBody);
 
 if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
-	$boxes = $auth["folders"];
+	$boxes = $mbox["folders"];
 
 	for($n=0;$n<count($boxes);$n++) {
 		$entry = $boxes[$n]["name"];
-		if(!is_array($auth["headers"][base64_encode(strtolower($entry))])) {
+		if(!is_array($mbox["headers"][base64_encode(strtolower($entry))])) {
 			if(!$TLN->mail_connected()) {
 				if(!$TLN->mail_connect()) {
 					redirect_and_exit("index.php?err=1", true);
@@ -58,18 +58,18 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 				if(!$TLN->mail_auth()) { redirect_and_exit("index.php?err=0"); }
 			}
 			$retbox = $TLN->mail_list_msgs($entry);
-			$auth["headers"][base64_encode(strtolower($entry))] = $retbox[0];
+			$mbox["headers"][base64_encode(strtolower($entry))] = $retbox[0];
 			$thisbox = $retbox[0];
 		} else 
-			$thisbox = $auth["headers"][base64_encode(strtolower($entry))];
+			$thisbox = $mbox["headers"][base64_encode(strtolower($entry))];
 	}
 	if($TLN->mail_connected()) {
 		$TLN->mail_disconnect(); 
-		$AuthSession->Save($auth);
+		$UserMbox->Save($mbox);
 	}
 
 
-	$boxlist = $auth["headers"];
+	$boxlist = $mbox["headers"];
 
 	function build_regex($strSearch) {
 		$strSearch = trim($strSearch);

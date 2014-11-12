@@ -44,7 +44,7 @@ if (valid_folder_name($delfolder, true) &&
 	}
 }
 
-if($require_update) $auth["folders"] = $TLN->mail_list_boxes();
+if($require_update) $mbox["folders"] = $TLN->mail_list_boxes();
 
 require("./folder_list.php");
 
@@ -61,7 +61,7 @@ if(isset($empty)) {
 		/* ops.. you have sent anything to trash, then you need refresh it */
 		if($prefs["save-to-trash"])
 			unset($mbox["headers"][base64_encode("trash")]);
-		$AuthSession->Save($auth);
+		$UserMbox->Save($mbox);
 	}
 	if(isset($goback)) redirect_and_exit("process.php?folder=".urlencode($folder)."");
 

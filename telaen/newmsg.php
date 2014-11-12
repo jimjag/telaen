@@ -132,8 +132,8 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			}
 		}
 
-		if(array_key_exists("attachments",$auth)) {
-			$attachs = $auth["attachments"];
+		if(array_key_exists("attachments",$mbox)) {
+			$attachs = $mbox["attachments"];
 			for($i=0;$i<count($attachs);$i++) {
 				if(file_exists($attachs[$i]["localname"])) {
 					$mail->AddAttachment($attachs[$i]["localname"], $attachs[$i]["name"], "base64", $attachs[$i]["type"]);
@@ -153,10 +153,10 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		
 			$smarty->assign("umMailSent",true);
 
-			if(array_key_exists("attachments",$auth)) {
-				unset($auth["attachments"]);
-				reset($auth);
-				$AuthSession->Save($auth);
+			if(array_key_exists("attachments",$mbox)) {
+				unset($mbox["attachments"]);
+				reset($mbox);
+				$UserMbox->Save($mbox);
 			}
 			
 			
@@ -169,7 +169,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 				$TLN->mail_save_message("sent",$mail->TelaenGetEmail(),"\\SEEN");
 				unset($mbox["headers"][base64_encode("sent")]);
 				$TLN->mail_disconnect();
-				$AuthSession->Save($auth);
+				$UserMbox->Save($mbox);
 
 			}
 		}
@@ -400,11 +400,11 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			}
 			if($rtype != "forward" && $TLN->mail_set_flag($mail_info,"\\ANSWERED","+")) {
 				$mbox["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
-				$AuthSession->Save($auth);
+				$UserMbox->Save($mbox);
 			}
 			if($rtype == "forward" && $TLN->mail_set_flag($mail_info,"\\FORWARDED","+")) {
 				$mbox["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
-				$AuthSession->Save($auth);
+				$UserMbox->Save($mbox);
 			}
 			$TLN->mail_disconnect(); 
 
@@ -578,13 +578,13 @@ $tmpbody";
 			if(count($email["attachments"]) > 0) {
 				for($i = 0; $i < count($email["attachments"]); $i++) {
 					$current = $email["attachments"][$i];
-					$ind = count($auth["attachments"]);
-					$auth["attachments"][$ind]["localname"] = $current["filename"];
-					$auth["attachments"][$ind]["name"] = $current["name"];
-					$auth["attachments"][$ind]["type"] = $current["content-type"];
-					$auth["attachments"][$ind]["size"] = $current["size"];
+					$ind = count($mbox["attachments"]);
+					$mbox["attachments"][$ind]["localname"] = $current["filename"];
+					$mbox["attachments"][$ind]["name"] = $current["name"];
+					$mbox["attachments"][$ind]["type"] = $current["content-type"];
+					$mbox["attachments"][$ind]["size"] = $current["size"];
 				}
-				$AuthSession->Save($auth);
+				$UserMbox->Save($mbox);
 			}
 			break;
 		}
@@ -616,7 +616,7 @@ $tmpbody";
 	$strsubject = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"subject\" value=\"".htmlspecialchars(stripslashes($subject))."\" />";
 
 
-	if(array_key_exists("attachments", $auth) && count($attachs = $auth["attachments"]) > 0) {
+	if(array_key_exists("attachments", $mbox) && count($attachs = $mbox["attachments"]) > 0) {
 
 		$smarty->assign("umHaveAttachs",1);
 		$attachlist = array();

@@ -74,15 +74,15 @@ function cleanup_dirs ($userfolder, $logout) {
 	cleanup_dir($cleanme);
 
 	if ($logout) {
-		if(is_array($auth["headers"]) && file_exists($userfolder)) {
+		if(is_array($mbox["headers"]) && file_exists($userfolder)) {
 
-			if(is_array($auth["folders"])) {
-				$boxes = $auth["folders"];
+			if(is_array($mbox["folders"])) {
+				$boxes = $mbox["folders"];
 				for($n=0;$n<count($boxes);$n++) {
 					$entry = $TLN->fix_prefix($boxes[$n]["name"],1);
 					$file_list = array();
 		
-					if(is_array($curfolder = $auth["headers"][base64_encode(strtolower($entry))])) {
+					if(is_array($curfolder = $mbox["headers"][base64_encode(strtolower($entry))])) {
 		
 						if ($TLN->is_system_folder($entry))
 							$entry = strtolower($entry);
@@ -115,11 +115,11 @@ function cleanup_dirs ($userfolder, $logout) {
 					}
 				}
 				$trash = "trash";
-				if(!is_array($auth["headers"][base64_encode($trash)])) {
+				if(!is_array($mbox["headers"][base64_encode($trash)])) {
 					$retbox = $TLN->mail_list_msgs($trash);
-					$auth["headers"][base64_encode($trash)] = $retbox[0];
+					$mbox["headers"][base64_encode($trash)] = $retbox[0];
 				}
-				$trash = $auth["headers"][base64_encode($trash)];
+				$trash = $mbox["headers"][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
 					for($j=0;$j<count($trash);$j++) {
@@ -138,11 +138,11 @@ function cleanup_dirs ($userfolder, $logout) {
 					 redirect_and_exit("index.php?err=0");
 				}
 				$trash = "spam";
-				if(!is_array($auth["headers"][base64_encode($trash)])) {
+				if(!is_array($mbox["headers"][base64_encode($trash)])) {
 					$retbox = $TLN->mail_list_msgs($trash);
-					$auth["headers"][base64_encode($trash)] = $retbox[0];
+					$mbox["headers"][base64_encode($trash)] = $retbox[0];
 				}
-				$trash = $auth["headers"][base64_encode($trash)];
+				$trash = $mbox["headers"][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
 					for($j=0;$j<count($trash);$j++) {

@@ -212,7 +212,7 @@ if( !is_array($headers)
 	}
 
 	$boxes = $TLN->mail_list_boxes();
-	$auth["folders"] = $boxes;
+	$mbox["folders"] = $boxes;
 
 	/*
 	 * If we deleted mails, the message list has already been reloaded.

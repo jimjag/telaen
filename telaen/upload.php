@@ -17,7 +17,7 @@ extract(pull_from_array($_FILES, array("userfile"), "str"));
 
 if (isset($rem) && $rem != "") {
 
-	$attchs = $auth["attachments"];
+	$attchs = $mbox["attachments"];
 	@unlink($attchs[$rem]["localname"]);
 	unset($attchs[$rem]);
 	$c = 0;
@@ -25,8 +25,8 @@ if (isset($rem) && $rem != "") {
 	while(list($key,$value) =  each($attchs)) {
 		$newlist[$c] = $value; $c++;
 	}
-	$auth["attachments"] = $newlist;
-	$AuthSession->Save($auth);
+	$mbox["attachments"] = $newlist;
+	$UserMbox->Save($mbox);
 	echo("
 	<script language=javascript>\n
 		if(window.opener) window.opener.doupload();\n
@@ -47,19 +47,19 @@ if (isset($rem) && $rem != "") {
 	$userfile	= $userfile["tmp_name"];
 
 
-	if(!is_array($auth["attachments"])) $ind = 0;
-	else $ind = count($auth["attachments"]);
+	if(!is_array($mbox["attachments"])) $ind = 0;
+	else $ind = count($mbox["attachments"]);
 
 	$filename = $userfolder."_attachments/".md5(uniqid("")).$userfile_name;
 
 	move_uploaded_file($userfile, $filename);
 
-	$auth["attachments"][$ind]["localname"] = $filename;
-	$auth["attachments"][$ind]["name"] = $userfile_name;
-	$auth["attachments"][$ind]["type"] = $userfile_type;
-	$auth["attachments"][$ind]["size"] = $userfile_size;
+	$mbox["attachments"][$ind]["localname"] = $filename;
+	$mbox["attachments"][$ind]["name"] = $userfile_name;
+	$mbox["attachments"][$ind]["type"] = $userfile_type;
+	$mbox["attachments"][$ind]["size"] = $userfile_size;
 
-	$AuthSession->Save($auth);
+	$UserMbox->Save($mbox);
 
 	echo("
 	<script language=javascript>\n

@@ -283,7 +283,7 @@ if(count($anexos) > 0) {
 	$smarty->assign("umAttachList",$attachAr);
 }
 
-$AuthSession->Save($auth);
+$UserMbox->Save($mbox);
 
 
 $avalfolders = array();
