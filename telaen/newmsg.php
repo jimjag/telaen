@@ -414,7 +414,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		$filename = $mail_info["localname"];
 
 		if(!file_exists($filename)) die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true';</script>");
-		$result = $TLN->_read_file($filename);
+		$result = $TLN->read_file($filename);
 
 				$TLN->sanitize = ($sanitize_html || !$allow_scripts);
 		$email = $TLN->Decode($result);

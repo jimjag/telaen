@@ -34,7 +34,7 @@ if(isset($attachment)) {
 	if( !is_array($root) || 
 		!file_exists($root["filename"])) redirect_and_exit("index.php?err=3");
 
-	$result = $TLN->_read_file($root["filename"]);
+	$result = $TLN->read_file($root["filename"]);
 
 } else {
 	$is_attached = false;

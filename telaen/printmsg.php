@@ -16,7 +16,7 @@ $mail_info = $mbox["headers"][base64_encode(strtolower($folder))][$ix];
 $smarty->assign("pageMetas", $nocache);
 
 if(!file_exists($mail_info["localname"])) die("File not found");;
-$email = $TLN->_read_file($mail_info["localname"]);
+$email = $TLN->read_file($mail_info["localname"]);
 
 $TLN->displayimages = $prefs["display-images"];
 $TLN->sanitize = ($sanitize_html || !$allow_scripts);

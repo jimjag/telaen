@@ -102,7 +102,7 @@ if($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 			$localname = $email["localname"];
 
 			if($get_body && file_exists($localname)) {
-				$thisfile = $TLN->_read_file($localname);
+				$thisfile = $TLN->read_file($localname);
 				$email = $TLN->Decode($thisfile);
 				unset($thisfile);
 			}

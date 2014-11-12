@@ -7,7 +7,7 @@ if($folder == "inbox") {
 	$require_update = false;
 
 	$filename = $userfolder."_infos/filters.ucf";
-	$myfile = $TLN->_read_file($filename);
+	$myfile = $TLN->read_file($filename);
 	$filters = array();
 
 	if($myfile != "") 

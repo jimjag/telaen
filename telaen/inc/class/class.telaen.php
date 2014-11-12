@@ -269,7 +269,7 @@ class Telaen extends Telaen_core {
 		}
 
 		if(file_exists($msg["localname"])) {
-			$msgcontent = $this->_read_file($msg["localname"]);
+			$msgcontent = $this->read_file($msg["localname"]);
 		} else {
 			$this->mail_send_command("FETCH ".$msg["msg"].":".$msg["msg"]." BODY[TEXT]");
 			$buffer = $this->mail_get_line();
@@ -289,7 +289,7 @@ class Telaen extends Telaen_core {
 
 			$msgcontent = "$msgheader\r\n\r\n$msgbody";
 
-			$this->_save_file($msg["localname"],$msgcontent);
+			$this->save_file($msg["localname"],$msgcontent);
 
 		}
 		return $msgcontent;
@@ -306,7 +306,7 @@ class Telaen extends Telaen_core {
 		}
 
 		if(file_exists($msg["localname"])) {
-			$msgcontent = $this->_read_file($msg["localname"]);
+			$msgcontent = $this->read_file($msg["localname"]);
 		} elseif (strtolower($msg["folder"]) == "inbox" || strtolower($msg["folder"]) == "spam") {
 
 			$command = ($mail_use_top)?"TOP ".$msg["msg"]." ".$msg["size"]:"RETR ".$msg["msg"];
@@ -342,7 +342,7 @@ class Telaen extends Telaen_core {
 
 			$msgcontent = "$header\r\n\r\n$body";
 
-			$this->_save_file($msg["localname"],$msgcontent);
+			$this->save_file($msg["localname"],$msgcontent);
 		}
 		return $msgcontent;
 	}
@@ -1249,7 +1249,7 @@ class Telaen extends Telaen_core {
 			if(!empty($flags))
 				$message = trim($email["header"])."\r\nX-UM-Flags: $flags\r\n\r\n".$email["body"];
 			unset($email);
-			$this->_save_file($filename,$message);
+			$this->save_file($filename,$message);
 			return true;
 		}
 	}
@@ -1288,7 +1288,7 @@ class Telaen extends Telaen_core {
 
 		if(file_exists($msg["localname"])) {
 
-			$email		= $this->_read_file($msg["localname"]);
+			$email		= $this->read_file($msg["localname"]);
 			$email		= $this->fetch_structure($email);
 			$header		= $email["header"];
 			$body		= $email["body"];
@@ -1324,7 +1324,7 @@ class Telaen extends Telaen_core {
 
 			$email = "$header\r\n\r\n$body";
 
-			$this->_save_file($msg["localname"],$email);
+			$this->save_file($msg["localname"],$email);
 
 			unset($email,$header,$body,$flags,$headerinfo);
 		}

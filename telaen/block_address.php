@@ -13,7 +13,7 @@ require("./inc/init.php");
 if(!isset($ix) || !isset($folder)) redirect_and_exit("index.php?err=3", true);
 
 $filename = $userfolder."_infos/filters.ucf";
-$myfile = $TLN->_read_file($filename);
+$myfile = $TLN->read_file($filename);
 $filters = array();
 
 if($myfile != "") 
@@ -55,7 +55,7 @@ if(isset($fFilter)) {
 					);
 	}
 
-	$TLN->_save_file($filename,base64_encode(serialize($filters)));
+	$TLN->save_file($filename,base64_encode(serialize($filters)));
 
 	echo("
 	<script language=javascript>

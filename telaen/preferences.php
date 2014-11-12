@@ -39,7 +39,7 @@ $smarty->assign("umJS", $jssource);
 
 // load filters
 $filename = $userfolder."_infos/filters.ucf";
-$myfile = $TLN->_read_file($filename);
+$myfile = $TLN->read_file($filename);
 $filters = array();
 
 if($myfile != "")  
@@ -111,7 +111,7 @@ if(isset($_POST['action'])) {
 
 			// save the file
 			$content = base64_encode(serialize($filters));
-			$TLN->_save_file($filename, $content);
+			$TLN->save_file($filename, $content);
 		
 			$smarty->assign("message", "4");
 	
@@ -137,7 +137,7 @@ if(isset($_POST['action'])) {
 			
 			// save the file
 						$content = base64_encode(serialize($filters));
-						$TLN->_save_file($filename, $content);
+						$TLN->save_file($filename, $content);
 
 			$smarty->assign("message", "5");			
 

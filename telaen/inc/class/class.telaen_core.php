@@ -72,9 +72,11 @@ class Telaen_core {
 	/**
 	 * Open a file and read it fixing possible mistakes
 	 * on the line breaks. A single variable is returned
+	 * @param string $strfile File to read from
+	 * @return string
 	 */
 
-	private function _read_file($strfile) {
+	public function read_file($strfile) {
 		if($strfile == "" || !file_exists($strfile)) return;
 		$fp = fopen($strfile,"rb"); fseek($fp,0,SEEK_END);
 		$size = ftell($fp); rewind($fp);
@@ -689,7 +691,7 @@ class Telaen_core {
 		$temp_array["type"]					= "mime";
 		$temp_array["index"]				= $nIndex;
 
-		$this->_save_file($temp_array["filename"],$body);
+		$this->save_file($temp_array["filename"],$body);
 		unset($body);
 		$this->_content["attachments"][$nIndex] = $temp_array;
 
@@ -1025,7 +1027,7 @@ class Telaen_core {
 			$temp_array["type"] = "uue";
 			$temp_array["filename"] = $this->user_folder."_attachments/".md5($temp_array["boundary"])."_".$temp_array["name"];
 			$this->_content["attachments"][] = $temp_array;
-			$this->_save_file($temp_array["filename"],$stream);
+			$this->save_file($temp_array["filename"],$stream);
 			unset($temp_array);
 		}
 		$body = preg_replace($regex, "", $body);
@@ -1053,7 +1055,7 @@ class Telaen_core {
 			
 			$this->_content["attachments"][]	= $temp_array;
 
-			$this->_save_file($temp_array["filename"],$content);
+			$this->save_file($temp_array["filename"],$content);
 			unset($temp_array);
 		}
 
