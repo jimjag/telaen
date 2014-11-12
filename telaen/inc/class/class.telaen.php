@@ -182,15 +182,14 @@ class Telaen extends Telaen_core {
 	 * @return boolean
 	 */
 	public function mail_auth($checkfolders=false) {
-		$ret = false;
 		if($this->mail_connected()) {
 			if ($this->mail_protocol == IMAP) {
-				$ret = $this->_mail_auth_imap($checkfolders);
+				return $this->_mail_auth_imap($checkfolders);
 			} else {
-				$ret = $this->_mail_auth_pop($checkfolders);
+				return $this->_mail_auth_pop($checkfolders);
 			}
 		}
-		return $ret;
+		return false;
 	}
 
 	private function _check_folders() {
@@ -354,13 +353,11 @@ class Telaen extends Telaen_core {
 	 * @return string
 	 */
 	public function mail_retr_msg(&$msg,$check=1) {
-		$ret = "";
 		if($this->mail_protocol == IMAP) {
-			$ret = $this->_mail_retr_msg_imap($msg,$check);
+			return $this->_mail_retr_msg_imap($msg,$check);
 		} else {
-			$ret = $this->_mail_retr_msg_pop($msg,$check);
+			return $this->_mail_retr_msg_pop($msg,$check);
 		}
-		return $ret;
 	}
 
 	private function _mail_retr_header_imap($msg) {
@@ -397,13 +394,11 @@ class Telaen extends Telaen_core {
 	 * @return string
 	 */
 	public function mail_retr_header($msg) {
-		$ret = "";
 		if($this->mail_protocol == IMAP) {
-			$ret = $this->_mail_retr_header_imap($msg);
+			return $this->_mail_retr_header_imap($msg);
 		} else {
-			$ret = $this->_mail_retr_header_pop($msg);
+			return $this->_mail_retr_header_pop($msg);
 		}
-		return $ret;
 	}
 
 
@@ -517,13 +512,11 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0) {
 
-		$ret = 1;
 		if($this->mail_protocol == IMAP) {
-			$ret = $this->_mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
+			return $this->_mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
 		} else {
-			$ret = $this->_mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
+			return $this->_mail_delete_msg_pop($msg, $send_to_trash, $save_only_read);
 		}
-		return $ret;
 	}
 
 
@@ -626,13 +619,11 @@ class Telaen extends Telaen_core {
 	 * @return boolean
 	 */
 	public function mail_move_msg($msg,$tofolder) {
-		$ret = 1;
 		if($this->mail_protocol == IMAP) {
-			$ret = $this->_mail_move_msg_imap($msg,$tofolder);
+			return $this->_mail_move_msg_imap($msg,$tofolder);
 		} else {
-			$ret = $this->_mail_move_msg_pop($msg,$tofolder);
+			return $this->_mail_move_msg_pop($msg,$tofolder);
 		}
-		return $ret;
 	}
 
 
@@ -1048,56 +1039,64 @@ class Telaen extends Telaen_core {
 		return $flocalname;
 	}
 
+	private function _mail_list_boxes_imap($boxname = "*") {
+		$boxlist = array();
+		$this->_mail_send_command("LIST \"\" $boxname");
+		$buffer = $this->_mail_get_line();
+		/* if any problem, stop the script */
+		if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
+		/* loop throught the list and split the parts */
+		while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
+			$tmp = array();
+			preg_match('|\\((.*)\\)|',$buffer,$regs);
+			$flags = $regs[1];
+			$tmp["flags"] = $flags;
+
+			preg_match('|\\((.*)\\)|',$buffer,$regs);
+			$flags = $regs[1];
+
+			$pos = strpos($buffer,")");
+			$rest = substr($buffer,$pos+2);
+			$pos = strpos($rest," ");
+			$tmp["prefix"] = preg_replace('|"(.*)"|',"$1",substr($rest,0,$pos));
+			$tmp["name"] = $this->fix_prefix(trim(preg_replace('|"(.*)"|',"$1",substr($rest,$pos+1))),0);
+			if(function_exists(mb_convert_encoding))
+				$tmp["name"] = mb_convert_encoding( $tmp["name"], "ISO_8859-1", "UTF7-IMAP" );
+			$buffer = $this->_mail_get_line();
+			$boxlist[] = $tmp;
+		}
+		return $boxlist;
+	}
+
+	public function _mail_list_boxes_pop($boxname = "*") {
+		$boxlist = array();
+		/* if POP3, only list the available folders */
+		$d = dir($this->user_folder);
+		while($entry=$d->read()) {
+			if($this->is_system_folder($entry))
+				$entry = strtolower($entry);
+
+			if( is_dir($this->user_folder.$entry) &&
+				$entry != ".." &&
+				substr($entry,0,1) != "_" &&
+				$entry != ".") {
+				$boxlist[]["name"] = $entry;
+			}
+		}
+		$d->close();
+		return $boxlist;
+	}
 	/**
 	 * List available emailboxes
 	 * @param string $boxname If specific name or glob
 	 * @return array
 	 */
 	public function mail_list_boxes($boxname = "*") {
-		$boxlist = array();
-		/* choose the protocol*/
 		if($this->mail_protocol == IMAP) {
-			$this->_mail_send_command("LIST \"\" $boxname");
-			$buffer = $this->_mail_get_line();
-			/* if any problem, stop the script */
-			if(preg_match("/^(".$this->_sid." (NO|BAD))/i",$buffer)) { $this->mail_error_msg = $buffer; return false; }
-			/* loop throught the list and split the parts */
-			while(!preg_match("/^(".$this->_sid." OK)/i",$buffer)) {
-				$tmp = array();
-				preg_match('|\\((.*)\\)|',$buffer,$regs);
-				$flags = $regs[1];
-				$tmp["flags"] = $flags;
-
-				preg_match('|\\((.*)\\)|',$buffer,$regs);
-				$flags = $regs[1];
-				
-				$pos = strpos($buffer,")");
-				$rest = substr($buffer,$pos+2);
-				$pos = strpos($rest," ");
-				$tmp["prefix"] = preg_replace('|"(.*)"|',"$1",substr($rest,0,$pos));
-				$tmp["name"] = $this->fix_prefix(trim(preg_replace('|"(.*)"|',"$1",substr($rest,$pos+1))),0);
-				if(function_exists(mb_convert_encoding))
-					$tmp["name"] = mb_convert_encoding( $tmp["name"], "ISO_8859-1", "UTF7-IMAP" );
-				$buffer = $this->_mail_get_line();
-				$boxlist[] = $tmp;
-			}
+			return $this->_mail_list_boxes_imap($boxname);
 		} else {
-			/* if POP3, only list the available folders */
-			$d = dir($this->user_folder);
-			while($entry=$d->read()) {
-				if($this->is_system_folder($entry)) 
-					$entry = strtolower($entry);
-
-				if( is_dir($this->user_folder.$entry) && 
-					$entry != ".." && 
-					substr($entry,0,1) != "_" && 
-					$entry != ".") {
-					$boxlist[]["name"] = $entry;
-				}
-			}
-			$d->close();
+			return $this->_mail_list_boxes_pop($boxname);
 		}
-		return $boxlist;
 	}
 
 	/**
