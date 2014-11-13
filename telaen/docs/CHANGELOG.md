@@ -9,9 +9,8 @@ LICENSE: Telaen is released under the GPL.
 
 
 CHANGELOG:
-
----------------------------------------------------------------- Telaen:
-	======= 1.3.2-dev
+----------------------------------------------------------------
+1.3.2
 
  * [New] Performance enhancements : avoid array copying
 
