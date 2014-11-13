@@ -7,6 +7,7 @@ Telaen is a GPL'ed software developed by
  - http://jimjag.github.io/telaen/
 
 *************************************************************************/
+require_once("./inc/vendor/iCalcreator.class.php");
 
 class MyMonth {
 	private $_month = 0;

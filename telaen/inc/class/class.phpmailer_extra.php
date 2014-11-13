@@ -1,4 +1,7 @@
 <?php
+
+require_once("./inc/vendor/class.phpmailer.php");
+
 class PHPMailer_extra extends PHPMailer {
 
 	/**

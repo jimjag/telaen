@@ -1,5 +1,6 @@
 <?php
 require_once("./inc/class/class.telaen_core.php");
+require_once("./inc/vendor/class.tnef.php");
 
 class Telaen extends Telaen_core {
 
@@ -16,9 +17,9 @@ class Telaen extends Telaen_core {
 	public $havepipelining		= false;	// boolean
 	public $haveapop		= false;	// boolean
 	public $haveuidl			= false;	// boolean
+	public $capabilities		= array();
 
 	public function Telaen() {
-		require("./inc/class/class.tnef.php");
 		$this->_tnef = new TNEF();
 		$this->_sid = uniqid("");
 	}

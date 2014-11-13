@@ -22,7 +22,6 @@ require_once("./inc/config/config.php");
 require_once("./inc/class/class.telaen.php");
 require_once("./inc/lib.php");
 require_once("./inc/preinit.php");
-require_once("./inc/class/iCalcreator.class.php");
 require_once("./inc/class/class.mymonth.php");
 
 
