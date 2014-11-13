@@ -5,16 +5,27 @@ require_once("./inc/vendor/class.tnef.php");
 class Telaen extends Telaen_core {
 
 	public $autospamfolder		= true;		// boolean
-	private $_spamregex		= array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
 	public $havespam		= "";		// NOTE: This is a STRING!
-	private $_system_folders		= array("inbox","trash","sent","spam");
-	private $_current_folder	= "";
 	public $CRLF			= "\r\n";
 	public $userspamlevel		= 0;		// Disabled
 	public $dirperm			= 0700;		// recall affected by umask value
 	public $greeting		= "";		// Internally used for store initial IMAP/POP3 greeting message
 	public $capabilities		= array();
-	private $serverurl		= "";
+	public $flags			= array('\\Seen', '\\Deleted', '\\Answered', '\\Draft', '\\Flagged', '\\Recent');
+
+	private $_system_folders		= array("inbox","trash","sent","spam");
+	private $_current_folder	= "";
+	private $_spamregex		= array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
+	private $_serverurl		= "";
+	private $_respnum		= 0;
+	private $_respstr		= "";
+
+	const RESP_OK = 0;
+	const RESP_NO = -1;
+	const RESP_BAD = -2;
+	const RESP_BYE = -3;
+	const RESP_NOK = 1;
+	const RESP_UNKNOWN = 99;
 
 	public function __construct() {
 		$this->_tnef = new TNEF();
@@ -52,10 +63,33 @@ class Telaen extends Telaen_core {
 	 * @return boolean
 	 */
 	public function mail_ok_resp($string) {
-		if ($this->mail_protocol == IMAP)
-			return preg_match('|^[a-z0-9*]+\s+OK|i', trim($string));
-		else
-			return preg_match('|^(\\+OK)|i', trim($string));
+		$resp = self::RESP_UNKNOWN;
+		$match = array();
+		if ($this->mail_protocol == IMAP) {
+			if (preg_match('|^[a-z0-9*]+\s+(OK|NO|BAD|BYE)(.*)$|i', trim($string), $match)) {
+				$a = strtoupper($match[1]);
+				switch ($a) {
+					case "OK":
+						$resp = self::RESP_OK; break;
+					case "NO":
+						$resp = self::RESP_NO; break;
+					case "BAD":
+						$resp = self::RESP_BAD; break;
+					case "BYE":
+						$resp = self::RESP_BYE; break;
+				}
+			}
+		} else {
+			if (preg_match('|^(\\+OK)(.*)$|i', trim($string), $match)) {
+				if (strtoupper($match[1]) == "+OK")
+					$resp = self::RESP_OK;
+				else
+					$resp = self::RESP_NOK;
+			}
+		}
+		$this->_respnum = $resp;
+		$this->_respstr = trim($match[2]);
+		return ($resp == self::RESP_OK);
 	}
 
 	private function _mail_get_line() {
@@ -119,11 +153,11 @@ class Telaen extends Telaen_core {
 			for($i=0;$i<20;$i++)
 				echo("<!-- buffer sux -->\r\n");
 		if(!$this->mail_connected()) {
-			if (!$this->serverurl) {
+			if (!$this->_serverurl) {
 				$serverurl = ($this->usessl ? "ssl://" : "tcp://") .
 					"{$this->mail_server}:{$this->mail_port}";
 			}
-			$this->mail_connection = stream_socket_client($this->serverurl, $errno, $errstr, 15);
+			$this->mail_connection = stream_socket_client($this->_serverurl, $errno, $errstr, 15);
 			if($this->mail_connection) {
 				$this->greeting = $this->_mail_get_line();
 				if(mail_ok_resp($this->greeting))
@@ -131,7 +165,7 @@ class Telaen extends Telaen_core {
 				else 
 					return false;
 			}
-			trigger_error("Cannot connect to: $this->serverurl");
+			trigger_error("Cannot connect to: $this->_serverurl");
 			return false;
 		} else return true;
 	}
@@ -656,37 +690,31 @@ class Telaen extends Telaen_core {
 			$this->_mail_send_command("FETCH 1:".$boxinfo["exists"]." (FLAGS RFC822.SIZE RFC822.HEADER)");
 			$buffer = $this->_mail_get_line();
 
-			/* if any problem, stop the procedure */
+			$counter = 0;
+			/* the end mark is <sid> OK FETCH, we are waiting for it*/
+			while(!mail_ok_resp($buffer)) {
+				/* if the return is something such as * N FETCH, a new message will displayed  */
+				if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i',$buffer,$regs)) {
+					$curmsg = $regs[1];
+					preg_match('|SIZE[ ]?([0-9]+)|i',$buffer,$regs);
+					$size	= $regs[1];
+					preg_match('|FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs);
+					$flags	= $regs[1];
+				/* if any problem, add the current line to buffer */
+				} elseif(trim($buffer) != ")" && trim($buffer) != "") {
+					$header .= $buffer;
 
-			if(!!mail_ok_resp($buffer)) {
-
-				$counter = 0;
-				
-				/* the end mark is <sid> OK FETCH, we are waiting for it*/
-				while(!mail_ok_resp($buffer)) {
-					/* if the return is something such as * N FETCH, a new message will displayed  */
-					if(preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i',$buffer,$regs)) {
-						$curmsg = $regs[1];
-						preg_match('|SIZE[ ]?([0-9]+)|i',$buffer,$regs);
-						$size	= $regs[1];
-						preg_match('|FLAGS[ ]?\\((.*)\\)|i',$buffer,$regs);
-						$flags	= $regs[1];
-					/* if any problem, add the current line to buffer */
-					} elseif(trim($buffer) != ")" && trim($buffer) != "") {
-						$header .= $buffer;
-	
-					/*	the end of message header was reached, increment the counter and store the last message */
-					} elseif(trim($buffer) == ")") {
-						$messages[$counter]["id"] = $counter+1; //$msgs[0];
-						$messages[$counter]["msg"] = intval($curmsg);
-						$messages[$counter]["size"] = intval($size);
-						$messages[$counter]["flags"] = strtoupper($flags);
-						$messages[$counter]["header"] = $header;
-						$counter++;
-						$header = "";
-					}
-					$buffer = $this->_mail_get_line();
+				/*	the end of message header was reached, increment the counter and store the last message */
+				} elseif(trim($buffer) == ")") {
+					$messages[$counter]["id"] = $counter+1; //$msgs[0];
+					$messages[$counter]["msg"] = intval($curmsg);
+					$messages[$counter]["size"] = intval($size);
+					$messages[$counter]["flags"] = strtoupper($flags);
+					$messages[$counter]["header"] = $header;
+					$counter++;
+					$header = "";
 				}
+				$buffer = $this->_mail_get_line();
 			}
 		}
 		return $messages;
@@ -1273,14 +1301,13 @@ class Telaen extends Telaen_core {
 	 */
 	public function mail_set_flag(&$msg,$flagname,$flagtype = "+") {
 		$flagname = strtoupper($flagname);
-		$allowed = array("\\ANSWERED", "\\SEEN", "\\DELETED", "\\DRAFT");
 
 		if($flagtype == '+' && strstr($msg['flags'], $flagname))
 			return true;
 		if($flagtype == '-' && !strstr($msg['flags'], $flagname))
 			return true;
 
-		if($this->mail_protocol == IMAP && in_array($flagname, $allowed)) {
+		if($this->mail_protocol == IMAP && in_array($flagname, $this->flags)) {
 			if(strtolower($this->_current_folder) != strtolower($msg["folder"]))
 				$this->mail_select_box($msg["folder"]);
 
