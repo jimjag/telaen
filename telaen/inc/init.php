@@ -19,6 +19,7 @@ $sid = session_id();
 /* We grab the actual session data below with the Session class */
 
 require_once("./inc/config/config.php");
+require_once("./inc/errorhandler.php");
 require_once("./inc/class/class.telaen.php");
 require_once("./inc/lib.php");
 require_once("./inc/preinit.php");

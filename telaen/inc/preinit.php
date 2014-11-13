@@ -16,28 +16,6 @@ if (!defined('I_AM_TELAEN')) {die('Direct access not premitted');}
 
 umask($default_umask);
 
-$error_flags = E_ALL & ~E_NOTICE;
-
-// set the error reporting, normally they are turned off
-// but sometimes are useful for debugging 
-if(isset($show_errors) && $show_errors) {
-	@error_reporting($error_flags);
-	@ini_set('error_reporting', $error_flags);
-	@ini_set('display_errors', 1);
-} else {
-	@error_reporting(0);
-	@ini_set('display_errors', 0); 
-}
-
-// Time Zone fix for php 5.3 and above
-if (!ini_get('date.timezone') &&
-	function_exists("date_default_timezone_set") &&
-	function_exists("date_default_timezone_get")) {
-	@date_default_timezone_set(@date_default_timezone_get());
-}
-
-//$old_error_handler = set_error_handler("err_handler");
-
 @set_magic_quotes_runtime(0);			// Smarty and magic_quotes_runtime ON do not mix.
 
 $phpver = phpversion();

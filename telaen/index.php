@@ -9,6 +9,7 @@ Telaen is a GPL'ed software developed by
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require_once("./inc/config/config.php");
+require_once("./inc/errorhandler.php");
 require_once("./inc/lib.php");
 require_once("./inc/preinit.php");
 require_once("./inc/class/class.phpmailer.php");

@@ -418,13 +418,12 @@ $enable_debug = no;
 $smtp_debug = no;
 
 ########################################################################
-# When show_errors is enabled, PHP errors are printed to the output.
-# For production websites, you're strongly encouraged to turn this
-# feature off. 
-# You can turn this on for troubleshooting problems like blank pages
-# or during debug.
+# When $log_errors is enabled, PHP errors are printed to $log_fname.
+# $log_fname is relative to $temporary_directory unless $log_fname is
+# an absolute path
 ########################################################################
 
-$show_errors = no;
+$log_errors = yes;
+$log_fname = "telaen_error.log";
 
 ?>
