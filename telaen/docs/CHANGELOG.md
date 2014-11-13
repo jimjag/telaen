@@ -13,7 +13,18 @@ CHANGELOG:
 
 2.0.0-dev
 
- * 
+ * Drop support for PHP 5.3 and older
+
+ * Email message cache no longer stored in Session data
+
+ * Explicit error handler
+
+ * Communication w/ IMAP and POP3 servers now uses PHP streams
+
+ * 3rd party dependencies now located in ./vendor directory for
+   future Composer compatibility
+
+ * Updated PHPMailer, iCalcreator
 
 1.3.2
 
