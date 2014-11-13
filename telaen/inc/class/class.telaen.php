@@ -19,7 +19,7 @@ class Telaen extends Telaen_core {
 	public $haveuidl			= false;	// boolean
 	public $capabilities		= array();
 
-	public function Telaen() {
+	public function __construct() {
 		$this->_tnef = new TNEF();
 		$this->_sid = uniqid("");
 	}

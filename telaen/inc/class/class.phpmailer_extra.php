@@ -11,6 +11,14 @@ class PHPMailer_extra extends PHPMailer {
 	private $FormattedMail	= "";
 	public $LE		= "\n";
 
+	/**
+	 * Constructor.
+	 * @param boolean $exceptions Should we throw external exceptions?
+	 */
+	public function __construct($exceptions = false) {
+		parent::__construct($exceptions);
+	}
+
 	public function TelaenGetEmail() {
 		if (method_exists(PHPMailer, 'GetSentMIMEMessage')) {
 			return $this->GetSentMIMEMessage();
