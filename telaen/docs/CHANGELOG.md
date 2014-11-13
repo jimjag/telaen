@@ -24,7 +24,8 @@ CHANGELOG:
  * 3rd party dependencies now located in ./vendor directory for
    future Composer compatibility
 
- * Updated PHPMailer, iCalcreator
+ * Updated PHPMailer (5.2.9), iCalcreator (2.20.2), tinymce (4.1.6),
+   Smarty (3.1.21)
 
 1.3.2
 
