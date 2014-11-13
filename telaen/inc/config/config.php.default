@@ -227,10 +227,10 @@ $mail_use_top = no;
 # the following POP3 server capabilities: PIPELINING, ATOP,
 # UIDL and APOP. If you find that Telaen is using one of these
 # when it shouldn't, uncomment out the respective variable
-# setting and set it to 'no'. If the reverse is happening, and
+# setting and set it to '0'. If the reverse is happening, and
 # Telaen is not using/detecting a capability you *know* your
 # POP3 server has, then uncomment out the variable line and
-# set it to 'yes'.
+# set it to 1.
 #
 # PIPELINING: the POP3 server is capable of accepting multiple
 #             commands at a time; Telaen does not have to wait for
@@ -240,17 +240,26 @@ $mail_use_top = no;
 # UIDL: the server can provide an assigned unique ID for each POP3
 #       message
 # APOP: provides an encrypted login system instead of clean password sent.
+#
+# NOTE: You can add your own as needed
 ########################################################################
 
 ##
-## NOTE: if any of the below are set, either to yes or no,
-##       they will overrule Telaen's automatic detection
-##
-#$mail_use_pipelining	= no;
-#$mail_use_atop		= no;
-#$mail_use_uidl		= no;
-#$mail_use_apop		= no;
+## COMPATIBILITY NOTE:
+##   Telaen 1.x used:
+##	$mail_use_pipelining	= no;
+##	$mail_use_atop		= no;
+##	$mail_use_uidl		= no;
+##	$mail_use_apop		= no;
+#
+#$capa_override = array(
+#	"ATOP" = 0;
+#	"UIDL" = 0;
+#	"PIPELINING" = 0;
+#	"APOP" = 0;
+#);
 
+$capa_override = array();
 
 ########################################################################
 # Specify mail transport type

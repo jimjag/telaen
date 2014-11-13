@@ -139,11 +139,15 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$TLN->mail_protocol	= $auth["protocol"]		= (strcasecmp($f_protocol, "pop3") ? IMAP : POP3);
 	$TLN->mail_prefix	= $auth["folder_prefix"]	= $f_prefix;
 
-	$pop3capa = $TLN->mail_pop3_capa();
-	$TLN->havepipelining	= $auth["havepipelining"]	= ( isset($mail_use_pipelining) ? $mail_use_pipelining : $pop3capa["PIPELINING"] );
-	$TLN->haveatop		= $auth["haveatop"]		= ( isset($mail_use_atop) ? $mail_use_atop : $pop3capa["ATOP"] );
-	$TLN->haveuidl		= $auth["haveuidl"]		= ( isset($mail_use_uidl) ? $mail_use_uidl : $pop3capa["UIDL"] );
-	$TLN->haveapop		= $auth["haveapop"]		= ( isset($mail_use_apop) ? $mail_use_apop : $pop3capa["APOP"] );
+	$capa = $TLN->mail_get_capa(true);
+	//
+	// Override what the server sez it can do with what the
+	// admin sez it can via config.php
+	//
+	foreach ($capa_override as $key => $value) {
+		$capa[$key] = $value;
+	}
+	$TLN->capabilities = $auth["capabilities"] = $capa;
 
 	$refr = 1;
 
@@ -168,10 +172,7 @@ if(isset($f_pass) && strlen($f_pass) > 0) {
 	$TLN->mail_protocol	= $f_protocol	= $auth["protocol"];
 	$TLN->mail_prefix	= $f_prefix	= $auth["folder_prefix"];
 
-	$TLN->havepipelining	= $auth["havepipelining"];
-	$TLN->haveatop		= $auth["haveatop"];
-	$TLN->haveuidl		= $auth["haveuidl"];
-	$TLN->haveapop		= $auth["haveapop"];
+	$TLN->capabilities	= $auth["capabilities"];
 	
 	$quota_limit		= $auth["quota_limit"];
 

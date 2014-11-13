@@ -13,10 +13,6 @@ class Telaen extends Telaen_core {
 	public $userspamlevel		= 0;		// Disabled
 	public $dirperm			= 0700;		// recall affected by umask value
 	public $greeting		= "";		// Internally used for store initial IMAP/POP3 greeting message
-	public $haveatop		= false;	// boolean
-	public $havepipelining		= false;	// boolean
-	public $haveapop		= false;	// boolean
-	public $haveuidl			= false;	// boolean
 	public $capabilities		= array();
 	private $serverurl		= "";
 
@@ -1408,10 +1404,6 @@ class Telaen extends Telaen_core {
 	 * NOTE: Any whitespace within a capability string is
 	 * squeezed down to a single "_".
 	 */
-	/**
-	 * List CAPA(BILITY) output of POP3/IMAP server
-	 * @return array
-	 */
 	private function _mail_capa_pop3() {
 		$capa = array();
 		$this->_mail_send_command("CAPA");
@@ -1447,7 +1439,12 @@ class Telaen extends Telaen_core {
 		return $capa;
 	}
 
-	public function mail_capa($oneshot = true) {
+	/**
+	 * List CAPA(BILITY) output of POP3/IMAP server
+	 * @param boolean $oneshot True if we connect/disconnect
+	 * @return array
+	 */
+	public function mail_get_capa($oneshot = true) {
 		if ($oneshot)
 			$this->mail_connect();
 		if ($this->mail_protocol == IMAP) {
@@ -1457,7 +1454,9 @@ class Telaen extends Telaen_core {
 		}
 		if ($oneshot)
 			$this->mail_disconnect();
-		return $capa;
+		// In case we do this before and after login (eg: IMAP
+		// with Dovecot), we merge with the old settings
+		return array_merge($this->capabilities, $capa);
 	}
 
 	/*
