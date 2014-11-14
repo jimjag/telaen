@@ -170,10 +170,10 @@ EOT;
 		$reta = array();
 		$this->_vcal->sort();
 		$events_arr = (array)$this->_vcal->selectComponents($this->_year, $this->_month, $day);
-		foreach( $events_arr as $year => $year_arr ) {
-			foreach( $year_arr as $month => $month_arr ) {
-				foreach( $month_arr as $day => $day_arr ) {
-					foreach( $day_arr as $event ) {
+		foreach($events_arr as $year => $year_arr ) {
+			foreach( (array)$year_arr as $month => $month_arr ) {
+				foreach( (array)$month_arr as $day => $day_arr ) {
+					foreach( (array)$day_arr as $event ) {
 						$dtstart = $this->_xdtime($event->getProperty('dtstart'));
 						$dtend = $this->_xdtime($event->getProperty('dtend'));
 						$reta[] = array($event->getProperty('uid'), $dtstart, $dtend,
