@@ -130,9 +130,7 @@ class Telaen extends Telaen_core {
 	protected function _mail_get_line() {
 		$buffer = fgets($this->mail_connection, 8192);
 		$buffer = preg_replace('|\r?\n|',"\r\n",$buffer);
-		if($this->debug) {
-			$this->debug_msg($buffer, __FUNCTION__);
-		}
+		if($this->debug) $this->debug_msg($buffer, __FUNCTION__);
 		return $buffer;
 	}
 
@@ -160,13 +158,11 @@ class Telaen extends Telaen_core {
 					$output = $this->_sid.' '.$output;
 				}
 				fwrite($this->mail_connection,$cmd);
-				if($this->debug) {
-					$this->debug_msg($cmd, __FUNCTION__);
-				}
+				if($this->debug) $this->debug_msg($cmd, __FUNCTION__);
 			}
 			return true;
 		}
-		trigger_error("attempt to send command w/o connection");
+		if ($this->log_errors) trigger_error("attempt to send command w/o connection");
 		return false;
 	}
 
@@ -188,7 +184,7 @@ class Telaen extends Telaen_core {
 				else 
 					return false;
 			}
-			trigger_error("Cannot connect to: $this->_serverurl");
+			if ($this->log_errors) trigger_error("Cannot connect to: $this->_serverurl");
 			return false;
 		}
 		return true;

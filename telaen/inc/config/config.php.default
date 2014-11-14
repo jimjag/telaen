@@ -414,8 +414,7 @@ $redirects_are_relative = no;
 ########################################################################
 # Enable mailserver debug :)
 # no - disabled
-# 1 or yes -> enabled with full results
-# 2 -> enable with servers communications only
+# yes - enabled with servers communications
 ########################################################################
 
 $enable_debug = no;

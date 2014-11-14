@@ -31,6 +31,7 @@ class Telaen_core {
 	public $charset			= 'iso-8859-1';
 	public $timezone		= '+0000';
 	public $debug			= false;
+	public $log_errors		= false;
 	public $user_folder		= './';
 	public $temp_folder		= './';
 	public $timeout			= 10;

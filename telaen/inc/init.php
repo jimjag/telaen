@@ -191,6 +191,7 @@ $UserMbox = new Mbox();
 $mbox = &$UserMbox->Load($userfolder.'_infos/mboxes.ucf');
 
 $TLN->debug			= $enable_debug;
+$TLN->log_errors			= $log_errors;
 $TLN->use_html			= $allow_html;
 
 $TLN->user_folder		= $userfolder;
