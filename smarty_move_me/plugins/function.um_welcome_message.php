@@ -11,7 +11,7 @@ function smarty_function_um_welcome_message($args, &$smarty_obj)
 {
 
     extract($args);
-	$config_vars = $smarty_obj->_config[0]["vars"];
+	$config_vars = $smarty_obj->getConfigVars();
 
 	$array_keys = array_keys($args);
 
