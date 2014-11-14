@@ -27,9 +27,24 @@ class Telaen extends Telaen_core {
 	const RESP_NOK = -4;
 	const RESP_UNKNOWN = 99;
 
+	/**
+	 * Contructor
+	 */
 	public function __construct() {
 		$this->_tnef = new TNEF();
 		$this->_sid = 'a000';
+	}
+
+	/**
+	 * Print out debugging info as HTML comments
+	 * @param string $str
+	 * @return void
+	 */
+	public function debug_msg($str, $caller="") {
+		echo "<!-- $caller:\n";
+		echo preg_replace('|-->|', '__>', safe_print($str));
+		echo "\n-->\n";
+		@flush();
 	}
 
 	/**
@@ -116,16 +131,7 @@ class Telaen extends Telaen_core {
 		$buffer = fgets($this->mail_connection,8192);
 		$buffer = preg_replace('|\r?\n|',"\r\n",$buffer);
 		if($this->debug) {
-			$sendtodebug = true;
-			if(preg_match('|^(\\* )|i',$buffer) || preg_match('/^([A-Za-z0-9]+ (OK|NO|BAD))/i',$buffer) || preg_match('/^(\\+OK|\\-ERR)/i',$buffer)) {
-				$output = '<- <b>'.htmlspecialchars($buffer).'</b>';
-			} else {
-				$sendtodebug = ($this->debug > 1)?false:true;
-				$output = htmlspecialchars($buffer);
-			}
-			if ($sendtodebug)
-				echo("<font style=\"font-size:12px; font-family: Courier New; background-color: white; color: black;\"> $output</font><br>\r\n");
-			flush();
+			$this->debug_msg($buffer, __FUNCTION__);
 		}
 		return $buffer;
 	}
@@ -155,12 +161,12 @@ class Telaen extends Telaen_core {
 				}
 				fwrite($this->mail_connection,$cmd);
 				if($this->debug) {
-					echo("<font style=\"font-size:12px; font-family: Courier New; background-color: white; color: black;\">-&gt; <em><b>".htmlspecialchars($output)."</b></em></font><br>\r\n");
-					flush();
+					$this->debug_msg($cmd, __FUNCTION__);
 				}
 			}
 			return true;
 		}
+		trigger_error("attempt to send command w/o connection");
 		return false;
 	}
 
@@ -169,9 +175,6 @@ class Telaen extends Telaen_core {
 	 * @return boolean
 	 */
 	public function mail_connect() {
-		if($this->debug)
-			for($i=0;$i<20;$i++)
-				echo("<!-- buffer sux -->\r\n");
 		if(!$this->mail_connected()) {
 			if (!$this->_serverurl) {
 				$serverurl = ($this->usessl ? 'ssl://' : 'tcp://') .
@@ -187,7 +190,8 @@ class Telaen extends Telaen_core {
 			}
 			trigger_error("Cannot connect to: $this->_serverurl");
 			return false;
-		} else return true;
+		}
+		return true;
 	}
 
 	/**
@@ -1208,7 +1212,7 @@ class Telaen extends Telaen_core {
 			$boxname = $this->fix_prefix(preg_replace('|"(.*)"|',"$1",$boxname),1);
 			$this->_mail_send_command("SUBSCRIBE \"$boxname\"");
 			$buffer = $this->_mail_get_line();
-			if(preg_match("/^".$this->_sid." (NO|BAD)/i",$buffer)) { 
+			if(mail_nok_resp($buffer)) {
 				$this->mail_error_msg = $buffer; 
 				return false;
 			}
@@ -1379,8 +1383,6 @@ class Telaen extends Telaen_core {
 
 			$msg['header']	= $header;
 			$msg['flags']	= $flags;
-
-			//debug_print_struc($msg);
 
 			$email = "$header\r\n\r\n$body";
 
