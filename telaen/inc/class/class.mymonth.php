@@ -57,8 +57,7 @@ class MyMonth {
 			$this->_nyear++;
 		}
 		$this->_edir = $userfolder."_infos/calendar/{$this->_year}/{$this->_month}";
-		$this->_vcal = new vcalendar();
-		$this->_vcal->setConfig( 'unique_id', 'Telaen' );
+		$this->_vcal = new vcalendar(array( 'unique_id' => 'Telaen'));
 		$this->_vcal->setConfig( 'directory', $this->_edir );
 		$this->_vcal->setConfig( 'filename',  'events.ics' );
 		$this->_vcal->parse();
@@ -168,6 +167,7 @@ EOT;
 	 */
 	public function getEvent($day) {
 		$reta = array();
+		$this->_vcal->parse();
 		$this->_vcal->sort();
 		$events_arr = (array)$this->_vcal->selectComponents($this->_year, $this->_month, $day);
 		foreach($events_arr as $year => $year_arr ) {
