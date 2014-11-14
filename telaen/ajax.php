@@ -12,7 +12,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
  * This file provides a support for ajax calls
  * All parameters must be sended via POST and the 'action' is mandatory
  */
-require("./inc/init.php");
+require('./inc/init.php');
 
 // cheking for main param
 if(isset($_POST['action'])) {
@@ -23,7 +23,7 @@ if(isset($_POST['action'])) {
 	switch($action) {
 	
 		// send a read receipt
-		case "sendReceipt":
+		case 'sendReceipt':
 			if(!isset($_POST['recipient']))
 				break;
 
@@ -33,10 +33,10 @@ if(isset($_POST['action'])) {
 			
 			// init mailer
 			$mail = new PHPMailer_extra;
-			$mail->PluginDir = "./inc/";
-			$mail->SetLanguage("en","langs/");
+			$mail->PluginDir = './inc/';
+			$mail->SetLanguage('en','langs/');
 			$mail->CharSet = $TLN->charset;
-			$mail->Hostname = getenv("SERVER_NAME");
+			$mail->Hostname = getenv('SERVER_NAME');
 			$mail->Host = $smtp_server;
 			$mail->WordWrap = 76;
 			$mail->Priority = 3;
@@ -51,13 +51,13 @@ if(isset($_POST['action'])) {
 
 			// for password authenticated servers
 			$mail->SMTPAuth = $use_password_for_smtp;
-			$mail->Username = $auth["user"];
-			$mail->Password = $auth["pass"];
+			$mail->Username = $auth['user'];
+			$mail->Password = $auth['pass'];
 
 			// build the email
-			$mail->From = ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
-			$mail->FromName = $mail->encodeHeader($prefs["real-name"]);
-			$mail->AddReplyTo($prefs["reply-to"], $mail->encodeHeader($prefs["real-name"]));
+			$mail->From = ($allow_modified_from && !empty($prefs['reply-to']))?$prefs['reply-to']:$auth['email'];
+			$mail->FromName = $mail->encodeHeader($prefs['real-name']);
+			$mail->AddReplyTo($prefs['reply-to'], $mail->encodeHeader($prefs['real-name']));
 			$mail->AddAddress($recipient);
 			
 			$mail->Subject = $mail->encodeHeader(stripslashes($receiptSubj));
@@ -65,37 +65,37 @@ if(isset($_POST['action'])) {
 
 			// send
 			if($mail->Send() === true) {
-				echo "success: receipt sent";
+				echo 'success: receipt sent';
 			}
 			else {
-				echo "error: " . $mail->ErrorInfo;
+				echo 'error: ' . $mail->ErrorInfo;
 			}
 
 			break;
 
 		// just refresh the session timeout
-		case "pingSession":
+		case 'pingSession':
 			// refresh time
-				$auth["start"] = time();
+				$auth['start'] = time();
 				// save
 				$AuthSession->Save($auth);
 
-				echo "success: session refreshed";
+				echo 'success: session refreshed';
 
 			break;
 
 		// Regen the calendar
-		case "replaceCal":
+		case 'replaceCal':
 			$newcal = new MyMonth($_POST['cal_year'], $_POST['cal_month']);
 			$newcal->showMonthAsTable();
 			break;
 		default:
-			echo "error: this action does not exist";
+			echo 'error: this action does not exist';
 	}
 
 } else {
 	// no action, no fun
-	echo "error: no action specified";
+	echo 'error: no action specified';
 }
 
 ?>

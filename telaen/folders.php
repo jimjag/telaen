@@ -10,17 +10,17 @@ Telaen is a GPL'ed software developed by
 // load session management
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
-require("./inc/init.php");
+require('./inc/init.php');
 
-extract(pull_from_array($_GET, array("empty", "goback", "nameto", "mailto"), "s"));
-extract(pull_from_array($_POST, array("newfolder"), "s"));
+extract(pull_from_array($_GET, array('empty', 'goback', 'nameto', 'mailto'), 's'));
+extract(pull_from_array($_POST, array('newfolder'), 's'));
 
 // server check
 if(!$TLN->mail_connect()){ 
-	redirect_and_exit("index.php?err=1", true);
+	redirect_and_exit('index.php?err=1', true);
 }
 if(!$TLN->mail_auth()) { 
-	redirect_and_exit("index.php?err=0");
+	redirect_and_exit('index.php?err=0');
 }
 
 // check and create a new folder
@@ -37,33 +37,33 @@ if(valid_folder_name($newfolder, true) &&
 
 // check and delete the especified folder: system folders can not be deleted
 if (valid_folder_name($delfolder, true) &&
-   (strpos($delfolder,"..") === false)) {
+   (strpos($delfolder,'..') === false)) {
 	if($TLN->mail_delete_box($delfolder)) {
-		unset($mbox["headers"][base64_encode(strtolower($delfolder))]);
+		unset($mbox['headers'][base64_encode(strtolower($delfolder))]);
 		$require_update = true;
 	}
 }
 
-if($require_update) $mbox["folders"] = $TLN->mail_list_boxes();
+if($require_update) $mbox['folders'] = $TLN->mail_list_boxes();
 
-require("./folder_list.php");
+require('./folder_list.php');
 
 
 if(isset($empty)) {
-	$headers = $mbox["headers"][base64_encode(strtolower($empty))];
+	$headers = $mbox['headers'][base64_encode(strtolower($empty))];
 	for($i=0;$i<count($headers);$i++) {
-		$TLN->mail_delete_msg($headers[$i],$prefs["save-to-trash"],$prefs["st-only-read"]);
+		$TLN->mail_delete_msg($headers[$i],$prefs['save-to-trash'],$prefs['st-only-read']);
 		$expunge = true;
 	}
 	if($expunge) {
 		$TLN->mail_expunge();
-		unset($mbox["headers"][base64_encode(strtolower($empty))]);
+		unset($mbox['headers'][base64_encode(strtolower($empty))]);
 		/* ops.. you have sent anything to trash, then you need refresh it */
-		if($prefs["save-to-trash"])
-			unset($mbox["headers"][base64_encode("trash")]);
+		if($prefs['save-to-trash'])
+			unset($mbox['headers'][base64_encode('trash')]);
 		$UserMbox->Save($mbox);
 	}
-	if(isset($goback)) redirect_and_exit("process.php?folder=".urlencode($folder)."");
+	if(isset($goback)) redirect_and_exit('process.php?folder='.urlencode($folder)."");
 
 }
 
@@ -91,8 +91,8 @@ function create() {
 ";
 
 
-$smarty->assign("umJS",$jssource);
-$smarty->assign("umUserEmail",$auth["email"]);
+$smarty->assign('umJS',$jssource);
+$smarty->assign('umUserEmail',$auth['email']);
 
 
 $boxes = $TLN->mail_list_boxes();
@@ -107,41 +107,41 @@ $personal = array();
 
 for($n=0;$n<count($boxes);$n++) {
 
-	$entry = $boxes[$n]["name"];
+	$entry = $boxes[$n]['name'];
 
 	$unread = 0;
 
-	if(!is_array($mbox["headers"][base64_encode(strtolower($entry))])) {
+	if(!is_array($mbox['headers'][base64_encode(strtolower($entry))])) {
 		$merged_array = array();
 		$merged_returnarray = array();
-		if (strtolower($entry) == "inbox") {
+		if (strtolower($entry) == 'inbox') {
 			/*
 			 * Sort the arrays and fit them together again.
 			 */
-			$merged_array = array_merge($mbox["headers"][base64_encode("inbox")], $mbox["headers"][base64_encode("spam")]);
-			array_qsort2int($merged_array,"msg","ASC");
+			$merged_array = array_merge($mbox['headers'][base64_encode('inbox')], $mbox['headers'][base64_encode('spam')]);
+			array_qsort2int($merged_array,'msg','ASC');
 
-			$merged_returnarray = $TLN->mail_list_msgs("INBOX", $merged_array);
+			$merged_returnarray = $TLN->mail_list_msgs('INBOX', $merged_array);
 			$thisbox = $merged_returnarray[0];
-			$mbox["headers"][base64_encode("spam")] = $merged_returnarray[1];
-		} elseif (strtolower($entry) == "spam") {
+			$mbox['headers'][base64_encode('spam')] = $merged_returnarray[1];
+		} elseif (strtolower($entry) == 'spam') {
 			;
 		} else {
-			$merged_returnarray = $TLN->mail_list_msgs($entry, $mbox["headers"][base64_encode(strtolower($entry))]);
+			$merged_returnarray = $TLN->mail_list_msgs($entry, $mbox['headers'][base64_encode(strtolower($entry))]);
 			$thisbox = $merged_returnarray[0];
 		}
 			
 		unset($merged_array);
 		unset($merged_returnarray);
-		$mbox["headers"][base64_encode(strtolower($entry))] = $thisbox;
-	} else $thisbox = $mbox["headers"][base64_encode(strtolower($entry))];
+		$mbox['headers'][base64_encode(strtolower($entry))] = $thisbox;
+	} else $thisbox = $mbox['headers'][base64_encode(strtolower($entry))];
 
 	$boxsize = 0;
 	for($i=0;$i<count($thisbox);$i++) {
-		if(!preg_match('|\\SEEN|i',$thisbox[$i]["flags"])) $unread++;
-		$boxsize += $thisbox[$i]["size"];
+		if(!preg_match('|\\SEEN|i',$thisbox[$i]['flags'])) $unread++;
+		$boxsize += $thisbox[$i]['size'];
 	}
-	$delete = "&nbsp;";
+	$delete = '&nbsp;';
 
 	if(!$TLN->is_system_folder($entry))
 		$delete = "<a href=\"folders.php?delfolder=$entry&folder=$folder\">OK</a>";
@@ -153,37 +153,37 @@ for($n=0;$n<count($boxes);$n++) {
 	if ($TLN->is_system_folder($entry)) {
 		$entry = strtolower($entry);
 		switch ($entry) {
-		case "inbox":
+		case 'inbox':
 			$boxname = $inbox_extended;
 			break;
-		case "sent":
+		case 'sent':
 			$boxname = $sent_extended;
 			break;
-		case "trash":
+		case 'trash':
 			$boxname = $trash_extended;
 			break;
-		case "spam":
-			$boxname = ($spam_extended ? $spam_extended : "SPAM");
+		case 'spam':
+			$boxname = ($spam_extended ? $spam_extended : 'SPAM');
 			break;
 		}
-		$system[$scounter]["entry"]		= $entry;
-		$system[$scounter]["name"]		= $boxname;
-		$system[$scounter]["msgs"]		= count($thisbox)."/$unread";
-		$system[$scounter]["del"]		= $delete;
-		$system[$scounter]["boxsize"]		= ceil($boxsize/1024);
-		$system[$scounter]["chlink"]		= "process.php?folder=$entry";
-		$system[$scounter]["emptylink"]		= "folders.php?empty=".$entry."&folder=".$entry."";
+		$system[$scounter]['entry']		= $entry;
+		$system[$scounter]['name']		= $boxname;
+		$system[$scounter]['msgs']		= count($thisbox)."/$unread";
+		$system[$scounter]['del']		= $delete;
+		$system[$scounter]['boxsize']		= ceil($boxsize/1024);
+		$system[$scounter]['chlink']		= "process.php?folder=$entry";
+		$system[$scounter]['emptylink']		= 'folders.php?empty='.$entry.'&folder='.$entry."";
 
 		$scounter++;
 	} else {
 
-		$personal[$pcounter]["entry"]		= $entry;
-		$personal[$pcounter]["name"]		= $boxname;
-		$personal[$pcounter]["msgs"]		= count($thisbox)."/$unread";
-		$personal[$pcounter]["del"]		= $delete;
-		$personal[$pcounter]["boxsize"]		= ceil($boxsize/1024);
-		$personal[$pcounter]["chlink"]		= "process.php?folder=".urlencode($entry)."";
-		$personal[$pcounter]["emptylink"]	= "folders.php?empty=".urlencode($entry)."&folder=".urlencode($entry)."";
+		$personal[$pcounter]['entry']		= $entry;
+		$personal[$pcounter]['name']		= $boxname;
+		$personal[$pcounter]['msgs']		= count($thisbox)."/$unread";
+		$personal[$pcounter]['del']		= $delete;
+		$personal[$pcounter]['boxsize']		= ceil($boxsize/1024);
+		$personal[$pcounter]['chlink']		= 'process.php?folder='.urlencode($entry)."";
+		$personal[$pcounter]['emptylink']	= 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
 
 		$pcounter++;
 	}
@@ -197,26 +197,26 @@ $TLN->mail_disconnect();
 unset($AuthSession,$TLN);
 
 // Sort and merge the 2 folders arrays
-array_qsort2ic ($system,"name");
-array_qsort2ic ($personal,"name");
+array_qsort2ic ($system,'name');
+array_qsort2ic ($personal,'name');
 
 $umFolderList = array_merge((array)$system, (array)$personal);
 
 
 
-$smarty->assign("umFolderList",$umFolderList);
+$smarty->assign('umFolderList',$umFolderList);
 
-$smarty->assign("umPersonal",$personal);
-$smarty->assign("umTotalUsed",ceil($totalused/1024));
+$smarty->assign('umPersonal',$personal);
+$smarty->assign('umTotalUsed',ceil($totalused/1024));
 $quota_enabled = ($quota_limit)?1:0;
-$smarty->assign("umQuotaEnabled",$quota_enabled);
-$smarty->assign("umQuotaLimit",$quota_limit);
+$smarty->assign('umQuotaEnabled',$quota_enabled);
+$smarty->assign('umQuotaLimit',$quota_limit);
 $usageGraph = get_usage_graphic(($totalused/1024),$quota_limit);
-$smarty->assign("umUsageGraph",$usageGraph);
+$smarty->assign('umUsageGraph',$usageGraph);
 $noquota = (($totalused/1024) > $quota_limit)?1:0;
-$smarty->assign("umNoQuota",$noquota);
+$smarty->assign('umNoQuota',$noquota);
 
-$smarty->assign("pageMetas",$nocache);
+$smarty->assign('pageMetas',$nocache);
 
 $smarty->display("$selected_theme/folders.htm");
 

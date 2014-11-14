@@ -8,19 +8,19 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
-require("./inc/init.php");
+require('./inc/init.php');
 
 // assign metas
-$smarty->assign("pageMetas", $nocache);
+$smarty->assign('pageMetas', $nocache);
 
-extract(pull_from_array($_GET, array("nameto", "mailto"), "str"));
-extract(pull_from_array($_POST, array("to", "cc", "bcc", "subject", "requireReceipt",
-		"priority", "body", "is_html", "textmode", "sig", "tipo", "rtype", "ix"), "str"));
+extract(pull_from_array($_GET, array('nameto', 'mailto'), 'str'));
+extract(pull_from_array($_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
+		'priority', 'body', 'is_html', 'textmode', 'sig', 'tipo', 'rtype', 'ix'), 'str'));
 
-if(isset($tipo) && $tipo == "send") {
+if(isset($tipo) && $tipo == 'send') {
 
 	$mail = new PHPMailer_extra;
-	$mail->PluginDir = "./inc/";
+	$mail->PluginDir = './inc/';
 
 	if ($phpmailer_sendmail != "") {
 		$mail->Sendmail = $phpmailer_sendmail;
@@ -49,7 +49,7 @@ if(isset($tipo) && $tipo == "send") {
 	if((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
 	
 		// set lang for error messages, english for now
-		$mail->SetLanguage("en","langs/");
+		$mail->SetLanguage('en','langs/');
 
 		// for password authenticated servers
 		$mail->SMTPAuth		= $use_password_for_smtp;
@@ -59,12 +59,12 @@ if(isset($tipo) && $tipo == "send") {
 			$mail->Username = $smtp_static_user;
 					$mail->Password = $smtp_static_password;
 		} else {		
-			$mail->Username = $auth["user"];
-			$mail->Password = $auth["pass"];
+			$mail->Username = $auth['user'];
+			$mail->Password = $auth['pass'];
 		}
 
 		// if using the advanced editor
-		if($is_html == "true")	{
+		if($is_html == 'true')	{
 			$mail->IsHTML(1);			
 			if($footer != "") 
 				$body .= preg_replace('|(\r?\n)|',"<br>$1",$footer);
@@ -77,10 +77,10 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		} elseif ($footer != "") $body .= $footer;
 
 		$mail->CharSet		= $TLN->charset;
-		$mail->Hostname		= getenv("SERVER_NAME");
-		$mail->From		= ($allow_modified_from && !empty($prefs["reply-to"]))?$prefs["reply-to"]:$auth["email"];
-		$mail->FromName		= $mail->encodeHeader($prefs["real-name"]);
-		$mail->AddReplyTo($prefs["reply-to"], $TLN->mime_encode_headers($prefs["real-name"]));
+		$mail->Hostname		= getenv('SERVER_NAME');
+		$mail->From		= ($allow_modified_from && !empty($prefs['reply-to']))?$prefs['reply-to']:$auth['email'];
+		$mail->FromName		= $mail->encodeHeader($prefs['real-name']);
+		$mail->AddReplyTo($prefs['reply-to'], $TLN->mime_encode_headers($prefs['real-name']));
 
 		$mail->Host		= $smtp_server;
 		$mail->WordWrap		= 76;
@@ -91,18 +91,18 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		}
 
 		// add an header for keep a track of client IP
-		$mail->AddCustomHeader("X-Originating-IP: ".getenv("REMOTE_ADDR"));		
+		$mail->AddCustomHeader('X-Originating-IP: '.getenv('REMOTE_ADDR'));
 		
 		// add return-receipt if required 
 		if ( isset($requireReceipt) ) { 
-			$mail->ConfirmReadingTo =  $prefs["reply-to"];
+			$mail->ConfirmReadingTo =  $prefs['reply-to'];
 		}
 
 		// add recipients
 		if(count($ARTo) != 0) {
 			for($i=0;$i<count($ARTo);$i++) {
-				$name = $ARTo[$i]["name"];
-				$email = $ARTo[$i]["mail"];
+				$name = $ARTo[$i]['name'];
+				$email = $ARTo[$i]['mail'];
 				if($name != $email)
 					$mail->AddAddress($email,$TLN->mime_encode_headers($name));
 				else
@@ -112,8 +112,8 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
 		if(count($ARCc) != 0) {
 			for($i=0;$i<count($ARCc);$i++) {
-				$name = $ARCc[$i]["name"];
-				$email = $ARCc[$i]["mail"];
+				$name = $ARCc[$i]['name'];
+				$email = $ARCc[$i]['mail'];
 				if($name != $email)
 					$mail->AddCC($email,$TLN->mime_encode_headers($name));
 				else
@@ -123,8 +123,8 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
 		if(count($ARBcc) != 0) {
 			for($i=0;$i<count($ARBcc);$i++) {
-				$name = $ARBcc[$i]["name"];
-				$email = $ARBcc[$i]["mail"];
+				$name = $ARBcc[$i]['name'];
+				$email = $ARBcc[$i]['mail'];
 				if($name != $email)
 					$mail->AddBCC($email,$TLN->mime_encode_headers($name));
 				else
@@ -132,11 +132,11 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			}
 		}
 
-		if(array_key_exists("attachments",$mbox)) {
-			$attachs = $mbox["attachments"];
+		if(array_key_exists('attachments',$mbox)) {
+			$attachs = $mbox['attachments'];
 			for($i=0;$i<count($attachs);$i++) {
-				if(file_exists($attachs[$i]["localname"])) {
-					$mail->AddAttachment($attachs[$i]["localname"], $attachs[$i]["name"], "base64", $attachs[$i]["type"]);
+				if(file_exists($attachs[$i]['localname'])) {
+					$mail->AddAttachment($attachs[$i]['localname'], $attachs[$i]['name'], 'base64', $attachs[$i]['type']);
 				}
 			}
 		}
@@ -146,28 +146,28 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		$mail->Mailer = $mailer_type;
 
 		if(($mail->TelaenSend()) === false) {
-			$smarty->assign("umMailSent",false);
-			$smarty->assign("umErrorMessage",$mail->ErrorInfo);
+			$smarty->assign('umMailSent',false);
+			$smarty->assign('umErrorMessage',$mail->ErrorInfo);
 
 		} else {
 		
-			$smarty->assign("umMailSent",true);
+			$smarty->assign('umMailSent',true);
 
-			if(array_key_exists("attachments",$mbox)) {
-				unset($mbox["attachments"]);
+			if(array_key_exists('attachments',$mbox)) {
+				unset($mbox['attachments']);
 				reset($mbox);
 				$UserMbox->Save($mbox);
 			}
 			
 			
-			if($prefs["save-to-sent"]) {
+			if($prefs['save-to-sent']) {
 
 				if(!$TLN->mail_connect()) {				
-					redirect_and_exit("index.php?err=1", true);
+					redirect_and_exit('index.php?err=1', true);
 				}
-				if(!$TLN->mail_auth(false)) { redirect_and_exit("index.php?err=0"); }
-				$TLN->mail_save_message("sent",$mail->TelaenGetEmail(),"\\SEEN");
-				unset($mbox["headers"][base64_encode("sent")]);
+				if(!$TLN->mail_auth(false)) { redirect_and_exit('index.php?err=0'); }
+				$TLN->mail_save_message('sent',$mail->TelaenGetEmail(),'\\SEEN');
+				unset($mbox['headers'][base64_encode('sent')]);
 				$TLN->mail_disconnect();
 				$UserMbox->Save($mbox);
 
@@ -189,7 +189,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	";
 	
 
-	$smarty->assign("umJS",$jssource);
+	$smarty->assign('umJS',$jssource);
 
 	$smarty->display("$selected_theme/newmsg-result.htm");
 
@@ -197,26 +197,26 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	
 	// priority
 	$priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority;
-	$smarty->assign("umPriority",$priority_level);
+	$smarty->assign('umPriority',$priority_level);
 
 	// adv editor
 	if(!isset($textmode))
 		$textmode = null;
-		$show_advanced = ((!$textmode) && ($prefs["editor-mode"] != "text")) ? 1 : 0 ;
-		$js_advanced = ($show_advanced) ? "true" : "false" ;
+		$show_advanced = ((!$textmode) && ($prefs['editor-mode'] != 'text')) ? 1 : 0 ;
+		$js_advanced = ($show_advanced) ? 'true' : 'false' ;
 
 		// signature
-		$signature = $prefs["signature"];
+		$signature = $prefs['signature'];
 		if($show_advanced)
 			$signature = nl2br($signature);
 	
-		$add_sig = $prefs["add-sig"];
+		$add_sig = $prefs['add-sig'];
 		$addSignature = ($add_sig) ? 1 : 0 ;
-		$smarty->assign("umAddSignature", $addSignature);
+		$smarty->assign('umAddSignature', $addSignature);
 
 		// return receipt
-		$rr = ($prefs["require-receipt"])? true:false;
-		$smarty->assign("requireReceipt", $rr);
+		$rr = ($prefs['require-receipt'])? true:false;
+		$smarty->assign('requireReceipt', $rr);
 
 	// hidden inputs ---- Note: these should be moved into template...
 	$forms = "<input type=\"hidden\" name=\"tipo\" value=\"edit\" />
@@ -225,7 +225,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	<input type=\"hidden\" name=\"sig\" value=\"".htmlspecialchars($signature)."\" />
 	<input type=\"hidden\" name=\"textmode\" value=\"$textmode\" />
 	";
-	$smarty->assign("umForms",$forms);
+	$smarty->assign('umForms',$forms);
 
 
 	$jssource = $commonJS;
@@ -380,30 +380,30 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
 	";
 	
-	$smarty->assign("umJS",$jssource);
+	$smarty->assign('umJS',$jssource);
 
 	if(!isset($body))
 		$body = null;
 	$body = stripslashes($body);
 
 	if(isset($rtype)) {
-		$mail_info = $mbox["headers"][base64_encode(strtolower($folder))][$ix];
+		$mail_info = $mbox['headers'][base64_encode(strtolower($folder))][$ix];
 
-		if( ($rtype == "forward" && !stristr($mail_info["flags"], '\\FORWARDED'))
-			|| ($rtype != "forward" && !stristr($mail_info["flags"], '\\ANSWERED'))) {
+		if( ($rtype == 'forward' && !stristr($mail_info['flags'], '\\FORWARDED'))
+			|| ($rtype != 'forward' && !stristr($mail_info['flags'], '\\ANSWERED'))) {
 
 			if(!$TLN->mail_connect()) { 
-				redirect_and_exit("index.php?err=1", true);
+				redirect_and_exit('index.php?err=1', true);
 			}
 			if(!$TLN->mail_auth()) { 
-				redirect_and_exit("index.php?err=0");
+				redirect_and_exit('index.php?err=0');
 			}
-			if($rtype != "forward" && $TLN->mail_set_flag($mail_info,"\\ANSWERED","+")) {
-				$mbox["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
+			if($rtype != 'forward' && $TLN->mail_set_flag($mail_info,'\\ANSWERED','+')) {
+				$mbox['headers'][base64_encode(strtolower($folder))][$ix] = $mail_info;
 				$UserMbox->Save($mbox);
 			}
-			if($rtype == "forward" && $TLN->mail_set_flag($mail_info,"\\FORWARDED","+")) {
-				$mbox["headers"][base64_encode(strtolower($folder))][$ix] = $mail_info;
+			if($rtype == 'forward' && $TLN->mail_set_flag($mail_info,'\\FORWARDED','+')) {
+				$mbox['headers'][base64_encode(strtolower($folder))][$ix] = $mail_info;
 				$UserMbox->Save($mbox);
 			}
 			$TLN->mail_disconnect(); 
@@ -411,31 +411,30 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		}
 
 
-		$filename = $mail_info["localname"];
+		$filename = $mail_info['localname'];
 
 		if(!file_exists($filename)) die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true';</script>");
 		$result = $TLN->read_file($filename);
-
-				$TLN->sanitize = ($sanitize_html || !$allow_scripts);
+		$TLN->sanitize = ($sanitize_html || !$allow_scripts);
 		$email = $TLN->Decode($result);
 
 		$result = $TLN->fetch_structure($result);
 
 
-		$tmpbody = $email["body"];
-		$subject = $mail_info["subject"];
+		$tmpbody = $email['body'];
+		$subject = $mail_info['subject'];
 
-		$ARReplyTo = $email["reply-to"];
-		$ARFrom = $email["from"];
-		$useremail = $auth["email"];
+		$ARReplyTo = $email['reply-to'];
+		$ARFrom = $email['from'];
+		$useremail = $auth['email'];
 
 		// From
-		if($ARReplyTo[0]["mail"] != "") {
-			$name = $ARReplyTo[0]["name"];
-			$thismail = $ARReplyTo[0]["mail"];
+		if($ARReplyTo[0]['mail'] != "") {
+			$name = $ARReplyTo[0]['name'];
+			$thismail = $ARReplyTo[0]['mail'];
 		} else {
-			$name = $ARFrom[0]["name"];
-			$thismail = $ARFrom[0]["mail"];
+			$name = $ARFrom[0]['name'];
+			$thismail = $ARFrom[0]['mail'];
 		}
 		$fromreply = "\"$name\" <$thismail>";		
 		
@@ -446,13 +445,13 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		$myCCAdr = "";
 
 		// To			
-		$ARTo = $email["to"];
+		$ARTo = $email['to'];
 		for($i=0;$i<count($ARTo);$i++) {
-			$name = $ARTo[$i]["name"]; 
-			$thismail = $ARTo[$i]["mail"];
+			$name = $ARTo[$i]['name'];
+			$thismail = $ARTo[$i]['mail'];
 
 			// avoid to add my address in the TO list
-						if ($thismail != $auth["email"] && $thismail != $prefs["reply-to"]) {
+						if ($thismail != $auth['email'] && $thismail != $prefs['reply-to']) {
 				if(isset($toreply)) 
 					$toreply .= ", \"$name\" <$thismail>";
 				else 
@@ -463,13 +462,13 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		}
 
 		// CC
-		$ARCC = $email["cc"];
+		$ARCC = $email['cc'];
 		for($i=0;$i<count($ARCC);$i++) {
-			$name = $ARCC[$i]["name"]; 
-			$thismail = $ARCC[$i]["mail"];
+			$name = $ARCC[$i]['name'];
+			$thismail = $ARCC[$i]['mail'];
 
 			// avoid to add my address in the CC list
-			if ($thismail != $auth["email"] && $thismail != $prefs["reply-to"]) {
+			if ($thismail != $auth['email'] && $thismail != $prefs['reply-to']) {
 				if(isset($ccreply)) 
 					$ccreply .= ", \"$name\" <$thismail>";
 				else 
@@ -485,9 +484,9 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			$strMail = $TLN->get_names($strMail);
 			for($i=0;$i<count($strMail);$i++) {
 				$thismail = $strMail[$i];
-				$thisline = ($thismail["mail"] != $thismail["name"])?"\"".$thismail["name"]."\""." <".$thismail["mail"].">":$thismail["mail"];
-				if($thismail["mail"] != "" && strpos($result,$thismail["mail"]) === false) {
-					if($result != "") $result .= ", ".$thisline;
+				$thisline = ($thismail['mail'] != $thismail['name'])?"\"".$thismail['name']."\""." <".$thismail['mail'].">":$thismail['mail'];
+				if($thismail['mail'] != "" && strpos($result,$thismail['mail']) === false) {
+					if($result != "") $result .= ', '.$thisline;
 					else $result = $thisline;
 				}
 			}
@@ -495,11 +494,11 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		}
 
 
-		$allreply = clear_names($fromreply.", ".$toreply);
+		$allreply = clear_names($fromreply.', '.$toreply);
 		$ccreply = clear_names($ccreply);
 		$fromreply = clear_names($fromreply);
 
-		$msgsubject = $email["subject"];
+		$msgsubject = $email['subject'];
 
 		$fromreply_quote	= $fromreply;
 		$toreply_quote		= $toreply;
@@ -511,13 +510,13 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			if (empty($toreply_quote))
 				$toreply_quote = $myToAdr;			
 			else 
-				$toreply_quote = $myToAdr . "," . $toreply_quote;
+				$toreply_quote = $myToAdr . ',' . $toreply_quote;
 
 		if (!empty($myCCAdr))
 			if (empty($ccreply_quote))
 								$ccreply_quote = $myCCAdr;
 						else
-								$ccreply_quote = $myCCAdr . "," . $ccreply_quote;
+								$ccreply_quote = $myCCAdr . ',' . $ccreply_quote;
 
 		
 		if($show_advanced) {
@@ -525,11 +524,11 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			$toreply_quote		= htmlspecialchars($toreply_quote);
 			$ccreply_quote		= htmlspecialchars($ccreply_quote);
 			$msgsubject_quote	= htmlspecialchars($msgsubject_quote);
-			$linebreak			= "<br>";
+			$linebreak			= '<br>';
 
 		} else {
 			$tmpbody			= strip_tags($tmpbody);
-			$quote_string = "> ";
+			$quote_string = '> ';
 			$tmpbody = $quote_string.preg_replace('|\n|',"\n$quote_string",$tmpbody);
 		}
 
@@ -546,7 +545,7 @@ $reply_cc_hea ".preg_replace('|(")|',"",$ccreply_quote);
 
 $body .= "$linebreak
 $reply_subject_hea ".$msgsubject_quote."$linebreak
-$reply_date_hea ".@strftime($date_format,$email["date"])."$linebreak
+$reply_date_hea ".@strftime($date_format,$email['date'])."$linebreak
 $linebreak
 $tmpbody";
 
@@ -564,25 +563,25 @@ $tmpbody";
 		}
 
 		switch($rtype) {
-		case "reply":
+		case 'reply':
 			if(!preg_match("/^$reply_prefix/i",trim($subject))) $subject = "$reply_prefix $subject";
 			$to = $fromreply;
 			break;
-		case "replyall":
+		case 'replyall':
 			if(!preg_match("/^$reply_prefix/i",trim($subject))) $subject = "$reply_prefix $subject";
 			$to = $allreply;
 			$cc = $ccreply;
 			break;
-		case "forward":
+		case 'forward':
 			if(!preg_match("/^$forward_prefix/i",trim($subject))) $subject = "$forward_prefix $subject";
-			if(count($email["attachments"]) > 0) {
-				for($i = 0; $i < count($email["attachments"]); $i++) {
-					$current = $email["attachments"][$i];
-					$ind = count($mbox["attachments"]);
-					$mbox["attachments"][$ind]["localname"] = $current["filename"];
-					$mbox["attachments"][$ind]["name"] = $current["name"];
-					$mbox["attachments"][$ind]["type"] = $current["content-type"];
-					$mbox["attachments"][$ind]["size"] = $current["size"];
+			if(count($email['attachments']) > 0) {
+				for($i = 0; $i < count($email['attachments']); $i++) {
+					$current = $email['attachments'][$i];
+					$ind = count($mbox['attachments']);
+					$mbox['attachments'][$ind]['localname'] = $current['filename'];
+					$mbox['attachments'][$ind]['name'] = $current['name'];
+					$mbox['attachments'][$ind]['type'] = $current['content-type'];
+					$mbox['attachments'][$ind]['size'] = $current['size'];
 				}
 				$UserMbox->Save($mbox);
 			}
@@ -598,7 +597,7 @@ $tmpbody";
 			else $body = "\r\n\r\n----\r\n$signature\r\n\r\n$body";
 
 	$haveSig = empty($signature) ? 0 : 1 ;
-	$smarty->assign("umHaveSignature",$haveSig);
+	$smarty->assign('umHaveSignature',$haveSig);
 
 	if(!isset($to)) $to = null;
 	if(!isset($cc)) $cc = null;
@@ -616,19 +615,19 @@ $tmpbody";
 	$strsubject = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"subject\" value=\"".htmlspecialchars(stripslashes($subject))."\" />";
 
 
-	if(array_key_exists("attachments", $mbox) && count($attachs = $mbox["attachments"]) > 0) {
+	if(array_key_exists('attachments', $mbox) && count($attachs = $mbox['attachments']) > 0) {
 
-		$smarty->assign("umHaveAttachs",1);
+		$smarty->assign('umHaveAttachs',1);
 		$attachlist = array();
 		for($i=0;$i<count($attachs);$i++) {
 			$index = count($attachlist);
 
-			$attachlist[$index]["name"] = $attachs[$i]["name"];
-			$attachlist[$index]["size"] = ceil($attachs[$i]["size"]/1024);
-			$attachlist[$index]["type"] = $attachs[$i]["type"];
-			$attachlist[$index]["link"] = "javascript:upwin($i)";
+			$attachlist[$index]['name'] = $attachs[$i]['name'];
+			$attachlist[$index]['size'] = ceil($attachs[$i]['size']/1024);
+			$attachlist[$index]['type'] = $attachs[$i]['type'];
+			$attachlist[$index]['link'] = "javascript:upwin($i)";
 		}
-		$smarty->assign("umAttachList",$attachlist);
+		$smarty->assign('umAttachList',$attachlist);
 	}
 
 	if(!$show_advanced) $body = stripslashes($body);
@@ -642,13 +641,13 @@ $tmpbody";
 	// $umAdvEdit = ($show_advanced) ? 1 : 0 ;
 	$umAdvEdit = 0 ;
 
-	$smarty->assign("umBody",$body);
-	$smarty->assign("umTo",$strto);
-	$smarty->assign("umCc",$strcc);
-	$smarty->assign("umBcc",$strbcc);
-	$smarty->assign("umSubject",$strsubject);
-	$smarty->assign("umTextEditor",$txtarea);
-	$smarty->assign("umAdvancedEditor",$umAdvEdit);
+	$smarty->assign('umBody',$body);
+	$smarty->assign('umTo',$strto);
+	$smarty->assign('umCc',$strcc);
+	$smarty->assign('umBcc',$strbcc);
+	$smarty->assign('umSubject',$strsubject);
+	$smarty->assign('umTextEditor',$txtarea);
+	$smarty->assign('umAdvancedEditor',$umAdvEdit);
 
 	$smarty->display("$selected_theme/newmsg.htm");
 

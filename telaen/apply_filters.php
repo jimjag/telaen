@@ -2,11 +2,11 @@
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-if($folder == "inbox") {
+if($folder == 'inbox') {
 
 	$require_update = false;
 
-	$filename = $userfolder."_infos/filters.ucf";
+	$filename = $userfolder.'_infos/filters.ucf';
 	$myfile = $TLN->read_file($filename);
 	$filters = array();
 
@@ -19,15 +19,15 @@ if($folder == "inbox") {
 	
 	$filters = array(
 		array(
-				"type"		=> 1,
-				"field"		=> 2,
-				"match"		=> "filtering",
-				"moveto"	=> "Test"
+				'type'		=> 1,
+				'field'		=> 2,
+				'match'		=> 'filtering',
+				'moveto'	=> 'Test'
 				),
 		array(
-				"type"		=> 2,
-				"field"		=> 2,
-				"match"		=> "ok",
+				'type'		=> 2,
+				'field'		=> 2,
+				'match'		=> 'ok',
 				)
 	);
 	*/
@@ -39,47 +39,47 @@ if($folder == "inbox") {
 			foreach($filters as $filter) {
 				$match_text = "";
 	
-				switch($filter["field"]) {
+				switch($filter['field']) {
 				case FL_FIELD_FROM:
-					foreach($message["from"] as $field) {
-						$match_text .= " ".$field["name"]." ".$field["mail"];
+					foreach($message['from'] as $field) {
+						$match_text .= ' '.$field['name'].' '.$field['mail'];
 					}
 					break;
 				case FL_FIELD_SUBJECT:
-					$match_text = " ".$message["subject"];
+					$match_text = ' '.$message['subject'];
 					break;
 				case FL_FIELD_TO:
-					foreach($message["to"] as $field) {
-						$match_text .= " ".$field["name"]." ".$field["mail"];
+					foreach($message['to'] as $field) {
+						$match_text .= ' '.$field['name'].' '.$field['mail'];
 					}
 					break;
 				}
 	
-				if(!empty($match_text) && strpos($match_text,$filter["match"]) > 0) {
-					switch($filter["type"]) {
+				if(!empty($match_text) && strpos($match_text,$filter['match']) > 0) {
+					switch($filter['type']) {
 					case FL_TYPE_MOVE:
 	
-						$TLN->mail_move_msg($message,$filter["moveto"]);
-						unset($mbox["headers"][base64_encode(strtolower($folder))]);
-						unset($mbox["headers"][base64_encode(strtolower($filter["moveto"]))]);
+						$TLN->mail_move_msg($message,$filter['moveto']);
+						unset($mbox['headers'][base64_encode(strtolower($folder))]);
+						unset($mbox['headers'][base64_encode(strtolower($filter['moveto']))]);
 	
 						$require_update = true;
 	
 						break;
 					case FL_TYPE_DELETE:
 	
-						$TLN->mail_delete_msg($message,$prefs["save-to-trash"],$prefs["st-only-read"]);
-						unset($mbox["headers"][base64_encode(strtolower($folder))]);
-						unset($mbox["headers"][base64_encode("trash")]);
+						$TLN->mail_delete_msg($message,$prefs['save-to-trash'],$prefs['st-only-read']);
+						unset($mbox['headers'][base64_encode(strtolower($folder))]);
+						unset($mbox['headers'][base64_encode('trash')]);
 	
 						$require_update = true;
 	
 						break;
 					case FL_TYPE_MARK_READ:
 	
-						if(!preg_match('|SEEN|i',$message["flags"])) {
-							$TLN->mail_set_flag($message,"SEEN","+");
-							$mbox["headers"][base64_encode(strtolower($folder))][$index] = $message;
+						if(!preg_match('|SEEN|i',$message['flags'])) {
+							$TLN->mail_set_flag($message,'SEEN','+');
+							$mbox['headers'][base64_encode(strtolower($folder))][$index] = $message;
 						}
 	
 						break;

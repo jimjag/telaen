@@ -8,24 +8,24 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
-require("./inc/init.php");
+require('./inc/init.php');
 
-$smarty->assign("pageMetas", $nocache);
+$smarty->assign('pageMetas', $nocache);
 
-extract(pull_from_array($_GET, array("rem"), "str"));
-extract(pull_from_array($_FILES, array("userfile"), "str"));
+extract(pull_from_array($_GET, array('rem'), 'str'));
+extract(pull_from_array($_FILES, array('userfile'), 'str'));
 
 if (isset($rem) && $rem != "") {
 
-	$attchs = $mbox["attachments"];
-	@unlink($attchs[$rem]["localname"]);
+	$attchs = $mbox['attachments'];
+	@unlink($attchs[$rem]['localname']);
 	unset($attchs[$rem]);
 	$c = 0;
 	$newlist = array();
 	while(list($key,$value) =  each($attchs)) {
 		$newlist[$c] = $value; $c++;
 	}
-	$mbox["attachments"] = $newlist;
+	$mbox['attachments'] = $newlist;
 	$UserMbox->Save($mbox);
 	echo("
 	<script language=javascript>\n
@@ -36,28 +36,28 @@ if (isset($rem) && $rem != "") {
 
 } elseif (	isset($userfile) && 
 		((!is_array($userfile) && is_uploaded_file($userfile)) || 
-		is_uploaded_file($userfile["tmp_name"]))) {
+		is_uploaded_file($userfile['tmp_name']))) {
 
-	//if(file_exists($userfile["tmp_name"])) {
-
-
-	$userfile_name	= $userfile["name"];
-	$userfile_type	= $userfile["type"];
-	$userfile_size	= $userfile["size"];
-	$userfile	= $userfile["tmp_name"];
+	//if(file_exists($userfile['tmp_name'])) {
 
 
-	if(!is_array($mbox["attachments"])) $ind = 0;
-	else $ind = count($mbox["attachments"]);
+	$userfile_name	= $userfile['name'];
+	$userfile_type	= $userfile['type'];
+	$userfile_size	= $userfile['size'];
+	$userfile	= $userfile['tmp_name'];
 
-	$filename = $userfolder."_attachments/".md5(uniqid("")).$userfile_name;
+
+	if(!is_array($mbox['attachments'])) $ind = 0;
+	else $ind = count($mbox['attachments']);
+
+	$filename = $userfolder.'_attachments/'.md5(uniqid("")).$userfile_name;
 
 	move_uploaded_file($userfile, $filename);
 
-	$mbox["attachments"][$ind]["localname"] = $filename;
-	$mbox["attachments"][$ind]["name"] = $userfile_name;
-	$mbox["attachments"][$ind]["type"] = $userfile_type;
-	$mbox["attachments"][$ind]["size"] = $userfile_size;
+	$mbox['attachments'][$ind]['localname'] = $filename;
+	$mbox['attachments'][$ind]['name'] = $userfile_name;
+	$mbox['attachments'][$ind]['type'] = $userfile_type;
+	$mbox['attachments'][$ind]['size'] = $userfile_size;
 
 	$UserMbox->Save($mbox);
 

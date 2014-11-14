@@ -8,14 +8,14 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
-require("./inc/init.php");
+require('./inc/init.php');
 
 if(!isset($ix) || !isset($folder))
-	redirect_and_exit("index.php?err=3", true);
+	redirect_and_exit('index.php?err=3', true);
 
-extract(pull_from_array($_POST, array("ckaval"), 1));
+extract(pull_from_array($_POST, array('ckaval'), 1));
 
-$filename = $userfolder."_infos/addressbook.ucf";
+$filename = $userfolder.'_infos/addressbook.ucf';
 $myfile = $TLN->read_file($filename);
 $addressbook = array();
 
@@ -28,19 +28,19 @@ function valid_email($thismail) {
 		return 0;
 	global $addressbook,$f_email;
 	for($i=0;$i<count($addressbook);$i++)
-		if(trim($addressbook[$i]["email"]) == trim($thismail)) 
+		if(trim($addressbook[$i]['email']) == trim($thismail))
 			return 0;
 	if(trim($f_email) == trim($thismail)) 
 		return 0;
 	return 1;
 }
 
-$mail_info = $mbox["headers"][base64_encode(strtolower($folder))][$ix];
+$mail_info = $mbox['headers'][base64_encode(strtolower($folder))][$ix];
 
 $emails = array();
-$from = $mail_info["from"];
-$to = $mail_info["to"];
-$cc = $mail_info["cc"];
+$from = $mail_info['from'];
+$to = $mail_info['to'];
+$cc = $mail_info['cc'];
 
 
 for($i=0;$i<count($from);$i++)
@@ -52,7 +52,7 @@ for($i=0;$i<count($cc);$i++)
 
 $aval = array();
 for($i=0;$i<count($emails);$i++)
-	if(valid_email($emails[$i]["mail"])) 
+	if(valid_email($emails[$i]['mail']))
 		$aval[] = $emails[$i];
 	
 $aval_count = count($aval);
@@ -62,8 +62,8 @@ if(isset($ckaval)) {
 	for($i=0;$i<count($ckaval);$i++) {
 		$idchecked = $ckaval[$i];
 		$id = count($addressbook);
-		$addressbook[$id]["name"] = $aval[$idchecked]["name"];
-		$addressbook[$id]["email"] = $aval[$idchecked]["mail"];
+		$addressbook[$id]['name'] = $aval[$idchecked]['name'];
+		$addressbook[$id]['email'] = $aval[$idchecked]['mail'];
 	}
 
 	$TLN->save_file($filename,base64_encode(serialize($addressbook)));
@@ -77,14 +77,14 @@ if(isset($ckaval)) {
 
 } else {
 
-	$smarty->assign("umFolder",$folder);
-	$smarty->assign("umIx",$ix);
-	$smarty->assign("umAvailableAddresses",$aval_count);
+	$smarty->assign('umFolder',$folder);
+	$smarty->assign('umIx',$ix);
+	$smarty->assign('umAvailableAddresses',$aval_count);
 
 	if($aval_count > 0) {
 		for($i=0;$i<$aval_count;$i++)
-			$aval[$i]["index"] = $i;
-		$smarty->assign("umAddressList",$aval);
+			$aval[$i]['index'] = $i;
+		$smarty->assign('umAddressList',$aval);
 	}
 	$smarty->display("$selected_theme/catch-address.htm");
 }
