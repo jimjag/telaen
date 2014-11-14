@@ -30,10 +30,11 @@ require_once(SMARTY_DIR.'Smarty.class.php');
 $smarty = new Smarty;
 $smarty->security=true;
 $smarty->secure_dir=array('./');
-$smarty->compile_dir = $temporary_directory;
+$smarty->compile_dir = $temporary_directory.'/smarty_ct/';
 $smarty->template_dir =	 './themes';
 $smarty->config_dir = './langs';
 $smarty->use_sub_dirs = true;
+if (!is_dir($smarty->compile_dir)) mkdir($smarty->compile_dir, (isset($dirperm) ? $dirperm : "0755"));
 
 $AuthSession = New Session();
 $auth = &$AuthSession->Load('telaen_sess');
