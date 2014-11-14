@@ -45,9 +45,9 @@ function err_handler ($errno, $errstr, $errfile, $errline) {
  */
 function cleanup_dir ($folder) {
 	if (file_exists($folder)) {
-		$d = dir($folder."/");
+		$d = dir($folder.'/');
 		while($entry=$d->read()) {
-			if($entry != "." && $entry != ".." && $entry != "") 
+			if($entry != '.' && $entry != '..' && $entry != "")
 				unlink($folder."/$entry");
 		}
 		$d->close();
@@ -64,36 +64,36 @@ function cleanup_dirs ($userfolder, $logout) {
 	global $TLN, $prefs;
 
 	if ( ($force_unmark_read_overrule && $force_unmark_read_setting) ||
-			 ($prefs["unmark-read"] && !$force_unmark_read_overrule) ) {
-		$cleanme = $userfolder."inbox/";
+			 ($prefs['unmark-read'] && !$force_unmark_read_overrule) ) {
+		$cleanme = $userfolder.'inbox/';
 		cleanup_dir($cleanme);
 	}
-	$cleanme = $userfolder."_attachments/";
+	$cleanme = $userfolder.'_attachments/';
 	cleanup_dir($cleanme);
-	$cleanme = $userfolder."spam/";
+	$cleanme = $userfolder.'spam/';
 	cleanup_dir($cleanme);
 
 	if ($logout) {
-		if(is_array($mbox["headers"]) && file_exists($userfolder)) {
+		if(is_array($mbox['headers']) && file_exists($userfolder)) {
 
-			if(is_array($mbox["folders"])) {
-				$boxes = $mbox["folders"];
+			if(is_array($mbox['folders'])) {
+				$boxes = $mbox['folders'];
 				for($n=0;$n<count($boxes);$n++) {
-					$entry = $TLN->fix_prefix($boxes[$n]["name"],1);
+					$entry = $TLN->fix_prefix($boxes[$n]['name'],1);
 					$file_list = array();
 		
-					if(is_array($curfolder = $mbox["headers"][base64_encode(strtolower($entry))])) {
+					if(is_array($curfolder = $mbox['headers'][base64_encode(strtolower($entry))])) {
 		
 						if ($TLN->is_system_folder($entry))
 							$entry = strtolower($entry);
 						for($j=0;$j<count($curfolder);$j++) {
-							$file_list[] = $curfolder[$j]["localname"];
+							$file_list[] = $curfolder[$j]['localname'];
 						}
 		
 						$d = dir($userfolder."$entry/");
 		
 						while($curfile=$d->read()) {
-							if($curfile != "." && $curfile != "..") {
+							if($curfile != '.' && $curfile != '..') {
 								$curfile = $userfolder."$entry/$curfile";
 								if(!in_array($curfile,$file_list)) {
 									unlink($curfile);
@@ -107,19 +107,19 @@ function cleanup_dirs ($userfolder, $logout) {
 			}
 		
 		
-			if($prefs["empty-trash"]) {
+			if($prefs['empty-trash']) {
 				if ($TLN->mail_protocol == IMAP) {
-					if(!$TLN->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
+					if(!$TLN->mail_connect()) { redirect_and_exit('index.php?err=1', true); }
 					if(!$TLN->mail_auth()) { 
-						redirect_and_exit("index.php?err=0");
+						redirect_and_exit('index.php?err=0');
 					}
 				}
-				$trash = "trash";
-				if(!is_array($mbox["headers"][base64_encode($trash)])) {
+				$trash = 'trash';
+				if(!is_array($mbox['headers'][base64_encode($trash)])) {
 					$retbox = $TLN->mail_list_msgs($trash);
-					$mbox["headers"][base64_encode($trash)] = $retbox[0];
+					$mbox['headers'][base64_encode($trash)] = $retbox[0];
 				}
-				$trash = $mbox["headers"][base64_encode($trash)];
+				$trash = $mbox['headers'][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
 					for($j=0;$j<count($trash);$j++) {
@@ -132,17 +132,17 @@ function cleanup_dirs ($userfolder, $logout) {
 				}
 			}
 	
-			if($prefs["empty-spam"]) {
-				if(!$TLN->mail_connect()) { redirect_and_exit("index.php?err=1", true); }
+			if($prefs['empty-spam']) {
+				if(!$TLN->mail_connect()) { redirect_and_exit('index.php?err=1', true); }
 				if(!$TLN->mail_auth()) {
-					 redirect_and_exit("index.php?err=0");
+					 redirect_and_exit('index.php?err=0');
 				}
-				$trash = "spam";
-				if(!is_array($mbox["headers"][base64_encode($trash)])) {
+				$trash = 'spam';
+				if(!is_array($mbox['headers'][base64_encode($trash)])) {
 					$retbox = $TLN->mail_list_msgs($trash);
-					$mbox["headers"][base64_encode($trash)] = $retbox[0];
+					$mbox['headers'][base64_encode($trash)] = $retbox[0];
 				}
-				$trash = $mbox["headers"][base64_encode($trash)];
+				$trash = $mbox['headers'][base64_encode($trash)];
 		
 				if(count($trash) > 0) {
 					for($j=0;$j<count($trash);$j++) {
@@ -158,14 +158,14 @@ function cleanup_dirs ($userfolder, $logout) {
 
 function get_microtime() {
 	$mtime = microtime();
-	$mtime = explode(" ", $mtime);
+	$mtime = explode(' ', $mtime);
 	$mtime = (double)($mtime[1]) + (double)($mtime[0]);
 	return ($mtime);
 }
 
 function simpleoutput($p1) { printf($p1); }
 
-$func = strrev("tuptuoelpmis");
+$func = strrev('tuptuoelpmis');
 
 function get_usage_graphic($used,$aval) {
 	if($used >= $aval) {
@@ -190,11 +190,11 @@ function get_usage_graphic($used,$aval) {
  * @return string
  */
 function create_http_url() {
-	$hurl = "http";
-	if ((strtolower($_SERVER['HTTPS']) == "on") || ($_SERVER['SERVER_PORT']==443)) {
-		$hurl .= "s://";
+	$hurl = 'http';
+	if ((strtolower($_SERVER['HTTPS']) == 'on') || ($_SERVER['SERVER_PORT']==443)) {
+		$hurl .= 's://';
 	} else {
-		$hurl .= "://";
+		$hurl .= '://';
 	}
 	$hurl .= ($_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']);
 	return $hurl;
@@ -256,24 +256,24 @@ ENDOFREDIRECT;
 	exit;
 }
 
-function array_qsort2ic (&$array, $column=0, $order="ASC") {
+function array_qsort2ic (&$array, $column=0, $order='ASC') {
 	if (!is_array($array)) return;
-	$oper = ($order == "ASC") ? (1) : (-1) ;
+	$oper = ($order == 'ASC') ? (1) : (-1) ;
 	usort($array, create_function('$a,$b',"return strcasecmp(\$a['$column'],\$b['$column']) * $oper;"));
 	reset($array);
 }
 
-function array_qsort2 (&$array, $column=0, $order="ASC") {
+function array_qsort2 (&$array, $column=0, $order='ASC') {
 	if (!is_array($array)) return;
-	$oper = ($order == "ASC") ? (1) : (-1) ;
+	$oper = ($order == 'ASC') ? (1) : (-1) ;
 	usort($array, create_function('$a,$b',"return strnatcmp(\$a['$column'],\$b['$column']) * $oper;"));
 	reset($array);
 }
 
-function array_qsort2int (&$array, $column=0, $order="ASC") {
+function array_qsort2int (&$array, $column=0, $order='ASC') {
 		// The column value must be an int value
 	if (!is_array($array)) return;
-	if ($order == "ASC")
+	if ($order == 'ASC')
 		usort($array, create_function('$a,$b',"return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']<\$b['$column'])?-1:1));"));
 	else
 		usort($array, create_function('$a,$b',"return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']>\$b['$column'])?-1:1));"));
@@ -286,7 +286,7 @@ function array_qsort2int (&$array, $column=0, $order="ASC") {
 class Session {
 
 	private $ss = null;
-	private $index = "default";
+	private $index = 'default';
 	
 	/**
 	 * Session creator
@@ -300,7 +300,7 @@ class Session {
 	 * @param string $index key of Session superglobal
 	 * @return  string
 	 */
-	function &Load($index = "default") {
+	function &Load($index = 'default') {
 		$this->index = $index;
 		if(!is_array($this->ss[$this->index]))
 			$this->ss[$this->index] = array();
@@ -354,7 +354,7 @@ class Mbox {
 	 * @return void
 	 */
 	function Save(&$array2save) {
-		$f = fopen($this->path, "w");
+		$f = fopen($this->path, 'w');
 		if ($f) {
 			fwrite($f, serialize($array2save));
 			fclose($f);
@@ -372,29 +372,29 @@ function load_prefs() {
 
 	extract($default_preferences);
 
-	$pref_file = $userfolder."_infos/prefs.upf";
+	$pref_file = $userfolder.'_infos/prefs.upf';
 
 	if(!file_exists($pref_file)) {
-		$prefs["real-name"]	= UCFirst(substr($auth["email"],0,strpos($auth["email"],"@")));
-		$prefs["reply-to"]	= $auth["email"];
-		$prefs["save-to-trash"] = $send_to_trash_default;
-		$prefs["st-only-read"]	= $st_only_ready_default;
-		$prefs["empty-trash"]	= $empty_trash_default;
-		$prefs["empty-spam"]	= $empty_spam_default;
-		$prefs["unmark-read"]	= $unmark_read_default;
-		$prefs["save-to-sent"]	= $save_to_sent_default;
-		$prefs["sort-by"]	= $sortby_default;
-		$prefs["sort-order"]	= $sortorder_default;
-		$prefs["rpp"]		= $rpp_default;
-		$prefs["add-sig"]	= $add_signature_default;
-		$prefs["signature"]	= $signature_default;
-		$prefs["require-receipt"] = $require_receipt_default;
-		$prefs["timezone"]	= $timezone_default;
-		$prefs["display-images"]= $display_images_default;
-		$prefs["editor-mode"]	= $editor_mode_default;
-		$prefs["refresh-time"]	= $refresh_time_default;
-		$prefs["spamlevel"]	= $spamlevel_default;
-		$prefs["version"]	= $appversion;
+		$prefs['real-name']	= UCFirst(substr($auth['email'],0,strpos($auth['email'],'@')));
+		$prefs['reply-to']	= $auth['email'];
+		$prefs['save-to-trash'] = $send_to_trash_default;
+		$prefs['st-only-read']	= $st_only_ready_default;
+		$prefs['empty-trash']	= $empty_trash_default;
+		$prefs['empty-spam']	= $empty_spam_default;
+		$prefs['unmark-read']	= $unmark_read_default;
+		$prefs['save-to-sent']	= $save_to_sent_default;
+		$prefs['sort-by']	= $sortby_default;
+		$prefs['sort-order']	= $sortorder_default;
+		$prefs['rpp']		= $rpp_default;
+		$prefs['add-sig']	= $add_signature_default;
+		$prefs['signature']	= $signature_default;
+		$prefs['require-receipt'] = $require_receipt_default;
+		$prefs['timezone']	= $timezone_default;
+		$prefs['display-images']= $display_images_default;
+		$prefs['editor-mode']	= $editor_mode_default;
+		$prefs['refresh-time']	= $refresh_time_default;
+		$prefs['spamlevel']	= $spamlevel_default;
+		$prefs['version']	= $appversion;
 	} else {
 		$prefs = file($pref_file);
 		$prefs = join("",$prefs);
@@ -406,8 +406,8 @@ function load_prefs() {
 //save preferences
 function save_prefs($prefarray) {
 	global $userfolder;
-	$pref_file = $userfolder."_infos/prefs.upf";
-	$f = fopen($pref_file,"w");
+	$pref_file = $userfolder.'_infos/prefs.upf';
+	$f = fopen($pref_file,'w');
 	fwrite($f,~serialize($prefarray));
 	fclose($f);
 }
@@ -415,10 +415,10 @@ function save_prefs($prefarray) {
 //get only headers from a file
 function get_headers_from_file($strfile) {
 	if(!file_exists($strfile)) return;
-	$f = fopen($strfile,"rb");
+	$f = fopen($strfile,'rb');
 	while(!feof($f)) {
 		$result .= preg_replace('|\n|',"",fread($f,100));
-		$pos = strpos($result,"\r\r");
+		$pos = strpos($result,'\r\r');
 		if(!($pos === false)) {
 			$result = substr($result,0,$pos);
 			break;
@@ -426,13 +426,13 @@ function get_headers_from_file($strfile) {
 	}
 	fclose($f);
 	unset($f); unset($pos); unset($strfile);
-	return preg_replace('|\r|',"\r\n",trim($result));
+	return preg_replace('|\r|','\r\n',trim($result));
 }
 
 function debug_print_struc($obj) {
-	echo("<pre>");
+	echo('<pre>');
 	print_r($obj);
-	echo("</pre>");
+	echo('</pre>');
 }
 
 function valid_folder_name($name, $checksys = false) {
@@ -451,26 +451,26 @@ function safe_print($str) {
 	);
 }
 
-function caster ($var, $cast="string") {
+function caster ($var, $cast='string') {
 	switch (gettype($cast)) {
-		case "boolean":
+		case 'boolean':
 			$var = (boolean)$var; break;
-		case "integer":
+		case 'integer':
 			$var = (integer)$var; break;
-		case "double":
+		case 'double':
 			$var = (double)$var; break;
-		case "string":
+		case 'string':
 			$var = safe_print(trim((string)$var));
 			break;
-		case "array":
+		case 'array':
 			$var = (array)$var; break;
-		case "object":
+		case 'object':
 			$var = (object)$var; break;
 	}
 	return $var;
 }
 
-function pull_from_array(&$whofrom, $my_vars = Array(), $cast="string") {
+function pull_from_array(&$whofrom, $my_vars = Array(), $cast='string') {
 	$reta = array();
 	foreach ($my_vars as $to_pull) {
 		if (isset($whofrom[$to_pull]))

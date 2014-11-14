@@ -7,7 +7,7 @@ Telaen is a GPL'ed software developed by
  - http://jimjag.github.io/telaen/
 
 *************************************************************************/
-require_once("./inc/vendor/iCalcreator.class.php");
+require_once('./inc/vendor/iCalcreator.class.php');
 
 class MyMonth {
 	private $_month = 0;
@@ -58,9 +58,9 @@ class MyMonth {
 		}
 		$this->_edir = $userfolder."_infos/calendar/{$this->_year}/{$this->_month}";
 		$this->_vcal = new vcalendar();
-		$this->_vcal->setConfig( "unique_id", "Telaen" );
-		$this->_vcal->setConfig( "directory", $this->_edir );
-		$this->_vcal->setConfig( "filename",  "events.ics" );
+		$this->_vcal->setConfig( 'unique_id', 'Telaen' );
+		$this->_vcal->setConfig( 'directory', $this->_edir );
+		$this->_vcal->setConfig( 'filename',  'events.ics' );
 		$this->_vcal->parse();
 		$this->_vcal->sort();
 	}
@@ -174,10 +174,10 @@ EOT;
 			foreach( $year_arr as $month => $month_arr ) {
 				foreach( $month_arr as $day => $day_arr ) {
 					foreach( $day_arr as $event ) {
-						$dtstart = $this->_xdtime($event->getProperty("dtstart"));
-						$dtend = $this->_xdtime($event->getProperty("dtend"));
-						$reta[] = array($event->getProperty("uid"), $dtstart, $dtend,
-										base64_decode($event->getProperty("description")),
+						$dtstart = $this->_xdtime($event->getProperty('dtstart'));
+						$dtend = $this->_xdtime($event->getProperty('dtend'));
+						$reta[] = array($event->getProperty('uid'), $dtstart, $dtend,
+										base64_decode($event->getProperty('description')),
 										substr($dtstart, 9, 2), substr($dtstart, 11, 2),
 										substr($dtend, 9, 2), substr($dtend, 11, 2));
 					}
@@ -197,20 +197,20 @@ EOT;
 	 * @return boolean
 	 */
 	public function setEvent($day, $start, $stop, $description, $dayuid="") {
-		$ymd = sprintf("%4s%02s%02s", $this->_year, $this->_month, $day);
+		$ymd = sprintf('%4s%02s%02s', $this->_year, $this->_month, $day);
 		if ($dayuid) {
-			$eventuid = $ymd ."_". $dayuid;
+			$eventuid = $ymd .'_'. $dayuid;
 			@$this->delEvent($eventuid);	// just simpler
 		} else {
 			/* new event, new id */
-			$eventuid = $ymd ."_". uniqid();
+			$eventuid = $ymd .'_'. uniqid();
 		}
 		$v = new vevent();
 		
-		$v->setProperty("dtstart", $ymd."T".$start);
-		$v->setProperty("dtend", $ymd."T".$stop);
-		$v->setProperty("uid", $eventuid);
-		$v->setProperty("description", base64_encode($description));
+		$v->setProperty('dtstart', $ymd.'T'.$start);
+		$v->setProperty('dtend', $ymd.'T'.$stop);
+		$v->setProperty('uid', $eventuid);
+		$v->setProperty('description', base64_encode($description));
 		return $this->_vcal->setComponent($v);
 	}
 
@@ -227,7 +227,7 @@ EOT;
 	 * Returns time from DTstamp array (from iCalcreator)
 	 */
 	private function _xdtime($dt) {
-		$ret = sprintf("%4s%02s%02sT%02s%02s%02s",
+		$ret = sprintf('%4s%02s%02sT%02s%02s%02s',
 					   $dt['year'],$dt['month'], $dt['day'],
 					   $dt['hour'], $dt['min'], $dt['sec']);
 		return $ret;
@@ -241,11 +241,11 @@ EOT;
 		$min = substr($dt, 11, 2);
 		if ($hour > 12) {
 			$hour -= 12;
-			$suf = "pm";
+			$suf = 'pm';
 		} else {
-			$suf = "am";
+			$suf = 'am';
 		}
-		return (sprintf("%02s:%s %s", $hour, $min, $suf));
+		return (sprintf('%02s:%s %s', $hour, $min, $suf));
 	}
 }
 ?>

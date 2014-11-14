@@ -3,12 +3,12 @@ if (!defined('I_AM_TELAEN')) {die('Direct access not premitted');}
 
 function errorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 	global $log_fname, $temporary_directory;
-	if ($log_fname[0] == "/")
+	if ($log_fname[0] == '/')
 		$elog = $log_fname;
 	else
 		$elog = $temporary_directory.'/'.$log_fname;
 
-	$dt = date("Ymd H:i:s T");
+	$dt = date('Ymd H:i:s T');
 
 	$etype = array (
 		E_ERROR			=> 'Error',
@@ -31,6 +31,6 @@ function errorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 }
 
 error_reporting(0);
-$oeh = set_error_handler("errorHandler");
+$oeh = set_error_handler('errorHandler');
 
 ?>

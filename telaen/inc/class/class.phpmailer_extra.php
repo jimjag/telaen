@@ -1,6 +1,6 @@
 <?php
 
-require_once("./inc/vendor/class.phpmailer.php");
+require_once('./inc/vendor/class.phpmailer.php');
 
 class PHPMailer_extra extends PHPMailer {
 
@@ -9,7 +9,7 @@ class PHPMailer_extra extends PHPMailer {
 	 *	@var string
 	 */
 	private $FormattedMail	= "";
-	public $LE		= "\n";
+	public $LE		= '\n';
 
 	/**
 	 * Constructor.
@@ -36,13 +36,13 @@ class PHPMailer_extra extends PHPMailer {
 	
 			if((count($this->to) + count($this->cc) + count($this->bcc)) < 1)
 			{
-				$this->SetError($this->Lang("provide_address"));
+				$this->SetError($this->Lang('provide_address'));
 				return false;
 			}
 	
 			// Set whether the message is multipart/alternative
 			if(!empty($this->AltBody))
-				$this->ContentType = "multipart/alternative";
+				$this->ContentType = 'multipart/alternative';
 	
 			$this->error_count = 0; // reset errors
 			$this->SetMessageType();
@@ -58,18 +58,18 @@ class PHPMailer_extra extends PHPMailer {
 			// thus we don't see them in the SENT folder. So, in
 			// this case, force them in. Also, some other headers
 			// aren't correct, so fix 'em
-			if ($this->Mailer == "mail") {
+			if ($this->Mailer == 'mail') {
 				if (count($this->to) > 0)
-					$fheader .= $this->AddrAppend("To", $this->to);
+					$fheader .= $this->AddrAppend('To', $this->to);
 				else
-					$fheader .= $this->HeaderLine("To", "undisclosed-recipients:;");
+					$fheader .= $this->HeaderLine('To', 'undisclosed-recipients:;');
 	
 				// Add in the Subject and CC lines
 				$fheader .= $this->HeaderLine('Subject', $this->EncodeHeader($this->SecureHeader(trim($this->Subject))));
 				if(count($this->cc) > 0) {
-					$fheader .= $this->AddrAppend("Cc", $this->cc);
+					$fheader .= $this->AddrAppend('Cc', $this->cc);
 					if ($this->Version < 2) {
-						$header .= $this->AddrAppend("Cc", $this->cc);
+						$header .= $this->AddrAppend('Cc', $this->cc);
 					}
 				}
 			}

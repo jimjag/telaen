@@ -13,7 +13,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 # Load in the version information
 ########################################################################
 
-require("./inc/version.php");
+require('./inc/version.php');
 
 ########################################################################
 #Defaults:
@@ -22,8 +22,8 @@ require("./inc/version.php");
 # do not remove or change this
 ########################################################################
 
-define("yes",1);
-define("no",0);
+define('yes',1);
+define('no',0);
 $themes         = Array();
 $languages      = Array();
 
@@ -31,19 +31,19 @@ $languages      = Array();
 # Language & themes settings
 ########################################################################
 
-require("./inc/config/config.languages.php");
+require('./inc/config/config.languages.php');
 
 ########################################################################
 # Security related settings
 ########################################################################
 
-require("./inc/config/config.security.php");
+require('./inc/config/config.security.php');
 
 ########################################################################
 # Read in $systemNews (not required)
 ########################################################################
 
-@include("./inc/news/news.system.php");
+@include('./inc/news/news.system.php');
 
 ########################################################################
 # Location of the Smarty template installation.
@@ -54,7 +54,7 @@ require("./inc/config/config.security.php");
 # AS IS WITHOUT MOVING IT TO A SAFE LOCATION
 ########################################################################
 
-define("SMARTY_DIR","/some/place/safe/smarty/");
+define('SMARTY_DIR','/some/place/safe/smarty/');
 
 ########################################################################
 # _ Please attention _:
@@ -75,13 +75,13 @@ define("SMARTY_DIR","/some/place/safe/smarty/");
 # folder !
 ########################################################################
 
-$temporary_directory = "./ChangeMe!/";
+$temporary_directory = './ChangeMe!/';
 
 ########################################################################
 # Title prefix for webmail pages
 ########################################################################
 
-$webmail_title = "Telaen Webmail";
+$webmail_title = 'Telaen Webmail';
 
 ########################################################################
 # Quota handling:
@@ -117,19 +117,19 @@ $quota_limits = Array (
 # Mail server type:
 # allowed values:
 
-# "DETECT" -------->	Guess the pop3 server. If you are running Telaen
-#			in a domain "www.company.com", the script will 
-#			use "PREFIX.company.com" as your server. you 
-#			can set the "PREFIX" in the var $mail_detect_prefix.
+# 'DETECT' -------->	Guess the pop3 server. If you are running Telaen
+#			in a domain 'www.company.com', the script will
+#			use 'PREFIX.company.com' as your server. you
+#			can set the 'PREFIX' in the var $mail_detect_prefix.
 #			Also, the var $mail_detect_remove can be set
-#			to "www.", then the script get rid the "www" and 
+#			to 'www.', then the script get rid the 'www' and
 #			put the prefix, eg. pop3.company.com.br
 
-#"ONE-FOR-EACH" -->	Each domain have your own mail server.
+#'ONE-FOR-EACH' -->	Each domain have your own mail server.
 #			The script will load the list of domains/servers from
 #			var $mail_servers.
 
-#"ONE-FOR-ALL" --->	If you use this option, your users must supply the
+#'ONE-FOR-ALL' --->	If you use this option, your users must supply the
 #			full email address as username. You can set the mail
 #			server in the var $default_mail_server
 #					
@@ -138,7 +138,7 @@ $quota_limits = Array (
 
 # Note. You can supply the LOGIN_TYPE according to your MAIL SERVER.
 # Eg. If your mail server requires usernames in user@domain.com, you must
-# specify the LOGIN_TYPE as "%user%@%domain%". You can combine it according to 
+# specify the LOGIN_TYPE as '%user%@%domain%'. You can combine it according to
 # your server. eg.
 
 # %user%
@@ -146,8 +146,8 @@ $quota_limits = Array (
 # %user%.%domain%
 #
 # PROTOCOL and PORT
-# Choose "imap" as protocol to use the Internet Mail Access Protocol, 
-# or "pop3" to use the Post Office Protocol.
+# Choose 'imap' as protocol to use the Internet Mail Access Protocol,
+# or 'pop3' to use the Post Office Protocol.
 # The default ports are:
 # pop3 -> 110
 # imap -> 143
@@ -156,17 +156,17 @@ $quota_limits = Array (
 
 ########################################################################
 
-$mail_server_type 	= "ONE-FOR-ALL";
+$mail_server_type 	= 'ONE-FOR-ALL';
 
 ########################################################################
 # TYPE: DETECT
 ########################################################################
 
-$mail_detect_remove 		= "www.";
-$mail_detect_prefix 		= "mail.";
-$mail_detect_login_type 	= "%user%@%domain%";
-$mail_detect_protocol 		= "pop3";
-$mail_detect_port 		= "110";
+$mail_detect_remove 		= 'www.';
+$mail_detect_prefix 		= 'mail.';
+$mail_detect_login_type 	= '%user%@%domain%';
+$mail_detect_protocol 		= 'pop3';
+$mail_detect_port 		= '110';
 $mail_detect_folder_prefix 	= "";
 
 ########################################################################
@@ -181,23 +181,23 @@ $mail_detect_folder_prefix 	= "";
 
 
 $mail_servers[] = Array(
-	"domain" 	=> "domain.com", 
-	"server" 	=> "pop3.domain.com", 
-	"login_type" 	=> "%user%",
-	"protocol"	=> "pop3",
-	"port"		=> "110",
-	"folder_prefix"	=> ""
+	'domain' 	=> 'domain.com',
+	'server' 	=> 'pop3.domain.com',
+	'login_type' 	=> '%user%',
+	'protocol'	=> 'pop3',
+	'port'		=> '110',
+	'folder_prefix'	=> ""
 );
 
 
 /*
 $mail_servers[] = Array(
-	"domain" 		=> "another-domain.com", 
-	"server" 		=> "mail.another-domain.com", 
-	"login_type" 	=> "%user%@%domain%",
-	"protocol"		=> "imap",
-	"port"			=> "143",
-	"folder_prefix"	=> "INBOX."
+	'domain' 		=> 'another-domain.com',
+	'server' 		=> 'mail.another-domain.com',
+	'login_type' 	=> '%user%@%domain%',
+	'protocol'		=> 'imap',
+	'port'			=> '143',
+	'folder_prefix'	=> 'INBOX.'
 );
 
 */
@@ -207,14 +207,14 @@ $mail_servers[] = Array(
 # the default mail server for all domains
 ########################################################################
 
-$default_mail_server 	= "localhost";
-$one_for_all_login_type	= "%user%@%domain%";
-$default_protocol	= "pop3";
-$default_port		= "110";
+$default_mail_server 	= 'localhost';
+$one_for_all_login_type	= '%user%@%domain%';
+$default_protocol	= 'pop3';
+$default_port		= '110';
 $default_folder_prefix	= "";
 
 ########################################################################
-# In some POP3 servers, if you send a "RETR" command, your
+# In some POP3 servers, if you send a 'RETR' command, your
 # message will be automatically deleted :(
 # This option prevents this inconvenience. Assumes
 # that the server supports TOP
@@ -253,10 +253,10 @@ $mail_use_top = no;
 ##	$mail_use_apop		= no;
 #
 #$capa_override = array(
-#	"ATOP" = 0;
-#	"UIDL" = 0;
-#	"PIPELINING" = 0;
-#	"APOP" = 0;
+#	'ATOP' = 0;
+#	'UIDL' = 0;
+#	'PIPELINING' = 0;
+#	'APOP' = 0;
 #);
 
 $capa_override = array();
@@ -264,13 +264,13 @@ $capa_override = array();
 ########################################################################
 # Specify mail transport type
 # Allowed values:
-# "smtp"       - To use an external SMTP Server specified in $smtp_server
-# "sendmail"   - To use server's sendmail-compatible MTA. If you need to
+# 'smtp'       - To use an external SMTP Server specified in $smtp_server
+# 'sendmail'   - To use server's sendmail-compatible MTA. If you need to
 #                change the path, see $phpmailer_sendmail below
-# "mail"       - To use default PHP's mail() function
+# 'mail'       - To use default PHP's mail() function
 ########################################################################
 
-$mailer_type		= "mail";
+$mailer_type		= 'mail';
 
 ########################################################################
 # Telaen uses PHPMailer for many mailing functions. Sometimes we
@@ -282,7 +282,7 @@ $mailer_type		= "mail";
 # NOTE: These are only used if they are non-NULL and non-0
 #
 # Examples:
-#    $phpmailer_sendmail = "/usr/lib/sendmail";
+#    $phpmailer_sendmail = '/usr/lib/sendmail';
 #    $phpmailer_timeout = 60;
 ########################################################################
 
@@ -290,11 +290,11 @@ $phpmailer_sendmail = "";
 $phpmailer_timeout = 0;
 
 ########################################################################
-# Your local SMTP Server (alias or IP) such as "smtp.yourdomain.com"
-# eg. "server1;server2;server3"   -> specify main and backup server
+# Your local SMTP Server (alias or IP) such as 'smtp.yourdomain.com'
+# eg. 'server1;server2;server3'   -> specify main and backup server
 ########################################################################
 
-$smtp_server = "localhost";  #YOU NEED CHANGE IT !!
+$smtp_server = 'localhost';  #YOU NEED CHANGE IT !!
 
 ########################################################################
 # Use SMTP password (AUTH LOGIN type)
@@ -311,11 +311,11 @@ $use_password_for_smtp = yes;
 ########################################################################
 
 $smtp_static_auth = no;
-$smtp_static_user = "yourSmtpUser";
-$smtp_static_password = "yourSmtpPasswd";
+$smtp_static_user = 'yourSmtpUser';
+$smtp_static_password = 'yourSmtpPasswd';
 
 ########################################################################
-# Add a "footer" to sent mails
+# Add a 'footer' to sent mails
 ########################################################################
 
 $footer = "
@@ -343,43 +343,43 @@ $allow_modified_from    = yes;
 # Order setting
 ########################################################################
 
-$default_sortby = "date";
-$default_sortorder = "DESC";
+$default_sortby = 'date';
+$default_sortorder = 'DESC';
 
 ########################################################################
 # Default preferences...
 ########################################################################
 
 $default_preferences = Array(
-	"send_to_trash_default" 	=> yes,		# send deleted messages to trash
-	"st_only_ready_default" 	=> yes,		# only read messages, otherwise, delete it
-	"save_to_sent_default"		=> yes,		# send sent messages to sent
-	"empty_trash_default"		=> yes,		# empty trash on logout
-	"empty_spam_default"		=> yes,		# empty spam on logout
-	"unmark_read_default"		=> no,		# Unmark READ messages as read (appear as unread)
-	"sortby_default"		=> "date",	# alowed: "attach","subject","fromname","date","size"
-	"sortorder_default"		=> "DESC",	# alowed: "ASC","DESC"
-	"rpp_default"			=> 20,		# records per page (messages), alowed: 10,20,30,40,50,100,200
-	"add_signature_default"		=> no,		# add the signature by default
-	"require_receipt_default"	=> no,		# require read receipt by default
-	"signature_default"		=> "",		# a default signature for all users, use text only, with multiple lines if needed
-	"timezone_default"		=> "-0000",	# timezone, format (+|-)HHMM (H=hours, M=minutes)
-	"display_images_default"	=> yes,		# automatically show attached images in the body of message
-	"editor_mode_default"		=> "text",	# use "html" or "text" to set default editor.
-	"refresh_time_default"		=> 10,		# after this time, the message list will be refreshed, in minutes
-	"spamlevel_default"		=> 0		# Sensitivity to X-Spam-Level detection
+	'send_to_trash_default' 	=> yes,		# send deleted messages to trash
+	'st_only_ready_default' 	=> yes,		# only read messages, otherwise, delete it
+	'save_to_sent_default'		=> yes,		# send sent messages to sent
+	'empty_trash_default'		=> yes,		# empty trash on logout
+	'empty_spam_default'		=> yes,		# empty spam on logout
+	'unmark_read_default'		=> no,		# Unmark READ messages as read (appear as unread)
+	'sortby_default'		=> 'date',	# alowed: 'attach','subject','fromname','date','size'
+	'sortorder_default'		=> 'DESC',	# alowed: 'ASC','DESC'
+	'rpp_default'			=> 20,		# records per page (messages), alowed: 10,20,30,40,50,100,200
+	'add_signature_default'		=> no,		# add the signature by default
+	'require_receipt_default'	=> no,		# require read receipt by default
+	'signature_default'		=> "",		# a default signature for all users, use text only, with multiple lines if needed
+	'timezone_default'		=> '-0000',	# timezone, format (+|-)HHMM (H=hours, M=minutes)
+	'display_images_default'	=> yes,		# automatically show attached images in the body of message
+	'editor_mode_default'		=> 'text',	# use 'html' or 'text' to set default editor.
+	'refresh_time_default'		=> 10,		# after this time, the message list will be refreshed, in minutes
+	'spamlevel_default'		=> 0		# Sensitivity to X-Spam-Level detection
 	);
 
 ########################################################################
 # Sometimes, we cannot figure out the correct timezone for the
 # server, as compared to the user. So setting the user timezone
-# to, for example "-0500" when the server is "-0800" results
+# to, for example '-0500' when the server is '-0800' results
 # in the mail time display being 3 hours off. To adjust for
 # this, set $server_timezone_offset to the correct
-# adjustment (that is, "-0300") . For most sites, this isn't required.
+# adjustment (that is, '-0300') . For most sites, this isn't required.
 ########################################################################
 
-$server_timezone_offset = "-0000";
+$server_timezone_offset = '-0000';
 
 ########################################################################
 # Control whether the SysAdmin overrules the unmark READ messages
@@ -395,7 +395,7 @@ $force_unmark_read_setting = no;
 ########################################################################
 # Control whether redirects will use META REFRESH and Javascript
 # to send the person to the required page ('yes') or whether to
-# use the HTTP Location header and do a "real" HTTP redirect. Some
+# use the HTTP Location header and do a 'real' HTTP redirect. Some
 # browsers have issues setting Cookies during HTTP redirects, in
 # those cases, setting the below to 'yes' will help.
 ########################################################################
@@ -433,6 +433,6 @@ $smtp_debug = no;
 ########################################################################
 
 $log_errors = yes;
-$log_fname = "telaen_error.log";
+$log_fname = 'telaen_error.log';
 
 ?>
