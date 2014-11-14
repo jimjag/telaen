@@ -25,7 +25,7 @@ function errorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 		E_STRICT		=> 'Runtime Notice',
 		E_RECOVERABLE_ERROR	=> 'Catchable Fatal Error'
 	);
-	$err = "$dt: [$errno/{$etype[$errno]}] ($filename:$linenum): $errmsg\n";
+	$err = "$dt: [$errno/{$etype[$errno]}] ($filename:$linenum): safe_print($errmsg)\n";
 
 	error_log($err, 3, $elog);
 }

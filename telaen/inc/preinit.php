@@ -20,7 +20,9 @@ umask($default_umask);
 
 $phpver = phpversion();
 $phpver = doubleval($phpver[0].".".$phpver[2]);
-
+if ((double)$phpver < 5.4) {
+	die('PHP version 5.4 and and greater are required');
+}
 /*
  * "emulate" register_globals ON: These are semi-global
  * vars used by just about all main entry points (see inc/init.php)
