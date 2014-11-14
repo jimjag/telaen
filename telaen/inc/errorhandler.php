@@ -4,6 +4,14 @@ if (!defined('I_AM_TELAEN')) {die('Direct access not premitted');}
 trim($log_fname);
 if (empty($log_fname)) $log_fname = "telaen_error.log";
 
+function safe_print($str) {
+	return preg_replace_callback(
+		'|([^[:print:]])|',
+		function ($match) { return '\x{'.dechex(ord($match[1])).'}'; },
+		$str
+	);
+}
+
 function errorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 	global $log_fname, $temporary_directory;
 	if ($log_fname[0] == '/')
@@ -28,7 +36,7 @@ function errorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 		E_STRICT		=> 'Runtime Notice',
 		E_RECOVERABLE_ERROR	=> 'Catchable Fatal Error'
 	);
-	$err = "$dt: [$errno/{$etype[$errno]}] ($filename:$linenum): safe_print($errmsg)\n";
+	$err = "$dt: [$errno/{$etype[$errno]}] ($filename:$linenum): ".safe_print($errmsg)."\n";
 
 	error_log($err, 3, $elog);
 }

@@ -443,14 +443,6 @@ function valid_folder_name($name, $checksys = false) {
 	return !preg_match('/[^A-Za-z0-9\-]/',$name);
 }
 
-function safe_print($str) {
-	return preg_replace_callback(
-		'|([^[:print:]])|',
-		function ($match) { return '\x{'.dechex(ord($match[1])).'}'; },
-		$str
-	);
-}
-
 function caster ($var, $cast='string') {
 	switch (gettype($cast)) {
 		case 'boolean':
