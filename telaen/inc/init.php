@@ -7,6 +7,9 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
+/*
+ * Initialize a working Telaen session
+ */
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 if(function_exists('date_default_timezone_set') && function_exists('date_default_timezone_get'))

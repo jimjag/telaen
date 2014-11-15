@@ -1,6 +1,9 @@
 <?php
 if (!defined('I_AM_TELAEN')) {die('Direct access not premitted');}
 
+/*
+ * Basic error handling
+ */
 trim($log_fname);
 if (empty($log_fname)) $log_fname = "telaen_error.log";
 

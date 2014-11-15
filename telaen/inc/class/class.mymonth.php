@@ -7,6 +7,9 @@ Telaen is a GPL'ed software developed by
  - http://jimjag.github.io/telaen/
 
 *************************************************************************/
+/*
+ * Core functionality for iCal calendar events
+ */
 require_once('./inc/vendor/iCalcreator.class.php');
 
 class MyMonth {

@@ -9,7 +9,10 @@ Telaen is a GPL'ed software developed by
 
 /*
  * This module takes care of setting and/or initializing
- * various aspects of Telaen that should be universal.
+ * pre-init core aspects of Telaen before main initialization.
+ *
+ * Why not simply fold into init.php? index.php doesn't require
+ * or work if init.php is scarfed in.
  */
 
 if (!defined('I_AM_TELAEN')) {die('Direct access not premitted');}
