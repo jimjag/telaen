@@ -2,7 +2,7 @@
 require_once './inc/class/class.telaen_core.php';
 require_once './inc/vendor/class.tnef.php';
 
-class telaen extends Telaen_core
+class Telaen extends Telaen_core
 {
     public $autospamfolder        = true;        // boolean
     public $havespam        = "";        // NOTE: This is a STRING!
