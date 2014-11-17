@@ -15,33 +15,33 @@ define('POP3', 2);
 
 class Telaen_core
 {
-    public $mail_connection        = null;
-    public $mail_server        = 'localhost';
-    public $mail_port        = 110;
-    public $usessl            = false;
-    public $mail_user        = 'unknown';
-    public $mail_pass        = "";
-    public $mail_email        = 'unknown@localhost';
-    public $mail_protocol        = POP3;
-    public $mail_prefix        = "";
+    public $mail_connection = null;
+    public $mail_server     = 'localhost';
+    public $mail_port       = 110;
+    public $usessl          = false;
+    public $mail_user       = 'unknown';
+    public $mail_pass       = "";
+    public $mail_email      = 'unknown@localhost';
+    public $mail_protocol   = POP3;
+    public $mail_prefix     = "";
 
-    public $sanitize        = true;
-    public $use_html            = false;
-    public $charset            = 'iso-8859-1';
-    public $timezone        = '+0000';
-    public $debug            = false;
+    public $sanitize          = true;
+    public $use_html          = false;
+    public $charset           = 'iso-8859-1';
+    public $timezone          = '+0000';
+    public $debug             = false;
     public $log_errors        = false;
-    public $user_folder        = './';
-    public $temp_folder        = './';
-    public $timeout            = 10;
-    public $displayimages        = false;
-    public $save_temp_attachs    = true;
-    public $current_level        = array();
+    public $user_folder       = './';
+    public $temp_folder       = './';
+    public $timeout           = 10;
+    public $displayimages     = false;
+    public $save_temp_attachs = true;
+    public $current_level     = array();
     // internal
-    protected $_msgbody        = "";
-    protected $_content        = array();
-    protected $_sid            = "";
-    protected $_tnef            = "";
+    protected $_msgbody = "";
+    protected $_content = array();
+    protected $_sid     = "";
+    protected $_tnef    = "";
 
     /*******************/
 

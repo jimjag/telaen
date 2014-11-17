@@ -4,24 +4,24 @@ require_once './inc/vendor/class.tnef.php';
 
 class Telaen extends Telaen_core
 {
-    public $autospamfolder        = true;        // boolean
-    public $havespam        = "";        // NOTE: This is a STRING!
-    public $CRLF            = "\r\n";
-    public $userspamlevel        = 0;        // Disabled
-    public $dirperm            = 0700;        // recall affected by umask value
-    public $greeting        = "";        // Internally used for store initial IMAP/POP3 greeting message
-    public $capabilities        = array();
-    public $flags            = array('\\SEEN', '\\DELETED', '\\ANSWERED', '\\DRAFT', '\\FLAGGED', '\\RECENT');
+    public $autospamfolder = true;        // boolean
+    public $havespam       = "";        // NOTE: This is a STRING!
+    public $CRLF           = "\r\n";
+    public $userspamlevel  = 0;        // Disabled
+    public $dirperm        = 0700;        // recall affected by umask value
+    public $greeting       = "";        // Internally used for store initial IMAP/POP3 greeting message
+    public $capabilities   = array();
+    public $flags          = array('\\SEEN', '\\DELETED', '\\ANSWERED', '\\DRAFT', '\\FLAGGED', '\\RECENT');
 
-    protected $_system_folders        = array('inbox','trash','sent','spam');
-    protected $_current_folder    = "";
-    protected $_spamregex        = array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
-    protected $_serverurl        = "";
+    protected $_system_folders = array('inbox','trash','sent','spam');
+    protected $_current_folder = "";
+    protected $_spamregex      = array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
+    protected $_serverurl      = "";
     protected $_respnum        = 0;
     protected $_respstr        = "";
 
-    const RESP_OK = 0;
-    const RESP_NO = -1;
+    const RESP_OK =   0;
+    const RESP_NO =  -1;
     const RESP_BAD = -2;
     const RESP_BYE = -3;
     const RESP_NOK = -4;
@@ -166,6 +166,7 @@ class Telaen extends Telaen_core
                 $cmds = (array) $cmds;
             }
             foreach ($cmds as $cmd) {
+                $regs = array();
                 $cmd = trim($cmd).$this->CRLF;
                 $output = (preg_match('/^(PASS|LOGIN)/', $cmd, $regs)) ? $regs[1]." ****" : $cmd;
                 if ($this->mail_protocol == IMAP && $addTag) {
@@ -201,6 +202,8 @@ class Telaen extends Telaen_core
                 $this->_serverurl = ($this->usessl ? 'ssl://' : 'tcp://').
                     $this->mail_server.':'.$this->mail_port;
             }
+            $errno = 0;
+            $errstr = 0;
             $this->mail_connection = stream_socket_client($this->_serverurl, $errno, $errstr, 15);
             if ($this->mail_connection) {
                 $this->greeting = $this->_mail_get_line();
@@ -247,6 +250,7 @@ class Telaen extends Telaen_core
      */
     protected function _mail_auth_pop($checkfolders = false)
     {
+        $tokens = array();;
         // APOP login mode, more secure
         if ($this->haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
             $this->_mail_send_command('APOP '.$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
@@ -301,7 +305,9 @@ class Telaen extends Telaen_core
 
         if (!file_exists($this->user_folder)) {
             if (!@mkdir($this->user_folder, $this->dirperm)) {
-                die("<h1><br><br><br><center>$error_permiss</center></h1>");
+                if ($this->log_errors) {
+                    trigger_error("permission error: $this->user_folder");
+                }
             }
         }
 
