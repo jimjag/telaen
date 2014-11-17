@@ -405,8 +405,7 @@ function tln_getnxtag($body, $offset)
                     }
                     list($pos, $attval, $match) = $regary;
                     $pos++;
-                    $attary{$attname}
-                    = '\''.$attval.'\'';
+                    $attary{$attname} = '\''.$attval.'\'';
                 } elseif ($quot == '"') {
                     $regary = tln_findnxreg($body, $pos+1, '\"');
                     if ($regary == false) {
@@ -414,8 +413,7 @@ function tln_getnxtag($body, $offset)
                     }
                     list($pos, $attval, $match) = $regary;
                     $pos++;
-                    $attary{$attname}
-                    = '"'.$attval.'"';
+                    $attary{$attname} = '"'.$attval.'"';
                 } else {
                     /**
                      * These are hateful. Look for \s, or >.
@@ -429,15 +427,13 @@ function tln_getnxtag($body, $offset)
                      * If it's ">" it will be caught at the top.
                      */
                     $attval = preg_replace('/\"/s', '&quot;', $attval);
-                    $attary{$attname}
-                    = '"'.$attval.'"';
+                    $attary{$attname} = '"'.$attval.'"';
                 }
             } elseif (preg_match('|[\w/>]|', $char)) {
                 /**
                  * That was attribute type 4.
                  */
-                $attary{$attname}
-                = '"yes"';
+                $attary{$attname} = '"yes"';
             } else {
                 /**
                  * An illegal character. Find next '>' and return.
@@ -475,8 +471,7 @@ function tln_deent(&$attvalue, $regex, $hex = false)
             if ($hex) {
                 $numval = hexdec($numval);
             }
-            $repl{$matches[0][$i]}
-            = chr($numval);
+            $repl{$matches[0][$i]} = chr($numval);
         }
         $attvalue = strtr($attvalue, $repl);
 
@@ -586,8 +581,7 @@ function tln_fixatts($tagname,
                         list($valmatch, $valrepl) = $valary;
                         $newvalue = preg_replace($valmatch, $valrepl, $attvalue);
                         if ($newvalue != $attvalue) {
-                            $attary{$attname}
-                            = $newvalue;
+                            $attary{$attname} = $newvalue;
                         }
                     }
                 }
@@ -708,8 +702,7 @@ function tln_sanitize($body,
                                     $open_tags{$tagname}
                                     ++;
                                 } else {
-                                    $open_tags{$tagname}
-                                    = 1;
+                                    $open_tags{$tagname} = 1;
                                 }
                             }
                             /**

@@ -149,7 +149,7 @@ class Telaen_core
     {
         global $block_external_images;
         if ($this->sanitize) {
-            $strbody    =    HTMLFilter($strbody, 'images/trans.gif', $block_external_images);
+            $strbody = HTMLFilter($strbody, 'images/trans.gif', $block_external_images);
         }
         if ($this->_msgbody == "") {
             $this->_msgbody = $strbody;
@@ -576,11 +576,11 @@ class Telaen_core
                 $body = $this->_compile_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
                 $this->_extract_tnef($body, $boundary, $i);
             } elseif ($is_download) {
-                $thisattach        = $this->_build_attach($header, $body, $boundary, $i);
-                $tree            = array_merge((array) $this->current_level, array($thisattach['index']));
-                $thisfile        = 'download.php?folder='.urlencode($folder).'&ix='.$ix.'&attach='.join(',', $tree);
-                $filename        = $thisattach['filename'];
-                $cid            = preg_replace('|<(.*)\\>|', "$1", $cid);
+                $thisattach = $this->_build_attach($header, $body, $boundary, $i);
+                $tree = array_merge((array) $this->current_level, array($thisattach['index']));
+                $thisfile = 'download.php?folder='.urlencode($folder).'&ix='.$ix.'&attach='.join(',', $tree);
+                $filename = $thisattach['filename'];
+                $cid = preg_replace('|<(.*)\\>|', "$1", $cid);
 
                 if ($cid != "") {
                     $cid = "cid:$cid";
@@ -727,15 +727,15 @@ class Telaen_core
 
         // extract content-disposition	(ex 'attachment')
         preg_match('|[a-z0-9]+|i', $cdisp, $matches);
-        $content_disposition    = $matches[0];
+        $content_disposition = $matches[0];
 
         // extract content-type		(ex 'text/plain' or 'application/vnd.ms-excel' note the DOT)
         preg_match('|[a-z0-9/\.-]+|i', $ctype, $matches);
-        $content_type    = $matches[0];
+        $content_type = $matches[0];
 
-        $tmp            = explode('/', $content_type);
-        $main_type        = $tmp[0];
-        $sub_type        = $tmp[1];
+        $tmp = explode('/', $content_type);
+        $main_type = $tmp[0];
+        $sub_type = $tmp[1];
 
         // This set determine if an attachement is embedded (like some images) so there no download link
         // Note: added check for use it only for images, some clients adds id where not necessary
@@ -754,17 +754,17 @@ class Telaen_core
 
         $filename = preg_replace('|[.]{2,}|', ".", preg_replace("'(/|\\\\)+'", "_", trim($this->_decode_mime_string($filename))));
         $safefilename = preg_replace('|[ \t\.\W]+|', "_", $filename);
-        $nIndex                        = count($this->_content['attachments']);
-        $temp_array['name']                    = trim($filename);
-        $temp_array['size']                    = strlen($body);
-        $temp_array['temp']                    = $is_embed;
-        $temp_array['content-type']            = strtolower(trim($content_type));
-        $temp_array['content-disposition']    = strtolower(trim($content_disposition));
-        $temp_array['boundary']                = $boundary;
-        $temp_array['part']                    = $part;
-        $temp_array['filename']                = $this->user_folder.'_attachments/'.md5($temp_array['boundary']).'_'.$safefilename;
-        $temp_array['type']                    = 'mime';
-        $temp_array['index']                = $nIndex;
+        $nIndex = count($this->_content['attachments']);
+        $temp_array['name'] = trim($filename);
+        $temp_array['size'] = strlen($body);
+        $temp_array['temp'] = $is_embed;
+        $temp_array['content-type'] = strtolower(trim($content_type));
+        $temp_array['content-disposition'] = strtolower(trim($content_disposition));
+        $temp_array['boundary'] = $boundary;
+        $temp_array['part'] = $part;
+        $temp_array['filename'] = $this->user_folder.'_attachments/'.md5($temp_array['boundary']).'_'.$safefilename;
+        $temp_array['type'] = 'mime';
+        $temp_array['index'] = $nIndex;
 
         $this->save_file($temp_array['filename'], $body);
         unset($body);
@@ -862,11 +862,11 @@ class Telaen_core
         $myarray['message-id'] = (array_key_exists('message-id', $headers)) ? preg_replace('|<(.*)>|', "$1", trim($headers['message-id'])) : null;
         $myarray['content-type'] = (array_key_exists('content-type', $headers)) ? $headers['content-type'] : null;
         $myarray['priority'] = (array_key_exists('x-priority', $headers)) ? $headers['x-priority'][0] : null;
-        $myarray['flags']         = $headers['x-um-flags'];
+        $myarray['flags'] = $headers['x-um-flags'];
         $myarray['content-transfer-encoding'] = (array_key_exists('content-transfer-encoding', $headers)) ? str_replace('GM', '-', $headers['content-transfer-encoding']) : null;
 
-        $received    = preg_replace('|  |', ' ', $headers['received']);
-        $user_date    = preg_replace('|  |', ' ', $headers['date']);
+        $received = preg_replace('|  |', ' ', $headers['received']);
+        $user_date = preg_replace('|  |', ' ', $headers['date']);
 
         if (preg_match('/([0-9]{1,2}[ ]+[A-Z]{3}[ ]+[0-9]{4}[ ]+[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]?((\+|-)[0-9]{4})?/', $received, $regs)) {
             //eg. Tue, 4 Sep 2001 16:22:31 -0000
@@ -899,7 +899,7 @@ class Telaen_core
                 }
             }
         } else {
-            $mydate        = date('d M Y H:i');
+            $mydate = date('d M Y H:i');
             $mytimezone = $this->timezone;
         }
 
@@ -1095,8 +1095,8 @@ class Telaen_core
         $encode = "";
         foreach ($lines as $line) {
             if ($line != '') {
-                $count     = (ord($line[0])-32)%64;
-                $count     = ceil(($count*4)/3);
+                $count = (ord($line[0])-32)%64;
+                $count = ceil(($count*4)/3);
                 $encode .= substr(ltrim($line), 1, $count);
             }
         }
@@ -1116,10 +1116,10 @@ class Telaen_core
         $regex = "/(begin ([0-7]{3}) (.+))\r?\n(.+)\r?\nend/Us";
         preg_match_all($regex, $body, $matches);
         for ($i = 0; $i < count($matches[3]); $i++) {
-            $boundary    = $matches[1][$i];
-            $fileperm    = $matches[2][$i];
-            $filename    = $matches[3][$i];
-            $stream        = $this->_UUDecode($matches[4][$i]);
+            $boundary = $matches[1][$i];
+            $fileperm = $matches[2][$i];
+            $filename = $matches[3][$i];
+            $stream = $this->_UUDecode($matches[4][$i]);
 
             $temp_array['index'] = count($this->_content['attachments']);
             $temp_array['name'] = $filename;
@@ -1145,19 +1145,19 @@ class Telaen_core
         $tnefobj = $this->_tnef->Decode($body);
 
         for ($i = 0;$i<count($tnefobj);$i++) {
-            $content                = $tnefobj[$i]['stream'];
-            $temp_array['index']            = count($this->_content['attachments']);
-            $temp_array['name']                = $tnefobj[$i]['name'];
-            $temp_array['size']                = $tnefobj[$i]['size'];
-            $temp_array['content-type']            = $tnefobj[$i]['type0'].'/'.$tnefobj[$i]['type1'];
-            $temp_array['content-disposition']    = 'attachment';
-            $temp_array['boundary']            = $boundary;
-            $temp_array['part']                = $part;
-            $temp_array['type']                = 'tnef';
-            $temp_array['tnef']                = $i;
-            $temp_array['filename']            = $this->user_folder.'_attachments/'.md5($temp_array['boundary']).'_'.$temp_array['name'];
+            $content = $tnefobj[$i]['stream'];
+            $temp_array['index'] = count($this->_content['attachments']);
+            $temp_array['name'] = $tnefobj[$i]['name'];
+            $temp_array['size'] = $tnefobj[$i]['size'];
+            $temp_array['content-type'] = $tnefobj[$i]['type0'].'/'.$tnefobj[$i]['type1'];
+            $temp_array['content-disposition'] = 'attachment';
+            $temp_array['boundary'] = $boundary;
+            $temp_array['part'] = $part;
+            $temp_array['type'] = 'tnef';
+            $temp_array['tnef'] = $i;
+            $temp_array['filename'] = $this->user_folder.'_attachments/'.md5($temp_array['boundary']).'_'.$temp_array['name'];
 
-            $this->_content['attachments'][]    = $temp_array;
+            $this->_content['attachments'][] = $temp_array;
 
             $this->save_file($temp_array['filename'], $content);
             unset($temp_array);

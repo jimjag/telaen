@@ -8,8 +8,8 @@ class PHPMailer_extra extends PHPMailer
      *	Read only - return a formatted mail to the client
      *	@var string
      */
-    private $FormattedMail    = "";
-    public $LE        = '\n';
+    private $FormattedMail = "";
+    public $LE = '\n';
 
     /**
      * Constructor.

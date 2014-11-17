@@ -37,11 +37,11 @@ class MyMonth
     {
         global $userfolder;
         if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050) {
-            $this->_mymonth    = getdate();
+            $this->_mymonth = getdate();
             $month = $this->_mymonth['mon'];
             $year = $this->_mymonth['year'];
         } else {
-            $this->_mymonth    = getdate(mktime(0, 0, 0, $month, 1, $year));
+            $this->_mymonth = getdate(mktime(0, 0, 0, $month, 1, $year));
         }
         $fom = gmmktime(0, 0, 0, $this->_mymonth['mon'], 1, $this->_mymonth['year']);
         $wd = explode(',', gmstrftime('%m,%Y,%B,%w', $fom));

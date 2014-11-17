@@ -299,9 +299,9 @@ class Telaen extends Telaen_core
 
     protected function _check_folders()
     {
-        $userfolder        = $this->user_folder;
-        $temporary_directory    = $this->temp_folder;
-        $idle_timeout        = $this->timeout;
+        $userfolder = $this->user_folder;
+        $temporary_directory = $this->temp_folder;
+        $idle_timeout = $this->timeout;
 
         if (!file_exists($this->user_folder)) {
             if (!@mkdir($this->user_folder, $this->dirperm)) {
@@ -455,10 +455,10 @@ class Telaen extends Telaen_core
                 }
                 $msgcontent .= $buffer;
             }
-            $email        = $this->fetch_structure($msgcontent);
-            $header        = $email['header'];
-            $body        = $email['body'];
-            $mail_info    = $this->get_mail_info($header);
+            $email = $this->fetch_structure($msgcontent);
+            $header = $email['header'];
+            $body = $email['body'];
+            $mail_info = $this->get_mail_info($header);
 
             // Since we are pulling this message for the first
             // time from the server, we need to add in our UIDL
@@ -468,9 +468,9 @@ class Telaen extends Telaen_core
             $header .= "\r\nX-UM-UIDL: $uidl";
 
             // Update globally
-            $msg['header']    = $header;
-            $msg['flags']    = $flags;
-            $msg['uidl']    = $uidl;
+            $msg['header'] = $header;
+            $msg['flags'] = $flags;
+            $msg['uidl'] = $uidl;
 
             $msgcontent = "$header\r\n\r\n$body";
 
@@ -830,9 +830,9 @@ class Telaen extends Telaen_core
                 if (preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i', $buffer, $regs)) {
                     $curmsg = $regs[1];
                     preg_match('|SIZE[ ]?([0-9]+)|i', $buffer, $regs);
-                    $size    = $regs[1];
+                    $size = $regs[1];
                     preg_match('|FLAGS[ ]?\\((.*)\\)|i', $buffer, $regs);
-                    $flags    = $regs[1];
+                    $flags = $regs[1];
                 /* if any problem, add the current line to buffer */
                 } elseif (trim($buffer) != ")" && trim($buffer) != "") {
                     $header .= $buffer;
@@ -971,11 +971,11 @@ class Telaen extends Telaen_core
                 $fullpath = "$datapath/$entry";
                 if (is_file($fullpath)) {
                     $thisheader = $this->_get_headers_from_cache($fullpath);
-                    $messages[$i]['id']        = $i+1;
-                    $messages[$i]['msg']        = $i;
-                    $messages[$i]['header']        = $thisheader;
-                    $messages[$i]['size']        = filesize($fullpath);
-                    $messages[$i]['localname']    = $fullpath;
+                    $messages[$i]['id'] = $i+1;
+                    $messages[$i]['msg'] = $i;
+                    $messages[$i]['header'] = $thisheader;
+                    $messages[$i]['size'] = filesize($fullpath);
+                    $messages[$i]['localname'] = $fullpath;
                     $i++;
                 }
             }
@@ -1109,17 +1109,17 @@ class Telaen extends Telaen_core
                     $j++;
                     continue;
                 }
-                $messagescopy[$j]['hparsed']    = 1;
-                $messagescopy[$j]['subject']    = $mail_info['subject'];
-                $messagescopy[$j]['date']    = $mail_info['date'];
+                $messagescopy[$j]['hparsed'] = 1;
+                $messagescopy[$j]['subject'] = $mail_info['subject'];
+                $messagescopy[$j]['date'] = $mail_info['date'];
                 $messagescopy[$j]['message-id'] = $mail_info['message-id'];
-                $messagescopy[$j]['from']    = $mail_info['from'];
-                $messagescopy[$j]['to']        = $mail_info['to'];
-                $messagescopy[$j]['fromname']    = $mail_info['from'][0]['name'];
-                $messagescopy[$j]['to']        = $mail_info['to'];
-                $messagescopy[$j]['cc']        = $mail_info['cc'];
-                $messagescopy[$j]['priority']    = $mail_info['priority'];
-                $messagescopy[$j]['uidl']    = ((!$this->is_valid_md5($mail_info['uidl'])) ?
+                $messagescopy[$j]['from'] = $mail_info['from'];
+                $messagescopy[$j]['to'] = $mail_info['to'];
+                $messagescopy[$j]['fromname'] = $mail_info['from'][0]['name'];
+                $messagescopy[$j]['to'] = $mail_info['to'];
+                $messagescopy[$j]['cc'] = $mail_info['cc'];
+                $messagescopy[$j]['priority'] = $mail_info['priority'];
+                $messagescopy[$j]['uidl'] = ((!$this->is_valid_md5($mail_info['uidl'])) ?
                                     $this->_mail_get_uidl($messagescopy[$j]['msg'], $mail_info) :
                                     $mail_info['uidl']);
                 $messagescopy[$j]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
@@ -1146,26 +1146,26 @@ class Telaen extends Telaen_core
 
                 $j++;
             } else {
-                $spamcopy[$y]            = $messages[$i];
+                $spamcopy[$y] = $messages[$i];
                 if ($messages[$i]['hparsed']) {
                     $y++;
                     continue;
                 }
 
-                $spamcopy[$y]['hparsed']    = 1;
-                $spamcopy[$y]['subject']    = $mail_info['subject'];
-                $spamcopy[$y]['date']        = $mail_info['date'];
+                $spamcopy[$y]['hparsed'] = 1;
+                $spamcopy[$y]['subject'] = $mail_info['subject'];
+                $spamcopy[$y]['date'] = $mail_info['date'];
                 $spamcopy[$y]['message-id'] = $mail_info['message-id'];
-                $spamcopy[$y]['from']        = $mail_info['from'];
-                $spamcopy[$y]['to']        = $mail_info['to'];
-                $spamcopy[$y]['fromname']    = $mail_info['from'][0]['name'];
-                $spamcopy[$y]['to']        = $mail_info['to'];
-                $spamcopy[$y]['cc']        = $mail_info['cc'];
-                $spamcopy[$y]['priority']    = $mail_info['priority'];
-                $spamcopy[$y]['uidl']        = ((!$this->is_valid_md5($mail_info['uidl'])) ?
+                $spamcopy[$y]['from'] = $mail_info['from'];
+                $spamcopy[$y]['to'] = $mail_info['to'];
+                $spamcopy[$y]['fromname'] = $mail_info['from'][0]['name'];
+                $spamcopy[$y]['to'] = $mail_info['to'];
+                $spamcopy[$y]['cc'] = $mail_info['cc'];
+                $spamcopy[$y]['priority'] = $mail_info['priority'];
+                $spamcopy[$y]['uidl'] = ((!$this->is_valid_md5($mail_info['uidl'])) ?
                                     $this->_mail_get_uidl($spamcopy[$y]['msg'], $mail_info) :
                                     $mail_info['uidl']);
-                $spamcopy[$y]['attach']        = (preg_match('#(multipart/mixed|multipart/related|application)#i',
+                $spamcopy[$y]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                                      $mail_info['content-type'])) ? 1 : 0;
 
                 if ($spamcopy[$y]['localname'] == "") {
@@ -1496,13 +1496,13 @@ class Telaen extends Telaen_core
         }
 
         if (file_exists($msg['localname'])) {
-            $email        = $this->read_file($msg['localname']);
-            $email        = $this->fetch_structure($email);
-            $header        = $email['header'];
-            $body        = $email['body'];
-            $headerinfo    = $this->decode_header($header);
+            $email = $this->read_file($msg['localname']);
+            $email = $this->fetch_structure($email);
+            $header = $email['header'];
+            $body = $email['body'];
+            $headerinfo = $this->decode_header($header);
 
-            $strFlags    = trim(strtoupper($msg['flags']));
+            $strFlags = trim(strtoupper($msg['flags']));
 
             $flags = array();
             if (!empty($strFlags)) {
@@ -1531,8 +1531,8 @@ class Telaen extends Telaen_core
                 $header = preg_replace('/'.quotemeta('X-UM-Flags:')."(.*)/i", "X-UM-Flags: $flags", $header);
             }
 
-            $msg['header']    = $header;
-            $msg['flags']    = $flags;
+            $msg['header'] = $header;
+            $msg['flags'] = $flags;
 
             $email = "$header\r\n\r\n$body";
 

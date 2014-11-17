@@ -108,9 +108,9 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     switch (strtoupper($mail_server_type)) {
 
     case 'DETECT':
-        $f_server    = strtolower(getenv('HTTP_HOST'));
-        $f_server    = str_replace($mail_detect_remove, "", $f_server);
-        $f_server    = $mail_detect_prefix.$f_server;
+        $f_server = strtolower(getenv('HTTP_HOST'));
+        $f_server = str_replace($mail_detect_remove, "", $f_server);
+        $f_server = $mail_detect_prefix.$f_server;
 
         if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
             $f_user = trim($regs[1]);
@@ -120,21 +120,21 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
             }
         }
 
-        $f_protocol    = $mail_detect_protocol;
-        $f_port        = $mail_detect_port;
-        $f_prefix    = $mail_detect_folder_prefix;
+        $f_protocol = $mail_detect_protocol;
+        $f_port = $mail_detect_port;
+        $f_prefix = $mail_detect_folder_prefix;
 
         break;
 
     case 'ONE-FOR-EACH':
-        $domain            = trim($mail_servers[$six]['domain']);
-        $f_email        = $f_user.'@'.$domain;
-        $f_server        = $mail_servers[$six]['server'];
-        $login_type            = $mail_servers[$six]['login_type'];
+        $domain = trim($mail_servers[$six]['domain']);
+        $f_email = $f_user.'@'.$domain;
+        $f_server = $mail_servers[$six]['server'];
+        $login_type = $mail_servers[$six]['login_type'];
 
-        $f_protocol        = $mail_servers[$six]['protocol'];
-        $f_port            = $mail_servers[$six]['port'];
-        $f_prefix        = $mail_servers[$six]['folder_prefix'];
+        $f_protocol = $mail_servers[$six]['protocol'];
+        $f_port = $mail_servers[$six]['port'];
+        $f_prefix = $mail_servers[$six]['folder_prefix'];
 
         if ($login_type != "") {
             $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $login_type));
@@ -149,22 +149,22 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
                 $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $one_for_all_login_type));
             }
         }
-        $f_server    = $default_mail_server;
-        $f_protocol    = $default_protocol;
-        $f_port        = $default_port;
-        $f_prefix    = $default_folder_prefix;
+        $f_server = $default_mail_server;
+        $f_protocol = $default_protocol;
+        $f_port = $default_port;
+        $f_prefix = $default_folder_prefix;
 
         break;
     }
 
-    $TLN->mail_email        = $auth['email']    = $f_email    = trim(stripslashes($f_email));
-    $TLN->mail_user        = $auth['user']        = $f_user    = trim(stripslashes($f_user));
-    $TLN->mail_pass        = $auth['pass']        = $f_pass    = stripslashes($f_pass);
-    $TLN->mail_server    = $auth['server']    = $f_server    = stripslashes($f_server);
+    $TLN->mail_email = $auth['email'] = $f_email = trim(stripslashes($f_email));
+    $TLN->mail_user = $auth['user'] = $f_user = trim(stripslashes($f_user));
+    $TLN->mail_pass = $auth['pass'] = $f_pass = stripslashes($f_pass);
+    $TLN->mail_server = $auth['server'] = $f_server = stripslashes($f_server);
 
-    $TLN->mail_port        = $auth['port']            = $f_port;
-    $TLN->mail_protocol    = $auth['protocol']        = (strcasecmp($f_protocol, 'pop3') ? IMAP : POP3);
-    $TLN->mail_prefix    = $auth['folder_prefix']    = $f_prefix;
+    $TLN->mail_port = $auth['port'] = $f_port;
+    $TLN->mail_protocol = $auth['protocol'] = (strcasecmp($f_protocol, 'pop3') ? IMAP : POP3);
+    $TLN->mail_prefix = $auth['folder_prefix'] = $f_prefix;
 
     $capa = $TLN->mail_get_capa(true);
     //
@@ -188,18 +188,18 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
 
     $auth['quota_limit'] = $quota_limit;
 } elseif ($auth['auth'] && ((time() - $start) < ($idle_timeout * 60))) {
-    $TLN->mail_user        = $f_user    = $auth['user'];
-    $TLN->mail_pass        = $f_pass    = $auth['pass'];
-    $TLN->mail_server    = $f_server    = $auth['server'];
-    $TLN->mail_email        = $f_email    = $auth['email'];
+    $TLN->mail_user = $f_user = $auth['user'];
+    $TLN->mail_pass = $f_pass = $auth['pass'];
+    $TLN->mail_server = $f_server = $auth['server'];
+    $TLN->mail_email = $f_email = $auth['email'];
 
-    $TLN->mail_port        = $f_port    = $auth['port'];
-    $TLN->mail_protocol    = $f_protocol    = $auth['protocol'];
-    $TLN->mail_prefix    = $f_prefix    = $auth['folder_prefix'];
+    $TLN->mail_port = $f_port = $auth['port'];
+    $TLN->mail_protocol = $f_protocol = $auth['protocol'];
+    $TLN->mail_prefix = $f_prefix = $auth['folder_prefix'];
 
-    $TLN->capabilities    = $auth['capabilities'];
+    $TLN->capabilities = $auth['capabilities'];
 
-    $quota_limit        = $auth['quota_limit'];
+    $quota_limit = $auth['quota_limit'];
 } else {
     // session expired
         redirect_and_exit('index.php?err=4');
@@ -214,13 +214,13 @@ $userfolder = $temporary_directory.preg_replace('/[^a-z0-9\._-]/', '_', strtolow
 $UserMbox = new Mbox();
 $mbox = &$UserMbox->Load($userfolder.'_infos/mboxes.ucf');
 
-$TLN->debug            = $enable_debug;
-$TLN->log_errors            = $log_errors;
-$TLN->use_html            = $allow_html;
+$TLN->debug = $enable_debug;
+$TLN->log_errors = $log_errors;
+$TLN->use_html = $allow_html;
 
-$TLN->user_folder        = $userfolder;
-$TLN->temp_folder        = $temporary_directory;
-$TLN->timeout            = $idle_timeout;
+$TLN->user_folder = $userfolder;
+$TLN->temp_folder = $temporary_directory;
+$TLN->timeout = $idle_timeout;
 
 // avoid missing settings allow dirs creation with 000 perms
 if (isset($dirperm) && $dirperm != 0000) {
@@ -234,9 +234,9 @@ $mycal = $mymo->monthAsDiv();
 $smarty->assign('umCalendar', $mycal);
 $smarty->assign('umSystemNews', $systemNews);
 
-$TLN->timezone            = $prefs['timezone'];
-$TLN->charset            = $default_char_set;
-$TLN->userspamlevel        = $prefs['spamlevel'];
+$TLN->timezone = $prefs['timezone'];
+$TLN->charset = $default_char_set;
+$TLN->userspamlevel = $prefs['spamlevel'];
 
 /*
 Don't remove the following lines, or you will have problems with browser's cache
