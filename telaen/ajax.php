@@ -1,6 +1,6 @@
 <?php
 /************************************************************************
-Telaen is a GPL'ed software developed by 
+Telaen is a GPL'ed software developed by
 
  - The Telaen Group
  - http://jimjag.github.io/telaen/
@@ -12,90 +12,86 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
  * This file provides a support for ajax calls
  * All parameters must be sended via POST and the 'action' is mandatory
  */
-require('./inc/init.php');
+require './inc/init.php';
 
 // cheking for main param
-if(isset($_POST['action'])) {
-	
-	$prefs = load_prefs();
-		
-	$action = $_POST['action'];
-	switch($action) {
-	
-		// send a read receipt
-		case 'sendReceipt':
-			if(!isset($_POST['recipient']))
-				break;
+if (isset($_POST['action'])) {
+    $prefs = load_prefs();
 
-			$recipient = $_POST['recipient'];
-			$receiptSubj = $_POST['receipt_subj'];
-			$receiptMsg = $_POST['receipt_msg'];
-			
-			// init mailer
-			$mail = new PHPMailer_extra;
-			$mail->PluginDir = './inc/';
-			$mail->SetLanguage('en','langs/');
-			$mail->CharSet = $TLN->charset;
-			$mail->Hostname = getenv('SERVER_NAME');
-			$mail->Host = $smtp_server;
-			$mail->WordWrap = 76;
-			$mail->Priority = 3;
-			$mail->SMTPDebug = false;
-			$mail->Mailer = $mailer_type;
-			if ($phpmailer_sendmail != "") {
-				$mail->Sendmail = $phpmailer_sendmail;
-			}
-			if ($phpmailer_timeout != 0) {
-				$mail->Timeout = $phpmailer_timeout;
-			}
+    $action = $_POST['action'];
+    switch ($action) {
 
-			// for password authenticated servers
-			$mail->SMTPAuth = $use_password_for_smtp;
-			$mail->Username = $auth['user'];
-			$mail->Password = $auth['pass'];
+        // send a read receipt
+        case 'sendReceipt':
+            if (!isset($_POST['recipient'])) {
+                break;
+            }
 
-			// build the email
-			$mail->From = ($allow_modified_from && !empty($prefs['reply-to']))?$prefs['reply-to']:$auth['email'];
-			$mail->FromName = $mail->encodeHeader($prefs['real-name']);
-			$mail->AddReplyTo($prefs['reply-to'], $mail->encodeHeader($prefs['real-name']));
-			$mail->AddAddress($recipient);
-			
-			$mail->Subject = $mail->encodeHeader(stripslashes($receiptSubj));
-			$mail->Body = stripslashes($receiptText);
+            $recipient = $_POST['recipient'];
+            $receiptSubj = $_POST['receipt_subj'];
+            $receiptMsg = $_POST['receipt_msg'];
 
-			// send
-			if($mail->Send() === true) {
-				echo 'success: receipt sent';
-			}
-			else {
-				echo 'error: ' . $mail->ErrorInfo;
-			}
+            // init mailer
+            $mail = new PHPMailer_extra();
+            $mail->PluginDir = './inc/';
+            $mail->SetLanguage('en', 'langs/');
+            $mail->CharSet = $TLN->charset;
+            $mail->Hostname = getenv('SERVER_NAME');
+            $mail->Host = $smtp_server;
+            $mail->WordWrap = 76;
+            $mail->Priority = 3;
+            $mail->SMTPDebug = false;
+            $mail->Mailer = $mailer_type;
+            if ($phpmailer_sendmail != "") {
+                $mail->Sendmail = $phpmailer_sendmail;
+            }
+            if ($phpmailer_timeout != 0) {
+                $mail->Timeout = $phpmailer_timeout;
+            }
 
-			break;
+            // for password authenticated servers
+            $mail->SMTPAuth = $use_password_for_smtp;
+            $mail->Username = $auth['user'];
+            $mail->Password = $auth['pass'];
 
-		// just refresh the session timeout
-		case 'pingSession':
-			// refresh time
-				$auth['start'] = time();
-				// save
-				$AuthSession->Save($auth);
+            // build the email
+            $mail->From = ($allow_modified_from && !empty($prefs['reply-to'])) ? $prefs['reply-to'] : $auth['email'];
+            $mail->FromName = $mail->encodeHeader($prefs['real-name']);
+            $mail->AddReplyTo($prefs['reply-to'], $mail->encodeHeader($prefs['real-name']));
+            $mail->AddAddress($recipient);
 
-				echo 'success: session refreshed';
+            $mail->Subject = $mail->encodeHeader(stripslashes($receiptSubj));
+            $mail->Body = stripslashes($receiptText);
 
-			break;
+            // send
+            if ($mail->Send() === true) {
+                echo 'success: receipt sent';
+            } else {
+                echo 'error: '.$mail->ErrorInfo;
+            }
 
-		// Regen the calendar
-		case 'replaceCal':
-			$newcal = new MyMonth($_POST['cal_year'], $_POST['cal_month']);
-			$newcal->showMonthAsTable();
-			break;
-		default:
-			echo 'error: this action does not exist';
-	}
+            break;
 
+        // just refresh the session timeout
+        case 'pingSession':
+            // refresh time
+                $auth['start'] = time();
+                // save
+                $AuthSession->Save($auth);
+
+                echo 'success: session refreshed';
+
+            break;
+
+        // Regen the calendar
+        case 'replaceCal':
+            $newcal = new MyMonth($_POST['cal_year'], $_POST['cal_month']);
+            $newcal->showMonthAsTable();
+            break;
+        default:
+            echo 'error: this action does not exist';
+    }
 } else {
-	// no action, no fun
-	echo 'error: no action specified';
+    // no action, no fun
+    echo 'error: no action specified';
 }
-
-?>
