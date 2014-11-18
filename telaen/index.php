@@ -22,7 +22,7 @@ $smarty = new Smarty();
 $smarty->security = true;
 $smarty->secure_dir = array('./');
 $smarty->compile_dir = $temporary_directory;
-$smarty->template_dir =     './themes';
+$smarty->template_dir = './themes';
 $smarty->config_dir = './langs';
 $smarty->use_sub_dirs = true;
 

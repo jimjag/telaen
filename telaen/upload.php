@@ -39,10 +39,10 @@ if (isset($rem) && $rem != "") {
     //if(file_exists($userfile['tmp_name'])) {
 
 
-    $userfile_name    = $userfile['name'];
-    $userfile_type    = $userfile['type'];
-    $userfile_size    = $userfile['size'];
-    $userfile    = $userfile['tmp_name'];
+    $userfile_name = $userfile['name'];
+    $userfile_type = $userfile['type'];
+    $userfile_size = $userfile['size'];
+    $userfile = $userfile['tmp_name'];
 
     if (!is_array($mbox['attachments'])) {
         $ind = 0;

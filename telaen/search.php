@@ -23,7 +23,7 @@ $jssource .= "
 function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-no_quota  = $jsquota;
+no_quota = $jsquota;
 quota_msg = '".preg_replace("/'/", "\\'", $quota_exceeded)."';
 function readmsg(ix,read,folder) {
 	if(no_quota)

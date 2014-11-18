@@ -171,23 +171,23 @@ for ($n = 0;$n<count($boxes);$n++) {
             $boxname = ($spam_extended ? $spam_extended : 'SPAM');
             break;
         }
-        $system[$scounter]['entry']        = $entry;
-        $system[$scounter]['name']        = $boxname;
-        $system[$scounter]['msgs']        = count($thisbox)."/$unread";
-        $system[$scounter]['del']        = $delete;
-        $system[$scounter]['boxsize']        = ceil($boxsize/1024);
-        $system[$scounter]['chlink']        = "process.php?folder=$entry";
-        $system[$scounter]['emptylink']        = 'folders.php?empty='.$entry.'&folder='.$entry."";
+        $system[$scounter]['entry'] = $entry;
+        $system[$scounter]['name'] = $boxname;
+        $system[$scounter]['msgs'] = count($thisbox)."/$unread";
+        $system[$scounter]['del'] = $delete;
+        $system[$scounter]['boxsize'] = ceil($boxsize/1024);
+        $system[$scounter]['chlink'] = "process.php?folder=$entry";
+        $system[$scounter]['emptylink'] = 'folders.php?empty='.$entry.'&folder='.$entry."";
 
         $scounter++;
     } else {
-        $personal[$pcounter]['entry']        = $entry;
-        $personal[$pcounter]['name']        = $boxname;
-        $personal[$pcounter]['msgs']        = count($thisbox)."/$unread";
-        $personal[$pcounter]['del']        = $delete;
-        $personal[$pcounter]['boxsize']        = ceil($boxsize/1024);
-        $personal[$pcounter]['chlink']        = 'process.php?folder='.urlencode($entry)."";
-        $personal[$pcounter]['emptylink']    = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
+        $personal[$pcounter]['entry'] = $entry;
+        $personal[$pcounter]['name'] = $boxname;
+        $personal[$pcounter]['msgs'] = count($thisbox)."/$unread";
+        $personal[$pcounter]['del'] = $delete;
+        $personal[$pcounter]['boxsize'] = ceil($boxsize/1024);
+        $personal[$pcounter]['chlink'] = 'process.php?folder='.urlencode($entry)."";
+        $personal[$pcounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
 
         $pcounter++;
     }

@@ -25,17 +25,17 @@ if (!is_array($headers = $mbox['headers'][$folder_key])) {
 $arrow = ($sortorder == 'ASC') ? 'images/arrow_up.gif' : 'images/arrow_down.gif';
 $arrow = "&nbsp;<img src=\"$arrow\" width=\"8\" height=\"7\" border=\"0\" alt=\"\" />";
 
-$attach_arrow    = "";
-$subject_arrow    = "";
+$attach_arrow = "";
+$subject_arrow = "";
 $fromname_arrow = "";
-$date_arrow        = "";
-$size_arrow        = "";
-$toname_arrow    = "";
+$date_arrow = "";
+$size_arrow = "";
+$toname_arrow = "";
 
 if ($TLN->mail_protocol == IMAP || !$is_inbox_or_spam) {
     switch ($sortby) {
         case 'subject':
-            $subject_arrow    = $arrow;
+            $subject_arrow = $arrow;
             break;
         case 'fromname':
             $fromname_arrow = $arrow;
@@ -47,7 +47,7 @@ if ($TLN->mail_protocol == IMAP || !$is_inbox_or_spam) {
             $size_arrow = $arrow;
             break;
         case 'toname':
-            $toname_arrow    = $arrow;
+            $toname_arrow = $arrow;
             break;
     }
 }
@@ -93,9 +93,9 @@ if (!isset($pag) || !is_numeric(trim($pag))) {
     $pag = 1;
 }
 
-$reg_pp       = $prefs['rpp'];
+$reg_pp = $prefs['rpp'];
 $start_pos = ($pag-1)*$reg_pp;
-$end_pos   = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
+$end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
 
 if (($start_pos >= $end_pos) && ($pag != 1)) {
     redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
@@ -124,7 +124,7 @@ $jssource .= "
 <script type=\"text/javascript\">
 //<![CDATA[
 
-no_quota  = $jsquota;
+no_quota = $jsquota;
 quota_msg = '".preg_replace("|'|", "\\'", $quota_exceeded)."';
 function readmsg(ix,read) {
 	if(no_quota)

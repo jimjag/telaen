@@ -17,13 +17,13 @@ if (!isset($ix) || !isset($pag)) {
 
 $folderkey = base64_encode(strtolower($folder));
 
-$mysess            = $mbox['headers'][$folderkey];
-$mail_info        = $mysess[$ix];
-$arAttachment    = array();
+$mysess = $mbox['headers'][$folderkey];
+$mail_info = $mysess[$ix];
+$arAttachment = array();
 
 if (isset($attachment)) {
     $is_attached = true;
-    $arAttachment    = explode(',', $attachment);
+    $arAttachment = explode(',', $attachment);
 
     $TLN->current_level = $arAttachment;
 
@@ -69,9 +69,9 @@ $TLN->sanitize = ($sanitize_html || !$allow_scripts);
 $email = $TLN->Decode($result);
 
 if ($ix > 0) {
-    $umHavePrevious        = 1;
-    $umPreviousSubject    = $mysess[($ix-1)]['subject'];
-    $umPreviousLink        = 'readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=".($ix-1)."";
+    $umHavePrevious = 1;
+    $umPreviousSubject = $mysess[($ix-1)]['subject'];
+    $umPreviousLink = 'readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=".($ix-1)."";
 
     $smarty->assign('umHavePrevious', $umHavePrevious);
     $smarty->assign('umPreviousSubject', $umPreviousSubject);
@@ -79,9 +79,9 @@ if ($ix > 0) {
 }
 
 if ($ix < (count($mysess)-1)) {
-    $umHaveNext        = 1;
-    $umNextSubject    = $mysess[($ix+1)]['subject'];
-    $umNextLink        = 'readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=".($ix+1)."";
+    $umHaveNext = 1;
+    $umNextSubject = $mysess[($ix+1)]['subject'];
+    $umNextLink = 'readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=".($ix+1)."";
     $smarty->assign('umHaveNext', $umHaveNext);
     $smarty->assign('umNextSubject', $umNextSubject);
     $smarty->assign('umNextLink', $umNextLink);
@@ -90,7 +90,7 @@ if ($ix < (count($mysess)-1)) {
 // message download link
 $smarty->assign('downloadLink', 'download.php?folder='.urlencode($folder).'&ix='.$ix);
 
-$body    =    $email['body'];
+$body =    $email['body'];
 
 $redir_path = 'redir.php';    // why not just relative?? Now is relative (due to problems on https servers)!
 
@@ -101,14 +101,14 @@ $body = preg_replace('|href="mailto:|i', "target=\"_top\" href=\"newmsg.php?to="
 // looking for browser type	   --vola's note: add check for safari and opera??
 $uagent =    $_SERVER['HTTP_USER_AGENT'];
 
-$ns4    =    (preg_match('|Mozilla/4|', $uagent) && !preg_match('|MSIE|', $uagent) && !preg_match('|Gecko|', $uagent));
+$ns4 =    (preg_match('|Mozilla/4|', $uagent) && !preg_match('|MSIE|', $uagent) && !preg_match('|Gecko|', $uagent));
 $ns6moz =    preg_match('|Gecko|', $uagent);
-$ie4up    =    preg_match('/MSIE (4|5|6|7)/', $uagent);
-$other    =    (!$ns4 && !$ns6moz && !$ie4up);
+$ie4up =    preg_match('/MSIE (4|5|6|7)/', $uagent);
+$other =    (!$ns4 && !$ns6moz && !$ie4up);
 
 // with no recognized browser display inline on the page
 if ($other) {
-    $body    =    preg_replace('|<base|i', '<telaen_base_not_alowed',
+    $body =    preg_replace('|<base|i', '<telaen_base_not_alowed',
                 preg_replace('|<link|i', '<telaen_link_not_alowed',
                 $body));
 
@@ -267,7 +267,7 @@ if (count($anexos) > 0) {
     $attachAr = array();
 
     for ($i = 0;$i<count($anexos);$i++) {
-        $arAttachment[$nIndex]    = $i;
+        $arAttachment[$nIndex] = $i;
         $link1 = "download.php?folder=$folder&ix=$ix&attach=".join(',', $arAttachment)."";
         $link2 = "$link1&down=1";
 

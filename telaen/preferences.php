@@ -53,25 +53,25 @@ if (isset($_POST['action'])) {
 
     case 'savePrefs':
         // pick the new settings and save
-        $myprefs['real-name']        = $_POST['real_name'];
-        $myprefs['reply-to']        = $_POST['reply_to'];
-        $myprefs['save-to-trash']    = $_POST['save_trash'];
-        $myprefs['st-only-read']    = $_POST['st_only_read'];
-        $myprefs['empty-trash']        = $_POST['empty_trash_on_exit'];
-        $myprefs['empty-spam']        = $_POST['empty_spam_on_exit'];
-        $myprefs['unmark-read']        = $_POST['unmark_read_on_exit'];
-        $myprefs['save-to-sent']    = $_POST['save_sent'];
-        $myprefs['rpp']            = $_POST['rpp'];
-        $myprefs['add-sig']        = $_POST['add_sig'];
-        $myprefs['signature']        = $_POST['sig'];
-        $myprefs['timezone']        = $_POST['timezone'];
-        $myprefs['display-images']    = $_POST['display_images'];
-        $myprefs['editor-mode']        = $_POST['editor_mode'];
-        $myprefs['refresh-time']    = $_POST['refresh_time'];
-        $myprefs['first-login']        = 1;
-        $myprefs['spamlevel']        = $_POST['spamlevel'];
-        $myprefs['require-receipt']    = $_POST['require_receipt'];
-        $myprefs['version']        = $appversion;
+        $myprefs['real-name'] = $_POST['real_name'];
+        $myprefs['reply-to'] = $_POST['reply_to'];
+        $myprefs['save-to-trash'] = $_POST['save_trash'];
+        $myprefs['st-only-read'] = $_POST['st_only_read'];
+        $myprefs['empty-trash'] = $_POST['empty_trash_on_exit'];
+        $myprefs['empty-spam'] = $_POST['empty_spam_on_exit'];
+        $myprefs['unmark-read'] = $_POST['unmark_read_on_exit'];
+        $myprefs['save-to-sent'] = $_POST['save_sent'];
+        $myprefs['rpp'] = $_POST['rpp'];
+        $myprefs['add-sig'] = $_POST['add_sig'];
+        $myprefs['signature'] = $_POST['sig'];
+        $myprefs['timezone'] = $_POST['timezone'];
+        $myprefs['display-images'] = $_POST['display_images'];
+        $myprefs['editor-mode'] = $_POST['editor_mode'];
+        $myprefs['refresh-time'] = $_POST['refresh_time'];
+        $myprefs['first-login'] = 1;
+        $myprefs['spamlevel'] = $_POST['spamlevel'];
+        $myprefs['require-receipt'] = $_POST['require_receipt'];
+        $myprefs['version'] = $appversion;
         save_prefs($myprefs);
         unset($myprefs);
 
@@ -106,10 +106,10 @@ if (isset($_POST['action'])) {
 
         // add the filter
         $newFilter =  array(
-            'type'            => intval($_POST['filter_type']),
-            'field'            => intval($_POST['filter_field']),
-            'match'            => $match,
-            'moveto'        => $destFolder,
+            'type' => intval($_POST['filter_type']),
+            'field' => intval($_POST['filter_field']),
+            'match' => $match,
+            'moveto' => $destFolder,
         );
         array_push($filters, $newFilter);
 

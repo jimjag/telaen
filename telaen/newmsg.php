@@ -50,7 +50,7 @@ if (isset($tipo) && $tipo == 'send') {
         $mail->SetLanguage('en', 'langs/');
 
         // for password authenticated servers
-        $mail->SMTPAuth        = $use_password_for_smtp;
+        $mail->SMTPAuth = $use_password_for_smtp;
 
         // use user data or static data for smtp auth
         if ($smtp_static_auth) {
@@ -76,15 +76,15 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             $body .= $footer;
         }
 
-        $mail->CharSet        = $TLN->charset;
-        $mail->Hostname        = getenv('SERVER_NAME');
-        $mail->From        = ($allow_modified_from && !empty($prefs['reply-to'])) ? $prefs['reply-to'] : $auth['email'];
-        $mail->FromName        = $mail->encodeHeader($prefs['real-name']);
+        $mail->CharSet = $TLN->charset;
+        $mail->Hostname = getenv('SERVER_NAME');
+        $mail->From = ($allow_modified_from && !empty($prefs['reply-to'])) ? $prefs['reply-to'] : $auth['email'];
+        $mail->FromName = $mail->encodeHeader($prefs['real-name']);
         $mail->AddReplyTo($prefs['reply-to'], $TLN->mime_encode_headers($prefs['real-name']));
 
-        $mail->Host        = $smtp_server;
-        $mail->WordWrap        = 76;
-        $mail->Priority        = $priority;
+        $mail->Host = $smtp_server;
+        $mail->WordWrap = 76;
+        $mail->Priority = $priority;
 
         if ($smtp_debug) {
             $mail->SMTPDebug = true;
@@ -502,10 +502,10 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
         $msgsubject = $email['subject'];
 
-        $fromreply_quote    = $fromreply;
-        $toreply_quote        = $toreply;
-        $ccreply_quote        = $ccreply;
-        $msgsubject_quote    = $msgsubject;
+        $fromreply_quote = $fromreply;
+        $toreply_quote = $toreply;
+        $ccreply_quote = $ccreply;
+        $msgsubject_quote = $msgsubject;
 
         // re-add my address in the quoted message, why? look at line #412
         if (!empty($myToAdr)) {
@@ -525,13 +525,13 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         }
 
         if ($show_advanced) {
-            $fromreply_quote    = htmlspecialchars($fromreply_quote);
-            $toreply_quote        = htmlspecialchars($toreply_quote);
-            $ccreply_quote        = htmlspecialchars($ccreply_quote);
-            $msgsubject_quote    = htmlspecialchars($msgsubject_quote);
-            $linebreak            = '<br>';
+            $fromreply_quote = htmlspecialchars($fromreply_quote);
+            $toreply_quote = htmlspecialchars($toreply_quote);
+            $ccreply_quote = htmlspecialchars($ccreply_quote);
+            $msgsubject_quote = htmlspecialchars($msgsubject_quote);
+            $linebreak = '<br>';
         } else {
-            $tmpbody            = strip_tags($tmpbody);
+            $tmpbody = strip_tags($tmpbody);
             $quote_string = '> ';
             $tmpbody = $quote_string.preg_replace('|\n|', "\n$quote_string", $tmpbody);
         }
