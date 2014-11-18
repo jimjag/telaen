@@ -44,10 +44,13 @@ if (!isset($pag)) {
     $pag = 1;
 }
 
-define('FL_TYPE_MOVE', 1);
-define('FL_TYPE_DELETE', 2);
-define('FL_TYPE_MARK_READ', 4);
+define('FL_TYPE_MOVE',      (1 << 0));
+define('FL_TYPE_DELETE',    (1 << 1));
+define('FL_TYPE_MARK_READ', (1 << 2));
+define('FL_TYPE_SPAM',      (1 << 3));
 
-define('FL_FIELD_FROM', 1);
-define('FL_FIELD_SUBJECT', 2);
-define('FL_FIELD_TO', 4);
+define('FL_FIELD_FROM',    (1 << 0));
+define('FL_FIELD_SUBJECT', (1 << 1));
+define('FL_FIELD_TO',      (1 << 2));
+define('FL_FIELD_HEADER',  (1 << 3));
+define('FL_FIELD_BODY',    (1 << 4));

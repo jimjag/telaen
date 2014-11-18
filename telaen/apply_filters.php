@@ -47,6 +47,12 @@ if ($folder == 'inbox') {
                 case FL_FIELD_SUBJECT:
                     $match_text = ' '.$message['subject'];
                     break;
+                case FL_FIELD_HEADER:
+                    $match_text = ' '.$message['header'];
+                    break;
+                case FL_FIELD_BODY:
+                    $match_text = ' '.$message['body'];
+                    break;
                 case FL_FIELD_TO:
                     foreach ($message['to'] as $field) {
                         $match_text .= ' '.$field['name'].' '.$field['mail'];
