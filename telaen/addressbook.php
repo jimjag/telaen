@@ -148,7 +148,45 @@ switch ($opt) {
         $smarty->assign('umNew', 'addressbook.php?opt=new');
 
         $addresslist = array();
-        for ($i = 0;$i<count($addressbook);$i++) {
+        $nummsg = count($addressbook);
+        if (!isset($pag) || !is_numeric(trim($pag))) {
+            $pag = 1;
+        }
+
+        $reg_pp = $prefs['rpp'];
+        $start_pos = ($pag-1)*$reg_pp;
+        $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
+
+        if (($start_pos >= $end_pos) && ($pag != 1)) {
+            redirect_and_exit("addressbook.php?pag=".($pag-1)."");
+        }
+
+        if ($nummsg > 0) {
+            if ($pag > 1) {
+                $smarty->assign('umFirstLink', "addressbook.php?pag=1");
+                $smarty->assign('umPreviousLink', "addressbook.php?pag=".($pag-1)."");
+            }
+
+            for ($i = 1;$i <= ceil($nummsg / $reg_pp);$i++) {
+                if ($pag == $i) {
+                    $navigation .= "[<b>$i</b>] ";
+                } else {
+                    $navigation .= "<a href=\"addressbook.php?pag=$i\" class=\"navigation\">$i</a> ";
+                }
+            }
+
+            $totPages = ceil($nummsg / $reg_pp);
+            if ($end_pos < $nummsg) {
+                $smarty->assign('umNextLink', "addressbook.php?pag=".($pag+1)."");
+                $smarty->assign('umLastLink', "addressbook.php?&pag=".$totPages."");
+            }
+            $navigation .= " ($pag/".$totPages.")";
+        }
+
+        $smarty->assign('umNavBar', $navigation);
+
+
+        for ($i = $start_pos; $i < $end_pos; $i++) {
             $ind = count($addresslist);
             $addresslist[$ind]['viewlink'] = "addressbook.php?opt=display&id=$i";
             $addresslist[$ind]['composelink'] = "newmsg.php?nameto=".htmlspecialchars($addressbook[$i]['name'])."&mailto=".htmlspecialchars($addressbook[$i]['email'])."";

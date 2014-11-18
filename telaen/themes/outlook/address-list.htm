@@ -61,6 +61,16 @@
 
            </table>
 		 </td>
+        <td>
+            <table border=0 width=17px height=100% cellpadding=0 cellspacing=0>
+                <tr><td class="outer" width=17px height=17px>{if $umPreviousLink}<a href="{$umPreviousLink}"><img border='0' src="themes/outlook/images/scrollbar_up.gif"></a>{else}<img src="themes/outlook/images/scrollbar_up_off.gif">{/if}</td></tr>
+                {if $umPreviousLink}<tr><td class="scrollbar_path" onclick="javascript:location='{$umPreviousLink}'">&nbsp;</td></tr>{/if}
+                {if $umPreviousLink || $umNextLink}<tr><td width=17px height=75px class="outer"><img src="themes/outlook/images/scrollbar_handler.gif"></td></tr>
+                {else}<tr><td height=100% class="scrollbar_path">&nbsp;</td></tr>{/if}
+                {if $umNextLink}<tr><td class="scrollbar_path" onclick="javascript:location='{$umNextLink}'">&nbsp;</td></tr>{/if}
+                <tr><td class="outer" width=17px height=17px >{if $umNextLink}<a href="{$umNextLink}"><img border='0' src="themes/outlook/images/scrollbar_down.gif"></a>{else}<img src="themes/outlook/images/scrollbar_down_off.gif">{/if}</tr>
+            </table>
+        </td>
 	</tr>
 	</form>
 	<tr>

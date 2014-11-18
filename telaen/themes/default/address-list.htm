@@ -23,7 +23,7 @@
 						<td width="10%" class="headers">{#adr_dele_hea#}</td>
 					</tr>
 					{section name=i loop=$umAddressList}
-					<tr>
+                    <tr>
 						<td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].viewlink}">{$umAddressList[i].name}</a></td>
 							<td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].composelink}">{$umAddressList[i].email}</a></td>
 							<td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].editlink}">OK</a></td>
@@ -33,6 +33,9 @@
 							<td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].dellink}">OK</a></td>
 					</tr>
 					{/section}
+                    <tr>
+                        <td colspan="3" class="default">&nbsp;{#pages_text#}:&nbsp;{if $umPreviousLink}<a href="{$umPreviousLink}" class="navigation">{#previous_text#}</a> &nbsp;{/if}{$umNavBar}{if $umNextLink} &nbsp;<a href="{$umNextLink}" class="navigation">{#next_text#}</a>{/if}</td>
+                    </tr>
 					<tr><td colspan="3" align="center"><br><form><input type="button" value="{#adr_new_entry#}" class="button" onclick="location = '{$umNew}'"></form></td></tr>
 				</table>
 

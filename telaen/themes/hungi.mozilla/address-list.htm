@@ -26,6 +26,15 @@
 		</tr>						
 				
 		{/section}
+        <tr>
+            <td colspan="4" class="default">&nbsp;&nbsp;<span class="menu"><b>{#pages_text#}:</b></span>
+            {if $umPreviousLink}<!--<a href="{$umFirstLink}" class="navigation">&laquo; {#first_text#}</a>&nbsp; -->
+            <a href="{$umPreviousLink}" class="navigation">&laquo; {#previous_text#}</a>&nbsp;{/if}
+            {$umNavBar}
+            {if $umNextLink}&nbsp;<a href="{$umNextLink}" class="navigation">{#next_text#} &raquo;</a>
+            <!--&nbsp;<a href="{$umLastLink}" class="navigation">{#last_text#} &raquo;</a>-->{/if}
+            </td>
+        </tr>
 		<tr>
 			<td colspan="4" class="usage">
 			<center>
