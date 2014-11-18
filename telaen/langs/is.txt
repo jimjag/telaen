@@ -237,6 +237,8 @@ filter_list					= Current filters
 filter_field_from                               = From
 filter_field_to                                 = To
 filter_field_subject				= Subject
+filter_field_header = Header
+filter_field_body = Body
 
 filter_type_move                                = Move
 filter_type_delete                              = Delete
@@ -328,6 +330,9 @@ adr_state					= Land
 adr_work					= Vinna
 adr_back					= Til baka
 adr_save					= Vista
+adr_phone = Phone
+adr_cell = Cell
+adr_note = Notes
 
 # list
 

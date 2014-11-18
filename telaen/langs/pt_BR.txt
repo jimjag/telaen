@@ -252,6 +252,8 @@ filter_list                                     = Filtros Atuais
 filter_field_from                               = De:
 filter_field_to                                 = Para:
 filter_field_subject                            = Assunto:
+filter_field_header = Header
+filter_field_body = Body
 
 filter_type_move                                = Mover
 filter_type_delete                              = Apagar
@@ -345,6 +347,9 @@ adr_state					= UF
 adr_work					= Profissão
 adr_back					= Voltar
 adr_save					= Salvar
+adr_phone = Phone
+adr_cell = Cell
+adr_note = Notes
 
 # list
 

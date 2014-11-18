@@ -305,6 +305,9 @@ adr_state						= Negeri
 adr_work						= Pekerjaan
 adr_back						= Kembali
 adr_save						= Simpan
+adr_phone = Phone
+adr_cell = Cell
+adr_note = Notes
 
 # list
 adr_name_hea					= Nama

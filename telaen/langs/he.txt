@@ -223,6 +223,8 @@ filter_list					= Current filters
 filter_field_from                               = From
 filter_field_to                                 = To
 filter_field_subject				= Subject
+filter_field_header = Header
+filter_field_body = Body
 
 filter_type_move                                = Move
 filter_type_delete                              = Delete
@@ -309,6 +311,9 @@ adr_state						= מדינה
 adr_work						= עבודה
 adr_back						= חזרה
 adr_save						= שמור
+adr_phone = Phone
+adr_cell = Cell
+adr_note = Notes
 
 # list
 adr_name_hea					= שם

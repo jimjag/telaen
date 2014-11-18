@@ -239,6 +239,8 @@ filter_list = ตัวกรองปัจจุบัน
 filter_field_from = จาก
 filter_field_to = ถึง
 filter_field_subject = หัวข้อ
+filter_field_header = Header
+filter_field_body = Body
 
 filter_type_move = ย้าย
 filter_type_delete = ลบ
@@ -330,6 +332,9 @@ adr_state = อำเภอ
 adr_work = งาน
 adr_back = กลับ
 adr_save = จัดเก็บ
+adr_phone = Phone
+adr_cell = Cell
+adr_note = Notes
 
 # list
 

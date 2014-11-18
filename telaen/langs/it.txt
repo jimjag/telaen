@@ -246,6 +246,8 @@ filter_list					= Filtri correnti
 filter_field_from                               = Da
 filter_field_to                                 = Per
 filter_field_subject				= Oggetto
+filter_field_header = Header
+filter_field_body = Body
 
 filter_type_move                                = Sposta
 filter_type_delete                              = Cancella
@@ -338,6 +340,9 @@ adr_state					= Stato
 adr_work					= Impiego
 adr_back					= Indietro
 adr_save					= Salva
+adr_phone = Phone
+adr_cell = Cell
+adr_note = Notes
 
 # list
 

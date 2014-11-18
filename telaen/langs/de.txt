@@ -228,6 +228,8 @@ filter_list					           = Angelegte Nachrichtenfilter
 filter_field_from              = Von
 filter_field_to                = An
 filter_field_subject				   = Betreff
+filter_field_header = Header
+filter_field_body = Body
 
 filter_type_move               = Verschieben
 filter_type_delete             = Löschen
@@ -319,6 +321,9 @@ adr_state					             = Bundesland:
 adr_work					             = Telefon:
 adr_back					             = Zurück
 adr_save					             = Speichern
+adr_phone = Phone
+adr_cell = Cell
+adr_note = Notes
 
 # list
 

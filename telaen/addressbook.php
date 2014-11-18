@@ -40,7 +40,8 @@ $smarty->assign('umJS', $jssource);
 $smarty->assign('umGoBack', 'addressbook.php');
 
 extract(pull_from_array($_GET, array('opt'), 'str'));
-extract(pull_from_array($_POST, array('name', 'email', 'street', 'city', 'state', 'work', 'opt'), 'str'));
+extract(pull_from_array($_POST, array('name', 'email', 'street', 'city', 'state', 'work', 'phone',
+    'cell', 'note', 'opt'), 'str'));
 extract(pull_from_array($_GET, array('id'), 1));
 extract(pull_from_array($_POST, array('id'), 1));
 
@@ -54,6 +55,9 @@ switch ($opt) {
         $addressbook[$id]['city'] = $city;
         $addressbook[$id]['state'] = $state;
         $addressbook[$id]['work'] = $work;
+        $addressbook[$id]['phone'] = $phone;
+        $addressbook[$id]['cell'] = $cell;
+        $addressbook[$id]['note'] = $note;
 
         $TLN->save_file($filename, base64_encode(serialize($addressbook)));
 
@@ -71,6 +75,9 @@ switch ($opt) {
         $addressbook[$id]['city'] = $city;
         $addressbook[$id]['state'] = $state;
         $addressbook[$id]['work'] = $work;
+        $addressbook[$id]['phone'] = $phone;
+        $addressbook[$id]['cell'] = $cell;
+        $addressbook[$id]['note'] = $note;
 
         $TLN->save_file($filename, base64_encode(serialize($addressbook)));
 
@@ -103,6 +110,9 @@ switch ($opt) {
         $smarty->assign('umAddrCity', $addressbook[$id]['city']);
         $smarty->assign('umAddrState', $addressbook[$id]['state']);
         $smarty->assign('umAddrWork', $addressbook[$id]['work']);
+        $smarty->assign('umAddrPhone', $addressbook[$id]['phone']);
+        $smarty->assign('umAddrCell', $addressbook[$id]['cell']);
+        $smarty->assign('umAddrNote', $addressbook[$id]['note']);
         $smarty->assign('umOpt', 'save');
         $smarty->assign('umAddrID', $id);
         $templatename = 'address-form.htm';
@@ -118,6 +128,9 @@ switch ($opt) {
         $smarty->assign('umAddrCity', $addressbook[$id]['city']);
         $smarty->assign('umAddrState', $addressbook[$id]['state']);
         $smarty->assign('umAddrWork', $addressbook[$id]['work']);
+        $smarty->assign('umAddrPhone', $addressbook[$id]['phone']);
+        $smarty->assign('umAddrCell', $addressbook[$id]['cell']);
+        $smarty->assign('umAddrNote', $addressbook[$id]['note']);
 
         $smarty->assign('umAddrID', $id);
         $templatename = 'address-display.htm';

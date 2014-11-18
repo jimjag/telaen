@@ -221,6 +221,8 @@ filter_list					= Current filters
 filter_field_from                               = From
 filter_field_to                                 = To
 filter_field_subject				= Subject
+filter_field_header = Header
+filter_field_body = Body
 
 filter_type_move                                = Move
 filter_type_delete                              = Delete
@@ -308,6 +310,9 @@ adr_state						= 전화번호2
 adr_work						= 기타사항
 adr_back						= 뒤로
 adr_save						= 저장
+adr_phone = Phone
+adr_cell = Cell
+adr_note = Notes
 
 # list
 adr_name_hea					= 이름
