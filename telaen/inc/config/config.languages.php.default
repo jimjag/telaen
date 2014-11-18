@@ -6,10 +6,10 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 # Language & themes settings
 ########################################################################
 
-$allow_user_change_theme			= yes; //allow users select theme
-$default_theme						= 'default'; //index of theme, starting with zero
-$allow_user_change_language			= yes; //allow users select language
-$default_language					= 'en_US'; //index of language, starting with zero
+$allow_user_change_theme = yes; //allow users select theme
+$default_theme = 'default'; //index of theme, starting with zero
+$allow_user_change_language = yes; //allow users select language
+$default_language = 'en_US'; //index of language, starting with zero
 
 # Themes
 $themes = array(
@@ -22,7 +22,7 @@ $themes = array(
 # Languages
 
 $language = array(
-    ['afr'] => 'Afrikaans'],
+    ['afr' => 'Afrikaans'],
     ['sq_AL' => 'Albanian (Shqip)'],
     ['ar'    => 'Arabic (العربية)'],
     ['hy_AM' => 'Armenian (Հայերեն)'],
@@ -33,7 +33,6 @@ $language = array(
     ['bs_BA' => 'Bosnian (Bosanski)'],
     ['bg_BG' => 'Bulgarian (Български)'],
     ['ca_ES' => 'Catalan (Català)'],
-    ['ceb' => 'Cebuano'],
     ['zh' => 'Chinese (简体中文)'],
     ['hr_HR' => 'Croatian (Hrvatski)'],
     ['cs_CZ' => 'Czech (Česky)'],
@@ -87,13 +86,11 @@ $language = array(
     ['es_ES' => 'Spanish (Español)'],
     ['swh' => 'Swahili'],
     ['sv_SE' => 'Swedish (Svenska)'],
-    ['ta_IN' => 'Tamil (தமிழ்)'],
     ['th_TH' => 'Thai (ไทย)'],
     ['tr_TR' => 'Turkish (Türkçe)'],
     ['uk_UA' => 'Ukrainian (Українська)'],
     ['ur_PK' => 'Urdu (اُردو)'],
     ['vi_VN' => 'Vietnamese (Tiếng Việt)'],
-    ['cy_GB' => 'Welsh (Cymraeg)'],
     ['xwg' => 'Yiddish'],
     ['yor' => 'Yoruba'],
     ['zul' => 'Zulu']
