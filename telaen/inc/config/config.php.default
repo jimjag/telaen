@@ -434,4 +434,3 @@ $smtp_debug = no;
 $log_errors = yes;
 $log_fname = 'telaen_error.log';
 
-?>

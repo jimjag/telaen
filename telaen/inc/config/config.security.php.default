@@ -50,4 +50,3 @@ $enable_cookies			= yes;
 $default_umask = 0077;
 $dirperm = 0700;
 
-?>

@@ -7,151 +7,95 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 ########################################################################
 
 $allow_user_change_theme			= yes; //allow users select theme
-$default_theme						= 0; //index of theme, starting with zero
+$default_theme						= 'default'; //index of theme, starting with zero
 $allow_user_change_language			= yes; //allow users select language
-$default_language					= 5; //index of language, starting with zero
+$default_language					= 'en_US'; //index of language, starting with zero
 
 # Themes
-
-$themes[] = Array(
-	"name" 		=> "Telaen Default",
-	"path" 		=> "default"
-);
-
-$themes[] = Array(
-        "name"          => "Hungi Mozilla",
-        "path"          => "hungi.mozilla"
-);
-
-$themes[] = Array(
-        "name"          => "Outlook",
-        "path"          => "outlook"
+$themes = array(
+    ['default' => 'Telaen Default'],
+    ['hungi.mozilla' => 'Hungi Mozilla'],
+    ['outlook' => 'MS Outlook'],
+    ['jagumail' => 'jaguMail']
 );
 
 # Languages
 
-$languages[] = Array(
-	"name" 		=> "Bulgarian",
-	"path"	 	=> "bg"
+$language = array(
+    ['afr'] => 'Afrikaans'],
+    ['sq_AL' => 'Albanian (Shqip)'],
+    ['ar'    => 'Arabic (العربية)'],
+    ['hy_AM' => 'Armenian (Հայերեն)'],
+    ['az_AZ' => 'Azerbaijani (Azərbaycanca)'],
+    ['eu_ES' => 'Basque (Euskara)'],
+    ['be_BE' => 'Belarusian (беларуская мова)'],
+    ['bn_BD' => 'Bengali (বাংলা)'],
+    ['bs_BA' => 'Bosnian (Bosanski)'],
+    ['bg_BG' => 'Bulgarian (Български)'],
+    ['ca_ES' => 'Catalan (Català)'],
+    ['ceb' => 'Cebuano'],
+    ['zh' => 'Chinese (简体中文)'],
+    ['hr_HR' => 'Croatian (Hrvatski)'],
+    ['cs_CZ' => 'Czech (Česky)'],
+    ['da_DK' => 'Danish (Dansk)'],
+    ['nl_NL' => 'Dutch (Nederlands)'],
+    ['en_US' => 'English (US)'],
+    ['eo'    => 'Esperanto'],
+    ['et_EE' => 'Estonian (Eesti)'],
+    ['fo_FO' => 'Faroese (Føroyskt)'],
+    ['fil' => 'Filipino'],
+    ['fi_FI' => 'Finnish (Suomi)'],
+    ['fr_FR' => 'French (Français)'],
+    ['gl_ES' => 'Galician (Galego)'],
+    ['ka_GE' => 'Georgian (ქართული)'],
+    ['de_DE' => 'German (Deutsch)'],
+    ['el_GR' => 'Greek (Ελληνικά)'],
+    ['hat' => 'Haitian Creole'],
+    ['he_IL' => 'Hebrew (עברית)'],
+    ['hi_IN' => 'Hindi (हिनदी)'],
+    ['hu_HU' => 'Hungarian (Magyar)'],
+    ['is_IS' => 'Icelandic (Íslenska)'],
+    ['id_ID' => 'Indonesian (Bahasa Indonesia)'],
+    ['ga_IE' => 'Irish (Gaedhilge)'],
+    ['it_IT' => 'Italian (Italiano)'],
+    ['ja_JP' => 'Japanese (日本語)'],
+    ['kan' => 'Kannada'],
+    ['km_KH' => 'Khmer (ភាសាខ្មែរ)'],
+    ['ko_KR' => 'Korean (한국어)'],
+    ['ku'    => 'Kurdish (Kurmancî)'],
+    ['lao' => 'Lao'],
+    ['lv_LV' => 'Latvian (Latviešu)'],
+    ['lt_LT' => 'Lithuanian (Lietuviškai)'],
+    ['mk_MK' => 'Macedonian (Македонски)'],
+    ['ms_MY' => 'Malay (Bahasa Melayu)'],
+    ['ml_IN' => 'Malayalam (മലയാളം)'],
+    ['mlt' => 'Maltese'],
+    ['mri' => 'Maori'],
+    ['mr_IN' => 'Marathi (मराठी)'],
+    ['khk' => 'Mongolian'],
+    ['ne_NP' => 'Nepali (नेपाली)'],
+    ['nb_NO' => 'Norwegian (Bokmål)'],
+    ['fa_IR' => 'Persian (فارسی)'],
+    ['pl_PL' => 'Polish (Polski)'],
+    ['pt_PT' => 'Portuguese (Português)'],
+    ['ro_RO' => 'Romanian (Româneşte)'],
+    ['ru_RU' => 'Russian (Русский)'],
+    ['sr_CS' => 'Serbian (Српски)'],
+    ['sk_SK' => 'Slovak (Slovenčina)'],
+    ['sl_SI' => 'Slovenian (Slovenščina)'],
+    ['som' => 'Somali'],
+    ['es_ES' => 'Spanish (Español)'],
+    ['swh' => 'Swahili'],
+    ['sv_SE' => 'Swedish (Svenska)'],
+    ['ta_IN' => 'Tamil (தமிழ்)'],
+    ['th_TH' => 'Thai (ไทย)'],
+    ['tr_TR' => 'Turkish (Türkçe)'],
+    ['uk_UA' => 'Ukrainian (Українська)'],
+    ['ur_PK' => 'Urdu (اُردو)'],
+    ['vi_VN' => 'Vietnamese (Tiếng Việt)'],
+    ['cy_GB' => 'Welsh (Cymraeg)'],
+    ['xwg' => 'Yiddish'],
+    ['yor' => 'Yoruba'],
+    ['zul' => 'Zulu']
 );
 
-$languages[] = Array(
-	"name" 		=> "Czech",
-	"path"	 	=> "cz_iso"
-);
-
-$languages[] = Array(
-	"name" 		=> "Chinese Traditional (BIG5)",
-	"path"	 	=> "ch_big5"
-);
-
-$languages[] = Array(
-	"name" 		=> "Dutch (Netherlands)",
-	"path" 		=> "nl"
-);
-
-$languages[] = Array(
-	"name" 		=> "Danish",
-	"path" 		=> "dk"
-);
-
-$languages[] = Array(
-	"name" 		=> "English",
-	"path" 		=> "en_UK"
-);
-
-$languages[] = Array(
-	"name" 		=> "Espa�ol",
-	"path" 		=> "es"
-);
-
-$languages[] = Array(
-	"name" 		=> "French",
-	"path" 		=> "fr"
-);
-
-$languages[] = Array(
-	"name" 		=> "German",
-	"path" 		=> "de"
-);
-
- 
-$languages[] = Array(
-	"name" 		=> "Hebrew",
-	"path" 		=> "he"
-);
-
-$languages[] = Array(
-	"name" 		=> "Hungarian",
-	"path" 		=> "hu"
-);
-
-$languages[] = Array(
-	"name" 		=> "Italian",
-	"path" 		=> "it"
-);
-
-$languages[] = Array(
-	"name" 		=> "Icelandic",
-	"path" 		=> "is"
-);
-
-
-$languages[] = Array(
-        "name"          => "Korean",
-        "path"          => "ko"
-);
-
-$languages[] = Array(
-        "name"          => "Malay",
-        "path"          => "ms"
-);
-
-$languages[] = Array(
-	"name" 		=> "Norwegian",
-	"path" 		=> "nb"
-);
-
-$languages[] = Array(
-	"name" 		=> "Polish",
-	"path" 		=> "pl"
-);
-
-$languages[] = Array(
-	"name" 		=> "Portuguese",
-	"path" 		=> "pt_BR"
-);
-
-$languages[] = Array(
-	"name" 		=> "Romenian",
-	"path" 		=> "ro"
-);
-
-$languages[] = Array(
-	"name" 		=> "Russian",
-	"path" 		=> "ru"
-);
-
-
-$languages[] = Array(
-	"name" 		=> "Russian (KOI8)",
-	"path" 		=> "ru_KOI"
-);
-
-
-$languages[] = Array(
-	"name" 		=> "Swedish",
-	"path"	 	=> "se"
-);
-
-$languages[] = Array(
-	"name" 		=> "Thailand",
-	"path" 		=> "th"
-);
-
-$languages[] = Array(
-	"name" 		=> "Turkish",
-	"path" 		=> "tr"
-);
-
-?>
