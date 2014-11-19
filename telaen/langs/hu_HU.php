@@ -20,12 +20,12 @@ $lang['last_text'] = 'Last';
 $lang['total_text'] = 'Total';
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error';
-$lang['err_system_msg'] = 'System error';
-$lang['error_login'] = 'Please check your username or password and try again';
+$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
+$lang['err_system_msg'] = 'System error'; // FIXME: need translation
+$lang['error_login'] = 'Please check your username or password and try again'; // FIXME: need translation
 $lang['error_connect'] = 'Nem siker¸lt a POP szerverhez kapcsolÛd·s.';
 $lang['error_retrieving'] = 'Az ¸zenet nem lett letˆltve.';
-$lang['error_session_expired'] = 'Your session is expired, please login again';
+$lang['error_session_expired'] = 'Your session is expired, please login again'; // FIXME: need translation
 $lang['error_other'] = 'V·ratlan hiba tˆrtÈnt. LÈpj kapcsolatba az adminisztr·torral.';
 
 // Invalid name of mailbox
@@ -207,40 +207,40 @@ $lang['prf_default_editor_mode'] = 'Szerkesztı tÌpusa';
 $lang['prf_default_editor_mode_text'] = '"Sima szˆveg"';
 $lang['prf_default_editor_mode_html'] = '"HTML szerkesztı"';
 $lang['prf_time_to_refesh'] = 'BeÈrkezett ¸zenetek automatikus frissÌtÈse (perc)';
-$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)';
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default';
+$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
+$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
 
-$lang['prf_msg_saved'] = 'Preferences saved';
+$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
-$lang['filter_title'] = 'Filters';
+$lang['filter_title'] = 'Filters'; // FIXME: need translation
 
-$lang['filter_new'] = 'Create a filter';
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages';
-$lang['filter_list'] = 'Current filters';
+$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
+$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
+$lang['filter_list'] = 'Current filters'; // FIXME: need translation
 
-$lang['filter_field_from'] = 'From';
-$lang['filter_field_to'] = 'To';
-$lang['filter_field_subject'] = 'Subject';
-$lang['filter_field_header'] = 'Header';
-$lang['filter_field_body'] = 'Body';
+$lang['filter_field_from'] = 'From'; // FIXME: need translation
+$lang['filter_field_to'] = 'To'; // FIXME: need translation
+$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
+$lang['filter_field_header'] = 'Header'; // FIXME: need translation
+$lang['filter_field_body'] = 'Body'; // FIXME: need translation
 
-$lang['filter_type_move'] = 'Move';
-$lang['filter_type_delete'] = 'Delete';
-$lang['filter_type_mark'] = 'Mark read';
+$lang['filter_type_move'] = 'Move'; // FIXME: need translation
+$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
 
-$lang['filter_add'] = 'Add filter';
-$lang['filter_delete'] = 'Delete';
-$lang['filter_delete_selected'] = 'Delete selected filters';
+$lang['filter_add'] = 'Add filter'; // FIXME: need translation
+$lang['filter_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
 
-$lang['filter_field'] = 'Filter on field';
-$lang['filter_match'] = 'Search for';
-$lang['filter_type'] = 'Action';
-$lang['filter_folder'] = 'Destination folder';
+$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
+$lang['filter_match'] = 'Search for'; // FIXME: need translation
+$lang['filter_type'] = 'Action'; // FIXME: need translation
+$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
 
-$lang['filter_msg_nofilters'] = 'No filters available.';
-$lang['filter_msg_added'] = 'Filter added';
-$lang['filter_msg_deleted'] = 'Filter deleted';
+$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
+$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
+$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
 
 
 // [Catch]
@@ -335,9 +335,9 @@ $lang['blk_close'] = 'Bez·r';
 $lang['blk_save'] = 'Ment';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = 'MentÈs';
 $lang['evt_delete'] = 'TˆrlÈs';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 

@@ -309,9 +309,9 @@ $lang['adr_state'] = 'Bundesland:';
 $lang['adr_work'] = 'Telefon:';
 $lang['adr_back'] = 'Zurück';
 $lang['adr_save'] = 'Speichern';
-$lang['adr_phone'] = 'Phone';
-$lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_cell'] = 'Cell'; // FIXME: need translation
+$lang['adr_note'] = 'Notes'; // FIXME: need translation
 
 // list
 $lang['adr_name_hea'] = 'Name';
@@ -335,9 +335,9 @@ $lang['blk_close'] = 'Schließen';
 $lang['blk_save'] = 'Speichern';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = 'Speichern';
 $lang['evt_delete'] = 'Entfernen';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 

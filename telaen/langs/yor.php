@@ -133,15 +133,15 @@ $lang['msg_in_the_folder'] = 'ni awọn folda';
 
 
 // [Login]
-$lang['lgn_title'] = 'Login';
+$lang['lgn_title'] = 'Login'; // FIXME: need translation
 $lang['lgn_welcome_msg'] = 'Kaabo, jọwọ buwolu sinu àkọọlẹ rẹ';
 $lang['lng_user_email'] = 'E-mail';
 $lang['lng_user_name'] = 'Orukọ olumulo';
 $lang['lng_user_pwd'] = 'Ọrọigbaniwọle';
-$lang['lng_server'] = 'Server';
+$lang['lng_server'] = 'Server'; // FIXME: need translation
 $lang['lng_theme'] = 'Akori';
 $lang['lng_language'] = 'Ede';
-$lang['lng_login_btn'] = 'Login & gt; & gt;';
+$lang['lng_login_btn'] = 'Login &gt;&gt;';
 $lang['lng_cookie_not_enabled'] = 'Cookies gbọdọ wa ni sise';
 $lang['lng_cookie_not_valid'] = 'kukisi Aabo Ṣayẹwo kùnà';
 
@@ -157,7 +157,7 @@ $lang['address_tip'] = 'Lati adirẹsi iwe';
 
 $lang['attach_hea'] = 'Asomọ:';
 $lang['attch_add_new'] = 'So titun faili';
-$lang['attch_name_hea'] = 'Name';
+$lang['attch_name_hea'] = 'Name'; // FIXME: need translation
 $lang['attch_size'] = 'Iwon';
 $lang['attch_type_hea'] = 'Iru';
 $lang['attch_dele_hea'] = 'Pa';
@@ -168,8 +168,8 @@ $lang['send_text'] = 'Fi';
 
 $lang['result_error'] = 'O je ko ṣee ṣe lati fi yi e-mail';
 $lang['result_success'] = 'e-mail yi ti a ti rán';
-$lang['nav_continue'] = '& LT: & LT; Tẹsiwaju & gt; & gt; ';
-$lang['nav_back'] = 'Back';
+$lang['nav_continue'] = '&lt;&lt; Tẹsiwaju &gt;&gt;';
+$lang['nav_back'] = 'Back'; // FIXME: need translation
 
 $lang['up_title'] = 'Fi faili';
 $lang['up_information_text'] = 'Yan faili';
@@ -189,8 +189,8 @@ $lang['prf_name'] = 'Name';
 $lang['prf_reply_to'] = 'Esi to';
 $lang['prf_time_zone'] = 'Time ibi kan';
 $lang['prf_trash_title'] = 'Ile ile';
-$lang['prf_save_to_trash'] = 'Nigbati o <b> pa </ b> ifiranṣẹ kan, o si gbe';
-$lang['prf_save_only_read'] = 'Fi nikan <b> ka awọn ifiranṣẹ </ b> ni';
+$lang['prf_save_to_trash'] = 'Nigbati o <b> pa </b> ifiranṣẹ kan, o si gbe';
+$lang['prf_save_only_read'] = 'Fi nikan <b> ka awọn ifiranṣẹ </b> ni';
 $lang['prf_empty_on_exit'] = '<b> sofo </ b> idọti folda nigba ti o logout';
 $lang['prf_empty_spam_on_exit'] = '<b> sofo </ b> idoti folda nigba ti o logout';
 $lang['prf_unmark_read_on_exit'] = 'Tun ka awọn ifiranṣẹ bi aika nigbati o logout';
@@ -235,7 +235,7 @@ $lang['filter_delete_selected'] = 'Pa ti a ti yan Ajọ';
 
 $lang['filter_field'] = 'Àlẹmọ lori aaye';
 $lang['filter_match'] = 'Search fun';
-$lang['filter_type'] = 'Action';
+$lang['filter_type'] = 'Action'; // FIXME: need translation
 $lang['filter_folder'] = 'nlo folda';
 
 $lang['filter_msg_nofilters'] = 'Ko si Ajọ wa.';
@@ -246,16 +246,16 @@ $lang['filter_msg_deleted'] = 'Àlẹmọ paarẹ';
 // [Catch]
 $lang['ctc_title'] = 'Fikun lati koju iwe';
 $lang['ctc_information'] = 'nikan fihan e-leta ti o wa ni ko si ni awọn adirẹsi iwe';
-$lang['ctc_name'] = 'Name';
+$lang['ctc_name'] = 'Name'; // FIXME: need translation
 $lang['ctc_email'] = 'E-mail';
 $lang['ctc_no_address'] = 'Ko si adirẹsi wa';
-$lang['ctc_close'] = 'Close';
+$lang['ctc_close'] = 'Close'; // FIXME: need translation
 $lang['ctc_save'] = 'Fipamọ';
 
 // [Readmsg]
-$lang['next_mnu'] = 'Next';
+$lang['next_mnu'] = 'Next'; // FIXME: need translation
 $lang['previous_mnu'] = 'Táa';
-$lang['back_mnu'] = 'Back';
+$lang['back_mnu'] = 'Back'; // FIXME: need translation
 $lang['reply_mnu'] = 'Fesi';
 $lang['reply_all_mnu'] = 'Esi si gbogbo';
 $lang['forward_mnu'] = 'Dari';
@@ -263,8 +263,8 @@ $lang['headers_mnu'] = 'akọsori';
 $lang['move_mnu'] = 'Gbe si';
 $lang['move_to_trash_mnu'] = 'Gbe si Ile ile';
 $lang['delete_mnu'] = 'Parẹ';
-$lang['print_mnu'] = 'Print';
-$lang['download_mnu'] = 'Download';
+$lang['print_mnu'] = 'Print'; // FIXME: need translation
+$lang['download_mnu'] = 'Download'; // FIXME: need translation
 
 $lang['from_hea'] = 'Lati:';
 $lang['to_hea'] = 'Lati:';
@@ -273,8 +273,8 @@ $lang['date_hea'] = 'Ọjọ:';
 $lang['subject_hea'] = 'Koko:';
 $lang['attach_hea'] = 'Asomọ:';
 
-$lang['attch_name_hea'] = 'Name';
-$lang['attch_force_hea'] = 'Download';
+$lang['attch_name_hea'] = 'Name'; // FIXME: need translation
+$lang['attch_force_hea'] = 'Download'; // FIXME: need translation
 $lang['attch_type_hea'] = 'Iru';
 $lang['attch_size_hea'] = 'Iwon';
 $lang['catch_address'] = 'Fikun lati koju iwe';
@@ -301,20 +301,20 @@ $lang['qad_bcc'] = 'Bcc';
 // [AddressBook]
 // edit/display
 $lang['adr_title'] = 'Adirẹsi iwe';
-$lang['adr_name'] = 'Name';
+$lang['adr_name'] = 'Name'; // FIXME: need translation
 $lang['adr_email'] = 'E-mail';
-$lang['adr_street'] = 'Street';
-$lang['adr_city'] = 'City';
-$lang['adr_state'] = 'State';
+$lang['adr_street'] = 'Street'; // FIXME: need translation
+$lang['adr_city'] = 'City'; // FIXME: need translation
+$lang['adr_state'] = 'State'; // FIXME: need translation
 $lang['adr_work'] = 'Ise';
-$lang['adr_back'] = 'Back';
+$lang['adr_back'] = 'Back'; // FIXME: need translation
 $lang['adr_save'] = 'Fipamọ';
 $lang['adr_phone'] = 'foonu';
-$lang['adr_cell'] = 'Cell';
+$lang['adr_cell'] = 'Cell'; // FIXME: need translation
 $lang['adr_note'] = 'akọsilẹ';
 
 // list
-$lang['adr_name_hea'] = 'Name';
+$lang['adr_name_hea'] = 'Name'; // FIXME: need translation
 $lang['adr_email_hea'] = 'E-mail';
 $lang['adr_edit_hea'] = 'Ṣatunkọ';
 $lang['adr_expo_hea'] = 'si ilẹ';
@@ -331,7 +331,7 @@ $lang['blk_title'] = 'Block Olu';
 $lang['blk_information'] = 'nikan fihan e-leta ti o wa ni ko si ni awọn àlẹmọ sibẹsibẹ';
 $lang['blk_email'] = 'E-mail';
 $lang['blk_no_address'] = 'Ko si adirẹsi wa';
-$lang['blk_close'] = 'Close';
+$lang['blk_close'] = 'Close'; // FIXME: need translation
 $lang['blk_save'] = 'Fipamọ';
 
 // [Event]

@@ -65,9 +65,9 @@ $lang['default_char_set'] = 'iso-8859-1';
 
 // Menu
 $lang['messages_mnu'] = 'Messaggi';
-$lang['read_menu'] = 'Read E-Mail(s)';
+$lang['read_menu'] = 'Read E-Mail(s)'; // FIXME: need translation
 $lang['compose_mnu'] = 'Scrivi';
-$lang['refresh_mnu'] = 'Refresh';
+$lang['refresh_mnu'] = 'Refresh'; // FIXME: need translation
 $lang['folders_mnu'] = 'Cartelle';
 $lang['search_mnu'] = 'Cerca';
 $lang['address_mnu'] = 'Agenda';
@@ -327,17 +327,17 @@ $lang['addr_deleted'] = 'Il contatto è stato eliminato';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender';
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_title'] = 'Block sender'; // FIXME: need translation
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'E-mail';
-$lang['blk_no_address'] = 'No address available';
-$lang['blk_close'] = 'Close';
-$lang['blk_save'] = 'Save';
+$lang['blk_no_address'] = 'No address available'; // FIXME: need translation
+$lang['blk_close'] = 'Close'; // FIXME: need translation
+$lang['blk_save'] = 'Save'; // FIXME: need translation
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = 'Salva';
 $lang['evt_delete'] = 'Cancella';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 

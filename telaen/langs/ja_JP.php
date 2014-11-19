@@ -29,7 +29,7 @@ $lang['error_session_expired'] = 'あなたのセッションの有効期限が�
 $lang['error_other'] = 'システム障害、ネットワーク管理者に連絡してください';
 
 // Invalid name of mailbox
-$lang['error_invalid_name'] = 'Invalid folder name - Use only the following characters  A-Z, a-z, 0-9, and -'; // need translation
+$lang['error_invalid_name'] = 'Invalid folder name - Use only the following characters  A-Z, a-z, 0-9, and -'; // FIXME: need translation
 
 // Validations when sending mails
 $lang['error_no_recipients'] = 'エラー：！あなたは少なくとも1人の受信者を持っている必要があります';
@@ -73,7 +73,7 @@ $lang['search_mnu'] = '検索';
 $lang['address_mnu'] = 'アドレス帳';
 $lang['empty_trash_mnu'] = 'ゴミ箱を空にする';
 $lang['prefs_mnu'] = '設定';
-$lang['logoff_mnu'] = 'Log out'; // need translation
+$lang['logoff_mnu'] = 'Log out'; // FIXME: need translation
 
 // Reply
 $lang['reply_prefix'] = '日時：';
@@ -186,7 +186,7 @@ $lang['priority_high'] = 'ハイ';
 $lang['prf_title'] = '設定';
 $lang['prf_general_title'] = '一般情報';
 $lang['prf_name'] = '名前';
-$lang['prf_reply_to'] = 'Reply to'; // need translation
+$lang['prf_reply_to'] = 'Reply to'; // FIXME: need translation
 $lang['prf_time_zone'] = 'タイムゾーン';
 $lang['prf_trash_title'] = 'ゴミ箱';
 $lang['prf_save_to_trash'] = 'あなたは<b> </ b>のメッセージを削除すると、それへの移動';
@@ -195,14 +195,14 @@ $lang['prf_empty_on_exit'] = '<B>空の</ b>のごみ箱フォルダをあなた
 $lang['prf_empty_spam_on_exit'] = '<B>空の</ b>のスパムフォルダをあなたはログアウト時';
 $lang['prf_unmark_read_on_exit'] = 'あなたは、ログアウト時に未読メッセージを読むのリセット';
 $lang['prf_sent_title'] = '送信済みアイテム';
-$lang['prf_save_sent'] = 'Save <b>sent messages</b> in the '; // need translation
+$lang['prf_save_sent'] = 'Save <b>sent messages</b> in the '; // FIXME: need translation
 $lang['prf_messages_title'] = 'メッセージ';
 $lang['prf_page_limit'] = 'ページあたりのメッセージの最大数';
 $lang['prf_signature_title'] = '署名';
 $lang['prf_signature'] = 'あなたの署名を書く';
 $lang['prf_auto_add_sign'] = 'すべての送信メッセージに署名を追加します';
 $lang['prf_save_button'] = '保存]';
-$lang['prf_display_images'] = 'Show attached images'; // need translation
+$lang['prf_display_images'] = 'Show attached images'; // FIXME: need translation
 $lang['prf_default_editor_mode'] = 'デフォルト編集モード';
 $lang['prf_default_editor_mode_text'] = '"プレーンテキスト"';
 $lang['prf_default_editor_mode_html'] = '"高度なHTMLエディタ"';
@@ -227,7 +227,7 @@ $lang['filter_field_body'] = 'ボディ';
 
 $lang['filter_type_move'] = '移動';
 $lang['filter_type_delete'] = '削除';
-$lang['filter_type_mark'] = 'Mark read'; // need translation
+$lang['filter_type_mark'] = 'Mark read';  // FIXME: need translation
 
 $lang['filter_add'] = 'フィルタを追加します。';
 $lang['filter_delete'] = '削除';
@@ -235,7 +235,7 @@ $lang['filter_delete_selected'] = '選択したフィルタを削除する';
 
 $lang['filter_field'] = 'フィールド上のフィルター';
 $lang['filter_match'] = '検索';
-$lang['filter_type'] = 'Action'; // need translation
+$lang['filter_type'] = 'Action';  // FIXME: need translation
 $lang['filter_folder'] = 'インストール先フォルダ';
 
 $lang['filter_msg_nofilters'] = 'なしのフィルター。';
@@ -245,8 +245,7 @@ $lang['filter_msg_deleted'] = 'フィルタが削除された';
 
 // [Catch]
 $lang['ctc_title'] = 'アドレス帳に追加します';
-$lang['ctc_information'] = 'Only shows e-mails that are not in the address book'; // need translation
-$lang['ctc_name'] = '名前';
+$lang['ctc_information'] = 'Only shows e-mails that are not in the address book'; // FIXME: need translation
 $lang['ctc_email'] = 'メール';
 $lang['ctc_no_address'] = 'なしアドレス';
 $lang['ctc_close'] = '閉じる';
@@ -328,7 +327,7 @@ $lang['addr_deleted'] = '接触が削除されました';
 
 // [BlockSender]
 $lang['blk_title'] = 'ブロック差出人';
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // need translation
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'メール';
 $lang['blk_no_address'] = 'いいえアドレス利用可能な';
 $lang['blk_close'] = '閉じる';

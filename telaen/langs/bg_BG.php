@@ -9,23 +9,23 @@ $lang = array();
 $lang['inbox_extended'] = 'œÓÎÛ˜ÂÌË';
 $lang['sent_extended'] = '»ÁÔ‡ÚÂÌË';
 $lang['trash_extended'] = 'Ó¯˜Â';
-$lang['spam_extended'] = 'Spam folder';
+$lang['spam_extended'] = 'Spam folder'; // FIXME: need translation
 
 // Navigation texts
-$lang['pages_text'] = 'Pages';
-$lang['first_text'] = 'First';
+$lang['pages_text'] = 'Pages'; // FIXME: need translation
+$lang['first_text'] = 'First'; // FIXME: need translation
 $lang['previous_text'] = 'œÂ‰Ë¯Ì‡';
 $lang['next_text'] = '—ÎÂ‰‚‡˘‡';
-$lang['last_text'] = 'Last';
-$lang['total_text'] = 'Total';
+$lang['last_text'] = 'Last'; // FIXME: need translation
+$lang['total_text'] = 'Total'; // FIXME: need translation
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error';
-$lang['err_system_msg'] = 'System error';
-$lang['error_login'] = 'Please check your username or password and try again';
+$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
+$lang['err_system_msg'] = 'System error'; // FIXME: need translation
+$lang['error_login'] = 'Please check your username or password and try again'; // FIXME: need translation
 $lang['error_connect'] = '√Â¯Í‡ ÔË ‚˙ÁÍ‡ Ò˙Ò Ò˙‚˙‡';
 $lang['error_retrieving'] = '√Â¯Í‡ ÔË ËÁÚÂ„ÎˇÌÂ Ì‡ ÔÓ˘‡Ú‡';
-$lang['error_session_expired'] = 'Your session is expired, please login again';
+$lang['error_session_expired'] = 'Your session is expired, please login again'; // FIXME: need translation
 $lang['error_other'] = '—ËÒÚÂÏÌ‡ „Â¯Í‡ - Ò‚˙ÊÂÚÂ ÒÂ Ò˙Ò —ËÚÂÏÌËˇ ‡‰ÏËÌËÒÚ‡ÚÓ ';
 
 // Invalid name of mailbox
@@ -109,8 +109,8 @@ $lang['no_messages'] = 'ÕˇÏ‡ Ò˙Ó·˘ÂÌËˇ ';
 $lang['delete_selected_mnu'] = '»ÁÚËÈ ËÁ·‡ÌËÚÂ';
 $lang['move_selected_mnu'] = 'œÂÏÂÒÚË ËÁ·‡ÌËÚÂ ‚';
 $lang['mark_selected_mnu'] = 'Mark as read';
-$lang['unmark_selected_mnu'] = 'Mark as unread';
-$lang['move_selected_to_trash_mnu'] = 'Move selected to Trash';
+$lang['unmark_selected_mnu'] = 'Mark as unread'; // FIXME: need translation
+$lang['move_selected_to_trash_mnu'] = 'Move selected to Trash'; // FIXME: need translation
 
 
 $lang['delete_mnu'] = '»ÁÚËÈ';
@@ -120,7 +120,7 @@ $lang['from_hea'] = 'ŒÚ:';
 $lang['to_hea'] = 'ƒÓ:';
 $lang['date_hea'] = 'ƒ‡Ú‡:';
 $lang['size_hea'] = '√ÓÎÂÏËÌ‡';
-$lang['have_spam'] = 'You have Spam (check Spam folder)';
+$lang['have_spam'] = 'You have Spam (check Spam folder)'; // FIXME: need translation
 
 $lang['msg_you_have'] = '»Ï‡ÚÂ';
 $lang['msg_message'] = 'Ò˙Ó·˘ÂÌËÂ';
@@ -142,8 +142,8 @@ $lang['lng_server'] = 'Server';
 $lang['lng_theme'] = '≈ÁËÍ';
 $lang['lng_language'] = 'Language';
 $lang['lng_login_btn'] = '¬ıÓ‰ &gt;&gt;';
-$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled';
-$lang['lng_cookie_not_valid'] = 'Cookie Security Check Failed';
+$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled'; // FIXME: need translation
+$lang['lng_cookie_not_valid'] = 'Cookie Security Check Failed'; // FIXME: need translation
 
 // [Newmessage]
 
@@ -175,7 +175,7 @@ $lang['up_title'] = 'ƒÓ·‡‚Ë ÌÓ‚ Ù‡ÈÎ';
 $lang['up_information_text'] = '»Á·ÂË Ù‡ÈÎ';
 $lang['up_button_text'] = 'ƒÓ·‡‚Ë';
 
-$lang['require_receipt'] = 'Return receipt';
+$lang['require_receipt'] = 'Return receipt'; // FIXME: need translation
 
 $lang['priority_text'] = 'œËÓËÚÂÚ';
 $lang['priority_low'] = 'ÕËÒ˙Í';
@@ -192,8 +192,8 @@ $lang['prf_trash_title'] = 'Ó¯˜Â Á‡ ·ÓÍÎÛÍ';
 $lang['prf_save_to_trash'] = 'œÂÏÂÒÚË <b>ËÁÚËÚËÚÂ</b> Ò˙Ó·˘ÂÌËˇ ‚ Ô‡ÔÍ‡ ';
 $lang['prf_save_only_read'] = '«‡ÔË¯Ë Ò‡ÏÓ <b>ÔÓ˜ÂÚÂÌËÂ</b> Ò˙Ó·˘ÂÌËˇ ‚ Ô‡ÔÍ‡ ';
 $lang['prf_empty_on_exit'] = '<b>»ÁÚËÈ</b>  Ó¯˜ÂÚÓ Á‡ ·ÓÍÎÛÍ';
-$lang['prf_empty_spam_on_exit'] = '<b>Empty</b> Spam folder when you logout';
-$lang['prf_unmark_read_on_exit'] = 'Reset READ messages as UNREAD when you logout';
+$lang['prf_empty_spam_on_exit'] = '<b>Empty</b> Spam folder when you logout'; // FIXME: need translation
+$lang['prf_unmark_read_on_exit'] = 'Reset READ messages as UNREAD when you logout'; // FIXME: need translation
 $lang['prf_sent_title'] = '»ÁÔ‡ÚÂÌË Ò˙Ó·˘ÂÌËˇ';
 $lang['prf_save_sent'] = '«‡ÔË¯Ë <b>ËÁÔ‡ÚÂÌËÚÂ</b> Ò˙Ó·˘ÂÌËˇ ‚ Ô‡ÔÍ‡';
 $lang['prf_messages_title'] = '—˙Ó·˘ÂÌËˇ';
@@ -207,40 +207,40 @@ $lang['prf_default_editor_mode'] = 'ÕÓÏÎÂÌ ÂÊËÏ Ì‡ Â‰�
 $lang['prf_default_editor_mode_text'] = '"◊ËÒÚ ÚÂÍÒÚ"';
 $lang['prf_default_editor_mode_html'] = '"HTML –Â‰‡ÍÚÓ (ËÁÒÍ‚‡ ÏËÌËÏÛÏ IE 5.0)"';
 $lang['prf_time_to_refesh'] = '¬ÂÏÂ Á‡ ‡‚ÚÓÏ‡ÚË˜ÌÓ ÓÔÂÒÌˇ‚‡ÌÂ Ì‡ Ò˙Ó·˘ÂÌËˇÚ‡ (‚ ÏËÌÛÚË)';
-$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)';
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default';
+$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
+$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
 
-$lang['prf_msg_saved'] = 'Preferences saved';
+$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
-$lang['filter_title'] = 'Filters';
+$lang['filter_title'] = 'Filters'; // FIXME: need translation
 
-$lang['filter_new'] = 'Create a filter';
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages';
-$lang['filter_list'] = 'Current filters';
+$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
+$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
+$lang['filter_list'] = 'Current filters'; // FIXME: need translation
 
-$lang['filter_field_from'] = 'From';
-$lang['filter_field_to'] = 'To';
-$lang['filter_field_subject'] = 'Subject';
-$lang['filter_field_header'] = 'Header';
-$lang['filter_field_body'] = 'Body';
+$lang['filter_field_from'] = 'From'; // FIXME: need translation
+$lang['filter_field_to'] = 'To'; // FIXME: need translation
+$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
+$lang['filter_field_header'] = 'Header'; // FIXME: need translation
+$lang['filter_field_body'] = 'Body'; // FIXME: need translation
 
-$lang['filter_type_move'] = 'Move';
-$lang['filter_type_delete'] = 'Delete';
-$lang['filter_type_mark'] = 'Mark read';
+$lang['filter_type_move'] = 'Move'; // FIXME: need translation
+$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
 
-$lang['filter_add'] = 'Add filter';
-$lang['filter_delete'] = 'Delete';
-$lang['filter_delete_selected'] = 'Delete selected filters';
+$lang['filter_add'] = 'Add filter'; // FIXME: need translation
+$lang['filter_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
 
-$lang['filter_field'] = 'Filter on field';
-$lang['filter_match'] = 'Search for';
-$lang['filter_type'] = 'Action';
-$lang['filter_folder'] = 'Destination folder';
+$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
+$lang['filter_match'] = 'Search for'; // FIXME: need translation
+$lang['filter_type'] = 'Action'; // FIXME: need translation
+$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
 
-$lang['filter_msg_nofilters'] = 'No filters available.';
-$lang['filter_msg_added'] = 'Filter added';
-$lang['filter_msg_deleted'] = 'Filter deleted';
+$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
+$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
+$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
 
 
 // [Catch]
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'ŒÚ„Ó‚ÓË Ì‡ ‚ÒË˜ÍË';
 $lang['forward_mnu'] = 'œÂÔ‡ÚË';
 $lang['headers_mnu'] = 'Header';
 $lang['move_mnu'] = 'œÂÏÂÒÚË ‚';
-$lang['move_to_trash_mnu'] = 'Move to Trash';
+$lang['move_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
 $lang['delete_mnu'] = '»ÁÚËÈ';
 $lang['print_mnu'] = 'œÂ˜‡Ú';
 $lang['download_mnu'] = 'Download';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'ËÁÚÂ„ÎË';
 $lang['attch_type_hea'] = 'ÚËÔ';
 $lang['attch_size_hea'] = '√ÓÎÂÏËÌ‡';
 $lang['catch_address'] = 'ƒÓ·‡‚Ë ‡‰ÂÒ‡';
-$lang['block_address'] = 'Block address';
+$lang['block_address'] = 'Block address'; // FIXME: need translation
 
 // [Search]
 $lang['sch_title'] = 'Search';
@@ -309,9 +309,9 @@ $lang['adr_state'] = 'ŒÍ˙„';
 $lang['adr_work'] = 'œÓÙÂÒËˇ';
 $lang['adr_back'] = 'Õ‡Á‡‰';
 $lang['adr_save'] = '«‡ÔËÒ';
-$lang['adr_phone'] = 'Phone';
-$lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_cell'] = 'Cell'; // FIXME: need translation
+$lang['adr_note'] = 'Notes'; // FIXME: need translation
 
 // list
 $lang['adr_name_hea'] = '»ÏÂ';
@@ -327,17 +327,17 @@ $lang['addr_deleted'] = '¿‰ÂÒ‡ Â ËÁÚËÚ';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender';
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_title'] = 'Block sender'; // FIXME: need translation
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'E-mail';
-$lang['blk_no_address'] = 'No address available';
-$lang['blk_close'] = 'Close';
-$lang['blk_save'] = 'Save';
+$lang['blk_no_address'] = 'No address available'; // FIXME: need translation
+$lang['blk_close'] = 'Close'; // FIXME: need translation
+$lang['blk_save'] = 'Save'; // FIXME: need translation
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = '«‡ÔËÒ';
 $lang['evt_delete'] = '»ÁÚË‚‡ÌÂ';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 

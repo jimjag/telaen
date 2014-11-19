@@ -16,8 +16,8 @@ $lang['pages_text'] = 'amakhasi';
 $lang['first_text'] = 'Okokuqala';
 $lang['previous_text'] = 'Previous';
 $lang['next_text'] = 'Okulandelayo';
-$lang['last_text'] = 'Last';
-$lang['total_text'] = 'Total';
+$lang['last_text'] = 'Last'; // FIXME: need translation
+$lang['total_text'] = 'Total'; // FIXME: need translation
 
 // Mail Server Errors
 $lang['err_login_msg'] = 'ngesiphambeko Login';
@@ -49,8 +49,8 @@ $lang['no_recipient_text'] = '[Umamukeli ongaziwa]';
 // If the quota limit was exceeded
 $lang['quota_exceeded'] = 'Hhayi isikhala esanele ebhokisini lakho lokungenayo ukuqedela lesi senzo \ nSicela ususe ezinye imiyalezo ukuqhubeka';
 $lang['quota_usage_info'] = 'Isabelo Umkhawulo';
-$lang['quota_usage_used'] = 'Used';
-$lang['quota_usage_of'] = 'of';
+$lang['quota_usage_used'] = 'Used'; // FIXME: need translation
+$lang['quota_usage_of'] = 'of'; // FIXME: need translation
 $lang['quota_usage_avail'] = 'ezikhona';
 
 //
@@ -96,10 +96,10 @@ $lang['value_hea'] = 'Value';
 // [Folders]
 $lang['fld_name_hea'] = 'Ifolda';
 $lang['fld_messages_hea'] = 'Imilayezo';
-$lang['fld_size_hea'] = 'Size';
-$lang['fld_empty_hea'] = 'Empty';
+$lang['fld_size_hea'] = 'Size'; // FIXME: need translation
+$lang['fld_empty_hea'] = 'Empty'; // FIXME: need translation
 $lang['fld_delete_hea'] = 'Susa';
-$lang['fld_total'] = 'Total:';
+$lang['fld_total'] = 'Total:'; // FIXME: need translation
 $lang['fld_make_new'] = 'Yakha ifolda entsha';
 $lang['folders_to'] = 'Amafolda ukuba';
 
@@ -110,16 +110,16 @@ $lang['delete_selected_mnu'] = 'Susa';
 $lang['move_selected_mnu'] = 'Move ukuba';
 $lang['mark_selected_mnu'] = 'uMarku njengoba ufunda';
 $lang['unmark_selected_mnu'] = 'Mark njengezingafundiwe';
-$lang['move_selected_to_trash_mnu'] = 'Move to Trash';
+$lang['move_selected_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
 
 
 $lang['delete_mnu'] = 'Susa';
 $lang['move_mnu'] = 'Move ukuba';
 $lang['subject_hea'] = 'Isihloko:';
-$lang['from_hea'] = 'From:';
-$lang['to_hea'] = 'To:';
+$lang['from_hea'] = 'From:'; // FIXME: need translation
+$lang['to_hea'] = 'To:'; // FIXME: need translation
 $lang['date_hea'] = 'Usuku:';
-$lang['size_hea'] = 'Size';
+$lang['size_hea'] = 'Size'; // FIXME: need translation
 $lang['have_spam'] = 'You ube Ogaxekile (hlola ifolda Spam)';
 
 $lang['msg_you_have'] = 'Wena babe';
@@ -138,10 +138,10 @@ $lang['lgn_welcome_msg'] = 'Siyakwamukela, sicela ungene ku-akhawunti yakho';
 $lang['lng_user_email'] = 'E-mail';
 $lang['lng_user_name'] = 'Igama lomsebenzisi';
 $lang['lng_user_pwd'] = 'Iphasiwedi';
-$lang['lng_server'] = 'Server';
-$lang['lng_theme'] = 'Theme';
+$lang['lng_server'] = 'Server'; // FIXME: need translation
+$lang['lng_theme'] = 'Theme'; // FIXME: need translation
 $lang['lng_language'] = 'Ulimi';
-$lang['lng_login_btn'] = 'Login & gt; & gt;';
+$lang['lng_login_btn'] = 'Login &gt;&gt;';
 $lang['lng_cookie_not_enabled'] = 'Amakhukhi kumele inikwe amandla';
 $lang['lng_cookie_not_valid'] = 'Cookie Security Hlola Yehlulekile';
 
@@ -158,8 +158,8 @@ $lang['address_tip'] = 'Kusuka ibhuku lamakheli';
 $lang['attach_hea'] = 'Okunamathiselwe:';
 $lang['attch_add_new'] = 'Namathisela ifayela entsha';
 $lang['attch_name_hea'] = 'Igama';
-$lang['attch_size'] = 'Size';
-$lang['attch_type_hea'] = 'Type';
+$lang['attch_size'] = 'Size'; // FIXME: need translation
+$lang['attch_type_hea'] = 'Type'; // FIXME: need translation
 $lang['attch_dele_hea'] = 'Susa';
 $lang['attch_no_hea'] = 'Akukho okunamathiselwe';
 
@@ -168,8 +168,8 @@ $lang['send_text'] = 'Thumela';
 
 $lang['result_error'] = 'It kwakungenakwenzeka ukuthumela le-e-mail';
 $lang['result_success'] = 'Le e-mail ithunyelwe';
-$lang['nav_continue'] = '& lt; & lt; Qhubeka & gt; & gt; ';
-$lang['nav_back'] = 'Back';
+$lang['nav_continue'] = '&lt;&lt; Qhubeka &gt;&gt; ';
+$lang['nav_back'] = 'Back'; // FIXME: need translation
 
 $lang['up_title'] = 'Faka ifayela';
 $lang['up_information_text'] = 'ifayela Khetha';
@@ -177,10 +177,10 @@ $lang['up_button_text'] = 'Namathisela ifayela';
 
 $lang['require_receipt'] = 'irisidi Return';
 
-$lang['priority_text'] = 'Priority';
+$lang['priority_text'] = 'Priority'; // FIXME: need translation
 $lang['priority_low'] = 'Phansi';
-$lang['priority_normal'] = 'Normal';
-$lang['priority_high'] = 'High';
+$lang['priority_normal'] = 'Normal'; // FIXME: need translation
+$lang['priority_high'] = 'High'; // FIXME: need translation
 
 // [Preferences]
 $lang['prf_title'] = 'Izintandokazi';
@@ -188,7 +188,7 @@ $lang['prf_general_title'] = 'imininingwane General';
 $lang['prf_name'] = 'Igama';
 $lang['prf_reply_to'] = 'Phendula ukuba';
 $lang['prf_time_zone'] = 'zone Isikhathi';
-$lang['prf_trash_title'] = 'Trash';
+$lang['prf_trash_title'] = 'Trash'; // FIXME: need translation
 $lang['prf_save_to_trash'] = 'Uma you <b> susa </ b> umyalezo, ukuhambisa yona';
 $lang['prf_save_only_read'] = 'Gcina nje <b> ukufunda imilayezo </ b> in the';
 $lang['prf_empty_on_exit'] = '<b> Empty </ b> kadoti ifolda uma wena uphume';
@@ -222,10 +222,10 @@ $lang['filter_list'] = 'izihlungi Current';
 $lang['filter_field_from'] = 'Kusuka';
 $lang['filter_field_to'] = 'To';
 $lang['filter_field_subject'] = 'Kuncike';
-$lang['filter_field_header'] = 'Header';
-$lang['filter_field_body'] = 'Body';
+$lang['filter_field_header'] = 'Header'; // FIXME: need translation
+$lang['filter_field_body'] = 'Body'; // FIXME: need translation
 
-$lang['filter_type_move'] = 'Move';
+$lang['filter_type_move'] = 'Move'; // FIXME: need translation
 $lang['filter_type_delete'] = 'Susa';
 $lang['filter_type_mark'] = 'UMarku wafunda';
 
@@ -235,7 +235,7 @@ $lang['filter_delete_selected'] = 'Susa ukuhlunga abakhethiwe';
 
 $lang['filter_field'] = 'Ihluzo on indima';
 $lang['filter_match'] = 'Search for';
-$lang['filter_type'] = 'Action';
+$lang['filter_type'] = 'Action'; // FIXME: need translation
 $lang['filter_folder'] = 'Destination ifolda';
 
 $lang['filter_msg_nofilters'] = 'Akukho okuhlungayo atholakalayo.';
@@ -249,19 +249,19 @@ $lang['ctc_information'] = 'lubonisa kuphela e-mail ezingekho encwadini inkulumo
 $lang['ctc_name'] = 'Igama';
 $lang['ctc_email'] = 'E-mail';
 $lang['ctc_no_address'] = 'Akukho kheli ezikhona';
-$lang['ctc_close'] = 'Close';
+$lang['ctc_close'] = 'Close'; // FIXME: need translation
 $lang['ctc_save'] = 'Londoloza';
 
 // [Readmsg]
 $lang['next_mnu'] = 'Okulandelayo';
-$lang['previous_mnu'] = 'Previous';
-$lang['back_mnu'] = 'Back';
-$lang['reply_mnu'] = 'Reply';
+$lang['previous_mnu'] = 'Previous'; // FIXME: need translation
+$lang['back_mnu'] = 'Back'; // FIXME: need translation
+$lang['reply_mnu'] = 'Reply'; // FIXME: need translation
 $lang['reply_all_mnu'] = 'Phendula konke';
 $lang['forward_mnu'] = 'Phambili';
-$lang['headers_mnu'] = 'Header';
+$lang['headers_mnu'] = 'Header'; // FIXME: need translation
 $lang['move_mnu'] = 'Move ukuba';
-$lang['move_to_trash_mnu'] = 'Move to Trash';
+$lang['move_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
 $lang['delete_mnu'] = 'Susa';
 $lang['print_mnu'] = 'Phrinta';
 $lang['download_mnu'] = 'Thwebula';
@@ -283,11 +283,11 @@ $lang['block_address'] = 'Block inkulumo';
 // [Search]
 $lang['sch_title'] = 'Funa';
 $lang['sch_information_text'] = '.. Bhala umusho noma igama ufuna khulula ukufunda imiyalezo siyofunwa kuphela';
-$lang['sch_button_text'] = 'Funa & gt; & gt;';
+$lang['sch_button_text'] = 'Funa &gt;&gt;';
 $lang['sch_subject_hea'] = 'Kuncike';
 $lang['sch_from_hea'] = 'Kusuka';
 $lang['sch_date_hea'] = 'Usuku';
-$lang['sch_body_hea'] = 'Body Message';
+$lang['sch_body_hea'] = 'Body Message'; // FIXME: need translation
 $lang['sch_folder_hea'] = 'Ifolda';
 $lang['sch_no_results'] = 'Ayikho imiyalezo criteria zakho zindlela ziye zatholakala';
 
@@ -303,23 +303,23 @@ $lang['qad_bcc'] = 'Bcc';
 $lang['adr_title'] = 'Incwadi Ikheli';
 $lang['adr_name'] = 'Igama';
 $lang['adr_email'] = 'E-mail';
-$lang['adr_street'] = 'Street';
-$lang['adr_city'] = 'City';
-$lang['adr_state'] = 'State';
+$lang['adr_street'] = 'Street'; // FIXME: need translation
+$lang['adr_city'] = 'City'; // FIXME: need translation
+$lang['adr_state'] = 'State'; // FIXME: need translation
 $lang['adr_work'] = 'Umsebenzi';
-$lang['adr_back'] = 'Back';
+$lang['adr_back'] = 'Back'; // FIXME: need translation
 $lang['adr_save'] = 'Londoloza';
-$lang['adr_phone'] = 'Phone';
-$lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_cell'] = 'Cell'; // FIXME: need translation
+$lang['adr_note'] = 'Notes'; // FIXME: need translation
 
 // list
 $lang['adr_name_hea'] = 'Igama';
 $lang['adr_email_hea'] = 'E-mail';
-$lang['adr_edit_hea'] = 'Edit';
-$lang['adr_expo_hea'] = 'Export';
+$lang['adr_edit_hea'] = 'Edit'; // FIXME: need translation
+$lang['adr_expo_hea'] = 'Export'; // FIXME: need translation
 $lang['adr_dele_hea'] = 'Susa';
-$lang['adr_new_entry'] = 'New contact';
+$lang['adr_new_entry'] = 'New contact'; // FIXME: need translation
 
 $lang['addr_saved'] = 'Le contact igciniwe';
 $lang['addr_added'] = 'Oxhumana naye wanezela';
@@ -331,7 +331,7 @@ $lang['blk_title'] = 'Block kumthumeli';
 $lang['blk_information'] = 'lubonisa kuphela e-mail ezingekho kule lemifanekiso okwamanje';
 $lang['blk_email'] = 'E-mail';
 $lang['blk_no_address'] = 'Akukho kheli ezikhona';
-$lang['blk_close'] = 'Close';
+$lang['blk_close'] = 'Close'; // FIXME: need translation
 $lang['blk_save'] = 'Londoloza';
 
 // [Event]

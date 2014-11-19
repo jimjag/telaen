@@ -20,8 +20,8 @@ $lang['last_text'] = 'Laatste';
 $lang['total_text'] = 'Totaal';
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error';
-$lang['err_system_msg'] = 'Systeem error';
+$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
+$lang['err_system_msg'] = 'Systeem error'; // FIXME: need translation
 $lang['error_login'] = 'Controleer gebruikersnaam en wachtwoord en probeer opnieuw';
 $lang['error_connect'] = 'De POP3 locatie is onjuist.';
 $lang['error_retrieving'] = 'De berichten konden niet opgehaald worden.';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'Allen beantwoorden';
 $lang['forward_mnu'] = 'Doorsturen';
 $lang['headers_mnu'] = 'Header';
 $lang['move_mnu'] = 'Verplaats naar';
-$lang['move_to_trash_mnu'] = 'Move to Trash';
+$lang['move_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
 $lang['delete_mnu'] = 'Verwijder';
 $lang['print_mnu'] = 'Afdrukweergave';
 $lang['download_mnu'] = 'Opslaan';
@@ -309,9 +309,9 @@ $lang['adr_state'] = 'Provincie:';
 $lang['adr_work'] = 'Werk:';
 $lang['adr_back'] = 'Terug';
 $lang['adr_save'] = 'Opslaan';
-$lang['adr_phone'] = 'Phone';
-$lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_cell'] = 'Cell'; // FIXME: need translation
+$lang['adr_note'] = 'Notes'; // FIXME: need translation
 
 // list
 $lang['adr_name_hea'] = 'Naam';
@@ -327,17 +327,17 @@ $lang['addr_deleted'] = 'De contactpersoon is verwijderd.';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender';
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_title'] = 'Block sender'; // FIXME: need translation
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'E-mail';
-$lang['blk_no_address'] = 'No address available';
-$lang['blk_close'] = 'Close';
-$lang['blk_save'] = 'Save';
+$lang['blk_no_address'] = 'No address available'; // FIXME: need translation
+$lang['blk_close'] = 'Close'; // FIXME: need translation
+$lang['blk_save'] = 'Save'; // FIXME: need translation
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = 'Opslaan';
 $lang['evt_delete'] = 'Verwijder';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 

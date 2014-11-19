@@ -108,8 +108,8 @@ $lang['messages_to'] = 'הודעות אל ';
 $lang['no_messages'] = 'אין לך הודעות חדשות בתוך ';
 $lang['delete_selected_mnu'] = 'מחק מסומנים';
 $lang['move_selected_mnu'] = 'העבר מסומנים אל';
-$lang['mark_selected_mnu'] = 'Mark as read';
-$lang['unmark_selected_mnu'] = 'Mark as unread';
+$lang['mark_selected_mnu'] = 'Mark as read'; // FIXME: need translation
+$lang['unmark_selected_mnu'] = 'Mark as unread'; // FIXME: need translation
 $lang['move_selected_to_trash_mnu'] = 'העבר מסומנים אל סל המחזור';
 
 
@@ -120,7 +120,7 @@ $lang['from_hea'] = 'מ:';
 $lang['to_hea'] = 'אל:';
 $lang['date_hea'] = 'תאריך:';
 $lang['size_hea'] = 'גודל';
-$lang['have_spam'] = 'You have Spam (check Spam folder)';
+$lang['have_spam'] = 'You have Spam (check Spam folder)'; // FIXME: need translation
 
 $lang['msg_you_have'] = 'יש לך';
 $lang['msg_message'] = 'הודעה';
@@ -142,12 +142,12 @@ $lang['lng_server'] = 'שרת';
 $lang['lng_theme'] = 'ערכה';
 $lang['lng_language'] = 'שפה';
 $lang['lng_login_btn'] = 'כניסה &gt;&gt;';
-$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled';
-$lang['lng_cookie_not_valid'] = 'Cookie Security Check Failed';
+$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled'; // FIXME: need translation
+$lang['lng_cookie_not_valid'] = 'Cookie Security Check Failed'; // FIXME: need translation
 
 // [Newmessage]
 
-$lang['newmsg_title'] = 'Compose mail';
+$lang['newmsg_title'] = 'Compose mail'; // FIXME: need translation
 
 $lang['to_hea'] = 'אל:';
 $lang['cc_hea'] = 'עותק:';
@@ -175,7 +175,7 @@ $lang['up_title'] = 'הוסף קובץ';
 $lang['up_information_text'] = 'בחר קובץ';
 $lang['up_button_text'] = 'שלח';
 
-$lang['require_receipt'] = 'Return receipt';
+$lang['require_receipt'] = 'Return receipt'; // FIXME: need translation
 
 $lang['priority_text'] = 'עדיפות';
 $lang['priority_low'] = 'נמוכה';
@@ -192,8 +192,8 @@ $lang['prf_trash_title'] = 'סל מחזור';
 $lang['prf_save_to_trash'] = 'כאשר אתה <b>מוחק</b> הודעה, העבר אותה ל ';
 $lang['prf_save_only_read'] = 'שמור רק <b>הודעות שנקראו</b> בתוך ה ';
 $lang['prf_empty_on_exit'] = '<b>רוקן</b> את סל המחזור ביציאה';
-$lang['prf_empty_spam_on_exit'] = '<b>Empty</b> Spam folder when you logout';
-$lang['prf_unmark_read_on_exit'] = 'Reset READ messages as UNREAD when you logout';
+$lang['prf_empty_spam_on_exit'] = '<b>Empty</b> Spam folder when you logout'; // FIXME: need translation
+$lang['prf_unmark_read_on_exit'] = 'Reset READ messages as UNREAD when you logout'; // FIXME: need translation
 $lang['prf_sent_title'] = 'הודעות יוצאות';
 $lang['prf_save_sent'] = 'שמור <b>הודעות שנשלחו</b> בתוך ה ';
 $lang['prf_messages_title'] = 'הודעות';
@@ -207,40 +207,40 @@ $lang['prf_default_editor_mode'] = 'מצב עריכה בברירת מחדל';
 $lang['prf_default_editor_mode_text'] = '"טקסט רגיל"';
 $lang['prf_default_editor_mode_html'] = '"עורך HTML מתקדם"';
 $lang['prf_time_to_refesh'] = 'בדוק אוטומטית עבור דואר חדש (דקות)';
-$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)';
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default';
+$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
+$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
 
-$lang['prf_msg_saved'] = 'Preferences saved';
+$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
-$lang['filter_title'] = 'Filters';
+$lang['filter_title'] = 'Filters'; // FIXME: need translation
 
-$lang['filter_new'] = 'Create a filter';
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages';
-$lang['filter_list'] = 'Current filters';
+$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
+$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
+$lang['filter_list'] = 'Current filters'; // FIXME: need translation
 
-$lang['filter_field_from'] = 'From';
-$lang['filter_field_to'] = 'To';
-$lang['filter_field_subject'] = 'Subject';
-$lang['filter_field_header'] = 'Header';
-$lang['filter_field_body'] = 'Body';
+$lang['filter_field_from'] = 'From'; // FIXME: need translation
+$lang['filter_field_to'] = 'To'; // FIXME: need translation
+$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
+$lang['filter_field_header'] = 'Header'; // FIXME: need translation
+$lang['filter_field_body'] = 'Body'; // FIXME: need translation
 
-$lang['filter_type_move'] = 'Move';
-$lang['filter_type_delete'] = 'Delete';
-$lang['filter_type_mark'] = 'Mark read';
+$lang['filter_type_move'] = 'Move'; // FIXME: need translation
+$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
 
-$lang['filter_add'] = 'Add filter';
-$lang['filter_delete'] = 'Delete';
-$lang['filter_delete_selected'] = 'Delete selected filters';
+$lang['filter_add'] = 'Add filter'; // FIXME: need translation
+$lang['filter_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
 
-$lang['filter_field'] = 'Filter on field';
-$lang['filter_match'] = 'Search for';
-$lang['filter_type'] = 'Action';
-$lang['filter_folder'] = 'Destination folder';
+$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
+$lang['filter_match'] = 'Search for'; // FIXME: need translation
+$lang['filter_type'] = 'Action'; // FIXME: need translation
+$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
 
-$lang['filter_msg_nofilters'] = 'No filters available.';
-$lang['filter_msg_added'] = 'Filter added';
-$lang['filter_msg_deleted'] = 'Filter deleted';
+$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
+$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
+$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
 
 
 // [Catch]
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'הורד';
 $lang['attch_type_hea'] = 'סוג';
 $lang['attch_size_hea'] = 'גודל';
 $lang['catch_address'] = 'הוסף לספר הכתובות';
-$lang['block_address'] = 'Block address';
+$lang['block_address'] = 'Block address'; // FIXME: need translation
 
 // [Search]
 $lang['sch_title'] = 'Search';
@@ -309,9 +309,9 @@ $lang['adr_state'] = 'מדינה';
 $lang['adr_work'] = 'עבודה';
 $lang['adr_back'] = 'חזרה';
 $lang['adr_save'] = 'שמור';
-$lang['adr_phone'] = 'Phone';
-$lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_cell'] = 'Cell'; // FIXME: need translation
+$lang['adr_note'] = 'Notes'; // FIXME: need translation
 
 // list
 $lang['adr_name_hea'] = 'שם';
@@ -327,17 +327,17 @@ $lang['addr_deleted'] = 'איש הקשר נמחק';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender';
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_title'] = 'Block sender'; // FIXME: need translation
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'E-mail';
-$lang['blk_no_address'] = 'No address available';
-$lang['blk_close'] = 'Close';
-$lang['blk_save'] = 'Save';
+$lang['blk_no_address'] = 'No address available'; // FIXME: need translation
+$lang['blk_close'] = 'Close'; // FIXME: need translation
+$lang['blk_save'] = 'Save'; // FIXME: need translation
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = 'שמור';
 $lang['evt_delete'] = 'מחק';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 

@@ -20,12 +20,12 @@ $lang['last_text'] = '마지막';
 $lang['total_text'] = '전체';
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error';
-$lang['err_system_msg'] = 'System error';
-$lang['error_login'] = 'Please check your username or password and try again';
+$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
+$lang['err_system_msg'] = 'System error'; // FIXME: need translation
+$lang['error_login'] = 'Please check your username or password and try again'; // FIXME: need translation
 $lang['error_connect'] = '서버에 연결할수 없습니다';
 $lang['error_retrieving'] = '받은편지를 가져올수 없습니다.';
-$lang['error_session_expired'] = 'Your session is expired, please login again';
+$lang['error_session_expired'] = 'Your session is expired, please login again'; // FIXME: need translation
 $lang['error_other'] = '시스템장애입니다. 관리자에게 문의하세요';
 
 // Invalid name of mailbox
@@ -208,39 +208,39 @@ $lang['prf_default_editor_mode_text'] = '"텍스트만 사용"';
 $lang['prf_default_editor_mode_html'] = '"고급에디터 사용"';
 $lang['prf_time_to_refesh'] = '자동으로 새로온 이메일 확인하기 (~분간격)';
 $lang['prf_spam_level'] = '스팸 차단 정도 (0 = 차단안함, 1 = 매우높음, 9 = 매우낮음)';
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default';
+$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
 
-$lang['prf_msg_saved'] = 'Preferences saved';
+$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
-$lang['filter_title'] = 'Filters';
+$lang['filter_title'] = 'Filters'; // FIXME: need translation
 
-$lang['filter_new'] = 'Create a filter';
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages';
-$lang['filter_list'] = 'Current filters';
+$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
+$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
+$lang['filter_list'] = 'Current filters'; // FIXME: need translation
 
-$lang['filter_field_from'] = 'From';
-$lang['filter_field_to'] = 'To';
-$lang['filter_field_subject'] = 'Subject';
-$lang['filter_field_header'] = 'Header';
-$lang['filter_field_body'] = 'Body';
+$lang['filter_field_from'] = 'From'; // FIXME: need translation
+$lang['filter_field_to'] = 'To'; // FIXME: need translation
+$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
+$lang['filter_field_header'] = 'Header'; // FIXME: need translation
+$lang['filter_field_body'] = 'Body'; // FIXME: need translation
 
-$lang['filter_type_move'] = 'Move';
-$lang['filter_type_delete'] = 'Delete';
-$lang['filter_type_mark'] = 'Mark read';
+$lang['filter_type_move'] = 'Move'; // FIXME: need translation
+$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
 
-$lang['filter_add'] = 'Add filter';
-$lang['filter_delete'] = 'Delete';
-$lang['filter_delete_selected'] = 'Delete selected filters';
+$lang['filter_add'] = 'Add filter'; // FIXME: need translation
+$lang['filter_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
 
-$lang['filter_field'] = 'Filter on field';
-$lang['filter_match'] = 'Search for';
-$lang['filter_type'] = 'Action';
-$lang['filter_folder'] = 'Destination folder';
+$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
+$lang['filter_match'] = 'Search for'; // FIXME: need translation
+$lang['filter_type'] = 'Action'; // FIXME: need translation
+$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
 
-$lang['filter_msg_nofilters'] = 'No filters available.';
-$lang['filter_msg_added'] = 'Filter added';
-$lang['filter_msg_deleted'] = 'Filter deleted';
+$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
+$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
+$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
 
 
 // [Catch]
@@ -264,7 +264,7 @@ $lang['move_mnu'] = '이동';
 $lang['move_to_trash_mnu'] = '휴지통으로';
 $lang['delete_mnu'] = '삭제';
 $lang['print_mnu'] = '인쇄';
-$lang['download_mnu'] = 'Download';
+$lang['download_mnu'] = 'Download'; // FIXME: need translation
 
 $lang['from_hea'] = '보낸이:';
 $lang['to_hea'] = '받는이:';
@@ -335,9 +335,9 @@ $lang['blk_close'] = '닫기';
 $lang['blk_save'] = '저장';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = '저장';
 $lang['evt_delete'] = '삭제';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 

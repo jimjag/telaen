@@ -65,7 +65,7 @@ $lang['default_char_set'] = 'tis-620';
 
 // Menu
 $lang['messages_mnu'] = 'ข้อความ';
-$lang['read_menu'] = 'Read E-Mail(s)';
+$lang['read_menu'] = 'Read E-Mail(s)'; // FIXME: need translation
 $lang['compose_mnu'] = 'เขียนจดหมาย';
 $lang['refresh_mnu'] = 'รีโหลด';
 $lang['folders_mnu'] = 'โฟลเดอร์';
@@ -175,7 +175,7 @@ $lang['up_title'] = 'เพิ่มไฟล์';
 $lang['up_information_text'] = 'เลือกไฟล์';
 $lang['up_button_text'] = '่ง';
 
-$lang['require_receipt'] = 'Return receipt';
+$lang['require_receipt'] = 'Return receipt'; // FIXME: need translation
 
 $lang['priority_text'] = 'ลำดับความสำคัญ';
 $lang['priority_low'] = 'น้อย';
@@ -208,9 +208,9 @@ $lang['prf_default_editor_mode_text'] = '"การแก้ไขแบบข้อความธรรมดา"';
 $lang['prf_default_editor_mode_html'] = '"การแก้ไขข้อความในรูปแบบ HTML"';
 $lang['prf_time_to_refesh'] = 'รีโหลดทุกๆ [นาที]';
 $lang['prf_spam_level'] = 'ระดับการตรวจจับจดหมายขยะ(0 = ไม่ตรวจจับ, 1 = สูงมาก, 9 = ต่ำมาก)';
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default';
+$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
 
-$lang['prf_msg_saved'] = 'Preferences saved';
+$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
 $lang['filter_title'] = 'ตัวกรอง';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'ตอบกลับทั้งหมด';
 $lang['forward_mnu'] = '่งต่อ';
 $lang['headers_mnu'] = 'หัว';
 $lang['move_mnu'] = 'ย้ายไป';
-$lang['move_to_trash_mnu'] = 'Move to Trash';
+$lang['move_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
 $lang['delete_mnu'] = 'ลบ';
 $lang['print_mnu'] = 'พิมพ์';
 $lang['download_mnu'] = 'ดาวน์โหลด';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'รับไฟล์';
 $lang['attch_type_hea'] = 'ชนิด';
 $lang['attch_size_hea'] = 'ขนาด';
 $lang['catch_address'] = 'เพิ่มเข้าไปในสมุดรายชื่อ';
-$lang['block_address'] = 'Block address';
+$lang['block_address'] = 'Block address'; // FIXME: need translation
 
 // [Search]
 $lang['sch_title'] = 'ค้นหา';
@@ -309,9 +309,9 @@ $lang['adr_state'] = 'อำเภอ';
 $lang['adr_work'] = 'งาน';
 $lang['adr_back'] = 'กลับ';
 $lang['adr_save'] = 'จัดเก็บ';
-$lang['adr_phone'] = 'Phone';
-$lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_cell'] = 'Cell'; // FIXME: need translation
+$lang['adr_note'] = 'Notes'; // FIXME: need translation
 
 // list
 $lang['adr_name_hea'] = 'ชื่อ';
@@ -330,14 +330,14 @@ $lang['addr_deleted'] = 'ลบรายชื่อแล้ว';
 $lang['blk_title'] = 'Block sender';
 $lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
 $lang['blk_email'] = 'E-mail';
-$lang['blk_no_address'] = 'No address available';
-$lang['blk_close'] = 'Close';
-$lang['blk_save'] = 'Save';
+$lang['blk_no_address'] = 'No address available'; // FIXME: need translation
+$lang['blk_close'] = 'Close'; // FIXME: need translation
+$lang['blk_save'] = 'Save'; // FIXME: need translation
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = 'จัดเก็บ';
 $lang['evt_delete'] = 'ลบ';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 

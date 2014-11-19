@@ -15,8 +15,8 @@ $lang['spam_extended'] = 'thư mục Spam';
 $lang['pages_text'] = 'trang';
 $lang['first_text'] = 'đầu tiên';
 $lang['previous_text'] = 'trước';
-$lang['next_text'] = 'Next';
-$lang['last_text'] = 'Last';
+$lang['next_text'] = 'Next'; // FIXME: need translation
+$lang['last_text'] = 'Last'; // FIXME: need translation
 $lang['total_text'] = 'Tổng';
 
 // Mail Server Errors
@@ -67,12 +67,12 @@ $lang['default_char_set'] = 'iso-8859-1"';
 $lang['messages_mnu'] = 'Hộp thư đến';
 $lang['read_menu'] = 'đọc E-Mail (s)';
 $lang['compose_mnu'] = 'Viết E-Mail';
-$lang['refresh_mnu'] = 'Refresh';
+$lang['refresh_mnu'] = 'Refresh'; // FIXME: need translation
 $lang['folders_mnu'] = 'thư mục';
 $lang['search_mnu'] = 'Tìm kiếm';
 $lang['address_mnu'] = 'Địa chỉ cuốn sách';
 $lang['empty_trash_mnu'] = 'Dọn sạch thùng rác';
-$lang['prefs_mnu'] = 'Preferences';
+$lang['prefs_mnu'] = 'Preferences'; // FIXME: need translation
 $lang['logoff_mnu'] = 'Đăng xuất';
 
 // Reply
@@ -94,7 +94,7 @@ $lang['key_hea'] = 'khóa';
 $lang['value_hea'] = 'Giá trị';
 
 // [Folders]
-$lang['fld_name_hea'] = 'Folder';
+$lang['fld_name_hea'] = 'Folder'; // FIXME: need translation
 $lang['fld_messages_hea'] = 'Tin nhắn';
 $lang['fld_size_hea'] = 'Size';
 $lang['fld_empty_hea'] = 'Empty';
@@ -106,20 +106,20 @@ $lang['folders_to'] = 'Folders để';
 // [MessageList]
 $lang['messages_to'] = 'Tin nhắn để';
 $lang['no_messages'] = 'Không có tin nhắn mới trong của bạn';
-$lang['delete_selected_mnu'] = 'Delete';
-$lang['move_selected_mnu'] = 'Move to';
+$lang['delete_selected_mnu'] = 'Delete'; // FIXME: need translation
+$lang['move_selected_mnu'] = 'Move to'; // FIXME: need translation
 $lang['mark_selected_mnu'] = 'Đánh dấu là đã đọc';
 $lang['unmark_selected_mnu'] = 'Đánh dấu là chưa đọc';
 $lang['move_selected_to_trash_mnu'] = 'Di chuyển vào Thùng rác';
 
 
-$lang['delete_mnu'] = 'Delete';
-$lang['move_mnu'] = 'Move to';
+$lang['delete_mnu'] = 'Delete'; // FIXME: need translation
+$lang['move_mnu'] = 'Move to'; // FIXME: need translation
 $lang['subject_hea'] = 'Chủ đề:';
 $lang['from_hea'] = 'Từ:';
 $lang['to_hea'] = 'Để:';
 $lang['date_hea'] = 'ngày:';
-$lang['size_hea'] = 'Size';
+$lang['size_hea'] = 'Size'; // FIXME: need translation
 $lang['have_spam'] = 'Bạn có Spam (kiểm tra thư mục Spam)';
 
 $lang['msg_you_have'] = 'Bạn có';
@@ -138,8 +138,8 @@ $lang['lgn_welcome_msg'] = 'Chào mừng bạn, vui lòng đăng nhập vào tà
 $lang['lng_user_email'] = 'E-mail';
 $lang['lng_user_name'] = 'Tên người dùng';
 $lang['lng_user_pwd'] = 'Mật khẩu';
-$lang['lng_server'] = 'Server';
-$lang['lng_theme'] = 'Theme';
+$lang['lng_server'] = 'Server'; // FIXME: need translation
+$lang['lng_theme'] = 'Theme'; // FIXME: need translation
 $lang['lng_language'] = 'Ngôn ngữ';
 $lang['lng_login_btn'] = 'Đăng nhập&gt;&gt;';
 $lang['lng_cookie_not_enabled'] = 'Cookies phải được cho phép';
@@ -158,8 +158,8 @@ $lang['address_tip'] = 'Từ sổ địa chỉ';
 $lang['attach_hea'] = 'File đính kèm:';
 $lang['attch_add_new'] = 'Đính kèm tập tin mới"';
 $lang['attch_name_hea'] = 'Tên';
-$lang['attch_size'] = 'Size';
-$lang['attch_type_hea'] = 'Type';
+$lang['attch_size'] = 'Size'; // FIXME: need translation
+$lang['attch_type_hea'] = 'Type'; // FIXME: need translation
 $lang['attch_dele_hea'] = 'Xóa';
 $lang['attch_no_hea'] = 'Không có file đính kèm';
 
@@ -172,18 +172,18 @@ $lang['nav_continue'] = '&lt;&lt; Tiếp tục &gt;&gt;';
 $lang['nav_back'] = 'Quay lại';
 
 $lang['up_title'] = 'Thêm tập tin';
-$lang['up_information_text'] = 'Select file';
+$lang['up_information_text'] = 'Select file'; // FIXME: need translation
 $lang['up_button_text'] = 'Đính kèm tập tin';
 
 $lang['require_receipt'] = 'nhận trở lại';
 
 $lang['priority_text'] = 'ưu tiên';
 $lang['priority_low'] = 'thấp';
-$lang['priority_normal'] = 'Normal';
+$lang['priority_normal'] = 'Normal'; // FIXME: need translation
 $lang['priority_high'] = 'cao';
 
 // [Preferences]
-$lang['prf_title'] = 'Preferences';
+$lang['prf_title'] = 'Preferences'; // FIXME: need translation
 $lang['prf_general_title'] = 'Thông tin chung';
 $lang['prf_name'] = 'Tên';
 $lang['prf_reply_to'] = 'Trả lời';

@@ -105,12 +105,12 @@ $lang['folders_to'] = 'Klasörler:';
 
 // [MessageList]
 $lang['messages_to'] = 'no_messages				= Yeni mesajýnýz yok. Klasör:  ';
-$lang['no_messages'] = 'No new messages in your ';
+$lang['no_messages'] = 'No new messages in your '; // FIXME: need translation
 $lang['delete_selected_mnu'] = 'Ýþaretlileri sil';
 $lang['move_selected_mnu'] = 'Ýþaretlileri taþý: ';
-$lang['mark_selected_mnu'] = 'Mark as read';
-$lang['unmark_selected_mnu'] = 'Mark as unread';
-$lang['move_selected_to_trash_mnu'] = 'Move selected to Trash';
+$lang['mark_selected_mnu'] = 'Mark as read'; // FIXME: need translation
+$lang['unmark_selected_mnu'] = 'Mark as unread'; // FIXME: need translation
+$lang['move_selected_to_trash_mnu'] = 'Move selected to Trash'; // FIXME: need translation
 
 
 $lang['delete_mnu'] = 'Sil';
@@ -142,12 +142,12 @@ $lang['lng_server'] = 'Server';
 $lang['lng_theme'] = 'Tema';
 $lang['lng_language'] = 'Language';
 $lang['lng_login_btn'] = 'Giriþ &gt;&gt;';
-$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled';
+$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled'; // FIXME: need translation
 $lang['lng_cookie_not_valid'] = 'Cookie Security Check Failed';
 
 // [Newmessage]
 
-$lang['newmsg_title'] = 'Compose mail';
+$lang['newmsg_title'] = 'Compose mail'; // FIXME: need translation
 
 $lang['to_hea'] = 'Kime:';
 $lang['cc_hea'] = 'Cc:';
@@ -175,7 +175,7 @@ $lang['up_title'] = 'Dosya ekle';
 $lang['up_information_text'] = 'Dosya seç';
 $lang['up_button_text'] = 'Gönder';
 
-$lang['require_receipt'] = 'Return receipt';
+$lang['require_receipt'] = 'Return receipt'; // FIXME: need translation
 
 $lang['priority_text'] = 'Periyot';
 $lang['priority_low'] = 'Düþük';
@@ -203,44 +203,44 @@ $lang['prf_signature'] = 'Ýmzanýz';
 $lang['prf_auto_add_sign'] = 'Tüm giden mesajlara imzamý ekle';
 $lang['prf_save_button'] = 'Kaydet';
 $lang['prf_display_images'] = 'Ekli resimleri göster';
-$lang['prf_default_editor_mode'] = 'Normal edition mode';
+$lang['prf_default_editor_mode'] = 'Normal edition mode'; // FIXME: need translation
 $lang['prf_default_editor_mode_text'] = '"Düz Metin"';
 $lang['prf_default_editor_mode_html'] = '"Geliþmiþ HTML editörü"';
 $lang['prf_time_to_refesh'] = 'Mesajlarýn yenilenme zamaný (dakika)';
-$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)';
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default';
+$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
+$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
 
-$lang['prf_msg_saved'] = 'Preferences saved';
+$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
-$lang['filter_title'] = 'Filters';
+$lang['filter_title'] = 'Filters'; // FIXME: need translation
 
-$lang['filter_new'] = 'Create a filter';
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages';
-$lang['filter_list'] = 'Current filters';
+$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
+$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
+$lang['filter_list'] = 'Current filters'; // FIXME: need translation
 
-$lang['filter_field_from'] = 'From';
-$lang['filter_field_to'] = 'To';
-$lang['filter_field_subject'] = 'Subject';
-$lang['filter_field_header'] = 'Header';
-$lang['filter_field_body'] = 'Body';
+$lang['filter_field_from'] = 'From'; // FIXME: need translation
+$lang['filter_field_to'] = 'To'; // FIXME: need translation
+$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
+$lang['filter_field_header'] = 'Header'; // FIXME: need translation
+$lang['filter_field_body'] = 'Body'; // FIXME: need translation
 
-$lang['filter_type_move'] = 'Move';
-$lang['filter_type_delete'] = 'Delete';
-$lang['filter_type_mark'] = 'Mark read';
+$lang['filter_type_move'] = 'Move'; // FIXME: need translation
+$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
 
-$lang['filter_add'] = 'Add filter';
-$lang['filter_delete'] = 'Delete';
-$lang['filter_delete_selected'] = 'Delete selected filters';
+$lang['filter_add'] = 'Add filter'; // FIXME: need translation
+$lang['filter_delete'] = 'Delete'; // FIXME: need translation
+$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
 
-$lang['filter_field'] = 'Filter on field';
-$lang['filter_match'] = 'Search for';
-$lang['filter_type'] = 'Action';
+$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
+$lang['filter_match'] = 'Search for'; // FIXME: need translation
+$lang['filter_type'] = 'Action'; // FIXME: need tra // FIXME: need translationnslation
 $lang['filter_folder'] = 'Destination folder';
 
-$lang['filter_msg_nofilters'] = 'No filters available.';
-$lang['filter_msg_added'] = 'Filter added';
-$lang['filter_msg_deleted'] = 'Filter deleted';
+$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
+$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
+$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
 
 
 // [Catch]
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'Hepsini cevapla';
 $lang['forward_mnu'] = 'Yönlendir';
 $lang['headers_mnu'] = 'Baþlýklar';
 $lang['move_mnu'] = 'Taþý:';
-$lang['move_to_trash_mnu'] = 'Move to Trash';
+$lang['move_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
 $lang['delete_mnu'] = 'Sil';
 $lang['print_mnu'] = 'Yazdýr';
 $lang['download_mnu'] = 'Download';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'Ýndir';
 $lang['attch_type_hea'] = 'Tür';
 $lang['attch_size_hea'] = 'Boyut';
 $lang['catch_address'] = 'Adres defterine ekle';
-$lang['block_address'] = 'Block address';
+$lang['block_address'] = 'Block address'; // FIXME: need translation
 
 // [Search]
 $lang['sch_title'] = 'Search';
@@ -309,15 +309,15 @@ $lang['adr_state'] = 'Eyalet';
 $lang['adr_work'] = 'Ýþ';
 $lang['adr_back'] = 'Geri';
 $lang['adr_save'] = 'Kaydet';
-$lang['adr_phone'] = 'Phone';
-$lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_cell'] = 'Cell'; // FIXME: need translation
+$lang['adr_note'] = 'Notes'; // FIXME: need translation
 
 // list
 $lang['adr_name_hea'] = 'Ad Soyad';
 $lang['adr_email_hea'] = 'E-posta';
 $lang['adr_edit_hea'] = 'Düzenle';
-$lang['adr_expo_hea'] = 'Export';
+$lang['adr_expo_hea'] = 'Export'; // FIXME: need translation
 $lang['adr_dele_hea'] = 'Sil';
 $lang['adr_new_entry'] = 'Yeni Giriþ';
 
@@ -335,9 +335,9 @@ $lang['blk_close'] = 'Close';
 $lang['blk_save'] = 'Save';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event';
+$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
 $lang['evt_save'] = 'Kaydet';
 $lang['evt_delete'] = 'Sil';
-$lang['evt_stop'] = 'Stop time';
-$lang['evt_start'] = 'Start time';
+$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_start'] = 'Start time'; // FIXME: need translation
 
