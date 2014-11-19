@@ -141,7 +141,7 @@ $smarty->assign('umAllowSelectLanguage', $allow_user_change_language); $func($te
 if ($allow_user_change_language) {
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
     foreach ($languages as $key => $val) {
-        $selected = ($lng == $key) ? "selected=\"selected\"" : "";
+        $selected = ($selected_language == $key) ? "selected=\"selected\"" : "";
         $langsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
     $langsel .= "</select>\r";
@@ -153,7 +153,7 @@ $smarty->assign('umAllowSelectTheme', $allow_user_change_theme);
 if ($allow_user_change_theme) {
     $themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";
     foreach ($themes as $key => $val) {
-        $selected = ($tem == tkey) ? "selected=\"selected\"" : "";
+        $selected = ($selected_theme == tkey) ? "selected=\"selected\"" : "";
         $themsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
     $themsel .= "</select>\r";
