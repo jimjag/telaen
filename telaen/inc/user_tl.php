@@ -28,7 +28,7 @@ if ($allow_user_change_theme && $tem != "") {
     }
 }
 if ($allow_user_change_language && $lng != "") {
-    if (array_key_exists($lng, $languages) && is_file("./langs/${lng}.php")) {
+    if (array_key_exists($lng, $languages) && is_file("./langs/{$lng}.php")) {
         $selected_language = $lid = $lng;
     }
 }

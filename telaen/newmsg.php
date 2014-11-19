@@ -36,7 +36,7 @@ if (isset($tipo) && $tipo == 'send') {
     $htmlHead = "
 <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 <html>
-<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=${lang['default_char_set']}\"></head>
+<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset={$lang['default_char_set']}\"></head>
 <body>
 	";
 
@@ -566,14 +566,14 @@ $tmpbody";
 
         switch ($rtype) {
         case 'reply':
-            if (!preg_match("/^${lang['reply_prefix']}/i", trim($subject))) {
-                $subject = "${lang['reply_prefix']} $subject";
+            if (!preg_match("/^{$lang['reply_prefix']}/i", trim($subject))) {
+                $subject = "{$lang['reply_prefix']} $subject";
             }
             $to = $fromreply;
             break;
         case 'replyall':
-            if (!preg_match("/^${lang['reply_prefix']}/i", trim($subject))) {
-                $subject = "${lang['reply_prefix']} $subject";
+            if (!preg_match("/^{$lang['reply_prefix']}/i", trim($subject))) {
+                $subject = "{$lang['reply_prefix']} $subject";
             }
             $to = $allreply;
             $cc = $ccreply;
