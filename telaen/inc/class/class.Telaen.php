@@ -37,6 +37,20 @@ class Telaen extends Telaen_core
     }
 
     /**
+     * Remove unsafe chars with hex equiv
+     * @param string $str
+     * @return string
+     */
+    public function safe_print($str)
+    {
+        return preg_replace_callback(
+            '|([^[:print:]])|',
+            function ($match) { return '_x{'.dechex(ord($match[1])).'}'; },
+            $str
+        );
+    }
+
+    /**
      * Print out debugging info as HTML comments
      * @param  string $str
      * @return void
@@ -44,10 +58,22 @@ class Telaen extends Telaen_core
     public function debug_msg($str, $caller = "")
     {
         echo "<!-- $caller:\n";
-        echo preg_replace('|-->|', '__>', safe_print($str));
+        echo preg_replace('|-->|', '__>', self::safe_print($str));
         echo "\n-->\n";
         @flush();
     }
+
+    /**
+     * Return a file-system safe filename
+     * @param string $str
+     * @return string
+     */
+    public function fs_safe($str)
+    {
+        $ret = preg_replace('|[.]{2,}|', ".", $str); // no dir
+        return preg_replace('|[^A-Za-z0-9_.-]+|', '_', $ret);
+    }
+
 
     /**
      * Check if we are connected to email server
@@ -304,10 +330,8 @@ class Telaen extends Telaen_core
         $idle_timeout = $this->timeout;
 
         if (!file_exists($this->user_folder)) {
-            if (!@mkdir($this->user_folder, $this->dirperm)) {
-                if ($this->log_errors) {
-                    trigger_error("permission error: $this->user_folder");
-                }
+            if (!@mkdir($this->user_folder, $this->dirperm) && $this->log_errors) {
+                trigger_error("mkdir error: $this->user_folder");
             }
         }
 
@@ -339,7 +363,9 @@ class Telaen extends Telaen_core
                 $current_folder = $this->fix_prefix($boxes[$i]['name'], 1);
                 if (!$this->is_system_folder($current_folder)) {
                     if (!file_exists($this->user_folder.$current_folder)) {
-                        mkdir($this->user_folder.$current_folder, $this->dirperm);
+                        if (!@mkdir($this->user_folder.$current_folder, $this->dirperm) && $this->log_errors) {
+                            trigger_error("mkdir error: {$this->user_folder}{$current_folder}");
+                        }
                     }
                 }
             }
@@ -353,7 +379,9 @@ class Telaen extends Telaen_core
                 if ($this->is_system_folder($value)) {
                     $value = strtolower($value);
                 }
-                mkdir($this->user_folder.$value, $this->dirperm);
+                if (!@mkdir($this->user_folder.$value, $this->dirperm) && $this->log_errors) {
+                    trigger_error("mkdir error: {$this->user_folder}{$value}");
+                }
             }
         }
     }

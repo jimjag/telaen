@@ -479,7 +479,7 @@ function caster($var, $cast = 'string')
         case 'double':
             $var = (double) $var; break;
         case 'string':
-            $var = safe_print(trim((string) $var));
+            $var = Telaen::safe_print(trim((string) $var));
             break;
         case 'array':
             $var = (array) $var; break;

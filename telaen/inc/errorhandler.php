@@ -9,28 +9,6 @@ if (empty($log_fname)) {
     $log_fname = "telaen_error.log";
 }
 
-function safe_print($str)
-{
-    return preg_replace_callback(
-        '|([^[:print:]])|',
-        function ($match) { return '\x{'.dechex(ord($match[1])).'}'; },
-        $str
-    );
-}
-
-/**
- * Print out debugging info as HTML comments
- * @param  string $str
- * @return void
- */
-function debug_msg($str, $caller = "")
-{
-    echo "<!-- $caller:\n";
-    echo preg_replace('|-->|', '__>', safe_print($str));
-    echo "\n-->\n";
-    @flush();
-}
-
 function errorHandler($errno, $errmsg, $filename, $linenum, $vars)
 {
     global $log_fname, $temporary_directory;
@@ -57,7 +35,10 @@ function errorHandler($errno, $errmsg, $filename, $linenum, $vars)
         E_STRICT => 'Runtime Notice',
         E_RECOVERABLE_ERROR => 'Catchable Fatal Error',
     );
-    $errmsg = safe_print($errmsg);
+    $errmsg = preg_replace_callback(
+            '|([^[:print:]])|',
+            function ($match) { return '\x{'.dechex(ord($match[1])).'}'; },
+            $errmsg);
     $err = "$dt: [$errno/{$etype[$errno]}] ($filename:$linenum): $errmsg\n";
 
     error_log($err, 3, $elog);
