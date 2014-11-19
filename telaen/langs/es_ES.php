@@ -309,9 +309,9 @@ $lang['adr_state'] = 'Región/Provincia';
 $lang['adr_work'] = 'Profesión';
 $lang['adr_back'] = 'Volver';
 $lang['adr_save'] = 'Guardar';
-$lang['adr_phone'] = 'Phone';
+$lang['adr_phone'] = 'TelŽfono';
 $lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_note'] = 'Notas';
 
 // list
 $lang['adr_name_hea'] = 'Nombre';

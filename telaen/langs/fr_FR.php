@@ -287,7 +287,7 @@ $lang['sch_button_text'] = 'Rechercher &gt;&gt;';
 $lang['sch_subject_hea'] = 'Objet';
 $lang['sch_from_hea'] = 'De';
 $lang['sch_date_hea'] = 'Date';
-$lang['sch_body_hea'] = 'Message'; // FIXME: need translation
+$lang['sch_body_hea'] = 'Message';
 $lang['sch_folder_hea'] = 'Dossier';
 $lang['sch_no_results'] = 'Aucun message trouvé';
 
@@ -309,7 +309,7 @@ $lang['adr_state'] = 'Etat';
 $lang['adr_work'] = 'Travail';
 $lang['adr_back'] = 'Retour';
 $lang['adr_save'] = 'Enregistrer';
-$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_phone'] = 'TŽlŽphone';
 $lang['adr_cell'] = 'Cell'; // FIXME: need translation
 $lang['adr_note'] = 'Notes'; // FIXME: need translation
 
@@ -331,8 +331,8 @@ $lang['blk_title'] = 'Block sender'; // FIXME: need translation
 $lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'E-mail'; // FIXME: need translation
 $lang['blk_no_address'] = 'No address available';
-$lang['blk_close'] = 'Close'; // FIXME: need translation
-$lang['blk_save'] = 'Save'; // FIXME: need translation
+$lang['blk_close'] = 'Fermer'; // FIXME: need translation
+$lang['blk_save'] = 'Enregistrer';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event'; // FIXME: need translation

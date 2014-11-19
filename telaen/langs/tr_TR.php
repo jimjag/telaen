@@ -331,8 +331,8 @@ $lang['blk_title'] = 'Block sender';
 $lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
 $lang['blk_email'] = 'E-mail';
 $lang['blk_no_address'] = 'No address available';
-$lang['blk_close'] = 'Close';
-$lang['blk_save'] = 'Save';
+$lang['blk_close'] = 'Kapat';
+$lang['blk_save'] = 'Kaydet';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event'; // FIXME: need translation

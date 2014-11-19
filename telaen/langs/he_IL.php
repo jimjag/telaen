@@ -331,8 +331,8 @@ $lang['blk_title'] = 'Block sender'; // FIXME: need translation
 $lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'E-mail';
 $lang['blk_no_address'] = 'No address available'; // FIXME: need translation
-$lang['blk_close'] = 'Close'; // FIXME: need translation
-$lang['blk_save'] = 'Save'; // FIXME: need translation
+$lang['blk_close'] = 'свеш';
+$lang['blk_save'] = 'щоеш';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event'; // FIXME: need translation

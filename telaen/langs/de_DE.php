@@ -309,9 +309,9 @@ $lang['adr_state'] = 'Bundesland:';
 $lang['adr_work'] = 'Telefon:';
 $lang['adr_back'] = 'Zurück';
 $lang['adr_save'] = 'Speichern';
-$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_phone'] = 'Telefon';
 $lang['adr_cell'] = 'Cell'; // FIXME: need translation
-$lang['adr_note'] = 'Notes'; // FIXME: need translation
+$lang['adr_note'] = 'Anmerkung';
 
 // list
 $lang['adr_name_hea'] = 'Name';

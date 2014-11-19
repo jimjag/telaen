@@ -309,9 +309,9 @@ $lang['adr_state'] = 'Województwo';
 $lang['adr_work'] = 'Praca';
 $lang['adr_back'] = 'Powrót';
 $lang['adr_save'] = 'Zapisz';
-$lang['adr_phone'] = 'Phone';
+$lang['adr_phone'] = 'Telefon';
 $lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_note'] = 'Notatki';
 
 // list
 $lang['adr_name_hea'] = 'Nazwa';
@@ -331,8 +331,8 @@ $lang['blk_title'] = 'Block sender'; // FIXME: need translation
 $lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
 $lang['blk_email'] = 'E-mail';
 $lang['blk_no_address'] = 'No address available'; // FIXME: need translation
-$lang['blk_close'] = 'Close'; // FIXME: need translation
-$lang['blk_save'] = 'Save'; // FIXME: need translation
+$lang['blk_close'] = 'Zamknij';
+$lang['blk_save'] = 'Zapisz';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event'; // FIXME: need translation

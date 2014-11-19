@@ -9,7 +9,7 @@ $lang = array();
 $lang['inbox_extended'] = 'InnhÛlf';
 $lang['sent_extended'] = '⁄thÛlf';
 $lang['trash_extended'] = 'Rusl';
-$lang['spam_extended'] = 'Spam folder'; // FIXME: need translation
+$lang['spam_extended'] = 'Ruslpóstur';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -331,8 +331,8 @@ $lang['blk_title'] = 'Block sender'; // FIXME: need translation
 $lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'E-mail';
 $lang['blk_no_address'] = 'No address available'; // FIXME: need translation
-$lang['blk_close'] = 'Close'; // FIXME: need translation
-$lang['blk_save'] = 'Save'; // FIXME: need translation
+$lang['blk_close'] = 'Loka';
+$lang['blk_save'] = 'Vista';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event'; // FIXME: need translation

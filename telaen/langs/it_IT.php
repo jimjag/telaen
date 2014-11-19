@@ -309,7 +309,7 @@ $lang['adr_state'] = 'Stato';
 $lang['adr_work'] = 'Impiego';
 $lang['adr_back'] = 'Indietro';
 $lang['adr_save'] = 'Salva';
-$lang['adr_phone'] = 'Phone';
+$lang['adr_phone'] = 'Telefono';
 $lang['adr_cell'] = 'Cell';
 $lang['adr_note'] = 'Notes';
 
@@ -331,8 +331,8 @@ $lang['blk_title'] = 'Block sender'; // FIXME: need translation
 $lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
 $lang['blk_email'] = 'E-mail';
 $lang['blk_no_address'] = 'No address available'; // FIXME: need translation
-$lang['blk_close'] = 'Close'; // FIXME: need translation
-$lang['blk_save'] = 'Save'; // FIXME: need translation
+$lang['blk_close'] = 'Chiudi';
+$lang['blk_save'] = 'Salva';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
