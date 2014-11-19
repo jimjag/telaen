@@ -20,6 +20,7 @@ $themes = array(
 );
 
 # Languages
+## This is extremely ambitious
 
 $language = array(
     ['afr' => 'Afrikaans'],

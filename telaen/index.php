@@ -139,11 +139,12 @@ if ($avalthemes == 0) {
 $smarty->assign('umAllowSelectLanguage', $allow_user_change_language); $func($textout);
 
 if ($allow_user_change_language) {
-    $def_lng = (is_numeric($lid)) ? $lid : $default_language;
+    $def_lng = (array_key_exists($lid, $languages)) ? $lid : $default_language;
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
-    for ($i = 0;$i<$avallangs;$i++) {
-        $selected = ($lid == $i) ? "selected=\"selected\"" : "";
-        $langsel .= "<option value=\"$i\" $selected>".$languages[$i]["name"]."</option> \r";
+    foreach ($languages as $i) {
+        $lkey = key($i);
+        $selected = ($lid == $lkey) ? "selected=\"selected\"" : "";
+        $langsel .= "<option value=\"$lkey\" $selected>".$i($lkey)."</option> \r";
     }
     $langsel .= "</select>\r";
     $smarty->assign("umLanguages", $langsel);
@@ -152,11 +153,12 @@ if ($allow_user_change_language) {
 $smarty->assign('umAllowSelectTheme', $allow_user_change_theme);
 
 if ($allow_user_change_theme) {
-    $def_tem = (is_numeric($tid)) ? $tid : $default_theme;
+    $def_tem = (array_key_exists($tid, $themes)) ? $tid : $default_theme;
     $themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";
-    for ($i = 0;$i<$avalthemes;$i++) {
-        $selected = ($tid == $i) ? "selected=\"selected\"" : "";
-        $themsel .= "<option value=\"$i\" $selected>".$themes[$i]["name"]."</option> \r";
+    foreach ($themes as $i) {
+        $tkey = key($i);
+        $selected = ($tid == $tkey) ? "selected=\"selected\"" : "";
+        $themsel .= "<option value=\"$tkey\" $selected>".$i($tkey)."</option> \r";
     }
     $themsel .= "</select>\r";
     $smarty->assign('umThemes', $themsel);
