@@ -22,7 +22,7 @@ $themes = array(
 # Languages
 ## This is extremely ambitious
 
-$language = array(
+$languages = array(
     ['afr' => 'Afrikaans'],
     ['sq_AL' => 'Albanian (Shqip)'],
     ['ar'    => 'Arabic (العربية)'],
