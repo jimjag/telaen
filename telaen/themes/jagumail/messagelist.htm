@@ -1,4 +1,3 @@
-{config_load file=$umLanguageFile section="MessageList"}
 {um_welcome_message messages=$umNumMessages unread=$umNumUnread boxname=$umBoxName var="umWelcomeMessage"}
 
 {include file=$headerTemplate pageTitle=#messages_to#|cat:" "|cat:$umUserEmail}
@@ -20,7 +19,7 @@
 					<td colspan="7" class="default"> &nbsp;&nbsp;
 					{$umWelcomeMessage}
 				{if $umHaveSpam eq "TRUE"}
-		                        - <a href="process.php?folder=spam" class="spam"><i>{#have_spam#}</i></a>
+		                        - <a href="process.php?folder=spam" class="spam"><i>{$umLabel.have_spam}</i></a>
         	                {/if}
 					</td>
 				</tr>
@@ -33,39 +32,39 @@
 				<tr>
 				    <td width="5"  class="headers"><input type=checkbox name=chkall onclick="sel()"></td>
 				    <td width="34"  class="headers"><img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
-				    <td width="225" class="headers">.: <b><a class="menu" href="javascript:sortby('subject')">{#subject_hea#}{$umSubjectArrow}</a></b> :.</td>
+				    <td width="225" class="headers">.: <b><a class="menu" href="javascript:sortby('subject')">{$umLabel.subject_hea}{$umSubjectArrow}</a></b> :.</td>
 
 					{if $umFolder eq "sent"}
-				    	<td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('toname')">{#to_hea#}{$umToArrow}</a></b> :.</td>
+				    	<td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('toname')">{$umLabel.to_hea}{$umToArrow}</a></b> :.</td>
 					{else}
-				    	<td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('fromname')">{#from_hea#}{$umFromArrow}</a></b> :.</td>
+				    	<td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('fromname')">{$umLabel.from_hea}{$umFromArrow}</a></b> :.</td>
 					{/if}
-				    <td width="90" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{#date_hea#}{$umDateArrow}</a></b> :.</td>
-				    <td width="70" class="headers">.: <b><a class="menu" href="javascript:sortby('size')">{#size_hea#}{$umSizeArrow}</a></b> :.</td>
+				    <td width="90" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{$umLabel.date_hea}{$umDateArrow}</a></b> :.</td>
+				    <td width="70" class="headers">.: <b><a class="menu" href="javascript:sortby('size')">{$umLabel.size_hea}{$umSizeArrow}</a></b> :.</td>
 				</tr>
 			
 				{section name=i loop=$umMessageList}
 				<tr>
 					<td class="default" nowrap>{$umMessageList[i].checkbox}</td>
 					<td class="default" nowrap>{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
-					<td class="default" nowrap><acronym title="{$umMessageList[i].subject|escape:"html"|default:#no_subject_text#}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:50:"...":true|escape:"html"|default:#no_subject_text#}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</acronym></td>
+					<td class="default" nowrap><acronym title="{$umMessageList[i].subject|escape:"html"|default:$umLabel.no_subject_text}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:50:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</acronym></td>
 
 					{if $umFolder eq "sent"}
-						<td class="default" nowrap><acronym title="{$umMessageList[i].to|escape:"html"|default:#no_recipient_text#}"><a href="{$umMessageList[i].composelinksent}">{$umMessageList[i].to|truncate:30:"...":true|escape:"html"|default:#no_recipient_text#}</a></acronym></td>
+						<td class="default" nowrap><acronym title="{$umMessageList[i].to|escape:"html"|default:$umLabel.no_recipient_text}"><a href="{$umMessageList[i].composelinksent}">{$umMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$umLabel.no_recipient_text}</a></acronym></td>
 					{else}
-						<td class="default" nowrap><acronym title="{$umMessageList[i].from|escape:"html"|default:#no_recipient_text#}"><a href="{$umMessageList[i].composelink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a></acronym></td>
+						<td class="default" nowrap><acronym title="{$umMessageList[i].from|escape:"html"|default:$umLabel.no_recipient_text}"><a href="{$umMessageList[i].composelink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a></acronym></td>
 					{/if}
 
-					<td class="cent" nowrap>{$umMessageList[i].date|date_format:#date_format#}</td>
+					<td class="cent" nowrap>{$umMessageList[i].date|date_format:$umLabel.date_format}</td>
 					<td class="right" nowrap>{$umMessageList[i].size}Kb &nbsp;</td>
 				</tr>
 				{/section}
 				<tr>
 					<td colspan="7" class="default"><img src="./themes/hungi.mozilla/images/arrowblue.gif" alt=""> 
-					<a class="menu" href="javascript:markmsg()">{#mark_selected_mnu#}</a> ::
-					<a class="menu" href="javascript:unmarkmsg()">{#unmark_selected_mnu#}</a> ::
-					<a class="menu" href="javascript:delemsg()">{#delete_selected_mnu#}</a> :: 
-					<a class="menu" href="javascript:movemsg()">{#move_selected_mnu#}</a>					
+					<a class="menu" href="javascript:markmsg()">{$umLabel.mark_selected_mnu}</a> ::
+					<a class="menu" href="javascript:unmarkmsg()">{$umLabel.unmark_selected_mnu}</a> ::
+					<a class="menu" href="javascript:delemsg()">{$umLabel.delete_selected_mnu}</a> :: 
+					<a class="menu" href="javascript:movemsg()">{$umLabel.move_selected_mnu}</a>					
 			
 					<select name="aval_folders">
 						{section name=i loop=$umAvalFolders}
@@ -75,18 +74,18 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="7" class="default">&nbsp;{#pages_text#}:&nbsp;{if $umPreviousLink}<a href="{$umPreviousLink}" class="navigation">{#previous_text#}</a> &nbsp;{/if}{$umNavBar}{if $umNextLink} &nbsp;<a href="{$umNextLink}" class="navigation">{#next_text#}</a>{/if}</td>
+					<td colspan="7" class="default">&nbsp;{$umLabel.pages_text}:&nbsp;{if $umPreviousLink}<a href="{$umPreviousLink}" class="navigation">{$umLabel.previous_text}</a> &nbsp;{/if}{$umNavBar}{if $umNextLink} &nbsp;<a href="{$umNextLink}" class="navigation">{$umLabel.next_text}</a>{/if}</td>
 				</tr>
 			{else}		
 				<tr>
-					<td colspan="7" class="cent"><br> &nbsp;&nbsp;{#no_messages#} <b>{$umBoxName|escape:"html"}</b><br><br></td>
+					<td colspan="7" class="cent"><br> &nbsp;&nbsp;{$umLabel.no_messages} <b>{$umBoxName|escape:"html"}</b><br><br></td>
 				</tr>
 			{/if}
 			</form>
 
 			{if $umQuotaEnabled eq 1}
 			<tr>
-				<td class="cent" colspan="7">&nbsp; {#quota_usage_info#}: {#quota_usage_used#} <b>{$umTotalUsed}</b>Kb {#quota_usage_of#} <b>{$umQuotaLimit}</b>Kb {#quota_usage_avail#}<br> {$umUsageGraph}</td>
+				<td class="cent" colspan="7">&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b>Kb {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b>Kb {$umLabel.quota_usage_avail}<br> {$umUsageGraph}</td>
 			</tr>
 			{/if}
 		</table>

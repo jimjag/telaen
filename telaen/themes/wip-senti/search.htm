@@ -4,7 +4,7 @@
 <html>
 <head>
 	<title>sentiMail - Search</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 <link rel="stylesheet" href="themes/senti/webmail.css" type="text/css">
 
 {$umJS}
@@ -49,7 +49,7 @@
 		<td colspan="13" valign="top">
 				<table height="100%" width="100%" border=0 cellpadding="0" cellspacing="0">
 							<tr>
-								<td class="default" colspan="5"> {#sch_information_text#}
+								<td class="default" colspan="5"> {$umLabel.sch_information_text}
 								</td>
 							<tr>
 								<form name="form1" action="search.php" method="POST">
@@ -59,13 +59,13 @@
 								<td colspan=5>
 									<table height="100%" width="100%" border=0 cellpadding="4" cellspacing="0">
 										<tr>
-											<td class="right">{#sch_from_hea#}: &nbsp;<td colspan="4" class="default"><input type=text name=srcFrom value="{$umInputFrom|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
+											<td class="right">{$umLabel.sch_from_hea}: &nbsp;<td colspan="4" class="default"><input type=text name=srcFrom value="{$umInputFrom|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
 										<tr>
-											<td class="right">{#sch_subject_hea#}: &nbsp;<td colspan="4" class="default"><input type=text name=srcSubject value="{$umInputSubject|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
+											<td class="right">{$umLabel.sch_subject_hea}: &nbsp;<td colspan="4" class="default"><input type=text name=srcSubject value="{$umInputSubject|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
 										<tr>
-											<td class="right">{#sch_body_hea#}: &nbsp;<td colspan="4" class="default"><input type=text name=srcBody value="{$umInputBody|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
+											<td class="right">{$umLabel.sch_body_hea}: &nbsp;<td colspan="4" class="default"><input type=text name=srcBody value="{$umInputBody|escape:"html"}" class="textbox" size="40" maxlength="40"></td>
 										<tr>
-											<td class="default"><td colspan="4" class="default"><input type=submit value="{#sch_button_text#}" class="button"></td>
+											<td class="default"><td colspan="4" class="default"><input type=submit value="{$umLabel.sch_button_text}" class="button"></td>
 									</table>			
 					
 								</td>
@@ -76,23 +76,23 @@
 				
 								<tr>
 								    <td width="35"  class="headers"><img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
-								    <td width="100%" class="headers">.: <b>{#sch_subject_hea#}</b> :.</td>
-							    	<td width="160" class="headers">.: <b>{#sch_from_hea#}</b> :.</td>
-								    <td width="90" class="headers">.: <b>{#sch_date_hea#}</b> :.</td>
-								    <td width="140" class="headers">.: <b>{#sch_folder_hea#}</b> :.</td>
+								    <td width="100%" class="headers">.: <b>{$umLabel.sch_subject_hea}</b> :.</td>
+							    	<td width="160" class="headers">.: <b>{$umLabel.sch_from_hea}</b> :.</td>
+								    <td width="90" class="headers">.: <b>{$umLabel.sch_date_hea}</b> :.</td>
+								    <td width="140" class="headers">.: <b>{$umLabel.sch_folder_hea}</b> :.</td>
 								</tr>
 				
 								{section name=i loop=$umMessageList}
 								<tr>
 									<td class="default">{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
-									<td class="default">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</td>
-									<td class="default"><a href="{$umMessageList[i].composelink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:#no_subject_text#}</a></td>
-									<td class="cent">{$umMessageList[i].date|date_format:#date_format#}</td>
+									<td class="default">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</td>
+									<td class="default"><a href="{$umMessageList[i].composelink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a></td>
+									<td class="cent">{$umMessageList[i].date|date_format:$umLabel.date_format}</td>
 									<td class="default">&nbsp;<a href="{$umMessageList[i].folderlink}">{$umMessageList[i].foldername|escape:"html"}</a></td>
 								</tr>
 								{sectionelse}
 								<tr>
-								    <td width="100%"  class="default"  colspan="5"><center><br>{#sch_no_results#}</center></td>
+								    <td width="100%"  class="default"  colspan="5"><center><br>{$umLabel.sch_no_results}</center></td>
 								</tr>
 								{/section}
 							{/if}

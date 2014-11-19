@@ -1,9 +1,8 @@
-{config_load file=$umLanguageFile section="AddressBook"}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-    <title>{if $webmailTitle}{$webmailTitle} - {/if}{#adr_title#}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+    <title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.adr_title}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 	{$pageMetas}
 	{$umJS}
 
@@ -18,7 +17,7 @@
 	<tr>
 		<td>
 			<table width='100%' cellpadding='0' cellspacing='0'>
-				<tr><td class="window_title"><img src='themes/outlook/images/icon_ab.gif'></td><td width='100%' class="window_title">&nbsp;{#adr_title#}</td><td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='themes/outlook/images/X.png'></a></td></tr>
+				<tr><td class="window_title"><img src='themes/outlook/images/icon_ab.gif'></td><td width='100%' class="window_title">&nbsp;{$umLabel.adr_title}</td><td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='themes/outlook/images/X.png'></a></td></tr>
 			</table>
 			<table width='100%' height='2' cellpadding='0' cellspacing='0'><tr><td></td></tr></table>
 			<table width='100%' cellpadding='0' cellspacing='0'>
@@ -29,7 +28,7 @@
 								<table width='0' cellpadding='0' cellspacing='0'>
 								<tr>
 									<td class="toolbar_splitter"><img src='themes/outlook/images/bar_handler.gif'></td>
-									<td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="location = '{$umNew}'"><acronym title="{#adr_new_entry#}"><img src="themes/outlook/images/icon_new_contact.gif"><font class='xx-normal'><br>{#adr_new_entry#|truncate:13:"...":true}</font></acronym></td>
+									<td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="location = '{$umNew}'"><acronym title="{$umLabel.adr_new_entry}"><img src="themes/outlook/images/icon_new_contact.gif"><font class='xx-normal'><br>{#adr_new_entry#|truncate:13:"...":true}</font></acronym></td>
 								</tr>
 								</table>
 						</td></tr>
@@ -43,9 +42,9 @@
 		<td class='messages' height=200 valign=top >
            <table width="100%" border="0" cellspacing="0" cellpadding="0">
 		       <tr>
-		               <td width="40%" class="headers">{#adr_name_hea#}</td>
-		               <td width="40%" class="headers">{#adr_email_hea#}</td>
-		               <td width="10%" class="headers">{#adr_dele_hea#}</td>
+		               <td width="40%" class="headers">{$umLabel.adr_name_hea}</td>
+		               <td width="40%" class="headers">{$umLabel.adr_email_hea}</td>
+		               <td width="10%" class="headers">{$umLabel.adr_dele_hea}</td>
 		       </tr>
 		       {counter start=0 skip=1 print=false}
 
@@ -75,7 +74,7 @@
 	</form>
 	<tr>
 		<td class='info_bar'>
-		    {if $contador}{$contador}{else}0{/if}&nbsp;{#quota_usage_avail#}
+		    {if $contador}{$contador}{else}0{/if}&nbsp;{$umLabel.quota_usage_avail}
 		</td>
 	</tr>
 </table>

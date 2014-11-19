@@ -1,5 +1,3 @@
-{config_load file=$umLanguageFile section="Folders"}
-
 {include file=$headerTemplate pageTitle=#folders_to#|cat:" "|cat:$umUserEmail}
 
 {include file=$menuTemplate}
@@ -7,11 +5,11 @@
 
 			<table cellspacing="0" cellpadding="0" width="100%" border="0">
 			<tr>
-			    <td width="45%" class="headersLeft">&nbsp; .:<b> {#fld_name_hea#} </b>:.</td>
-			    <td width="15%" class="headers">.:<b> {#fld_messages_hea#} </b>:.</td>
-			    <td width="15%" class="headersRight">.:<b> {#fld_size_hea#} </b>:.</td>
-			    <td width="15%" class="headers">.:<b> {#fld_empty_hea#} </b>:.</td>
-			    <td class="headers">.:<b> {#fld_delete_hea#} </b>:.</td>
+			    <td width="45%" class="headersLeft">&nbsp; .:<b> {$umLabel.fld_name_hea} </b>:.</td>
+			    <td width="15%" class="headers">.:<b> {$umLabel.fld_messages_hea} </b>:.</td>
+			    <td width="15%" class="headersRight">.:<b> {$umLabel.fld_size_hea} </b>:.</td>
+			    <td width="15%" class="headers">.:<b> {$umLabel.fld_empty_hea} </b>:.</td>
+			    <td class="headers">.:<b> {$umLabel.fld_delete_hea} </b>:.</td>
 			</tr>
 
 			{section name=i loop=$umFolderList}
@@ -26,7 +24,7 @@
 			{/section}
 			<tr>
 				<td class="default">&nbsp;</td>
-				<td class="right"><b>{#fld_total#}</b> &nbsp;</td>
+				<td class="right"><b>{$umLabel.fld_total}</b> &nbsp;</td>
 				<td class="right"><b>{$umTotalUsed}</b>Kb &nbsp;</td>
 				<td class="cent">&nbsp;</td>
 				<td class="cent">&nbsp;</td>
@@ -43,7 +41,7 @@
 							<table class="buttonTable" cellspacing="0" cellpadding="0">
 							<tr>
 								<td valign="middle" class="buttonLeft">&nbsp;</td>
-								<td valign="middle" class="buttonMiddle"><input type="button" onclick="javascript:create();" class="button" value="{#fld_make_new#}"/></td>
+								<td valign="middle" class="buttonMiddle"><input type="button" onclick="javascript:create();" class="button" value="{$umLabel.fld_make_new}"/></td>
 								<td valign="middle" class="buttonRight">&nbsp;</td>
 							</tr>
 							</table>
@@ -57,7 +55,7 @@
 
 			{if $umQuotaEnabled eq 1}
 			<tr>
-				<td class="usage" colspan="5">&nbsp; {#quota_usage_info#}: {#quota_usage_used#} <b>{$umTotalUsed}</b>Kb {#quota_usage_of#} <b>{$umQuotaLimit}</b>Kb {#quota_usage_avail#}<br /> <!-- <img src="themes/hungi.mozilla/images/usage-start.gif" alt="" /> -->{$umUsageGraph}<!-- <img src="themes/hungi.mozilla/images/usage-end.gif" alt="" /> --> </td>
+				<td class="usage" colspan="5">&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b>Kb {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b>Kb {$umLabel.quota_usage_avail}<br /> <!-- <img src="themes/hungi.mozilla/images/usage-start.gif" alt="" /> -->{$umUsageGraph}<!-- <img src="themes/hungi.mozilla/images/usage-end.gif" alt="" /> --> </td>
 			</tr>
 			{/if}
 			

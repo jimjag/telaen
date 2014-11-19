@@ -1,6 +1,4 @@
-{config_load file=$umLanguageFile section="Newmessage"}
-
-{include file=$headerTemplate pageTitle=#newmsg_title#}
+{include file=$headerTemplate pageTitle=$umLabel.newmsg_title}
 
 <table cellspacing="2" cellpadding="0" border="0" align="center" bgcolor="White" width="100%">
 	
@@ -15,16 +13,16 @@
 			{if $umMailSent}
 				<tr>
 					<td class=cent>
-						{#result_success#}<br><br>
-						<a href="messages.php"><b><i>{#nav_continue#}</i></b></a>
+						{$umLabel.result_success}<br><br>
+						<a href="messages.php"><b><i>{$umLabel.nav_continue}</i></b></a>
 					</td>
 				</tr>
 			{else}
 				<tr>
 					<td class=cent>
-						{#result_error#}<br><br>
+						{$umLabel.result_error}<br><br>
 						<font color=red>{$umErrorMessage}</font><br><br>
-						<a href="javascript:history.go(-1)">{#nav_back#}</a>
+						<a href="javascript:history.go(-1)">{$umLabel.nav_back}</a>
 					</td>
 				</tr>
 			{/if}

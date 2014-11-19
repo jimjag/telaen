@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>UebiMiau Webmail - {$umPageTitle|escape:"html"} - Skin by Beauvoir.net</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 	<link rel="stylesheet" href="themes/beauvoir2/webmail.css" type="text/css">
 	<script language="JavaScript" src="themes/beauvoir2/webmail.js" type="text/javascript"></script>
 </head>
@@ -31,35 +31,35 @@ copyright, or worse, to put your name at the place.
 				<td height="5" colspan="2"></td>
 			</tr>
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{#from_hea#}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$umLabel.from_hea}</td>
 				<td>&nbsp;{section name=i loop=$umFromList}{$umFromList[i].name|default:#no_sender_text#|escape:"html"}{/section}</td>
 			</tr>
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{#to_hea#}</td>
-				<td>&nbsp;{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}{$umTOList[i].name|escape:"html"}{assign var="firstto" value="no"}{sectionelse}&nbsp;{#no_recipient_text#}{/section}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$umLabel.to_hea}</td>
+				<td>&nbsp;{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}{$umTOList[i].name|escape:"html"}{assign var="firstto" value="no"}{sectionelse}&nbsp;{$umLabel.no_recipient_text}{/section}</td>
 			</tr>	
 			{if $umHaveCC}
 			<tr bgcolor="#BFC6D3">
-				<td  width="15%" align="left" height="20">&nbsp;{#cc_hea#}</td>
+				<td  width="15%" align="left" height="20">&nbsp;{$umLabel.cc_hea}</td>
 				<td>&nbsp;{section name=i loop=$umCCList}{if $firstcc eq "no"};{/if}{$umCCList[i].name|escape:"html"}{assign var="firstcc" value="no"}{/section}</td>
 			</tr>	
 			{/if}
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{#subject_hea#}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$umLabel.subject_hea}</td>
 				<td>&nbsp;{$umSubject|default:#no_subject_text#|truncate:100:"...":true|escape:"html"}</td>
 			</tr>	
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{#date_hea#}</td>
-				<td>&nbsp;{$umDate|date_format:#date_format#}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$umLabel.date_hea}</td>
+				<td>&nbsp;{$umDate|date_format:$umLabel.date_format}</td>
 			</tr>	
 			{if $umHaveAttachments}
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{#attach_hea#}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$umLabel.attach_hea}</td>
 				<td><table width="99.4%" border="0" cellspacing="1" cellpadding="0" bgcolor="#2D3443" class="normal">
 						<tr bgcolor="#BFC6D3">
-							<td width="60%">&nbsp;<b>{#attch_name_hea#}</b> ({#attch_force_hea#})</td>
-							<td>&nbsp;<b>{#attch_size_hea#}</b></td>
-							<td>&nbsp;<b>{#attch_type_hea#}</b></td>
+							<td width="60%">&nbsp;<b>{$umLabel.attch_name_hea}</b> ({$umLabel.attch_force_hea})</td>
+							<td>&nbsp;<b>{$umLabel.attch_size_hea}</b></td>
+							<td>&nbsp;<b>{$umLabel.attch_type_hea}</b></td>
 						</tr>
 						{section name=i loop=$umAttachList}
 						<tr bgcolor="#FFFFFF">

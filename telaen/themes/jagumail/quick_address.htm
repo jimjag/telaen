@@ -1,6 +1,4 @@
-{config_load file=$umLanguageFile section="QuickAddress"}
-
-{include file=$popupHeaderTemplate  pageTitle=#qad_title#}
+{include file=$popupHeaderTemplate  pageTitle=$umLabel.qad_title}
 
 <body>
 <div id="popup">
@@ -44,7 +42,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{#qad_select_address#}");
+		alert("{$umLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -61,7 +59,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{#qad_select_address#}");
+		alert("{$umLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -106,7 +104,7 @@ function ns_clean() {
 		<td valign=top width="50%">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
-					<td colspan=2 class="headers"><b>{#qad_to#}</b></td>
+					<td colspan=2 class="headers"><b>{$umLabel.qad_to}</b></td>
 				</tr>
 				<tr>
 					<td width="8%" valign=top class=default>
@@ -121,7 +119,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 class="headers"><b>{#qad_cc#}</b></td>
+					<td colspan=2 class="headers"><b>{$umLabel.qad_cc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign=top class=default>
@@ -136,7 +134,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" class="headers"><b>{#qad_bcc#}</b></td>
+					<td colspan="2" class="headers"><b>{$umLabel.qad_bcc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="top" class="default">

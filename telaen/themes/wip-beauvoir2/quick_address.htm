@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>UebiMiau Webmail - {#qad_title#} - Skin by Beauvoir.net</title>
+<title>UebiMiau Webmail - {$umLabel.qad_title} - Skin by Beauvoir.net</title>
 <link rel="stylesheet" href="themes/beauvoir2/webmail.css" type="text/css">
 </head>
 <!--
@@ -48,7 +48,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{#qad_select_address#}");
+		alert("{$umLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -60,7 +60,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{#qad_select_address#}");
+		alert("{$umLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -96,7 +96,7 @@ function ns_clean() {
 		<td valign="top" width="225">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
-					<td colspan="2"><b>{#qad_to#}</b></td>
+					<td colspan="2"><b>{$umLabel.qad_to}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="middle">
@@ -111,7 +111,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><b>{#qad_cc#}</b></td>
+					<td colspan="2"><b>{$umLabel.qad_cc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="middle">
@@ -126,7 +126,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><b>{#qad_bcc#}</b></td>
+					<td colspan="2"><b>{$umLabel.qad_bcc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="middle">

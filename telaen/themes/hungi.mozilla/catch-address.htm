@@ -1,5 +1,3 @@
-{config_load file=$umLanguageFile section="Catch"}
-
 {include file=$popupHeaderTemplate pageTitle=#ctc_title# }
 
 <body>
@@ -13,14 +11,14 @@
 
 	<tr>
 		<td class="default" width="100%" colspan="2" align="center">
-		<b>{#ctc_information#}</b><br /><br />
+		<b>{$umLabel.ctc_information}</b><br /><br />
 		</td>
 	</tr>
 
 	{if $umAvailableAddresses gt 0 }
 		<tr>
-			<td class="headersLeft" width="50%">&nbsp;.: <b>{#ctc_name#}</b> :.</td>
-			<td class="headersLeft">.: <b>{#ctc_email#}</b> :.</td>
+			<td class="headersLeft" width="50%">&nbsp;.: <b>{$umLabel.ctc_name}</b> :.</td>
+			<td class="headersLeft">.: <b>{$umLabel.ctc_email}</b> :.</td>
 		</tr>
 		{section name=i loop=$umAddressList}
 			<tr>
@@ -34,7 +32,7 @@
 			<table class="buttonTable" cellspacing="0" align="center">
 			    	<tr>
 					<td valign="middle" class="buttonLeft">&nbsp;</td>
-					<td valign="middle" class="buttonMiddle"><input type="submit" name="submit" class="button" value="{#ctc_save#}" /></td>
+					<td valign="middle" class="buttonMiddle"><input type="submit" name="submit" class="button" value="{$umLabel.ctc_save}" /></td>
 					<td valign="middle" class="buttonRight">&nbsp;</td>
 			    	</tr>
 			</table>
@@ -42,14 +40,14 @@
 			</td>
 		</tr>
 	{else}
-		<tr><td class="cent">{#ctc_no_address#}</td></tr>
+		<tr><td class="cent">{$umLabel.ctc_no_address}</td></tr>
 		<tr>
 			<td class="usage">
 			<center>
 			<table class="buttonTable" cellspacing="0" aling="center">
 			    	<tr>
 					<td valign="middle" class="buttonLeft">&nbsp;</td>
-					<td valign="middle" class="buttonMiddle"><input type="button" name="submit" class="button" value="{#ctc_close#}" onclick="self.close()" /></td>
+					<td valign="middle" class="buttonMiddle"><input type="button" name="submit" class="button" value="{$umLabel.ctc_close}" onclick="self.close()" /></td>
 					<td valign="middle" class="buttonRight">&nbsp;</td>
 			    	</tr>
 			</table>

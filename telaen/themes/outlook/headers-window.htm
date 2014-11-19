@@ -1,11 +1,9 @@
-{config_load file=$umLanguageFile section="Headers"}
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <html>
 <head>
 	<title>{if $webmailTitle}{$webmailTitle} - {/if}{$umPageTitle|escape:"html"}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 	{$pageMetas}
         {$umJS}
 </head>

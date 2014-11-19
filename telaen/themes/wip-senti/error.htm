@@ -3,8 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>sentiMail - {#err_title#}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	<title>sentiMail - {$umLabel.err_title}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 	<link rel="stylesheet" href="themes/senti/webmail.css" type="text/css">
 	{$umJS}
 </head>
@@ -22,16 +22,16 @@
 						<tr>		
 							<td colspan="3" class="mainLoginTable">
 								<table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">
-									<tr><td align=right class="title">.: <font color=red size=3><b>{#err_title#}</b></font> :.</td>
+									<tr><td align=right class="title">.: <font color=red size=3><b>{$umLabel.err_title}</b></font> :.</td>
 										<tr><td align=right class="cent"><br>
-										{#err_msg#}<br><br>
-										<small>{#err_system_msg#} 
-										{if $umErrorCode eq "1"}{#error_connect#}
-										{elseif $umErrorCode eq "2"}{#error_retrieving#}
-										{else}{#error_other#}{/if}
+										{$umLabel.err_msg}<br><br>
+										<small>{$umLabel.err_system_msg} 
+										{if $umErrorCode eq "1"}{$umLabel.error_connect}
+										{elseif $umErrorCode eq "2"}{$umLabel.error_retrieving}
+										{else}{$umLabel.error_other}{/if}
 										
 										</small><br><br>
-										<a href="logout.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{#err_exit#}</a><br><br>
+										<a href="logout.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{$umLabel.err_exit}</a><br><br>
 										</td>
 									</table>
 															</td>

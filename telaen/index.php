@@ -26,7 +26,7 @@ $smarty->template_dir = './themes';
 $smarty->config_dir = './langs';
 $smarty->use_sub_dirs = true;
 
-$smarty->assign('umLanguageFile', $selected_language.'.txt');
+$smarty->assign('umLabel', $lang);
 
 // Assign also the webmail title to smarty, check for empty title before
 if (!isset($webmail_title) || trim($webmail_title) == "") {

@@ -180,7 +180,7 @@ function BtnMouseUp() {
 function validateMode() {
   if (! bTextMode) return true;
 {/literal}
-  alert('{#adv_warning_text_mode1#} "{#view_source#}" {#adv_warning_text_mode2#}');
+  alert('{$umLabel.adv_warning_text_mode1} "{$umLabel.view_source}" {$umLabel.adv_warning_text_mode2}');
 {literal}
   Composition.focus();
   return false;
@@ -240,7 +240,7 @@ function createLink() {
 
 {/literal}
 
-  var str=prompt("{#adv_type_path#}", isA ? isA.href : "http:\/\/");
+  var str=prompt("{$umLabel.adv_type_path}", isA ? isA.href : "http:\/\/");
 
 {literal}
 
@@ -302,18 +302,18 @@ function getPureHtml() {
    								<div class="TBHandle">
    								</div>
    								<select id="ParagraphStyle" class="TBGen" language="javascript" onChange="formatC('formatBlock',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{#format_paragraph#}
-   									<option value="&lt;H1&gt;">{#format_h1#}
-   									<option value="&lt;H2&gt;">{#format_h2#}
-   									<option value="&lt;H3&gt;">{#format_h3#}
-   									<option value="&lt;H4&gt;">{#format_h4#}
-   									<option value="&lt;H5&gt;">{#format_h5#}
-   									<option value="&lt;H6&gt;">{#format_h6#}
-   									<option value="&lt;PRE&gt;">{#format_pre#}
-   									<option value="removeFormat">{#format_clear_all#}
+   									<option class="heading" selected>{$umLabel.format_paragraph}
+   									<option value="&lt;H1&gt;">{$umLabel.format_h1}
+   									<option value="&lt;H2&gt;">{$umLabel.format_h2}
+   									<option value="&lt;H3&gt;">{$umLabel.format_h3}
+   									<option value="&lt;H4&gt;">{$umLabel.format_h4}
+   									<option value="&lt;H5&gt;">{$umLabel.format_h5}
+   									<option value="&lt;H6&gt;">{$umLabel.format_h6}
+   									<option value="&lt;PRE&gt;">{$umLabel.format_pre}
+   									<option value="removeFormat">{$umLabel.format_clear_all}
    								</select>
    								<select id="FontName" class="TBGen" language="javascript" onChange="formatC('fontname',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{#format_font#}
+   									<option class="heading" selected>{$umLabel.format_font}
    									<option value="Arial">Arial
    									<option value="Arial Black">Arial Black
    									<option value="Arial Narrow">Arial Narrow
@@ -325,7 +325,7 @@ function getPureHtml() {
    									<option value="Wingdings">Wingdings
    								</select>
    								<select id="FontSize" class="TBGen" language="javascript" onChange="formatC('fontsize',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{#format_size#}
+   									<option class="heading" selected>{$umLabel.format_size}
    									<option value="1">1
    									<option value="2">2
    									<option value="3">3
@@ -335,20 +335,20 @@ function getPureHtml() {
    									<option value="7">7
    								</select>
    								<select id="FontColor" class="TBGen" language="javascript" onChange="formatC('forecolor',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{#format_color#}
-   									<option value="red">{#color_red#}
-   									<option value="blue">{#color_blue#}
-   									<option value="green">{#color_green#}
-   									<option value="black">{#color_black#}
+   									<option class="heading" selected>{$umLabel.format_color}
+   									<option value="red">{$umLabel.color_red}
+   									<option value="blue">{$umLabel.color_blue}
+   									<option value="green">{$umLabel.color_green}
+   									<option value="black">{$umLabel.color_black}
    								</select>
    								<select id="FontBackColor" class="TBGen"  language="javascript" onChange="formatC('backcolor',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{#format_back#}
-   									<option value="red">{#color_red#}
-   									<option value="blue">{#color_blue#}
-   									<option value="green">{#color_green#}
-   									<option value="black">{#color_black#}
-   									<option value="yellow">{#color_yellow#}
-   									<option value="white">{#color_white#}
+   									<option class="heading" selected>{$umLabel.format_back}
+   									<option value="red">{$umLabel.color_red}
+   									<option value="blue">{$umLabel.color_blue}
+   									<option value="green">{$umLabel.color_green}
+   									<option value="black">{$umLabel.color_black}
+   									<option value="yellow">{$umLabel.color_yellow}
+   									<option value="white">{$umLabel.color_white}
    								</select>
 
 								
@@ -356,9 +356,9 @@ function getPureHtml() {
    								</div>
    								<div id="EditMode" class="TBGen">
    								   <input type="checkbox" name="switchMode" LANGUAGE="javascript" onClick="setMode(switchMode.checked)">
-								   <a href="javascript:void(0)" onClick="document.composeForm.switchMode.click()"><font class="normal">{#view_source#}</font></a> | 
-								   <a href="javascript:textmode()"><font class="normal">{#text_mode#}</font></a> |
-								   <a href="javascript:void(0)" onClick="formatC('formatBlock','removeFormat')"><font class="normal">{#clear_format#}</font></a>
+								   <a href="javascript:void(0)" onClick="document.composeForm.switchMode.click()"><font class="normal">{$umLabel.view_source}</font></a> | 
+								   <a href="javascript:textmode()"><font class="normal">{$umLabel.text_mode}</font></a> |
+								   <a href="javascript:void(0)" onClick="formatC('formatBlock','removeFormat')"><font class="normal">{$umLabel.clear_format}</font></a>
    								</div>
    							</div>
    							<table>

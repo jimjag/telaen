@@ -35,7 +35,7 @@ function printIt() {
 
 
 							<tr bgcolor=white>
-								<td width="20%" height="18" class="headerright">{#from_hea#} &nbsp;</td>
+								<td width="20%" height="18" class="headerright">{$umLabel.from_hea} &nbsp;</td>
 								<td class="default">
 								{section name=i loop=$umFromList}
 								 &nbsp;<a href="{$umFromList[i].link}" title="{$umFromList[i].title|escape:"html"}">{$umFromList[i].name|default:#no_sender_text#|escape:"html"}</a>
@@ -43,15 +43,15 @@ function printIt() {
 								</td>
 							</tr>
 							<tr bgcolor=white>
-								<td height="18" class="headerright">{#to_hea#} &nbsp;</td>
+								<td height="18" class="headerright">{$umLabel.to_hea} &nbsp;</td>
 								<td class="default">
-								{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}&nbsp;<a href="{$umTOList[i].link}" title="{$umTOList[i].title|escape:"html"}">{$umTOList[i].name|escape:"html"}</a>{assign var="firstto" value="no"}{sectionelse}&nbsp;{#no_recipient_text#}{/section}
+								{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}&nbsp;<a href="{$umTOList[i].link}" title="{$umTOList[i].title|escape:"html"}">{$umTOList[i].name|escape:"html"}</a>{assign var="firstto" value="no"}{sectionelse}&nbsp;{$umLabel.no_recipient_text}{/section}
 								</td>
 							</tr>	
 
 							{if $umHaveCC eq 1}
 								<tr bgcolor=white>
-									<td height="18" class="headerright">{#cc_hea#} &nbsp;</td>
+									<td height="18" class="headerright">{$umLabel.cc_hea} &nbsp;</td>
 									<td class="default">
 									{section name=i loop=$umCCList}{if $firstcc eq "no"};{/if}&nbsp;<a href="{$umCCList[i].link}" title="{$umCCList[i].title|escape:"html"}">{$umCCList[i].name|escape:"html"}</a>{assign var="firstcc" value="no"}{/section}
 									</td>
@@ -59,22 +59,22 @@ function printIt() {
 							{/if}
 
 							<tr bgcolor=white>
-								<td height="18" class="headerright">{#subject_hea#} &nbsp;</td>
+								<td height="18" class="headerright">{$umLabel.subject_hea} &nbsp;</td>
 								<td class="default"> &nbsp;{$umSubject|default:#no_subject_text#|truncate:100:"...":true|escape:"html"}</td>
 							</tr>	
 							<tr bgcolor=white>
-								<td height="18" class="headerright">{#date_hea#} &nbsp;</td>
-								<td class="default"> &nbsp;{$umDate|date_format:#date_format#}</td>
+								<td height="18" class="headerright">{$umLabel.date_hea} &nbsp;</td>
+								<td class="default"> &nbsp;{$umDate|date_format:$umLabel.date_format}</td>
 							</tr>	
 							{if $umHaveAttachments eq 1}
 								<tr bgcolor=silver>
-									<td class="headerright">{#attach_hea#} &nbsp;</td>
+									<td class="headerright">{$umLabel.attach_hea} &nbsp;</td>
 									<td>
 										<table width="100%" border=0 cellspacing=1 cellpadding=0>
 											<tr bgcolor=#f1f1f1>
-												<td class="headers" width="60%"> &nbsp;<b>{#attch_name_hea#}</b> ({#attch_force_hea#})</td>
-												<td class="headers"> &nbsp;<b>{#attch_size_hea#}</b></td>
-												<td class="headers"> &nbsp;<b>{#attch_type_hea#}</b></td>
+												<td class="headers" width="60%"> &nbsp;<b>{$umLabel.attch_name_hea}</b> ({$umLabel.attch_force_hea})</td>
+												<td class="headers"> &nbsp;<b>{$umLabel.attch_size_hea}</b></td>
+												<td class="headers"> &nbsp;<b>{$umLabel.attch_type_hea}</b></td>
 
 												{section name=i loop=$umAttachList}
 												<tr bgcolor=white>

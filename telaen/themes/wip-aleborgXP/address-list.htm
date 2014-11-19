@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 
 <head>
-        <title>UebiMiau - {#adr_title#}</title>
+        <title>UebiMiau - {$umLabel.adr_title}</title>
 	<link rel="stylesheet" href="themes/aleborgXP/webmail.css" type="text/css">
 
 <script language="JavaScript" src="themes/aleborgXP/webmail.js" type="text/javascript">
@@ -19,20 +19,20 @@
         <tr> 
           <td width="100"><img src="themes/aleborgXP/images/logo.gif" width="100" height="32"></td>
           <td width="11"><img src="themes/aleborgXP/images/seperator.gif" width="11" height="38"></td>
-          <td width="32"><img src="themes/aleborgXP/images/previous_off.gif" alt="{#previous_text#}" name="previous" width="32" height="38" border="0" id="previous"></td>
-          <td width="32">{if $umNextLink}<a href="{$umNextLink}"><img src="themes/aleborgXP/images/next.gif" alt="{#next_text#}" name="next" width="32" height="38" border="0" id="next" onMouseDown="MM_swapImage('next','','themes/aleborgXP/images/next_down.gif',1)" onMouseOver="MM_swapImage('next','','themes/aleborgXP/images/next_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a>{else}<img src="themes/aleborgXP/images/next_off.gif">{/if}</td>
+          <td width="32"><img src="themes/aleborgXP/images/previous_off.gif" alt="{$umLabel.previous_text}" name="previous" width="32" height="38" border="0" id="previous"></td>
+          <td width="32">{if $umNextLink}<a href="{$umNextLink}"><img src="themes/aleborgXP/images/next.gif" alt="{$umLabel.next_text}" name="next" width="32" height="38" border="0" id="next" onMouseDown="MM_swapImage('next','','themes/aleborgXP/images/next_down.gif',1)" onMouseOver="MM_swapImage('next','','themes/aleborgXP/images/next_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a>{else}<img src="themes/aleborgXP/images/next_off.gif">{/if}</td>
           <td width="11"><img src="themes/aleborgXP/images/seperator.gif" width="11" height="38"></td>
-          <td width="32"><a href="javascript:goinbox()"><img src="themes/aleborgXP/images/inbox.gif" alt="{#messages_mnu#}" name="inbox" width="32" height="38" border="0" id="inbox" onMouseDown="MM_swapImage('inbox','','themes/aleborgXP/images/inbox_down.gif',1)" onMouseOver="MM_swapImage('inbox','','themes/aleborgXP/images/inbox_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
-          <td width="32"><a href="javascript:newmsg()"><img src="themes/aleborgXP/images/newmsg.gif" alt="{#compose_mnu#}" name="newmsg" width="32" height="38" border="0" id="newmsg" onMouseDown="MM_swapImage('newmsg','','themes/aleborgXP/images/newmsg_down.gif',1)" onMouseOver="MM_swapImage('newmsg','','themes/aleborgXP/images/newmsg_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
-          <td width="32"><img src="themes/aleborgXP/images/refresh_off.gif" alt="{#refresh_mnu#}" name="refresh" width="32" height="38" border="0" id="refresh"></td>
+          <td width="32"><a href="javascript:goinbox()"><img src="themes/aleborgXP/images/inbox.gif" alt="{$umLabel.messages_mnu}" name="inbox" width="32" height="38" border="0" id="inbox" onMouseDown="MM_swapImage('inbox','','themes/aleborgXP/images/inbox_down.gif',1)" onMouseOver="MM_swapImage('inbox','','themes/aleborgXP/images/inbox_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
+          <td width="32"><a href="javascript:newmsg()"><img src="themes/aleborgXP/images/newmsg.gif" alt="{$umLabel.compose_mnu}" name="newmsg" width="32" height="38" border="0" id="newmsg" onMouseDown="MM_swapImage('newmsg','','themes/aleborgXP/images/newmsg_down.gif',1)" onMouseOver="MM_swapImage('newmsg','','themes/aleborgXP/images/newmsg_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
+          <td width="32"><img src="themes/aleborgXP/images/refresh_off.gif" alt="{$umLabel.refresh_mnu}" name="refresh" width="32" height="38" border="0" id="refresh"></td>
           <td width="11"><img src="themes/aleborgXP/images/seperator.gif" width="11" height="38"></td>
-          <td width="32"><a href="javascript:folderlist()"><img src="themes/aleborgXP/images/folders.gif" alt="{#folders_mnu#}" name="folders" width="32" height="38" border="0" id="folders" onMouseDown="MM_swapImage('folders','','themes/aleborgXP/images/folders_down.gif',1)" onMouseOver="MM_swapImage('folders','','themes/aleborgXP/images/folders_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
-          <td width="32"><a href="javascript:search()"><img src="themes/aleborgXP/images/search.gif" alt="{#search_mnu#}" name="search" width="32" height="38" border="0" id="search" onMouseDown="MM_swapImage('search','','themes/aleborgXP/images/search_down.gif',1)" onMouseOver="MM_swapImage('search','','themes/aleborgXP/images/search_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
-          <td width="32"><a href="javascript:addresses()"><img src="themes/aleborgXP/images/addressbook.gif" alt="{#address_mnu#}" name="addressbook" width="32" height="38" border="0" id="addressbook" onMouseDown="MM_swapImage('addressbook','','themes/aleborgXP/images/addressbook_down.gif',1)" onMouseOver="MM_swapImage('addressbook','','themes/aleborgXP/images/addressbook_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
+          <td width="32"><a href="javascript:folderlist()"><img src="themes/aleborgXP/images/folders.gif" alt="{$umLabel.folders_mnu}" name="folders" width="32" height="38" border="0" id="folders" onMouseDown="MM_swapImage('folders','','themes/aleborgXP/images/folders_down.gif',1)" onMouseOver="MM_swapImage('folders','','themes/aleborgXP/images/folders_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
+          <td width="32"><a href="javascript:search()"><img src="themes/aleborgXP/images/search.gif" alt="{$umLabel.search_mnu}" name="search" width="32" height="38" border="0" id="search" onMouseDown="MM_swapImage('search','','themes/aleborgXP/images/search_down.gif',1)" onMouseOver="MM_swapImage('search','','themes/aleborgXP/images/search_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
+          <td width="32"><a href="javascript:addresses()"><img src="themes/aleborgXP/images/addressbook.gif" alt="{$umLabel.address_mnu}" name="addressbook" width="32" height="38" border="0" id="addressbook" onMouseDown="MM_swapImage('addressbook','','themes/aleborgXP/images/addressbook_down.gif',1)" onMouseOver="MM_swapImage('addressbook','','themes/aleborgXP/images/addressbook_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
           <td width="11"><img src="themes/aleborgXP/images/seperator.gif" width="11" height="38"></td>
-          <td width="32"><a href="javascript:emptytrash()"><img src="themes/aleborgXP/images/trash.gif" alt="{#empty_trash_mnu#}" name="trash" width="32" height="38" border="0" id="trash" onMouseDown="MM_swapImage('trash','','themes/aleborgXP/images/trash_down.gif',1)" onMouseOver="MM_swapImage('trash','','themes/aleborgXP/images/trash_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
-          <td width="32"><a href="javascript:prefs()"><img src="themes/aleborgXP/images/options.gif" alt="{#prefs_mnu#}" name="options" width="32" height="38" border="0" id="options" onMouseDown="MM_swapImage('options','','themes/aleborgXP/images/options_down.gif',1)" onMouseOver="MM_swapImage('options','','themes/aleborgXP/images/options_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
-          <td width="32"><a href="javascript:goend()"><img src="themes/aleborgXP/images/logout.gif" alt="{#logoff_mnu#}" name="logout" width="32" height="38" border="0" id="logout" onMouseDown="MM_swapImage('logout','','themes/aleborgXP/images/logout_down.gif',1)" onMouseOver="MM_swapImage('logout','','themes/aleborgXP/images/logout_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
+          <td width="32"><a href="javascript:emptytrash()"><img src="themes/aleborgXP/images/trash.gif" alt="{$umLabel.empty_trash_mnu}" name="trash" width="32" height="38" border="0" id="trash" onMouseDown="MM_swapImage('trash','','themes/aleborgXP/images/trash_down.gif',1)" onMouseOver="MM_swapImage('trash','','themes/aleborgXP/images/trash_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
+          <td width="32"><a href="javascript:prefs()"><img src="themes/aleborgXP/images/options.gif" alt="{$umLabel.prefs_mnu}" name="options" width="32" height="38" border="0" id="options" onMouseDown="MM_swapImage('options','','themes/aleborgXP/images/options_down.gif',1)" onMouseOver="MM_swapImage('options','','themes/aleborgXP/images/options_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
+          <td width="32"><a href="javascript:goend()"><img src="themes/aleborgXP/images/logout.gif" alt="{$umLabel.logoff_mnu}" name="logout" width="32" height="38" border="0" id="logout" onMouseDown="MM_swapImage('logout','','themes/aleborgXP/images/logout_down.gif',1)" onMouseOver="MM_swapImage('logout','','themes/aleborgXP/images/logout_over.gif',1)" onMouseOut="MM_swapImgRestore()"></a></td>
           <td>&nbsp;</td>
         </tr>
       </table></td>
@@ -43,7 +43,7 @@
   <tr background="themes/aleborgXP/images/menu_back.gif">
     <form>
       <td height="20" background="themes/aleborgXP/images/menu_back.gif">
-<input type="button" value="{#adr_new_entry#}" onClick="location = '{$umNew}'" style="height: 20px; font-family: verdana;font-size: 9px;">
+<input type="button" value="{$umLabel.adr_new_entry}" onClick="location = '{$umNew}'" style="height: 20px; font-family: verdana;font-size: 9px;">
       </td>
     </form>
   </tr>
@@ -54,16 +54,16 @@
       <table width="720" border="0" cellspacing="1" cellpadding="2">
         <tr>
 			
-          <td width="270"><strong> &nbsp;{#adr_name_hea#}</strong></td>
+          <td width="270"><strong> &nbsp;{$umLabel.adr_name_hea}</strong></td>
 			
-          <td><strong>{#adr_email_hea#}</strong></td>
+          <td><strong>{$umLabel.adr_email_hea}</strong></td>
 			
-          <td width="100" class="headers" align="center"><strong>{#adr_edit_hea#}</strong></td>
+          <td width="100" class="headers" align="center"><strong>{$umLabel.adr_edit_hea}</strong></td>
 <!---
-			 <td width="10%" class="headers"><strong>{#adr_expo_hea#}</strong></td>
+			 <td width="10%" class="headers"><strong>{$umLabel.adr_expo_hea}</strong></td>
 --->
 			
-          <td width="100" class="headers" align="center"><strong>{#adr_dele_hea#}</strong></td>
+          <td width="100" class="headers" align="center"><strong>{$umLabel.adr_dele_hea}</strong></td>
 		</tr>
 	</table>
 </td>
@@ -80,12 +80,12 @@
                                         
     <td class="default"><a class="menu" href="{$umAddressList[i].composelink}">{$umAddressList[i].email}</a>&nbsp;</td>
                                         
-    <td width="100" align="center" class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].editlink}"><img src="themes/aleborgXP/images/edit.gif" width="16" height="16" border="0" alt="{#adr_edit_hea#}"></a></td>
+    <td width="100" align="center" class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].editlink}"><img src="themes/aleborgXP/images/edit.gif" width="16" height="16" border="0" alt="{$umLabel.adr_edit_hea}"></a></td>
 <!---
                                         <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].exportlink}">OK</a></td>
 --->
                                         
-    <td width="100" align="center" class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].dellink}"><img src="themes/aleborgXP/images/delete.gif" width="16" height="16" border="0" alt="{#adr_dele_hea#}"></a></td>
+    <td width="100" align="center" class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].dellink}"><img src="themes/aleborgXP/images/delete.gif" width="16" height="16" border="0" alt="{$umLabel.adr_dele_hea}"></a></td>
                                 </tr>
                                 {/section}
                         </table>

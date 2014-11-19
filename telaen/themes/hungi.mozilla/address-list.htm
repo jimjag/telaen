@@ -1,17 +1,15 @@
-{config_load file=$umLanguageFile section="AddressBook"}
-
-{include file=$headerTemplate pageTitle=#adr_title#}
+{include file=$headerTemplate pageTitle=$umLabel.adr_title}
 
 {include file=$menuTemplate refresh="false"}
 		
 	<table width="100%" border="0" cellspacing="0" cellpadding="2" bgcolor="#DDE3EB">
 		<tr>
-			<td height="15" width="40%" class="headersLeft">.: <b>{#adr_name_hea#}</b> :.</td>
-			<td width="40%" class="headersLeft">.: <b>{#adr_email_hea#}</b> :.</td>
-			<td width="10%" class="headers">.: <b>{#adr_edit_hea#}</b> :.</td>
+			<td height="15" width="40%" class="headersLeft">.: <b>{$umLabel.adr_name_hea}</b> :.</td>
+			<td width="40%" class="headersLeft">.: <b>{$umLabel.adr_email_hea}</b> :.</td>
+			<td width="10%" class="headers">.: <b>{$umLabel.adr_edit_hea}</b> :.</td>
 <!--
-			<td width="10%" class="headers">{#adr_expo_hea#}</td>
--->			<td width="10%" class="headers">.: <b>{#adr_dele_hea#}</b> :.</td>
+			<td width="10%" class="headers">{$umLabel.adr_expo_hea}</td>
+-->			<td width="10%" class="headers">.: <b>{$umLabel.adr_dele_hea}</b> :.</td>
 		</tr>
 		{section name=i loop=$umAddressList}
 		<tr><td colspan="4" class="separator"></td></tr>
@@ -27,12 +25,12 @@
 				
 		{/section}
         <tr>
-            <td colspan="4" class="default">&nbsp;&nbsp;<span class="menu"><b>{#pages_text#}:</b></span>
-            {if $umPreviousLink}<!--<a href="{$umFirstLink}" class="navigation">&laquo; {#first_text#}</a>&nbsp; -->
-            <a href="{$umPreviousLink}" class="navigation">&laquo; {#previous_text#}</a>&nbsp;{/if}
+            <td colspan="4" class="default">&nbsp;&nbsp;<span class="menu"><b>{$umLabel.pages_text}:</b></span>
+            {if $umPreviousLink}<!--<a href="{$umFirstLink}" class="navigation">&laquo; {$umLabel.first_text}</a>&nbsp; -->
+            <a href="{$umPreviousLink}" class="navigation">&laquo; {$umLabel.previous_text}</a>&nbsp;{/if}
             {$umNavBar}
-            {if $umNextLink}&nbsp;<a href="{$umNextLink}" class="navigation">{#next_text#} &raquo;</a>
-            <!--&nbsp;<a href="{$umLastLink}" class="navigation">{#last_text#} &raquo;</a>-->{/if}
+            {if $umNextLink}&nbsp;<a href="{$umNextLink}" class="navigation">{$umLabel.next_text} &raquo;</a>
+            <!--&nbsp;<a href="{$umLastLink}" class="navigation">{$umLabel.last_text} &raquo;</a>-->{/if}
             </td>
         </tr>
 		<tr>
@@ -42,7 +40,7 @@
 			    	<tr>
 			    		<td valign="middle" class="buttonLeft">&nbsp;</td>
 				  	<td valign="middle" class="buttonMiddle">
-						<input class="button" type="button" name="button" onclick="javascript:location = '{$umNew}'" value="{#adr_new_entry#}" />
+						<input class="button" type="button" name="button" onclick="javascript:location = '{$umNew}'" value="{$umLabel.adr_new_entry}" />
 					</td>
 				  	<td valign="middle" class="buttonRight">&nbsp;</td>
 				</tr>

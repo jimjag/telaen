@@ -4,7 +4,7 @@
 
 <html>
 <head>
-	<title>UebiMiau - {#err_title#}</title>
+	<title>UebiMiau - {$umLabel.err_title}</title>
 	<link rel="stylesheet" href="themes/aleborgXP/webmail.css" type="text/css">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
@@ -28,15 +28,15 @@
   <tr> 
     <td bgcolor=white> <table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">
         <tr>
-          <td align=right class="title"><font color=red size=3><b>{#err_title#}</b></font></td>
+          <td align=right class="title"><font color=red size=3><b>{$umLabel.err_title}</b></font></td>
         </tr>
         <tr>
           <td align=right class="cent"><br>
-            {#err_msg#}<br>
-            <br> <small>{#err_system_msg#} {if $umErrorCode eq "1"}{#error_connect#} 
-            {elseif $umErrorCode eq "2"}{#error_retrieving#} {else}{#error_other#}{/if} 
+            {$umLabel.err_msg}<br>
+            <br> <small>{$umLabel.err_system_msg} {if $umErrorCode eq "1"}{$umLabel.error_connect} 
+            {elseif $umErrorCode eq "2"}{$umLabel.error_retrieving} {else}{$umLabel.error_other}{/if} 
             </small><br>
-            <br> <a href="logout.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{#err_exit#}</a><br>
+            <br> <a href="logout.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{$umLabel.err_exit}</a><br>
             <br> </td>
         </tr>
       </table></td>

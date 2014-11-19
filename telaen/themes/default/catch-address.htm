@@ -1,5 +1,3 @@
-{config_load file=$umLanguageFile section="Catch"}
-
 {include file=$popupHeaderTemplate pageTitle=#ctc_title# }
 
 <body>
@@ -17,14 +15,14 @@
 	
 	<tr>
 		<td class=default  width="100%" colspan="2" align=center>
-		<b>{#ctc_information#}</b><br><br>
+		<b>{$umLabel.ctc_information}</b><br><br>
 		</td>
 	</tr>
 
 	{if $umAvailableAddresses gt 0 }
 		<tr>
-			<td class=headers width="60%"><b>{#ctc_name#}</b></td>
-			<td class=headers><b>{#ctc_email#}</b></td>
+			<td class=headers width="60%"><b>{$umLabel.ctc_name}</b></td>
+			<td class=headers><b>{$umLabel.ctc_email}</b></td>
 		</tr>
 		{section name=i loop=$umAddressList}
 			<tr>
@@ -33,10 +31,10 @@
 			</tr>
 		{/section}
 		<tr>
-			<td class="cent" colspan="2"><br><br><input type="submit" name="submit" class="button" value="{#ctc_save#}"></td></tr>
+			<td class="cent" colspan="2"><br><br><input type="submit" name="submit" class="button" value="{$umLabel.ctc_save}"></td></tr>
 	{else}
-		<tr><td class="cent">{#ctc_no_address#}</td></tr>
-		<tr><td class="cent"><br><br><a href="javascript:self.close()">{#ctc_close#}</a></td></tr>
+		<tr><td class="cent">{$umLabel.ctc_no_address}</td></tr>
+		<tr><td class="cent"><br><br><a href="javascript:self.close()">{$umLabel.ctc_close}</a></td></tr>
 	{/if}
 
 </table>

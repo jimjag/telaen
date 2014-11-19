@@ -1,7 +1,4 @@
-{config_load file=$umLanguageFile section="QuickAddress"}
-{config_load file=$umLanguageFile section="Newmessage"}
-
-{include file=$popupHeaderTemplate pageTitle=#qad_title#}
+{include file=$popupHeaderTemplate pageTitle=$umLabel.qad_title}
 
 <body>
 <div id="popup">
@@ -40,7 +37,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{#qad_select_address#}");
+		alert("{$umLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -57,7 +54,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{#qad_select_address#}");
+		alert("{$umLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -94,7 +91,7 @@ function ns_clean() {
 		<td width="50%" class="default" valign="top" align="center">
 			<table width="100%" cellspacing="0" cellpadding="0">
 			<tr>
-				<td class="usage"><span style="font-size:14px; color:#000066;">{#address_mnu#}</span></td>
+				<td class="usage"><span style="font-size:14px; color:#000066;">{$umLabel.address_mnu}</span></td>
 			</tr>
 			<tr>
 				<td align="center">
@@ -109,7 +106,7 @@ function ns_clean() {
 		<td valign="top" width="50%">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
-					<td colspan="2" height="22" class="headers"><b>{#qad_to#}</b></td>
+					<td colspan="2" height="22" class="headers"><b>{$umLabel.qad_to}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="top" class="default">
@@ -123,7 +120,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td height="22" colspan="2" class="headers"><b>{#qad_cc#}</b></td>
+					<td height="22" colspan="2" class="headers"><b>{$umLabel.qad_cc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="top" class="default">
@@ -137,7 +134,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" height="22"  class="headers"><b>{#qad_bcc#}</b></td>
+					<td colspan="2" height="22"  class="headers"><b>{$umLabel.qad_bcc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="top" class="default">
@@ -159,7 +156,7 @@ function ns_clean() {
 			<table class="buttonTable" cellspacing="0" >
 			    	<tr>
 			    		<td valign="middle" class="buttonLeft">&nbsp;</td>
-			  		<td valign="middle" class="buttonMiddle"><input type="button" name="submit" value="{#nav_back#}" class="button" onclick="AddAndExit()"/></td>
+			  		<td valign="middle" class="buttonMiddle"><input type="button" name="submit" value="{$umLabel.nav_back}" class="button" onclick="AddAndExit()"/></td>
 			  		<td valign="middle" class="buttonRight">&nbsp;</td>
 			    	</tr>
 			</table>

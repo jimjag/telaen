@@ -1,6 +1,6 @@
 {config_load file=$umLanguageFile section="QuickAddress"}
-<title>sentiMail - {#qad_title#}</title>
-<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+<title>sentiMail - {$umLabel.qad_title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 <body bgcolor="#DDDCDC" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
 <link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
 {literal}
@@ -37,7 +37,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{#qad_select_address#}");
+		alert("{$umLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -49,7 +49,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{#qad_select_address#}");
+		alert("{$umLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -82,7 +82,7 @@ function ns_clean() {
 <table width="450" border="0" cellspacing="0" cellpadding="0">
 	<form name=form1>
 	<tr>
-		<td width="225" valign=top class="headers">{#qad_select_address#}<br>
+		<td width="225" valign=top class="headers">{$umLabel.qad_select_address}<br>
 			{$umContacts}
 			<br><br>
 			<input type=button value=" &nbsp;Done &nbsp;" onClick="AddAndExit()" class=button>
@@ -91,7 +91,7 @@ function ns_clean() {
 		<td valign=top width="225">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td colspan=2 class="headers"><b>{#qad_to#}</b></td>
+					<td colspan=2 class="headers"><b>{$umLabel.qad_to}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign=top class="headers">
@@ -106,7 +106,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 class="headers"><b>{#qad_cc#}</b></td>
+					<td colspan=2 class="headers"><b>{$umLabel.qad_cc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign=top class="headers">
@@ -121,7 +121,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 class="headers"><b>{#qad_bcc#}</b></td>
+					<td colspan=2 class="headers"><b>{$umLabel.qad_bcc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign=top class="headers">

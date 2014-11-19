@@ -14,53 +14,35 @@ Telaen is a GPL'ed software developed by
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
+$selected_theme = $tid = $default_theme;
+$selected_language = $lid = $default_language;
+
 if (isset($auth) && is_array($auth) && $auth['thm_lang_inited']) {
     $tid = $auth['tid'];
     $lid = $auth['lid'];
 } else {
     if (isset($f_pass) && strlen($f_pass) > 0) {
+
         if ($allow_user_change_theme) {
             if ($tem != "") {
-                $tid = $tem;
-            } else {
-                $tid = $default_theme;
+                if (array_key_exists($tem, $themes) && is_file("themes/$tem")) {
+                    $tid = $tem;
+                }
             }
-        } else {
-            $tid = $default_theme;
         }
-
         if ($allow_user_change_language) {
             if ($lng != "") {
-                $lid = $lng;
-            } else {
-                $lid = $default_language;
+                if (array_key_exists($lng, $languages) && is_file('langs/'.$lng.'.php')) {
+                    $lid = $lng;
+                }
             }
-        } else {
-            $lid = $default_language;
+        }
+        if (isset($auth) && is_array($auth)) {
+            $auth['thm_lang_inited'] = true;
+            $auth['tid'] = $tid;
+            $auth['lid'] = $lid;
         }
     }
-}
-
-if (!is_numeric($tid) || $tid >= count($themes)) {
-    $tid = $default_theme;
-}
-if (!is_numeric($lid) || $lid >= count($languages)) {
-    $lid = $default_language;
-}
-
-if (isset($auth) && is_array($auth)) {
-    $auth['thm_lang_inited'] = true;
-    $auth['tid'] = $tid;
-    $auth['lid'] = $lid;
-}
-
-$selected_theme = $themes[$tid]['path'];
-if (!$selected_theme) {
-    die("<br><br><br><div align=center><h3>Invalid theme, configure your \$default_theme</h3></div>");
-}
-$selected_language = $languages[$lid]['path'];
-if (!$selected_language) {
-    die("<br><br><br><div align=center><h3>Invalid language, configure your \$default_language</h3></div>");
 }
 
 /********************************************************
@@ -98,15 +80,4 @@ $footer_template = "$selected_theme/footer.htm";            // Page Footer
 $popup_header_template = "$selected_theme/popup-header.htm";        // Header for the popup wins
 
 
-$lg = file('langs/'.$selected_language.'.txt');
-
-while (list($line, $value) = each($lg)) {
-    if ($value[0] == '[') {
-        break;
-    }
-    if (strpos(";#", $value[0]) === false && ($pos = strpos($value, "=")) != 0 && trim($value) != "") {
-        $varname = trim(substr($value, 0, $pos));
-        $varvalue = trim(substr($value, $pos+1));
-        ${$varname} = $varvalue;
-    }
-}
+require_once 'langs/'.$selected_language.'.php';

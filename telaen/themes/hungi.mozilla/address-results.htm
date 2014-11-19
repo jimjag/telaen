@@ -1,6 +1,4 @@
-{config_load file=$umLanguageFile section="AddressBook"}
-
-{include file=$headerTemplate pageTitle=#adr_title#}
+{include file=$headerTemplate pageTitle=$umLabel.adr_title}
 
 {include file=$menuTemplate refresh="false"}
 
@@ -11,16 +9,16 @@
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
 					<td class="default" align="center"><br />
-					{if $umOpt eq 1}{#addr_saved#}
-					{elseif $umOpt eq 2}{#addr_added#}
-					{elseif $umOpt eq 3}{#addr_deleted#}
+					{if $umOpt eq 1}{$umLabel.addr_saved}
+					{elseif $umOpt eq 2}{$umLabel.addr_added}
+					{elseif $umOpt eq 3}{$umLabel.addr_deleted}
 					{/if}
 					<br />
 					
 					<table class="buttonTable" cellspacing="0" >
 			    	<tr>
 			    		<td valign="middle" class="buttonLeft">&nbsp;</td>
-				  		<td valign="middle" class="buttonMiddle"><a class="login" href="{$umGoBack}">{#adr_back#}</a></td>
+				  		<td valign="middle" class="buttonMiddle"><a class="login" href="{$umGoBack}">{$umLabel.adr_back}</a></td>
 				  		<td valign="middle" class="buttonRight">&nbsp;</td>
 			    	</tr>
 					</table>				

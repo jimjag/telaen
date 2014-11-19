@@ -3,8 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>UebiMiau Webmail - {#bdl_title#} - Skin by Beauvoir.net</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	<title>UebiMiau Webmail - {$umLabel.bdl_title} - Skin by Beauvoir.net</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 	<link rel="stylesheet" href="themes/beauvoir2/webmail.css" type="text/css">
 </head>
 
@@ -26,12 +26,12 @@ copyright, or worse, to put your name at the place.
 	<tr>
 		<td background="themes/beauvoir2/images/ligne-fond.gif">
 			<table width="450" border="0" cellspacing="1" cellpadding="1" align="center">
-				<tr><td align="center"><br><font color="red">.: <b>{#bdl_title#}</b> :.</font><br></td></tr>
+				<tr><td align="center"><br><font color="red">.: <b>{$umLabel.bdl_title}</b> :.</font><br></td></tr>
 				<tr><td>&nbsp;</td></tr>
-				<tr><td align="center">{#bdl_msg#}<br><br>
+				<tr><td align="center">{$umLabel.bdl_msg}<br><br>
 				{$umServerResponse}</td></tr>
 				<tr><td>&nbsp;</td></tr>
-				<tr><td align="center">> <a href="./index.php?tid={$umTid}&lid={$umLid}" class="lien">{#bdl_back#}</a> <</td></tr>
+				<tr><td align="center">> <a href="./index.php?tid={$umTid}&lid={$umLid}" class="lien">{$umLabel.bdl_back}</a> <</td></tr>
 				<tr><td>&nbsp;</td></tr>
 			</table>
 		</td>
