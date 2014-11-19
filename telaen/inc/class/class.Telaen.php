@@ -1,5 +1,5 @@
 <?php
-require_once './inc/class/class.telaen_core.php';
+require_once './inc/class/class.Telaen_core.php';
 require_once './inc/vendor/class.tnef.php';
 
 class Telaen extends Telaen_core

@@ -24,10 +24,10 @@ $sid = session_id();
 
 require_once './inc/config/config.php';
 require_once './inc/errorhandler.php';
-require_once './inc/class/class.telaen.php';
+require_once './inc/class/class.Telaen.php';
 require_once './inc/lib.php';
 require_once './inc/preinit.php';
-require_once './inc/class/class.mymonth.php';
+require_once './inc/class/class.MyMonth.php';
 
 require_once SMARTY_DIR.'Smarty.class.php';
 $smarty = new Smarty();
