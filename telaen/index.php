@@ -139,7 +139,6 @@ if ($avalthemes == 0) {
 $smarty->assign('umAllowSelectLanguage', $allow_user_change_language); $func($textout);
 
 if ($allow_user_change_language) {
-    $def_lng = (array_key_exists($lid, $languages)) ? $lid : $default_language;
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
     foreach ($languages as $i) {
         $lkey = key($i);
@@ -153,7 +152,6 @@ if ($allow_user_change_language) {
 $smarty->assign('umAllowSelectTheme', $allow_user_change_theme);
 
 if ($allow_user_change_theme) {
-    $def_tem = (array_key_exists($tid, $themes)) ? $tid : $default_theme;
     $themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";
     foreach ($themes as $i) {
         $tkey = key($i);

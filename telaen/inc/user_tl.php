@@ -18,32 +18,26 @@ $selected_theme = $tid = $default_theme;
 $selected_language = $lid = $default_language;
 
 if (isset($auth) && is_array($auth) && $auth['thm_lang_inited']) {
-    $tid = $auth['tid'];
-    $lid = $auth['lid'];
-} else {
-    if (isset($f_pass) && strlen($f_pass) > 0) {
+    $selected_theme = $tid = $auth['tid'];
+    $selected_language = $lid = $auth['lid'];
+}
 
-        if ($allow_user_change_theme) {
-            if ($tem != "") {
-                if (array_key_exists($tem, $themes) && is_file("themes/$tem")) {
-                    $tid = $tem;
-                }
-            }
-        }
-        if ($allow_user_change_language) {
-            if ($lng != "") {
-                if (array_key_exists($lng, $languages) && is_file('langs/'.$lng.'.php')) {
-                    $lid = $lng;
-                }
-            }
-        }
-        if (isset($auth) && is_array($auth)) {
-            $auth['thm_lang_inited'] = true;
-            $auth['tid'] = $tid;
-            $auth['lid'] = $lid;
-        }
+if ($allow_user_change_theme && $tem != "") {
+    if (array_key_exists($tem, $themes) && is_file("themes/$tem")) {
+        $tid = $tem;
     }
 }
+if ($allow_user_change_language && $lng != "") {
+    if (array_key_exists($lng, $languages) && is_file('langs/'.$lng.'.php')) {
+        $lid = $lng;
+    }
+}
+if (isset($auth) && is_array($auth)) {
+    $auth['thm_lang_inited'] = true;
+    $selected_theme = $auth['tid'] = $tid;
+    $selected_language = $auth['lid'] = $lid;
+}
+
 
 /********************************************************
 Templates
