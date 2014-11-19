@@ -1,343 +1,342 @@
 <?php
-/*
- * US English (canonical list and phrasing)
- */
+/ *
+ * ԱՄՆ-Անգլերեն (կանոնական ցանկը եւ ձեւակերպումը):
+ * /
 
-$lang = array();
+$lang = array ();
 
-// User-friendly names to system folders
-$lang['inbox_extended'] = 'Inbox'; // need translation
-$lang['sent_extended'] = 'Sent items'; // need translation
-$lang['trash_extended'] = 'Trash folder'; // need translation
-$lang['spam_extended'] = 'Spam folder'; // need translation
+// User- բարեկամական անուններ համակարգային թղթապանակների
+$lang ['inbox_extended'] = 'Inbox';
+$lang ['sent_extended'] = 'Ուղարկված իրեր';
+$lang ['trash_extended'] = 'Trash թղթապանակ';
+$lang ['spam_extended'] = 'Spam թղթապանակ';
 
-// Navigation texts
-$lang['pages_text'] = 'Pages'; // need translation
-$lang['first_text'] = 'First'; // need translation
-$lang['previous_text'] = 'Previous'; // need translation
-$lang['next_text'] = 'Next'; // need translation
-$lang['last_text'] = 'Last'; // need translation
-$lang['total_text'] = 'Total'; // need translation
+// Նավիգացիոն տեքստեր
+$lang ['pages_text'] = 'Էջեր';
+$lang ['first_text'] = 'Առաջին';
+$lang ['previous_text'] = 'Այս';
+$lang ['next_text'] = 'Հաջորդը';
+$lang ['last_text'] = 'Վերջին';
+$lang ['total_text'] = 'Ընդհանուր';
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error'; // need translation
-$lang['err_system_msg'] = 'System error'; // need translation
-$lang['error_login'] = 'Please check your username or password and try again'; // need translation
-$lang['error_connect'] = 'Error connecting to the server'; // need translation
-$lang['error_retrieving'] = 'Error getting your messages, your Inbox has changed'; // need translation
-$lang['error_session_expired'] = 'Your session is expired, please login again'; // need translation
-$lang['error_other'] = 'System failure, please contact your network administrator'; // need translation
+$lang ['err_login_msg'] = 'Մուտք սխալ';
+$lang ['err_system_msg'] = 'System սխալ';
+$lang ['error_login'] = 'Խնդրում ենք ստուգել Ձեր մուտքաբառը կամ գաղտնաբառը, եւ փորձեք կրկին.';
+$lang ['error_connect'] = 'Սխալ կապում է սերվերի';
+$lang ['error_retrieving'] = 'Սխալ ստանալով ձեր հաղորդագրությունները Ձեր Inbox փոխվել';
+$lang ['error_session_expired'] = 'Ձեր նիստը ժամկետանց, խնդրում ենք մուտք նորից';
+$lang ['error_other'] = 'համակարգի ձախողման, դիմեք ձեր ցանցային ադմինիստրատորին';
 
-// Invalid name of mailbox
-$lang['error_invalid_name'] = 'Invalid folder name - Use only the following characters  A-Z, a-z, 0-9, and -'; // need translation
+// Սխալ անունը փոստարկղում
+$lang ['error_invalid_name'] = 'Սխալ թղթապանակը անունը - Օգտագործեք միայն հետեւյալ կերպարները A-Z, a-z, 0-9, -';
 
-// Validations when sending mails
-$lang['error_no_recipients'] = 'Error: You must have at least one recipient!'; // need translation
-$lang['error_compose_invalid_mail1_s'] = 'Error: This e-mail address seems to be invalid'; // need translation
-$lang['error_compose_invalid_mail1_p'] = 'Error: This e-mail addresses seem to be invalid'; // need translation
-$lang['error_compose_invalid_mail2_s'] = 'Check the e-mail address before resending this email.'; // need translation
-$lang['error_compose_invalid_mail2_p'] = 'Check your addresses before resending this email.'; // need translation
+// Validations երբ ուղարկման նամակներ
+$lang ['error_no_recipients'] = 'Սխալ: Դուք պետք է ունենա առնվազն մեկ հասցեատեր.';
+$lang ['error_compose_invalid_mail1_s'] = 'Սխալ: Այս e-mail հասցեն կարծես անվավեր';
+$lang ['error_compose_invalid_mail1_p'] = 'Սխալ: Այս e-mail հասցեներ կարծես անվավեր';
+$lang ['error_compose_invalid_mail2_s'] = 'Ստուգեք e-mail հասցեն, նախքան resending այս նամակը.';
+$lang ['error_compose_invalid_mail2_p'] = 'Ընտրեք ձեր հասցեները առաջ resending այս նամակը.';
 
-// Confirmation of delete
-$lang['confirm_delete'] = 'Do you really want to delete this message(s)?'; // need translation
+// Հաստատում Ջնջել
+$lang ['confirm_delete'] = 'Դուք իսկապես ցանկանում եք ջնջել այս հաղորդագրությունը (եր).';
 
-// If the message no have a subject or sender
-$lang['no_subject_text'] = '[No subject]'; // need translation
-$lang['no_sender_text'] = '[Sender unknown]'; // need translation
-$lang['no_recipient_text'] = '[Recipient unknown]'; // need translation
+// Եթե հաղորդագրությունը ոչ մի առարկա կամ ուղարկողի
+$lang ['no_subject_text'] = '[առանց վերնագիր]';
+$lang ['no_sender_text'] = '[Ուղարկողի անհայտ]';
+$lang ['no_recipient_text'] = '[Ստացողի անհայտ]';
 
-// If the quota limit was exceeded
-$lang['quota_exceeded'] = 'Not enough space in your inbox to complete this action\nPlease delete some messages to continue'; // need translation
-$lang['quota_usage_info'] = 'Quota limit'; // need translation
-$lang['quota_usage_used'] = 'Used'; // need translation
-$lang['quota_usage_of'] = 'of'; // need translation
-$lang['quota_usage_avail'] = 'available'; // need translation
+// Եթե քվոտա սահմանը գերազանցել
+$lang ['quota_exceeded'] = 'Ոչ բավարար տարածք ձեր ներարկղ լրացնի այս գործողությունը \ n ջնջել որոշ հաղորդագրությունները շարունակելու';
+$lang ['quota_usage_info'] = 'Սահմանը սահմանը';
+$lang ['quota_usage_used'] = 'Նոր';
+$lang ['quota_usage_of'] = 'եւ';
+$lang ['quota_usage_avail'] = 'մատչելի';
 
 //
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
+// Ամսաթիվ Ֆորմատ
+//% D = օրը,% մ = ամիս,% y = տարի,% H = ժամ,% M = րոպե
+// Ամբողջական ցանկի համար տես http://www.php.net/strftime
 //
-$lang['date_format'] = '%m/%d/%y %H:%M'; // need translation
+$lang['date_format'] = '%m/%d/%y %H:%M';
 
-// CharSet
-$lang['default_char_set'] = 'iso-8859-1'; // need translation
+// Կոդավորում
+$lang ['default_char_set'] = 'iso-8859-1';
 
-// Menu
-$lang['messages_mnu'] = 'Inbox'; // need translation
-$lang['read_menu'] = 'Read E-Mail(s)'; // need translation
-$lang['compose_mnu'] = 'Write E-Mail'; // need translation
-$lang['refresh_mnu'] = 'Refresh'; // need translation
-$lang['folders_mnu'] = 'Folders'; // need translation
-$lang['search_mnu'] = 'Search'; // need translation
-$lang['address_mnu'] = 'Address book'; // need translation
-$lang['empty_trash_mnu'] = 'Empty trash'; // need translation
-$lang['prefs_mnu'] = 'Preferences'; // need translation
-$lang['logoff_mnu'] = 'Log out'; // need translation
+// Մենյու
+$lang ['messages_mnu'] = 'Inbox';
+$lang ['read_menu'] = 'Կարդալ E-Mail (ներ)';
+$lang ['compose_mnu'] = 'գրել E-Mail';
+$lang ['refresh_mnu'] = 'Թարմացնել';
+$lang ['folders_mnu'] = 'Թղթապանակներ';
+$lang ['search_mnu'] = 'Որոնել';
+$lang ['address_mnu'] = 'Հասցեների գրքույկ';
+$lang ['empty_trash_mnu'] = 'Դատարկ թափոն';
+$lang ['prefs_mnu'] = 'Preferences';
+$lang ['logoff_mnu'] = 'Ելք';
 
-// Reply
-$lang['reply_prefix'] = 'Re:'; // need translation
-$lang['forward_prefix'] = 'Fw:'; // need translation
-$lang['reply_delimiter'] = '--------- Original Message --------'; // need translation
-$lang['reply_from_hea'] = 'From:'; // need translation
-$lang['reply_to_hea'] = 'To:'; // need translation
-$lang['reply_cc_hea'] = 'Cc:'; // need translation
-$lang['reply_date_hea'] = 'Date:'; // need translation
-$lang['reply_subject_hea'] = 'Subject:'; // need translation
-// done
+// Պատասխանել
+$lang ['reply_prefix'] = 'Re:';
+$lang ['forward_prefix'] = 'Fw:';
+$lang ['reply_delimiter'] = '--------- Original Message --------';
+$lang ['reply_from_hea'] = 'From';
+$lang ['reply_to_hea'] = 'To:';
+$lang ['reply_cc_hea'] = 'Cc:';
+$lang ['reply_date_hea'] = 'ամսաթիվը:';
+$lang ['reply_subject_hea'] = 'Թեմա.';
+// Արել
 
 
-// page-specific vars
+// Էջ հատուկ Vars
 
 // [Headers]
-$lang['key_hea'] = 'Key'; // need translation
-$lang['value_hea'] = 'Value'; // need translation
+$lang ['key_hea'] = 'Key';
+$lang ['value_hea'] = 'Value';
 
-// [Folders]
-$lang['fld_name_hea'] = 'Folder'; // need translation
-$lang['fld_messages_hea'] = 'Messages'; // need translation
-$lang['fld_size_hea'] = 'Size'; // need translation
-$lang['fld_empty_hea'] = 'Empty'; // need translation
-$lang['fld_delete_hea'] = 'Delete'; // need translation
-$lang['fld_total'] = 'Total:'; // need translation
-$lang['fld_make_new'] = 'Create new folder'; // need translation
-$lang['folders_to'] = 'Folders to'; // need translation
+// [Թղթապանակներ]
+$lang ['fld_name_hea'] = 'Folder';
+$lang ['fld_messages_hea'] = 'Հաղորդագրություններ';
+$lang ['fld_size_hea'] = 'Size';
+$lang ['fld_empty_hea'] = 'Դատարկ';
+$lang ['fld_delete_hea'] = 'Ջնջել';
+$lang ['fld_total'] = 'Ընդհանուր';
+$lang ['fld_make_new'] = 'Ստեղծել նոր թղթապանակ';
+$lang ['folders_to'] = 'թղթապանակների';
 
 // [MessageList]
-$lang['messages_to'] = 'Messages to '; // need translation
-$lang['no_messages'] = 'No new messages in your '; // need translation
-$lang['delete_selected_mnu'] = 'Delete '; // need translation
-$lang['move_selected_mnu'] = 'Move to'; // need translation
-$lang['mark_selected_mnu'] = 'Mark as read'; // need translation
-$lang['unmark_selected_mnu'] = 'Mark as unread'; // need translation
-$lang['move_selected_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang ['messages_to'] = 'Հաղորդագրություններ';
+$lang ['no_messages'] = 'Ոչ մի նոր հաղորդագրությունները Ձեր';
+$lang ['delete_selected_mnu'] = 'Ջնջել';
+$lang ['move_selected_mnu'] = 'Տեղափոխել';
+$lang ['mark_selected_mnu'] = 'Նշել որպես ընթերցված';
+$lang ['unmark_selected_mnu'] = 'Նշել որպես չընթերցված';
+$lang ['move_selected_to_trash_mnu'] = 'Տեղափոխել Trash';
 
 
-$lang['delete_mnu'] = 'Delete'; // need translation
-$lang['move_mnu'] = 'Move to'; // need translation
-$lang['subject_hea'] = 'Subject:'; // need translation
-$lang['from_hea'] = 'From:'; // need translation
-$lang['to_hea'] = 'To:'; // need translation
-$lang['date_hea'] = 'Date:'; // need translation
-$lang['size_hea'] = 'Size'; // need translation
-$lang['have_spam'] = 'You have Spam (check Spam folder)'; // need translation
+$lang ['delete_mnu'] = 'Ջնջել';
+$lang ['move_mnu'] = 'Տեղափոխել';
+$lang ['subject_hea'] = 'Թեմա.';
+$lang ['from_hea'] = 'From';
+$lang ['to_hea'] = 'To';
+$lang ['date_hea'] = 'ամսաթիվը';
+$lang ['size_hea'] = 'Size';
+$lang ['have_spam'] = 'Դուք պետք Spam (ստուգել սպամի թղթապանակ)';
 
-$lang['msg_you_have'] = 'You have'; // need translation
-$lang['msg_message'] = 'message'; // need translation
-$lang['msg_messages'] = 'messages'; // need translation
+$lang ['msg_you_have'] = 'Դուք պետք է';
+$lang ['msg_message'] = 'հաղորդագրությունը';
+$lang ['msg_messages'] = 'հաղորդագրությունները';
 
-$lang['msg_more_unread'] = 'unread'; // need translation
-$lang['msg_one_unread'] = 'unread'; // need translation
-$lang['msg_none_unread'] = 'none to read'; // need translation
-$lang['msg_in_the_folder'] = 'in the folder'; // need translation
+$lang ['msg_more_unread'] = 'չընթերցված';
+$lang ['msg_one_unread'] = 'չընթերցված';
+$lang ['msg_none_unread'] = 'ոչ կարդալ';
+$lang ['msg_in_the_folder'] = 'թղթապանակում';
 
 
-// [Login]
-$lang['lgn_title'] = 'Login'; // need translation
-$lang['lgn_welcome_msg'] = 'Welcome, please login into your account'; // need translation
-$lang['lng_user_email'] = 'E-mail'; // need translation
-$lang['lng_user_name'] = 'Username'; // need translation
-$lang['lng_user_pwd'] = 'Password'; // need translation
-$lang['lng_server'] = 'Server'; // need translation
-$lang['lng_theme'] = 'Theme'; // need translation
-$lang['lng_language'] = 'Language'; // need translation
-$lang['lng_login_btn'] = 'Login &gt;&gt;'; // need translation
-$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled'; // need translation
-$lang['lng_cookie_not_valid'] = 'Cookie Security Check Failed'; // need translation
+// [Մուտք]
+$lang ['lgn_title'] = 'Մուտք';
+$lang ['lgn_welcome_msg'] = 'Բարի, խնդրում ենք մուտք գործել Ձեր հաշիվը';
+$lang ['lng_user_email'] = 'Էլ-փոստ';
+$lang ['lng_user_name'] = 'Մականուն';
+$lang ['lng_user_pwd'] = 'Գաղտնաբառ.';
+$lang ['lng_server'] = 'Սերվերի';
+$lang ['lng_theme'] = 'Theme';
+$lang ['lng_language'] = 'Language';
+$lang ['lng_login_btn'] = 'Մուտք & gt; & gt;';
+$lang ['lng_cookie_not_enabled'] = 'պետք է թույլատրվեն cookies';
+$lang ['lng_cookie_not_valid'] = 'Cookie Security ստուգել չհաջողվեց';
 
 // [Newmessage]
 
-$lang['newmsg_title'] = 'Compose mail'; // need translation
+$lang ['newmsg_title'] = 'Խմբագրել փոստով';
 
-$lang['to_hea'] = 'To:'; // need translation
-$lang['cc_hea'] = 'Cc:'; // need translation
-$lang['bcc_hea'] = 'Bcc:'; // need translation
-$lang['subject_hea'] = 'Subject:'; // need translation
-$lang['address_tip'] = 'From address book'; // need translation
+$lang ['to_hea'] = 'To:';
+$lang ['cc_hea'] = 'Cc:';
+$lang ['bcc_hea'] = 'Bcc';
+$lang ['subject_hea'] = 'Թեմա.';
+$lang ['address_tip'] = 'From հասցեագրքից';
 
-$lang['attach_hea'] = 'Attachment:'; // need translation
-$lang['attch_add_new'] = 'Attach new file'; // need translation
-$lang['attch_name_hea'] = 'Name'; // need translation
-$lang['attch_size'] = 'Size'; // need translation
-$lang['attch_type_hea'] = 'Type'; // need translation
-$lang['attch_dele_hea'] = 'Delete'; // need translation
-$lang['attch_no_hea'] = 'No attachments'; // need translation
+$lang ['attach_hea'] = 'Հավելված';
+$lang ['attch_add_new'] = 'Կցել նոր ֆայլ';
+$lang ['attch_name_hea'] = 'անվանումը:';
+$lang ['attch_size'] = 'Size';
+$lang ['attch_type_hea'] = 'Type';
+$lang ['attch_dele_hea'] = 'Ջնջել';
+$lang ['attch_no_hea'] = 'Ոչ հավելվածները';
 
-$lang['add_signature'] = 'Add signature'; // need translation
-$lang['send_text'] = 'Send'; // need translation
+$lang ['add_signature'] = 'Ավելացնել ստորագրությունը';
+$lang ['send_text'] = 'Ուղարկել';
 
-$lang['result_error'] = 'It was not possible to send this e-mail'; // need translation
-$lang['result_success'] = 'This e-mail has been sent'; // need translation
-$lang['nav_continue'] = '&lt;&lt; Continue &gt;&gt;'; // need translation
-$lang['nav_back'] = 'Back'; // need translation
+$lang ['result_error'] = 'Այն հնարավոր չէր ուղարկել այս էլեկտրոնային փոստով';
+$lang ['result_success'] = 'Այս e-mail է ուղարկվել';
+$lang ['nav_continue'] = '& lt; & lt; Շարունակել & gt; & gt; ';
+$lang ['nav_back'] = 'Վերադառնալ';
 
-$lang['up_title'] = 'Add file'; // need translation
-$lang['up_information_text'] = 'Select file'; // need translation
-$lang['up_button_text'] = 'Attach file'; // need translation
+$lang ['up_title'] = 'Ավելացնել ֆայլ';
+$lang ['up_information_text'] = 'Ընտրեք ֆայլը';
+$lang ['up_button_text'] = 'կցել ֆայլը';
 
-$lang['require_receipt'] = 'Return receipt'; // need translation
+$lang ['require_receipt'] = 'Վերադառնալ ստացում';
 
-$lang['priority_text'] = 'Priority'; // need translation
-$lang['priority_low'] = 'Low'; // need translation
-$lang['priority_normal'] = 'Normal'; // need translation
-$lang['priority_high'] = 'High'; // need translation
+$lang ['priority_text'] = 'Priority';
+$lang ['priority_low'] = 'Ցածր';
+$lang ['priority_normal'] = 'Նորմալ';
+$lang ['priority_high'] = 'High';
 
-// [Preferences]
-$lang['prf_title'] = 'Preferences'; // need translation
-$lang['prf_general_title'] = 'General information'; // need translation
-$lang['prf_name'] = 'Name'; // need translation
-$lang['prf_reply_to'] = 'Reply to'; // need translation
-$lang['prf_time_zone'] = 'Time zone'; // need translation
-$lang['prf_trash_title'] = 'Trash'; // need translation
-$lang['prf_save_to_trash'] = 'When you <b>delete</b> a message, move it to '; // need translation
-$lang['prf_save_only_read'] = 'Save only <b>read messages</b> in the '; // need translation
-$lang['prf_empty_on_exit'] = '<b>Empty</b> trash folder when you logout'; // need translation
-$lang['prf_empty_spam_on_exit'] = '<b>Empty</b> Spam folder when you logout'; // need translation
-$lang['prf_unmark_read_on_exit'] = 'Reset READ messages as UNREAD when you logout'; // need translation
-$lang['prf_sent_title'] = 'Sent items'; // need translation
-$lang['prf_save_sent'] = 'Save <b>sent messages</b> in the '; // need translation
-$lang['prf_messages_title'] = 'Messages'; // need translation
-$lang['prf_page_limit'] = 'Maximum number of messages per page'; // need translation
-$lang['prf_signature_title'] = 'Signature'; // need translation
-$lang['prf_signature'] = 'Write your signature'; // need translation
-$lang['prf_auto_add_sign'] = 'Add your signature to all the outgoing messages '; // need translation
-$lang['prf_save_button'] = 'Save Preferences'; // need translation
-$lang['prf_display_images'] = 'Show attached images'; // need translation
-$lang['prf_default_editor_mode'] = 'Default edit mode'; // need translation
-$lang['prf_default_editor_mode_text'] = '"Plain text"'; // need translation
-$lang['prf_default_editor_mode_html'] = '"Advanced HTML editor"'; // need translation
-$lang['prf_time_to_refesh'] = 'Automatically check for new mail (minutes)'; // need translation
-$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // need translation
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // need translation
+// [Նախընտրանքներ]
+$lang ['prf_title'] = 'Preferences';
+$lang ['prf_general_title'] = 'Ընդհանուր տեղեկություններ';
+$lang ['prf_name'] = 'անվանումը:';
+$lang ['prf_reply_to'] = 'Պատասխանել';
+$lang ['prf_time_zone'] = 'Ժամային գոտի.';
+$lang ['prf_trash_title'] = 'Trash';
+$lang ['prf_save_to_trash'] = 'Եթե դուք <b> ջնջել </ b> հաղորդագրություն, տեղափոխել այն.';
+$lang ['prf_save_only_read'] = 'Պահպանել միայն <b> կարդալ հաղորդագրությունները </ b> է';
+$lang ['prf_empty_on_exit'] = '<b> Դատարկ </ b> թափոն թղթապանակը, երբ դուք դուրս գալ համակարգից';
+$lang ['prf_empty_spam_on_exit'] = '<b> Դատարկ </ b> սպամի թղթապանակ, երբ դուք դուրս գալ համակարգից';
+$lang ['prf_unmark_read_on_exit'] = 'Դուք փնտրել էք կարդալ հաղորդագրությունները որպես չընթերցված, երբ դուք դուրս գալ համակարգից';
+$lang ['prf_sent_title'] = 'հղել նյութեր';
+$lang ['prf_save_sent'] = 'Պահպանել <b> ուղարկված հաղորդագրությունները </ b> է';
+$lang ['prf_messages_title'] = 'Հաղորդագրություններ';
+$lang ['prf_page_limit'] = 'Առավելագույն թվով Հաղորդագրությունների մեկ էջում';
+$lang ['prf_signature_title'] = 'Ստորագրություն';
+$lang ['prf_signature'] = 'Գրեք ձեր ստորագրությունը';
+$lang ['prf_auto_add_sign'] = 'Ավելացնել ձեր ստորագրությունը բոլոր ելքային հաղորդագրությունները';
+$lang ['prf_save_button'] = 'Պահպանել Preferences';
+$lang ['prf_display_images'] = 'Ցուցադրել կցված պատկերներ';
+$lang ['prf_default_editor_mode'] = 'Կանխորոշված ​​խմբագրել ռեժիմում';
+$lang ['prf_default_editor_mode_text'] = '«Plain տեքստը"';
+$lang ['prf_default_editor_mode_html'] = '"Advanced HTML խմբագրիչի"';
+$lang ['prf_time_to_refesh'] = 'ավտոմատ ստուգել նոր փոստով (րոպե)';
+$lang ['prf_spam_level'] = 'SPAM զգայունության (0 = Հաշմանդամների, 1 = շատ մեծ է, 9 = Very Low)';
+$lang ['prf_auto_require_receipt'] = 'Անհրաժեշտ է կարդալ անդորրագիրը լռակյաց';
 
-$lang['prf_msg_saved'] = 'Preferences saved'; // need translation
+$lang ['prf_msg_saved'] = 'Preferences պահպանվել';
 
-// filters
-$lang['filter_title'] = 'Filters'; // need translation
+// զտիչներ
+$lang ['filter_title'] = 'Filters';
 
-$lang['filter_new'] = 'Create a filter'; // need translation
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // need translation
-$lang['filter_list'] = 'Current filters'; // need translation
+$lang ['filter_new'] = 'Ստեղծել զտիչ';
+$lang ['filter_desc'] = 'Ընտրեք որոնման չափանիշներին ու գործողությունների համար մուտքային հաղորդագրությունները';
+$lang ['filter_list'] = 'Ընթացիկ զտիչներ';
 
-$lang['filter_field_from'] = 'From'; // need translation
-$lang['filter_field_to'] = 'To'; // need translation
-$lang['filter_field_subject'] = 'Subject'; // need translation
-$lang['filter_field_header'] = 'Header'; // need translation
-$lang['filter_field_body'] = 'Body'; // need translation
+$lang ['filter_field_from'] = 'From';
+$lang ['filter_field_to'] = 'To';
+$lang ['filter_field_subject'] = 'Թեմա.';
+$lang ['filter_field_header'] = 'Վերնագրի';
+$lang ['filter_field_body'] = 'Body';
 
-$lang['filter_type_move'] = 'Move'; // need translation
-$lang['filter_type_delete'] = 'Delete'; // need translation
-$lang['filter_type_mark'] = 'Mark read'; // need translation
+$lang ['filter_type_move'] = 'Տեղափոխել';
+$lang ['filter_type_delete'] = 'Ջնջել';
+$lang ['filter_type_mark'] = 'Նշել կարդալ';
 
-$lang['filter_add'] = 'Add filter'; // need translation
-$lang['filter_delete'] = 'Delete'; // need translation
-$lang['filter_delete_selected'] = 'Delete selected filters'; // need translation
+$lang ['filter_add'] = 'Ավելացնել զտիչ';
+$lang ['filter_delete'] = 'Ջնջել';
+$lang ['filter_delete_selected'] = 'Ջնջել ընտրված ֆիլտրերը';
 
-$lang['filter_field'] = 'Filter on field'; // need translation
-$lang['filter_match'] = 'Search for'; // need translation
-$lang['filter_type'] = 'Action'; // need translation
-$lang['filter_folder'] = 'Destination folder'; // need translation
+$lang ['filter_field'] = 'Զտել դաշտ';
+$lang ['filter_match'] = 'Որոնել';
+$lang ['filter_type'] = 'Action';
+$lang ['filter_folder'] = 'Այս թղթապանակը';
 
-$lang['filter_msg_nofilters'] = 'No filters available.'; // need translation
-$lang['filter_msg_added'] = 'Filter added'; // need translation
-$lang['filter_msg_deleted'] = 'Filter deleted'; // need translation
+$lang ['filter_msg_nofilters'] = 'Ոչ ֆիլտրեր մատչելի.';
+$lang ['filter_msg_added'] = 'Filter ավելացրեց';
+$lang ['filter_msg_deleted'] = 'Filter ջնջվել';
 
 
 // [Catch]
-$lang['ctc_title'] = 'Add to address book'; // need translation
-$lang['ctc_information'] = 'Only shows e-mails that are not in the address book'; // need translation
-$lang['ctc_name'] = 'Name'; // need translation
-$lang['ctc_email'] = 'E-mail'; // need translation
-$lang['ctc_no_address'] = 'No address available'; // need translation
-$lang['ctc_close'] = 'Close'; // need translation
-$lang['ctc_save'] = 'Save'; // need translation
+$lang ['ctc_title'] = 'Ավելացնել Հասցեների գրքույկ';
+$lang ['ctc_information'] = 'Միայն թե էլեկտրոնային նամակների, որոնք չեն հասցեագրքից';
+$lang ['ctc_name'] = 'անվանումը:';
+$lang ['ctc_email'] = 'Էլ-փոստ';
+$lang ['ctc_no_address'] = 'Ոչ հասցեն մատչելի';
+$lang ['ctc_close'] = 'Close';
+$lang ['ctc_save'] = 'Պահպանել';
 
 // [Readmsg]
-$lang['next_mnu'] = 'Next'; // need translation
-$lang['previous_mnu'] = 'Previous'; // need translation
-$lang['back_mnu'] = 'Back'; // need translation
-$lang['reply_mnu'] = 'Reply'; // need translation
-$lang['reply_all_mnu'] = 'Reply to all'; // need translation
-$lang['forward_mnu'] = 'Forward'; // need translation
-$lang['headers_mnu'] = 'Header'; // need translation
-$lang['move_mnu'] = 'Move to'; // need translation
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // need translation
-$lang['delete_mnu'] = 'Delete'; // need translation
-$lang['print_mnu'] = 'Print'; // need translation
-$lang['download_mnu'] = 'Download'; // need translation
+$lang ['next_mnu'] = 'Հաջորդը';
+$lang ['previous_mnu'] = 'Այս';
+$lang ['back_mnu'] = 'Վերադառնալ';
+$lang ['reply_mnu'] = 'Պատասխանել';
+$lang ['reply_all_mnu'] = 'Պատասխանել բոլորին';
+$lang ['forward_mnu'] = 'Փոխանցել';
+$lang ['headers_mnu'] = 'Վերնագրի';
+$lang ['move_mnu'] = 'Տեղափոխել';
+$lang ['move_to_trash_mnu'] = 'Տեղափոխել Trash';
+$lang ['delete_mnu'] = 'Ջնջել';
+$lang ['print_mnu'] = 'Print';
+$lang ['download_mnu'] = 'Բեռնել';
 
-$lang['from_hea'] = 'From:'; // need translation
-$lang['to_hea'] = 'To:'; // need translation
-$lang['cc_hea'] = 'Cc:'; // need translation
-$lang['date_hea'] = 'Date:'; // need translation
-$lang['subject_hea'] = 'Subject:'; // need translation
-$lang['attach_hea'] = 'Attachment:'; // need translation
+$lang ['from_hea'] = 'From';
+$lang ['to_hea'] = 'To:';
+$lang ['cc_hea'] = 'Cc:';
+$lang ['date_hea'] = 'ամսաթիվը:';
+$lang ['subject_hea'] = 'Թեմա.';
+$lang ['attach_hea'] = 'Հավելված';
 
-$lang['attch_name_hea'] = 'Name'; // need translation
-$lang['attch_force_hea'] = 'Download'; // need translation
-$lang['attch_type_hea'] = 'Type'; // need translation
-$lang['attch_size_hea'] = 'Size'; // need translation
-$lang['catch_address'] = 'Add to address book'; // need translation
-$lang['block_address'] = 'Block address'; // need translation
+$lang ['attch_name_hea'] = 'անվանումը:';
+$lang ['attch_force_hea'] = 'Բեռնել';
+$lang ['attch_type_hea'] = 'Type';
+$lang ['attch_size_hea'] = 'Size';
+$lang ['catch_address'] = 'Ավելացնել Հասցեների գրքույկ';
+$lang ['block_address'] = 'Արգելափակել հասցե';
 
-// [Search]
-$lang['sch_title'] = 'Search'; // need translation
-$lang['sch_information_text'] = 'Write a phrase or a word that you are looking for.<br> Only read messages will be searched.'; // need translation
-$lang['sch_button_text'] = 'Search &gt;&gt;'; // need translation
-$lang['sch_subject_hea'] = 'Subject'; // need translation
-$lang['sch_from_hea'] = 'From'; // need translation
-$lang['sch_date_hea'] = 'Date'; // need translation
-$lang['sch_body_hea'] = 'Message Body'; // need translation
-$lang['sch_folder_hea'] = 'Folder'; // need translation
-$lang['sch_no_results'] = 'No messages matching your criteria have been found'; // need translation
+// [Որոնում]
+$lang ['sch_title'] = 'Որոնել';
+$lang ['sch_information_text'] = 'Գրեք մի արտահայտություն կամ բառը, որ դուք փնտրում: Բաժին Միայն կարդալ հաղորդագրությունները կլինի փնտրում.';
+$lang ['sch_button_text'] = 'Որոնել & gt; & gt;';
+$lang ['sch_subject_hea'] = 'Թեմա.';
+$lang ['sch_from_hea'] = 'From';
+$lang ['sch_date_hea'] = 'ամսաթիվը';
+$lang ['sch_body_hea'] = 'Հաղորդագրություն Body';
+$lang ['sch_folder_hea'] = 'Folder';
+$lang ['sch_no_results'] = 'Ոչ հաղորդագրությունները համապատասխանող ձեր չափանիշներին են գտնվել';
 
 // [QuickAddress]
-$lang['qad_title'] = 'Address book'; // need translation
-$lang['qad_select_address'] = 'Select a contact'; // need translation
-$lang['qad_to'] = 'To'; // need translation
-$lang['qad_cc'] = 'Cc'; // need translation
-$lang['qad_bcc'] = 'Bcc'; // need translation
+$lang ['qad_title'] = 'Հասցեների գրքույկ';
+$lang ['qad_select_address'] = 'Ընտրեք կոնտակտ';
+$lang ['qad_to'] = 'To';
+$lang ['qad_cc'] = 'Cc:';
+$lang ['qad_bcc'] = 'Նաեւ';
 
-// [AddressBook]
-// edit/display
-$lang['adr_title'] = 'Address book'; // need translation
-$lang['adr_name'] = 'Name'; // need translation
-$lang['adr_email'] = 'E-mail'; // need translation
-$lang['adr_street'] = 'Street'; // need translation
-$lang['adr_city'] = 'City'; // need translation
-$lang['adr_state'] = 'State'; // need translation
-$lang['adr_work'] = 'Work'; // need translation
-$lang['adr_back'] = 'Back'; // need translation
-$lang['adr_save'] = 'Save'; // need translation
-$lang['adr_phone'] = 'Phone'; // need translation
-$lang['adr_cell'] = 'Cell'; // need translation
-$lang['adr_note'] = 'Notes'; // need translation
+// [Հասցեագիրք]
+// Խմբագրել / էկրան
+$lang ['adr_title'] = 'Հասցեների գրքույկ';
+$lang ['adr_name'] = 'անվանումը:';
+$lang ['adr_email'] = 'Էլ-փոստ';
+$lang ['adr_street'] = 'Street';
+$lang ['adr_city'] = 'City';
+$lang ['adr_state'] = 'պետական';
+$lang ['adr_work'] = 'աշխատանք';
+$lang ['adr_back'] = 'Վերադառնալ';
+$lang ['adr_save'] = 'Պահպանել';
+$lang ['adr_phone'] = 'Phone';
+$lang ['adr_cell'] = 'Բջջային';
+$lang ['adr_note'] = 'Notes';
 
-// list
-$lang['adr_name_hea'] = 'Name'; // need translation
-$lang['adr_email_hea'] = 'E-mail'; // need translation
-$lang['adr_edit_hea'] = 'Edit'; // need translation
-$lang['adr_expo_hea'] = 'Export'; // need translation
-$lang['adr_dele_hea'] = 'Delete'; // need translation
-$lang['adr_new_entry'] = 'New contact'; // need translation
+// Ցուցակ
+$lang ['adr_name_hea'] = 'անվանումը:';
+$lang ['adr_email_hea'] = 'Էլ-փոստ';
+$lang ['adr_edit_hea'] = 'Խմբագրել';
+$lang ['adr_expo_hea'] = 'Export';
+$lang ['adr_dele_hea'] = 'Ջնջել';
+$lang ['adr_new_entry'] = 'Նոր կոնտակտային';
 
-$lang['addr_saved'] = 'The contact has been saved'; // need translation
-$lang['addr_added'] = 'The contact has been added'; // need translation
-$lang['addr_deleted'] = 'The contact has been deleted'; // need translation
+$lang ['addr_saved'] = 'Կապը արդեն պահպանվել';
+$lang ['addr_added'] = 'Կապը ավելացված';
+$lang ['addr_deleted'] = 'Կապը ջնջվել է';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender'; // need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // need translation
-$lang['blk_email'] = 'E-mail'; // need translation
-$lang['blk_no_address'] = 'No address available'; // need translation
-$lang['blk_close'] = 'Close'; // need translation
-$lang['blk_save'] = 'Save'; // need translation
+$lang ['blk_title'] = 'Արգելափակել ուղարկողի';
+$lang ['blk_information'] = 'Միայն թե էլեկտրոնային նամակների, որոնք չեն զտիչ դեռեւս';
+$lang ['blk_email'] = 'Էլ-փոստ';
+$lang ['blk_no_address'] = 'Ոչ հասցեն մատչելի';
+$lang ['blk_close'] = 'Close';
+$lang ['blk_save'] = 'Պահպանել';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event'; // need translation
-$lang['evt_save'] = 'Save'; // need translation
-$lang['evt_delete'] = 'Delete'; // need translation
-$lang['evt_stop'] = 'Stop time'; // need translation
-$lang['evt_start'] = 'Start time'; // need translation
-
+$lang ['evt_title'] = 'Calendar իրադարձություն';
+$lang ['evt_save'] = 'Պահպանել';
+$lang ['evt_delete'] = 'Ջնջել';
+$lang ['evt_stop'] = 'Stop ժամանակ';
+$lang ['evt_start'] = 'Սկիզբ ժամանակ';
