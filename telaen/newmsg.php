@@ -47,7 +47,7 @@ if (isset($tipo) && $tipo == 'send') {
     // build the email
     if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
         // set lang for error messages, english for now
-        $mail->SetLanguage('en', 'langs/');
+        $mail->SetLanguage('en', 'inc/language/');
 
         // for password authenticated servers
         $mail->SMTPAuth = $use_password_for_smtp;
@@ -566,14 +566,14 @@ $tmpbody";
 
         switch ($rtype) {
         case 'reply':
-            if (!preg_match("/^$reply_prefix/i", trim($subject))) {
-                $subject = "$reply_prefix $subject";
+            if (!preg_match("/^$lang[reply_prefix]/i", trim($subject))) {
+                $subject = "$lang[reply_prefix] $subject";
             }
             $to = $fromreply;
             break;
         case 'replyall':
-            if (!preg_match("/^$reply_prefix/i", trim($subject))) {
-                $subject = "$reply_prefix $subject";
+            if (!preg_match("/^$lang[reply_prefix]/i", trim($subject))) {
+                $subject = "$lang[reply_prefix] $subject";
             }
             $to = $allreply;
             $cc = $ccreply;

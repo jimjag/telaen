@@ -253,16 +253,16 @@ $smarty->assign('umMessageList', $messagelist);
 
 switch (strtolower($folder)) {
 case 'inbox':
-    $display = $inbox_extended;
+    $display = $lang[inbox_extended];
     break;
 case 'sent':
-    $display = $sent_extended;
+    $display = $lang[sent_extended];
     break;
 case 'trash':
-    $display = $trash_extended;
+    $display = $lang[trash_extended];
     break;
 case 'spam':
-    $display = ($spam_extended ? $spam_extended : 'SPAM');
+    $display = ($lang[spam_extended] ? $lang[spam_extended] : 'SPAM');
     break;
 default:
     $display = $folder;
@@ -307,16 +307,16 @@ while ($entry = $d->read()) {
         $entry = $TLN->fix_prefix($entry, 0);
         switch (strtolower($entry)) {
         case 'inbox':
-            $display = $inbox_extended;
+            $display = $lang[inbox_extended];
             break;
         case 'sent':
-            $display = $sent_extended;
+            $display = $lang[sent_extended];
             break;
         case 'trash':
-            $display = $trash_extended;
+            $display = $lang[trash_extended];
             break;
         case 'spam':
-            $display = ($spam_extended ? $spam_extended : 'SPAM');
+            $display = ($lang[spam_extended] ? $lang[spam_extended] : 'SPAM');
             break;
         default:
             $display = $entry;

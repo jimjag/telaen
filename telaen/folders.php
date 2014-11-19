@@ -159,16 +159,16 @@ for ($n = 0;$n<count($boxes);$n++) {
         $entry = strtolower($entry);
         switch ($entry) {
         case 'inbox':
-            $boxname = $inbox_extended;
+            $boxname = $lang[inbox_extended];
             break;
         case 'sent':
-            $boxname = $sent_extended;
+            $boxname = $lang[sent_extended];
             break;
         case 'trash':
-            $boxname = $trash_extended;
+            $boxname = $lang[trash_extended];
             break;
         case 'spam':
-            $boxname = ($spam_extended ? $spam_extended : 'SPAM');
+            $boxname = ($lang[spam_extended] ? $lang[spam_extended] : 'SPAM');
             break;
         }
         $system[$scounter]['entry'] = $entry;
