@@ -302,16 +302,16 @@ while ($entry = $d->read()) {
         $entry = $TLN->fix_prefix($entry, 0);
         switch (strtolower($entry)) {
         case 'inbox':
-            $display = $lang[inbox_extended];
+            $display = $lang['inbox_extended'];
             break;
         case 'spam':
-            $display = $lang[spam_extended];
+            $display = $lang['spam_extended'];
             break;
         case 'sent':
-            $display = $lang[sent_extended];
+            $display = $lang['sent_extended'];
             break;
         case 'trash':
-            $display = $lang[trash_extended];
+            $display = $lang['trash_extended'];
             break;
         default:
             $display = $entry;

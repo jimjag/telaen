@@ -185,13 +185,13 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $index = count($messagelist);
         switch (strtolower($headers[$i]['folder'])) {
         case 'inbox':
-            $boxname = $lang[inbox_extended];
+            $boxname = $lang['inbox_extended'];
             break;
         case 'sent':
-            $boxname = $lang[sent_extended];
+            $boxname = $lang['sent_extended'];
             break;
         case 'trash':
-            $boxname = $lang[trash_extended];
+            $boxname = $lang['trash_extended'];
             break;
         default:
             $boxname = $headers[$i]['folder'];

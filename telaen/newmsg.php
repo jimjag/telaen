@@ -566,14 +566,14 @@ $tmpbody";
 
         switch ($rtype) {
         case 'reply':
-            if (!preg_match("/^$lang[reply_prefix]/i", trim($subject))) {
-                $subject = "$lang[reply_prefix] $subject";
+            if (!preg_match("/^${lang['reply_prefix']}/i", trim($subject))) {
+                $subject = "${lang['reply_prefix']} $subject";
             }
             $to = $fromreply;
             break;
         case 'replyall':
-            if (!preg_match("/^$lang[reply_prefix]/i", trim($subject))) {
-                $subject = "$lang[reply_prefix] $subject";
+            if (!preg_match("/^${lang['reply_prefix']}/i", trim($subject))) {
+                $subject = "${lang['reply_prefix']} $subject";
             }
             $to = $allreply;
             $cc = $ccreply;
