@@ -23,7 +23,7 @@ $lang['total_text'] = 'Total';
 $lang['err_login_msg'] = 'Anmeldungsfehler';
 $lang['err_system_msg'] = 'Systemfehler';
 $lang['error_login'] = 'Bitte prüfen Sie ihren Benutzernamen und das Kennwort und versuchen Sie es erneut';
-$lang['error_connect'] = 'Error connecting to the server'; // need translation
+$lang['error_connect'] = 'Error connecting to the server';
 $lang['error_retrieving'] = 'Konnte Ihre Nachrichten nicht abrufen!';
 $lang['error_session_expired'] = 'Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an';
 $lang['error_other'] = 'Bitte kontaktieren Sie den Administrator';
@@ -65,7 +65,7 @@ $lang['default_char_set'] = 'iso-8859-1';
 
 // Menu
 $lang['messages_mnu'] = 'Posteingang';
-$lang['read_menu'] = 'Read E-Mail(s)'; // need translation
+$lang['read_menu'] = 'Read E-Mail(s)';
 $lang['compose_mnu'] = 'Neu';
 $lang['refresh_mnu'] = 'Aktualisieren';
 $lang['folders_mnu'] = 'Ordner';
@@ -110,7 +110,7 @@ $lang['delete_selected_mnu'] = 'Markierte löschen';
 $lang['move_selected_mnu'] = 'Markierte verschieben';
 $lang['mark_selected_mnu'] = 'Markiere als gelesen';
 $lang['unmark_selected_mnu'] = 'Markiere als ungelesen';
-$lang['move_selected_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_selected_to_trash_mnu'] = 'Move to Trash';
 
 
 $lang['delete_mnu'] = 'Entfernen';
@@ -138,7 +138,7 @@ $lang['lgn_welcome_msg'] = 'Willkommen, bitte melden Sie sich an';
 $lang['lng_user_email'] = 'E-Mail';
 $lang['lng_user_name'] = 'Benutzername';
 $lang['lng_user_pwd'] = 'Kennwort';
-$lang['lng_server'] = 'Server'; // need translation
+$lang['lng_server'] = 'Server';
 $lang['lng_theme'] = 'Thema';
 $lang['lng_language'] = 'Sprache';
 $lang['lng_login_btn'] = 'Anmelden &gt;&gt;';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'Allen antworten';
 $lang['forward_mnu'] = 'Weiterleiten';
 $lang['headers_mnu'] = 'E-Mail Header';
 $lang['move_mnu'] = 'Verschieben';
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_to_trash_mnu'] = 'Move to Trash';
 $lang['delete_mnu'] = 'Entfernen';
 $lang['print_mnu'] = 'Drucken';
 $lang['download_mnu'] = 'Herunterladen';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'Herunterladen';
 $lang['attch_type_hea'] = 'Typ';
 $lang['attch_size_hea'] = 'Gr.';
 $lang['catch_address'] = 'Zum Adressbuch hinzufügen';
-$lang['block_address'] = 'Block address'; // need translation
+$lang['block_address'] = 'Block address';
 
 // [Search]
 $lang['sch_title'] = 'Suchen';

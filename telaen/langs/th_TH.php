@@ -65,7 +65,7 @@ $lang['default_char_set'] = 'tis-620';
 
 // Menu
 $lang['messages_mnu'] = 'ข้อความ';
-$lang['read_menu'] = 'Read E-Mail(s)'; // need translation
+$lang['read_menu'] = 'Read E-Mail(s)';
 $lang['compose_mnu'] = 'เขียนจดหมาย';
 $lang['refresh_mnu'] = 'รีโหลด';
 $lang['folders_mnu'] = 'โฟลเดอร์';
@@ -138,7 +138,7 @@ $lang['lgn_welcome_msg'] = 'ยินดีต้อนรับสู่ Telaen webmail';
 $lang['lng_user_email'] = 'จดหมายอิเล็กทรอนิกส์';
 $lang['lng_user_name'] = 'ชื่อผู้ใช้';
 $lang['lng_user_pwd'] = 'รหัสผ่าน';
-$lang['lng_server'] = 'Server'; // need translation
+$lang['lng_server'] = 'Server';
 $lang['lng_theme'] = 'หน้าตา';
 $lang['lng_language'] = 'ภาษา';
 $lang['lng_login_btn'] = 'เข้าสู่ระบบ &gt;&gt;';
@@ -210,7 +210,7 @@ $lang['prf_time_to_refesh'] = 'รีโหลดทุกๆ [นาที]';
 $lang['prf_spam_level'] = 'ระดับการตรวจจับจดหมายขยะ(0 = ไม่ตรวจจับ, 1 = สูงมาก, 9 = ต่ำมาก)';
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default';
 
-$lang['prf_msg_saved'] = 'Preferences saved'; // need translation
+$lang['prf_msg_saved'] = 'Preferences saved';
 
 // filters
 $lang['filter_title'] = 'ตัวกรอง';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'ตอบกลับทั้งหมด';
 $lang['forward_mnu'] = '่งต่อ';
 $lang['headers_mnu'] = 'หัว';
 $lang['move_mnu'] = 'ย้ายไป';
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_to_trash_mnu'] = 'Move to Trash';
 $lang['delete_mnu'] = 'ลบ';
 $lang['print_mnu'] = 'พิมพ์';
 $lang['download_mnu'] = 'ดาวน์โหลด';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'รับไฟล์';
 $lang['attch_type_hea'] = 'ชนิด';
 $lang['attch_size_hea'] = 'ขนาด';
 $lang['catch_address'] = 'เพิ่มเข้าไปในสมุดรายชื่อ';
-$lang['block_address'] = 'Block address'; // need translation
+$lang['block_address'] = 'Block address';
 
 // [Search]
 $lang['sch_title'] = 'ค้นหา';
@@ -327,12 +327,12 @@ $lang['addr_deleted'] = 'ลบรายชื่อแล้ว';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender'; // need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // need translation
-$lang['blk_email'] = 'E-mail'; // need translation
-$lang['blk_no_address'] = 'No address available'; // need translation
-$lang['blk_close'] = 'Close'; // need translation
-$lang['blk_save'] = 'Save'; // need translation
+$lang['blk_title'] = 'Block sender';
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_email'] = 'E-mail';
+$lang['blk_no_address'] = 'No address available';
+$lang['blk_close'] = 'Close';
+$lang['blk_save'] = 'Save';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event';

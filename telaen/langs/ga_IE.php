@@ -1,17 +1,17 @@
 <?php
-/ *
-  * Aontaithe Poist English (liosta Canonical agus mhíriú)
-  * /
+/*
+ * US English (canonical list and phrasing)
+ */
 
 $lang = array();
 
-// Ainmneacha Úsáideoir-chairdiúil do fillteáin córas
+// User-friendly names to system folders
 $lang['inbox_extended'] = 'R-phost Isteach';
 $lang['sent_extended'] = 'ítimí Seolta';
-$lang['trash_extended'] 'fillteán Bruscar';
+$lang['trash_extended'] = 'fillteán Bruscar';
 $lang['spam_extended'] = 'fillteán Spam';
 
-// Téacsanna Nascleanúint
+// Navigation texts
 $lang['pages_text'] = 'Leathanaigh';
 $lang['first_text'] = 'An chéad';
 $lang['previous_text'] = 'Ar ais';
@@ -19,7 +19,7 @@ $lang['next_text'] = 'Ar Aghaidh';
 $lang['last_text'] = 'Last';
 $lang['total_text'] = 'Iomlán';
 
-// Earráidí Freastalaí Mail
+// Mail Server Errors
 $lang['err_login_msg'] = 'earráid Logáil';
 $lang['err_system_msg'] = 'Córas earráid';
 $lang['error_login'] = 'Déan seiceáil ar do ainm úsáideora nó ar do phasfhocal agus bain triail eile';
@@ -28,25 +28,25 @@ $lang['error_retrieving'] = 'Earráid ag fáil do theachtaireachtaí, tá do R-p
 $lang['error_session_expired'] = 'Tá do seisiún in éag, le do thoil logáil isteach arís';
 $lang['error_other'] = 'Córas teip, téigh i dteagmháil le do riarthóir líonra';
 
-//-Ainm neamhbhailí ar bosca poist
+// Invalid name of mailbox
 $lang['error_invalid_name'] = 'An t-ainm fillteán Neamhbhailí - Bain úsáid as ach na carachtair seo a leanas AZ, az, 0-9, agus -';
 
-// DTeilidhíolacháin, i mBailíochtú nuair phoist a sheoladh
+// Validations when sending mails
 $lang['error_no_recipients'] = 'Earráid:! Ní mór duit a bheith faighteoir amháin ar a laghad';
 $lang['error_compose_invalid_mail1_s'] = 'Earráid: Dealraíonn an seoladh r-phoist a bheith neamhbhailí';
 $lang['error_compose_invalid_mail1_p'] = 'Earráid: r-phost cosúil go seoltaí a bheith neamhbhailí';
 $lang['error_compose_invalid_mail2_s'] = 'Seiceáil an seoladh r-phoist roimh resending an ríomhphost seo.';
 $lang['error_compose_invalid_mail2_p'] = 'Seiceáil do seoltaí roimh resending an ríomhphost seo.';
 
-// Dhaingniú scriosadh
+// Confirmation of delete
 $lang['confirm_delete'] = '? Ar mhaith leat teachtaireacht (í) seo a scriosadh';
 
-// Má tá an teachtaireacht ar bith ábhar nó seoltóir
+// If the message no have a subject or sender
 $lang['no_subject_text'] = '[Uimh ábhar]';
 $lang['no_sender_text'] = '[anaithnid Sender]';
 $lang['no_recipient_text'] = '[Faighteoir anaithnid]';
 
-// Má sáraíodh an teorainn chuóta
+// If the quota limit was exceeded
 $lang['quota_exceeded'] = 'Níl go leor spáis i do bhosca chun an gníomh seo a chur i gcrích \ nPlease scriosadh roinnt teachtaireachtaí chun leanúint ar aghaidh';
 $lang['quota_usage_info'] = 'teorainn Cuóta';
 $lang['quota_usage_used'] = 'Úsáidte';
@@ -54,16 +54,16 @@ $lang['quota_usage_of'] = 'de';
 $lang['quota_usage_avail'] = 'ar fáil';
 
 //
-// Dáta Formáid
-//% D = lá,% m = mí,% y = bhliain,% H = uair an chloig,% M = miontuairiscí
-// Haghaidh liosta iomlán, féach http://www.php.net/strftime
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
 //
-$lang ['date_format'] = '% m /% d /% y% H:% M';
+$lang['date_format'] = '% m /% d /% y% H:% M';
 
-// charset
+// CharSet
 $lang['default_char_set'] = 'iso-8859-1';
 
-// Roghchlár
+// Menu
 $lang['messages_mnu'] = 'R-phost Isteach';
 $lang['read_menu'] = 'Léigh E-Mail (í)';
 $lang['compose_mnu'] = 'Scríobh E-Mail';
@@ -75,7 +75,7 @@ $lang['empty_trash_mnu'] = 'bruscar Folamh';
 $lang['prefs_mnu'] = 'Sainroghanna';
 $lang['logoff_mnu'] = 'Logáil amach';
 
-// Freagra
+// Reply
 $lang['reply_prefix'] = 'Re:';
 $lang['forward_prefix'] = 'FW:';
 $lang['reply_delimiter'] = '--------- Teachtaireacht Bunaidh --------';
@@ -84,16 +84,16 @@ $lang['reply_to_hea'] = 'Go:';
 $lang['reply_cc_hea'] = 'Cc:';
 $lang['reply_date_hea'] = 'Dáta:';
 $lang['reply_subject_hea'] = 'Ábhar:';
-// dhéanamh
+// done
 
 
-// Leathanach-sonrach VARs
+// page-specific vars
 
-// [Ceanntásca]
+// [Headers]
 $lang['key_hea'] = 'Eochair';
 $lang['value_hea'] = 'Luach';
 
-// [Fillteáin]
+// [Folders]
 $lang['fld_name_hea'] = 'Fillteán';
 $lang['fld_messages_hea'] = 'Teachtaireachtaí';
 $lang['fld_size_hea'] = 'Méid';
@@ -101,7 +101,7 @@ $lang['fld_empty_hea'] = 'Folamh';
 $lang['fld_delete_hea'] = 'Scrios';
 $lang['fld_total'] = 'Iomlán:';
 $lang['fld_make_new'] = 'Cruthaigh fillteán nua';
-$lang['folders_to'] 'Fillteáin a';
+$lang['folders_to'] = 'Fillteáin a';
 
 // [MessageList]
 $lang['messages_to'] = 'Teachtaireachtaí a';
@@ -124,7 +124,7 @@ $lang['have_spam'] = 'Tá tú Spam (seiceáil fillteán spam)';
 
 $lang['msg_you_have'] = 'Tá tú';
 $lang['msg_message'] = 'teachtaireacht';
-$lang['msg_messages'] 'teachtaireachtaí';
+$lang['msg_messages'] = 'teachtaireachtaí';
 
 $lang['msg_more_unread'] = 'gan léamh';
 $lang['msg_one_unread'] = 'gan léamh';
@@ -132,7 +132,7 @@ $lang['msg_none_unread'] = 'none léamh';
 $lang['msg_in_the_folder'] = 'san fhillteán';
 
 
-// [Logáil isteach]
+// [Login]
 $lang['lgn_title'] = 'Logáil isteach';
 $lang['lgn_welcome_msg'] = 'Fáilte, le do thoil logáil isteach i do chuntas';
 $lang['lng_user_email'] = 'E-mail';
@@ -207,12 +207,12 @@ $lang['prf_default_editor_mode'] = 'Réamhshocrú eagar mód';
 $lang['prf_default_editor_mode_text'] = '"téacs Plain"';
 $lang['prf_default_editor_mode_html'] = '"Casta HTML eagarthóir"';
 $lang['prf_time_to_refesh'] = 'seiceáil go huathoibríoch do phost nua (nóiméid)';
-$lang['prf_spam_level'] 'Spam íogaireacht (0 = Mhíchumas, 1 = An-Ard, 9 = An-Íseal)';
+$lang['prf_spam_level'] = 'Spam íogaireacht (0 = Mhíchumas, 1 = An-Ard, 9 = An-Íseal)';
 $lang['prf_auto_require_receipt'] = 'A cheangal admháil a léamh de réir réamhshocraithe';
 
 $lang['prf_msg_saved'] = 'Preferences shábháil';
 
-// scagairí
+// filters
 $lang['filter_title'] = 'Scagairí';
 
 $lang['filter_new'] = 'Cruthaigh scagaire';
@@ -236,14 +236,14 @@ $lang['filter_delete_selected'] = 'Scrios scagairí roghnaithe';
 $lang['filter_field'] = 'Scagaire ar réimse';
 $lang['filter_match'] = 'Cuardaigh le haghaidh';
 $lang['filter_type'] = 'Action';
-$lang['filter_folder'] 'fillteán Ceann Scríbe';
+$lang['filter_folder'] = 'fillteán Ceann Scríbe';
 
 $lang['filter_msg_nofilters'] = 'Níl scagairí atá ar fáil.';
 $lang['filter_msg_added'] = 'Scagaire breise';
 $lang['filter_msg_deleted'] = 'Scagaire scriostar';
 
 
-// [Gabháil]
+// [Catch]
 $lang['ctc_title'] = 'Cuir le aghaidh a thabhairt ar leabhar';
 $lang['ctc_information'] = 'Léiríonn amháin r-phoist nach bhfuil sa leabhar seoladh';
 $lang['ctc_name'] = 'Ainm';
@@ -287,7 +287,7 @@ $lang['sch_button_text'] = 'Cuardaigh & gt; & gt;';
 $lang['sch_subject_hea'] = 'Ábhar';
 $lang['sch_from_hea'] = 'From';
 $lang['sch_date_hea'] = 'Dáta';
-$lang['sch_body_hea'] 'Teachtaireacht Comhlacht';
+$lang['sch_body_hea'] = 'Teachtaireacht Comhlacht';
 $lang['sch_folder_hea'] = 'Fillteán';
 $lang['sch_no_results'] = 'Tá No teachtaireachtaí a thagann le do chritéir a shuífear';
 
@@ -298,8 +298,8 @@ $lang['qad_to'] = 'Le';
 $lang['qad_cc'] = 'Cc';
 $lang['qad_bcc'] = 'Bcc';
 
-// [Seoltaí]
-// In eagar / taispeáint
+// [AddressBook]
+// edit/display
 $lang['adr_title'] = 'leabhar Seoladh';
 $lang['adr_name'] = 'Ainm';
 $lang['adr_email'] = 'E-mail';
@@ -313,7 +313,7 @@ $lang['adr_phone'] = 'Fón';
 $lang['adr_cell'] = 'Cell';
 $lang['adr_note'] = 'Nótaí';
 
-// liosta
+// list
 $lang['adr_name_hea'] = 'Ainm';
 $lang['adr_email_hea'] = 'E-mail';
 $lang['adr_edit_hea'] = 'Edit';
@@ -334,9 +334,10 @@ $lang['blk_no_address'] = 'Níl seoladh ar fáil';
 $lang['blk_close'] = 'Close';
 $lang['blk_save'] = 'Sábháil';
 
-// [Imeacht]
-$lang['evt_title'] 'Féilire Ócáid';
+// [Event]
+$lang['evt_title'] = 'Féilire Ócáid';
 $lang['evt_save'] = 'Sábháil';
 $lang['evt_delete'] = 'Scrios';
 $lang['evt_stop'] = 'Stop am';
 $lang['evt_start'] = 'Tosaigh am';
+

@@ -1,17 +1,17 @@
 <?php
-/ *
-  * Usona angla (kanona listo kaj fraseo)
-  * /
+/*
+ * US English (canonical list and phrasing)
+ */
 
 $lang = array();
 
-// Uzanto-amika nomojn al la sistemo dosierujoj
+// User-friendly names to system folders
 $lang['inbox_extended'] = 'Envenkesto';
 $lang['sent_extended'] = 'Sent erojn';
 $lang['trash_extended'] = 'Trash dosierujo';
 $lang['spam_extended'] = 'spamo dosierujo';
 
-// Navigado tekstoj
+// Navigation texts
 $lang['pages_text'] = 'Paĝoj';
 $lang['first_text'] = 'Unua';
 $lang['previous_text'] = 'Antaŭaj';
@@ -19,7 +19,7 @@ $lang['next_text'] = 'Sekva';
 $lang['last_text'] = 'Lasta';
 $lang['total_text'] = 'Tuta';
 
-// Poŝto Servilo Eraroj
+// Mail Server Errors
 $lang['err_login_msg'] = 'Salutnomo eraro';
 $lang['err_system_msg'] = 'Sistemo Eraro';
 $lang['error_login'] = 'Bonvolu kontroli vian salutnomon aŭ pasvorton kaj reprovu';
@@ -28,25 +28,25 @@ $lang['error_retrieving'] = 'Eraro interesigi viajn mesaĝojn, via Envenkesto ŝ
 $lang['error_session_expired'] = 'Via seanco estas eksvalidiĝis, bonvolu ensaluti denove';
 $lang['error_other'] = 'Sistemo fiasko, bonvolu kontakti vian reto administranto';
 
-// Nevalida nomo de leterkesto
+// Invalid name of mailbox
 $lang['error_invalid_name'] = 'Malvalida dosierujo nomon - Uzi nur la jenajn signojn AZ, az, 0-9, kaj -';
 
-// Validations kiam sendante poŝtoj
+// Validations when sending mails
 $lang['error_no_recipients'] = 'Eraro: vi devas havi almenaŭ unu adresaton!';
 $lang['error_compose_invalid_mail1_s'] = 'Eraro: ĉi retpoŝtadreso ŝajnas nevalida';
 $lang['error_compose_invalid_mail1_p'] = 'Eraro: Ĉi retadresoj ŝajnas esti nevalida';
 $lang['error_compose_invalid_mail2_s'] = 'Kontroli la retpoŝtan adreson antaŭ resendi ĉi retpoŝto.';
 $lang['error_compose_invalid_mail2_p'] = 'Kontroli viajn adresojn antaŭ resendi ĉi retpoŝto.';
 
-// Konfirmo de forigo
+// Confirmation of delete
 $lang['confirm_delete'] = 'Ĉu vi vere volas forigi tiun mesaĝon (j)?';
 
-// Se la mesaĝo ne havas subjekton aŭ sendinto
+// If the message no have a subject or sender
 $lang['no_subject_text'] = '[Neniu temo]';
 $lang['no_sender_text'] = '[Sender nekonata]';
 $lang['no_recipient_text'] = '[Ricevanto nekonata]';
 
-// Se la kotizo limo estis superita
+// If the quota limit was exceeded
 $lang['quota_exceeded'] = 'Ne sufiĉe spaco en via enirkesto kompletigi tiun agon \ nBonvolu forviŝi kelkajn mesaĝojn daŭrigi';
 $lang['quota_usage_info'] = 'Kotizo limon';
 $lang['quota_usage_used'] = 'Used';
@@ -54,16 +54,16 @@ $lang['quota_usage_of'] = 'de';
 $lang['quota_usage_avail'] = 'disponebla';
 
 //
-// Dato Formato
-//% D = tago,% m = monato,% y = jaro,% H = horo,% M = minutoj
-// Por kompleta listo, vidu http://www.php.net/strftime
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
 //
-$lang ['date_format'] = '% m /% d /% y% H:% M';
+$lang['date_format'] = '% m /% d /% y% H:% M';
 
-// signaro
+// CharSet
 $lang['default_char_set'] = 'iso-8859-1';
 
-// Menuo
+// Menu
 $lang['messages_mnu'] = 'Envenkesto';
 $lang['read_menu'] = 'legi E-Poŝto (j)';
 $lang['compose_mnu'] = 'Skribu E-Poŝto';
@@ -75,7 +75,7 @@ $lang['empty_trash_mnu'] = 'Malplena rubo';
 $lang['prefs_mnu'] = 'Preferoj';
 $lang['logoff_mnu'] = 'Elsaluti';
 
-// Respondu
+// Reply
 $lang['reply_prefix'] = 'Re:';
 $lang['forward_prefix'] = 'Fw:';
 $lang['reply_delimiter'] = '--------- Original Message --------';
@@ -84,16 +84,16 @@ $lang['reply_to_hea'] = 'Al:';
 $lang['reply_cc_hea'] = 'Cc:';
 $lang['reply_date_hea'] = 'Dato:';
 $lang['reply_subject_hea'] = 'Titolo:';
-// farita
+// done
 
 
-// Paĝo specifaj vars
+// page-specific vars
 
-// [Kaplinioj]
+// [Headers]
 $lang['key_hea'] = 'Ŝlosilo';
 $lang['value_hea'] = 'Valoro';
 
-// [Dosierujoj]
+// [Folders]
 $lang['fld_name_hea'] = 'Dosierujo';
 $lang['fld_messages_hea'] = 'Mesaĝoj';
 $lang['fld_size_hea'] = 'Grando';
@@ -132,7 +132,7 @@ $lang['msg_none_unread'] = 'neniu legi';
 $lang['msg_in_the_folder'] = 'en la dosierujo';
 
 
-// [Salutnomo]
+// [Login]
 $lang['lgn_title'] = 'Salutnomo';
 $lang['lgn_welcome_msg'] = 'Bonvenon, bonvolu ensaluti al via konto';
 $lang['lng_user_email'] = 'Retpoŝtadreso';
@@ -182,7 +182,7 @@ $lang['priority_low'] = 'Malalta';
 $lang['priority_normal'] = 'Normala';
 $lang['priority_high'] = 'Altaj';
 
-// [Preferoj]
+// [Preferences]
 $lang['prf_title'] = 'Preferoj';
 $lang['prf_general_title'] = 'Ĝeneralaj informoj';
 $lang['prf_name'] = 'Nomo';
@@ -212,7 +212,7 @@ $lang['prf_auto_require_receipt'] = 'Postulu legi kvitanco defaŭlte';
 
 $lang['prf_msg_saved'] = 'Preferoj savitaj';
 
-// filtriloj
+// filters
 $lang['filter_title'] = 'Filtriloj';
 
 $lang['filter_new'] = 'Krei filtrilon';
@@ -280,7 +280,7 @@ $lang['attch_size_hea'] = 'Grando';
 $lang['catch_address'] = 'Aldoni al adreslibro';
 $lang['block_address'] = 'Bloki adreso';
 
-// [Serĉo]
+// [Search]
 $lang['sch_title'] = 'Serĉi';
 $lang['sch_information_text'] = 'Skribu frazon aŭ vorton kiun vi serĉas. <br> Nur legi mesaĝojn estos traserĉata.';
 $lang['sch_button_text'] = 'Serĉi & gt; & gt;';
@@ -298,8 +298,8 @@ $lang['qad_to'] = 'Por';
 $lang['qad_cc'] = 'PD';
 $lang['qad_bcc'] = 'Bkk';
 
-// [Adresaron]
-// Redakto / montriĝo
+// [AddressBook]
+// edit/display
 $lang['adr_title'] = 'Nomo libro';
 $lang['adr_name'] = 'Nomo';
 $lang['adr_email'] = 'Retpoŝtadreso';
@@ -313,7 +313,7 @@ $lang['adr_phone'] = 'Phone';
 $lang['adr_cell'] = 'Cell';
 $lang['adr_note'] = 'Notoj';
 
-// listo
+// list
 $lang['adr_name_hea'] = 'Nomo';
 $lang['adr_email_hea'] = 'Retpoŝtadreso';
 $lang['adr_edit_hea'] = 'Redakti';
@@ -340,3 +340,4 @@ $lang['evt_save'] = 'Konservi';
 $lang['evt_delete'] = 'Forigi';
 $lang['evt_stop'] = 'Ĉesu tempo';
 $lang['evt_start'] = 'Kreu tempo';
+

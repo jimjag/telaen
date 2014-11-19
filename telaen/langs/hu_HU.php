@@ -50,7 +50,7 @@ $lang['no_recipient_text'] = '[nincs tˆrzse]';
 $lang['quota_exceeded'] = 'A t·rhelyed betelt. Tˆrˆld a rÈgi ¸zeneteid a beÈrkezett ¸zenetek mapp·bÛl Ès prÛb·ld ˙jra!';
 $lang['quota_usage_info'] = 'T·rhely haszn·lat';
 $lang['quota_usage_used'] = 'quota_usage_of					= foglalt az engedÈlyezett';
-$lang['quota_usage_of'] = 'of'; // need translation
+$lang['quota_usage_of'] = 'of';
 $lang['quota_usage_avail'] = '-bÛl';
 
 //
@@ -123,7 +123,7 @@ $lang['size_hea'] = 'MÈret';
 $lang['have_spam'] = '÷nnek spam levele Èrkezett (tekintse meg Spam mapp·j·t)';
 
 $lang['msg_you_have'] = 'msg_message					= ¸zeneted van';
-$lang['msg_message'] = 'message'; // need translation
+$lang['msg_message'] = 'message';
 $lang['msg_messages'] = '¸zeneted van';
 
 $lang['msg_more_unread'] = 'olvasatlan';

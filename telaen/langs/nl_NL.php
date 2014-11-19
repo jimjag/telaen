@@ -12,7 +12,7 @@ $lang['trash_extended'] = 'Prullenbak';
 $lang['spam_extended'] = 'Spam';
 
 // Navigation texts
-$lang['pages_text'] = 'Pagina\'s';
+$lang['pages_text'] = 'Paginas';
 $lang['first_text'] = 'Eerste';
 $lang['previous_text'] = 'Vorige';
 $lang['next_text'] = 'Volgende';
@@ -29,7 +29,7 @@ $lang['error_session_expired'] = 'Uw sessie is verlopen, log alsjeblieft opnieuw
 $lang['error_other'] = 'Onbekende fout, neem contact op met de webmaster.';
 
 // Invalid name of mailbox
-$lang['error_invalid_name'] = 'Onjuiste mapnaam - gebruik alleen: \'A t/m Z\', \'0 t/m 9\' en \'-\'.';
+$lang['error_invalid_name'] = 'Onjuiste mapnaam - gebruik alleen: A t/m Z, 0 t/m 9 en -.';
 
 // Validations when sending mails
 $lang['error_no_recipients'] = 'Typ een adres in het tekstvak Naar.';
@@ -110,7 +110,7 @@ $lang['delete_selected_mnu'] = 'Verwijder';
 $lang['move_selected_mnu'] = 'Verplaats naar';
 $lang['mark_selected_mnu'] = 'Markeer als gelezen';
 $lang['unmark_selected_mnu'] = 'Markeer als ongelezen';
-$lang['move_selected_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_selected_to_trash_mnu'] = 'Move to Trash';
 
 
 $lang['delete_mnu'] = 'Verwijder';
@@ -138,7 +138,7 @@ $lang['lgn_welcome_msg'] = 'Welkom, meld je aan op jouw account.';
 $lang['lng_user_email'] = 'E-mail';
 $lang['lng_user_name'] = 'Gebruikersnaam';
 $lang['lng_user_pwd'] = 'Wachtwoord';
-$lang['lng_server'] = 'Server'; // need translation
+$lang['lng_server'] = 'Server';
 $lang['lng_theme'] = 'Thema';
 $lang['lng_language'] = 'Taal';
 $lang['lng_login_btn'] = 'Aanmelden';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'Allen beantwoorden';
 $lang['forward_mnu'] = 'Doorsturen';
 $lang['headers_mnu'] = 'Header';
 $lang['move_mnu'] = 'Verplaats naar';
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_to_trash_mnu'] = 'Move to Trash';
 $lang['delete_mnu'] = 'Verwijder';
 $lang['print_mnu'] = 'Afdrukweergave';
 $lang['download_mnu'] = 'Opslaan';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'Opslaan';
 $lang['attch_type_hea'] = 'Type';
 $lang['attch_size_hea'] = 'Grootte';
 $lang['catch_address'] = 'Aan contactpersonen toevoegen';
-$lang['block_address'] = 'Block address'; // need translation
+$lang['block_address'] = 'Block address';
 
 // [Search]
 $lang['sch_title'] = 'Zoeken';
@@ -327,12 +327,12 @@ $lang['addr_deleted'] = 'De contactpersoon is verwijderd.';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender'; // need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // need translation
-$lang['blk_email'] = 'E-mail'; // need translation
-$lang['blk_no_address'] = 'No address available'; // need translation
-$lang['blk_close'] = 'Close'; // need translation
-$lang['blk_save'] = 'Save'; // need translation
+$lang['blk_title'] = 'Block sender';
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_email'] = 'E-mail';
+$lang['blk_no_address'] = 'No address available';
+$lang['blk_close'] = 'Close';
+$lang['blk_save'] = 'Save';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event';

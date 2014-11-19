@@ -65,7 +65,7 @@ $lang['default_char_set'] = 'Windows-1251';
 
 // Menu
 $lang['messages_mnu'] = '—˙Ó·˘ÂÌËˇ';
-$lang['read_menu'] = 'Read E-Mail(s)'; // need translation
+$lang['read_menu'] = 'Read E-Mail(s)';
 $lang['compose_mnu'] = '»ÁÔ‡ÚË';
 $lang['refresh_mnu'] = 'ŒÔÂÒÌË';
 $lang['folders_mnu'] = 'œ‡ÔÍË';
@@ -138,7 +138,7 @@ $lang['lgn_welcome_msg'] = 'ƒÓ·Â ‰Ó¯ÎË. ÃÓÎˇ ‚˙‚Â‰ÂÚ�
 $lang['lng_user_email'] = '≈-ÔÓ˘‡';
 $lang['lng_user_name'] = '»ÏÂ';
 $lang['lng_user_pwd'] = 'œ‡ÓÎ‡';
-$lang['lng_server'] = 'Server'; // need translation
+$lang['lng_server'] = 'Server';
 $lang['lng_theme'] = '≈ÁËÍ';
 $lang['lng_language'] = 'Language';
 $lang['lng_login_btn'] = '¬ıÓ‰ &gt;&gt;';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'ŒÚ„Ó‚ÓË Ì‡ ‚ÒË˜ÍË';
 $lang['forward_mnu'] = 'œÂÔ‡ÚË';
 $lang['headers_mnu'] = 'Header';
 $lang['move_mnu'] = 'œÂÏÂÒÚË ‚';
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_to_trash_mnu'] = 'Move to Trash';
 $lang['delete_mnu'] = '»ÁÚËÈ';
 $lang['print_mnu'] = 'œÂ˜‡Ú';
 $lang['download_mnu'] = 'Download';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'ËÁÚÂ„ÎË';
 $lang['attch_type_hea'] = 'ÚËÔ';
 $lang['attch_size_hea'] = '√ÓÎÂÏËÌ‡';
 $lang['catch_address'] = 'ƒÓ·‡‚Ë ‡‰ÂÒ‡';
-$lang['block_address'] = 'Block address'; // need translation
+$lang['block_address'] = 'Block address';
 
 // [Search]
 $lang['sch_title'] = 'Search';
@@ -327,12 +327,12 @@ $lang['addr_deleted'] = '¿‰ÂÒ‡ Â ËÁÚËÚ';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender'; // need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // need translation
-$lang['blk_email'] = 'E-mail'; // need translation
-$lang['blk_no_address'] = 'No address available'; // need translation
-$lang['blk_close'] = 'Close'; // need translation
-$lang['blk_save'] = 'Save'; // need translation
+$lang['blk_title'] = 'Block sender';
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_email'] = 'E-mail';
+$lang['blk_no_address'] = 'No address available';
+$lang['blk_close'] = 'Close';
+$lang['blk_save'] = 'Save';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event';

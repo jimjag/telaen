@@ -65,7 +65,7 @@ $lang['default_char_set'] = 'iso-8859-2';
 
 // Menu
 $lang['messages_mnu'] = 'Wiadomo¶ci';
-$lang['read_menu'] = 'Read E-Mail(s)'; // need translation
+$lang['read_menu'] = 'Read E-Mail(s)';
 $lang['compose_mnu'] = 'Komponuj';
 $lang['refresh_mnu'] = 'Od¶wie¿';
 $lang['folders_mnu'] = 'Foldery';
@@ -110,7 +110,7 @@ $lang['delete_selected_mnu'] = 'Usuñ zaznaczone';
 $lang['move_selected_mnu'] = 'Przenie¶ zaznaczone do';
 $lang['mark_selected_mnu'] = 'Mark as read';
 $lang['unmark_selected_mnu'] = 'Mark as unread';
-$lang['move_selected_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_selected_to_trash_mnu'] = 'Move to Trash';
 
 
 $lang['delete_mnu'] = 'Usuñ';
@@ -138,7 +138,7 @@ $lang['lgn_welcome_msg'] = 'Informacje Logowania';
 $lang['lng_user_email'] = 'E-mail';
 $lang['lng_user_name'] = 'Login';
 $lang['lng_user_pwd'] = 'Has³o';
-$lang['lng_server'] = 'Server'; // need translation
+$lang['lng_server'] = 'Server';
 $lang['lng_theme'] = 'Wygl±d';
 $lang['lng_language'] = 'Jêzyk';
 $lang['lng_login_btn'] = 'Zaloguj &gt;&gt;';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'Odpowiedz wszystkim';
 $lang['forward_mnu'] = 'Prze¶lij dalej';
 $lang['headers_mnu'] = 'Nag³ówki';
 $lang['move_mnu'] = 'Przenie¶ do';
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_to_trash_mnu'] = 'Move to Trash';
 $lang['delete_mnu'] = 'Usuñ';
 $lang['print_mnu'] = 'Drukuj';
 $lang['download_mnu'] = 'Download';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'Pobierz';
 $lang['attch_type_hea'] = 'Typ';
 $lang['attch_size_hea'] = 'Rozmiar';
 $lang['catch_address'] = 'Dodaj do ksi±¿ki adresowej';
-$lang['block_address'] = 'Block address'; // need translation
+$lang['block_address'] = 'Block address';
 
 // [Search]
 $lang['sch_title'] = 'Search';
@@ -327,12 +327,12 @@ $lang['addr_deleted'] = 'Adres zosta³ usuniêty';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender'; // need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // need translation
-$lang['blk_email'] = 'E-mail'; // need translation
-$lang['blk_no_address'] = 'No address available'; // need translation
-$lang['blk_close'] = 'Close'; // need translation
-$lang['blk_save'] = 'Save'; // need translation
+$lang['blk_title'] = 'Block sender';
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_email'] = 'E-mail';
+$lang['blk_no_address'] = 'No address available';
+$lang['blk_close'] = 'Close';
+$lang['blk_save'] = 'Save';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event';

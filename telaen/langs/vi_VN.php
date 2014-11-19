@@ -1,17 +1,17 @@
 <?php
-/ *
-  * Mỹ Anh (danh sách kinh điển và phân nhịp)
-  * /
+/*
+ * US English (canonical list and phrasing)
+ */
 
 $lang = array();
 
-// Tên người dùng thân thiện đến các thư mục hệ thống
+// User-friendly names to system folders
 $lang['inbox_extended'] = 'Hộp thư đến';
 $lang['sent_extended'] = 'Bị đuổi mục';
 $lang['trash_extended'] = 'thư mục Trash';
 $lang['spam_extended'] = 'thư mục Spam';
 
-// Văn bản Navigation
+// Navigation texts
 $lang['pages_text'] = 'trang';
 $lang['first_text'] = 'đầu tiên';
 $lang['previous_text'] = 'trước';
@@ -19,7 +19,7 @@ $lang['next_text'] = 'Next';
 $lang['last_text'] = 'Last';
 $lang['total_text'] = 'Tổng';
 
-// Lỗi Mail Server
+// Mail Server Errors
 $lang['err_login_msg'] = 'Đăng nhập lỗi';
 $lang['err_system_msg'] = 'lỗi hệ thống';
 $lang['error_login'] = 'Vui lòng kiểm tra tên đăng nhập hoặc mật khẩu của bạn và thử lại';
@@ -28,25 +28,25 @@ $lang['error_retrieving'] = 'Lỗi nhận được tin nhắn của bạn, Hộp
 $lang['error_session_expired'] = 'Phiên của bạn đã hết hạn, xin vui lòng đăng nhập lại';
 $lang['error_other'] = 'hệ thống thất bại, xin vui lòng liên hệ với quản trị mạng của bạn';
 
-// Tên không hợp lệ của hộp thư
+// Invalid name of mailbox
 $lang['error_invalid_name'] = 'tên thư mục không hợp lệ - Chỉ sử dụng các ký tự sau AZ, az, 0-9, và -';
 
-// Validations khi gửi mail
+// Validations when sending mails
 $lang['error_no_recipients'] = 'Lỗi: Bạn phải có ít nhất một người nhận';
 $lang['error_compose_invalid_mail1_s'] = 'Lỗi: địa chỉ e-mail này có vẻ là không hợp lệ';
 $lang['error_compose_invalid_mail1_p'] = 'Lỗi: e-mail này địa chỉ dường như là không hợp lệ';
 $lang['error_compose_invalid_mail2_s'] = 'Kiểm tra địa chỉ e-mail trước khi gửi lại email này.';
 $lang['error_compose_invalid_mail2_p'] = 'Kiểm tra địa chỉ của bạn trước khi gửi lại email này.';
 
-// Xác nhận xóa
+// Confirmation of delete
 $lang['confirm_delete'] = '? Bạn có thực sự muốn xóa tin nhắn này (s)';
 
-// Nếu thông báo không có một chủ đề hoặc người gửi
+// If the message no have a subject or sender
 $lang['no_subject_text'] = '[Không có chủ đề]';
 $lang['no_sender_text'] = '[Tên người gửi không rõ]';
 $lang['no_recipient_text'] = '[nhận biết]';
 
-// Nếu vượt quá giới hạn hạn ngạch được
+// If the quota limit was exceeded
 $lang['quota_exceeded'] = 'Không đủ không gian trong hộp thư của bạn để hoàn tất hành động này \ nHãy xóa một số tin nhắn để tiếp tục';
 $lang['quota_usage_info'] = 'hạn ngạch giới hạn"';
 $lang['quota_usage_used'] = 'sử dụng';
@@ -55,15 +55,15 @@ $lang['quota_usage_avail'] = 'có sẵn';
 
 //
 // Date Format
-//% D = ngày,% m = tháng,% y = năm,% H = giờ,% M = phút
-// Cho một danh sách đầy đủ, xem http://www.php.net/strftime
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
 //
 $lang['date_format'] = '%m/%d/%y %H:%M';
 
 // CharSet
 $lang['default_char_set'] = 'iso-8859-1"';
 
-// Thực đơn
+// Menu
 $lang['messages_mnu'] = 'Hộp thư đến';
 $lang['read_menu'] = 'đọc E-Mail (s)';
 $lang['compose_mnu'] = 'Viết E-Mail';
@@ -75,7 +75,7 @@ $lang['empty_trash_mnu'] = 'Dọn sạch thùng rác';
 $lang['prefs_mnu'] = 'Preferences';
 $lang['logoff_mnu'] = 'Đăng xuất';
 
-// Trả lời
+// Reply
 $lang['reply_prefix'] = 'Re:';
 $lang['forward_prefix'] = 'Fw:';
 $lang['reply_delimiter'] = '--------- tin nhắn gốc --------';
@@ -84,16 +84,16 @@ $lang['reply_to_hea'] = 'Để:';
 $lang['reply_cc_hea'] = 'Cc:';
 $lang['reply_date_hea'] = 'ngày:';
 $lang['reply_subject_hea'] = 'Chủ đề:';
-// thực hiện
+// done
 
 
-// Trang cụ thể vars
+// page-specific vars
 
-// [Tiêu đề]
+// [Headers]
 $lang['key_hea'] = 'khóa';
 $lang['value_hea'] = 'Giá trị';
 
-// [Thư mục]
+// [Folders]
 $lang['fld_name_hea'] = 'Folder';
 $lang['fld_messages_hea'] = 'Tin nhắn';
 $lang['fld_size_hea'] = 'Size';
@@ -132,7 +132,7 @@ $lang['msg_none_unread'] = 'không đọc';
 $lang['msg_in_the_folder'] = 'trong thư mục';
 
 
-// [Đăng nhập]
+// [Login]
 $lang['lgn_title'] = 'Đăng nhập';
 $lang['lgn_welcome_msg'] = 'Chào mừng bạn, vui lòng đăng nhập vào tài khoản của bạn';
 $lang['lng_user_email'] = 'E-mail';
@@ -168,7 +168,7 @@ $lang['send_text'] = 'Gửi';
 
 $lang['result_error'] = 'Không thể để gửi e-mail này';
 $lang['result_success'] = 'e-mail này đã được gửi';
-$lang['nav_continue'] = '& lt'; & lt'; Tiếp tục &gt;&gt;';
+$lang['nav_continue'] = '&lt;&lt; Tiếp tục &gt;&gt;';
 $lang['nav_back'] = 'Quay lại';
 
 $lang['up_title'] = 'Thêm tập tin';
@@ -212,7 +212,7 @@ $lang['prf_auto_require_receipt'] = 'Yêu cầu đọc nhận theo mặc định
 
 $lang['prf_msg_saved'] = 'Preferences lưu';
 
-// bộ lọc
+// filters
 $lang['filter_title'] = 'Bộ lọc';
 
 $lang['filter_new'] = 'Tạo một bộ lọc';
@@ -243,7 +243,7 @@ $lang['filter_msg_added'] = 'Bộ lọc thêm';
 $lang['filter_msg_deleted'] = 'Bộ lọc xóa';
 
 
-// [Săn]
+// [Catch]
 $lang['ctc_title'] = 'Thêm vào sổ địa chỉ';
 $lang['ctc_information'] = 'Chỉ cho e-mail mà không có trong sổ địa chỉ';
 $lang['ctc_name'] = 'Tên';
@@ -299,7 +299,7 @@ $lang['qad_cc'] = 'Cc';
 $lang['qad_bcc'] = 'Bcc';
 
 // [AddressBook]
-// Chỉnh sửa / hiển thị
+// edit/display
 $lang['adr_title'] = 'Địa chỉ cuốn sách';
 $lang['adr_name'] = 'Tên';
 $lang['adr_email'] = 'E-mail';
@@ -313,7 +313,7 @@ $lang['adr_phone'] = 'Điện thoại';
 $lang['adr_cell'] = 'di động';
 $lang['adr_note'] = 'Ghi chú';
 
-// danh sách
+// list
 $lang['adr_name_hea'] = 'Tên';
 $lang['adr_email_hea'] = 'E-mail';
 $lang['adr_edit_hea'] = 'Chỉnh sửa';
@@ -334,9 +334,10 @@ $lang['blk_no_address'] = 'Không có địa chỉ có sẵn';
 $lang['blk_close'] = 'Đóng';
 $lang['blk_save'] = 'Lưu';
 
-// [Sự kiện]
+// [Event]
 $lang['evt_title'] = 'Lịch sự kiện';
 $lang['evt_save'] = 'Lưu';
 $lang['evt_delete'] = 'Xóa';
 $lang['evt_stop'] = 'Dừng lại thời gian"';
 $lang['evt_start'] = 'thời gian bắt đầu';
+

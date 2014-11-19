@@ -50,7 +50,7 @@ $lang['no_recipient_text'] = '[alýcý bilinmiyor]';
 $lang['quota_exceeded'] = 'Bu iþlemi tamamlayabilmeniz için gerekli yer mevcut deðil\Lütfen bazý devam etmek için bazý mesajlarýnýzý silin';
 $lang['quota_usage_info'] = 'Limit';
 $lang['quota_usage_used'] = 'quota_usage_of					= /';
-$lang['quota_usage_of'] = 'of'; // need translation
+$lang['quota_usage_of'] = 'of';
 $lang['quota_usage_avail'] = 'kullanýmda.';
 
 //
@@ -65,7 +65,7 @@ $lang['default_char_set'] = 'iso-8859-9';
 
 // Menu
 $lang['messages_mnu'] = 'Gelen Kutusu';
-$lang['read_menu'] = 'Read E-Mail(s)'; // need translation
+$lang['read_menu'] = 'Read E-Mail(s)';
 $lang['compose_mnu'] = 'Yaz';
 $lang['refresh_mnu'] = 'Yenile';
 $lang['folders_mnu'] = 'Klasörler';
@@ -105,7 +105,7 @@ $lang['folders_to'] = 'Klasörler:';
 
 // [MessageList]
 $lang['messages_to'] = 'no_messages				= Yeni mesajýnýz yok. Klasör:  ';
-$lang['no_messages'] = 'No new messages in your '; // need translation
+$lang['no_messages'] = 'No new messages in your ';
 $lang['delete_selected_mnu'] = 'Ýþaretlileri sil';
 $lang['move_selected_mnu'] = 'Ýþaretlileri taþý: ';
 $lang['mark_selected_mnu'] = 'Mark as read';
@@ -123,7 +123,7 @@ $lang['size_hea'] = 'Boyut';
 $lang['have_spam'] = 'You have Spam (check Spam folder)';
 
 $lang['msg_you_have'] = 'msg_message					= mesajýnýz var';
-$lang['msg_message'] = 'message'; // need translation
+$lang['msg_message'] = 'message';
 $lang['msg_messages'] = 'mesajýnýz var';
 
 $lang['msg_more_unread'] = 'tanesi okunmamýþ.';
@@ -138,7 +138,7 @@ $lang['lgn_welcome_msg'] = 'Hoþ geldiniz, lütfen hesabýnýza giriþ yapýn';
 $lang['lng_user_email'] = 'E-posta';
 $lang['lng_user_name'] = 'Kullanýcý adý';
 $lang['lng_user_pwd'] = 'Þifre';
-$lang['lng_server'] = 'Server'; // need translation
+$lang['lng_server'] = 'Server';
 $lang['lng_theme'] = 'Tema';
 $lang['lng_language'] = 'Language';
 $lang['lng_login_btn'] = 'Giriþ &gt;&gt;';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'Hepsini cevapla';
 $lang['forward_mnu'] = 'Yönlendir';
 $lang['headers_mnu'] = 'Baþlýklar';
 $lang['move_mnu'] = 'Taþý:';
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // need translation
+$lang['move_to_trash_mnu'] = 'Move to Trash';
 $lang['delete_mnu'] = 'Sil';
 $lang['print_mnu'] = 'Yazdýr';
 $lang['download_mnu'] = 'Download';
@@ -278,7 +278,7 @@ $lang['attch_force_hea'] = 'Ýndir';
 $lang['attch_type_hea'] = 'Tür';
 $lang['attch_size_hea'] = 'Boyut';
 $lang['catch_address'] = 'Adres defterine ekle';
-$lang['block_address'] = 'Block address'; // need translation
+$lang['block_address'] = 'Block address';
 
 // [Search]
 $lang['sch_title'] = 'Search';
@@ -327,12 +327,12 @@ $lang['addr_deleted'] = 'Bu baðlantý ortadan kaldýrýldý';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender'; // need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // need translation
-$lang['blk_email'] = 'E-mail'; // need translation
-$lang['blk_no_address'] = 'No address available'; // need translation
-$lang['blk_close'] = 'Close'; // need translation
-$lang['blk_save'] = 'Save'; // need translation
+$lang['blk_title'] = 'Block sender';
+$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
+$lang['blk_email'] = 'E-mail';
+$lang['blk_no_address'] = 'No address available';
+$lang['blk_close'] = 'Close';
+$lang['blk_save'] = 'Save';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event';
