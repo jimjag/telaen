@@ -125,7 +125,7 @@ $jssource .= "
 //<![CDATA[
 
 no_quota = $jsquota;
-quota_msg = '".preg_replace("|'|", "\\'", $quota_exceeded)."';
+quota_msg = '".preg_replace("|'|", "\\'", $lang['quota_exceeded'])."';
 function readmsg(ix,read) {
 	if(no_quota)
 		alert(quota_msg);

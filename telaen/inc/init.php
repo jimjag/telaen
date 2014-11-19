@@ -235,7 +235,7 @@ $smarty->assign('umCalendar', $mycal);
 $smarty->assign('umSystemNews', $systemNews);
 
 $TLN->timezone = $prefs['timezone'];
-$TLN->charset = $default_char_set;
+$TLN->charset = $lang['default_char_set'];
 $TLN->userspamlevel = $prefs['spamlevel'];
 
 /*
