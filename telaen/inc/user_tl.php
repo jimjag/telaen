@@ -24,18 +24,18 @@ if (isset($auth) && is_array($auth) && $auth['thm_lang_inited']) {
 
 if ($allow_user_change_theme && $tem != "") {
     if (array_key_exists($tem, $themes) && is_file("themes/$tem")) {
-        $tid = $tem;
+        $selected_theme = $tid = $tem;
     }
 }
 if ($allow_user_change_language && $lng != "") {
     if (array_key_exists($lng, $languages) && is_file('langs/'.$lng.'.php')) {
-        $lid = $lng;
+        $selected_language = $lid = $lng;
     }
 }
 if (isset($auth) && is_array($auth)) {
     $auth['thm_lang_inited'] = true;
-    $selected_theme = $auth['tid'] = $tid;
-    $selected_language = $auth['lid'] = $lid;
+    $auth['tid'] = $tid;
+    $auth['lid'] = $lid;
 }
 
 
@@ -44,7 +44,7 @@ Templates
 ********************************************************/
 
 // Vola on 23/06/06	 I think this are never used... modified for use menu/header/footer in templates
-
+/*
 $message_list_template = "themes/$selected_theme/messagelist.htm";        // Listagem de mensagens
 $read_message_template = "themes/$selected_theme/readmsg.htm";            // Ler a mensagem
 $folder_list_template = "themes/$selected_theme/folders.htm";            // Listagem de pastas
@@ -72,6 +72,6 @@ $news_template = "$selected_theme/news.htm";            // News
 $header_template = "$selected_theme/header.htm";            // Page Header
 $footer_template = "$selected_theme/footer.htm";            // Page Footer
 $popup_header_template = "$selected_theme/popup-header.htm";        // Header for the popup wins
-
+*/
 
 require_once 'langs/'.$selected_language.'.php';

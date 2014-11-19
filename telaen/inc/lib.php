@@ -13,32 +13,6 @@ Telaen is a GPL'ed software developed by
  */
 
 /**
- * Error handler to print out error strings
- * @param  string $errno   Error number
- * @param  string $errstr  Error string
- * @param  string $errfile Error file
- * @param  string $errline Line of error
- * @return void
- */
-function err_handler($errno, $errstr, $errfile, $errline)
-{
-    global $display_errors;
-
-    if (($errno != E_NOTICE && $errno != E_WARNING)
-        && $display_errors) {
-        echo("
-		<font face='Courier New,Courier,monospace' size=2>
-		<hr size=1 color=black>
-		<b>Error [$errno]:	$errstr</b><br>
-		File: ".basename($errfile)."<br>
-		Line: $errline<br>
-		<hr size=1 color=black>
-		</font>
-		");
-    }
-}
-
-/**
  * Remove all files within a directory
  * @param  string $folder Directory to clean up
  * @return void

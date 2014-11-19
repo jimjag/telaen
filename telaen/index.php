@@ -14,7 +14,7 @@ require_once './inc/lib.php';
 require_once './inc/preinit.php';
 require_once './inc/class/class.phpmailer.php';
 
-extract(pull_from_array($_GET, array('f_email', 'f_user', 'lid', 'tid', 'six'), 's'));
+extract(pull_from_array($_GET, array('f_email', 'f_user', 'lng', 'tem', 'six'), 's'));
 require_once './inc/user_tl.php';
 
 require_once SMARTY_DIR.'Smarty.class.php';
@@ -68,7 +68,7 @@ $jssource = "
 				sTheme = frm.tem.options[frm.tem.selectedIndex].value;
 			if(frm.lng)
 				sLanguage = frm.lng.options[frm.lng.selectedIndex].value;
-			sLocation = 'index.php?lid='+sLanguage+'&tid='+sTheme+'&f_user='+escape(sUser)+'&six='+sSix+'&f_email='+sEmail;
+			sLocation = 'index.php?lng='+sLanguage+'&tem='+sTheme+'&f_user='+escape(sUser)+'&six='+sSix+'&f_email='+sEmail;
 			location.replace(sLocation);
 		} catch(err) {
 			alert('Your browser do not support JS'); // Vola: this is stupid... if js doesn't work also alert doesn't work :)
@@ -142,7 +142,7 @@ if ($allow_user_change_language) {
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
     foreach ($languages as $i) {
         $lkey = key($i);
-        $selected = ($lid == $lkey) ? "selected=\"selected\"" : "";
+        $selected = ($lng == $lkey) ? "selected=\"selected\"" : "";
         $langsel .= "<option value=\"$lkey\" $selected>".$i[$lkey]."</option> \r";
     }
     $langsel .= "</select>\r";
@@ -155,7 +155,7 @@ if ($allow_user_change_theme) {
     $themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";
     foreach ($themes as $i) {
         $tkey = key($i);
-        $selected = ($tid == $tkey) ? "selected=\"selected\"" : "";
+        $selected = ($tem == $tkey) ? "selected=\"selected\"" : "";
         $themsel .= "<option value=\"$tkey\" $selected>".$i[$tkey]."</option> \r";
     }
     $themsel .= "</select>\r";

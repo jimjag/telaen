@@ -18,6 +18,19 @@ function safe_print($str)
     );
 }
 
+/**
+ * Print out debugging info as HTML comments
+ * @param  string $str
+ * @return void
+ */
+function debug_msg($str, $caller = "")
+{
+    echo "<!-- $caller:\n";
+    echo preg_replace('|-->|', '__>', safe_print($str));
+    echo "\n-->\n";
+    @flush();
+}
+
 function errorHandler($errno, $errmsg, $filename, $linenum, $vars)
 {
     global $log_fname, $temporary_directory;
