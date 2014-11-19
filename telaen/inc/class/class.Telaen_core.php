@@ -1,4 +1,5 @@
 <?php
+namespace Telaen;
 /************************************************************************
 Telaen is a GPL'ed software developed by
 
@@ -76,7 +77,7 @@ class Telaen_core
     /**
      * Open a file and read it fixing possible mistakes
      * on the line breaks. A single variable is returned
-     * @param  string $strfile File to read from
+     * @param string $strfile File to read from
      * @return string
      */
 

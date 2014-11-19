@@ -1,4 +1,5 @@
 <?php
+namespace Telaen;
 require_once './inc/class/class.Telaen_core.php';
 require_once './inc/vendor/class.tnef.php';
 
@@ -61,6 +62,19 @@ class Telaen extends Telaen_core
         echo preg_replace('|-->|', '__>', self::safe_print($str));
         echo "\n-->\n";
         @flush();
+    }
+
+    /**
+     * Print out debugging info as HTML comments
+     * @param  string $str
+     * @return void
+     */
+    public function trigger_error($str, $caller = "")
+    {
+        if ($this->debug) {
+            $this->debug_msg($str, $caller);
+        }
+        \trigger_error($str);
     }
 
     /**
@@ -211,7 +225,7 @@ class Telaen extends Telaen_core
             return true;
         }
         if ($this->log_errors) {
-            trigger_error("attempt to send command w/o connection");
+            $this->trigger_error("attempt to send command w/o connection", __FUNCTION__);
         }
 
         return false;
@@ -240,7 +254,7 @@ class Telaen extends Telaen_core
                 }
             }
             if ($this->log_errors) {
-                trigger_error("Cannot connect to: $this->_serverurl");
+                $this->trigger_error("Cannot connect to: $this->_serverurl", __FUNCTION__);
             }
 
             return false;
@@ -331,7 +345,7 @@ class Telaen extends Telaen_core
 
         if (!file_exists($this->user_folder)) {
             if (!@mkdir($this->user_folder, $this->dirperm) && $this->log_errors) {
-                trigger_error("mkdir error: $this->user_folder");
+                $this->trigger_error("mkdir error: $this->user_folder", __FUNCTION__);
             }
         }
 
@@ -364,7 +378,7 @@ class Telaen extends Telaen_core
                 if (!$this->is_system_folder($current_folder)) {
                     if (!file_exists($this->user_folder.$current_folder)) {
                         if (!@mkdir($this->user_folder.$current_folder, $this->dirperm) && $this->log_errors) {
-                            trigger_error("mkdir error: {$this->user_folder}{$current_folder}");
+                            $this->trigger_error("mkdir error: {$this->user_folder}{$current_folder}", __FUNCTION__);
                         }
                     }
                 }
@@ -380,7 +394,7 @@ class Telaen extends Telaen_core
                     $value = strtolower($value);
                 }
                 if (!@mkdir($this->user_folder.$value, $this->dirperm) && $this->log_errors) {
-                    trigger_error("mkdir error: {$this->user_folder}{$value}");
+                    $this->trigger_error("mkdir error: {$this->user_folder}{$value}", __FUNCTION__);
                 }
             }
         }
@@ -408,9 +422,11 @@ class Telaen extends Telaen_core
             }
 
             if (base64_encode($current_id) != base64_encode($msg['message-id'])) {
-                trigger_error(sprintf("Message ID's differ: [%s/%s]",
-                    base64_encode($current_id),
-                    base64_encode($msg['message-id'])));
+                if ($this->log_errors) {
+                    $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
+                        base64_encode($current_id),
+                        base64_encode($msg['message-id'])), __FUNCTION__);
+                }
 
                 return false;
             }
@@ -455,9 +471,9 @@ class Telaen extends Telaen_core
         if ($check && (strtolower($msg['folder']) == 'inbox' || strtolower($msg['folder']) == 'spam')) {
             $muidl = $this->_mail_get_uidl($msg['msg']);
             if ($msg['uidl'] && ($msg['uidl'] != $muidl)) {
-                trigger_error(sprintf("UIDL's differ: [%s/%s]",
+                $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                     $msg['uidl'],
-                    $muidl));
+                    $muidl),__FUNCTION__);
 
                 return false;
             }
@@ -601,9 +617,9 @@ class Telaen extends Telaen_core
 
         /* compare the old and the new message id, if different, stop*/
         if (base64_encode($current_id) != base64_encode($msg['message-id'])) {
-            trigger_error(sprintf("Message ID's differ: [%s/%s]",
+            $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
                 base64_encode($current_id),
-                base64_encode($msg['message-id'])));
+                base64_encode($msg['message-id'])), __FUNCTION__);
 
             return false;
         }
@@ -646,9 +662,9 @@ class Telaen extends Telaen_core
             /* compare the old and the new message uidl, if different, stop*/
             $muidl = $this->_mail_get_uidl($msg['msg']);
             if ($msg['uidl'] != $muidl) {
-                trigger_error(sprintf("UIDL's differ: [%s/%s]",
+                $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                     $msg['uidl'],
-                    $muidl));
+                    $muidl), __FUNCTION__);
 
                 return false;
             }
@@ -730,9 +746,9 @@ class Telaen extends Telaen_core
 
             /* compare the old and the new message id, if different, stop*/
             if (base64_encode($current_id) != base64_encode($msg['message-id'])) {
-                trigger_error(sprintf("Message ID's differ: [%s/%s]",
+                $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
                     base64_encode($current_id),
-                    base64_encode($msg['message-id'])));
+                    base64_encode($msg['message-id'])), __FUNCTION__);
 
                 return false;
             }
@@ -769,9 +785,9 @@ class Telaen extends Telaen_core
                 /* compare the old and the new message id, if different, stop*/
                 $muidl = $this->_mail_get_uidl($msg['msg']);
                 if ($msg['uidl'] != $muidl) {
-                    trigger_error(sprintf("UIDL's differ: [%s/%s]",
+                    $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                         $msg['uidl'],
-                        $muidl));
+                        $muidl), __FUNCTION__);
 
                     return false;
                 }
@@ -1407,6 +1423,31 @@ class Telaen extends Telaen_core
         }
     }
 
+    private function _mail_delete_box_imap($boxname)
+    {
+        $boxname = $this->fix_prefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
+        $this->_mail_send_command("DELETE \"$boxname\"");
+        $buffer = $this->_mail_get_line();
+
+        if ($this->mail_ok_resp($buffer)) {
+            $this->_RmDirR($this->user_folder.$boxname);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function _mail_delete_box_pop($boxname)
+    {
+        if (is_dir($this->user_folder.$boxname)) {
+            $this->_RmDirR($this->user_folder.$boxname);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Delete a specific default emailbox
      * @param  string  $boxname Emailbox name to delete
@@ -1415,26 +1456,36 @@ class Telaen extends Telaen_core
     public function mail_delete_box($boxname)
     {
         if ($this->mail_protocol == IMAP) {
-            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
-            $this->_mail_send_command("DELETE \"$boxname\"");
-            $buffer = $this->_mail_get_line();
-
-            if ($this->mail_ok_resp($buffer)) {
-                $this->_RmDirR($this->user_folder.$boxname);
-
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_mail_delete_box_imap($boxname);
         } else {
-            if (is_dir($this->user_folder.$boxname)) {
-                $this->_RmDirR($this->user_folder.$boxname);
-
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_mail_delete_box_pop($boxname);
         }
+    }
+
+    private function _mail_save_message_imap($boxname, $message, $flags = "")
+    {
+        $boxname = $this->fix_prefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
+
+        // send an append command
+        $mailcommand = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
+        $this->_mail_send_command($mailcommand);
+
+        // wait for a "+ Something" here and not after the msg sent!!
+        $buffer = $this->_mail_get_line();
+        if ($buffer[0] != '+') {
+            return false;    // problem appending
+        }
+
+        // send the msg
+        $mailcommand = "$message";
+        $this->_mail_send_command($mailcommand, true);    // not send the session id here!
+
+        $buffer = $this->_mail_get_line();
+
+        if (!preg_match("/^(".$this->_sid." OK)/i", $buffer)) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -1447,25 +1498,7 @@ class Telaen extends Telaen_core
     public function mail_save_message($boxname, $message, $flags = "")
     {
         if ($this->mail_protocol == IMAP) {
-            $boxname = $this->fix_prefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
-
-            // send an append command
-            $mailcommand = "APPEND \"$boxname\" ($flags) {".strlen($message)."}";
-            $this->_mail_send_command($mailcommand);
-
-            // wait for a "+ Something" here and not after the msg sent!!
-            $buffer = $this->_mail_get_line();
-            if ($buffer[0] != '+') {
-                return false;    // problem appending
-            }
-
-            // send the msg
-            $mailcommand = "$message";
-            $this->_mail_send_command($mailcommand, true);    // not send the session id here!
-
-            $buffer = $this->_mail_get_line();
-
-            if (!preg_match("/^(".$this->_sid." OK)/i", $buffer)) {
+            if (!$this->_mail_save_message_imap($boxname, $message, $flags)) {
                 return false;
             }
         }
@@ -1484,6 +1517,26 @@ class Telaen extends Telaen_core
         }
     }
 
+    private function _mail_set_flag_imap(&$msg, $flagname, $flagtype = '+')
+    {
+        if (strtolower($this->_current_folder) != strtolower($msg['folder'])) {
+            $this->mail_select_box($msg['folder']);
+        }
+
+        if ($flagtype != '+') {
+            $flagtype = '-';
+        }
+        $this->_mail_send_command('STORE '.$msg['msg'].':'.$msg['msg'].' '.$flagtype."FLAGS ($flagname)");
+        $buffer = $this->_mail_get_line();
+
+        while (!preg_match("/^(".$this->_sid." (OK|NO|BAD))/i", $buffer)) {
+            $buffer = $this->_mail_get_line();
+        }
+        if ($this->mail_nok_resp($buffer)) {
+            return false;
+        }
+    }
+
     /**
      * Set flags on specific email message
      * @param  string  $msg      Email message to set flag for
@@ -1494,7 +1547,12 @@ class Telaen extends Telaen_core
     public function mail_set_flag(&$msg, $flagname, $flagtype = '+')
     {
         $flagname = strtoupper($flagname);
-
+        if (!in_array($flagname, $this->flags)) {
+            if ($this->log_errors) {
+                $this->trigger_error("unknown flag: $this->user_folder", __FUNCTION__);
+            }
+            return false;
+        }
         if ($flagtype == '+' && strstr($msg['flags'], $flagname)) {
             return true;
         }
@@ -1606,12 +1664,11 @@ class Telaen extends Telaen_core
     {
         if ($this->mail_connected()) {
             $this->_mail_send_command('FORCEDQUIT');
-            $tmp = $this->_mail_get_line();
+            $this->_mail_get_line();
             fclose($this->mail_connection);
             $this->mail_connection = "";
             // Sleep to make it possible that the server can resume.
             sleep(2);
-
             return true;
         } else {
             return false;
@@ -1634,7 +1691,6 @@ class Telaen extends Telaen_core
                 $buffer = $this->_mail_get_line();
             }
         }
-
         return true;
     }
 
