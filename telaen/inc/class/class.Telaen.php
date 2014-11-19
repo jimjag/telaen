@@ -1138,7 +1138,7 @@ class Telaen extends Telaen_core
 
                 if ($this->mail_protocol != IMAP && file_exists($messagescopy[$j]['localname'])) {
                     $iheaders = $this->_get_headers_from_cache($messagescopy[$j]['localname']);
-                    $iheaders = $this->decode_header($iheaders);
+                    $iheaders = $this->_decode_header($iheaders);
                     $messagescopy[$j]['flags'] = strtoupper($iheaders['x-um-flags']);
                     unset($iheaders);
                 }
@@ -1181,7 +1181,7 @@ class Telaen extends Telaen_core
 
                 if ($this->mail_protocol != IMAP && file_exists($spamcopy[$y]['localname'])) {
                     $iheaders = $this->_get_headers_from_cache($spamcopy[$y]['localname']);
-                    $iheaders = $this->decode_header($iheaders);
+                    $iheaders = $this->_decode_header($iheaders);
                     $spamcopy[$y]['flags'] = strtoupper($iheaders['x-um-flags']);
                     unset($iheaders);
                 }
@@ -1500,7 +1500,7 @@ class Telaen extends Telaen_core
             $email = $this->fetch_structure($email);
             $header = $email['header'];
             $body = $email['body'];
-            $headerinfo = $this->decode_header($header);
+            $headerinfo = $this->_decode_header($header);
 
             $strFlags = trim(strtoupper($msg['flags']));
 

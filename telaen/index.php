@@ -144,7 +144,7 @@ if ($allow_user_change_language) {
     foreach ($languages as $i) {
         $lkey = key($i);
         $selected = ($lid == $lkey) ? "selected=\"selected\"" : "";
-        $langsel .= "<option value=\"$lkey\" $selected>".$i($lkey)."</option> \r";
+        $langsel .= "<option value=\"$lkey\" $selected>".$i[$lkey]."</option> \r";
     }
     $langsel .= "</select>\r";
     $smarty->assign("umLanguages", $langsel);
@@ -158,7 +158,7 @@ if ($allow_user_change_theme) {
     foreach ($themes as $i) {
         $tkey = key($i);
         $selected = ($tid == $tkey) ? "selected=\"selected\"" : "";
-        $themsel .= "<option value=\"$tkey\" $selected>".$i($tkey)."</option> \r";
+        $themsel .= "<option value=\"$tkey\" $selected>".$i[$tkey]."</option> \r";
     }
     $themsel .= "</select>\r";
     $smarty->assign('umThemes', $themsel);
