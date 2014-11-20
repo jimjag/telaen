@@ -280,7 +280,7 @@ $welcome_msg = sprintf("%s <b>%s<b> %s, %s <b>%s</b> %s <i>%s</i>",
     $lang['msg_in_the_folder'],
     $display
     );
-$smarty->assign('umWelcomeMessage', $welcome_msg);
+$smarty->assign('umWelcomeMessage2', $welcome_msg);
 
 // Page navigation
 if ($nummsg > 0) {
