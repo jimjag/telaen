@@ -641,7 +641,7 @@ $tmpbody";
             $index = count($attachlist);
 
             $attachlist[$index]['name'] = $attachs[$i]['name'];
-            $attachlist[$index]['size'] = bkmg2bytes($attachs[$i]['size']);
+            $attachlist[$index]['size'] = bytes2bkmg($attachs[$i]['size']);
             $attachlist[$index]['type'] = $attachs[$i]['type'];
             $attachlist[$index]['link'] = "javascript:upwin($i)";
         }

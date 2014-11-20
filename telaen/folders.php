@@ -210,7 +210,7 @@ $smarty->assign('umPersonal', $personal);
 $smarty->assign('umTotalUsed', ceil($totalused/1024));
 $quota_enabled = ($quota_limit) ? 1 : 0;
 $smarty->assign('umQuotaEnabled', $quota_enabled);
-$smarty->assign('umQuotaLimit', bkmg2bytes($quota_limit));
+$smarty->assign('umQuotaLimit', bytes2bkmg($quota_limit));
 $usageGraph = get_usage_graphic($totalused, $quota_limit);
 $smarty->assign('umUsageGraph', $usageGraph);
 $noquota = ($totalused > $quota_limit) ? 1 : 0;
