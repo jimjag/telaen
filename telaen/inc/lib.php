@@ -501,3 +501,16 @@ function pull_from_array(&$whofrom, $my_vars = array(), $cast = 'string')
 
     return $reta;
 }
+
+function bkmg_bytes($val) {
+    $a = "";
+    foreach (array('b', 'k', 'M', 'G') as $a) {
+        echo "$val $a \n";
+        if ($val > 1024) {
+            $val /= 1024;
+        } else {
+            break;
+        }
+    }
+    return round($val, 1) . $a;
+}
