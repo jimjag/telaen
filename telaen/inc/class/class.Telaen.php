@@ -1,5 +1,5 @@
 <?php
-namespace Telaen;
+// namespace Telaen;
 require_once './inc/class/class.Telaen_core.php';
 require_once './inc/vendor/class.tnef.php';
 

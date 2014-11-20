@@ -1,5 +1,5 @@
 <?php
-namespace Telaen;
+// namespace Telaen;
 /************************************************************************
 Telaen is a GPL'ed software developed by
 
