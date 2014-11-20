@@ -175,7 +175,7 @@ for ($n = 0;$n<count($boxes);$n++) {
         $system[$scounter]['name'] = $boxname;
         $system[$scounter]['msgs'] = count($thisbox)."/$unread";
         $system[$scounter]['del'] = $delete;
-        $system[$scounter]['boxsize'] = $boxsize;
+        $system[$scounter]['boxsize'] = bytes2bkmg($boxsize);
         $system[$scounter]['chlink'] = "process.php?folder=$entry";
         $system[$scounter]['emptylink'] = 'folders.php?empty='.$entry.'&folder='.$entry."";
 
@@ -185,7 +185,7 @@ for ($n = 0;$n<count($boxes);$n++) {
         $personal[$pcounter]['name'] = $boxname;
         $personal[$pcounter]['msgs'] = count($thisbox)."/$unread";
         $personal[$pcounter]['del'] = $delete;
-        $personal[$pcounter]['boxsize'] = $boxsize;
+        $personal[$pcounter]['boxsize'] = bytes2bkmg($boxsize);
         $personal[$pcounter]['chlink'] = 'process.php?folder='.urlencode($entry)."";
         $personal[$pcounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
 
@@ -207,7 +207,7 @@ $umFolderList = array_merge((array) $system, (array) $personal);
 $smarty->assign('umFolderList', $umFolderList);
 
 $smarty->assign('umPersonal', $personal);
-$smarty->assign('umTotalUsed', ceil($totalused/1024));
+$smarty->assign('umTotalUsed', bytes2bkmg($totalused));
 $quota_enabled = ($quota_limit) ? 1 : 0;
 $smarty->assign('umQuotaEnabled', $quota_enabled);
 $smarty->assign('umQuotaLimit', bytes2bkmg($quota_limit));
