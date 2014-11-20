@@ -285,18 +285,18 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		errors = error_msg.length;
 
 		if(frm.to.value == '' && frm.cc.value == '' && frm.bcc.value == '')
-			alert('".preg_replace("|'|", "\\'", $error_no_recipients)."');
+			alert('".preg_replace("|'|", "\\'", $lang['error_no_recipients'])."');
 
 		else if (errors > 0) {
 
-			if (errors == 1) errmsg = '".preg_replace("|'|", "\\'", $error_compose_invalid_mail1_s)."\\r\\r';
-			else  errmsg = '".preg_replace("|'|", "\\'", $error_compose_invalid_mail1_p)."\\r\\r';
+			if (errors == 1) errmsg = '".preg_replace("|'|", "\\'", $lang['error_compose_invalid_mail1_s'])."\\r\\r';
+			else  errmsg = '".preg_replace("|'|", "\\'", $lang['error_compose_invalid_mail1_p'])."\\r\\r';
 
 			for(i=0;i<errors;i++)
 				errmsg += error_msg[i]+'\\r';
 
-			if (errors == 1) errmsg += '\\r".preg_replace("|'|", "\\'", $error_compose_invalid_mail2_s)."s';
-			else  errmsg += '\\r".preg_replace("|'|", "\\'", $error_compose_invalid_mail2_p)."';
+			if (errors == 1) errmsg += '\\r".preg_replace("|'|", "\\'", $lang['error_compose_invalid_mail2_s'])."s';
+			else  errmsg += '\\r".preg_replace("|'|", "\\'", $lang['error_compose_invalid_mail2_p'])."';
 
 			alert(errmsg)
 
@@ -537,18 +537,18 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         }
 
         $body = "
-$reply_delimiter$linebreak
-$reply_from_hea ".preg_replace('|(")|', "", $fromreply_quote)."$linebreak
-$reply_to_hea ".preg_replace('|(")|', "", $toreply_quote);
+{$lang['reply_delimiter']}$linebreak
+{$lang['reply_from_hea']} ".preg_replace('|(")|', "", $fromreply_quote)."$linebreak
+{$lang['reply_to_hea']} ".preg_replace('|(")|', "", $toreply_quote);
 
         if (!empty($ccreply)) {
             $body .= "$linebreak
-$reply_cc_hea ".preg_replace('|(")|', "", $ccreply_quote);
+{$lang['reply_cc_hea']} ".preg_replace('|(")|', "", $ccreply_quote);
         }
 
         $body .= "$linebreak
-$reply_subject_hea ".$msgsubject_quote."$linebreak
-$reply_date_hea ".@strftime($date_format, $email['date'])."$linebreak
+{$lang['reply_subject_hea']} ".$msgsubject_quote."$linebreak
+{$lang['reply_date_hea']} ".@strftime($lang['date_format'], $email['date'])."$linebreak
 $linebreak
 $tmpbody";
 
@@ -579,8 +579,8 @@ $tmpbody";
             $cc = $ccreply;
             break;
         case 'forward':
-            if (!preg_match("/^$forward_prefix/i", trim($subject))) {
-                $subject = "$forward_prefix $subject";
+            if (!preg_match("/^{$lang['forward_prefix']}/i", trim($subject))) {
+                $subject = "{$lang['forward_prefix']} $subject";
             }
             if (count($email['attachments']) > 0) {
                 for ($i = 0; $i < count($email['attachments']); $i++) {

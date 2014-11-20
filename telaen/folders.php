@@ -83,7 +83,7 @@ function create() {
 	strName = frm.newfolder.value
 	mathArray = strName.match(strPat)
 	if(mathArray != null) {
-		alert('".preg_replace("/'/", "\\'", $error_invalid_name)."')
+		alert('".preg_replace("/'/", "\\'", $lang['error_invalid_name'])."')
 		return false;
 	}else
 		frm.submit();

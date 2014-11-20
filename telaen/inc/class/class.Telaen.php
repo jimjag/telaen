@@ -42,7 +42,7 @@ class Telaen extends Telaen_core
      * @param string $str
      * @return string
      */
-    public function safe_print($str)
+    static public function safe_print($str)
     {
         return preg_replace_callback(
             '|([^[:print:]])|',
@@ -56,7 +56,7 @@ class Telaen extends Telaen_core
      * @param  string $str
      * @return void
      */
-    public function debug_msg($str, $caller = "")
+    static public function debug_msg($str, $caller = "")
     {
         echo "<!-- $caller:\n";
         echo preg_replace('|-->|', '__>', self::safe_print($str));
