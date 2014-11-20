@@ -185,7 +185,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
             }
         }
     }
-    $quota_limit = kmg2bytes($quota_limit); // ensure bytes
+    $quota_limit = bkmg2bytes($quota_limit); // ensure bytes
     $auth['quota_limit'] = $quota_limit;
 } elseif ($auth['auth'] && ((time() - $start) < ($idle_timeout * 60))) {
     $TLN->mail_user = $f_user = $auth['user'];
