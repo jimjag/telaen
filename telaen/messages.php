@@ -23,7 +23,7 @@ if (!is_array($headers = $mbox['headers'][$folder_key])) {
 }
 
 $arrow = ($sortorder == 'ASC') ? 'images/arrow_up.gif' : 'images/arrow_down.gif';
-$arrow = "&nbsp;<img src=\"$arrow\" width=\"8\" height=\"7\" border=\"0\" alt=\"\" />";
+$arrow = '&nbsp;<img src="'.$arrow.'" width"8" height="7" border="0" alt="" />';
 
 $attach_arrow = "";
 $subject_arrow = "";
@@ -217,16 +217,16 @@ if ($nummsg > 0) {
         }
         $prior = $headers[$i]['priority'];
         if ($prior == 4 || $prior == 5) {
-            $img_prior = "&nbsp;<img src=\"./images/prior_low.gif\" width=\"5\" height=\"11\" border=\"0\" alt=\"\" />";
+            $img_prior = '&nbsp;<img src="./images/prior_low.gif" width="5" height="11" border="0" alt="" />';
         } elseif ($prior == 1 || $prior == 2) {
-            $img_prior = "&nbsp;<img src=\"./images/prior_high.gif\" width=\"5\" height=\"11\" border=\"0\" alt=\"\" />";
+            $img_prior = '&nbsp;<img src="./images/prior_high.gif" width="5" height="11" border="0" alt="" />';
         } else {
             $img_prior = "";
         }
 
-        $msg_img = "&nbsp;<img src=\"$msg_img\" width=\"14\" height=\"14\" border=\"0\" alt=\"\" />";
-        $checkbox = "<input type=\"checkbox\" name=\"msg_$i\" value=\"1\" />";
-        $attachimg = ($headers[$i]['attach']) ? "&nbsp;<img src=\"images/attach.gif\" border=\"0\" />" : "";
+        $msg_img = '&nbsp;<img src="'.$msg_img.'" width="14" height="14" border="0" alt="" />';
+        $checkbox = '<input type="checkbox" name="msg_'.$i.'" value="1" />';
+        $attachimg = ($headers[$i]['attach']) ? '&nbsp;<img src\"images/attach.gif" border="0" />' : '';
 
         $date = $headers[$i]['date'];
         $size = ceil($headers[$i]['size']/1024);
