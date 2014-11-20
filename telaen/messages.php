@@ -270,6 +270,18 @@ default:
 
 $smarty->assign('umBoxName', $display);
 
+// Ugg. This should be it's own lang[] entry
+$welcome_msg = sprintf("%s <b>%s<b> %s, %s <b>%s</b> %s <i>%s</i>",
+    $lang['msg_you_have'],
+    $nummsg,
+    ($nummsg == 1 ? $lang['msg_message'] : $lang['msg_messages']),
+    $newmsgs,
+    ($newmsgs == 0 ? $lang['msg_none_unread'] : ($newmsgs == 1 ? $lang['msg_one_unread'] : $lang['msg_more_unread'])),
+    $lang['msg_in_the_folder'],
+    $display
+    );
+$smarty->assign('umWelcomeMessage', $welcome_msg);
+
 // Page navigation
 if ($nummsg > 0) {
     if ($pag > 1) {
