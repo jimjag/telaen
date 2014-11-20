@@ -502,7 +502,8 @@ function pull_from_array(&$whofrom, $my_vars = array(), $cast = 'string')
     return $reta;
 }
 
-function bkmg_bytes($val) {
+function bytes2bkmg($val)
+{
     $a = "";
     foreach (array('b', 'k', 'M', 'G') as $a) {
         echo "$val $a \n";
@@ -513,4 +514,26 @@ function bkmg_bytes($val) {
         }
     }
     return round($val, 1) . $a;
+}
+
+function bkmg2bytes($val)
+{
+    switch (substr(trim($val), -1)) {
+        case 'k':
+        case 'K':
+            $val = intval($val) * 1024;
+            break;
+        case 'm':
+        case 'M':
+            $val = intval($val) * 1024 * 1024;
+            break;
+        case 'G':
+        case 'g':
+            $val = intval($val) * 1024 * 1024 * 1024;
+            break;
+        case 'b':
+        case 'B':
+            break;
+  }
+  return intval($val);
 }

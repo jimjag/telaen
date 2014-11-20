@@ -96,20 +96,22 @@ $webmail_title = 'Telaen Webmail';
 #		    so later matches override earlier ones (see
 #		    example below)
 #
-# A value of 0 means no limit (and no quotas)
+# A value of 0|"" means no limit (and no quotas)
+# NOTE: All values are in *bytes*, but you can append k|M|G for
+#       kilobytes, Megabytes and Gigabytes
 ########################################################################
 
-$quota_limit = 4096;  //  in KB, eg. 4096 Kb = 4MB
+$quota_limit = '4096k';  //  in KB, eg. 4096 Kb = 4MB
 
 ##
 # Example of quota limit array. All users from @example.com
-# will have a quota of 4096, except jim@example.com who will
+# will have a quota of 4megs!, except jim@example.com who will
 # have his quota disabled. Recall that this array is scanned
 # sequentially... If the order was reverse, then jim would
-# also be set to 4096!
+# also be set to 4M as well!
 ##
 $quota_limits = Array (
-    Array ('/@example.com/i', 4096 ),
+    Array ('/@example.com/i', '4M' ),
     Array ('/jim@example.com/i', 0)
 );
 
