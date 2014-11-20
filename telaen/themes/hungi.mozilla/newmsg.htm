@@ -44,7 +44,7 @@
 								{section name=i loop=$umAttachList}
 									<tr>
 										<td class="default">&nbsp; {$umAttachList[i].name|escape:"html"}</td>
-										<td class="cent">{$umAttachList[i].size}Kb</td>
+										<td class="cent">{$umAttachList[i].size} </td>
 										<td class="default">{$umAttachList[i].type|truncate:23:"...":true}</td>
 										<td class="cent"><a href="{$umAttachList[i].link}">OK</a></td>
 									</tr>

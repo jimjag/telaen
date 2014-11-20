@@ -22,7 +22,7 @@
 				<tr>
 					<td class="default"><a href="{$umFolderList[i].chlink}">{$umFolderList[i].name|escape:"html"}</a></td>
 					<td class="cent">{$umFolderList[i].msgs}</td>
-					<td class="right">{$umFolderList[i].boxsize}Kb &nbsp;</td>
+					<td class="right">{$umFolderList[i].boxsize} &nbsp;</td>
 					<td class="cent"><a href="{$umFolderList[i].emptylink}">OK</a></td>
 					<td class="cent">{$umFolderList[i].del}</td>
 				</tr>
@@ -31,14 +31,14 @@
 			<tr>
 				<td class="default">&nbsp;</td>
 				<td class="right"><b>{$umLabel.fld_total}</b> &nbsp;</td>
-				<td class="right"><b>{$umTotalUsed}</b>Kb &nbsp;</td>
+				<td class="right"><b>{$umTotalUsed}</b> &nbsp;</td>
 				<td class="cent">&nbsp;</td>
 				<td class="cent">&nbsp;</td>
 			</tr>
 
 			{if $umQuotaEnabled eq 1}
 			<tr>
-				<td class="cent" colspan=5>&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b>Kb {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b>Kb {$umLabel.quota_usage_avail}<br> {$umUsageGraph}</td>
+				<td class="cent" colspan=5>&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b> {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b> {$umLabel.quota_usage_avail}<br> {$umUsageGraph}</td>
 			</tr>
 			{/if}
 			<tr>

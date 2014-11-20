@@ -175,7 +175,7 @@ for ($n = 0;$n<count($boxes);$n++) {
         $system[$scounter]['name'] = $boxname;
         $system[$scounter]['msgs'] = count($thisbox)."/$unread";
         $system[$scounter]['del'] = $delete;
-        $system[$scounter]['boxsize'] = ceil($boxsize/1024);
+        $system[$scounter]['boxsize'] = $boxsize;
         $system[$scounter]['chlink'] = "process.php?folder=$entry";
         $system[$scounter]['emptylink'] = 'folders.php?empty='.$entry.'&folder='.$entry."";
 
@@ -185,7 +185,7 @@ for ($n = 0;$n<count($boxes);$n++) {
         $personal[$pcounter]['name'] = $boxname;
         $personal[$pcounter]['msgs'] = count($thisbox)."/$unread";
         $personal[$pcounter]['del'] = $delete;
-        $personal[$pcounter]['boxsize'] = ceil($boxsize/1024);
+        $personal[$pcounter]['boxsize'] = $boxsize;
         $personal[$pcounter]['chlink'] = 'process.php?folder='.urlencode($entry)."";
         $personal[$pcounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
 
@@ -210,10 +210,10 @@ $smarty->assign('umPersonal', $personal);
 $smarty->assign('umTotalUsed', ceil($totalused/1024));
 $quota_enabled = ($quota_limit) ? 1 : 0;
 $smarty->assign('umQuotaEnabled', $quota_enabled);
-$smarty->assign('umQuotaLimit', $quota_limit);
-$usageGraph = get_usage_graphic(($totalused/1024), $quota_limit);
+$smarty->assign('umQuotaLimit', bkmg2bytes($quota_limit));
+$usageGraph = get_usage_graphic($totalused, $quota_limit);
 $smarty->assign('umUsageGraph', $usageGraph);
-$noquota = (($totalused/1024) > $quota_limit) ? 1 : 0;
+$noquota = ($totalused > $quota_limit) ? 1 : 0;
 $smarty->assign('umNoQuota', $noquota);
 
 $smarty->assign('pageMetas', $nocache);

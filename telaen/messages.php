@@ -75,11 +75,11 @@ while (list($box, $info) = each($mbox['headers'])) {
 $smarty->assign('umTotalUsed', ceil($totalused/1024));
 $quota_enabled = ($quota_limit) ? 1 : 0;
 $smarty->assign('umQuotaEnabled', $quota_enabled);
-$smarty->assign('umQuotaLimit', $quota_limit);
-$usageGraph = get_usage_graphic(($totalused/1024), $quota_limit);
+$smarty->assign('umQuotaLimit', bkmg2bytes($quota_limit));
+$usageGraph = get_usage_graphic($totalused, $quota_limit);
 $smarty->assign('umUsageGraph', $usageGraph);
 
-$exceeded = (($quota_limit) && (ceil($totalused/1024) >= $quota_limit));
+$exceeded = (($quota_limit) && ($totalused >= $quota_limit));
 
 // sorting arrays..
 $smarty->assign('umAttachArrow', $attach_arrow);
@@ -229,7 +229,7 @@ if ($nummsg > 0) {
         $attachimg = ($headers[$i]['attach']) ? '&nbsp;<img src\"images/attach.gif" border="0" />' : '';
 
         $date = $headers[$i]['date'];
-        $size = ceil($headers[$i]['size']/1024);
+        $size = $headers[$i]['size'];
         $index = count($messagelist);
 
         $messagelist[$index]['read'] = $read;
@@ -244,7 +244,7 @@ if ($nummsg > 0) {
         $messagelist[$index]['checkbox'] = $checkbox;
         $messagelist[$index]['attachimg'] = $attachimg;
         $messagelist[$index]['priorimg'] = $img_prior;
-        $messagelist[$index]['size'] = $size;
+        $messagelist[$index]['size'] = bkmg2bytes($size);
     }
 }
 $smarty->assign('umNumMessages', $nummsg);

@@ -147,7 +147,7 @@
 											<td align="right" onclick="{$umMessageList[i].readlink}" id="size_{$contador}"
 												onmouseover="address_{$contador}.className='messagelist_over';subject_{$contador}.className='messagelist_over';date_{$contador}.className='messagelist_over';size_{$contador}.className='messagelist_over';"
 												onmouseout="address_{$contador}.className='messagelist';subject_{$contador}.className='messagelist';date_{$contador}.className='messagelist';size_{$contador}.className='messagelist';"
-												class="messagelist">{if $umMessageList[i].read eq "false"}<b>{/if}{$i}{$umMessageList[i].size}&nbsp;Kb{if $umMessageList[i].read eq "false"}</b>{/if}</td>
+												class="messagelist">{if $umMessageList[i].read eq "false"}<b>{/if}{$i}{$umMessageList[i].size}&nbsp;{if $umMessageList[i].read eq "false"}</b>{/if}</td>
 										</tr>
 										{/section}
 										{if $umNumMessages eq 0}
@@ -187,7 +187,7 @@
 		{/if}
 
 		{if $umQuotaEnabled eq 1}
-			({$umLabel.quota_usage_used} {$umTotalUsed}Kb {$umLabel.quota_usage_of} {$umQuotaLimit}Kb {$umLabel.quota_usage_avail})
+			({$umLabel.quota_usage_used} {$umTotalUsed} {$umLabel.quota_usage_of} {$umQuotaLimit} {$umLabel.quota_usage_avail})
 		{/if}
 
 		<!-- spam alert -->

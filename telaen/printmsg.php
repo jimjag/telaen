@@ -96,7 +96,7 @@ if (count($anexos) > 0) {
         $link2 = "$link1&down=1";
         $anexos[$i]['normlink'] = "$link1&fname=$safefname";
         $anexos[$i]['downlink'] = "$link2&fname=$safefname";
-        $anexos[$i]['size'] = ceil($anexos[$i]['size']/1024);
+        $anexos[$i]['size'] = bkmg2bytes($anexos[$i]['size']);
         $anexos[$i]['type'] = trim($anexos[$i]['content-type']);
     }
     $smarty->assign('umAttachList', $anexos);

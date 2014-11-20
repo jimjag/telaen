@@ -76,7 +76,7 @@ function printIt() {
 												{section name=i loop=$umAttachList}
 												<tr bgcolor=white>
 													<td class="default" style="background:#ffffff"> &nbsp;{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}
-														({$umAttachList[i].size}Kb, &nbsp;{$umAttachList[i].type})</td>
+														({$umAttachList[i].size}, &nbsp;{$umAttachList[i].type})</td>
 												{/section}
 
 											</tr>

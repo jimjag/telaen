@@ -74,7 +74,7 @@
 								{section name=i loop=$umAttachList}
 								<tr bgcolor="white">
 									<td class="default"> &nbsp;{$umAttachList[i].normlink}{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> {$umAttachList[i].downlink}<img src="./images/download.gif" width="12" height="12" border="0" alt="" title="Download"></a></td>
-									<td class="cent">{$umAttachList[i].size}Kb</td>
+									<td class="cent">{$umAttachList[i].size} </td>
 									<td class="default">{$umAttachList[i].type}</td>													
 								</tr>
 								{/section}	

@@ -78,7 +78,7 @@
 					</td>
 					<td class="right" nowrap>
 						{if $umMessageList[i].read eq "false"}<b>{/if}
-						{$umMessageList[i].size}Kb &nbsp;
+						{$umMessageList[i].size} &nbsp;
 						{if $umMessageList[i].read eq "false"}</b>{/if}
 					</td>
 				</tr>
@@ -109,7 +109,7 @@
 
 			{if $umQuotaEnabled eq 1}
 			<tr>
-				<td class="cent" colspan="7">&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b>Kb {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b>Kb {$umLabel.quota_usage_avail}<br> {$umUsageGraph}</td>
+				<td class="cent" colspan="7">&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b> {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b> {$umLabel.quota_usage_avail}<br> {$umUsageGraph}</td>
 			</tr>
 			{/if}
 		</table>

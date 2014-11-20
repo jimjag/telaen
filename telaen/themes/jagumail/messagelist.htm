@@ -54,7 +54,7 @@
 					{/if}
 
 					<td class="cent" nowrap>{$umMessageList[i].date|date_format:$umLabel.date_format}</td>
-					<td class="right" nowrap>{$umMessageList[i].size}Kb &nbsp;</td>
+					<td class="right" nowrap>{$umMessageList[i].size} &nbsp;</td>
 				</tr>
 				{/section}
 				<tr>
@@ -83,7 +83,7 @@
 
 			{if $umQuotaEnabled eq 1}
 			<tr>
-				<td class="cent" colspan="7">&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b>Kb {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b>Kb {$umLabel.quota_usage_avail}<br> {$umUsageGraph}</td>
+				<td class="cent" colspan="7">&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b> {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b> {$umLabel.quota_usage_avail}<br> {$umUsageGraph}</td>
 			</tr>
 			{/if}
 		</table>
