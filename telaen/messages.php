@@ -271,16 +271,22 @@ default:
 $smarty->assign('umBoxName', $display);
 
 // Ugg. This should be it's own lang[] entry
-$welcome_msg = sprintf("%s <b>%s</b> %s, %s <b>%s</b> %s <b><i>%s</i></b>",
-    $lang['msg_you_have'],
-    $nummsg,
-    ($nummsg == 1 ? $lang['msg_message'] : $lang['msg_messages']),
-    ($newmsgs == 0 ? "" : $newmsgs),
-    ($newmsgs == 0 ? $lang['msg_none_unread'] : ($newmsgs == 1 ? $lang['msg_one_unread'] : $lang['msg_more_unread'])),
-    $lang['msg_in_the_folder'],
-    $display
-    );
-$smarty->assign('umWelcomeMessage2', $welcome_msg);
+$wlcmessage = $lang['msg_you_have']." <b>$nummsg</b> ";
+if ($nummsg == 1) {
+    $wlcmessage .= $lang['msg_message'].", ";
+} else {
+    $wlcmessage .= $lang['msg_messages'].", ";
+}
+if ($newmsgs == 0) {
+    $wlcmessage .= $lang['msg_none_unread']." ";
+} elseif ($newmsgs == 1) {
+    $wlcmessage .= "<b>$newmsgs</b> ".$lang['msg_one_unread']." ";
+} else {
+    $wlcmessage .= "<b>$newmsgs</b> ".$lang['msg_more_unread']." ";
+}
+$wlcmessage .= $lang['msg_in_the_folder']." <b><i>$display</i></b>";
+
+$smarty->assign('umWelcomeMessage2', $wlcmessage);
 
 // Page navigation
 if ($nummsg > 0) {
