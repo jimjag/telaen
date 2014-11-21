@@ -15,13 +15,13 @@ require './inc/init.php';
 // meta assigned to smarty
 $smarty->assign('pageMetas', $nocache);
 
-$filename = $userfolder.'_infos/addressbook.ucf';
+$filename = $TLN->userfolder.'_infos/addressbook.ucf';
 $myfile = $TLN->read_file($filename);
 
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));
 }
-array_qsort2ic($addressbook, 'name');
+$TLN->array_qsort2ic($addressbook, 'name');
 
 $jssource = $commonJS;
 $jssource .= "
@@ -171,7 +171,7 @@ switch ($opt) {
         $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
 
         if (($start_pos >= $end_pos) && ($pag != 1)) {
-            redirect_and_exit("addressbook.php?pag=".($pag-1)."");
+            $TLN->redirect_and_exit("addressbook.php?pag=".($pag-1)."");
         }
 
         if ($nummsg > 0) {

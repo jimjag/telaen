@@ -18,10 +18,10 @@ function mail_connect()
 
     // server check
     if (!$TLN->mail_connect()) {
-        redirect_and_exit('index.php?err=1', true);
+        $TLN->redirect_and_exit('index.php?err=1', true);
     }
     if (!$TLN->mail_auth(true)) {
-        redirect_and_exit('index.php?err=0');
+        $TLN->redirect_and_exit('index.php?err=0');
     }
 }
 
@@ -57,7 +57,7 @@ if (!is_array($headers)
     $reg_pp = $TLN->prefs['rpp'];
 
     if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
-        cleanup_dirs($userfolder, 0);
+        cleanup_dirs($TLN->userfolder, 0);
         $start_pos = 0;
     } else {
         if (isset($pag) && isset($mlist) && !isset($start_pos)) {
@@ -159,7 +159,7 @@ if (!is_array($headers)
                  * ubiid variable. Scan through the delarray to find the
                  * first ID to be deleted.
                  */
-                array_qsort2int($delarray, 'msgid', 'ASC');
+                $TLN->array_qsort2int($delarray, 'msgid', 'ASC');
                 $delarray_count = count($delarray);
                 $firstid = 0;
 
@@ -241,7 +241,7 @@ if (!is_array($headers)
 }
 
 if (!is_array($headers = $mbox['headers'][$folder_key])) {
-    redirect_and_exit('index.php?err=3', true);
+    $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
 /*
@@ -250,9 +250,9 @@ if (!is_array($headers = $mbox['headers'][$folder_key])) {
  */
 if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
     if ($sortby == 'date' || $sortby == 'size') {
-        array_qsort2($headers, $sortby, $sortorder);
+        $TLN->array_qsort2($headers, $sortby, $sortorder);
     } else {
-        array_qsort2ic($headers, $sortby, $sortorder);
+        $TLN->array_qsort2ic($headers, $sortby, $sortorder);
     }
 }
 
@@ -280,7 +280,7 @@ if ((!$same_version) ||
     ($check_first_login && !$TLN->prefs['first-login'])) {
     $TLN->prefs['first-login'] = 1;
     save_prefs($TLN->prefs);
-    redirect_and_exit('preferences.php?folder='.urlencode($folder));
+    $TLN->redirect_and_exit('preferences.php?folder='.urlencode($folder));
     exit;
 }
 
@@ -291,8 +291,8 @@ $refreshurl = 'messages.php?folder='.urlencode($folder)."&pag=$pag";
 
 if (isset($back_to)) {
     if (count($headers) > $back_to) {
-        redirect_and_exit('readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=$back_to");
+        $TLN->redirect_and_exit('readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=$back_to");
     }
 }
 
-redirect_and_exit("$refreshurl");
+$TLN->redirect_and_exit("$refreshurl");

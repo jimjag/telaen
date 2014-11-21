@@ -5,10 +5,8 @@ require_once './inc/vendor/class.tnef.php';
 
 class Telaen extends Telaen_core
 {
-    public $autospamfolder = true;        // boolean
     public $havespam       = "";        // NOTE: This is a STRING!
     public $CRLF           = "\r\n";
-    public $userspamlevel  = 0;        // Disabled
     public $dirperm        = 0700;        // recall affected by umask value
     public $greeting       = "";        // Internally used for store initial IMAP/POP3 greeting message
     public $capabilities   = array();
@@ -71,8 +69,8 @@ class Telaen extends Telaen_core
      */
     public function trigger_error($str, $caller = "")
     {
-        if ($this->debug) {
-            $this->debug_msg($str, $caller);
+        if ($this->config['enable_debug']) {
+            $this->config['enable_debug']_msg($str, $caller);
         }
         \trigger_error($str);
     }
@@ -185,8 +183,8 @@ class Telaen extends Telaen_core
     {
         $buffer = fgets($this->mail_connection, 8192);
         $buffer = preg_replace('|\r?\n|', "\r\n", $buffer);
-        if ($this->debug) {
-            $this->debug_msg($buffer, __FUNCTION__);
+        if ($this->config['enable_debug']) {
+            $this->config['enable_debug']_msg($buffer, __FUNCTION__);
         }
 
         return $buffer;
@@ -217,14 +215,14 @@ class Telaen extends Telaen_core
                     $output = $this->_sid.' '.$output;
                 }
                 fwrite($this->mail_connection, $cmd);
-                if ($this->debug) {
-                    $this->debug_msg($cmd, __FUNCTION__);
+                if ($this->config['enable_debug']) {
+                    $this->config['enable_debug']_msg($cmd, __FUNCTION__);
                 }
             }
 
             return true;
         }
-        if ($this->log_errors) {
+        if ($this->config['log_errors']) {
             $this->trigger_error("attempt to send command w/o connection", __FUNCTION__);
         }
 
@@ -253,7 +251,7 @@ class Telaen extends Telaen_core
                     return false;
                 }
             }
-            if ($this->log_errors) {
+            if ($this->config['log_errors']) {
                 $this->trigger_error("Cannot connect to: $this->_serverurl", __FUNCTION__);
             }
 
@@ -339,12 +337,8 @@ class Telaen extends Telaen_core
 
     protected function _check_folders()
     {
-        $userfolder = $this->userfolder;
-        $temporary_directory = $this->temp_folder;
-        $idle_timeout = $this->timeout;
-
         if (!file_exists($this->userfolder)) {
-            if (!@mkdir($this->userfolder, $this->dirperm) && $this->log_errors) {
+            if (!@mkdir($this->userfolder, $this->dirperm) && $this->config['log_errors']) {
                 $this->trigger_error("mkdir error: $this->userfolder", __FUNCTION__);
             }
         }
@@ -377,7 +371,7 @@ class Telaen extends Telaen_core
                 $current_folder = $this->fix_prefix($boxes[$i]['name'], 1);
                 if (!$this->is_system_folder($current_folder)) {
                     if (!file_exists($this->userfolder.$current_folder)) {
-                        if (!@mkdir($this->userfolder.$current_folder, $this->dirperm) && $this->log_errors) {
+                        if (!@mkdir($this->userfolder.$current_folder, $this->dirperm) && $this->config['log_errors']) {
                             $this->trigger_error("mkdir error: {$this->userfolder}{$current_folder}", __FUNCTION__);
                         }
                     }
@@ -393,7 +387,7 @@ class Telaen extends Telaen_core
                 if ($this->is_system_folder($value)) {
                     $value = strtolower($value);
                 }
-                if (!@mkdir($this->userfolder.$value, $this->dirperm) && $this->log_errors) {
+                if (!@mkdir($this->userfolder.$value, $this->dirperm) && $this->config['log_errors']) {
                     $this->trigger_error("mkdir error: {$this->userfolder}{$value}", __FUNCTION__);
                 }
             }
@@ -422,7 +416,7 @@ class Telaen extends Telaen_core
             }
 
             if (base64_encode($current_id) != base64_encode($msg['message-id'])) {
-                if ($this->log_errors) {
+                if ($this->config['log_errors']) {
                     $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
                         base64_encode($current_id),
                         base64_encode($msg['message-id'])), __FUNCTION__);
@@ -900,7 +894,6 @@ class Telaen extends Telaen_core
 
     protected function _mail_list_msgs_pop($boxname = 'INBOX', $localmessages = array())
     {
-        global $userfolder;
         // $this->havespam = "";
 
         if ($this->is_system_folder($boxname)) {
@@ -1006,7 +999,7 @@ class Telaen extends Telaen_core
         } else {
             /* otherwise (not inbox or spam), we need get the message list from a cache (currently, hard disk)*/
 
-            $datapath = $userfolder.$boxname;
+            $datapath = $this->userfolder.$boxname;
             $i = 0;
             $d = dir($datapath);
             $dirsize = 0;
@@ -1026,7 +1019,7 @@ class Telaen extends Telaen_core
 
             $d->close();
         }
-        array_qsort2int($messages, 'msg', 'DESC');
+        $TLN->array_qsort2int($messages, 'msg', 'DESC');
 
         return $messages;
     }
@@ -1049,7 +1042,6 @@ class Telaen extends Telaen_core
      */
     public function mail_list_msgs($boxname = 'INBOX', $localmessages = array(), $start = 0, $wcount = 99999)
     {
-        global $userfolder;
         $fetched_part = 0;
         $parallelized = 0;
         // $this->havespam = "";
@@ -1128,7 +1120,7 @@ class Telaen extends Telaen_core
              * we are checking the INBOX and we have _autospamfolder
              * set :)
              */
-            if (($this->autospamfolder) &&
+            if (($this->prefs['autospamfolder']) &&
                 (strtoupper($boxname) == 'INBOX' || strtoupper($boxname) == 'SPAM')) {
                 foreach ($this->_spamregex as $spamregex) {
                     if (preg_match("/$spamregex/i", $spamsubject)) {
@@ -1137,9 +1129,9 @@ class Telaen extends Telaen_core
                         break;
                     }
                 }
-                if ($this->userspamlevel) {
+                if ($this->prefs['spamlevel']) {
                     preg_match('|[*+]+|', $xspamlevel, $matches);
-                    if (strlen($matches[0]) >= $this->userspamlevel) {
+                    if (strlen($matches[0]) >= $this->prefs['spamlevel']) {
                         $havespam = 1;
                         $this->havespam = 'TRUE';
                     }
@@ -1548,7 +1540,7 @@ class Telaen extends Telaen_core
     {
         $flagname = strtoupper($flagname);
         if (!in_array($flagname, $this->flags)) {
-            if ($this->log_errors) {
+            if ($this->config['log_errors']) {
                 $this->trigger_error("unknown flag: $this->userfolder", __FUNCTION__);
             }
             return false;
@@ -1932,10 +1924,10 @@ class Telaen extends Telaen_core
                 if ($this->prefs['empty-trash']) {
                     if ($this->mail_protocol == IMAP) {
                         if (!$this->mail_connect()) {
-                            redirect_and_exit('index.php?err=1', true);
+                            $this->redirect_and_exit('index.php?err=1', true);
                         }
                         if (!$this->mail_auth()) {
-                            redirect_and_exit('index.php?err=0');
+                            $this->redirect_and_exit('index.php?err=0');
                         }
                     }
                     $trash = 'trash';
@@ -1958,10 +1950,10 @@ class Telaen extends Telaen_core
 
                 if ($this->prefs['empty-spam']) {
                     if (!$this->mail_connect()) {
-                        redirect_and_exit('index.php?err=1', true);
+                        $this->redirect_and_exit('index.php?err=1', true);
                     }
                     if (!$this->mail_auth()) {
-                        redirect_and_exit('index.php?err=0');
+                        $this->redirect_and_exit('index.php?err=0');
                     }
                     $trash = 'spam';
                     if (!is_array($mbox['headers'][base64_encode($trash)])) {

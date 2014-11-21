@@ -38,7 +38,7 @@ function dis() {
 $smarty->assign('umJS', $jssource);
 
 // load filters
-$filename = $userfolder.'_infos/filters.ucf';
+$filename = $TLN->userfolder.'_infos/filters.ucf';
 $myfile = $TLN->read_file($filename);
 $filters = array();
 
@@ -93,7 +93,7 @@ if (isset($_POST['action'])) {
         if (intval($_POST['filter_type']) == FL_TYPE_MOVE) {
             $destFolder = trim($_POST['filter_folder']);
             // Check if the user entered a valid folder
-            if (!valid_folder_name($destFolder) || !file_exists($userfolder.$destFolder)) {
+            if (!valid_folder_name($destFolder) || !file_exists($TLN->userfolder.$destFolder)) {
                 break;
             }
         }

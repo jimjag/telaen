@@ -29,12 +29,9 @@ class Telaen_core
     public $sanitize          = true;
     public $use_html          = false;
     public $charset           = 'iso-8859-1';
-    public $timezone          = '+0000';
-    public $debug             = false;
-    public $log_errors        = false;
     public $userfolder        = './';
     public $temp_folder       = './';
-    public $timeout           = 10;
+    public $idle_timeout      = 10;
     public $displayimages     = false;
     public $save_temp_attachs = true;
     public $current_level     = array();
@@ -454,7 +451,7 @@ class Telaen_core
         // split the parts
         $parts = $this->_split_parts($boundary, $body);
 
-        // not needed.. $thispart = ($this->use_html)?$parts[1]:$parts[0];
+        // not needed.. $thispart = ($this->config['allow_html'])?$parts[1]:$parts[0];
 
         // multipart flag
         $multipartSub = false;
@@ -476,11 +473,11 @@ class Telaen_core
                 $multipartSub = true;
                 break;
             // if html enabled use it
-            } elseif ($this->use_html && $ctype == 'text/html') {
+            } elseif ($this->config['allow_html'] && $ctype == 'text/html') {
                 $part = $parts[$index];
                 break;
             // else use the text part
-            } elseif (!$this->use_html && $ctype == 'text/plain') {
+            } elseif (!$this->config['allow_html'] && $ctype == 'text/plain') {
                 $part = $parts[$index];
                 break;
             }
@@ -498,10 +495,10 @@ class Telaen_core
             $this->_build_complex_body($part['headers']['content-type'], $part['body']);
         } else {
             $body = $this->_compile_body($part['body'], $part['headers']['content-transfer-encoding'], $part['headers']['content-type']);
-            if (!$this->use_html && $part['type'] != 'text/plain') {
+            if (!$this->config['allow_html'] && $part['type'] != 'text/plain') {
                 $body = $this->_html2text($body);
             }
-            if (!$this->use_html) {
+            if (!$this->config['allow_html']) {
                 $body = $this->_build_text_body($body);
             }
             $this->_add_body($body);
@@ -575,7 +572,7 @@ class Telaen_core
             } elseif ($rctype == 'text/html' &&    !$is_download) {
                 $body = $this->_compile_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
 
-                if (!$this->use_html) {
+                if (!$this->config['allow_html']) {
                     $body = $this->_build_text_body($this->_html2text($body));
                 }
                 $this->_add_body($body);
@@ -666,7 +663,7 @@ class Telaen_core
             $body = $this->_compile_body($body, $ctenc, $mail_info['content-type']);
             switch ($subtype) {
             case 'html':
-                if (!$this->use_html) {
+                if (!$this->config['allow_html']) {
                     $body = $this->_build_text_body($this->_html2text($body));
                 }
                 $msgbody = $body;

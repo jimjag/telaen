@@ -162,10 +162,10 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
             if ($TLN->prefs['save-to-sent']) {
                 if (!$TLN->mail_connect()) {
-                    redirect_and_exit('index.php?err=1', true);
+                    $TLN->redirect_and_exit('index.php?err=1', true);
                 }
                 if (!$TLN->mail_auth(false)) {
-                    redirect_and_exit('index.php?err=0');
+                    $TLN->redirect_and_exit('index.php?err=0');
                 }
                 $TLN->mail_save_message('sent', $mail->TelaenGetEmail(), '\\SEEN');
                 unset($mbox['headers'][base64_encode('sent')]);
@@ -391,10 +391,10 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         if (($rtype == 'forward' && !stristr($mail_info['flags'], '\\FORWARDED'))
             || ($rtype != 'forward' && !stristr($mail_info['flags'], '\\ANSWERED'))) {
             if (!$TLN->mail_connect()) {
-                redirect_and_exit('index.php?err=1', true);
+                $TLN->redirect_and_exit('index.php?err=1', true);
             }
             if (!$TLN->mail_auth()) {
-                redirect_and_exit('index.php?err=0');
+                $TLN->redirect_and_exit('index.php?err=0');
             }
             if ($rtype != 'forward' && $TLN->mail_set_flag($mail_info, '\\ANSWERED', '+')) {
                 $mbox['headers'][base64_encode(strtolower($folder))][$ix] = $mail_info;

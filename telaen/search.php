@@ -49,10 +49,10 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         if (!is_array($mbox['headers'][base64_encode(strtolower($entry))])) {
             if (!$TLN->mail_connected()) {
                 if (!$TLN->mail_connect()) {
-                    redirect_and_exit('index.php?err=1', true);
+                    $TLN->redirect_and_exit('index.php?err=1', true);
                 }
                 if (!$TLN->mail_auth()) {
-                    redirect_and_exit('index.php?err=0');
+                    $TLN->redirect_and_exit('index.php?err=0');
                 }
             }
             $retbox = $TLN->mail_list_msgs($entry);
@@ -93,7 +93,7 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
     }
     $search_results = array();
     $start = get_microtime();
-    $TLN->use_html = false;
+    $TLN->config['allow_html'] = false;
 
     if ($srcFrom != "") {
         $srcFrom = build_regex($srcFrom);

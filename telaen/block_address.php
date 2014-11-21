@@ -11,10 +11,10 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 
 if (!isset($ix) || !isset($folder)) {
-    redirect_and_exit('index.php?err=3', true);
+    $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
-$filename = $userfolder.'_infos/filters.ucf';
+$filename = $TLN->userfolder.'_infos/filters.ucf';
 $myfile = $TLN->read_file($filename);
 $filters = array();
 

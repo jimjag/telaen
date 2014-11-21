@@ -172,7 +172,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     // Override what the server sez it can do with what the
     // admin sez it can via config.php
     //
-    foreach ($capa_override as $key => $value) {
+    foreach ($TLN->config['capa_override'] as $key => $value) {
         $capa[$key] = $value;
     }
     $TLN->capabilities = $auth['capabilities'] = $capa;
@@ -188,7 +188,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     }
     $quota_limit = bkmg2bytes($quota_limit); // ensure bytes
     $auth['quota_limit'] = $quota_limit;
-} elseif ($auth['auth'] && ((time() - $start) < ($idle_timeout * 60))) {
+} elseif ($auth['auth'] && ((time() - $start) < ($TLN->config['idle_timeout'] * 60))) {
     $TLN->mail_user = $f_user = $auth['user'];
     $TLN->mail_pass = $f_pass = $auth['pass'];
     $TLN->mail_server = $f_server = $auth['server'];
@@ -210,23 +210,15 @@ $auth['start'] = time();
 
 $AuthSession->Save($auth);
 
-$userfolder = $temporary_directory.preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
+$TLN->userfolder = $temporary_directory.preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
 
 $UserMbox = new Mbox();
 $TLN->UserMbox = $UserMbox;
-$mbox = &$UserMbox->Load($userfolder.'_infos/mboxes.ucf');
-
-$TLN->debug = $enable_debug;
-$TLN->log_errors = $log_errors;
-$TLN->use_html = $allow_html;
-
-$TLN->user_folder = $userfolder;
-$TLN->temp_folder = $temporary_directory;
-$TLN->timeout = $idle_timeout;
+$mbox = &$UserMbox->Load($TLN->userfolder.'_infos/mboxes.ucf');
 
 // avoid missing settings allow dirs creation with 000 perms
-if (isset($dirperm) && $dirperm != 0000) {
-    $TLN->dirperm = $dirperm;
+if (isset($TLN->config['dirperm']) && $TLN->config['dirperm'] != 0000) {
+    $TLN->dirperm = $TLN->config['dirperm'];
 }
 
 $TLN->load_prefs();
@@ -236,9 +228,7 @@ $mycal = $mymo->monthAsDiv();
 $smarty->assign('umCalendar', $mycal);
 $smarty->assign('umSystemNews', $systemNews);
 
-$TLN->timezone = $TLN->prefs['timezone'];
 $TLN->charset = $lang['default_char_set'];
-$TLN->userspamlevel = $TLN->prefs['spamlevel'];
 
 /*
 Don't remove the following lines, or you will have problems with browser's cache
@@ -294,6 +284,6 @@ if (isset($need_save)) {
 
 if (!isset($folder) || $folder == "" || strpos($folder, '..') !== false) {
     $folder = 'inbox';
-} elseif (!file_exists($userfolder.$TLN->fix_prefix($folder, 1))) {
+} elseif (!file_exists($TLN->userfolder.$TLN->fix_prefix($folder, 1))) {
     redirect_and_exit('logout.php');
 }

@@ -12,7 +12,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 
 if (!isset($ix) || !isset($pag)) {
-    redirect_and_exit('index.php?err=3', true);
+    $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
 $folderkey = base64_encode(strtolower($folder));
@@ -36,7 +36,7 @@ if (isset($attachment)) {
 
     if (!is_array($root) ||
         !file_exists($root['filename'])) {
-        redirect_and_exit('index.php?err=3');
+        $TLN->redirect_and_exit('index.php?err=3');
     }
 
     $result = $TLN->read_file($root['filename']);
@@ -44,14 +44,14 @@ if (isset($attachment)) {
     $is_attached = false;
     $arAttachment = array();
     if (!$TLN->mail_connect()) {
-        redirect_and_exit('index.php?err=1', true);
+        $TLN->redirect_and_exit('index.php?err=1', true);
     }
     if (!$TLN->mail_auth()) {
-        redirect_and_exit('index.php?err=0');
+        $TLN->redirect_and_exit('index.php?err=0');
     }
 
     if (!($result = $TLN->mail_retr_msg($mail_info, 1))) {
-        redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&pag=$pag&refr=true");
+        $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&pag=$pag&refr=true");
     }
     if ($TLN->mail_set_flag($mail_info, '\\SEEN', '+')) {
         $mbox['headers'][$folderkey][$ix] = $mail_info;
@@ -291,9 +291,9 @@ if (count($anexos) > 0) {
 $UserMbox->Save($mbox);
 
 $avalfolders = array();
-$d = dir($userfolder);
+$d = dir($TLN->userfolder);
 while ($entry = $d->read()) {
-    if (is_dir($userfolder.$entry) &&
+    if (is_dir($TLN->userfolder.$entry) &&
         $entry != '..' &&
         $entry != '.' &&
         substr($entry, 0, 1) != '_' &&

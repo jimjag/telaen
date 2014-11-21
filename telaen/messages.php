@@ -19,7 +19,7 @@ $smarty->assign('umUser', $f_user);
 $refreshurl = 'process.php?folder='.urlencode($folder)."&pag=$pag&refr=true";
 
 if (!is_array($headers = $mbox['headers'][$folder_key])) {
-    redirect_and_exit('index.php?err=3', true);
+    $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
 $arrow = ($sortorder == 'ASC') ? 'images/arrow_up.gif' : 'images/arrow_down.gif';
@@ -58,7 +58,7 @@ $timeleft = ($TLN->prefs['refresh-time']-$elapsedtime);
 if ($timeleft > 0) {
     $refreshMeta = "	<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";
 } elseif ($TLN->prefs['refresh-time']) {
-    redirect_and_exit("$refreshurl");
+    $TLN->redirect_and_exit("$refreshurl");
 }
 
 // Assign metas to smarty, no more bad echos output
@@ -98,7 +98,7 @@ $start_pos = ($pag-1)*$reg_pp;
 $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
 
 if (($start_pos >= $end_pos) && ($pag != 1)) {
-    redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
+    $TLN->redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
 }
 
 /*
@@ -114,7 +114,7 @@ for ($i = $start_pos;$i<$end_pos;$i++) {
     }
 }
 if ($force_refresh) {
-    redirect_and_exit('process.php?folder='.urlencode($folder)."&pag=$pag&mlist=true");
+    $TLN->redirect_and_exit('process.php?folder='.urlencode($folder)."&pag=$pag&mlist=true");
 }
 
 $jsquota = ($exceeded) ? 'true' : 'false';
@@ -314,9 +314,9 @@ if ($nummsg > 0) {
 $smarty->assign('umNavBar', $navigation);
 
 $avalfolders = array();
-$d = dir($userfolder);
+$d = dir($TLN->userfolder);
 while ($entry = $d->read()) {
-    if (is_dir($userfolder.$entry) &&
+    if (is_dir($TLN->userfolder.$entry) &&
         $entry != '..' &&
         $entry != '.' &&
         substr($entry, 0, 1) != '_' &&

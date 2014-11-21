@@ -17,10 +17,10 @@ extract(pull_from_array($_POST, array('newfolder'), 's'));
 
 // server check
 if (!$TLN->mail_connect()) {
-    redirect_and_exit('index.php?err=1', true);
+    $TLN->redirect_and_exit('index.php?err=1', true);
 }
 if (!$TLN->mail_auth()) {
-    redirect_and_exit('index.php?err=0');
+    $TLN->redirect_and_exit('index.php?err=0');
 }
 
 // check and create a new folder
@@ -29,7 +29,7 @@ $newfolder = trim($newfolder);
 $require_update = false;
 
 if (valid_folder_name($newfolder, true) &&
-   !file_exists($userfolder.$newfolder)) {
+   !file_exists($TLN->userfolder.$newfolder)) {
     $TLN->mail_create_box($newfolder);
     $require_update = true;
 }
@@ -65,7 +65,7 @@ if (isset($empty)) {
         $UserMbox->Save($mbox);
     }
     if (isset($goback)) {
-        redirect_and_exit('process.php?folder='.urlencode($folder)."");
+        $TLN->redirect_and_exit('process.php?folder='.urlencode($folder)."");
     }
 }
 
@@ -117,7 +117,7 @@ for ($n = 0;$n<count($boxes);$n++) {
              * Sort the arrays and fit them together again.
              */
             $merged_array = array_merge($mbox['headers'][base64_encode('inbox')], $mbox['headers'][base64_encode('spam')]);
-            array_qsort2int($merged_array, 'msg', 'ASC');
+            $TLN->array_qsort2int($merged_array, 'msg', 'ASC');
 
             $merged_returnarray = $TLN->mail_list_msgs('INBOX', $merged_array);
             $thisbox = $merged_returnarray[0];
@@ -199,8 +199,8 @@ $TLN->mail_disconnect();
 unset($AuthSession, $TLN);
 
 // Sort and merge the 2 folders arrays
-array_qsort2ic($system, 'name');
-array_qsort2ic($personal, 'name');
+$TLN->array_qsort2ic($system, 'name');
+$TLN->array_qsort2ic($personal, 'name');
 
 $umFolderList = array_merge((array) $system, (array) $personal);
 

@@ -5,7 +5,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 if ($folder == 'inbox') {
     $require_update = false;
 
-    $filename = $userfolder.'_infos/filters.ucf';
+    $filename = $TLN->userfolder.'_infos/filters.ucf';
     $myfile = $TLN->read_file($filename);
     $filters = array();
 

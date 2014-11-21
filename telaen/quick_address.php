@@ -13,12 +13,12 @@ require './inc/init.php';
 extract(pull_from_array($_GET, array('where'), 'str'));
 extract(pull_from_array($_POST, array('contacts'), 'str'));
 
-$filename = $userfolder.'_infos/addressbook.ucf';
+$filename = $TLN->userfolder.'_infos/addressbook.ucf';
 $myfile = $TLN->read_file($filename);
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));
 }
-array_qsort2ic($addressbook, 'name');
+$TLN->array_qsort2ic($addressbook, 'name');
 
 switch ($where) {
 case 'cc':

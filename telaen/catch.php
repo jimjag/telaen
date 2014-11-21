@@ -11,12 +11,12 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 
 if (!isset($ix) || !isset($folder)) {
-    redirect_and_exit('index.php?err=3', true);
+    $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
 extract(pull_from_array($_POST, array('ckaval'), 1));
 
-$filename = $userfolder.'_infos/addressbook.ucf';
+$filename = $TLN->userfolder.'_infos/addressbook.ucf';
 $myfile = $TLN->read_file($filename);
 $addressbook = array();
 
