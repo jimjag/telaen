@@ -3,32 +3,30 @@ INSTALL
 ----------------------------------------------------
 - Read the README file... really, you should!
 
-- Unpack the package (.tar.gz or .zip file) into temporary directory. 
+- Unpack the package (.tar.gz or .zip file) into temporary directory.
 
 - Move the 'telaen' folder to where you want it under your
   public webspace.
   eg /home/httpd/webmail (*unix) or c:\inetpub\wwwroot\webmail (Win32).
-  
-- Make a non web-shared folder (users cannot see this folder throught a web
+
+- Make a non web-shared folder (users cannot see this folder through a web
   browser), eg. /home/telaen or c:\winnt\temp\telaen
 
 - IMPORTANT: If using the bundled Smarty package, move the ./smarty_move_me/
   directory to a non web-shared folder.
- 
+
 - The user which the webserver is running (nobody, apache, IUSR_machine,etc)
   need permission to write on this folder. It is best to make
   it owned by the webserver ID and mode 700.
 
-- In the "telaen/inc/config/" directory, copy the following files to their
-  new names:
-  
-     config.languages.php.default  ->  config.languages.php
-     config.php.default            ->  config.php
-     config.security.php.default   ->  config.security.php
-     
-- Open all the "inc/config*php" files in a text editor; all instructions are
-  commented on this file, pay attention on the $temporary_folder variable and
-  the SMARTY_DIR define, set them according your above folder names.
+- The default configuration is stored in "inc/config/configv2.php.default".
+  Any and all changes should be placed in the "inc/config/configv2.php"
+  file; there is no need to copy over settings which don't have any
+  local changes, but if you prefer to just copy configv2.php.default
+  to configv2.php and make your edits there, that is fine too.
+  All instructions are commented on in this file; pay attention to
+  the $config['temporary_folder'] variable and the SMARTY_DIR define!
+  Set them according your above folder names.
 
 - Check your installation setup by performing the following
   tasks:
@@ -38,11 +36,6 @@ INSTALL
       o Make any required changes.
       o Be SURE to REMOVE check_install.php or RENAME it back to
         check_install.php.txt !!!
-
-- If not using the bundled version of Smarty, be sure to copy the
-  function.um_welcome_message.php.txt in the 'patches'
-  directory file to your Smarty plugins folder (rename it to
-  function.um_welcome_message.php)!
 
 - Ensure that the ./inc/ directory cannot be accessed directly.
   There are many ways to do this, but the easiest is using
@@ -60,9 +53,9 @@ The performance of Telaen, of course, depends on the speed of
 your Webserver, PHP and your POP3/IMAP Email server. Even so,
 here are some helpful hints:
 
-  a. Use Apache 2.2.
+  a. Use Apache 2.4.
   b. Just for Telaen, configure PHP with a large memory
-     allocation and a long (or non-existant) time-limit.
+     allocation and a long (or non-existent) time-limit.
   c. Use a good PHP cache, like XCache or APC.
   d. If possible, host your Email server on your Web server,
      so you can connect to the loopback address.

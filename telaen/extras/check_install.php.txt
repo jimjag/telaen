@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>... Testing Telaen installation ...</title>
+<title>... Testing Telaen v2.x installation ...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 
@@ -8,216 +8,229 @@
 <font face="Arial" size="+1">
 
 <?php
-chdir('../');	// So the include works
-$error = false;
-$warn = false;
-?>
-
-<strong>This script will test your configurations and try to give you a solution.</strong><br/>
-All configurations are located in <font face="Courier New" color=Gray>./inc/config</font> folder
-and appear as <font face="Courier New" color=Gray>config.*.php</font><br/>
-<hr>
-
-<br/><strong>- Testing for old config files... </strong><br/>
-
-<?php
-
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Old version??
-//
+chdir('../');	// So the include works
+?>
 
+<h1>Intro</h1>
+<strong>This script will test your installation and configuration of Telaen v2.x and try to give you a solution.</strong><br/>
+
+<h2>Checking PHP version:</h2>
+<hr>
+<?php
+$phpver = phpversion();
+$phpver = doubleval($phpver[0].'.'.$phpver[2]);
+if ((double) $phpver < 5.4)
+	echo('<font color=red><strong>FAIL</strong></font>Talaen requires at least version 5.4.x; you are running {$phpver} <br/>');
+else
+	echo('<font color=green><strong>PASSED</strong></font>Running PHP version {$phpver} <br/>');
+?>
+
+<h2>Checking for old configuration file(s)</h2>
+
+Older versions of Telaen used 3 separate files and a different configuration method.
+Checking if the old configs are still around:<br/>
+<hr>
+
+<?php
 $has_old_files = false;
 $old_files = Array();
 foreach (Array("config.languages.php","config.php","config.security.php") as $i) {
-	if (file_exists('./inc/'.$i)) {
+	if (file_exists('./inc/config/'.$i)) {
 		$has_old_files = true;
 		$old_files[] = $i;
 	}
 }
 
 if ($has_old_files) {
-	echo('<font color=red><strong>WARNING</strong></font><br/>I see the following old config files in their old location: ');
+	echo('<font color=red><strong>WARNING</strong></font>&nbsp; I see the following old config files:</br>');
 	foreach ($old_files as $i) {
-		echo('<font face="Courier New" color=Gray>'.$i.'</font> &nbsp;');
+		echo('<font face="Courier New" color=Gray>&nbsp;&nbsp;&nbsp;&nbsp;'.$i.'</font><br/>');
 	}
-	echo('<br/>You should either move these to <font face="Courier New" color=Gray>./inc/config/</font> or delete these.<br/>');
+	echo('<br/>Done<br/>');
 } else
 	echo('<font color=green><strong>PASSED</strong></font><br/>');
+?>
 
+<h2>Checking for old files:</h2>
+With the upgrade to version 2.x, some files are no longer required and
+should be deleted. Checking for these now:<br/>
+<hr>
 
-echo('<br/><strong>- Testing for old class files... </strong><br/>');
+<?php
+
 $has_old_files = false;
 $old_files = Array();
 
-foreach (Array("class.phpmailer.php","class.smtp.php","class.tnef.php","class.phpmailer_extra.php","class.telaen.php","class.pop3.php","class.telaen_mail.php") as $i) {
-	if (file_exists('./inc/'.$i)) {
+foreach (Array('inc/lib.php', 'langs/bg.txt','langs/en_UK.txt','langs/is.txt','langs/nl.txt','langs/ru.txt',
+	'langs/ch_big5.txt','langs/es.txt','langs/it.txt','langs/ru_KOI.txt',
+	'langs/cz_iso.txt','langs/fr.txt','langs/ko.txt','langs/pl.txt','langs/se.txt',
+	'langs/de.txt','langs/he.txt','langs/ms.txt','langs/pt_BR.txt','langs/th.txt',
+	'langs/dk.txt','langs/hu.txt','langs/nb.txt','langs/ro.txt','langs/tr.txt') as $i) {
+	if (file_exists('./'.$i)) {
 		$has_old_files = true;
 		$old_files[] = $i;
 	}
 }
 
 if ($has_old_files) {
-	echo('<font color=red><strong>WARNING</strong></font><br/>I see the following old class files in their old location: ');
+	echo('<font color=red><strong>WARNING</strong></font>I see the following old files:</br>');
 	foreach ($old_files as $i) {
-		echo('<font face="Courier New" color=Gray>'.$i.'</font> &nbsp;');
+		echo('<font face="Courier New" color=Gray>&nbsp;&nbsp;&nbsp;&nbsp;'.$i.'</font><br/>');
 	}
 	echo('<br/>These should be deleted!<br/>');
 } else
 	echo('<font color=green><strong>PASSED</strong></font><br/>');
 
-echo('<br/><strong>- Testing <font face="Courier New" color=Gray>inc/config/config.php</font></strong><br/>');
-echo('<em>if the script stops here, there are a parse problems with your file; try getting a fresh copy and re-editing it</em>)<br/>...');
+echo('<br/><strong>- Testing <font face="Courier New" color=Gray>inc/config/configv2.php</font></strong><br/>');
+echo('<em>if the script stops here, there are parsing problems with your file; try getting a fresh copy and re-editing it</em>)<br/>...');
+?>
 
-@include('inc/config/config.php');
+<h2>New config?</h2>
+Telaen configuration is located in the <font face="Courier New" color=Gray>./inc/config</font> folder
+in <font face="Courier New" color=Gray>configv2.php.default</font> and
+<font face="Courier New" color=Gray>configv2.php</font>. Checking now:
 
-if (is_array($default_preferences)) 
-	echo('<font color=green><strong>PASSED</strong></font><br/>');
-else
-	die('<font color=red><strong>FAILED</strong></font><br/>There are problems with your <font face="Courier New" color=Gray>config.php</font>, try getting a fresh copy and re-editing it<br/>');
+<?php
+@include './inc/config/configv2.php';
+if (!isset($config) || !is_array($config))
+	echo('<font color=red><strong>FAIL</strong></font>I don\'t see, or cannot read, your <font face="Courier New" color=Gray>configv2.php</font> file<br/>');
+	echo ('You can try to use the <font face="Courier New" color=Gray>convert12.php</font> script to create a v2 version based on your v1 setup.');
+else {
+	echo('<font color=green><strong>PASSED</strong></font> <br/>');
+	echo("<br/><strong>- Testing your \$config['temporary_directory'] variable</strong> ($temporary_directory)... <br/>");
 
-echo("<br/><strong>- Testing your \$temporary_directory variable</strong> ($temporary_directory)... <br/>");
+	// Now start checking the location and perms for $temporary_directory
+	// Location vars
+	$temporary_directory = $config['temporary_directory'];
+	$localpath = realpath('./');
+	$temppath = realpath($temporary_directory);
 
-// Now start checking the location and perms for $temporary_directory
-// Location vars
-$localpath = realpath('./');
-$temppath = realpath($temporary_directory);
-
-// For webserver uid/gid info
-$uidisvalid = 0;
-$tmpfname = tempnam("/tmp", "TELAEN-");
-$fd = @fopen($tmpfname, "w");
-if ($fd) {
-	if (fwrite($fd, "foo")) {
-		fclose($fd);
-		// we know the file was created
-		$uid = fileowner($tmpfname);
-		$gid = filegroup($tmpfname);
-		unlink($tmpfname);
-		$uidisvalid = 1;
-	}
-}
-
-echo('<br/>Can we write it?...   ');
-if(!is_writable($temporary_directory)) {
-	echo('<font color=red><strong>FAILED</strong></font>
-	<br/>The path given in <font face="Courier New" color=Gray>$temporary_directory</font> points to a folder that is not writable<br/>
-	The user wich your webserver runs on (apache in *nix or IUSR_name in windows) MUST have rights to create folder and files<br/>
-	on this directory. try chmod or Properties dialog<br/>');
-	echo("The directory should be mode 700");
-	if ($uidisvalid) {
-		echo(" with a Owner of $uid and Group of $gid");
-	}
-	echo(".<br/>");
-	$error = true;
-} else {
-	// We know it's writable, but how secure is it?
-	// Note: If $uidisvalid is 0, then we were not able to
-	//       get the web server uid/gid, most likely due to
-	//       an open_basedir issue. Since we know $temporary_directory
-	//       is writable now, get that info here :)
-	if (!$uidisvalid) {
-		$tmpfname = tempnam("$temporary_directory", "TELAEN-");
-		$fd = @fopen($tmpfname, "w");
-		if ($fd) {
-			if (fwrite($fd, "foo")) {
-				fclose($fd);
-				// we know the file was created
-				$uid = fileowner($tmpfname);
-				$gid = filegroup($tmpfname);
-				unlink($tmpfname);
-				$uidisvalid = 1;
-			}
+	// For webserver uid/gid info
+	$uidisvalid = 0;
+	$tmpfname = tempnam("/tmp", "TELAEN-");
+	$fd = @fopen($tmpfname, "w");
+	if ($fd) {
+		if (fwrite($fd, "foo")) {
+			fclose($fd);
+			// we know the file was created
+			$uid = fileowner($tmpfname);
+			$gid = filegroup($tmpfname);
+			unlink($tmpfname);
+			$uidisvalid = 1;
 		}
 	}
-	$tuid = fileowner($temporary_directory);
-	$tgid = filegroup($temporary_directory);
-	$mode = substr(sprintf('%o', fileperms($temporary_directory)), -3);
-	
-	echo('<font color=green><strong>PASSED</strong></font><br/>');
-	echo("Now let's check the permissions.<br/>The directory should be mode 700");
-	if ($uidisvalid) {
-		echo(" with a Owner of $uid and Group of $gid");
+
+	echo('<br/>Can we write it?...   ');
+	if(!is_writable($temporary_directory)) {
+		echo('<font color=red><strong>FAILED</strong></font>
+		<br/>The path given in <font face="Courier New" color=Gray>$temporary_directory</font> points to a folder that is not writable<br/>
+		The user wich your webserver runs on (apache in *nix or IUSR_name in windows) MUST have rights to create folder and files<br/>
+		on this directory. try chmod or Properties dialog<br/>');
+		echo("The directory should be mode 700");
+		if ($uidisvalid) {
+			echo(" with a Owner of $uid and Group of $gid");
+		}
+		echo(".<br/>");
+		$error = true;
+	} else {
+		// We know it's writable, but how secure is it?
+		// Note: If $uidisvalid is 0, then we were not able to
+		//       get the web server uid/gid, most likely due to
+		//       an open_basedir issue. Since we know $temporary_directory
+		//       is writable now, get that info here :)
+		if (!$uidisvalid) {
+			$tmpfname = tempnam("$temporary_directory", "TELAEN-");
+			$fd = @fopen($tmpfname, "w");
+			if ($fd) {
+				if (fwrite($fd, "foo")) {
+					fclose($fd);
+					// we know the file was created
+					$uid = fileowner($tmpfname);
+					$gid = filegroup($tmpfname);
+					unlink($tmpfname);
+					$uidisvalid = 1;
+				}
+			}
+		}
+		$tuid = fileowner($temporary_directory);
+		$tgid = filegroup($temporary_directory);
+		$mode = substr(sprintf('%o', fileperms($temporary_directory)), -3);
+
+		echo('<font color=green><strong>PASSED</strong></font><br/>');
+		echo("Now let's check the permissions.<br/>The directory should be mode 700");
+		if ($uidisvalid) {
+			echo(" with a Owner of $uid and Group of $gid");
+		}
+		echo(". Let's see how close you are:<br/>");
+		echo("Your mode is $mode, Owner is $tuid and Group is $tgid...   ");
+		if ($mode != "700" ||
+		   ($uidisvalid && (($tuid != $uid) || ($tgid != $gid)))) {
+			echo('<font color=red><strong>WARNING</strong></font><br/>Not setup securely!');
+			$warn = true;
+		} else {
+				echo('<font color=green><strong>PASSED</strong></font><br/>');
+		}
 	}
-	echo(". Let's see how close you are:<br/>");
-	echo("Your mode is $mode, Owner is $tuid and Group is $tgid...   ");
-	if ($mode != "700" ||
-	   ($uidisvalid && (($tuid != $uid) || ($tgid != $gid)))) {
-		echo('<font color=red><strong>WARNING</strong></font><br/>Not setup securely!');
+
+	echo('<br/>Is it a safe location?...   ');
+	if(substr($temppath, 0, strlen($localpath)) == $localpath) {
+		echo('<font color=red><strong>WARNING</strong></font>
+		<br/>The path given in <font face="Courier New" color=Gray>$temporary_directory</font> points to a folder inside the main folder<br/>
+		Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br/>
+		There are security issues using this configuration, please choose a non-shared folder to store temporary files<br/>
+		/var/telaen is a good choice<br/>');
 		$warn = true;
 	} else {
-			echo('<font color=green><strong>PASSED</strong></font><br/>');
+		echo('<font color=green><strong>PASSED</strong></font><br/>');
 	}
-}
 
-echo('<br/>Is it a safe location?...   ');
-if(substr($temppath, 0, strlen($localpath)) == $localpath) {
-	echo('<font color=red><strong>WARNING</strong></font>
-	<br/>The path given in <font face="Courier New" color=Gray>$temporary_directory</font> points to a folder inside the main folder<br/>
-	Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br/>
-	There are security issues using this configuration, please choose a non-shared folder to store temporary files<br/>
-	/var/telaen is a good choice<br/>');
-	$warn = true;
-} else {
-	echo('<font color=green><strong>PASSED</strong></font><br/>');
-}
+	// Now check to make sure that Smarty is not under here as well.
+	$smartyrelative = SMARTY_DIR;
+	$smartypathdefined = realpath(SMARTY_DIR);
+	$smartypathold = realpath('./smarty/');
+	$smartypathnew = realpath('./smarty_move_me/');
 
-// Now check to make sure that Smarty is not under here as well.
-$smartyrelative = SMARTY_DIR;
-$smartypathdefined = realpath(SMARTY_DIR);
-$smartypathold = realpath('./smarty/');
-$smartypathnew = realpath('./smarty_move_me/');
+	echo("<br/><strong>- Testing your Smarty libs location</strong> (SMARTY_DIR:$smartyrelative -> $smartypathdefined)... <br/>");
+	if(substr($smartypathdefined, 0, strlen($localpath)) == $localpath) {
+		echo('<font color=red><strong>WARNING</strong></font>
+		<br/>The path given in <font face="Courier New" color=Gray>SMARTY_DIR</font> points to a folder inside the main folder<br/>
+		Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br/>
+		There are security issues using this configuration, please choose a non-shared folder to store temporary files<br/>
+		/var/telaen is a good choice<br/>');
+		$warn = true;
+	} else {
+		echo('<font color=green><strong>PASSED</strong></font><br/>');
+	}
 
-echo("<br/><strong>- Testing your Smarty libs location</strong> (SMARTY_DIR:$smartyrelative -> $smartypathdefined)... <br/>");
-if(substr($smartypathdefined, 0, strlen($localpath)) == $localpath) {
-	echo('<font color=red><strong>WARNING</strong></font>
-	<br/>The path given in <font face="Courier New" color=Gray>SMARTY_DIR</font> points to a folder inside the main folder<br/>
-	Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br/>
-	There are security issues using this configuration, please choose a non-shared folder to store temporary files<br/>
-	/var/telaen is a good choice<br/>');
-	$warn = true;
-} else {
-	echo('<font color=green><strong>PASSED</strong></font><br/>');
-}
+	echo("<br/><strong>- Now checking that ./smarty/ is not here as well</strong>... <br/>");
+	if(is_readable($smartypathold)) {
+		echo('<font color=red><strong>WARNING</strong></font>
+		<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
+	} else {
+		echo('<font color=green><strong>PASSED</strong></font><br/>');
+	}
 
-echo("<br/><strong>- Now checking that ./smarty/ is not here as well</strong>... <br/>");
-if(is_readable($smartypathold)) {
-	echo('<font color=red><strong>WARNING</strong></font>
-	<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
-} else {
-	echo('<font color=green><strong>PASSED</strong></font><br/>');
-}
+	echo("<br/><strong>- Now checking that ./smarty_move_me/ is not here as well</strong>... <br/>");
+	if(is_readable($smartypathnew)) {
+		echo('<font color=red><strong>WARNING</strong></font>
+		<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
+	} else {
+		echo('<font color=green><strong>PASSED</strong></font><br/>');
+	}
 
-echo("<br/><strong>- Now checking that ./smarty_move_me/ is not here as well</strong>... <br/>");
-if(is_readable($smartypathnew)) {
-	echo('<font color=red><strong>WARNING</strong></font>
-	<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
-} else {
-	echo('<font color=green><strong>PASSED</strong></font><br/>');
-}
-
-
-$phpver = phpversion();
-$phpver = doubleval($phpver[0].".".$phpver[2]);
-
-echo('<br/><strong>- Testing your PHP version</strong>... ');
-
-if($phpver >= 4.1) echo('<font color=green><strong>PASSED</strong></font><br/>');
-else {
-	echo('<font color=red><strong>FAILED</strong></font><br/> You are using PHP version '.$phpver.', <br/>
-there are SERIOUS security risks using versions below 4.1. Telaen will not work properly with your version, please update now.<br/>');
-	$error = true;
 }
 
 $megs8 = 8*1024*1024;
 $megs32 = $megs8 * 4;
 
 $iniLimit = ini_get('memory_limit');
-$tempSize = 
-	str_replace('K', '*1024', 
-	str_replace('M', '*1024*1024', 
-	str_replace('G', '*1024*1024*1024', 
+$tempSize =
+	str_replace('K', '*1024',
+	str_replace('M', '*1024*1024',
+	str_replace('G', '*1024*1024*1024',
 	$iniLimit)));
 
 if($tempSize) {
