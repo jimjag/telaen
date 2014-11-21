@@ -32,12 +32,19 @@ class Telaen_core
     public $timezone          = '+0000';
     public $debug             = false;
     public $log_errors        = false;
-    public $user_folder       = './';
+    public $userfolder        = './';
     public $temp_folder       = './';
     public $timeout           = 10;
     public $displayimages     = false;
     public $save_temp_attachs = true;
     public $current_level     = array();
+    public $config            = array();
+    public $prefs             = array();
+    public $appversion        = "";
+    public $appname           = "";
+    public $UserMbox          = "";
+    public $AuthSession       = "";
+
     // internal
     protected $_msgbody = "";
     protected $_content = array();
@@ -148,9 +155,8 @@ class Telaen_core
      */
     protected function _add_body($strbody)
     {
-        global $block_external_images;
         if ($this->sanitize) {
-            $strbody = HTMLFilter($strbody, 'images/trans.gif', $block_external_images);
+            $strbody = HTMLFilter($strbody, 'images/trans.gif', $this->config['block_external_images']);
         }
         if ($this->_msgbody == "") {
             $this->_msgbody = $strbody;
@@ -509,7 +515,7 @@ class Telaen_core
      */
     protected function _build_complex_body($ctype, $body)
     {
-        global $sid,$lid,$ix,$folder;
+        global $ix, $folder;
 
         $Rtype = trim(substr($ctype, strpos($ctype, "type=")+5, strlen($ctype)));
 
@@ -699,8 +705,6 @@ class Telaen_core
      */
     protected function _build_attach($header, $body, $boundary, $part)
     {
-        global $mail,$temporary_directory,$userfolder;
-
         $headers = $this->_decode_header($header);
         $cdisp = $headers['content-disposition'];
         $ctype = $headers['content-type'];
@@ -763,7 +767,7 @@ class Telaen_core
         $temp_array['content-disposition'] = strtolower(trim($content_disposition));
         $temp_array['boundary'] = $boundary;
         $temp_array['part'] = $part;
-        $temp_array['filename'] = $this->user_folder.'_attachments/'.md5($temp_array['boundary']).'_'.$safefilename;
+        $temp_array['filename'] = $this->userfolder.'_attachments/'.md5($temp_array['boundary']).'_'.$safefilename;
         $temp_array['type'] = 'mime';
         $temp_array['index'] = $nIndex;
 
@@ -844,7 +848,7 @@ class Telaen_core
      * @param  string  $val Possible MD5 hash
      * @return boolean
      */
-    public function is_valid_md5($val)
+    static public function is_valid_md5($val)
     {
         return preg_match('|^[A-Fa-f0-9]{32}$|D', $val);
     }
@@ -937,10 +941,8 @@ class Telaen_core
      * Convert a TIMESTAMP value into a RFC-compliant date
      * Vola's note: I think it does exactly the opposite...
      */
-    public function build_mime_date($mydate, $timezone = '+0000')
+    public function build_mime_date($mydate, $timezone = '+0000', $server_timezone_offset='-0000')
     {
-        global $server_timezone_offset;
-
         // check if $timezone is valid
         if (!preg_match('/((\\+|-)[0-9]{4})/', $timezone)) {
             $timezone = '+0000';
@@ -1130,7 +1132,7 @@ class Telaen_core
             $temp_array['boundary'] = $boundary;
             $temp_array['part'] = 0;
             $temp_array['type'] = 'uue';
-            $temp_array['filename'] = $this->user_folder.'_attachments/'.md5($temp_array['boundary']).'_'.$temp_array['name'];
+            $temp_array['filename'] = $this->userfolder.'_attachments/'.md5($temp_array['boundary']).'_'.$temp_array['name'];
             $this->_content['attachments'][] = $temp_array;
             $this->save_file($temp_array['filename'], $stream);
             unset($temp_array);
@@ -1156,7 +1158,7 @@ class Telaen_core
             $temp_array['part'] = $part;
             $temp_array['type'] = 'tnef';
             $temp_array['tnef'] = $i;
-            $temp_array['filename'] = $this->user_folder.'_attachments/'.md5($temp_array['boundary']).'_'.$temp_array['name'];
+            $temp_array['filename'] = $this->userfolder.'_attachments/'.md5($temp_array['boundary']).'_'.$temp_array['name'];
 
             $this->_content['attachments'][] = $temp_array;
 
@@ -1190,4 +1192,305 @@ class Telaen_core
             return $folder;
         }
     }
+
+    /**
+     * Remove all files within a directory
+     * @param  string $folder Directory to clean up
+     * @return void
+     */
+    static public function cleanup_dir($folder)
+    {
+        if (file_exists($folder)) {
+            $d = dir($folder.'/');
+            while ($entry = $d->read()) {
+                if ($entry != '.' && $entry != '..' && $entry != "") {
+                    unlink($folder."/$entry");
+                }
+            }
+            $d->close();
+        }
+    }
+
+    static public function get_microtime()
+    {
+        $mtime = microtime();
+        $mtime = explode(' ', $mtime);
+        $mtime = (double) ($mtime[1]) + (double) ($mtime[0]);
+
+        return ($mtime);
+    }
+
+    static public function simpleoutput($p1)
+    {
+        printf($p1);
+    }
+
+    static public function get_usage_graphic($used, $aval)
+    {
+        if ($used >= $aval) {
+            $redsize = 100;
+            $graph = "<img src=\"images/red.gif\" height=\"10\" width=\"$redsize\" alt=\"\" />";
+        } elseif ($used == 0) {
+            $greesize = 100;
+            $graph = "<img src=\"images/green.gif\" height=\"10\" width=\"$greesize\" alt=\"\" />";
+        } else {
+            $usedperc = $used*100/$aval;
+            $redsize = ceil($usedperc);
+            $greesize = ceil(100-$redsize);
+            $red = "<img src=\"images/red.gif\" height=\"10\" width=\"$redsize\" alt=\"\" />";
+            $green = "<img src=\"images/green.gif\" height=\"10\" width=\"$greesize\" alt=\"\" />";
+            $graph = $red.$green;
+        }
+
+        return $graph;
+    }
+
+    /**
+     * Create TLS/SSL aware URL for server (eg: http://www.example.com/)
+     * @return string
+     */
+    static public function create_http_url()
+    {
+        $hurl = 'http';
+        if ((strtolower($_SERVER['HTTPS']) == 'on') || ($_SERVER['SERVER_PORT'] == 443)) {
+            $hurl .= 's://';
+        } else {
+            $hurl .= '://';
+        }
+        $hurl .= ($_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']);
+
+        return $hurl;
+    }
+
+    /**
+     * Create absolute URL of PHP script
+     * @param  string  $url             URL to add
+     * @param  boolean $add_scheme_host Whether we need http: part
+     * @return string
+     */
+    static public function create_abs_url($url, $add_scheme_host = true)
+    {
+        $nurl = "";
+        if ($add_scheme_host) {
+            $nurl .= create_http_url();
+        }
+        $nurl .= rtrim(dirname($_SERVER['PHP_SELF']), '/\\').'/'.$url;
+        $nurl = str_replace('\\', '/', $nurl);    // Windows path fix
+        return $nurl;
+    }
+
+    public function redirect_and_exit($location, $killsession = false)
+    {
+        // on error the session should be killed, on badlogin no, i want my selected theme/lang
+        if ($killsession) {
+            $this->AuthSession->Kill();
+        }
+
+        if ($this->config['redirects_are_relative']) {
+            $url = $location;
+        } else {
+            $url = create_abs_url($location);
+        }
+        if ($this->config['enable_debug']) {
+            echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$url\">Click here</a> to go to <a href=\"$url\">$url</a></h3><br><br><br><br>");
+        } elseif ($this->config['redirects_use_meta']) {
+            echo <<<ENDOFREDIRECT
+    <html>
+     <head>
+      <meta http-equiv="refresh" content="0;url=$url">
+      <script language="JavaScript">
+       <!--
+        window.location = "$url"
+       -->
+      </script>
+     </head>
+     <body></body>
+    </html>
+ENDOFREDIRECT;
+        } else {
+            Header("Location: $url");
+        }
+        if (ob_get_level()) {
+            ob_end_flush();
+        }
+        exit;
+    }
+
+    static public function array_qsort2ic(&$array, $column = 0, $order = 'ASC')
+    {
+        if (!is_array($array)) {
+            return;
+        }
+        $oper = ($order == 'ASC') ? (1) : (-1);
+        usort($array, create_function('$a,$b', "return strcasecmp(\$a['$column'],\$b['$column']) * $oper;"));
+        reset($array);
+    }
+
+    static public function array_qsort2(&$array, $column = 0, $order = 'ASC')
+    {
+        if (!is_array($array)) {
+            return;
+        }
+        $oper = ($order == 'ASC') ? (1) : (-1);
+        usort($array, create_function('$a,$b', "return strnatcmp(\$a['$column'],\$b['$column']) * $oper;"));
+        reset($array);
+    }
+
+    static public function array_qsort2int(&$array, $column = 0, $order = 'ASC')
+    {
+        // The column value must be an int value
+        if (!is_array($array)) {
+            return;
+        }
+        if ($order == 'ASC') {
+            usort($array, create_function('$a,$b', "return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']<\$b['$column'])?-1:1));"));
+        } else {
+            usort($array, create_function('$a,$b', "return ((\$a['$column']==\$b['$column']) ? 0 : ((\$a['$column']>\$b['$column'])?-1:1));"));
+        }
+        reset($array);
+    }
+
+    // load settings
+    public function load_prefs($user)
+    {
+        extract($this->config['default_preferences']);
+
+        $pref_file = $this->userfolder.'_infos/prefs.upf';
+
+        if (!file_exists($pref_file)) {
+            $this->prefs['real-name'] = UCFirst(substr($user, 0, strpos($user, '@')));
+            $this->prefs['reply-to'] = $user;
+            $this->prefs['save-to-trash'] = $send_to_trash_default;
+            $this->prefs['st-only-read'] = $st_only_ready_default;
+            $this->prefs['empty-trash'] = $empty_trash_default;
+            $this->prefs['empty-spam'] = $empty_spam_default;
+            $this->prefs['unmark-read'] = $unmark_read_default;
+            $this->prefs['save-to-sent'] = $save_to_sent_default;
+            $this->prefs['sort-by'] = $sortby_default;
+            $this->prefs['sort-order'] = $sortorder_default;
+            $this->prefs['rpp'] = $rpp_default;
+            $this->prefs['add-sig'] = $add_signature_default;
+            $this->prefs['signature'] = $signature_default;
+            $this->prefs['require-receipt'] = $require_receipt_default;
+            $this->prefs['timezone'] = $timezone_default;
+            $this->prefs['display-images'] = $display_images_default;
+            $this->prefs['editor-mode'] = $editor_mode_default;
+            $this->prefs['refresh-time'] = $refresh_time_default;
+            $this->prefs['spamlevel'] = $spamlevel_default;
+            $this->prefs['version'] = $this->appversion;
+        } else {
+            $this->prefs = file($pref_file);
+            $this->prefs = join("", $prefs);
+            $this->prefs = unserialize(~$prefs);
+        }
+    }
+
+    //save preferences
+    public function save_prefs($prefarray)
+    {
+        $pref_file = $this->userfolder.'_infos/prefs.upf';
+        $f = fopen($pref_file, 'w');
+        fwrite($f, ~serialize($prefarray));
+        fclose($f);
+    }
+
+    //get only headers from a file
+    static public function get_headers_from_file($strfile)
+    {
+        if (!file_exists($strfile)) {
+            return;
+        }
+        $f = fopen($strfile, 'rb');
+        while (!feof($f)) {
+            $result .= preg_replace('|\n|', "", fread($f, 100));
+            $pos = strpos($result, '\r\r');
+            if (!($pos === false)) {
+                $result = substr($result, 0, $pos);
+                break;
+            }
+        }
+        fclose($f);
+        unset($f);
+        unset($pos);
+        unset($strfile);
+
+        return preg_replace('|\r|', '\r\n', trim($result));
+    }
+
+    static public function debug_print_struc($obj)
+    {
+        echo('<pre>');
+        print_r($obj);
+        echo('</pre>');
+    }
+
+    static public function caster($var, $cast = 'string')
+    {
+        switch (gettype($cast)) {
+            case 'boolean':
+                $var = (boolean) $var; break;
+            case 'integer':
+                $var = (integer) $var; break;
+            case 'double':
+                $var = (double) $var; break;
+            case 'string':
+                $var = Telaen::safe_print(trim((string) $var));
+                break;
+            case 'array':
+                $var = (array) $var; break;
+            case 'object':
+                $var = (object) $var; break;
+        }
+
+        return $var;
+    }
+
+    static public function pull_from_array(&$whofrom, $my_vars = array(), $cast = 'string')
+    {
+        $reta = array();
+        foreach ($my_vars as $to_pull) {
+            if (isset($whofrom[$to_pull])) {
+                $reta[$to_pull] = caster($whofrom[$to_pull], $cast);
+            }
+        }
+
+        return $reta;
+    }
+
+    static public function bytes2bkmg($val)
+    {
+        $a = "";
+        foreach (array('b', 'k', 'M', 'G') as $a) {
+            echo "$val $a \n";
+            if ($val > 1024) {
+                $val /= 1024;
+            } else {
+                break;
+            }
+        }
+        return round($val, 1) . $a;
+    }
+
+    static public function bkmg2bytes($val)
+    {
+        switch (substr(trim($val), -1)) {
+            case 'k':
+            case 'K':
+                $val = intval($val) * 1024;
+                break;
+            case 'm':
+            case 'M':
+                $val = intval($val) * 1024 * 1024;
+                break;
+            case 'G':
+            case 'g':
+                $val = intval($val) * 1024 * 1024 * 1024;
+                break;
+            case 'b':
+            case 'B':
+                break;
+      }
+      return intval($val);
+    }
+
 }

@@ -25,7 +25,6 @@ $sid = session_id();
 require_once './inc/config/config.php';
 require_once './inc/errorhandler.php';
 require_once './inc/class/class.Telaen.php';
-require_once './inc/lib.php';
 require_once './inc/preinit.php';
 require_once './inc/class/class.MyMonth.php';
 
@@ -42,6 +41,7 @@ if (!is_dir($smarty->compile_dir)) {
 }
 
 $AuthSession = new Session();
+$TLN->AuthSession = $AuthSession;
 $auth = &$AuthSession->Load('telaen_sess');
 
 // Only process.php is allowed to be run with expired sessions (for login)
@@ -212,6 +212,7 @@ $AuthSession->Save($auth);
 $userfolder = $temporary_directory.preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
 
 $UserMbox = new Mbox();
+$TLN->UserMbox = $UserMbox;
 $mbox = &$UserMbox->Load($userfolder.'_infos/mboxes.ucf');
 
 $TLN->debug = $enable_debug;

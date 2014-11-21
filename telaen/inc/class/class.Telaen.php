@@ -339,13 +339,13 @@ class Telaen extends Telaen_core
 
     protected function _check_folders()
     {
-        $userfolder = $this->user_folder;
+        $userfolder = $this->userfolder;
         $temporary_directory = $this->temp_folder;
         $idle_timeout = $this->timeout;
 
-        if (!file_exists($this->user_folder)) {
-            if (!@mkdir($this->user_folder, $this->dirperm) && $this->log_errors) {
-                $this->trigger_error("mkdir error: $this->user_folder", __FUNCTION__);
+        if (!file_exists($this->userfolder)) {
+            if (!@mkdir($this->userfolder, $this->dirperm) && $this->log_errors) {
+                $this->trigger_error("mkdir error: $this->userfolder", __FUNCTION__);
             }
         }
 
@@ -376,9 +376,9 @@ class Telaen extends Telaen_core
             for ($i = 0;$i<count($boxes);$i++) {
                 $current_folder = $this->fix_prefix($boxes[$i]['name'], 1);
                 if (!$this->is_system_folder($current_folder)) {
-                    if (!file_exists($this->user_folder.$current_folder)) {
-                        if (!@mkdir($this->user_folder.$current_folder, $this->dirperm) && $this->log_errors) {
-                            $this->trigger_error("mkdir error: {$this->user_folder}{$current_folder}", __FUNCTION__);
+                    if (!file_exists($this->userfolder.$current_folder)) {
+                        if (!@mkdir($this->userfolder.$current_folder, $this->dirperm) && $this->log_errors) {
+                            $this->trigger_error("mkdir error: {$this->userfolder}{$current_folder}", __FUNCTION__);
                         }
                     }
                 }
@@ -389,12 +389,12 @@ class Telaen extends Telaen_core
 
         while (list($index, $value) = each($system_folders)) {
             $value = $this->fix_prefix($value, 1);
-            if (!file_exists($this->user_folder.$value)) {
+            if (!file_exists($this->userfolder.$value)) {
                 if ($this->is_system_folder($value)) {
                     $value = strtolower($value);
                 }
-                if (!@mkdir($this->user_folder.$value, $this->dirperm) && $this->log_errors) {
-                    $this->trigger_error("mkdir error: {$this->user_folder}{$value}", __FUNCTION__);
+                if (!@mkdir($this->userfolder.$value, $this->dirperm) && $this->log_errors) {
+                    $this->trigger_error("mkdir error: {$this->userfolder}{$value}", __FUNCTION__);
                 }
             }
         }
@@ -642,7 +642,7 @@ class Telaen extends Telaen_core
             if (file_exists($msg['localname'])) {
                 $currentname = $msg['localname'];
                 $basename = basename($currentname);
-                $newfilename = $this->user_folder."trash/$basename";
+                $newfilename = $this->userfolder."trash/$basename";
                 copy($currentname, $newfilename);
                 unlink($currentname);
             }
@@ -689,7 +689,7 @@ class Telaen extends Telaen_core
             if (file_exists($msg['localname'])) {
                 $currentname = $msg['localname'];
                 $basename = basename($currentname);
-                $newfilename = $this->user_folder."trash/$basename";
+                $newfilename = $this->userfolder."trash/$basename";
                 copy($currentname, $newfilename);
                 unlink($currentname);
             }
@@ -766,7 +766,7 @@ class Telaen extends Telaen_core
             if (file_exists($msg['localname'])) {
                 $currentname = $msg['localname'];
                 $basename = basename($currentname);
-                $newfilename = $this->user_folder."$tofolder/$basename";
+                $newfilename = $this->userfolder."$tofolder/$basename";
                 copy($currentname, $newfilename);
                 unlink($currentname);
             }
@@ -803,7 +803,7 @@ class Telaen extends Telaen_core
             if (file_exists($msg['localname'])) {
                 $currentname = $msg['localname'];
                 $basename = basename($currentname);
-                $newfilename = $this->user_folder."$tofolder/$basename";
+                $newfilename = $this->userfolder."$tofolder/$basename";
                 copy($currentname, $newfilename);
                 // ensure that the copy exist
                 if (file_exists($newfilename)) {
@@ -1256,9 +1256,9 @@ class Telaen extends Telaen_core
     protected function _get_local_name($message, $boxname)
     {
         if (is_array($message)) {
-            $flocalname = trim($this->user_folder."$boxname/".md5(trim($message['subject'].$message['date'].$message['message-id'])).'.eml');
+            $flocalname = trim($this->userfolder."$boxname/".md5(trim($message['subject'].$message['date'].$message['message-id'])).'.eml');
         } else {
-            $flocalname = trim($this->user_folder."$boxname/".$message.'.eml');
+            $flocalname = trim($this->userfolder."$boxname/".$message.'.eml');
         }
 
         return $flocalname;
@@ -1302,13 +1302,13 @@ class Telaen extends Telaen_core
     {
         $boxlist = array();
         /* if POP3, only list the available folders */
-        $d = dir($this->user_folder);
+        $d = dir($this->userfolder);
         while ($entry = $d->read()) {
             if ($this->is_system_folder($entry)) {
                 $entry = strtolower($entry);
             }
 
-            if (is_dir($this->user_folder.$entry) &&
+            if (is_dir($this->userfolder.$entry) &&
                 $entry != '..' &&
                 substr($entry, 0, 1) != '_' &&
                 $entry != '.') {
@@ -1407,7 +1407,7 @@ class Telaen extends Telaen_core
             $this->_mail_send_command("CREATE \"$boxname\"");
             $buffer = $this->_mail_get_line();
             if ($this->mail_ok_resp($buffer)) {
-                @mkdir($this->user_folder.$this->fix_prefix($boxname, 0), $this->dirperm);
+                @mkdir($this->userfolder.$this->fix_prefix($boxname, 0), $this->dirperm);
 
                 return true;
             } else {
@@ -1415,7 +1415,7 @@ class Telaen extends Telaen_core
             }
         } else {
             /* if POP3, only make a new folder */
-            if (@mkdir($this->user_folder.$boxname, $this->dirperm)) {
+            if (@mkdir($this->userfolder.$boxname, $this->dirperm)) {
                 return true;
             } else {
                 return false;
@@ -1430,7 +1430,7 @@ class Telaen extends Telaen_core
         $buffer = $this->_mail_get_line();
 
         if ($this->mail_ok_resp($buffer)) {
-            $this->_RmDirR($this->user_folder.$boxname);
+            $this->_RmDirR($this->userfolder.$boxname);
 
             return true;
         } else {
@@ -1440,8 +1440,8 @@ class Telaen extends Telaen_core
 
     private function _mail_delete_box_pop($boxname)
     {
-        if (is_dir($this->user_folder.$boxname)) {
-            $this->_RmDirR($this->user_folder.$boxname);
+        if (is_dir($this->userfolder.$boxname)) {
+            $this->_RmDirR($this->userfolder.$boxname);
             return true;
         } else {
             return false;
@@ -1503,7 +1503,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        if (is_dir($this->user_folder.$boxname)) {
+        if (is_dir($this->userfolder.$boxname)) {
             $email = $this->fetch_structure($message);
             $mail_info = $this->get_mail_info($email['header']);
             $filename = $this->_get_local_name($mail_info, $boxname);
@@ -1549,7 +1549,7 @@ class Telaen extends Telaen_core
         $flagname = strtoupper($flagname);
         if (!in_array($flagname, $this->flags)) {
             if ($this->log_errors) {
-                $this->trigger_error("unknown flag: $this->user_folder", __FUNCTION__);
+                $this->trigger_error("unknown flag: $this->userfolder", __FUNCTION__);
             }
             return false;
         }
@@ -1878,4 +1878,123 @@ class Telaen extends Telaen_core
             return $retarray;
         }
     }
+
+    /**
+     * Cleanup a set of directorys
+     * @param  string  $userfolder The user's local webmail directory
+     * @param  boolean $logout     TRUE if we also log user out
+     * @return void
+     */
+    public function cleanup_dirs($userfolder, $logout)
+    {
+        global $prefs;
+
+        if (($force_unmark_read_overrule && $force_unmark_read_setting) ||
+                 ($prefs['unmark-read'] && !$force_unmark_read_overrule)) {
+            $cleanme = $userfolder.'inbox/';
+            cleanup_dir($cleanme);
+        }
+        $cleanme = $userfolder.'_attachments/';
+        cleanup_dir($cleanme);
+        $cleanme = $userfolder.'spam/';
+        cleanup_dir($cleanme);
+
+        if ($logout) {
+            if (is_array($mbox['headers']) && file_exists($userfolder)) {
+                if (is_array($mbox['folders'])) {
+                    $boxes = $mbox['folders'];
+                    for ($n = 0;$n<count($boxes);$n++) {
+                        $entry = $this->fix_prefix($boxes[$n]['name'], 1);
+                        $file_list = array();
+
+                        if (is_array($curfolder = $mbox['headers'][base64_encode(strtolower($entry))])) {
+                            if ($this->is_system_folder($entry)) {
+                                $entry = strtolower($entry);
+                            }
+                            for ($j = 0;$j<count($curfolder);$j++) {
+                                $file_list[] = $curfolder[$j]['localname'];
+                            }
+
+                            $d = dir($userfolder."$entry/");
+
+                            while ($curfile = $d->read()) {
+                                if ($curfile != '.' && $curfile != '..') {
+                                    $curfile = $userfolder."$entry/$curfile";
+                                    if (!in_array($curfile, $file_list)) {
+                                        unlink($curfile);
+                                    }
+                                }
+                            }
+
+                            $d->close();
+                        }
+                    }
+                }
+
+                if ($prefs['empty-trash']) {
+                    if ($this->mail_protocol == IMAP) {
+                        if (!$this->mail_connect()) {
+                            redirect_and_exit('index.php?err=1', true);
+                        }
+                        if (!$this->mail_auth()) {
+                            redirect_and_exit('index.php?err=0');
+                        }
+                    }
+                    $trash = 'trash';
+                    if (!is_array($mbox['headers'][base64_encode($trash)])) {
+                        $retbox = $this->mail_list_msgs($trash);
+                        $mbox['headers'][base64_encode($trash)] = $retbox[0];
+                    }
+                    $trash = $mbox['headers'][base64_encode($trash)];
+
+                    if (count($trash) > 0) {
+                        for ($j = 0;$j<count($trash);$j++) {
+                            $this->mail_delete_msg($trash[$j], false);
+                        }
+                        $this->mail_expunge();
+                    }
+                    if ($this->mail_protocol == IMAP) {
+                        $this->mail_disconnect();
+                    }
+                }
+
+                if ($prefs['empty-spam']) {
+                    if (!$this->mail_connect()) {
+                        redirect_and_exit('index.php?err=1', true);
+                    }
+                    if (!$this->mail_auth()) {
+                        redirect_and_exit('index.php?err=0');
+                    }
+                    $trash = 'spam';
+                    if (!is_array($mbox['headers'][base64_encode($trash)])) {
+                        $retbox = $this->mail_list_msgs($trash);
+                        $mbox['headers'][base64_encode($trash)] = $retbox[0];
+                    }
+                    $trash = $mbox['headers'][base64_encode($trash)];
+
+                    if (count($trash) > 0) {
+                        for ($j = 0;$j<count($trash);$j++) {
+                            $this->mail_delete_msg($trash[$j], false);
+                        }
+                        $this->mail_expunge();
+                    }
+                    $this->mail_disconnect();
+                }
+            }
+        }
+    }
+
+    public function valid_folder_name($name, $checksys = false)
+    {
+        if ($name == "") {
+            return false;
+        }
+        // Folder names that match system folder names are NOT valid
+        if ($checksys && $this->is_system_folder($name)) {
+            return false;
+        }
+
+        return !preg_match('/[^A-Za-z0-9\-]/', $name);
+    }
+
 }
