@@ -21,7 +21,7 @@ if (!file_exists($mail_info['localname'])) {
     die('File not found');
 }$email = $TLN->read_file($mail_info['localname']);
 
-$TLN->displayimages = $prefs['display-images'];
+$TLN->displayimages = $TLN->prefs['display-images'];
 $TLN->sanitize = ($sanitize_html || !$allow_scripts);
 
 $email = $TLN->Decode($email);

@@ -72,7 +72,7 @@ if (isset($_POST['action'])) {
         $myprefs['spamlevel'] = $_POST['spamlevel'];
         $myprefs['require-receipt'] = $_POST['require_receipt'];
         $myprefs['version'] = $appversion;
-        save_prefs($myprefs);
+        $TLN->save_prefs($myprefs);
         unset($myprefs);
 
         $smarty->assign('message', '1');
@@ -152,11 +152,11 @@ if (isset($_POST['action'])) {
 $smarty->assign('filterList', $filters);
 
 // load prefs
-$prefs = load_prefs();
+$TLN->load_prefs();
 
 // name & reply to
-$smarty->assign('realName', $prefs['real-name']);
-$smarty->assign('replyTo', $prefs['reply-to']);
+$smarty->assign('realName', $TLN->prefs['real-name']);
+$smarty->assign('replyTo', $TLN->prefs['reply-to']);
 
 // timezones
 $gmttime = time()-date('Z');
@@ -170,54 +170,54 @@ for ($i = -12; $i <= 12; $i = $i+0.5) {
     $timeVals[$diff] = 'GMT '.$diff." (".date('h:i A', $nowgmt).")";
 }
 
-$smarty->assign('timezone', $prefs['timezone']);
+$smarty->assign('timezone', $TLN->prefs['timezone']);
 $smarty->assign('timezoneVals', $timeVals);
 
 // editor mode
-$smarty->assign('editorMode', $prefs['editor-mode']);
+$smarty->assign('editorMode', $TLN->prefs['editor-mode']);
 
 // records per page
-$smarty->assign('msgPerPage', $prefs['rpp']);
+$smarty->assign('msgPerPage', $TLN->prefs['rpp']);
 $smarty->assign('msgPerPageVals', array(10, 20, 30, 40, 50, 100, 200));
 
 // refresh time
-$smarty->assign('refreshTime', $prefs['refresh-time']);
+$smarty->assign('refreshTime', $TLN->prefs['refresh-time']);
 $smarty->assign('refreshTimeVals', array(5, 10, 15, 20, 25));
 
 // signature
-$status = ($prefs['add-sig']) ? true : false;
+$status = ($TLN->prefs['add-sig']) ? true : false;
 $smarty->assign('addSignature', $status);
 
-$txtsignature = htmlspecialchars($prefs['signature']);
+$txtsignature = htmlspecialchars($TLN->prefs['signature']);
 $smarty->assign('signature', $txtsignature);
 
 // misc
-$status = ($prefs['save-to-trash']) ? true : false;
+$status = ($TLN->prefs['save-to-trash']) ? true : false;
 $smarty->assign('saveTrash', $status);
 
-$status = ($prefs['st-only-read']) ? true : false;
+$status = ($TLN->prefs['st-only-read']) ? true : false;
 $smarty->assign('saveTrashOnlyRead', $status);
 
-$status = ($prefs['empty-trash']) ? true : false;
+$status = ($TLN->prefs['empty-trash']) ? true : false;
 $smarty->assign('emptyTrashOnExit', $status);
 
-$status = ($prefs['unmark-read']) ? true : false;
+$status = ($TLN->prefs['unmark-read']) ? true : false;
 $smarty->assign('unmarkReadOnExit', $status);
 
-$status = ($prefs['save-to-sent']) ? true : false;
+$status = ($TLN->prefs['save-to-sent']) ? true : false;
 $smarty->assign('saveSent', $status);
 
-$status = ($prefs['display-images']) ? true : false;
+$status = ($TLN->prefs['display-images']) ? true : false;
 $smarty->assign('displayImages', $status);
 
-$status = ($prefs['require-receipt']) ? true : false;
+$status = ($TLN->prefs['require-receipt']) ? true : false;
 $smarty->assign('requireReceipt', $status);
 
 // spam options
-$status = ($prefs['empty-spam']) ? true : false;
+$status = ($TLN->prefs['empty-spam']) ? true : false;
 $smarty->assign('emptySpamOnExit', $status);
 
 $smarty->assign('spamLevelVals', array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-$smarty->assign('spamLevel', $prefs['spamlevel']);
+$smarty->assign('spamLevel', $TLN->prefs['spamlevel']);
 
 $smarty->display("$selected_theme/preferences.htm");

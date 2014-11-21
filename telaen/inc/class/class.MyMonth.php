@@ -33,9 +33,8 @@ class MyMonth
  * @param integer $month month
  * @return void
  */
-    public function __construct($year = 0, $month = 0)
+    public function __construct($userfolder, $year = 0, $month = 0)
     {
-        global $userfolder;
         if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050) {
             $this->_mymonth = getdate();
             $month = $this->_mymonth['mon'];

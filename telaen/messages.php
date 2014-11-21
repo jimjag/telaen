@@ -53,11 +53,11 @@ if ($TLN->mail_protocol == IMAP || !$is_inbox_or_spam) {
 }
 
 $elapsedtime = (time()-$auth['last-update'])/60;
-$timeleft = ($prefs['refresh-time']-$elapsedtime);
+$timeleft = ($TLN->prefs['refresh-time']-$elapsedtime);
 
 if ($timeleft > 0) {
     $refreshMeta = "	<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";
-} elseif ($prefs['refresh-time']) {
+} elseif ($TLN->prefs['refresh-time']) {
     redirect_and_exit("$refreshurl");
 }
 
@@ -93,7 +93,7 @@ if (!isset($pag) || !is_numeric(trim($pag))) {
     $pag = 1;
 }
 
-$reg_pp = $prefs['rpp'];
+$reg_pp = $TLN->prefs['rpp'];
 $start_pos = ($pag-1)*$reg_pp;
 $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
 

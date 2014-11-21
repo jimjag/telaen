@@ -78,9 +78,9 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
         $mail->CharSet = $TLN->charset;
         $mail->Hostname = getenv('SERVER_NAME');
-        $mail->From = ($allow_modified_from && !empty($prefs['reply-to'])) ? $prefs['reply-to'] : $auth['email'];
-        $mail->FromName = $mail->encodeHeader($prefs['real-name']);
-        $mail->AddReplyTo($prefs['reply-to'], $TLN->mime_encode_headers($prefs['real-name']));
+        $mail->From = ($allow_modified_from && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
+        $mail->FromName = $mail->encodeHeader($TLN->prefs['real-name']);
+        $mail->AddReplyTo($TLN->prefs['reply-to'], $TLN->mime_encode_headers($TLN->prefs['real-name']));
 
         $mail->Host = $smtp_server;
         $mail->WordWrap = 76;
@@ -95,7 +95,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
         // add return-receipt if required
         if (isset($requireReceipt)) {
-            $mail->ConfirmReadingTo =  $prefs['reply-to'];
+            $mail->ConfirmReadingTo =  $TLN->prefs['reply-to'];
         }
 
         // add recipients
@@ -160,7 +160,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
                 $UserMbox->Save($mbox);
             }
 
-            if ($prefs['save-to-sent']) {
+            if ($TLN->prefs['save-to-sent']) {
                 if (!$TLN->mail_connect()) {
                     redirect_and_exit('index.php?err=1', true);
                 }
@@ -201,21 +201,21 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     if (!isset($textmode)) {
         $textmode = null;
     }
-    $show_advanced = ((!$textmode) && ($prefs['editor-mode'] != 'text')) ? 1 : 0;
+    $show_advanced = ((!$textmode) && ($TLN->prefs['editor-mode'] != 'text')) ? 1 : 0;
     $js_advanced = ($show_advanced) ? 'true' : 'false';
 
         // signature
-        $signature = $prefs['signature'];
+        $signature = $TLN->prefs['signature'];
     if ($show_advanced) {
         $signature = nl2br($signature);
     }
 
-    $add_sig = $prefs['add-sig'];
+    $add_sig = $TLN->prefs['add-sig'];
     $addSignature = ($add_sig) ? 1 : 0;
     $smarty->assign('umAddSignature', $addSignature);
 
         // return receipt
-        $rr = ($prefs['require-receipt']) ? true : false;
+        $rr = ($TLN->prefs['require-receipt']) ? true : false;
     $smarty->assign('requireReceipt', $rr);
 
     // hidden inputs ---- Note: these should be moved into template...
@@ -448,7 +448,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             $thismail = $ARTo[$i]['mail'];
 
             // avoid to add my address in the TO list
-                        if ($thismail != $auth['email'] && $thismail != $prefs['reply-to']) {
+                        if ($thismail != $auth['email'] && $thismail != $TLN->prefs['reply-to']) {
                             if (isset($toreply)) {
                                 $toreply .= ", \"$name\" <$thismail>";
                             } else {
@@ -466,7 +466,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             $thismail = $ARCC[$i]['mail'];
 
             // avoid to add my address in the CC list
-            if ($thismail != $auth['email'] && $thismail != $prefs['reply-to']) {
+            if ($thismail != $auth['email'] && $thismail != $TLN->prefs['reply-to']) {
                 if (isset($ccreply)) {
                     $ccreply .= ", \"$name\" <$thismail>";
                 } else {

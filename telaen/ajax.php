@@ -16,7 +16,7 @@ require './inc/init.php';
 
 // cheking for main param
 if (isset($_POST['action'])) {
-    $prefs = load_prefs();
+    $TLN->prefs = load_prefs();
 
     $action = $_POST['action'];
     switch ($action) {
@@ -55,9 +55,9 @@ if (isset($_POST['action'])) {
             $mail->Password = $auth['pass'];
 
             // build the email
-            $mail->From = ($allow_modified_from && !empty($prefs['reply-to'])) ? $prefs['reply-to'] : $auth['email'];
-            $mail->FromName = $mail->encodeHeader($prefs['real-name']);
-            $mail->AddReplyTo($prefs['reply-to'], $mail->encodeHeader($prefs['real-name']));
+            $mail->From = ($allow_modified_from && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
+            $mail->FromName = $mail->encodeHeader($TLN->prefs['real-name']);
+            $mail->AddReplyTo($TLN->prefs['reply-to'], $mail->encodeHeader($TLN->prefs['real-name']));
             $mail->AddAddress($recipient);
 
             $mail->Subject = $mail->encodeHeader(stripslashes($receiptSubj));

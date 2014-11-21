@@ -11,8 +11,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require_once './inc/config/config.php';
 require_once './inc/errorhandler.php';
 require_once './inc/class/class.Telaen.php';
-require_once './inc/lib.php';
 require_once './inc/preinit.php';
+$TLN = new Telaen();
 
 extract(pull_from_array($_GET, array('f_email', 'f_user', 'lng', 'tem', 'six'), 's'));
 require_once './inc/user_tl.php';

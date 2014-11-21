@@ -1887,10 +1887,8 @@ class Telaen extends Telaen_core
      */
     public function cleanup_dirs($userfolder, $logout)
     {
-        global $prefs;
-
         if (($force_unmark_read_overrule && $force_unmark_read_setting) ||
-                 ($prefs['unmark-read'] && !$force_unmark_read_overrule)) {
+                 ($this->prefs['unmark-read'] && !$force_unmark_read_overrule)) {
             $cleanme = $userfolder.'inbox/';
             cleanup_dir($cleanme);
         }
@@ -1931,7 +1929,7 @@ class Telaen extends Telaen_core
                     }
                 }
 
-                if ($prefs['empty-trash']) {
+                if ($this->prefs['empty-trash']) {
                     if ($this->mail_protocol == IMAP) {
                         if (!$this->mail_connect()) {
                             redirect_and_exit('index.php?err=1', true);
@@ -1958,7 +1956,7 @@ class Telaen extends Telaen_core
                     }
                 }
 
-                if ($prefs['empty-spam']) {
+                if ($this->prefs['empty-spam']) {
                     if (!$this->mail_connect()) {
                         redirect_and_exit('index.php?err=1', true);
                     }

@@ -1279,6 +1279,9 @@ class Telaen_core
         return $nurl;
     }
 
+    /**
+     *
+     */
     public function redirect_and_exit($location, $killsession = false)
     {
         // on error the session should be killed, on badlogin no, i want my selected theme/lang
@@ -1316,6 +1319,9 @@ ENDOFREDIRECT;
         exit;
     }
 
+    /**
+     *
+     */
     static public function array_qsort2ic(&$array, $column = 0, $order = 'ASC')
     {
         if (!is_array($array)) {
@@ -1326,6 +1332,9 @@ ENDOFREDIRECT;
         reset($array);
     }
 
+     /**
+     *
+     */
     static public function array_qsort2(&$array, $column = 0, $order = 'ASC')
     {
         if (!is_array($array)) {
@@ -1336,6 +1345,9 @@ ENDOFREDIRECT;
         reset($array);
     }
 
+    /**
+     *
+     */
     static public function array_qsort2int(&$array, $column = 0, $order = 'ASC')
     {
         // The column value must be an int value
@@ -1350,7 +1362,9 @@ ENDOFREDIRECT;
         reset($array);
     }
 
-    // load settings
+    /**
+     * Load user prefs
+     */
     public function load_prefs($user)
     {
         extract($this->config['default_preferences']);
@@ -1385,7 +1399,9 @@ ENDOFREDIRECT;
         }
     }
 
-    //save preferences
+    /**
+     * Save prefs
+     */
     public function save_prefs($prefarray)
     {
         $pref_file = $this->userfolder.'_infos/prefs.upf';
@@ -1394,7 +1410,20 @@ ENDOFREDIRECT;
         fclose($f);
     }
 
-    //get only headers from a file
+    /**
+     *
+     */
+    public function load_config()
+    {
+        $config = array();
+        require_once './inc/configv2.php.default';
+        @include './inc/configv2.php';
+        $this->config = $config;
+    }
+
+    /**
+     *
+     */
     static public function get_headers_from_file($strfile)
     {
         if (!file_exists($strfile)) {
@@ -1417,6 +1446,9 @@ ENDOFREDIRECT;
         return preg_replace('|\r|', '\r\n', trim($result));
     }
 
+    /**
+     *
+     */
     static public function debug_print_struc($obj)
     {
         echo('<pre>');
@@ -1424,6 +1456,9 @@ ENDOFREDIRECT;
         echo('</pre>');
     }
 
+    /**
+     *
+     */
     static public function caster($var, $cast = 'string')
     {
         switch (gettype($cast)) {
@@ -1445,6 +1480,9 @@ ENDOFREDIRECT;
         return $var;
     }
 
+    /**
+     *
+     */
     static public function pull_from_array(&$whofrom, $my_vars = array(), $cast = 'string')
     {
         $reta = array();
@@ -1457,6 +1495,9 @@ ENDOFREDIRECT;
         return $reta;
     }
 
+    /**
+     *
+     */
     static public function bytes2bkmg($val)
     {
         $a = "";
@@ -1471,6 +1512,9 @@ ENDOFREDIRECT;
         return round($val, 1) . $a;
     }
 
+    /**
+     *
+     */
     static public function bkmg2bytes($val)
     {
         switch (substr(trim($val), -1)) {

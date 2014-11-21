@@ -28,6 +28,8 @@ require_once './inc/class/class.Telaen.php';
 require_once './inc/preinit.php';
 require_once './inc/class/class.MyMonth.php';
 
+$TLN = new Telaen();
+
 require_once SMARTY_DIR.'Smarty.class.php';
 $smarty = new Smarty();
 $smarty->security = true;
@@ -41,13 +43,14 @@ if (!is_dir($smarty->compile_dir)) {
 }
 
 $AuthSession = new Session();
-$TLN->AuthSession = $AuthSession;
 $auth = &$AuthSession->Load('telaen_sess');
 
 // Only process.php is allowed to be run with expired sessions (for login)
 if ((I_AM_TELAEN != 'process.php') && (!$auth['auth'])) {
     die('error: your session seems expired');
 }
+
+$TLN->AuthSession = $AuthSession;
 
 if (!array_key_exists('start', $auth)) {
     $auth['start'] = time();
@@ -80,8 +83,6 @@ if (!isset($webmail_title) || trim($webmail_title) == "") {
     $webmail_title = 'Telaen Webmail';
 }
 $smarty->assign('webmailTitle', $webmail_title);
-
-$TLN = new Telaen();
 
 if (isset($f_pass)) {
     $f_pass = stripslashes($f_pass);
@@ -228,16 +229,16 @@ if (isset($dirperm) && $dirperm != 0000) {
     $TLN->dirperm = $dirperm;
 }
 
-$prefs = load_prefs();
+$TLN->load_prefs();
 
-$mymo = new MyMonth();     // needs $prefs[], $UM and $userfolder!
+$mymo = new MyMonth($TLN->userfolder);
 $mycal = $mymo->monthAsDiv();
 $smarty->assign('umCalendar', $mycal);
 $smarty->assign('umSystemNews', $systemNews);
 
-$TLN->timezone = $prefs['timezone'];
+$TLN->timezone = $TLN->prefs['timezone'];
 $TLN->charset = $lang['default_char_set'];
-$TLN->userspamlevel = $prefs['spamlevel'];
+$TLN->userspamlevel = $TLN->prefs['spamlevel'];
 
 /*
 Don't remove the following lines, or you will have problems with browser's cache
@@ -266,29 +267,29 @@ require_once './folder_list.php';
 
 $need_save = false;
 if (!isset($sortby) || !preg_match('/(subject|fromname|date|size|toname)/', $sortby)) {
-    if (array_key_exists('sort-by', $prefs) && preg_match('/(subject|fromname|date|size|toname)/', $prefs['sort-by'])) {
-        $sortby = $prefs['sort-by'];
+    if (array_key_exists('sort-by', $TLN->prefs) && preg_match('/(subject|fromname|date|size|toname)/', $TLN->prefs['sort-by'])) {
+        $sortby = $TLN->prefs['sort-by'];
     } else {
         $sortby = $default_sortby;
     }
 } else {
     $need_save = true;
-    $prefs['sort-by'] = $sortby;
+    $TLN->prefs['sort-by'] = $sortby;
 }
 
 if (!isset($sortorder) || !preg_match('/ASC|DESC/', $sortorder)) {
-    if (array_key_exists('sort-order', $prefs) && preg_match('/ASC|DESC/', $prefs['sort-order'])) {
-        $sortorder = $prefs['sort-order'];
+    if (array_key_exists('sort-order', $TLN->prefs) && preg_match('/ASC|DESC/', $TLN->prefs['sort-order'])) {
+        $sortorder = $TLN->prefs['sort-order'];
     } else {
         $sortorder = $default_sortorder;
     }
 } else {
     $need_save = true;
-    $prefs['sort-order'] = $sortorder;
+    $TLN->prefs['sort-order'] = $sortorder;
 }
 
 if (isset($need_save)) {
-    save_prefs($prefs);
+    save_prefs($TLN->prefs);
 }
 
 if (!isset($folder) || $folder == "" || strpos($folder, '..') !== false) {

@@ -166,7 +166,7 @@ switch ($opt) {
             $pag = 1;
         }
 
-        $reg_pp = $prefs['rpp'];
+        $reg_pp = $TLN->prefs['rpp'];
         $start_pos = ($pag-1)*$reg_pp;
         $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
 

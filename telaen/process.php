@@ -54,7 +54,7 @@ if (!is_array($headers)
     $auth['auth'] = true;
     $expunge = false;
     $require_update = false;
-    $reg_pp = $prefs['rpp'];
+    $reg_pp = $TLN->prefs['rpp'];
 
     if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
         cleanup_dirs($userfolder, 0);
@@ -78,7 +78,7 @@ if (!is_array($headers)
         for ($i = 0;$i<$messagecount;$i++) {
             if (isset($_POST["msg_$i"])) {
                 if ($decision == 'delete') {
-                    $TLN->mail_delete_msg($headers[$i], $prefs['save-to-trash'], $prefs['st-only-read']);
+                    $TLN->mail_delete_msg($headers[$i], $TLN->prefs['save-to-trash'], $TLN->prefs['st-only-read']);
                 } elseif ($decision == 'move') {
                     $TLN->mail_move_msg($headers[$i], $aval_folders);
                 } elseif ($decision == 'mark') {
@@ -203,7 +203,7 @@ if (!is_array($headers)
                 $expunge = false;
                 $require_update = false;
             }
-            if ($prefs['save-to-trash']) {
+            if ($TLN->prefs['save-to-trash']) {
                 unset($mbox['headers'][base64_encode('trash')]);
             }
             if ($decision == 'move') {
@@ -269,17 +269,17 @@ $UserMbox->Save($mbox);
  * HACK:
  */
 $same_version = true;
-if ($prefs['version'] != $appversion) {
-    list($their_major, $their_minor, $patch_level) = explode('.', $prefs['version']);
+if ($TLN->prefs['version'] != $appversion) {
+    list($their_major, $their_minor, $patch_level) = explode('.', $TLN->prefs['version']);
     list($our_major, $our_minor, $patch_level, $devver) = explode('.', $appversion);
     if (!$devver && (($their_minor != $our_minor) || ($their_major != $our_major))) {
         $same_version = false;
     }
 }
 if ((!$same_version) ||
-    ($check_first_login && !$prefs['first-login'])) {
-    $prefs['first-login'] = 1;
-    save_prefs($prefs);
+    ($check_first_login && !$TLN->prefs['first-login'])) {
+    $TLN->prefs['first-login'] = 1;
+    save_prefs($TLN->prefs);
     redirect_and_exit('preferences.php?folder='.urlencode($folder));
     exit;
 }
