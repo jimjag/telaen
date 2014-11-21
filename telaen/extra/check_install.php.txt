@@ -11,7 +11,35 @@
         ini_set('display_errors', 0);
         error_reporting(E_ALL);
         define('I_AM_TELAEN', 'check_install.php');
-
+        function pout($fp, $value)
+        {
+            switch (gettype($value)) {
+                case 'boolean':
+                    fwrite($fp, ($value ? "true" : "false"));
+                    break;
+                case 'integer':
+                case 'double':
+                    fwrite($fp, $value);
+                    break;
+                case 'string':
+                    $value = preg_replace("|'|", "\'", $value);
+                    fwrite($fp, "'$value'");
+                    break;
+                case 'array':
+                    fwrite($fp, "array(\n");
+                    foreach ($value as $a => $b) {
+                        fwrite($fp, "   ");
+                        pout($fp, $a);
+                        fwrite($fp, " => ");
+                        pout($fp, $b);
+                        fwrite($fp, ",\n");
+                    }
+                    fwrite($fp, ")");
+                    break;
+                default:
+                    fwrite($fp, "'$value'"); break;
+            }
+        }
         chdir('../'); // So the include works
 ?>
 
@@ -26,7 +54,7 @@
             echo('<font color=red><strong>!! FAILED !!</strong></font>Talaen requires at least version 5.4.x; you are running {$phpver} <br/>');
             $error = true;
         } else
-            echo('<font color=green><strong>PASSED</strong></font> (Running PHP version ' . $phpver . ') <br/>');
+            echo('<font color=green><strong>PASSED</strong></font> (Running PHP version ' . phpversion() . ') <br/>');
 ?>
         <hr>
         <h2>Checking for old configuration file(s)</h2>
@@ -100,28 +128,40 @@
         <font face="Courier New" color=Gray>configv2.php</font>. Checking now:<br/>
 
 <?php
+$config = array();
 @include './inc/config/configv2.php';
-if (!isset($config) || !is_array($config)) {
+if (count($config) == 0) {
     echo('<font color=red><strong>!! FAILED !!</strong></font><br/>I don\'t see, or cannot read, your <font face="Courier New" color=Gray>configv2.php</font> file<br/>');
     //
     // Try to create one for them...
     //
     $keep = array('appversion', 'appname', 'themes', 'languages', 'default_theme', 'default_language');
-    $config = array();
-    include './inc/config/configv2.php.default';
+    // $config = array();
+    @include './inc/config/configv2.php.default';
     if (count($config) > 0) {
-        echo "Try";
         foreach ($config as $key => $value) {
             if (!in_array($key, $keep))
                 $config[$key] = ${$key};
         }
-        $config['capa_override']['PIPELINING'] = $oconfig['mail_use_pipelining'];
-        $config['capa_override']['ATOP'] = $oconfig['mail_use_atop'];
-        $config['capa_override']['UIDL'] = $oconfig['mail_use_uidl'];
-        $config['capa_override']['APOP'] = $oconfig['mail_use_apop'];
+        $config['capa_override']['PIPELINING'] = $mail_use_pipelining;
+        $config['capa_override']['ATOP'] = $mail_use_atop;
+        $config['capa_override']['UIDL'] = $mail_use_uidl;
+        $config['capa_override']['APOP'] = $mail_use_apop;
         $config['SMARTY_DIR'] = SMARTY_DIR;
         $fp = @fopen('/tmp/configv2.php.new', 'w');
         if ($fp) {
+            fwrite($fp, "<?php\n");
+            fwrite($fp, "/*\n");
+            fwrite($fp, " * Auto-created Telaen config file:::\n");
+            fwrite($fp, " *    written:".date("D M j G:i:s T Y")."\n");
+            fwrite($fp, " *    DO NOT USE WITH DOUBLE AND TRIPLE CHECKING!!\n");
+            fwrite($fp, " */\n\n");
+            fwrite($fp, "defined('I_AM_TELAEN') or die('Direct access not permitted');\n");
+            fwrite($fp, "require('./inc/version.php');\n");
+            fwrite($fp, "\$config['appversion'] = \$appversion;\n");
+            fwrite($fp, "\$config['appname'] = \$appname;\n");
+            fwrite($fp, "@include('./inc/news/news.system.php');\n");
+            fwrite($fp, "\$config['systemNews'] = \$systemNews;\n");
             foreach ($config as $key => $value) {
                 fwrite($fp, "\$config['$key'] = ");
                 if ($value == "") $value = "";
@@ -129,15 +169,16 @@ if (!isset($config) || !is_array($config)) {
                     $value = '0'.decoct($value);
                 }
                 if (preg_match('|timezone|', $key)) $value = "$value";
+                //pout($fp, $value);
                 fwrite($fp, var_export($value, true));
                 fwrite($fp, ";\n");
             }
             fclose($fp);
-            echo 'I tried to draft one based on your old configs. It can be found';
+            echo 'I tried to draft one based on your old configs. It can be found at:<br/>';
             echo '<font face="Courier New" color=Gray>/tmp/configv2.php.new</font><br/>';
-            echo "Here it is printed for you:<br/>\n<pre>\n";
-            echo file_get_contents('/tmp/configv2.php.new');
-            echo "</pre>\n";
+            //echo "Here it is for you:<hr><pre>\n";
+            //echo file_get_contents('/tmp/configv2.php.new');
+            //echo "</pre>\n";
         }
     } else {
         echo ('You must create one based on your old configs (or from scratch).');
@@ -145,11 +186,11 @@ if (!isset($config) || !is_array($config)) {
     $error = true;
 } else {
     echo('<font color=green><strong>PASSED</strong></font> <br/>');
-    echo("<h4>- Testing your \$config['temporary_directory'] variable ($temporary_directory)... </h4>");
+    $temporary_directory = $config['temporary_directory'];
+    echo("<h4>- Testing your \$config['temporary_directory'] variable: $temporary_directory... </h4>");
 
     // Now start checking the location and perms for $temporary_directory
     // Location vars
-    $temporary_directory = $config['temporary_directory'];
     $localpath = realpath('./');
     $temppath = realpath($temporary_directory);
 
