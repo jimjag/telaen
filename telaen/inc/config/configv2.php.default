@@ -56,7 +56,7 @@ $config['systemNews'] = $systemNews;
 # folder !
 ########################################################################
 
-$temporary_directory = './ChangeMe!/';
+$config['temporary_directory'] = './ChangeMe!/';
 
 ########################################################################
 # Title prefix for webmail pages
