@@ -26,7 +26,7 @@ $config['SMARTY_DIR'] = '/some/place/safe/smarty/';
 
 require('./inc/version.php');
 $config['appversion'] = $appversion;
-$config['appname'] = $appname
+$config['appname'] = $appname;
 
 
 ########################################################################
@@ -419,10 +419,6 @@ $config['smtp_debug'] = false;
 $config['log_errors'] = true;
 $config['log_fname'] = 'telaen_error.log';
 
-<?php
-
-defined('I_AM_TELAEN') or die('Direct access not permitted');
-
 ########################################################################
 # Enable visualization of HTML messages
 # *This option afect only incoming messages, the  HTML editor
@@ -470,10 +466,6 @@ $config['enable_cookies'] = true;
 
 $config['default_umask'] = 0077;
 $config['dirperm'] = 0700;
-
-<?php
-
-defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 ########################################################################
 # Language & themes settings
