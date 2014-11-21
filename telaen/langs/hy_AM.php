@@ -141,7 +141,7 @@ $lang['lng_user_pwd'] = 'Գաղտնաբառ.';
 $lang['lng_server'] = 'Սերվերի';
 $lang['lng_theme'] = 'Theme';
 $lang['lng_language'] = 'Language';
-$lang['lng_login_btn'] = 'Մուտք & gt; & gt;';
+$lang['lng_login_btn'] = 'Մուտք &gt;&gt;';
 $lang['lng_cookie_not_enabled'] = 'պետք է թույլատրվեն cookies';
 $lang['lng_cookie_not_valid'] = 'Cookie Security ստուգել չհաջողվեց';
 
@@ -168,7 +168,7 @@ $lang['send_text'] = 'Ուղարկել';
 
 $lang['result_error'] = 'Այն հնարավոր չէր ուղարկել այս էլեկտրոնային փոստով';
 $lang['result_success'] = 'Այս e-mail է ուղարկվել';
-$lang['nav_continue'] = '& lt; & lt; Շարունակել & gt; & gt; ';
+$lang['nav_continue'] = '&lt;&lt; Շարունակել &gt;&gt; ';
 $lang['nav_back'] = 'Վերադառնալ';
 
 $lang['up_title'] = 'Ավելացնել ֆայլ';
@@ -283,7 +283,7 @@ $lang['block_address'] = 'Արգելափակել հասցե';
 // [Search]
 $lang['sch_title'] = 'Որոնել';
 $lang['sch_information_text'] = 'Գրեք մի արտահայտություն կամ բառը, որ դուք փնտրում: Բաժին Միայն կարդալ հաղորդագրությունները կլինի փնտրում.';
-$lang['sch_button_text'] = 'Որոնել & gt; & gt;';
+$lang['sch_button_text'] = 'Որոնել &gt; &gt;';
 $lang['sch_subject_hea'] = 'Թեմա.';
 $lang['sch_from_hea'] = 'From';
 $lang['sch_date_hea'] = 'ամսաթիվը';

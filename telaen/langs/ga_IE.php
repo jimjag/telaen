@@ -141,7 +141,7 @@ $lang['lng_user_pwd'] = 'Pasfhocal';
 $lang['lng_server'] = 'an fhreastalaí';
 $lang['lng_theme'] = 'Téama';
 $lang['lng_language'] = 'Teanga';
-$lang['lng_login_btn'] = 'Logáil isteach & gt; & gt;';
+$lang['lng_login_btn'] = 'Logáil isteach &gt;&gt;';
 $lang['lng_cookie_not_enabled'] = 'Níor mór fianáin a chumasú';
 $lang['lng_cookie_not_valid'] = 'Cookie Slándáil Seiceáil Theip';
 
@@ -168,7 +168,7 @@ $lang['send_text'] = 'Seol';
 
 $lang['result_error'] = 'Ní raibh sé indéanta a sheoladh r-phost';
 $lang['result_success'] = 'Tá an r-phost curtha chuig';
-$lang['nav_continue'] = '& lt; & lt; Leanúint ar & gt; & gt; ';
+$lang['nav_continue'] = '&lt;&lt; Leanúint ar &gt;&gt; ';
 $lang['nav_back'] = 'Ar ais';
 
 $lang['up_title'] = 'Cuir comhad';
@@ -283,7 +283,7 @@ $lang['block_address'] = 'Bloc seoladh';
 // [Search]
 $lang['sch_title'] = 'Cuardaigh';
 $lang['sch_information_text'] = '.. Scríobh focal nó abairt a bhfuil tú ag lorg <br> ach léamh a bheidh teachtaireachtaí a chuardach';
-$lang['sch_button_text'] = 'Cuardaigh & gt; & gt;';
+$lang['sch_button_text'] = 'Cuardaigh &gt;&gt;';
 $lang['sch_subject_hea'] = 'Ábhar';
 $lang['sch_from_hea'] = 'From';
 $lang['sch_date_hea'] = 'Dáta';

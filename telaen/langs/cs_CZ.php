@@ -29,7 +29,7 @@ $lang['error_session_expired'] = 'Vaše relace vypršela, znovu se přihlásit, 
 $lang['error_other'] = 'selhání systému, obraťte se na správce sítě';
 
 // Invalid name of mailbox
-$lang['error_invalid_name'] = 'Neplatný název složky - Používejte pouze tyto znaky AZ, az, 0-9, a -';
+$lang['error_invalid_name'] = 'Neplatný název složky - Používejte pouze tyto znaky A-Z, a-z, 0-9, a -';
 
 // Validations when sending mails
 $lang['error_no_recipients'] = 'Chyba: Musíte mít alespoň jednoho příjemce';

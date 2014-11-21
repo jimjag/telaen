@@ -141,7 +141,7 @@ $lang['lng_user_pwd'] = 'Password';
 $lang['lng_server'] = 'Server';
 $lang['lng_theme'] = 'Tema';
 $lang['lng_language'] = 'Lingwa';
-$lang['lng_login_btn'] = 'Login & gt; & gt;';
+$lang['lng_login_btn'] = 'Login &gt; &gt;';
 $lang['lng_cookie_not_enabled'] = 'Cookies għandha tkun mixgħula';
 $lang['lng_cookie_not_valid'] = 'Check Cookie Sigurtà rnexxielhomx';
 
@@ -168,7 +168,7 @@ $lang['send_text'] = 'Ibgħat';
 
 $lang['result_error'] = 'Ma kienx possibbli li tibgħat din l-email';
 $lang['result_success'] = 'Dan le-mail ntbagħtet';
-$lang['nav_continue'] = '& lt; & lt; Kompli & gt; & gt; ';
+$lang['nav_continue'] = '&lt;&lt; Kompli &gt;&gt; ';
 $lang['nav_back'] = 'Lura';
 
 $lang['up_title'] = 'Żid fajl';

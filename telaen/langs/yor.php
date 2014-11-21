@@ -283,7 +283,7 @@ $lang['block_address'] = 'Block adirẹsi';
 // [Search]
 $lang['sch_title'] = 'àwárí';
 $lang['sch_information_text'] = 'Kọ kan tabi gbolohun kan ti ọrọ ti o ti wa ni nwa fun. <br> nikan ka awọn ifiranṣẹ yoo wa ni wá.';
-$lang['sch_button_text'] = 'àwárí & gt; & gt;';
+$lang['sch_button_text'] = 'àwárí &gt;&gt;';
 $lang['sch_subject_hea'] = 'Koko';
 $lang['sch_from_hea'] = 'Lati';
 $lang['sch_date_hea'] = 'Ọjọ';

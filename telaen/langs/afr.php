@@ -141,7 +141,7 @@ $lang['lng_user_pwd'] = 'Wagwoord';
 $lang['lng_server'] = 'Bediener';
 $lang['lng_theme'] = 'Tema';
 $lang['lng_language'] = 'Taal';
-$lang['lng_login_btn'] = 'Teken & gt; & gt;';
+$lang['lng_login_btn'] = 'Teken &gt;&gt;';
 $lang['lng_cookie_not_enabled'] = 'Cookies moet aangesit wees';
 $lang['lng_cookie_not_valid'] = 'Cookie Security misluk';
 
