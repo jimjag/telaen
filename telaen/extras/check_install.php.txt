@@ -25,7 +25,7 @@ $phpver = doubleval($phpver[0].'.'.$phpver[2]);
 if ((double) $phpver < 5.4)
 	echo('<font color=red><strong>FAIL</strong></font>Talaen requires at least version 5.4.x; you are running {$phpver} <br/>');
 else
-	echo('<font color=green><strong>PASSED</strong></font>Running PHP version {$phpver} <br/>');
+	echo('<font color=green><strong>PASSED</strong></font> (Running PHP version {$phpver}) <br/>');
 ?>
 
 <h2>Checking for old configuration file(s)</h2>
@@ -53,11 +53,10 @@ if ($has_old_files) {
 } else
 	echo('<font color=green><strong>PASSED</strong></font><br/>');
 ?>
-
+<hr>
 <h2>Checking for old files:</h2>
 With the upgrade to version 2.x, some files are no longer required and
 should be deleted. Checking for these now:<br/>
-<hr>
 
 <?php
 
@@ -80,25 +79,26 @@ if ($has_old_files) {
 	foreach ($old_files as $i) {
 		echo('<font face="Courier New" color=Gray>&nbsp;&nbsp;&nbsp;&nbsp;'.$i.'</font><br/>');
 	}
+	echo('<br/>Done<br/>');
 	echo('<br/>These should be deleted!<br/>');
 } else
 	echo('<font color=green><strong>PASSED</strong></font><br/>');
 
-echo('<br/><strong>- Testing <font face="Courier New" color=Gray>inc/config/configv2.php</font></strong><br/>');
-echo('<em>if the script stops here, there are parsing problems with your file; try getting a fresh copy and re-editing it</em>)<br/>...');
 ?>
+<hr>
+<h2>Testing <font face="Courier New" color=Gray>inc/config/configv2.php</h2>
+<em>if the script stops here, there are parsing problems with your file; try getting a fresh copy and re-editing it</em>)<br/>
 
-<h2>New config?</h2>
 Telaen configuration is located in the <font face="Courier New" color=Gray>./inc/config</font> folder
 in <font face="Courier New" color=Gray>configv2.php.default</font> and
-<font face="Courier New" color=Gray>configv2.php</font>. Checking now:
+<font face="Courier New" color=Gray>configv2.php</font>. Checking now<br/>:
 
 <?php
-@include './inc/config/configv2.php';
+@include './inc/config/configv2.php'; {
 if (!isset($config) || !is_array($config))
 	echo('<font color=red><strong>FAIL</strong></font>I don\'t see, or cannot read, your <font face="Courier New" color=Gray>configv2.php</font> file<br/>');
 	echo ('You can try to use the <font face="Courier New" color=Gray>convert12.php</font> script to create a v2 version based on your v1 setup.');
-else {
+} else {
 	echo('<font color=green><strong>PASSED</strong></font> <br/>');
 	echo("<br/><strong>- Testing your \$config['temporary_directory'] variable</strong> ($temporary_directory)... <br/>");
 
@@ -238,7 +238,7 @@ if($tempSize) {
 } else {
 	$iniLimit = "Unlimited";
 }
-echo("<br/><strong>- Testing your memory limits</strong> (memory_limit: $iniLimit) ... <br/>");
+echo("<hr><h2>Testing your memory limits</strong> (memory_limit: $iniLimit)</h2>>");
 
 if($tempSize && $memoryLimit < $megs8) {
 	echo('<font color=red><strong>FAILED</strong></font>
@@ -252,7 +252,7 @@ if($tempSize && $memoryLimit < $megs8) {
 	echo('<font color=green><strong>PASSED</strong></font><br/>');
 }
 
-echo('<br/><strong>- Testing server installation</strong>... ');
+echo('<hr><h2>Testing server installation</h2>');
 
 
 if(ini_get('safe_mode')) {
