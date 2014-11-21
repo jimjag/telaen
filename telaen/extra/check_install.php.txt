@@ -12,35 +12,6 @@
         error_reporting(E_ALL);
         define('I_AM_TELAEN', 'check_install.php');
 
-        function pout($fp, $value)
-        {
-            switch (gettype($value)) {
-                case 'boolean':
-                    fwrite($fp, ($value ? "true" : "false"));
-                    break;
-                case 'integer':
-                case 'double':
-                    fwrite($fp, $value);
-                    break;
-                case 'string':
-                    $value = preg_replace("|'|", "\'", $value);
-                    fwrite($fp, "'$value'");
-                    break;
-                case 'array':
-                    fwrite($fp, "array(\n");
-                    foreach ($value as $a => $b) {
-                        fwrite($fp, "   ");
-                        pout($fp, $a);
-                        fwrite($fp, " => ");
-                        pout($fp, $b);
-                        fwrite($fp, ",\n");
-                    }
-                    fwrite($fp, ")");
-                    break;
-                default:
-                    fwrite($fp, "'$value'"); break;
-            }
-        }
         chdir('../'); // So the include works
 ?>
 
@@ -158,7 +129,7 @@ if (!isset($config) || !is_array($config)) {
                     $value = '0'.decoct($value);
                 }
                 if (preg_match('|timezone|', $key)) $value = "$value";
-                pout($fp, $value);
+                fwrite($fp, var_export($value, true));
                 fwrite($fp, ";\n");
             }
             fclose($fp);
