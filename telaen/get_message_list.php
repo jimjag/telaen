@@ -15,7 +15,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
                 /*
                  * Sort the arrays and fit them together again.
                  */
-                $merged_array = array_merge((array) $mbox['headers'][base64_encode('inbox')], (array) $mbox['headers'][base64_encode('spam')]);
+                $merged_array = array_merge((array) $mbox['headers']['inbox'], (array) $mbox['headers']['spam']);
                 Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
 
                 $merged_returnarray = $TLN->mail_list_msgs('INBOX', $merged_array, $start_pos, $reg_pp);
@@ -26,8 +26,8 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
                  * has changed.
                  */
                 if ($merged_returnarray[2] == 1) {
-                    $mbox['headers'][base64_encode('inbox')] = $merged_returnarray[0];
-                    $mbox['headers'][base64_encode('spam')] = $merged_returnarray[1];
+                    $mbox['headers']['inbox'] = $merged_returnarray[0];
+                    $mbox['headers']['spam'] = $merged_returnarray[1];
                 }
             } elseif (strtolower($entry) == 'spam') {
                 ;
@@ -42,11 +42,11 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 
         $returnarray = array(); // ensure
         // if inbox or spam merge the 2 current folders
-        if ($folder_key == base64_encode('inbox') || $folder_key == base64_encode('spam')) {
+        if ($folder == 'inbox' || $folder == 'spam') {
             /*
              * Sort the arrays and fit them together again.
              */
-            $merged_array = array_merge((array) $mbox['headers'][base64_encode('inbox')], (array) $mbox['headers'][base64_encode('spam')]);
+            $merged_array = array_merge((array) $mbox['headers']['inbox'], (array) $mbox['headers']['spam']);
             Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
             $returnarray = $TLN->mail_list_msgs('INBOX', $merged_array, $start_pos, $reg_pp);
 
@@ -56,15 +56,15 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
              * has changed or we get an EMPTY msg list on refresh
              */
             if ($returnarray[2] == 1) {
-                $mbox['headers'][base64_encode('inbox')] = $returnarray[0];
-                $mbox['headers'][base64_encode('spam')] = $returnarray[1];
+                $mbox['headers']['inbox'] = $returnarray[0];
+                $mbox['headers']['spam'] = $returnarray[1];
             }
         } else {
-            $returnarray = $TLN->mail_list_msgs($folder, $mbox['headers'][$folder_key], $start_pos, $reg_pp);
-            $mbox['headers'][$folder_key] = $returnarray[0];
+            $returnarray = $TLN->mail_list_msgs($folder, $mbox['headers'][$folder], $start_pos, $reg_pp);
+            $mbox['headers'][$folder] = $returnarray[0];
         }
         unset($merged_array);
         unset($returnarray);
     }
     // load the headers for the folder
-    $headers = $mbox['headers'][$folder_key];
+    $headers = $mbox['headers'][$folder];

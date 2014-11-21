@@ -12,7 +12,7 @@ class Telaen extends Telaen_core
     public $capabilities   = array();
     public $flags          = array('\\SEEN', '\\DELETED', '\\ANSWERED', '\\DRAFT', '\\FLAGGED', '\\RECENT');
 
-    protected $_system_folders = array('inbox','trash','sent','spam');
+    protected $_system_folders = array('inbox','trash','sent','spam', 'draft');
     protected $_current_folder = "";
     protected $_spamregex      = array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
     protected $_serverurl      = "";
@@ -80,13 +80,41 @@ class Telaen extends Telaen_core
      * @param string $str
      * @return string
      */
-    public function fs_safe($str)
+    static public function fs_safe_file($str)
     {
         $ret = preg_replace('|[.]{2,}|', ".", $str); // no dir
         return preg_replace('|[^A-Za-z0-9_.-]+|', '_', $ret);
     }
 
+    /**
+     * Return a file-system safe folder name
+     * @param string $str
+     * @return string
+     */
+    static public function fs_safe_folder($str)
+    {
+        $ret = Telaen::fs_safe_file($str);
+        return preg_replace('|[^A-Za-z0-9_-]|', '', $ret);
+    }
 
+    /**
+     * Is this a valid folder name?
+     * @param type $name folder name to check
+     * @param type $checksys Check against system folders?
+     * @return boolean
+     */
+    public function valid_folder_name($name, $checksys = false)
+    {
+        if ($name == "") {
+            return false;
+        }
+        // Folder names that match system folder names are NOT valid
+        if ($checksys && $this->is_system_folder($name)) {
+            return false;
+        }
+
+        return !preg_match('|[^A-Za-z0-9_-]|', $name);
+    }
     /**
      * Check if we are connected to email server
      * @return boolean
@@ -1973,18 +2001,4 @@ class Telaen extends Telaen_core
             }
         }
     }
-
-    public function valid_folder_name($name, $checksys = false)
-    {
-        if ($name == "") {
-            return false;
-        }
-        // Folder names that match system folder names are NOT valid
-        if ($checksys && $this->is_system_folder($name)) {
-            return false;
-        }
-
-        return !preg_match('/[^A-Za-z0-9\-]/', $name);
-    }
-
 }

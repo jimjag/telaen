@@ -28,14 +28,14 @@ $newfolder = trim($newfolder);
 
 $require_update = false;
 
-if (valid_folder_name($newfolder, true) &&
+if ($TLN->valid_folder_name($newfolder, true) &&
    !file_exists($TLN->userfolder.$newfolder)) {
     $TLN->mail_create_box($newfolder);
     $require_update = true;
 }
 
 // check and delete the especified folder: system folders can not be deleted
-if (valid_folder_name($delfolder, true) &&
+if ($TLN->valid_folder_name($delfolder, true) &&
    (strpos($delfolder, '..') === false)) {
     if ($TLN->mail_delete_box($delfolder)) {
         unset($mbox['headers'][base64_encode(strtolower($delfolder))]);

@@ -10,7 +10,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
 
-cleanup_dirs($TLN->userfolder, 1);
+$TLN->cleanup_dirs($TLN->userfolder, 1);
 
 $AuthSession->Kill();
 $TLN->redirect_and_exit('./index.php');

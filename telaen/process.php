@@ -31,17 +31,15 @@ extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'
 extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
 
 $headers = null;
-$folder_key = base64_encode(strtolower($folder));
-$folder_key_inbox = base64_encode('inbox');
-$folder_key_spam = base64_encode('spam');
-$is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam);
+$folder = Telaen::fs_safe_folder($folder); // just in case!
+$is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
 if (!array_key_exists('headers', $mbox)) {
     $mbox['headers'] = array();
 }
 
-if (array_key_exists($folder_key, $mbox['headers'])) {
-    $headers = $mbox['headers'][$folder_key];
+if (array_key_exists($folder, $mbox['headers'])) {
+    $headers = $mbox['headers'][$folder];
 }
 
 if (!is_array($headers)
@@ -57,7 +55,7 @@ if (!is_array($headers)
     $reg_pp = $TLN->prefs['rpp'];
 
     if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
-        cleanup_dirs($TLN->userfolder, 0);
+        $TLN->cleanup_dirs($TLN->userfolder, 0);
         $start_pos = 0;
     } else {
         if (isset($pag) && isset($mlist) && !isset($start_pos)) {
@@ -65,10 +63,10 @@ if (!is_array($headers)
         }
     }
     if ($TLN->autospamfolder) {
-        if ($folder_key == $folder_key_inbox) {
-            $other_folder_key = $folder_key_spam;
+        if ($folder == 'inbox') {
+            $other_folder_key = 'spam';
         } else {
-            $other_folder_key = $folder_key_inbox;
+            $other_folder_key = 'inbox';
         }
     }
     $messagecount = count($headers);
@@ -106,7 +104,7 @@ if (!is_array($headers)
             $msgid = $headers[$i]['msg'];
             $delarray[$i]['ubiid'] = $i;
             $delarray[$i]['msgid'] = $msgid;
-            $delarray[$i]['folder'] = "$folder_key";
+            $delarray[$i]['folder'] = "$folder";
         }
         if ($expunge || $require_update) {
             /*
@@ -194,8 +192,8 @@ if (!is_array($headers)
                  * We dont have many messages. Unset the array and fetch everything
                  * from scratch.
                  */
-                unset($mbox['headers'][$folder_key]);
-                $mbox['headers'][$folder_key] = array();
+                unset($mbox['headers'][$folder]);
+                $mbox['headers'][$folder] = array();
                 if ($TLN->autospamfolder && $is_inbox_or_spam) {
                     unset($mbox['headers'][$other_folder_key]);
                     $mbox['headers'][$other_folder_key] = array();
@@ -240,7 +238,7 @@ if (!is_array($headers)
     $TLN->mail_disconnect();
 }
 
-if (!is_array($headers = $mbox['headers'][$folder_key])) {
+if (!is_array($headers = $mbox['headers'][$folder])) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
@@ -256,8 +254,8 @@ if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
     }
 }
 
-$mbox['headers'][$folder_key] = $headers;
-$auth['havespam'] = ($TLN->havespam || count($mbox['headers'][$folder_key_spam]));
+$mbox['headers'][$folder] = $headers;
+$auth['havespam'] = ($TLN->havespam || count($mbox['headers']['spam']));
 $AuthSession->Save($auth);
 $UserMbox->Save($mbox);
 

@@ -10,15 +10,13 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
 
-$folder_key = base64_encode(strtolower($folder));
-$folder_key_inbox = base64_encode('inbox');
-$folder_key_spam = base64_encode('spam');
-$is_inbox_or_spam = ($folder_key == $folder_key_inbox || $folder_key == $folder_key_spam);
+$folder = Telaen::fs_safe_folder($folder); // just in case!
+$is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
 $smarty->assign('umUser', $f_user);
 $refreshurl = 'process.php?folder='.urlencode($folder)."&pag=$pag&refr=true";
 
-if (!is_array($headers = $mbox['headers'][$folder_key])) {
+if (!is_array($headers = $mbox['headers'][$folder])) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
