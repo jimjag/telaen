@@ -38,9 +38,9 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
             unset($merged_array);
             unset($merged_returnarray);
         }
-    } else {    // no quota, get single folder
+    } else { // no quota, get single folder
 
-        $returnarray = array();        // ensure
+        $returnarray = array(); // ensure
         // if inbox or spam merge the 2 current folders
         if ($folder_key == base64_encode('inbox') || $folder_key == base64_encode('spam')) {
             /*

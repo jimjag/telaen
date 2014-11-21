@@ -673,5 +673,3 @@ $tmpbody";
 
     $smarty->display("$selected_theme/newmsg.htm");
 }
-
-?>
