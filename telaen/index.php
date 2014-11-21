@@ -8,31 +8,34 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
-require_once './inc/config/config.php';
-require_once './inc/errorhandler.php';
 require_once './inc/class/class.Telaen.php';
 require_once './inc/preinit.php';
 $TLN = new Telaen();
+$TLN->load_config();
+require_once './inc/errorhandler.php';
 
-extract(pull_from_array($_GET, array('f_email', 'f_user', 'lng', 'tem', 'six'), 's'));
+extract(Telaen::pull_from_array($_GET, array('f_email', 'f_user', 'lng', 'tem', 'six'), 's'));
 require_once './inc/user_tl.php';
 
 require_once SMARTY_DIR.'Smarty.class.php';
 $smarty = new Smarty();
 $smarty->security = true;
 $smarty->secure_dir = array('./');
-$smarty->compile_dir = $temporary_directory;
+$smarty->compile_dir = $TLN->config['temporary_directory'].'/smarty_ct/';
 $smarty->template_dir = './themes';
 $smarty->config_dir = './langs';
 $smarty->use_sub_dirs = true;
+if (!is_dir($smarty->compile_dir)) {
+    mkdir($smarty->compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
+}
 
 $smarty->assign('umLabel', $lang);
 
 // Assign also the webmail title to smarty, check for empty title before
-if (!isset($webmail_title) || trim($webmail_title) == "") {
-    $webmail_title = 'Telaen Webmail';
+if (!isset($TLN->config['webmail_title'])) {
+    $TLN->config['webmail_title'] = 'Telaen Webmail';
 }
-$smarty->assign('webmailTitle', $webmail_title);
+$smarty->assign('webmailTitle', $TLN->config['webmail_title']);
 
 // Assing the header and footer paths because inc.php is not loaded in index
 $smarty->assign('headerTemplate', $header_template);
@@ -79,27 +82,28 @@ $jssource = "
 ";
 
 //$smarty->debugging = true;
-$smarty->assign('umServerType', strtoupper($mail_server_type));
+$mail_server_type = strtoupper($TLN->config['mail_server_type']);
+$smarty->assign('umServerType', $mail_server_type);
 
-switch (strtoupper($mail_server_type)) {
+switch ($mail_server_type) {
     case 'DETECT':
 
         break;
     case 'ONE-FOR-EACH':
 
-        $aval_servers = count($mail_servers);
+        $aval_servers = count($TLN->config['mail_servers']);
         $smarty->assign('umAvailableServers', $aval_servers);
 
         if (!$aval_servers) {
             die("You must set at least one server in \$mail_servers, please review your config.php");
         }
         if ($aval_servers == 1) {
-            $strServers = '@'.$mail_servers[0]['domain']." <input type=\"hidden\" name=\"six\" value=\"0\" />";
+            $strServers = '@'.$TLN->config['mail_servers'][0]['domain']." <input type=\"hidden\" name=\"six\" value=\"0\" />";
         } else {
             $strServers = "<select name=\"six\">\r";
             for ($i = 0;$i<$aval_servers;$i++) {
                 $sel = ($i == $six) ? "selected=\"selected\"" : "";
-                $strServers .= "<option value=\"$i\" $sel>@".$mail_servers[$i]["domain"]."</option> \r";
+                $strServers .= "<option value=\"$i\" $sel>@".$TLN->config['mail_servers'][$i]["domain"]."</option> \r";
             }
             $strServers .= "</select>\r";
         }
@@ -136,7 +140,7 @@ if ($avalthemes == 0) {
     die('You must provide at least one theme');
 }
 
-$smarty->assign('umAllowSelectLanguage', $allow_user_change_language); $func($textout);
+$smarty->assign('umAllowSelectLanguage', $TLN->config['allow_user_change_language']); $func($textout);
 
 if ($allow_user_change_language) {
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
@@ -148,7 +152,7 @@ if ($allow_user_change_language) {
     $smarty->assign("umLanguages", $langsel);
 }
 
-$smarty->assign('umAllowSelectTheme', $allow_user_change_theme);
+$smarty->assign('umAllowSelectTheme', $TLN->config['allow_user_change_theme']);
 
 if ($allow_user_change_theme) {
     $themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";

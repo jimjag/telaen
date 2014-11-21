@@ -10,8 +10,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
 
-extract(pull_from_array($_GET, array('where'), 'str'));
-extract(pull_from_array($_POST, array('contacts'), 'str'));
+extract(Telaen::pull_from_array($_GET, array('where'), 'str'));
+extract(Telaen::pull_from_array($_POST, array('contacts'), 'str'));
 
 $filename = $TLN->userfolder.'_infos/addressbook.ucf';
 $myfile = $TLN->read_file($filename);

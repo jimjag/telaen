@@ -70,7 +70,7 @@ class Telaen extends Telaen_core
     public function trigger_error($str, $caller = "")
     {
         if ($this->config['enable_debug']) {
-            $this->config['enable_debug']_msg($str, $caller);
+            $this->debug_msg($str, $caller);
         }
         \trigger_error($str);
     }
@@ -184,7 +184,7 @@ class Telaen extends Telaen_core
         $buffer = fgets($this->mail_connection, 8192);
         $buffer = preg_replace('|\r?\n|', "\r\n", $buffer);
         if ($this->config['enable_debug']) {
-            $this->config['enable_debug']_msg($buffer, __FUNCTION__);
+            $this->debug_msg($buffer, __FUNCTION__);
         }
 
         return $buffer;
@@ -216,7 +216,7 @@ class Telaen extends Telaen_core
                 }
                 fwrite($this->mail_connection, $cmd);
                 if ($this->config['enable_debug']) {
-                    $this->config['enable_debug']_msg($cmd, __FUNCTION__);
+                    $this->debug_msg($cmd, __FUNCTION__);
                 }
             }
 

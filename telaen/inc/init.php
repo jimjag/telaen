@@ -22,24 +22,25 @@ session_start();
 $sid = session_id();
 /* We grab the actual session data below with the Session class */
 
-require_once './inc/config/config.php';
-require_once './inc/errorhandler.php';
 require_once './inc/class/class.Telaen.php';
 require_once './inc/preinit.php';
 require_once './inc/class/class.MyMonth.php';
 
 $TLN = new Telaen();
+$TLN->load_config();
+
+require_once './inc/errorhandler.php';
 
 require_once SMARTY_DIR.'Smarty.class.php';
 $smarty = new Smarty();
 $smarty->security = true;
 $smarty->secure_dir = array('./');
-$smarty->compile_dir = $temporary_directory.'/smarty_ct/';
+$smarty->compile_dir = $TLN->config['temporary_directory'].'/smarty_ct/';
 $smarty->template_dir =     './themes';
 $smarty->config_dir = './langs';
 $smarty->use_sub_dirs = true;
 if (!is_dir($smarty->compile_dir)) {
-    mkdir($smarty->compile_dir, (isset($dirperm) ? $dirperm : "0755"));
+    mkdir($smarty->compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
 }
 
 $AuthSession = new Session();
@@ -79,10 +80,10 @@ $smarty->assign('umLabel', $lang);
 // setlocale(LC_ALL, $languages[$lid]['locale']);
 
 // Assign also the webmail title to smarty, check for empty title before
-if (!isset($webmail_title) || trim($webmail_title) == "") {
-    $webmail_title = 'Telaen Webmail';
+if (!isset($TLN->config['webmail_title'])) {
+    $TLN->config['webmail_title'] = 'Telaen Webmail';
 }
-$smarty->assign('webmailTitle', $webmail_title);
+$smarty->assign('webmailTitle', $TLN->config['webmail_title']);
 
 if (isset($f_pass)) {
     $f_pass = stripslashes($f_pass);
@@ -106,18 +107,18 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         $f_user = 'unknown';
     }
 
-    switch (strtoupper($mail_server_type)) {
+    switch (strtoupper($TLN->config['mail_server_type'])) {
 
     case 'DETECT':
         $f_server = strtolower(getenv('HTTP_HOST'));
-        $f_server = str_replace($mail_detect_remove, "", $f_server);
+        $f_server = str_replace($TLN->config['mail_detect_remove'], "", $f_server);
         $f_server = $mail_detect_prefix.$f_server;
 
         if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
             $f_user = trim($regs[1]);
             $domain = trim($regs[2]);
-            if ($mail_detect_login_type != "") {
-                $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $mail_detect_login_type));
+            if ($TLN->config['mail_detect_login_type'] != "") {
+                $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $TLN->config['mail_detect_login_type']));
             }
         }
 
@@ -128,14 +129,14 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         break;
 
     case 'ONE-FOR-EACH':
-        $domain = trim($mail_servers[$six]['domain']);
+        $domain = trim($TLN->config['mail_servers'][$six]['domain']);
         $f_email = $f_user.'@'.$domain;
-        $f_server = $mail_servers[$six]['server'];
-        $login_type = $mail_servers[$six]['login_type'];
+        $f_server = $TLN->config['mail_servers'][$six]['server'];
+        $login_type = $TLN->config['mail_servers'][$six]['login_type'];
 
-        $f_protocol = $mail_servers[$six]['protocol'];
-        $f_port = $mail_servers[$six]['port'];
-        $f_prefix = $mail_servers[$six]['folder_prefix'];
+        $f_protocol = $TLN->config['mail_servers'][$six]['protocol'];
+        $f_port = $TLN->config['mail_servers'][$six]['port'];
+        $f_prefix = $TLN->config['mail_servers'][$six]['folder_prefix'];
 
         if ($login_type != "") {
             $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $login_type));
@@ -150,10 +151,10 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
                 $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $one_for_all_login_type));
             }
         }
-        $f_server = $default_mail_server;
-        $f_protocol = $default_protocol;
-        $f_port = $default_port;
-        $f_prefix = $default_folder_prefix;
+        $f_server = $TLN->config['default_mail_server'];
+        $f_protocol = $TLN->config['default_protocol'];
+        $f_port = $TLN->config['default_port'];
+        $f_prefix = $TLN->config['default_folder_prefix'];
 
         break;
     }
@@ -186,7 +187,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
             }
         }
     }
-    $quota_limit = bkmg2bytes($quota_limit); // ensure bytes
+    $quota_limit = Telaen::bkmg2bytes($quota_limit); // ensure bytes
     $auth['quota_limit'] = $quota_limit;
 } elseif ($auth['auth'] && ((time() - $start) < ($TLN->config['idle_timeout'] * 60))) {
     $TLN->mail_user = $f_user = $auth['user'];
@@ -210,7 +211,7 @@ $auth['start'] = time();
 
 $AuthSession->Save($auth);
 
-$TLN->userfolder = $temporary_directory.preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
+$TLN->userfolder = $TLN->config['temporary_directory'].preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
 
 $UserMbox = new Mbox();
 $TLN->UserMbox = $UserMbox;
@@ -260,7 +261,7 @@ if (!isset($sortby) || !preg_match('/(subject|fromname|date|size|toname)/', $sor
     if (array_key_exists('sort-by', $TLN->prefs) && preg_match('/(subject|fromname|date|size|toname)/', $TLN->prefs['sort-by'])) {
         $sortby = $TLN->prefs['sort-by'];
     } else {
-        $sortby = $default_sortby;
+        $sortby = $TLN->config['default_sortby'];
     }
 } else {
     $need_save = true;
@@ -271,7 +272,7 @@ if (!isset($sortorder) || !preg_match('/ASC|DESC/', $sortorder)) {
     if (array_key_exists('sort-order', $TLN->prefs) && preg_match('/ASC|DESC/', $TLN->prefs['sort-order'])) {
         $sortorder = $TLN->prefs['sort-order'];
     } else {
-        $sortorder = $default_sortorder;
+        $sortorder = $TLN->config['default_sortorder'];
     }
 } else {
     $need_save = true;

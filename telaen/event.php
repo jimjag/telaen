@@ -10,8 +10,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
 
-extract(pull_from_array($_GET, array('edate'), 'str'));
-extract(pull_from_array($_POST, array('eventn', 'edate', 'evsave', 'evdelete', 'starthour', 'stophour', 'startmin', 'stopmin'), 'str'));
+extract(Telaen::pull_from_array($_GET, array('edate'), 'str'));
+extract(Telaen::pull_from_array($_POST, array('eventn', 'edate', 'evsave', 'evdelete', 'starthour', 'stophour', 'startmin', 'stopmin'), 'str'));
 
 $etext = trim($_POST["etext_{$eventn}"]);
 

@@ -14,8 +14,8 @@ Telaen is a GPL'ed software developed by
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-$selected_theme = $tid = $default_theme;
-$selected_language = $lid = $default_language;
+$selected_theme = $tid = $TLN->config['default_theme'];
+$selected_language = $lid = $TLN->config['default_language'];
 
 if (isset($auth) && is_array($auth) && $auth['thm_lang_inited']) {
     $selected_theme = $tid = $auth['tid'];
@@ -43,12 +43,12 @@ if (isset($auth) && is_array($auth)) {
 Templates
 ********************************************************/
 
-$menu_template = "$selected_theme/menu.htm";            // Menu
-$calendar_template = "$selected_theme/calendar.htm";        // Calendar
-$news_template = "$selected_theme/news.htm";            // News
-$header_template = "$selected_theme/header.htm";            // Page Header
-$footer_template = "$selected_theme/footer.htm";            // Page Footer
-$popup_header_template = "$selected_theme/popup-header.htm";        // Header for the popup wins
+$menu_template = "$selected_theme/menu.htm";
+$calendar_template = "$selected_theme/calendar.htm";
+$news_template = "$selected_theme/news.htm";
+$header_template = "$selected_theme/header.htm";
+$footer_template = "$selected_theme/footer.htm";
+$popup_header_template = "$selected_theme/popup-header.htm";
 
-
+// Pull in correct $lang[] array for select language
 require_once 'langs/'.$selected_language.'.php';

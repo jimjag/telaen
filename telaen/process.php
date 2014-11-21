@@ -25,10 +25,10 @@ function mail_connect()
     }
 }
 
-extract(pull_from_array($_GET, array('decision'), 'str'));
-extract(pull_from_array($_GET, array('refr', 'mlist'), true));
-extract(pull_from_array($_POST, array('decision', 'aval_folders'), 'str'));
-extract(pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
+extract(Telaen::pull_from_array($_GET, array('decision'), 'str'));
+extract(Telaen::pull_from_array($_GET, array('refr', 'mlist'), true));
+extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'));
+extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
 
 $headers = null;
 $folder_key = base64_encode(strtolower($folder));
@@ -140,7 +140,7 @@ if (!is_array($headers)
              */
             if ($TLN->mail_protocol == POP3 && $expunge
                 && $is_inbox_or_spam) {
-                if ($mail_use_forcedquit) {
+                if ($TLN->config['mail_use_forcedquit']) {
                     $TLN->mail_disconnect_force();
                 } else {
                     $TLN->mail_disconnect();
@@ -159,7 +159,7 @@ if (!is_array($headers)
                  * ubiid variable. Scan through the delarray to find the
                  * first ID to be deleted.
                  */
-                $TLN->array_qsort2int($delarray, 'msgid', 'ASC');
+                Telaen::array_qsort2int($delarray, 'msgid', 'ASC');
                 $delarray_count = count($delarray);
                 $firstid = 0;
 

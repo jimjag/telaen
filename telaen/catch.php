@@ -14,7 +14,7 @@ if (!isset($ix) || !isset($folder)) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
-extract(pull_from_array($_POST, array('ckaval'), 1));
+extract(Telaen::pull_from_array($_POST, array('ckaval'), 1));
 
 $filename = $TLN->userfolder.'_infos/addressbook.ucf';
 $myfile = $TLN->read_file($filename);

@@ -12,8 +12,8 @@ require './inc/init.php';
 
 $smarty->assign('pageMetas', $nocache);
 
-extract(pull_from_array($_GET, array('rem'), 'str'));
-extract(pull_from_array($_FILES, array('userfile'), 'str'));
+extract(Telaen::pull_from_array($_GET, array('rem'), 'str'));
+extract(Telaen::pull_from_array($_FILES, array('userfile'), 'str'));
 
 if (isset($rem) && $rem != "") {
     $attchs = $mbox['attachments'];

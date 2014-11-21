@@ -10,7 +10,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
 
-extract(pull_from_array($_POST, array('srcFrom', 'srcSubject', 'srcBody'), 'str'));
+extract(Telaen::pull_from_array($_POST, array('srcFrom', 'srcSubject', 'srcBody'), 'str'));
 
 $smarty->assign('pageMetas', $nocache);
 

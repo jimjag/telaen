@@ -75,7 +75,7 @@ while (list($box, $info) = each($mbox['headers'])) {
 $smarty->assign('umTotalUsed', ceil($totalused/1024));
 $quota_enabled = ($quota_limit) ? 1 : 0;
 $smarty->assign('umQuotaEnabled', $quota_enabled);
-$smarty->assign('umQuotaLimit', bytes2bkmg($quota_limit));
+$smarty->assign('umQuotaLimit', Telaen::bytes2bkmg($quota_limit));
 $usageGraph = get_usage_graphic($totalused, $quota_limit);
 $smarty->assign('umUsageGraph', $usageGraph);
 
@@ -244,7 +244,7 @@ if ($nummsg > 0) {
         $messagelist[$index]['checkbox'] = $checkbox;
         $messagelist[$index]['attachimg'] = $attachimg;
         $messagelist[$index]['priorimg'] = $img_prior;
-        $messagelist[$index]['size'] = bytes2bkmg($size);
+        $messagelist[$index]['size'] = Telaen::bytes2bkmg($size);
     }
 }
 $smarty->assign('umNumMessages', $nummsg);

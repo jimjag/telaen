@@ -13,8 +13,8 @@ require './inc/init.php';
 // assign metas
 $smarty->assign('pageMetas', $nocache);
 
-extract(pull_from_array($_GET, array('nameto', 'mailto'), 'str'));
-extract(pull_from_array($_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
+extract(Telaen::pull_from_array($_GET, array('nameto', 'mailto'), 'str'));
+extract(Telaen::pull_from_array($_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
         'priority', 'body', 'is_html', 'textmode', 'sig', 'tipo', 'rtype', 'ix', ), 'str'));
 
 if (isset($tipo) && $tipo == 'send') {
@@ -641,7 +641,7 @@ $tmpbody";
             $index = count($attachlist);
 
             $attachlist[$index]['name'] = $attachs[$i]['name'];
-            $attachlist[$index]['size'] = bytes2bkmg($attachs[$i]['size']);
+            $attachlist[$index]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
             $attachlist[$index]['type'] = $attachs[$i]['type'];
             $attachlist[$index]['link'] = "javascript:upwin($i)";
         }

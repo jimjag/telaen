@@ -39,11 +39,11 @@ function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($
 $smarty->assign('umJS', $jssource);
 $smarty->assign('umGoBack', 'addressbook.php');
 
-extract(pull_from_array($_GET, array('opt'), 'str'));
-extract(pull_from_array($_POST, array('name', 'email', 'street', 'city', 'state', 'work', 'phone',
+extract(Telaen::pull_from_array($_GET, array('opt'), 'str'));
+extract(Telaen::pull_from_array($_POST, array('name', 'email', 'street', 'city', 'state', 'work', 'phone',
     'cell', 'note', 'opt'), 'str'));
-extract(pull_from_array($_GET, array('id'), 1));
-extract(pull_from_array($_POST, array('id'), 1));
+extract(Telaen::pull_from_array($_GET, array('id'), 1));
+extract(Telaen::pull_from_array($_POST, array('id'), 1));
 
 switch ($opt) {
     // save an edited contact

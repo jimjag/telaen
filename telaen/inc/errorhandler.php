@@ -4,6 +4,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 /*
  * Basic error handling
  */
+$log_fname = $TLN->config['log_fname'];
 trim($log_fname);
 if (empty($log_fname)) {
     $log_fname = "telaen_error.log";
@@ -11,11 +12,11 @@ if (empty($log_fname)) {
 
 function errorHandler($errno, $errmsg, $filename, $linenum, $vars)
 {
-    global $log_fname, $temporary_directory;
+    global $log_fname, $TLN;
     if ($log_fname[0] == '/') {
         $elog = $log_fname;
     } else {
-        $elog = $temporary_directory.'/'.$log_fname;
+        $elog = $TLN->config['temporary_directory'].'/'.$log_fname;
     }
 
     $dt = date('Ymd H:i:s T');

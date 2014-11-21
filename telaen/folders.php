@@ -12,8 +12,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
 
-extract(pull_from_array($_GET, array('empty', 'goback', 'nameto', 'mailto'), 's'));
-extract(pull_from_array($_POST, array('newfolder'), 's'));
+extract(Telaen::pull_from_array($_GET, array('empty', 'goback', 'nameto', 'mailto'), 's'));
+extract(Telaen::pull_from_array($_POST, array('newfolder'), 's'));
 
 // server check
 if (!$TLN->mail_connect()) {
@@ -117,7 +117,7 @@ for ($n = 0;$n<count($boxes);$n++) {
              * Sort the arrays and fit them together again.
              */
             $merged_array = array_merge($mbox['headers'][base64_encode('inbox')], $mbox['headers'][base64_encode('spam')]);
-            $TLN->array_qsort2int($merged_array, 'msg', 'ASC');
+            Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
 
             $merged_returnarray = $TLN->mail_list_msgs('INBOX', $merged_array);
             $thisbox = $merged_returnarray[0];
@@ -175,7 +175,7 @@ for ($n = 0;$n<count($boxes);$n++) {
         $system[$scounter]['name'] = $boxname;
         $system[$scounter]['msgs'] = count($thisbox)."/$unread";
         $system[$scounter]['del'] = $delete;
-        $system[$scounter]['boxsize'] = bytes2bkmg($boxsize);
+        $system[$scounter]['boxsize'] = Telaen::bytes2bkmg($boxsize);
         $system[$scounter]['chlink'] = "process.php?folder=$entry";
         $system[$scounter]['emptylink'] = 'folders.php?empty='.$entry.'&folder='.$entry."";
 
@@ -185,7 +185,7 @@ for ($n = 0;$n<count($boxes);$n++) {
         $personal[$pcounter]['name'] = $boxname;
         $personal[$pcounter]['msgs'] = count($thisbox)."/$unread";
         $personal[$pcounter]['del'] = $delete;
-        $personal[$pcounter]['boxsize'] = bytes2bkmg($boxsize);
+        $personal[$pcounter]['boxsize'] = Telaen::bytes2bkmg($boxsize);
         $personal[$pcounter]['chlink'] = 'process.php?folder='.urlencode($entry)."";
         $personal[$pcounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
 
@@ -207,10 +207,10 @@ $umFolderList = array_merge((array) $system, (array) $personal);
 $smarty->assign('umFolderList', $umFolderList);
 
 $smarty->assign('umPersonal', $personal);
-$smarty->assign('umTotalUsed', bytes2bkmg($totalused));
+$smarty->assign('umTotalUsed', Telaen::bytes2bkmg($totalused));
 $quota_enabled = ($quota_limit) ? 1 : 0;
 $smarty->assign('umQuotaEnabled', $quota_enabled);
-$smarty->assign('umQuotaLimit', bytes2bkmg($quota_limit));
+$smarty->assign('umQuotaLimit', Telaen::bytes2bkmg($quota_limit));
 $usageGraph = get_usage_graphic($totalused, $quota_limit);
 $smarty->assign('umUsageGraph', $usageGraph);
 $noquota = ($totalused > $quota_limit) ? 1 : 0;
