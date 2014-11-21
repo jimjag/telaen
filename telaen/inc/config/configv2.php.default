@@ -22,7 +22,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 # AS IS WITHOUT MOVING IT TO A SAFE LOCATION
 ########################################################################
 
-define('SMARTY_DIR','/some/place/safe/smarty/');
+$config['SMARTY_DIR'] = '/some/place/safe/smarty/';
 
 require('./inc/version.php');
 $config['appversion'] = $appversion;

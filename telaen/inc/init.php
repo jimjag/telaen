@@ -31,7 +31,7 @@ $TLN->load_config();
 
 require_once './inc/errorhandler.php';
 
-require_once SMARTY_DIR.'Smarty.class.php';
+require_once $config['SMARTY_DIR'].'Smarty.class.php';
 $smarty = new Smarty();
 $smarty->security = true;
 $smarty->secure_dir = array('./');
