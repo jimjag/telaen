@@ -169,16 +169,19 @@ if (count($config) == 0) {
                     $value = '0'.decoct($value);
                 }
                 if (preg_match('|timezone|', $key)) $value = "$value";
-                //pout($fp, $value);
+                // pout($fp, $value);
                 fwrite($fp, var_export($value, true));
                 fwrite($fp, ";\n");
             }
             fclose($fp);
             echo 'I tried to draft one based on your old configs. It can be found at:<br/>';
             echo '<font face="Courier New" color=Gray>/tmp/configv2.php.new</font><br/>';
-            //echo "Here it is for you:<hr><pre>\n";
-            //echo file_get_contents('/tmp/configv2.php.new');
-            //echo "</pre>\n";
+            echo "Here it is for you:<hr><code>\n";
+            $show =  file('/tmp/configv2.php.new');
+            foreach ($show as $line) {
+                echo preg_replace('|^ +|', '&nbsp;', nl2br($line));
+            }
+            echo "</code>\n";
         }
     } else {
         echo ('You must create one based on your old configs (or from scratch).');
