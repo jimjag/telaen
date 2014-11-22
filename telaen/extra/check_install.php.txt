@@ -176,12 +176,12 @@ if (count($config) == 0) {
             fclose($fp);
             echo 'I tried to draft one based on your old configs. It can be found at:<br/>';
             echo '<font face="Courier New" color=Gray>/tmp/configv2.php.new</font><br/>';
-            echo "Here it is for you:<hr><code>\n";
+            echo "Here it is for you:<hr><pre>\n";
             $show =  file('/tmp/configv2.php.new');
             foreach ($show as $line) {
-                echo preg_replace('|^ +|', '&nbsp;', nl2br($line));
+                echo htmlspecialchars($line);
             }
-            echo "</code>\n";
+            echo "</pre>\n";
         }
     } else {
         echo ('You must create one based on your old configs (or from scratch).');
