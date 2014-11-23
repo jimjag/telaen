@@ -173,9 +173,6 @@ body,td,th {
             }
         }
         $oconfig = $GLOBALS;
-        unset($oconfig['has_old_files']);
-        unset($oconfig['old_files']);
-        unset($oconfig['phpver']);
 
         if ($has_old_files) {
             echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following old config files:</br>');
@@ -234,23 +231,26 @@ body,td,th {
 $config = array();
 @include './inc/config/configv2.php';
 if (count($config) == 0) {
+    $nconfig = array();
     echo('<span class="fail">!! FAILED !!</span><br/>I don\'t see, or cannot read, your <span class="codish">configv2.php</span> file.');
     //
     // Try to create one for them...
     //
-    $keep = array('appversion', 'appname', 'themes', 'languages', 'default_theme', 'default_language');
+    $keep = array('appversion', 'appname', 'themes', 'languages', 'default_theme',
+        'default_language', 'log_errors', 'log_fname');
     // $config = array();
     @include './inc/config/configv2.php.default';
     if (count($config) > 0) {
         foreach ($config as $key => $value) {
-            if (!in_array($key, $keep))
-                $config[$key] = ${$key};
+            if (!in_array($key, $keep) && ($value != ${$key})) {
+                $nconfig[$key] = ${$key};
+            }
         }
-        $config['capa_override']['PIPELINING'] = $mail_use_pipelining;
-        $config['capa_override']['ATOP'] = $mail_use_atop;
-        $config['capa_override']['UIDL'] = $mail_use_uidl;
-        $config['capa_override']['APOP'] = $mail_use_apop;
-        $config['SMARTY_DIR'] = SMARTY_DIR;
+        $nconfig['capa_override']['PIPELINING'] = $mail_use_pipelining;
+        $nconfig['capa_override']['ATOP'] = $mail_use_atop;
+        $nconfig['capa_override']['UIDL'] = $mail_use_uidl;
+        $nconfig['capa_override']['APOP'] = $mail_use_apop;
+        $nconfig['SMARTY_DIR'] = SMARTY_DIR;
         $fp = @fopen('/tmp/configv2.php.new', 'w');
         if ($fp) {
             fwrite($fp, "<?php\n");
@@ -265,7 +265,11 @@ if (count($config) == 0) {
             fwrite($fp, "\$config['appname'] = \$appname;\n");
             fwrite($fp, "@include('./inc/news/news.system.php');\n");
             fwrite($fp, "\$config['systemNews'] = \$systemNews;\n");
-            foreach ($config as $key => $value) {
+            fwrite($fp, "/*\n");
+            fwrite($fp, " * Local diffs from configv2.php.default\n");
+            fwrite($fp, " * Based on old Telaen 1.x config.* files\n");
+            fwrite($fp, " */\n");
+            foreach ($nconfig as $key => $value) {
                 fwrite($fp, "\$config['$key'] = ");
                 if ($value == "") $value = "";
                 if ($key == 'dirperm' ||$key == 'default_umask') {
