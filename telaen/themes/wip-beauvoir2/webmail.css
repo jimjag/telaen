@@ -24,7 +24,7 @@ BODY {
 	overflow-y: yes;
 	topmargin: 0;
 	leftmargin: 0 }
-	
+
 form { display: inline }
 
 TABLE, TR, TD, SELECT {
@@ -62,7 +62,7 @@ a:hover.lien {text-decoration: none; color: #2D3443}
 	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
 	font-size: 8.5pt;
 	color: #78879C }
-	
+
 .error {
 	font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
 	font-size: 8.5pt;

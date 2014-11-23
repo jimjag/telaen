@@ -29,7 +29,7 @@
 										{if $umErrorCode eq "1"}{$umLabel.error_connect}
 										{elseif $umErrorCode eq "2"}{$umLabel.error_retrieving}
 										{else}{$umLabel.error_other}{/if}
-										
+
 										</small><br><br>
 										<a href="logout.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{$umLabel.err_exit}</a><br><br>
 										</td>
@@ -47,5 +47,5 @@
 				</table>	
 			</form>	
 	</body>
-	
+
 </html>

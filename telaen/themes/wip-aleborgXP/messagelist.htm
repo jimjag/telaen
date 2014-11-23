@@ -10,7 +10,6 @@
 {$umJS} 
 </head>
 
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr height="1" bgcolor="#FFFFFF">
     <td height="1" bgcolor="#FFFFFF"></td>
@@ -87,7 +86,7 @@
       <td height="16" class="default">&nbsp;<a href="javascript:delemsg()"><img src="themes/aleborgXP/images/delete.gif" border="0" alt="{$umLabel.delete_selected_mnu}"></a>&nbsp;<a href="javascript:movemsg()"><img src="themes/aleborgXP/images/move_to.gif" border="0" alt="{$umLabel.move_selected_mnu}"></a>&nbsp; 
         <select name="aval_folders" class="textbox">
 						{section name=i loop=$umAvalFolders}
-							
+
           <option value="{$umAvalFolders[i].path|escape:"html"}">{$umAvalFolders[i].display|escape:"html"} 
           {/section} 
         </select>

@@ -15,7 +15,7 @@
 			margin: 0px;
 			margin-top: 20px;
 		}
-		
+
 		.mainLoginTable
 		{
 		background-color: #DDDCDC;
@@ -58,7 +58,7 @@
 		color: #0C1C6E;
 		font-size: 10pt;		
 		}		
-		
+
 	.textbox {
 		color : Black;
 		background-color : #ffffff;
@@ -83,7 +83,7 @@
 	.menu:link { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
 	.menu:hover { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
 	.menu:visited { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
-		
+
 	.navigation { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080; }
 	.navigation:link { text-decoration: none; font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
 	.navigation:hover { text-decoration: none; font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #000000;  }

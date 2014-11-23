@@ -1,7 +1,8 @@
 <!-- 
 available only for IE5+ users
 -->
-{literal}
+
+{literal} 
 <script language="JavaScript">
 bLoad=false
 pureText=true
@@ -175,8 +176,6 @@ function BtnMouseUp() {
   return false;
 }
 
-
-
 // Check if toolbar is being used when in text mode
 function validateMode() {
   if (! bTextMode) return true;
@@ -224,7 +223,7 @@ function setMode(newMode) {
     cont=Composition.document.body.innerText;
     Composition.document.body.innerHTML=cont;
   }
-  
+
   Composition.focus();
 }
 
@@ -236,7 +235,7 @@ function getEl(sTag,start) {
 
 function createLink() {
   if (!validateMode()) return;
-  
+
   var isA = getEl("A",Composition.document.selection.createRange().parentElement());
 
 {/literal}
@@ -272,7 +271,6 @@ function backColor() {
   else Composition.focus()
 }
 
-
 function cleanHtml() {
   var fonts = Composition.document.body.all.tags("FONT");
   var curr;
@@ -293,100 +291,91 @@ function getPureHtml() {
   return str;
 }
 
-</script>      
+</script> 
 {/literal}
-   				<table width="100%" border="0" cellspacing="0" cellpadding="3">
-   					<tr>
-   						<td>
-   							<div class="yToolbar" id="ParaToolbar">
-   								<div class="TBHandle">
-   								</div>
-   								<select id="ParagraphStyle" class="TBGen" language="javascript" onChange="formatC('formatBlock',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{$umLabel.format_paragraph}
-   									<option value="&lt;H1&gt;">{$umLabel.format_h1}
-   									<option value="&lt;H2&gt;">{$umLabel.format_h2}
-   									<option value="&lt;H3&gt;">{$umLabel.format_h3}
-   									<option value="&lt;H4&gt;">{$umLabel.format_h4}
-   									<option value="&lt;H5&gt;">{$umLabel.format_h5}
-   									<option value="&lt;H6&gt;">{$umLabel.format_h6}
-   									<option value="&lt;PRE&gt;">{$umLabel.format_pre}
-   									<option value="removeFormat">{$umLabel.format_clear_all}
-   								</select>
-   								<select id="FontName" class="TBGen" language="javascript" onChange="formatC('fontname',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{$umLabel.format_font}
-   									<option value="Arial">Arial
-   									<option value="Arial Black">Arial Black
-   									<option value="Arial Narrow">Arial Narrow
-   									<option value="Comic Sans MS">Comic Sans MS
-   									<option value="Courier New">Courier New
-   									<option value="System">System
-   									<option value="Times New Roman">Times New Roman
-   									<option value="Verdana">Verdana
-   									<option value="Wingdings">Wingdings
-   								</select>
-   								<select id="FontSize" class="TBGen" language="javascript" onChange="formatC('fontsize',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{$umLabel.format_size}
-   									<option value="1">1
-   									<option value="2">2
-   									<option value="3">3
-   									<option value="4">4
-   									<option value="5">5
-   									<option value="6">6
-   									<option value="7">7
-   								</select>
-   								<select id="FontColor" class="TBGen" language="javascript" onChange="formatC('forecolor',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{$umLabel.format_color}
-   									<option value="red">{$umLabel.color_red}
-   									<option value="blue">{$umLabel.color_blue}
-   									<option value="green">{$umLabel.color_green}
-   									<option value="black">{$umLabel.color_black}
-   								</select>
-   								<select id="FontBackColor" class="TBGen"  language="javascript" onChange="formatC('backcolor',this[this.selectedIndex].value);this.selectedIndex=0">
-   									<option class="heading" selected>{$umLabel.format_back}
-   									<option value="red">{$umLabel.color_red}
-   									<option value="blue">{$umLabel.color_blue}
-   									<option value="green">{$umLabel.color_green}
-   									<option value="black">{$umLabel.color_black}
-   									<option value="yellow">{$umLabel.color_yellow}
-   									<option value="white">{$umLabel.color_white}
-   								</select>
-
-								
-   								<div class="TBSep">
-   								</div>
-   								<div id="EditMode" class="TBGen">
-   								   <input type="checkbox" name="switchMode" LANGUAGE="javascript" onClick="setMode(switchMode.checked)">
-								   <a href="javascript:void(0)" onClick="document.composeForm.switchMode.click()"><font color="#000000" face="Arial" size=2>{$umLabel.view_source}</font></a> | 
-								   <a href="javascript:textmode()"><font color="#000000" face="Arial" size=2>{$umLabel.text_mode}</font></a> |
-								   <a href="javascript:void(0)" onClick="formatC('formatBlock','removeFormat')"><font color="#000000" face="Arial" size=2>{$umLabel.clear_format}</font></a>
-   								</div>
-   							</div>
-   							<table>
-   								<tr>
-   									<td><div class="Btn" language="javascript" onClick="formatC('cut')"><img class="Ico" src="images/cut.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="formatC('copy')"><img class="Ico" src="images/copy.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="formatC('paste')"><img class="Ico" src="images/paste.gif"></div></td>
-   									<td><div class="Btn" tlanguage="javascript" onClick="formatC('bold');"><img class="Ico" src="images/bold.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="formatC('italic')"><img class="Ico" src="images/italic.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="formatC('underline')"><img class="Ico" src="images/under.gif"></div></td>
-   									<td><div class="Btn" name="Justify" language="javascript" onClick="formatC('justifyleft')"><img class="Ico" src="images/aleft.gif"></div></td>
-   									<td><div class="Btn" name="Justify" language="javascript" onClick="formatC('justifycenter')"><img class="Ico" src="images/center.gif"></div></td>
-   									<td><div class="Btn" name="Justify" language="javascript" onClick="formatC('justifyright')"><img class="Ico" src="images/aright.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="formatC('insertorderedlist')"><img class="Ico" src="images/nlist.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="formatC('insertunorderedlist')"><img class="Ico" src="images/blist.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="formatC('outdent')"><img class="Ico" src="images/ileft.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="formatC('indent')"><img class="Ico" src="images/iright.gif"></div></td>
-   									<td><div class="Btn" language="javascript" onClick="createLink()"><img class="Ico" src="images/wlink.gif"></div></td>
-   								</tr>
-   							</table>
-   							<iframe name="Composition" id="Composition" width="100%" height="190" frameborder="0" class="Composition" style="border: 1px dotted;"></iframe>
-							<script><!--
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+  <tr>
+    <td><div class="yToolbar" id="ParaToolbar">
+        <div class="TBHandle"> </div>
+        <select id="ParagraphStyle" class="TBGen" language="javascript" onChange="formatC('formatBlock',this[this.selectedIndex].value);this.selectedIndex=0">
+          <option class="heading" selected>{$umLabel.format_paragraph}
+          <option value="&lt;H1&gt;">{$umLabel.format_h1}
+          <option value="&lt;H2&gt;">{$umLabel.format_h2}
+          <option value="&lt;H3&gt;">{$umLabel.format_h3}
+          <option value="&lt;H4&gt;">{$umLabel.format_h4}
+          <option value="&lt;H5&gt;">{$umLabel.format_h5}
+          <option value="&lt;H6&gt;">{$umLabel.format_h6}
+          <option value="&lt;PRE&gt;">{$umLabel.format_pre}
+          <option value="removeFormat">{$umLabel.format_clear_all}
+        </select>
+        <select id="FontName" class="TBGen" language="javascript" onChange="formatC('fontname',this[this.selectedIndex].value);this.selectedIndex=0">
+          <option class="heading" selected>{$umLabel.format_font}
+          <option value="Arial">Arial
+          <option value="Arial Black">Arial Black
+          <option value="Arial Narrow">Arial Narrow
+          <option value="Comic Sans MS">Comic Sans MS
+          <option value="Courier New">Courier New
+          <option value="System">System
+          <option value="Times New Roman">Times New Roman
+          <option value="Verdana">Verdana
+          <option value="Wingdings">Wingdings
+        </select>
+        <select id="FontSize" class="TBGen" language="javascript" onChange="formatC('fontsize',this[this.selectedIndex].value);this.selectedIndex=0">
+          <option class="heading" selected>{$umLabel.format_size}
+          <option value="1">1
+          <option value="2">2
+          <option value="3">3
+          <option value="4">4
+          <option value="5">5
+          <option value="6">6
+          <option value="7">7
+        </select>
+        <select id="FontColor" class="TBGen" language="javascript" onChange="formatC('forecolor',this[this.selectedIndex].value);this.selectedIndex=0">
+          <option class="heading" selected>{$umLabel.format_color}
+          <option value="red">{$umLabel.color_red}
+          <option value="blue">{$umLabel.color_blue}
+          <option value="green">{$umLabel.color_green}
+          <option value="black">{$umLabel.color_black}
+        </select>
+        <select id="FontBackColor" class="TBGen"  language="javascript" onChange="formatC('backcolor',this[this.selectedIndex].value);this.selectedIndex=0">
+          <option class="heading" selected>{$umLabel.format_back}
+          <option value="red">{$umLabel.color_red}
+          <option value="blue">{$umLabel.color_blue}
+          <option value="green">{$umLabel.color_green}
+          <option value="black">{$umLabel.color_black}
+          <option value="yellow">{$umLabel.color_yellow}
+          <option value="white">{$umLabel.color_white}
+        </select>
+        <div class="TBSep"> </div>
+        <div id="EditMode" class="TBGen">
+          <input type="checkbox" name="switchMode" LANGUAGE="javascript" onClick="setMode(switchMode.checked)">
+          <a href="javascript:void(0)" onClick="document.composeForm.switchMode.click()"><font color="#000000" face="Arial" size=2>{$umLabel.view_source}</font></a> | <a href="javascript:textmode()"><font color="#000000" face="Arial" size=2>{$umLabel.text_mode}</font></a> | <a href="javascript:void(0)" onClick="formatC('formatBlock','removeFormat')"><font color="#000000" face="Arial" size=2>{$umLabel.clear_format}</font></a> </div>
+      </div>
+      <table>
+        <tr>
+          <td><div class="Btn" language="javascript" onClick="formatC('cut')"><img class="Ico" src="images/cut.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="formatC('copy')"><img class="Ico" src="images/copy.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="formatC('paste')"><img class="Ico" src="images/paste.gif"></div></td>
+          <td><div class="Btn" tlanguage="javascript" onClick="formatC('bold');"><img class="Ico" src="images/bold.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="formatC('italic')"><img class="Ico" src="images/italic.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="formatC('underline')"><img class="Ico" src="images/under.gif"></div></td>
+          <td><div class="Btn" name="Justify" language="javascript" onClick="formatC('justifyleft')"><img class="Ico" src="images/aleft.gif"></div></td>
+          <td><div class="Btn" name="Justify" language="javascript" onClick="formatC('justifycenter')"><img class="Ico" src="images/center.gif"></div></td>
+          <td><div class="Btn" name="Justify" language="javascript" onClick="formatC('justifyright')"><img class="Ico" src="images/aright.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="formatC('insertorderedlist')"><img class="Ico" src="images/nlist.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="formatC('insertunorderedlist')"><img class="Ico" src="images/blist.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="formatC('outdent')"><img class="Ico" src="images/ileft.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="formatC('indent')"><img class="Ico" src="images/iright.gif"></div></td>
+          <td><div class="Btn" language="javascript" onClick="createLink()"><img class="Ico" src="images/wlink.gif"></div></td>
+        </tr>
+      </table>
+      <iframe name="Composition" id="Composition" width="100%" height="190" frameborder="0" class="Composition" style="border: 1px dotted;"></iframe>
+      <script><!--
 							Composition.document.open();
 							Composition.document.write(bodyTag);
 							Composition.document.close();
 							Composition.document.designMode="On";
 							// -->
-							</script>
-   						</td>
-   					</tr>
-   				</table>
+							</script></td>
+  </tr>
+</table>

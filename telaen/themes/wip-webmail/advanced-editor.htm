@@ -174,8 +174,6 @@ function BtnMouseUp() {
   return false;
 }
 
-
-
 // Check if toolbar is being used when in text mode
 function validateMode() {
   if (! bTextMode) return true;
@@ -223,7 +221,7 @@ function setMode(newMode) {
     cont=Composition.document.body.innerText;
     Composition.document.body.innerHTML=cont;
   }
-  
+
   Composition.focus();
 }
 
@@ -235,7 +233,7 @@ function getEl(sTag,start) {
 
 function createLink() {
   if (!validateMode()) return;
-  
+
   var isA = getEl("A",Composition.document.selection.createRange().parentElement());
 
 {/literal}
@@ -270,7 +268,6 @@ function backColor() {
   if (arr != null) formatC('backcolor', arr);
   else Composition.focus()
 }
-
 
 function cleanHtml() {
   var fonts = Composition.document.body.all.tags("FONT");
@@ -351,7 +348,6 @@ function getPureHtml() {
    									<option value="white">{$umLabel.color_white}
    								</select>
 
-								
    								<div class="TBSep">
    								</div>
    								<div id="EditMode" class="TBGen">

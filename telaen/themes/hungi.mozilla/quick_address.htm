@@ -1,10 +1,8 @@
 {include file=$popupHeaderTemplate pageTitle=$umLabel.qad_title}
 
 <body>
-<div id="popup">
-
-{literal}
-<script type="text/javascript">
+<div id="popup"> {literal} 
+  <script type="text/javascript">
 //<![CDATA[
 function addItem(obj,strText,strValue,blSel,intPos){
 	var newOpt,i,ArTemp,selIndex;
@@ -82,93 +80,76 @@ function ns_clean() {
 	}
 }
 //]]>
-</script>
-{/literal}
-
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<form name="form1" action="">
-	<tr>
-		<td width="50%" class="default" valign="top" align="center">
-			<table width="100%" cellspacing="0" cellpadding="0">
-			<tr>
-				<td class="usage"><span style="font-size:14px; color:#000066;">{$umLabel.address_mnu}</span></td>
-			</tr>
-			<tr>
-				<td align="center">
-				<br />
-				{$umContacts}
-				<script type="text/javascript">form1.contacts.style='width:200px';</script>			
-				</td>
-			</tr>
-			</table>
-		</td>
-		
-		<td valign="top" width="50%">
-			<table width="100%" border="0" cellspacing="1" cellpadding="0">
-				<tr>
-					<td colspan="2" height="22" class="headers"><b>{$umLabel.qad_to}</b></td>
-				</tr>
-				<tr>
-					<td width="5%" valign="top" class="default">
-					<input class="button50" type="button" onclick="Add('to')" value="&gt;&gt;" style="margin-bottom:2px">
-					<input class="button50" type="button" onclick="Dele('to')" value="&lt;&lt;"><br />
-					</td>
-					<td valign="top">
-					<select name="to" size="3" style="width: 260px;" ondblclick="Dele('to')">
-						<!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td height="22" colspan="2" class="headers"><b>{$umLabel.qad_cc}</b></td>
-				</tr>
-				<tr>
-					<td width="5%" valign="top" class="default">
-						<input class="button50" type="button" onclick="Add('cc')"  value="&gt;&gt;" style="margin-bottom:2px"><br />
-						<input class="button50" type="button" onclick="Dele('cc')"  value="&lt;&lt;"><br />
-					</td>
-					<td valign="top">
-					<select name="cc" size="3" style="width: 260px;" ondblclick="Dele('cc')">
-						<!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" height="22"  class="headers"><b>{$umLabel.qad_bcc}</b></td>
-				</tr>
-				<tr>
-					<td width="5%" valign="top" class="default">
-						<input class="button50" type="button" onclick="Add('bcc')" value="&gt;&gt;" style="margin-bottom:2px"><br />
-						<input class="button50" type=button onclick="Dele('bcc')"  value="&lt;&lt;"><br />
-					</td>
-					<td valign="top">
-					<select name="bcc" size="3" style="width: 260px;" onDblClick="Dele('bcc')">
-						<!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
-					</select>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td class="usage" colspan="2">
-			<center>
-			<table class="buttonTable" cellspacing="0" >
-			    	<tr>
-			    		<td valign="middle" class="buttonLeft">&nbsp;</td>
-			  		<td valign="middle" class="buttonMiddle"><input type="button" name="submit" value="{$umLabel.nav_back}" class="button" onclick="AddAndExit()"/></td>
-			  		<td valign="middle" class="buttonRight">&nbsp;</td>
-			    	</tr>
-			</table>
-	</tr>
-	</form>
-</table>
-<script type="text/javascript"> 
+</script> 
+  {/literal}
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <form name="form1" action="">
+      <tr>
+        <td width="50%" class="default" valign="top" align="center"><table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td class="usage"><span style="font-size:14px; color:#000066;">{$umLabel.address_mnu}</span></td>
+            </tr>
+            <tr>
+              <td align="center"><br />
+                {$umContacts} 
+                <script type="text/javascript">form1.contacts.style='width:200px';</script></td>
+            </tr>
+          </table></td>
+        <td valign="top" width="50%"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+            <tr>
+              <td colspan="2" height="22" class="headers"><b>{$umLabel.qad_to}</b></td>
+            </tr>
+            <tr>
+              <td width="5%" valign="top" class="default"><input class="button50" type="button" onClick="Add('to')" value="&gt;&gt;" style="margin-bottom:2px">
+                <input class="button50" type="button" onClick="Dele('to')" value="&lt;&lt;">
+                <br /></td>
+              <td valign="top"><select name="to" size="3" style="width: 260px;" ondblclick="Dele('to')">
+                  <!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
+                </select></td>
+            </tr>
+            <tr>
+              <td height="22" colspan="2" class="headers"><b>{$umLabel.qad_cc}</b></td>
+            </tr>
+            <tr>
+              <td width="5%" valign="top" class="default"><input class="button50" type="button" onClick="Add('cc')"  value="&gt;&gt;" style="margin-bottom:2px">
+                <br />
+                <input class="button50" type="button" onClick="Dele('cc')"  value="&lt;&lt;">
+                <br /></td>
+              <td valign="top"><select name="cc" size="3" style="width: 260px;" ondblclick="Dele('cc')">
+                  <!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
+                </select></td>
+            </tr>
+            <tr>
+              <td colspan="2" height="22"  class="headers"><b>{$umLabel.qad_bcc}</b></td>
+            </tr>
+            <tr>
+              <td width="5%" valign="top" class="default"><input class="button50" type="button" onClick="Add('bcc')" value="&gt;&gt;" style="margin-bottom:2px">
+                <br />
+                <input class="button50" type=button onClick="Dele('bcc')"  value="&lt;&lt;">
+                <br /></td>
+              <td valign="top"><select name="bcc" size="3" style="width: 260px;" onDblClick="Dele('bcc')">
+                  <!--option value=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option-->
+                </select></td>
+            </tr>
+          </table></td>
+      </tr>
+      <tr>
+        <td class="usage" colspan="2"><center>
+          <table class="buttonTable" cellspacing="0" >
+            <tr>
+              <td valign="middle" class="buttonLeft">&nbsp;</td>
+              <td valign="middle" class="buttonMiddle"><input type="button" name="submit" value="{$umLabel.nav_back}" class="button" onClick="AddAndExit()"/></td>
+              <td valign="middle" class="buttonRight">&nbsp;</td>
+            </tr>
+          </table>
+      </tr>
+    </form>
+  </table>
+  <script type="text/javascript"> 
 // clean the spaces in selects, its fix width in netscape
 //ns_clean();  old (unuseful??) things
 //window.resizeTo(535,300);
-</script>
-
+</script> 
 </div>
 </body>
 </html>

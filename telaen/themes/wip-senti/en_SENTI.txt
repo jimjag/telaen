@@ -2,7 +2,6 @@
 # English
 #
 
-
 # User-friendly names to system folders
 inbox_extended					= Inbox
 sent_extended					= Sent items
@@ -76,7 +75,6 @@ reply_date_hea					= Date:
 reply_subject_hea				= Subject:
 # done
 
-
 # page-specific vars
 
 [Headers]
@@ -116,8 +114,6 @@ msg_more_unread					= of them not read
 msg_one_unread					= Unread
 msg_none_unread					= <b>0</b> unread
 msg_in_the_folder				= in the folder
-
-
 
 [Login]
 lgn_title						= Login
@@ -332,8 +328,6 @@ addr_saved						= Entry(s) Updated and Saved
 addr_added						= New Contact has been Added
 addr_deleted					= This Contact has been Deleted
 
-
-
 [BlockSender]
 blk_title						= Block Sender
 blk_information					= Check the Email Address(s) you want to Block.
@@ -342,4 +336,3 @@ blk_no_address					= No address available
 blk_close						= Close
 blk_save						= Submit
 blk_warn						= <b>Warning!</b> <br>This Email Blocker is Permanent and <u>Can Not be Undone</u> once Submitted. <br>Be sure you want to Block this Email Address.<br>All Blocked Emails are Sent Directly to your Trash Folder.
-

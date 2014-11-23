@@ -2,7 +2,7 @@
 	function mOvr(src,clrOver) {
 		src.style.cursor = 'pointer';
 		src.style.backgroundColor = clrOver;
-		
+
 	}
 	function mOut(src,clrIn) {
 		src.style.cursor = 'default';

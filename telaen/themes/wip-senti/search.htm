@@ -67,13 +67,13 @@
 										<tr>
 											<td class="default"><td colspan="4" class="default"><input type=submit value="{$umLabel.sch_button_text}" class="button"></td>
 									</table>			
-					
+
 								</td>
 								</form>
 							<tr>
-				
+
 							{if $umDoSearch}
-				
+
 								<tr>
 								    <td width="35"  class="headers"><img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
 								    <td width="100%" class="headers">.: <b>{$umLabel.sch_subject_hea}</b> :.</td>
@@ -81,7 +81,7 @@
 								    <td width="90" class="headers">.: <b>{$umLabel.sch_date_hea}</b> :.</td>
 								    <td width="140" class="headers">.: <b>{$umLabel.sch_folder_hea}</b> :.</td>
 								</tr>
-				
+
 								{section name=i loop=$umMessageList}
 								<tr>
 									<td class="default">{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
@@ -106,4 +106,3 @@
 </table>
 </body>
 </html>
-

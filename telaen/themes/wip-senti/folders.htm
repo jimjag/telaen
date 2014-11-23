@@ -54,7 +54,7 @@
 					    <td width="15%" class="headers">.: {$umLabel.fld_empty_hea} :.</td>
 					    <td width="20%" class="headers">.: {$umLabel.fld_delete_hea} :.</td>
 					</tr>
-		
+
 					{section name=i loop=$umFolderList}
 						<tr>
 							<td class="default"><a href="{$umFolderList[i].chlink}"><img src="themes/senti/images/folder.gif"  alt="" border="0">&nbsp;&nbsp;&nbsp;{$umFolderList[i].name|escape:"html"}</a></td>
@@ -64,7 +64,7 @@
 							<td class="cent">{$umFolderList[i].del}</td>
 						</tr>
 					{/section}
-		
+
 					<tr>
 						<td class="default">&nbsp;</td>
 						<td class="right"><b>{$umLabel.fld_total}</b> &nbsp;</td>
@@ -77,7 +77,7 @@
 							<img src="themes/senti/images/trash.gif" alt="" border="0">&nbsp;&nbsp;{$umLabel.empty_trash_mnu}</a>
 						</td>
 					</tr>
-		
+
 					{if $umQuotaEnabled eq 1}
 					<tr>
 						<td class="default" colspan=5><br><br>&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b>Kb {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b>Kb {$umLabel.quota_usage_avail}&nbsp;&nbsp;&nbsp; {$umUsageGraph}</td>

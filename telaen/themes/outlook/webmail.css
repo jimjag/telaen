@@ -1,8 +1,8 @@
+
 <!--
 BODY {
 	background-color: #808080;
 }
-
 TABLE.window_outer {
 	border-style: solid;
 	border-width: 1px;
@@ -11,7 +11,6 @@ TABLE.window_outer {
 	border-right-color: #404040;
 	border-bottom-color: #404040;
 }
-
 TABLE.window_inner {
 	background-color: #D4D0C8;
 	border-style: solid;
@@ -21,7 +20,6 @@ TABLE.window_inner {
 	border-right-color: #808080;
 	border-bottom-color: #808080;
 }
-
 TD.outer {
 	border-style: solid;
 	border-width: 1px;
@@ -30,7 +28,6 @@ TD.outer {
 	border-right-color: #404040;
 	border-bottom-color: #404040;
 }
-
 TD.inner {
 	background-color: #D4D0C8;
 	border-style: solid;
@@ -40,7 +37,6 @@ TD.inner {
 	border-right-color: #808080;
 	border-bottom-color: #808080;
 }
-
 TD.editor_button_off {
 	border-style: solid;
 	border-width: 1px;
@@ -51,7 +47,6 @@ TD.editor_button_off {
 	height: 44px;
 	cursor: default;
 }
-
 TD.editor_button_on {
 	border-style: solid;
 	border-width: 1px;
@@ -65,7 +60,6 @@ TD.editor_button_on {
 	height: 44px;
 	cursor: default;
 }
-
 TD.editor_button_down {
 	border-style: solid;
 	border-width: 1px;
@@ -79,7 +73,6 @@ TD.editor_button_down {
 	height: 44px;
 	cursor: default;
 }
-
 TD.headers {
 	background-color: #D4D0C8;
 	border-style: solid;
@@ -88,9 +81,9 @@ TD.headers {
 	border-left-color: #FFFFFF;
 	border-right-color: #808080;
 	border-bottom-color: #808080;
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	vertical-align: middle;
 	padding-top: 1px;
@@ -99,7 +92,6 @@ TD.headers {
 	padding-right: 3px;
 	height: 10px;
 }
-
 TD.editor {
 	border-style: solid;
 	border-width: 1px;
@@ -109,7 +101,6 @@ TD.editor {
 	border-bottom-color: #404040;
 	padding: 2px;
 }
-
 TD.info_bar {
 	border-style: solid;
 	border-width: 1px;
@@ -117,23 +108,21 @@ TD.info_bar {
 	border-left-color: #808080;
 	border-right-color: #FFFFFF;
 	border-bottom-color: #FFFFFF;
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	vertical-align: middle;
 	padding: 2px;
 }
-
 TD.label {
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	vertical-align: top;
 	padding: 5px;
 }
-
 TD.messages {
 	background-color: #FFFFFF;
 	border-style: solid;
@@ -143,27 +132,11 @@ TD.messages {
 	border-right-color: #FFFFFF;
 	border-bottom-color: #FFFFFF;
 }
-
 TD.messagelist {
 	background-color: #FFFFFF;
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
-	color: #000000;
-	vertical-align: middle;
-	cursor: default;
-	padding-top: 2px;
-	padding-bottom: 2px;
-	padding-left: 3px;
-	padding-right: 3px;
-	white-space: nowrap;	
-}
-
-TD.messagelist_over {
-	background-color: #D5E8F9;
-	font-family: Tahoma,Arial,sans serif ;
-	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	vertical-align: middle;
 	cursor: default;
@@ -173,7 +146,20 @@ TD.messagelist_over {
 	padding-right: 3px;
 	white-space: nowrap;
 }
-
+TD.messagelist_over {
+	background-color: #D5E8F9;
+	font-family: Tahoma, Arial, sans serif;
+	font-weight: normal;
+	font-size: 11px;
+	color: #000000;
+	vertical-align: middle;
+	cursor: default;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 3px;
+	padding-right: 3px;
+	white-space: nowrap;
+}
 TD.newmsg_attachments_outer {
 	border-style: solid;
 	border-width: 1px;
@@ -183,7 +169,6 @@ TD.newmsg_attachments_outer {
 	border-bottom-color: #FFFFFF;
 	height: 19px;
 }
-
 TD.newmsg_attachments_inner {
 	background-color: #FFFFFF;
 	border-style: solid;
@@ -193,13 +178,12 @@ TD.newmsg_attachments_inner {
 	border-right-color: #D4D0C8;
 	border-bottom-color: #D4D0C8;
 	height: 19px;
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	vertical-align: middle;
 }
-
 TD.outlook_bar_outer {
 	background-color: #808080;
 	border-style: solid;
@@ -210,7 +194,6 @@ TD.outlook_bar_outer {
 	border-bottom-color: #FFFFFF;
 	width: 97px;
 }
-
 TABLE.outlook_bar_inner {
 	background-color: #808080;
 	border-style: solid;
@@ -221,7 +204,6 @@ TABLE.outlook_bar_inner {
 	border-bottom-color: #D4D0C8;
 	vertical-align: top;
 }
-
 TD.outlook_bar_button_off {
 	border-style: solid;
 	border-width: 1px;
@@ -233,7 +215,6 @@ TD.outlook_bar_button_off {
 	cursor: default;
 	white-space: nowrap;
 }
-
 TD.outlook_bar_button_on {
 	border-style: solid;
 	border-width: 1px;
@@ -248,7 +229,6 @@ TD.outlook_bar_button_on {
 	cursor: default;
 	white-space: nowrap;
 }
-
 TD.outlook_bar_button_down {
 	border-style: solid;
 	border-width: 1px;
@@ -263,7 +243,6 @@ TD.outlook_bar_button_down {
 	cursor: default;
 	white-space: nowrap;
 }
-
 TD.scrollbar_button {
 	background-color: #D4D0C8;
 	border-style: solid;
@@ -278,9 +257,8 @@ TD.scrollbar_button {
 	height: 17px;
 	cursor: default;
 }
-
 TD.scrollbar_path {
-	background-image: url('images/scrollbar_path.gif') ;	
+	background-image: url('images/scrollbar_path.gif');
 	background-repeat: repeat;
 	border-style: none;
 	vertical-align: middle;
@@ -288,44 +266,41 @@ TD.scrollbar_path {
 	width: 17px;
 	cursor: default;
 }
-
 TD.seccion_title {
 	background-color: #808080;
 	height: 23px;
 	border-style: none;
-	font-family: Tahoma,Arial,sans serif ;
-	font-weight: bold ;
-	font-size: 16px ;
+	font-family: Tahoma, Arial, sans serif;
+	font-weight: bold;
+	font-size: 16px;
 	color: #FFFFFF;
 	vertical-align: middle;
 	width: 100%;
 	white-space: nowrap;
-	cursor: default;	
+	cursor: default;
 }
-
 TD.seccion_title_out {
 	background-color: #808080;
 	height: 23px;
 	border-style: solid;
 	border-width: 1px;
 	border-color: #808080;
-	font-family: Tahoma,Arial,sans serif ;
-	font-weight: bold ;
-	font-size: 16px ;
+	font-family: Tahoma, Arial, sans serif;
+	font-weight: bold;
+	font-size: 16px;
 	color: #FFFFFF;
 	vertical-align: middle;
 	white-space: nowrap;
 	cursor: default;
 }
-
 TD.seccion_title_over {
 	background-color: #808080;
 	height: 23px;
 	border-style: solid;
 	border-width: 1px;
-	font-family: Tahoma,Arial,sans serif ;
-	font-weight: bold ;
-	font-size: 16px ;
+	font-family: Tahoma, Arial, sans serif;
+	font-weight: bold;
+	font-size: 16px;
 	color: #FFFFFF;
 	vertical-align: middle;
 	white-space: nowrap;
@@ -335,15 +310,14 @@ TD.seccion_title_over {
 	border-bottom-color: #000000;
 	cursor: default;
 }
-
 TD.seccion_title_down {
 	background-color: #808080;
 	height: 23px;
 	border-style: solid;
 	border-width: 1px;
-	font-family: Tahoma,Arial,sans serif ;
-	font-weight: bold ;
-	font-size: 16px ;
+	font-family: Tahoma, Arial, sans serif;
+	font-weight: bold;
+	font-size: 16px;
 	color: #FFFFFF;
 	vertical-align: middle;
 	white-space: nowrap;
@@ -353,7 +327,6 @@ TD.seccion_title_down {
 	border-bottom-color: #FFFFFF;
 	cursor: default;
 }
-
 TD.toolbar_outer {
 	border-style: solid;
 	border-width: 1px;
@@ -364,7 +337,6 @@ TD.toolbar_outer {
 	width: 100%;
 	height: 48px;
 }
-
 TD.toolbar_inner {
 	background-color: #D4D0C8;
 	border-style: solid;
@@ -376,7 +348,6 @@ TD.toolbar_inner {
 	width: 100%;
 	height: 100%;
 }
-
 TD.toolbar_button_off {
 	border-style: solid;
 	border-width: 1px;
@@ -388,7 +359,6 @@ TD.toolbar_button_off {
 	cursor: default;
 	white-space: nowrap;
 }
-
 TD.toolbar_button_on {
 	border-style: solid;
 	border-width: 1px;
@@ -403,7 +373,6 @@ TD.toolbar_button_on {
 	cursor: default;
 	white-space: nowrap;
 }
-
 TD.toolbar_button_down {
 	border-style: solid;
 	border-width: 1px;
@@ -418,101 +387,88 @@ TD.toolbar_button_down {
 	cursor: default;
 	white-space: nowrap;
 }
-
 TD.toolbar_splitter {
-	vertical-align: middle;	
+	vertical-align: middle;
 }
-
 TD.window_title {
-	background-image: url('images/window_title.png') ;	
+	background-image: url('images/window_title.png');
 	background-repeat: repeat-y;
 	background-color: #A6CAF0;
 	border-style: none;
 	height: 18px;
-	font-family: Tahoma,Arial,sans serif ;
-	font-weight: bold ;
-	font-size: 11px ;
+	font-family: Tahoma, Arial, sans serif;
+	font-weight: bold;
+	font-size: 11px;
 	color: #FFFFFF;
 	vertical-align: middle;
 }
-
 TD.window_title_X {
 	background-color: #A6CAF0;
 	vertical-align: middle;
 	text-align: right;
 	padding: 2px;
 }
-
 INPUT.button {
 	background-color: #D4D0C8;
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	vertical-align: middle;
 	padding: 1px;
 }
-
 INPUT.textbox {
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	width: 400px;
 }
-
 INPUT.file {
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 }
-
 TEXTAREA {
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 }
-
-SELECT 	{ 
-	font-family: Tahoma,Arial,sans serif ;
+SELECT {
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 }
-
-SELECT.priority 	{ 
+SELECT.priority {
 	border-style: none;
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	width: 100px;
 }
-
 A {
-	font-family: Tahoma,Arial,sans serif ;
+	font-family: Tahoma, Arial, sans serif;
 	font-weight: normal;
-	font-size: 11px ;
+	font-size: 11px;
 	color: #000000;
 	text-decoration : none;
-}	
-
+}
 A:hover {
-	font-family : Tahoma,Arial,sans serif;
-	font-weight : normal ;
-	font-size : 11px ;
-	color : #316bc6 ;
+	font-family : Tahoma, Arial, sans serif;
+	font-weight : normal;
+	font-size : 11px;
+	color : #316bc6;
 	text-decoration : underline;
 }
-
 FONT.xx-normal {
-	font-family : Tahoma,Arial,sans serif;
-	font-weight : normal ;
-	font-size : 11px ;
+	font-family : Tahoma, Arial, sans serif;
+	font-weight : normal;
+	font-size : 11px;
 }
-
 DIV.priority_outer {
 	border-style: solid;
 	border-width: 1px;
@@ -527,7 +483,6 @@ DIV.priority_outer {
 	top: 84px;
 	width: 100px;
 }
-
 DIV.priority_inner {
 	background-color: #D4D0C8;
 	border-style: solid;
@@ -538,30 +493,24 @@ DIV.priority_inner {
 	border-bottom-color: #808080;
 	width: 100%;
 }
-
 DIV.tab_visible {
 	background-color: #D4D0C8;
 	width: 550px;
 	display: block;
 }
-
 DIV.tab_hidden {
 	background-color: #D4D0C8;
 	width: 550px;
 	display: none;
 }
-
 DIV.showmodal {
 	BORDER:0;
 	DISPLAY: block;
 }
-
 DIV.hidemodal {
 	BORDER:0;
 	DISPLAY: none;
 }
-
-
 TABLE.tab {
 	background-color: #D4D0C8;
 	border-left-style: solid;
@@ -574,37 +523,30 @@ TABLE.tab {
 	border-bottom-width: 1px;
 	border-bottom-color: #808080;
 }
-
 TD.tab_blank {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	border-bottom-color: #FFFFFF;
 }
-
-
 TD.tab_info_visible {
 	cursor: default;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
 	border-bottom-color: #D4D0C8;
 }
-
 TD.tab_info_hidden {
 	cursor: default;
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
 	border-bottom-color: #FFFFFF;
 }
-
 FIELDSET {
 	padding: 7px;
 	border: 2px #eeeeee groove;
 }
-
 HR {
 	border: 1 #eeeeee groove;
 }
-
 TD.folders_visible {
 	background-color: #FFFFFF;
 	border-top: 1px #404040 solid;
@@ -614,16 +556,13 @@ TD.folders_visible {
 	width: 250px;
 	padding: 0;
 }
-
 TD.folders_hidden {
 	width: 1px;
 }
-
 ACRONYM {
 	border: 0;
 	padding: 0;
 }
-
 TABLE.folders_inner {
 	background-color: #FFFFFF;
 	border-style: solid;
@@ -633,7 +572,6 @@ TABLE.folders_inner {
 	border-right-color: #D4D0C8;
 	border-bottom-color: #D4D0C8;
 }
-
 TD.folders_outer {
 	background-color: #FFFFFF;
 	border-style: solid;
@@ -643,5 +581,4 @@ TD.folders_outer {
 	border-right-color: #FFFFFF;
 	border-bottom-color: #FFFFFF;
 }
-
 -->

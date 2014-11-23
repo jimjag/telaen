@@ -9,7 +9,7 @@ body {
 	color: #000000;
 	margin: 0;
 }
-	
+
 form { display: inline }
 
 TABLE, TR, TD, SELECT {
@@ -37,11 +37,11 @@ color: #2D3443
 .inactive {
 	font-size: 10pt;
 	color: #78879C }
-	
+
 .error {
 	font-size: 10pt;
 	color: #FF0000 }
-	
+
 #text {
 	margin : 10px 10px 10px 10px;
 	text-ident : 5%;
