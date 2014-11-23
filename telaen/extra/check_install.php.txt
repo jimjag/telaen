@@ -84,8 +84,10 @@ body,td,th {
     font-family: "Courier New", Courier, monospace;
     font-size: 11pt;
 	color: #000000;
-    text-align:right;
+    float:right;
 	font-weight: bold;
+    border: 2px solid #000000;
+    padding: 0px 4px 0px 4px;
 }
 .closeme a:link { text-decoration:none; }
 .seeme a:link { font-size: 75%; text-decoration:none; }
@@ -281,7 +283,7 @@ if (count($config) == 0) {
             echo('&lt;see it&gt;</a></span>');
             echo('<br/><div id="pop" class="popup">'); echo("\n");
             echo('<div class="closeme">');
-            echo('<a href="javascript:void(0)" onclick="document.getElementById(\'pop\').style.display=\'none\'">[X]</a>');
+            echo('<a href="javascript:void(0)" onclick="document.getElementById(\'pop\').style.display=\'none\'">X</a>');
             echo('</div><br/>');
             echo("\n<br/>\n");
             $show =  file('/tmp/configv2.php.new');
