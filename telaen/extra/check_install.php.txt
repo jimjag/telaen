@@ -1,12 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-    <head>
-        <title>... Testing Telaen v2.x installation ...</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<head>
+<title>... Testing Telaen v2.x installation ...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+h1 {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 24pt;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	color: #3300CC;
+}
+.fail {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 16pt;
+	font-style: oblique;
+	font-weight: bold;
+	color: red;
+	text-decoration: underline;
+}
+.codish {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 14pt;
+	color: #666666;
+}
+.codishsml {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 11pt;
+	color: #666666;
+}
+.codish2 {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 11pt;
+	color: #666666;
+	white-space: pre;
+}
+h2 {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 16pt;
+	font-style: oblique;
+	font-weight: bold;
+	color: #0033FF;
+}
+h4 {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14pt;
+	font-style: oblique;
+	font-weight: bold;
+	color: #0033FF;
+}
+.pass {
+	font-family: "Courier New", Courier, monospace;
+	color: green;
+	font-size: 14pt;
+	font-weight: bold;
+}
+.warn {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 14pt;
+	font-style: italic;
+	font-weight: bold;
+	color: orange;
+}
+.Description {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: 14pt;
+	font-style: normal;
+	font-weight: normal;
+}
+body,td,th {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14pt;
+	color: #000000;
+}
+.notice {
+	font-size: 10pt;
+	font-style: italic;
+	color: #666666;
+}
+.closeme {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 11pt;
+	color: #000000;
+    text-align:right;
+	font-weight: bold;
+}
+.closeme a:link { text-decoration:none; }
+.seeme a:link { font-size: 75%; text-decoration:none; }
+.popup {
+    left: 100px;
+    top: 50px;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 11pt;
+	color: #666666;
+	white-space: pre;
+	position:absolute;
+	border:5px solid #000000;
+    padding:20px;
+	display: none;
+    background-color: #eeeeee;
+}
+</style>
     </head>
-
-    <body>
-        <font face="Arial" size="+1">
-
 <?php
         ini_set('display_errors', 0);
         error_reporting(E_ALL);
@@ -43,24 +140,25 @@
         chdir('../'); // So the include works
 ?>
 
-        <h1>Intro</h1>
-        <strong>This script will test your installation and configuration of Telaen v2.x and try to give you a solution.</strong><br/>
+    <h1>Intro: Talaen 2.x Installation Check</h1>
+    <span class="Description">This script will test your installation and configuration of Telaen v2.x and try to give you a solution if it runs into problems.<br/>
 
-        <h2>Checking PHP version:</h2>
+</span>
+    <h2>Checking PHP version:</h2>
 <?php
         $phpver = phpversion();
         $phpver = doubleval($phpver[0] . '.' . $phpver[2]);
         if ((double) $phpver < 5.4) {
-            echo('<font color=red><strong>!! FAILED !!</strong></font>Talaen requires at least version 5.4.x; you are running {$phpver} <br/>');
+            echo('<span class="fail">!! FAILED !!</span><br/>Talaen requires at least version 5.4.x; you are running {$phpver} <br/>');
             $error = true;
         } else
-            echo('<font color=green><strong>PASSED</strong></font> (Running PHP version ' . phpversion() . ') <br/>');
+            echo('<span class="pass">PASSED</span> (Running PHP version ' . phpversion() . ') <br/>');
 ?>
         <hr>
-        <h2>Checking for old configuration file(s)</h2>
+        <h2 class="Test">Checking for old configuration file(s)</h2>
 
-        Older versions of Telaen used 3 separate files and a different configuration method.
-        Checking if the old configs are still around:<br/>
+        <span class="Description">Older versions of Telaen used 3 separate files and a different configuration method.
+        Checking if the old configs are still around:</span><br/>
 
 <?php
         $has_old_files = false;
@@ -78,20 +176,22 @@
         unset($oconfig['phpver']);
 
         if ($has_old_files) {
-            echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font><br/>I see the following old config files:</br>');
+            echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following old config files:</br>');
+            echo('<span class="codishsml">'); echo("\n");
             foreach ($old_files as $i) {
-                echo('<font face="Courier New" color=Gray>&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '</font><br/>');
+                echo('&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '<br/>'); echo("\n");
             }
+            echo('</span>'); echo("\n");
             echo('<br/>Done<br/>');
              echo('These should be deleted!<br/>');
            $warn = true;
         } else
-            echo('<font color=green><strong>PASSED</strong></font><br/>');
+            echo('<span class="pass">PASSED</span><br/>');
 ?>
         <hr>
-        <h2>Checking for old files:</h2>
-        With the upgrade to version 2.x, some files are no longer required and
-        should be deleted. Checking for these now:<br/>
+        <h2 class="Test">Checking for old files:</h2>
+        <span class="Description">With the upgrade to version 2.x, some files are no longer required and
+        should be deleted. Checking for these now:</span><br/>
 
 <?php
         $has_old_files = false;
@@ -109,29 +209,30 @@
         }
 
         if ($has_old_files) {
-            echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font><br/>I see the following old files:</br>');
+            echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following old files:<br/>');
+            echo('<span class="codishsml">'); echo("\n");
             foreach ($old_files as $i) {
-                echo('<font face="Courier New" color=Gray>&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '</font><br/>');
+                echo('&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '<br/>');
             }
+            echo('</span>'); echo("\n");
             echo('<br/>Done<br/>');
             echo('These should be deleted!<br/>');
             $warn = true;
         } else
-            echo('<font color=green><strong>PASSED</strong></font><br/>');
+            echo('<span class="pass">PASSED</span><br/>');
 ?>
         <hr>
-        <h2>Testing <font face="Courier New" color=Gray>inc/config/configv2.php</font></h2>
-        <em>if the script stops here, there are parsing problems with your file; try getting a fresh copy and re-editing it</em>)<br/>
+        <h2>Testing inc/config/configv2.php</h2>
+        <span class="notice">(if the script stops here, there are parsing problems with your file; try getting a fresh copy and re-editing it)</span><br/>
 
-        Telaen configuration is located in the <font face="Courier New" color=Gray>./inc/config</font> folder
-        in <font face="Courier New" color=Gray>configv2.php.default</font> and
-        <font face="Courier New" color=Gray>configv2.php</font>. Checking now:<br/>
+        <span class="Description">Telaen configuration is located in the </span><span class="codish">./inc/config folder</span><span class="Description"> in </span><span class="codish">configv2.php.default</span><span class="Description"> and
+        </span><span class="codish">configv2.php</span><span class="Description">. Checking now:</span><br/>
 
 <?php
 $config = array();
 @include './inc/config/configv2.php';
 if (count($config) == 0) {
-    echo('<font color=red><strong>!! FAILED !!</strong></font><br/>I don\'t see, or cannot read, your <font face="Courier New" color=Gray>configv2.php</font> file<br/>');
+    echo('<span class="fail">!! FAILED !!</span><br/>I don\'t see, or cannot read, your <span class="codish">configv2.php</span> file.');
     //
     // Try to create one for them...
     //
@@ -174,21 +275,27 @@ if (count($config) == 0) {
                 fwrite($fp, ";\n");
             }
             fclose($fp);
-            echo 'I tried to draft one based on your old configs. It can be found at:<br/>';
-            echo '<font face="Courier New" color=Gray>/tmp/configv2.php.new</font><br/>';
-            echo "Here it is for you:<hr><pre>\n";
+            echo('I tried to draft one based on your old configs. It can be found at:&nbsp;');
+            echo('<span class="codish">/tmp/configv2.php.new</span>&nbsp;&nbsp;');
+            echo('<span class="seeme"><a href="javascript:void(0)" onclick="document.getElementById(\'pop\').style.display=\'block\'">');
+            echo('&lt;see it&gt;</a></span>');
+            echo('<br/><div id="pop" class="popup">'); echo("\n");
+            echo('<div class="closeme">');
+            echo('<a href="javascript:void(0)" onclick="document.getElementById(\'pop\').style.display=\'none\'">[X]</a>');
+            echo('</div><br/>');
+            echo("\n<br/>\n");
             $show =  file('/tmp/configv2.php.new');
             foreach ($show as $line) {
                 echo htmlspecialchars($line);
             }
-            echo "</pre>\n";
+            echo("</div>\n");
         }
     } else {
         echo ('You must create one based on your old configs (or from scratch).');
     }
     $error = true;
 } else {
-    echo('<font color=green><strong>PASSED</strong></font> <br/>');
+    echo('<span class="pass">PASSED</span> <br/>');
     $temporary_directory = $config['temporary_directory'];
     echo("<h4>- Testing your \$config['temporary_directory'] variable: $temporary_directory... </h4>");
 
@@ -214,10 +321,10 @@ if (count($config) == 0) {
 
     echo('<h4>- Can we write it?...</h4>');
     if (!is_writable($temporary_directory)) {
-        echo('<font color=red><strong>!! FAILED !!</strong></font>
-		<br/>The path given in <font face="Courier New" color=Gray>$temporary_directory</font> points to a folder that is not writable<br/>
+        echo('<span class="fail">!! FAILED !!</span>
+		<br/>The path given in <span class="codish">$temporary_directory</span> points to a folder that is not writable<br/>
 		The user wich your webserver runs on (apache in *nix or IUSR_name in windows) MUST have rights to create folder and files<br/>
-		on this directory. try chmod or Properties dialog<br/>');
+		on this directory. Try <span class="codish">chmod</span> or Properties dialog<br/>');
         echo("The directory should be mode 700");
         if ($uidisvalid) {
             echo(" with a Owner of $uid and Group of $gid");
@@ -248,7 +355,7 @@ if (count($config) == 0) {
         $tgid = filegroup($temporary_directory);
         $mode = substr(sprintf('%o', fileperms($temporary_directory)), -3);
 
-        echo('<font color=green><strong>PASSED</strong></font><br/>');
+        echo('<span class="pass">PASSED</span><br/>');
         echo("Now let's check the permissions.<br/>The directory should be mode 700");
         if ($uidisvalid) {
             echo(" with a Owner of $uid and Group of $gid");
@@ -257,23 +364,23 @@ if (count($config) == 0) {
         echo("Your mode is $mode, Owner is $tuid and Group is $tgid...   ");
         if ($mode != "700" ||
             ($uidisvalid && (($tuid != $uid) || ($tgid != $gid)))) {
-            echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font><br/>Not setup securely!');
+            echo('<span class="warn">&lt; WARNING &gt;</span><br/>Not setup securely!');
             $warn = true;
         } else {
-            echo('<font color=green><strong>PASSED</strong></font><br/>');
+            echo('<span class="pass">PASSED</span><br/>');
         }
     }
 
     echo('<h4>- Is it a safe location?...</h4>');
     if (substr($temppath, 0, strlen($localpath)) == $localpath) {
-        echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font>
-		<br/>The path given in <font face="Courier New" color=Gray>$temporary_directory</font> points to a folder inside the main folder<br/>
+        echo('<span class="warn">&lt; WARNING &gt;</span>
+		<br/>The path given in $temporary_directory points to a folder inside the main folder<br/>
 		Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br/>
 		There are security issues using this configuration, please choose a non-shared folder to store temporary files<br/>
 		/var/telaen is a good choice<br/>');
         $warn = true;
     } else {
-        echo('<font color=green><strong>PASSED</strong></font><br/>');
+        echo('<span class="pass">PASSED</span><br/>');
     }
 
     // Now check to make sure that Smarty is not under here as well.
@@ -282,32 +389,32 @@ if (count($config) == 0) {
     $smartypathold = realpath('./smarty/');
     $smartypathnew = realpath('./smarty_move_me/');
 
-    echo("<h4>- Testing your Smarty libs location</strong> (SMARTY_DIR:$smartyrelative -> $smartypathdefined)...</h4>>");
+    echo("<h4>- Testing your Smarty libs location (SMARTY_DIR:$smartyrelative -> $smartypathdefined)...</h4>>");
     if (substr($smartypathdefined, 0, strlen($localpath)) == $localpath) {
-        echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font>
-		<br/>The path given in <font face="Courier New" color=Gray>SMARTY_DIR</font> points to a folder inside the main folder<br/>
+        echo('<span class="warn">&lt; WARNING &gt;</span>
+		<br/>The path given in SMARTY_DIR points to a folder inside the main folder<br/>
 		Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br/>
 		There are security issues using this configuration, please choose a non-shared folder to store temporary files<br/>
 		/var/telaen is a good choice<br/>');
         $warn = true;
     } else {
-        echo('<font color=green><strong>PASSED</strong></font><br/>');
+        echo('<span class="pass">PASSED</span><br/>');
     }
 
     echo("<br/><strong>- Now checking that ./smarty/ is not here as well</strong>... <br/>");
     if (is_readable($smartypathold)) {
-        echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font>
+        echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
     } else {
-        echo('<font color=green><strong>PASSED</strong></font><br/>');
+        echo('<span class="pass">PASSED</span><br/>');
     }
 
     echo("<br/><strong>- Now checking that ./smarty_move_me/ is not here as well</strong>... <br/>");
     if (is_readable($smartypathnew)) {
-        echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font>
+        echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
     } else {
-        echo('<font color=green><strong>PASSED</strong></font><br/>');
+        echo('<span class="pass">PASSED</span><br/>');
     }
 }
 
@@ -322,60 +429,55 @@ if ($tempSize) {
 } else {
     $iniLimit = "Unlimited";
 }
-echo("<hr><h2>Testing your memory limits</strong> (memory_limit: $iniLimit)</h2>");
+echo("<hr><h2>Testing your memory limits (memory_limit: $iniLimit)</h2>");
 
 if ($tempSize && $memoryLimit < $megs8) {
-    echo('<font color=red><strong>!! FAILED !!</strong></font>
-	<br/>PHP.ini\'s <font face="Courier New" color=Gray>memory_limit</font> must be at least <code>8M</code> (We recommend 32M (32 MegaBytes)<br/>');
+    echo('<span class="fail">!! FAILED !!</span>
+	<br/>PHP.ini\'s memory_limit</font> must be at least <code>8M</code> (We recommend 32M (32 MegaBytes)<br/>');
     $error = true;
 } elseif ($tempSize && $memoryLimit >= $megs8 && $memoryLimit < $megs32) {
-    echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font>
-	<br/>PHP.ini\'s <font face="Courier New" color=Gray>memory_limit</font> should be at least 32 (32 MegaBytes), but may still work.<br/>');
+    echo('<span class="warn">&lt; WARNING &gt;</span>
+	<br/>PHP.ini\'s memory_limit</font> should be at least 32 (32 MegaBytes), but may still work.<br/>');
     $warn = true;
 } else {
-    echo('<font color=green><strong>PASSED</strong></font><br/>');
+    echo('<span class="pass">PASSED</span><br/>');
 }
 
 echo('<hr><h2>Testing server installation</h2>');
 
 
 if (ini_get('safe_mode')) {
-    echo('<font color=orange><strong>&lt; WARNING &gt;</strong></font>
-	<br/>PHP.ini\'s <font face="Courier New" color=Gray>safe_mode</font> is on. You may have problems with this configuration<br/>');
+    echo('<span class="warn">&lt; WARNING &gt;</span>
+	<br/>PHP.ini\'s safe_mode is on. You may have problems with this configuration<br/>');
     $warn = true;
 } else {
-    echo('<font color=green><strong>PASSED</strong></font><br/>');
+    echo('<span class="pass">PASSED</span><br/>');
 }
 
 echo('<br/><hr><br/>');
 if ($error) {
 ?>
 
-            <strong><font color="red">
-                Your system is not ready to run Telaen.<br/>
-                </font>
-                <h3>Please fix all <font color="red">!! FAILED !!</font> topics and run this page again</h3>
-            </strong></font>
+                Your system is not ready to run Telaen.<br>
+                <h3>Please fix all <span class="fail">!! FAILED !!</span> topics and run this page again</h3>
 <?php
         } else {
 ?>
-            <strong><font color="#003366">
-                Your system appears to be ready to run Telaen.<br/><br/>
+                Your system appears to be ready to run Telaen.<br><br>
 <?php
     if ($warn) {
 ?>
-                    There are some <font color="orange">&lt; WARNING &gt;S</font> that should be fixed before you deploy your webmail.<br/>
+                    There are some <span class="warn">&lt; WARNINGS &gt;</span> that should be fixed before you deploy your webmail.<br/>
                     <br/>
 <?php
     }
 ?>
 
-                Before you start using, make sure you've correctly configured your <font face="Courier New">$smtp_server</font><br/>
+                Before you start using, make sure you've correctly configured your <span class="codish">$smtp_server</span><br/>
                 variable. If you will use an external SMTP server, please make sure you will not  need a SMTP Authentication. <br/>
-                In positive case , use the <font face="Courier New">$use_password_for_smtp</font> variable, otherwise you will<br/>
+                In positive case , use the <span class="codish">$use_password_for_smtp</span> variable, otherwise you will<br/>
                 receive a "Verify your relay rules" error message while sending mails<br/><br/><br/>
-                <h3>To start using your webmail, please delete or rename the <font face="Courier New" color=Gray>extra/check_install.php</font> file AND <a href="../">CLICK HERE TO CONTINUE</a></h3>
-                </font></strong></font>
+                <h3>To start using your webmail, please delete or rename the <span class="codish">extra/check_install.php</span> file AND <a href="../">CLICK HERE TO CONTINUE</a></h3>
 <?php
 }
 ?>
