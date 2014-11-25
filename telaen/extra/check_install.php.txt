@@ -15,7 +15,7 @@ h1 {
 }
 .fail {
 	font-family: "Courier New", Courier, monospace;
-	font-size: 16pt;
+	font-size: 13pt;
 	font-style: oblique;
 	font-weight: bold;
 	color: red;
@@ -23,17 +23,17 @@ h1 {
 }
 .codish {
 	font-family: "Courier New", Courier, monospace;
-	font-size: 14pt;
+	font-size: 12pt;
 	color: #666666;
 }
 .codishsml {
 	font-family: "Courier New", Courier, monospace;
-	font-size: 11pt;
+	font-size: 9pt;
 	color: #666666;
 }
 .codish2 {
 	font-family: "Courier New", Courier, monospace;
-	font-size: 11pt;
+	font-size: 10pt;
 	color: #666666;
 	white-space: pre;
 }
@@ -51,28 +51,33 @@ h4 {
 	font-weight: bold;
 	color: #0033FF;
 }
+h5 {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13pt;
+	color: #0033FF;
+}
 .pass {
 	font-family: "Courier New", Courier, monospace;
 	color: green;
-	font-size: 14pt;
+	font-size: 13pt;
 	font-weight: bold;
 }
 .warn {
 	font-family: "Courier New", Courier, monospace;
-	font-size: 14pt;
+	font-size: 13pt;
 	font-style: italic;
 	font-weight: bold;
 	color: orange;
 }
 .Description {
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-	font-size: 14pt;
+	font-size: 12pt;
 	font-style: normal;
 	font-weight: normal;
 }
 body,td,th {
 	font-family: Verdana, Geneva, sans-serif;
-	font-size: 14pt;
+	font-size: 12pt;
 	color: #000000;
 }
 .notice {
@@ -82,7 +87,7 @@ body,td,th {
 }
 .closeme {
     font-family: "Courier New", Courier, monospace;
-    font-size: 11pt;
+    font-size: 10pt;
 	color: #000000;
     float:right;
 	font-weight: bold;
@@ -95,7 +100,7 @@ body,td,th {
     left: 100px;
     top: 50px;
 	font-family: "Courier New", Courier, monospace;
-	font-size: 11pt;
+	font-size: 10pt;
 	color: #666666;
 	white-space: pre;
 	position:absolute;
@@ -257,7 +262,7 @@ if (count($config) == 0) {
             fwrite($fp, "/*\n");
             fwrite($fp, " * Auto-created Telaen config file:::\n");
             fwrite($fp, " *    written:".date("D M j G:i:s T Y")."\n");
-            fwrite($fp, " *    DO NOT USE WITH DOUBLE AND TRIPLE CHECKING!!\n");
+            fwrite($fp, " *    DO NOT USE WITHOUT DOUBLE AND TRIPLE CHECKING!!\n");
             fwrite($fp, " */\n\n");
             fwrite($fp, "defined('I_AM_TELAEN') or die('Direct access not permitted');\n");
             fwrite($fp, "require('./inc/version.php');\n");
@@ -325,7 +330,7 @@ if (count($config) == 0) {
         }
     }
 
-    echo('<h4>- Can we write it?...</h4>');
+    echo('<h5>-- Can we write it?...</h5>');
     if (!is_writable($temporary_directory)) {
         echo('<span class="fail">!! FAILED !!</span>
 		<br/>The path given in <span class="codish">$temporary_directory</span> points to a folder that is not writable<br/>
@@ -362,7 +367,7 @@ if (count($config) == 0) {
         $mode = substr(sprintf('%o', fileperms($temporary_directory)), -3);
 
         echo('<span class="pass">PASSED</span><br/>');
-        echo("Now let's check the permissions.<br/>The directory should be mode 700");
+        echo("<h5>-- check the permissions..</h5></br>The directory should be mode 700");
         if ($uidisvalid) {
             echo(" with a Owner of $uid and Group of $gid");
         }
@@ -377,7 +382,7 @@ if (count($config) == 0) {
         }
     }
 
-    echo('<h4>- Is it a safe location?...</h4>');
+    echo('<h5>-- Is it a safe location?...</h5>');
     if (substr($temppath, 0, strlen($localpath)) == $localpath) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>The path given in $temporary_directory points to a folder inside the main folder<br/>
@@ -395,7 +400,7 @@ if (count($config) == 0) {
     $smartypathold = realpath('./smarty/');
     $smartypathnew = realpath('./smarty_move_me/');
 
-    echo("<h4>- Testing your Smarty libs location (SMARTY_DIR:$smartyrelative -> $smartypathdefined)...</h4>>");
+    echo("<h4>- Testing your Smarty libs location (SMARTY_DIR:$smartyrelative -> $smartypathdefined)...</h4>");
     if (substr($smartypathdefined, 0, strlen($localpath)) == $localpath) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>The path given in SMARTY_DIR points to a folder inside the main folder<br/>
@@ -407,7 +412,7 @@ if (count($config) == 0) {
         echo('<span class="pass">PASSED</span><br/>');
     }
 
-    echo("<br/><strong>- Now checking that ./smarty/ is not here as well</strong>... <br/>");
+    echo("<br/><h5>-- Now checking that ./smarty/ is not here as well... </h5><br/>");
     if (is_readable($smartypathold)) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
@@ -415,7 +420,7 @@ if (count($config) == 0) {
         echo('<span class="pass">PASSED</span><br/>');
     }
 
-    echo("<br/><strong>- Now checking that ./smarty_move_me/ is not here as well</strong>... <br/>");
+    echo("<br/><h5>-- Now checking that ./smarty_move_me/ is not here as well... </h5><br/>");
     if (is_readable($smartypathnew)) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
@@ -424,8 +429,8 @@ if (count($config) == 0) {
     }
 }
 
-$megs8 = 8 * 1024 * 1024;
-$megs32 = $megs8 * 4;
+$megs16 = 16 * 1024 * 1024;
+$megs32 = $megs16 * 2;
 
 $iniLimit = ini_get('memory_limit');
 $tempSize = str_replace('K', '*1024', str_replace('M', '*1024*1024', str_replace('G', '*1024*1024*1024', $iniLimit)));
@@ -435,18 +440,18 @@ if ($tempSize) {
 } else {
     $iniLimit = "Unlimited";
 }
-echo("<hr><h2>Testing your memory limits (memory_limit: $iniLimit)</h2>");
+echo("<hr><h2>Testing your memory limits</h2>");
 
-if ($tempSize && $memoryLimit < $megs8) {
+if ($tempSize && $memoryLimit < $megs16) {
     echo('<span class="fail">!! FAILED !!</span>
-	<br/>PHP.ini\'s memory_limit</font> must be at least <code>8M</code> (We recommend 32M (32 MegaBytes)<br/>');
+	<br/>PHP.ini\'s memory_limit</font> must be at least <code>16M</code> (We recommend 32M (32 MegaBytes)<br/>');
     $error = true;
-} elseif ($tempSize && $memoryLimit >= $megs8 && $memoryLimit < $megs32) {
+} elseif ($tempSize && $memoryLimit >= $megs16 && $memoryLimit < $megs32) {
     echo('<span class="warn">&lt; WARNING &gt;</span>
 	<br/>PHP.ini\'s memory_limit</font> should be at least 32 (32 MegaBytes), but may still work.<br/>');
     $warn = true;
 } else {
-    echo('<span class="pass">PASSED</span><br/>');
+    echo('<span class="pass">PASSED</span>  (memory_limit: '.$iniLimit.')<br/>');
 }
 
 echo('<hr><h2>Testing server installation</h2>');
@@ -480,10 +485,11 @@ if ($error) {
 ?>
 
                 Before you start using, make sure you've correctly configured your <span class="codish">$smtp_server</span><br/>
-                variable. If you will use an external SMTP server, please make sure you will not  need a SMTP Authentication. <br/>
-                In positive case , use the <span class="codish">$use_password_for_smtp</span> variable, otherwise you will<br/>
-                receive a "Verify your relay rules" error message while sending mails<br/><br/><br/>
-                <h3>To start using your webmail, please delete or rename the <span class="codish">extra/check_install.php</span> file AND <a href="../">CLICK HERE TO CONTINUE</a></h3>
+                variable. If you will be using an external SMTP server, check to see if you need SMTP Authentication or not;
+                if you do, but don't configure it correctly,  users will<br/>
+                receive a "unauthorized relay" error message while sending mails.<br/><br/><br/>
+                <h3>To start using your webmail, please delete or rename the
+                <span class="codish">extra/check_install.php</span> file AND <a href="../">CLICK HERE TO CONTINUE</a></h3>
 <?php
 }
 ?>
