@@ -31,7 +31,7 @@ umask($TLN->config['default_umask']);
 
 require_once './inc/errorhandler.php';
 
-require_once $config['SMARTY_DIR'].'Smarty.class.php';
+require_once $TLN->config['SMARTY_DIR'].'Smarty.class.php';
 $smarty = new Smarty();
 $smarty->security = true;
 $smarty->secure_dir = array('./');
@@ -180,10 +180,11 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
 
     $refr = 1;
 
-    if (is_array($quota_limits)) {
-        foreach ($quota_limits as $quota) {
+    if (is_array($TLN->config['quota_limits'])) {
+        foreach ($TLN->config['quota_limits'] as $quota) {
             if (preg_match($quota[0], $TLN->mail_user)) {
                 $quota_limit = $quota[1];
+                break;
             }
         }
     }
@@ -227,7 +228,7 @@ $TLN->load_prefs();
 $mymo = new MyMonth($TLN->userfolder);
 $mycal = $mymo->monthAsDiv();
 $smarty->assign('umCalendar', $mycal);
-$smarty->assign('umSystemNews', $systemNews);
+$smarty->assign('umSystemNews', $TLN->config['systemNews']);
 
 $TLN->charset = $lang['default_char_set'];
 
