@@ -19,7 +19,8 @@ $smarty->assign('pageMetas', $nocache);
 
 if (!file_exists($mail_info['localname'])) {
     die('File not found');
-}$email = $TLN->read_file($mail_info['localname']);
+}
+$email = $TLN->read_file($mail_info['localname']);
 
 $TLN->displayimages = $TLN->prefs['display-images'];
 $TLN->sanitize = ($sanitize_html || !$allow_scripts);

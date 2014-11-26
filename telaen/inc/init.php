@@ -27,6 +27,8 @@ require_once './inc/preinit.php';
 $TLN = new Telaen();
 $TLN->load_config();
 
+umask($TLN->config['default_umask']);
+
 require_once './inc/errorhandler.php';
 
 require_once $config['SMARTY_DIR'].'Smarty.class.php';

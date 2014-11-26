@@ -22,8 +22,6 @@ require_once './inc/class/class.MyMonth.php';
 require_once './inc/class/class.Mbox.php';
 require_once './inc/class/class.Session.php';
 
-umask($TLN->config['default_umask']);
-
 @set_magic_quotes_runtime(0);            // Smarty and magic_quotes_runtime ON do not mix.
 
 $phpver = phpversion();

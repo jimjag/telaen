@@ -1413,8 +1413,8 @@ ENDOFREDIRECT;
     public function load_config()
     {
         $config = array();
-        require_once './inc/configv2.php.default';
-        @include './inc/configv2.php';
+        require_once './inc/config/configv2.php.default';
+        @include './inc/config/configv2.php';
         $this->config = $config;
     }
 
