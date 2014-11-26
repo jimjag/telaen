@@ -129,12 +129,12 @@ $smarty->assign('umUser', $f_user);
 $smarty->assign('umPass', $f_pass);
 $smarty->assign('umJS', $jssource);
 
-$avallangs = count($languages);
+$avallangs = count($TLN->config['languages']);
 if ($avallangs == 0) {
     die('You must provide at least one language');
 }
 
-$avalthemes = count($themes);
+$avalthemes = count($TLN->config['themes']);
 if ($avalthemes == 0) {
     die('You must provide at least one theme');
 }
@@ -143,7 +143,7 @@ $smarty->assign('umAllowSelectLanguage', $TLN->config['allow_user_change_languag
 
 if ($TLN->config['allow_user_change_language']) {
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
-    foreach ($languages as $key => $val) {
+    foreach ($TLN->config['languages'] as $key => $val) {
         $selected = ($selected_language == $key) ? "selected=\"selected\"" : "";
         $langsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
@@ -155,7 +155,7 @@ $smarty->assign('umAllowSelectTheme', $TLN->config['allow_user_change_theme']);
 
 if ($TLN->config['allow_user_change_theme']) {
     $themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";
-    foreach ($themes as $key => $val) {
+    foreach ($TLN->config['themes'] as $key => $val) {
         $selected = ($selected_theme == $key) ? "selected=\"selected\"" : "";
         $themsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
