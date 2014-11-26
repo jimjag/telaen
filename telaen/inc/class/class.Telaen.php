@@ -36,20 +36,6 @@ class Telaen extends Telaen_core
     }
 
     /**
-     * Remove unsafe chars with hex equiv
-     * @param string $str
-     * @return string
-     */
-    static public function safe_print($str)
-    {
-        return preg_replace_callback(
-            '|([^[:print:]])|',
-            function ($match) { return '_x{'.dechex(ord($match[1])).'}'; },
-            $str
-        );
-    }
-
-    /**
      * Print out debugging info as HTML comments
      * @param  string $str
      * @return void
@@ -57,7 +43,7 @@ class Telaen extends Telaen_core
     static public function debug_msg($str, $caller = "")
     {
         echo "<!-- $caller:\n";
-        echo preg_replace('|-->|', '__>', self::safe_print($str));
+        echo preg_replace('|-->|', '__>', Telaen_core::safe_print($str));
         echo "\n-->\n";
         @flush();
     }

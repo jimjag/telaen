@@ -1452,6 +1452,20 @@ ENDOFREDIRECT;
         print_r($obj);
         echo('</pre>');
     }
+    /**
+     * Remove unsafe chars with hex equiv
+     * @param string $str
+     * @return string
+     */
+    static public function safe_print($str)
+    {
+        return preg_replace_callback(
+            '|([^[:print:]])|',
+            function ($match) { return '_x{'.dechex(ord($match[1])).'}'; },
+            $str
+        );
+    }
+
 
     /**
      *
@@ -1466,7 +1480,7 @@ ENDOFREDIRECT;
             case 'double':
                 $var = (double) $var; break;
             case 'string':
-                $var = Telaen::safe_print(trim((string) $var));
+                $var = Telaen_core::safe_print(trim((string) $var));
                 break;
             case 'array':
                 $var = (array) $var; break;
