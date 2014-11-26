@@ -15,9 +15,12 @@ Telaen is a GPL'ed software developed by
  * or work if init.php is scarfed in.
  */
 
-if (!defined('I_AM_TELAEN')) {
-    die('Direct access not premitted');
-}
+defined('I_AM_TELAEN') or die('Direct access not permitted');
+
+require_once './inc/class/class.Telaen.php';
+require_once './inc/class/class.MyMonth.php';
+require_once './inc/class/class.Mbox.php';
+require_once './inc/class/class.Session.php';
 
 umask($TLN->config['default_umask']);
 

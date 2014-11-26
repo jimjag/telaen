@@ -22,9 +22,7 @@ session_start();
 $sid = session_id();
 /* We grab the actual session data below with the Session class */
 
-require_once './inc/class/class.Telaen.php';
 require_once './inc/preinit.php';
-require_once './inc/class/class.MyMonth.php';
 
 $TLN = new Telaen();
 $TLN->load_config();
@@ -234,10 +232,10 @@ $TLN->charset = $lang['default_char_set'];
 /*
 Don't remove the following lines, or you will have problems with browser's cache
 */
-Header('Expires: Wed, 11 Nov 1998 11:11:11 GMT');
-Header('Cache-Control: no-cache');
-Header('Cache-Control: must-revalidate');
-Header('Pragma: no-cache');
+@Header('Expires: Wed, 11 Nov 1998 11:11:11 GMT');
+@Header('Cache-Control: no-cache');
+@Header('Cache-Control: must-revalidate');
+@Header('Pragma: no-cache');
 
 // No cache metas
 $nocache = "
