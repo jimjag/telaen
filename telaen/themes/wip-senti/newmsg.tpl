@@ -115,7 +115,7 @@
 					<td class="default">&nbsp;</td>
 					<td class="default">
 					{if $umAdvancedEditor eq 1}
-						{include file="senti/advanced-editor.htm"}
+						{include file="senti/advanced-editor.tpl"}
 						<div id="hiddenCompose2" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
 							<textarea cols=50 rows=15 name=body>{$umBody|escape:"html"}</textarea>
 						</div>

@@ -96,5 +96,5 @@ if (isset($ckaval)) {
         }
         $smarty->assign('umAddressList', $aval);
     }
-    $smarty->display("$selected_theme/catch-address.htm");
+    $smarty->display("$selected_theme/catch-address.tpl");
 }

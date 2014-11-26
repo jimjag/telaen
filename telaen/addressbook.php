@@ -62,7 +62,7 @@ switch ($opt) {
         $TLN->save_file($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 1);
-        $templatename = 'address-results.htm';
+        $templatename = 'address-results.tpl';
 
         break;
 
@@ -82,7 +82,7 @@ switch ($opt) {
         $TLN->save_file($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 2);
-        $templatename = 'address-results.htm';
+        $templatename = 'address-results.tpl';
 
         break;
 
@@ -97,7 +97,7 @@ switch ($opt) {
         $TLN->save_file($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 3);
-        $templatename = 'address-results.htm';
+        $templatename = 'address-results.tpl';
 
         break;
 
@@ -115,7 +115,7 @@ switch ($opt) {
         $smarty->assign('umAddrNote', $addressbook[$id]['note']);
         $smarty->assign('umOpt', 'save');
         $smarty->assign('umAddrID', $id);
-        $templatename = 'address-form.htm';
+        $templatename = 'address-form.tpl';
 
         break;
 
@@ -133,14 +133,14 @@ switch ($opt) {
         $smarty->assign('umAddrNote', $addressbook[$id]['note']);
 
         $smarty->assign('umAddrID', $id);
-        $templatename = 'address-display.htm';
+        $templatename = 'address-display.tpl';
 
         break;
 
     // show the form to a new contact
     case 'new':
 
-        $templatename = 'address-form.htm';
+        $templatename = 'address-form.tpl';
 
         $smarty->assign('umOpt', 'add');
         $smarty->assign('umAddrID', 'N');
@@ -209,7 +209,7 @@ switch ($opt) {
             $addresslist[$ind]['name'] = $addressbook[$i]['name'];
             $addresslist[$ind]['email'] = $addressbook[$i]['email'];
         }
-        $templatename = 'address-list.htm';
+        $templatename = 'address-list.tpl';
         $smarty->assign('umAddressList', $addresslist);
 }
 

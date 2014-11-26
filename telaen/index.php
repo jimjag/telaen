@@ -163,4 +163,4 @@ if ($TLN->config['allow_user_change_theme']) {
     $smarty->assign('umThemes', $themsel);
 }
 
-$smarty->display("$selected_theme/login.htm");
+$smarty->display("$selected_theme/login.tpl");

@@ -191,7 +191,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
     $smarty->assign('umJS', $jssource);
 
-    $smarty->display("$selected_theme/newmsg-result.htm");
+    $smarty->display("$selected_theme/newmsg-result.tpl");
 } else {
     // priority
     $priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority;
@@ -671,5 +671,5 @@ $tmpbody";
     $smarty->assign('umTextEditor', $txtarea);
     $smarty->assign('umAdvancedEditor', $umAdvEdit);
 
-    $smarty->display("$selected_theme/newmsg.htm");
+    $smarty->display("$selected_theme/newmsg.tpl");
 }

@@ -1,7 +1,7 @@
 **************************************************************
 **** ORIGINAL UEBIMIAU CHANGELOG -- PRESERVED FOR HISTORY ****
 **************************************************************
-- Added server response to bad-login.htm
+- Added server response to bad-login.tpl
 - Added charset conversion (PHP 4.3 recommended)
 - Once moved to PHPMailer, mails sent thru UM aren't in RBL filters by 'malformed headers'
 - Moved to PHPMailer as mailer (without mods), since PHPMailer is stable, powerful and RFC-compliant
@@ -118,7 +118,7 @@
 - Fixed bug with Cubic Circle's Server when decoding the date
 - Fixed small bug with empty keys in headers
 - Optimized routines that manage local messages, now it's more fast and can manage more data
-- Changes in readmsg.htm template, now it's more flexible
+- Changes in readmsg.tpl template, now it's more flexible
 - Added option in config.php to use full email address as username (for qmail users)
 - Cleaned source for SMTP class
 - Fixed small problems with netscape (styles) 

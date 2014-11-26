@@ -61,7 +61,7 @@
 	border-right-width: 0px;
 	border-bottom-color: #FFFFFF;
 	">
-          <form target="uploading" onsubmit="this.submit.disabled=true;window.open('themes/outlook/uploading.htm','uploading','width=400,height=120,scrollbars=0,menubar=0,status=0')" enctype="multipart/form-data" name="upload" id="upload" action="upload.php?sid={$umSid}" method=POST>
+          <form target="uploading" onsubmit="this.submit.disabled=true;window.open('themes/outlook/uploading.tpl','uploading','width=400,height=120,scrollbars=0,menubar=0,status=0')" enctype="multipart/form-data" name="upload" id="upload" action="upload.php?sid={$umSid}" method=POST>
             <tr>
               <td width="100" style="
 	border-style: solid;

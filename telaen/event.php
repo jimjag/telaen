@@ -77,4 +77,4 @@ if ($actionDone) {
 unset($events);
 
 $smarty->assign('umPageTitle', 'Calendar Event');
-$smarty->display("$selected_theme/event.htm");
+$smarty->display("$selected_theme/event.tpl");

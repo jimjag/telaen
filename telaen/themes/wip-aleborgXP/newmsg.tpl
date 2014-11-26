@@ -192,7 +192,7 @@
       <td height="3" background="themes/aleborgXP/images/list_down.gif"><img src="themes/aleborgXP/images/list_down.gif" width="5" height="3"></td>
     </tr>
     <tr> 
-      <td bgcolor="#FFFFFF">{if $umAdvancedEditor eq 1} {include file="uebimiau/advanced-editor.htm"} 
+      <td bgcolor="#FFFFFF">{if $umAdvancedEditor eq 1} {include file="uebimiau/advanced-editor.tpl"} 
         <div id="hiddenCompose2" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	
           <textarea cols=76 rows=10 name=body>{$umBody|escape:"html"}</textarea>
         </div>

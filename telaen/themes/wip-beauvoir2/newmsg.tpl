@@ -105,7 +105,7 @@ copyright, or worse, to put your name at the place.
 				<td></td>
 				<td>
 					{if $umAdvancedEditor eq 1}
-						{include file="beauvoir2/advanced-editor.htm"}
+						{include file="beauvoir2/advanced-editor.tpl"}
 						<div id="hiddenCompose2" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
 							<textarea rows="15" name="body" class="normal" style="width: 445px">{$umBody|escape:"html"}</textarea>
 						</div>

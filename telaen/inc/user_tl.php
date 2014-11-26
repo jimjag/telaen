@@ -43,12 +43,12 @@ if (isset($auth) && is_array($auth)) {
 Templates
 ********************************************************/
 
-$menu_template = "$selected_theme/menu.htm";
-$calendar_template = "$selected_theme/calendar.htm";
-$news_template = "$selected_theme/news.htm";
-$header_template = "$selected_theme/header.htm";
-$footer_template = "$selected_theme/footer.htm";
-$popup_header_template = "$selected_theme/popup-header.htm";
+$menu_template = "$selected_theme/menu.tpl";
+$calendar_template = "$selected_theme/calendar.tpl";
+$news_template = "$selected_theme/news.tpl";
+$header_template = "$selected_theme/header.tpl";
+$footer_template = "$selected_theme/footer.tpl";
+$popup_header_template = "$selected_theme/popup-header.tpl";
 
 // Pull in correct $lang[] array for select language
 require_once 'langs/'.$selected_language.'.php';

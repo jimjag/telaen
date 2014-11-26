@@ -218,4 +218,4 @@ $smarty->assign('umNoQuota', $noquota);
 
 $smarty->assign('pageMetas', $nocache);
 
-$smarty->display("$selected_theme/folders.htm");
+$smarty->display("$selected_theme/folders.tpl");

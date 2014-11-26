@@ -219,4 +219,4 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 } else {
     $smarty->assign('umDoSearch', 0);
 }
-$smarty->display("$selected_theme/search.htm");
+$smarty->display("$selected_theme/search.tpl");

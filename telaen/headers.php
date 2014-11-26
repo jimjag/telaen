@@ -16,4 +16,4 @@ if (!isset($folder) || !isset($ix)) {
 $mail_info = $mbox['headers'][base64_encode(strtolower($folder))][$ix];
 $smarty->assign('umPageTitle', $mail_info['subject']);
 $smarty->assign('umHeaders', preg_replace('/\t/', '&nbsp;&nbsp;&nbsp;&nbsp;', nl2br(htmlspecialchars($mail_info['header']))));
-$smarty->display("$selected_theme/headers-window.htm");
+$smarty->display("$selected_theme/headers-window.tpl");

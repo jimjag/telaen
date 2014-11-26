@@ -346,4 +346,4 @@ unset($TLN);
 
 $smarty->assign('umHaveSpam', $auth['havespam']);
 $smarty->assign('umAvalFolders', $avalfolders);
-$smarty->display("$selected_theme/messagelist.htm");
+$smarty->display("$selected_theme/messagelist.tpl");

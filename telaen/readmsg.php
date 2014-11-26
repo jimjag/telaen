@@ -324,7 +324,7 @@ $smarty->assign('umAvalFolders', $avalfolders);
 unset($TLN);
 
 if ($is_attached) {
-    $smarty->display("$selected_theme/readmsg_popup.htm");
+    $smarty->display("$selected_theme/readmsg_popup.tpl");
 } else {
-    $smarty->display("$selected_theme/readmsg.htm");
+    $smarty->display("$selected_theme/readmsg.tpl");
 }
