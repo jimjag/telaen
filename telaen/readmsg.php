@@ -212,7 +212,7 @@ function openwin(targetUrl) { window.open(targetUrl); }
 
 //]]>
 </script>
-<script type=\"text/javascript\" src=\"./js/ajax_prototype.js\"></script>
+<script type=\"text/javascript\" src=\"./js/mini_Ajax.js\"></script>
 <script type=\"text/javascript\">
 //<![CDATA[
 function sendReceipt(subj, msg) {
