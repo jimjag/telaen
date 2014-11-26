@@ -7,10 +7,11 @@
  *
  *  For details, see the Prototype web site: http://prototype.conio.net/
  *
+ * Renamed to mini-Ajax.js
 /*--------------------------------------------------------------------------*/
 
 var Prototype = {
-	Version: '1.4.0_pre10_ajax',
+	Version: '1.0',
 	
 	emptyFunction: function() {},
 	K: function(x) {return x}
@@ -210,7 +211,7 @@ Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
 	setRequestHeaders: function() {
 		var requestHeaders = 
 			['X-Requested-With', 'XMLHttpRequest',
-			 'X-Prototype-Version', Prototype.Version];
+			 'X-mini-Ajax-Version', Prototype.Version];
 
 		if (this.options.method == 'post') {
 			requestHeaders.push('Content-type', 
