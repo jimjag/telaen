@@ -45,5 +45,11 @@ function errorHandler($errno, $errmsg, $filename, $linenum, $vars)
     error_log($err, 3, $elog);
 }
 
-error_reporting(0);
-$oeh = set_error_handler('errorHandler');
+if ($TLN->config['display_all_errors']) {
+    ini_set('display_errors',1);
+    ini_set('display_startup_errors',1);
+    error_reporting(-1);
+} else {
+    error_reporting(0);
+    $oeh = set_error_handler('errorHandler');
+}
