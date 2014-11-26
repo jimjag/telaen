@@ -1499,7 +1499,7 @@ ENDOFREDIRECT;
         $reta = array();
         foreach ($my_vars as $to_pull) {
             if (isset($whofrom[$to_pull])) {
-                $reta[$to_pull] = caster($whofrom[$to_pull], $cast);
+                $reta[$to_pull] = Telaen_core::caster($whofrom[$to_pull], $cast);
             }
         }
 
