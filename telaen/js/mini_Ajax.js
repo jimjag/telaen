@@ -8,6 +8,7 @@
  *  For details, see the Prototype web site: http://prototype.conio.net/
  *
  * Renamed to mini-Ajax.js
+ *  * Updated w/ selected backports from Prototype 1.7.2
 /*--------------------------------------------------------------------------*/
 
 var Prototype = {
@@ -144,8 +145,8 @@ function $() {
 var Ajax = {
 	getTransport: function() {
 		return Try.these(
-			function() {return new ActiveXObject('MSXML2.XMLHTTP.3.0')},
-			function() {return new XMLHttpRequest()}
+			function() {return new XMLHttpRequest()},
+			function() {return new ActiveXObject('MSXML2.XMLHTTP.3.0')}
 		) || false;
 	}
 }
@@ -164,7 +165,8 @@ Ajax.Base.prototype = {
 	responseIsSuccess: function() {
 		return this.transport.status == undefined
 				|| this.transport.status == 0 
-				|| (this.transport.status >= 200 && this.transport.status < 300);
+				|| (this.transport.status >= 200 && this.transport.status < 300)
+				|| this.transport.status == 304;
 	},
 
 	responseIsFailure: function() {
@@ -173,14 +175,14 @@ Ajax.Base.prototype = {
 }
 
 Ajax.Request = Class.create();
-Ajax.Request.Events = 
-	['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete'];
+Ajax.Request.Events = ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete'];
 
 Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
 	initialize: function(url, options) {
 		this.transport = Ajax.getTransport();
 		this.setOptions(options);
 		this.request(url);
+		this._complete = false;
 	},
 
 	request: function(url) {
@@ -188,21 +190,27 @@ Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
 		if (parameters.length > 0) parameters += '&_=';
 
 		try {
-			if (this.options.method == 'get')
-				url += '?' + parameters;
+			if (parameters && this.option.method === 'get') {
+			// when GET, append parameters to URL
+				url += (url.include('?') ? '&' : '?') + parameters;
+			}
 
-			this.transport.open(this.options.method, url,
+			this.transport.open(this.options.method.toUpperCase(), url,
 				this.options.asynchronous);
 
 			if (this.options.asynchronous) {
-				this.transport.onreadystatechange = this.onStateChange.bind(this);
 				setTimeout((function() {this.respondToReadyState(1)}).bind(this), 10);
 			}
 
+			this.transport.onreadystatechange = this.onStateChange.bind(this);
 			this.setRequestHeaders();
 
 			var body = this.options.postBody ? this.options.postBody : parameters;
 			this.transport.send(this.options.method == 'post' ? body : null);
+
+			/* Force Firefox to handle ready state 4 for synchronous requests */
+			if (!this.options.asynchronous && this.transport.overrideMimeType)
+				this.onStateChange();
 
 		} catch (e) {
 		}
@@ -234,7 +242,7 @@ Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
 
 	onStateChange: function() {
 		var readyState = this.transport.readyState;
-		if (readyState != 1)
+		if (readyState > 1 && !((readyState == 4) && this._complete))
 			this.respondToReadyState(this.transport.readyState);
 	},
 	
@@ -252,6 +260,7 @@ Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
 		var transport = this.transport, json = this.evalJSON();
 
 		if (event == 'Complete')
+			this._complete = true;
 			(this.options['on' + this.transport.status]
 			 || this.options['on' + (this.responseIsSuccess() ? 'Success' : 'Failure')]
 			 || Prototype.emptyFunction)(transport, json);
