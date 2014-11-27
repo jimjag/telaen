@@ -13,6 +13,9 @@ require_once './inc/class/class.PHPMailer_extra.php';
 
 define('IMAP', 1);
 define('POP3', 2);
+define('STATUS_OK', 0);
+define('STATUS_NOK', 1);
+define('STATUS_NOK_FILE', 2);
 
 class Telaen_core
 {
@@ -41,21 +44,69 @@ class Telaen_core
     public $appname           = "";
     public $UserMbox          = "";
     public $AuthSession       = "";
+    public $status            = STATUS_OK;
 
     // internal
     protected $_msgbody = "";
     protected $_content = array();
-    protected $_sid     = "";
+    protected $_sid     = 1;
     protected $_tnef    = "";
 
     /*******************/
+
+     /**
+     * Print out debugging info as HTML comments
+     * @param  string $str
+     * @return void
+     */
+    static public function debug_msg($str, $caller = "")
+    {
+        echo "<!-- $caller:\n";
+        echo preg_replace('|-->|', '__>', self::safe_print($str));
+        echo "\n-->\n";
+        @flush();
+    }
+
+    /**
+     * Print out debugging info as HTML comments
+     * @param  string $str
+     * @return void
+     */
+    public function trigger_error($str, $caller = "")
+    {
+        if ($this->config['enable_debug']) {
+            $this->debug_msg($str, $caller);
+        }
+        \trigger_error($str);
+    }
+
+    /**
+     * Return a file-system safe filename
+     * @param string $str
+     * @return string
+     */
+    static public function fs_safe_file($str, $delete=false)
+    {
+        $ret = preg_replace('|[.]{2,}|', ".", $str); // no dir
+        return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $ret);
+    }
+
+    /**
+     * Return a file-system safe folder name
+     * @param string $str
+     * @return string
+     */
+    static public function fs_safe_folder($str, $delete=true)
+    {
+        $ret = self::fs_safe_file($str);
+        return preg_replace('|[^A-Za-z0-9_-]|', ($delete ? '' : '_'), $ret);
+    }
 
     /**
      * Open a file and read it until a double line break
      * is reached.
      * Used to get the list of cached messages from cache
      */
-
     protected function _get_headers_from_cache($strfile)
     {
         if (!file_exists($strfile)) {
@@ -91,6 +142,11 @@ class Telaen_core
             return;
         }
         $fp = fopen($strfile, 'rb');
+        if (!$fp) {
+            $this->trigger_error("cannot fopen $strfile", __FUNCTION__);
+            $this->status = STATUS_NOK_FILE;
+            return "";
+        }
         fseek($fp, 0, SEEK_END);
         $size = ftell($fp);
         rewind($fp);
@@ -99,6 +155,7 @@ class Telaen_core
         unset($fp);
         unset($size);
 
+        $this->status = STATUS_OK;
         return $result;
     }
 
@@ -110,16 +167,18 @@ class Telaen_core
      */
     public function save_file($filename, $content)
     {
-        $ret = false;
         $tmpfile = fopen($filename, 'wb');
         if ($tmpfile) {
             fwrite($tmpfile, $content);
             fclose($tmpfile);
             unset($content, $tmpfile);
-            $ret = true;
+            $this->status = STATUS_OK;
+            return true;
+        } else {
+            $this->trigger_error("cannot fopen $filename", __FUNCTION__);
+            $this->status = STATUS_NOK_FILE;
+            return false;
         }
-
-        return $ret;
     }
 
     /**
@@ -755,7 +814,7 @@ class Telaen_core
         }
 
         $filename = preg_replace('|[.]{2,}|', ".", preg_replace("'(/|\\\\)+'", "_", trim($this->_decode_mime_string($filename))));
-        $safefilename = preg_replace('|[ \t\.\W]+|', "_", $filename);
+        $safefilename = self::fs_safe_file($filename);
         $nIndex = count($this->_content['attachments']);
         $temp_array['name'] = trim($filename);
         $temp_array['size'] = strlen($body);
@@ -1269,7 +1328,7 @@ class Telaen_core
     {
         $nurl = "";
         if ($add_scheme_host) {
-            $nurl .= create_http_url();
+            $nurl .= self::create_http_url();
         }
         $nurl .= rtrim(dirname($_SERVER['PHP_SELF']), '/\\').'/'.$url;
         $nurl = str_replace('\\', '/', $nurl);    // Windows path fix
@@ -1362,11 +1421,12 @@ ENDOFREDIRECT;
     /**
      * Load user prefs
      */
-    public function load_prefs($user)
+    public function load_prefs($user, $pref_file = NULL)
     {
         extract($this->config['default_preferences']);
 
-        $pref_file = $this->userfolder.'_infos/prefs.upf';
+        if (!$pref_file) $pref_file = $this->userfolder.'_infos/prefs.upf';
+        $pref_file = self::fs_safe_file($pref_file);
 
         if (!file_exists($pref_file)) {
             $this->prefs['real-name'] = UCFirst(substr($user, 0, strpos($user, '@')));
@@ -1399,10 +1459,16 @@ ENDOFREDIRECT;
     /**
      * Save prefs
      */
-    public function save_prefs($prefarray)
+    public function save_prefs($prefarray, $pref_file = NULL)
     {
-        $pref_file = $this->userfolder.'_infos/prefs.upf';
+        if (!$pref_file) $pref_file = $this->userfolder.'_infos/prefs.upf';
+        $pref_file = self::fs_safe_file($pref_file);
+
         $f = fopen($pref_file, 'w');
+        if (!$f) {
+            $this->trigger_error("cannot fopen $pref_file", __FUNCTION__);
+            return;
+        }
         fwrite($f, ~serialize($prefarray));
         fclose($f);
     }
@@ -1410,12 +1476,14 @@ ENDOFREDIRECT;
     /**
      *
      */
-    public function load_config()
+    public function load_config($cfile, $merge=true)
     {
+        $cfile = self::fs_safe_file($cfile);
         $config = array();
-        require_once './inc/config/configv2.php.default';
-        @include './inc/config/configv2.php';
-        $this->config = $config;
+        @include_once './inc/config/'.$cfile.'-default.php';
+        @include_once './inc/config/'.$cfile.'.php';
+        if ($merge) $this->config = array_merge($this->config, $config);
+        return $config;
     }
 
     /**
@@ -1480,7 +1548,7 @@ ENDOFREDIRECT;
             case 'double':
                 $var = (double) $var; break;
             case 'string':
-                $var = Telaen_core::safe_print(trim((string) $var));
+                $var = self::safe_print(trim((string) $var));
                 break;
             case 'array':
                 $var = (array) $var; break;
@@ -1499,7 +1567,7 @@ ENDOFREDIRECT;
         $reta = array();
         foreach ($my_vars as $to_pull) {
             if (isset($whofrom[$to_pull])) {
-                $reta[$to_pull] = Telaen_core::caster($whofrom[$to_pull], $cast);
+                $reta[$to_pull] = self::caster($whofrom[$to_pull], $cast);
             }
         }
 

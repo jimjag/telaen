@@ -36,54 +36,6 @@ class Telaen extends Telaen_core
     }
 
     /**
-     * Print out debugging info as HTML comments
-     * @param  string $str
-     * @return void
-     */
-    static public function debug_msg($str, $caller = "")
-    {
-        echo "<!-- $caller:\n";
-        echo preg_replace('|-->|', '__>', Telaen_core::safe_print($str));
-        echo "\n-->\n";
-        @flush();
-    }
-
-    /**
-     * Print out debugging info as HTML comments
-     * @param  string $str
-     * @return void
-     */
-    public function trigger_error($str, $caller = "")
-    {
-        if ($this->config['enable_debug']) {
-            $this->debug_msg($str, $caller);
-        }
-        \trigger_error($str);
-    }
-
-    /**
-     * Return a file-system safe filename
-     * @param string $str
-     * @return string
-     */
-    static public function fs_safe_file($str)
-    {
-        $ret = preg_replace('|[.]{2,}|', ".", $str); // no dir
-        return preg_replace('|[^A-Za-z0-9_.-]+|', '_', $ret);
-    }
-
-    /**
-     * Return a file-system safe folder name
-     * @param string $str
-     * @return string
-     */
-    static public function fs_safe_folder($str)
-    {
-        $ret = Telaen::fs_safe_file($str);
-        return preg_replace('|[^A-Za-z0-9_-]|', '', $ret);
-    }
-
-    /**
      * Is this a valid folder name?
      * @param type $name folder name to check
      * @param type $checksys Check against system folders?
