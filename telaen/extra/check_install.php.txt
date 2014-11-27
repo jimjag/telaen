@@ -244,7 +244,7 @@ if (count($config) == 0) {
     $keep = array('appversion', 'appname', 'themes', 'languages', 'default_theme',
         'default_language', 'log_errors', 'log_fname');
     // $config = array();
-    @include './inc/config/configv2.php.default';
+    @include './inc/config/configv2-default.php';
     if (count($config) > 0) {
         foreach ($config as $key => $value) {
             if (!in_array($key, $keep) && ($value != ${$key})) {
