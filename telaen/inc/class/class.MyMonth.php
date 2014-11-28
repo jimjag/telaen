@@ -153,7 +153,7 @@ EOT;
 //]]>
 </script>
 EOT;
-        $ret = "<script type=\"text/javascript\" src=\"./js/calendar.js\"></script>\n<div id=\"calendar\">".$this->monthAsTable().$end;
+        $ret = "<script type=\"text/javascript\" src=\"./inc/js/calendar.js\"></script>\n<div id=\"calendar\">".$this->monthAsTable().$end;
 
         return $ret;
     }

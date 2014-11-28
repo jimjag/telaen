@@ -52,9 +52,9 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
 }
 
 $jssource .= <<<EOT
-	<script type="text/javascript" src="./js/calendar.js"></script>
-	<script type="text/javascript" src="editors/tiny_mce/tinymce.gzip.js"></script>
-	<script type="text/javascript" src="editors/tiny_mce/tiny_e_init.js"></script>
+	<script type="text/javascript" src="./inc/js/calendar.js"></script>
+	<script type="text/javascript" src="inc/editors/tinymce/tinymce.gzip.js"></script>
+	<script type="text/javascript" src="inc/editors/tinymce/tiny_e_init.js"></script>
 EOT;
 
 $smarty->assign('pageMetas', $nocache);

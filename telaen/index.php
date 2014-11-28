@@ -21,8 +21,8 @@ $smarty = new Smarty();
 $smarty->security = true;
 $smarty->secure_dir = array('./');
 $smarty->compile_dir = $TLN->config['temporary_directory'].'/smarty_ct/';
-$smarty->template_dir = './themes';
-$smarty->config_dir = './langs';
+$smarty->template_dir = './inc/themes';
+$smarty->config_dir = './inc/langs';
 $smarty->use_sub_dirs = true;
 if (!is_dir($smarty->compile_dir)) {
     mkdir($smarty->compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));

@@ -231,8 +231,8 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
     if ($show_advanced) {
         $jssource .= "
-	<script type=\"text/javascript\" src=\"editors/tinymce/tinymce.gzip.js\"></script>
-	<script type=\"text/javascript\" src=\"editors/tinymce/tiny_init.js\"></script>
+	<script type=\"text/javascript\" src=\"inc/editors/tinymce/tinymce.gzip.js\"></script>
+	<script type=\"text/javascript\" src=\"inc/editors/tinymce/tiny_init.js\"></script>
 		";
     }
 
