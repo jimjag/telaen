@@ -200,7 +200,7 @@ body,td,th {
 <?php
         $has_old_files = false;
         $old_files = array();
-        moved_files = array();
+        $moved_files = array();
 
         foreach (array('inc/lib.php') as $i) {
             if (file_exists('./' . $i)) {
@@ -217,7 +217,7 @@ body,td,th {
         }
 
         if ($has_old_files) {
-            if (count($old_files) > 0) {}
+            if (count($old_files) > 0) {
                 echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following old files/dirs:<br/>');
                 echo('<span class="codishsml">'); echo("\n");
                 foreach ($old_files as $i) {
@@ -227,7 +227,7 @@ body,td,th {
                 echo('<br/>Done<br/>');
                 echo('These should be deleted!<br/>');
             }
-            if (count($moved_files) > 0) {}
+            if (count($moved_files) > 0) {
                 echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following moved files/dirs:<br/>');
                 echo('<span class="codishsml">'); echo("\n");
                 foreach ($moved_files as $i) {
