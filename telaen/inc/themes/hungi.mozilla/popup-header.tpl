@@ -2,10 +2,10 @@
 <html>
 <head>
 <title>{$webmailTitle} - {$pageTitle}</title>
-<link rel="stylesheet" href="themes/hungi.mozilla/webmail.css" type="text/css" />
+<link rel="stylesheet" href="inc/themes/hungi.mozilla/webmail.css" type="text/css" />
 
 {$pageMetas}
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}" />
-<script type="text/javascript" src="themes/hungi.mozilla/webmail.js"></script> 
+<script type="text/javascript" src="inc/themes/hungi.mozilla/webmail.js"></script> 
 {$umJS}
 </head>

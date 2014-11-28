@@ -7,26 +7,26 @@ Visit www.cyber.nu
 <head>
 <title>UebiMiau - {#lgn_title#|escape:"html"}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="themes/aleborgXP/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 </head>
 {$umJS}
 
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td background="themes/aleborgXP/images/menu_back.gif" bgcolor="#FFFFFF" align="center"> 
+    <td background="inc/themes/aleborgXP/images/menu_back.gif" bgcolor="#FFFFFF" align="center"> 
         <table border="0" cellspacing="0" cellpadding="0">
           <tr> 
-            <td width="8"><img src="themes/aleborgXP/images/login/left_up_corner.gif" width="8" height="29"></td>
+            <td width="8"><img src="inc/themes/aleborgXP/images/login/left_up_corner.gif" width="8" height="29"></td>
             <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr> 
-                  <td background="themes/aleborgXP/images/login/up_back.gif" class="white"><b>{$umLabel.lgn_welcome_msg}</b></td>
+                  <td background="inc/themes/aleborgXP/images/login/up_back.gif" class="white"><b>{$umLabel.lgn_welcome_msg}</b></td>
 
-                <td width="31"><a href="javascript:;" onClick="self.close();"><img src="themes/aleborgXP/images/login/right_up_corner.gif" width="31" height="29" border="0"></a></td>
+                <td width="31"><a href="javascript:;" onClick="self.close();"><img src="inc/themes/aleborgXP/images/login/right_up_corner.gif" width="31" height="29" border="0"></a></td>
                 </tr>
               </table></td>
           </tr>
           <tr> 
-            <td background="themes/aleborgXP/images/login/left_side.gif"><img src="themes/aleborgXP/images/login/left_side.gif" width="8" height="5"></td>
+            <td background="inc/themes/aleborgXP/images/login/left_side.gif"><img src="inc/themes/aleborgXP/images/login/left_side.gif" width="8" height="5"></td>
             <td bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr> 
                   <td> 
@@ -98,13 +98,13 @@ Visit www.cyber.nu
                     </form>
                   </table>
                     </td>
-                  <td width="8" background="themes/aleborgXP/images/login/right_side.gif"><img src="themes/aleborgXP/images/login/right_side.gif" width="8" height="5"></td>
+                  <td width="8" background="inc/themes/aleborgXP/images/login/right_side.gif"><img src="inc/themes/aleborgXP/images/login/right_side.gif" width="8" height="5"></td>
                 </tr>
               </table></td>
           </tr>
           <tr> 
-            <td><img src="themes/aleborgXP/images/login/left_down_corner.gif" width="8" height="5"></td>
-            <td align="right" background="themes/aleborgXP/images/login/down_buttom.gif"><img src="themes/aleborgXP/images/login/down_buttom.gif" width="8" height="5"><img src="themes/aleborgXP/images/login/right_down_corner.gif" width="8" height="5"></td>
+            <td><img src="inc/themes/aleborgXP/images/login/left_down_corner.gif" width="8" height="5"></td>
+            <td align="right" background="inc/themes/aleborgXP/images/login/down_buttom.gif"><img src="inc/themes/aleborgXP/images/login/down_buttom.gif" width="8" height="5"><img src="inc/themes/aleborgXP/images/login/right_down_corner.gif" width="8" height="5"></td>
           </tr>
         </table>
 	</td>

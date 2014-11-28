@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.up_title}</title>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 </head>
 <body style="background-color: #D4D0C8;" topmargin=0 leftmargin=0>

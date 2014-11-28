@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>jaguMail Webmail - {$umLabel.bdl_title}</title>
-<link rel="stylesheet" href="themes/jagumail/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/jagumail/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 </head>
 

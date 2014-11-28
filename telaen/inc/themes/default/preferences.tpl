@@ -204,7 +204,7 @@
           </tr>
           {/section}
           <tr>
-            <td colspan="6" class="default"><img src="themes/default/images/arrowblue.gif" alt=""> <a href="#" class="menu" onclick="submitForm('filters_form');return false;">{$umLabel.filter_delete_selected}</a></td>
+            <td colspan="6" class="default"><img src="inc/themes/default/images/arrowblue.gif" alt=""> <a href="#" class="menu" onclick="submitForm('filters_form');return false;">{$umLabel.filter_delete_selected}</a></td>
           </tr>
         </table>
       </form></td>

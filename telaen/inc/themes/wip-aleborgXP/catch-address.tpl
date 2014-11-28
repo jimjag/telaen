@@ -5,7 +5,7 @@
 <html>
 <head>
 	<title>UebiMiau - {$umLabel.ctc_title}</title>
-	<link rel="stylesheet" href="themes/aleborg/webmail.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/aleborg/webmail.css" type="text/css">
 </head>
 
 <body bgcolor="#FFFFFF" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">

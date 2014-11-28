@@ -2,10 +2,10 @@
 <html>
 <head>
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.folders_to} {$umUserEmail}</title>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 {$pageMetas}
-<script src="themes/outlook/webmail.js" type="text/javascript"></script>
+<script src="inc/themes/outlook/webmail.js" type="text/javascript"></script>
 {$umJS}
 </head>
 {if $smarty.request.oefolders=="true"}
@@ -41,9 +41,9 @@
   <tr>
     <td><table width='100%' cellpadding='0' cellspacing='0'>
         <tr>
-          <td class="window_title"><img src='themes/outlook/images/icon_outlook.gif'></td>
+          <td class="window_title"><img src='inc/themes/outlook/images/icon_outlook.gif'></td>
           <td width='100%' class="window_title">&nbsp;{$umLabel.folders_to} {$umUserEmail}</td>
-          <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='themes/outlook/images/X.png'></a></td>
+          <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='inc/themes/outlook/images/X.png'></a></td>
         </tr>
       </table>
       <table width='100%' height='2' cellpadding='0' cellspacing='0'>
@@ -58,19 +58,19 @@
               <tr>
                 <td class='toolbar_inner'><table width='0' cellpadding='0' cellspacing='0'>
                     <tr>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_handler.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:newmsg()"><acronym title="{$umLabel.compose_mnu}"><img src="themes/outlook/images/icon_new.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_handler.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:newmsg()"><acronym title="{$umLabel.compose_mnu}"><img src="inc/themes/outlook/images/icon_new.gif"><font class='xx-normal'><br>
                         {#compose_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:refreshlist()"><acronym title="{$umLabel.refresh_mnu}"><img src="themes/outlook/images/icon_sendreceive.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:refreshlist()"><acronym title="{$umLabel.refresh_mnu}"><img src="inc/themes/outlook/images/icon_sendreceive.gif"><font class='xx-normal'><br>
                         {#refresh_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:addresses()"><acronym title="{$umLabel.address_mnu}"><img src="themes/outlook/images/icon_addressbook.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:addresses()"><acronym title="{$umLabel.address_mnu}"><img src="inc/themes/outlook/images/icon_addressbook.gif"><font class='xx-normal'><br>
                         {#address_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:search()"><acronym title="{$umLabel.search_mnu}"><img src="themes/outlook/images/icon_search.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:search()"><acronym title="{$umLabel.search_mnu}"><img src="inc/themes/outlook/images/icon_search.gif"><font class='xx-normal'><br>
                         {#search_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:prefs()"><acronym title="{$umLabel.prefs_mnu}"><img src="themes/outlook/images/icon_options.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:prefs()"><acronym title="{$umLabel.prefs_mnu}"><img src="inc/themes/outlook/images/icon_options.gif"><font class='xx-normal'><br>
                         {#prefs_mnu#|truncate:13:"...":true}</font></acronym></td>
                     </tr>
                   </table></td>
@@ -84,7 +84,7 @@
         <tr>
           <td valign=top colspan=3><table width='100%' cellpadding='0' cellspacing='0'>
               <tr>
-                <td class='seccion_title_out'>&nbsp;<img src="themes/outlook/images/icon_folder.gif">&nbsp;<nobr>{$umLabel.folders_mnu}</nobr></td>
+                <td class='seccion_title_out'>&nbsp;<img src="inc/themes/outlook/images/icon_folder.gif">&nbsp;<nobr>{$umLabel.folders_mnu}</nobr></td>
               </tr>
             </table></td>
         </tr>
@@ -144,11 +144,11 @@
                     {$umFoldersList}
                     {counter print=false assign=contador}
                     <tr> {strip}
-                      <td width=25px align=center class="messagelist"> {if $umFolderList[i].entry eq "inbox"}<img src="themes/outlook/images/icon_folder_inbox.gif"> {elseif $umFolderList[i].entry eq "sent"}<img src="themes/outlook/images/icon_folder_sent.gif"> {elseif $umFolderList[i].entry eq "trash"}<img src="themes/outlook/images/icon_folder_trash.gif"> {elseif $umFolderList[i].entry eq "spam"}<img src="themes/outlook/images/icon_folder_spam.gif"> {else}<img src="themes/outlook/images/icon_folder_other.gif"> {/if}</td>
+                      <td width=25px align=center class="messagelist"> {if $umFolderList[i].entry eq "inbox"}<img src="inc/themes/outlook/images/icon_folder_inbox.gif"> {elseif $umFolderList[i].entry eq "sent"}<img src="inc/themes/outlook/images/icon_folder_sent.gif"> {elseif $umFolderList[i].entry eq "trash"}<img src="inc/themes/outlook/images/icon_folder_trash.gif"> {elseif $umFolderList[i].entry eq "spam"}<img src="inc/themes/outlook/images/icon_folder_spam.gif"> {else}<img src="inc/themes/outlook/images/icon_folder_other.gif"> {/if}</td>
                       <td id="fol_{$contador}" onclick="window.location='{$umFolderList[i].chlink}'" class="messagelist" onmouseover="fol_{$contador}.className='messagelist_over';msg_{$contador}.className='messagelist_over';trs_{$contador}.className='messagelist_over';del_{$contador}.className='messagelist_over';" onmouseout="fol_{$contador}.className='messagelist';msg_{$contador}.className='messagelist';trs_{$contador}.className='messagelist';del_{$contador}.className='messagelist';"><a href="{$umFolderList[i].chlink}">{$umFolderList[i].name|escape:"html"}</a></td>
                       <td align="right" id="msg_{$contador}" onclick="window.location='{$umFolderList[i].chlink}'" class="messagelist" onmouseover="fol_{$contador}.className='messagelist_over';msg_{$contador}.className='messagelist_over';trs_{$contador}.className='messagelist_over';del_{$contador}.className='messagelist_over';" onmouseout="fol_{$contador}.className='messagelist';msg_{$contador}.className='messagelist';trs_{$contador}.className='messagelist';del_{$contador}.className='messagelist';">{$umFolderList[i].msgs}</td>
-                      <td align="center" id="trs_{$contador}" class="messagelist" onmouseover="fol_{$contador}.className='messagelist_over';msg_{$contador}.className='messagelist_over';trs_{$contador}.className='messagelist_over';del_{$contador}.className='messagelist_over';" onmouseout="fol_{$contador}.className='messagelist';msg_{$contador}.className='messagelist';trs_{$contador}.className='messagelist';del_{$contador}.className='messagelist';"><a href="#" onclick="javascript:if(confirm('{$umLabel.fld_empty_hea} {$umFolderList[i].name|escape:"html"}?')) window.location='{$umFolderList[i].emptylink}'; "><acronym title="{$umLabel.fld_empty_hea}"><img src="themes/outlook/images/icon_folder_trash.gif" border=0></acronym></a></td>
-                      <td align="center" id="del_{$contador}" class="messagelist" onmouseover="fol_{$contador}.className='messagelist_over';msg_{$contador}.className='messagelist_over';trs_{$contador}.className='messagelist_over';del_{$contador}.className='messagelist_over';" onmouseout="fol_{$contador}.className='messagelist';msg_{$contador}.className='messagelist';trs_{$contador}.className='messagelist';del_{$contador}.className='messagelist';"> {if $umFolderList[i].entry != "inbox" and $umFolderList[i].entry != "sent" and $umFolderList[i].entry != "trash" and $umFolderList[i].entry != "spam"} <a href="#" onclick="javascript:if(confirm('{$umLabel.fld_delete_hea} {$umFolderList[i].name|escape:"html"}?')) window.location='folders.php?dummy_del=yes&delfolder={$umFolderList[i].name}&sid={$umSid}&lid={$umLid}&tid={$umTid}'; "> <acronym title="{$umLabel.fld_delete_hea}"><img src="themes/outlook/images/icon_delete_mini.gif" border="0"></acronym></a>{else}&nbsp;{/if}</td>
+                      <td align="center" id="trs_{$contador}" class="messagelist" onmouseover="fol_{$contador}.className='messagelist_over';msg_{$contador}.className='messagelist_over';trs_{$contador}.className='messagelist_over';del_{$contador}.className='messagelist_over';" onmouseout="fol_{$contador}.className='messagelist';msg_{$contador}.className='messagelist';trs_{$contador}.className='messagelist';del_{$contador}.className='messagelist';"><a href="#" onclick="javascript:if(confirm('{$umLabel.fld_empty_hea} {$umFolderList[i].name|escape:"html"}?')) window.location='{$umFolderList[i].emptylink}'; "><acronym title="{$umLabel.fld_empty_hea}"><img src="inc/themes/outlook/images/icon_folder_trash.gif" border=0></acronym></a></td>
+                      <td align="center" id="del_{$contador}" class="messagelist" onmouseover="fol_{$contador}.className='messagelist_over';msg_{$contador}.className='messagelist_over';trs_{$contador}.className='messagelist_over';del_{$contador}.className='messagelist_over';" onmouseout="fol_{$contador}.className='messagelist';msg_{$contador}.className='messagelist';trs_{$contador}.className='messagelist';del_{$contador}.className='messagelist';"> {if $umFolderList[i].entry != "inbox" and $umFolderList[i].entry != "sent" and $umFolderList[i].entry != "trash" and $umFolderList[i].entry != "spam"} <a href="#" onclick="javascript:if(confirm('{$umLabel.fld_delete_hea} {$umFolderList[i].name|escape:"html"}?')) window.location='folders.php?dummy_del=yes&delfolder={$umFolderList[i].name}&sid={$umSid}&lid={$umLid}&tid={$umTid}'; "> <acronym title="{$umLabel.fld_delete_hea}"><img src="inc/themes/outlook/images/icon_delete_mini.gif" border="0"></acronym></a>{else}&nbsp;{/if}</td>
                       <td class="messagelist" width=100%></td>
                       {/strip} </tr>
                     {/section}

@@ -2,10 +2,10 @@
 <html>
 <head>
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.prf_title}</title>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 {$pageMetas}
-<script src="themes/outlook/webmail.js" type="text/javascript"></script>
+<script src="inc/themes/outlook/webmail.js" type="text/javascript"></script>
 {$umJS}
 </head>
 <body>
@@ -13,9 +13,9 @@
   <tr>
     <td><table width='100%' cellpadding='0' cellspacing='0'>
         <tr>
-          <td class="window_title"><img src='themes/outlook/images/icon_outlook.gif'></td>
+          <td class="window_title"><img src='inc/themes/outlook/images/icon_outlook.gif'></td>
           <td width='100%' class="window_title">&nbsp;{$umLabel.prf_title}</td>
-          <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='themes/outlook/images/X.png'></a></td>
+          <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='inc/themes/outlook/images/X.png'></a></td>
         </tr>
       </table>
       <table width='100%' cellpadding='0' cellspacing='0'>
@@ -24,30 +24,30 @@
               <tr>
                 <td id="tab_info" class="tab_info_visible"><table cellpadding="0" cellspacing="0">
                     <tr>
-                      <td><img src="themes/outlook/images/tab_left.gif"></td>
-                      <td background="themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('info')"><nobr><font class="xx-normal">&nbsp;{$umLabel.prf_general_title}&nbsp;</font></nobr></td>
-                      <td><img src="themes/outlook/images/tab_right.gif"></td>
+                      <td><img src="inc/themes/outlook/images/tab_left.gif"></td>
+                      <td background="inc/themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('info')"><nobr><font class="xx-normal">&nbsp;{$umLabel.prf_general_title}&nbsp;</font></nobr></td>
+                      <td><img src="inc/themes/outlook/images/tab_right.gif"></td>
                     </tr>
                   </table></td>
                 <td id="tab_trash" class="tab_info_hidden"><table cellpadding="0" cellspacing="0">
                     <tr>
-                      <td><img src="themes/outlook/images/tab_left.gif"></td>
-                      <td background="themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('trash')"><nobr><font class="xx-normal">&nbsp;{$umLabel.prf_messages_title}&nbsp;</font></nobr></td>
-                      <td><img src="themes/outlook/images/tab_right.gif"></td>
+                      <td><img src="inc/themes/outlook/images/tab_left.gif"></td>
+                      <td background="inc/themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('trash')"><nobr><font class="xx-normal">&nbsp;{$umLabel.prf_messages_title}&nbsp;</font></nobr></td>
+                      <td><img src="inc/themes/outlook/images/tab_right.gif"></td>
                     </tr>
                   </table></td>
                 <td id="tab_messages" class="tab_info_hidden"><table cellpadding="0" cellspacing="0">
                     <tr>
-                      <td><img src="themes/outlook/images/tab_left.gif"></td>
-                      <td background="themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('messages')"><nobr><font class="xx-normal">&nbsp;{$umLabel.prf_trash_title}&nbsp;</font></nobr></td>
-                      <td><img src="themes/outlook/images/tab_right.gif"></td>
+                      <td><img src="inc/themes/outlook/images/tab_left.gif"></td>
+                      <td background="inc/themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('messages')"><nobr><font class="xx-normal">&nbsp;{$umLabel.prf_trash_title}&nbsp;</font></nobr></td>
+                      <td><img src="inc/themes/outlook/images/tab_right.gif"></td>
                     </tr>
                   </table></td>
                 <td id="tab_filters" class="tab_info_hidden"><table cellpadding="0" cellspacing="0">
                     <tr>
-                      <td><img src="themes/outlook/images/tab_left.gif"></td>
-                      <td background="themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('filters')"><nobr><font class="xx-normal">&nbsp;{$umLabel.filter_title}&nbsp;</font></nobr></td>
-                      <td><img src="themes/outlook/images/tab_right.gif"></td>
+                      <td><img src="inc/themes/outlook/images/tab_left.gif"></td>
+                      <td background="inc/themes/outlook/images/tab_middle.gif" onclick="switchPrefsTab('filters')"><nobr><font class="xx-normal">&nbsp;{$umLabel.filter_title}&nbsp;</font></nobr></td>
+                      <td><img src="inc/themes/outlook/images/tab_right.gif"></td>
                     </tr>
                   </table></td>
                 <td class="tab_blank" width='100%'>&nbsp;</td>
@@ -280,7 +280,7 @@
                         {elseif $filterList[filter].type eq 2}{$umLabel.filter_type_delete}
                         {elseif $filterList[filter].type eq 4}{$umLabel.filter_type_mark}{/if} </td>
                       <td class="label">{$filterList[filter].moveto}</td>
-                      <td align="center"><a href="#" onclick="selectAndSubmit('filters_form',{$smarty.section.filter.index});return false;"><acronym title="{$umLabel.filter_delete}"><img src='themes/outlook/images/icon_delete_mini.gif' border=0></acronym></a></td>
+                      <td align="center"><a href="#" onclick="selectAndSubmit('filters_form',{$smarty.section.filter.index});return false;"><acronym title="{$umLabel.filter_delete}"><img src='inc/themes/outlook/images/icon_delete_mini.gif' border=0></acronym></a></td>
                     </tr>
                     {sectionelse}
                     <tr>

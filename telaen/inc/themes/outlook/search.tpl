@@ -4,8 +4,8 @@
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.search_mnu}</title>
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 {$pageMetas}
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
-<script language="JavaScript" src="themes/outlook/webmail.js" type="text/javascript"></script>
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
+<script language="JavaScript" src="inc/themes/outlook/webmail.js" type="text/javascript"></script>
 {$umJS}
 </head>
 
@@ -17,9 +17,9 @@
 
   <table width='100%' cellpadding='0' cellspacing='0'>
     <tr>
-      <td class="window_title"><img src='themes/outlook/images/icon_outlook.gif'></td>
+      <td class="window_title"><img src='inc/themes/outlook/images/icon_outlook.gif'></td>
       <td width='100%' class="window_title">&nbsp;{$umLabel.search_mnu}</td>
-      <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='themes/outlook/images/X.png'></a></td>
+      <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='inc/themes/outlook/images/X.png'></a></td>
     </tr>
   </table>
   <table width='100%' cellpadding='3' cellspacing='0'>
@@ -71,8 +71,8 @@
 
       <table width='100%' cellpadding='0' cellspacing='0'>
         <tr>
-          <td width="10" align="center" class="headers"><img src="themes/outlook/images/icon_high_priority.gif" alt="">
-          <td width="10" align="center" class="headers"><img src="themes/outlook/images/icon_attachment_clip.gif" alt=""></td>
+          <td width="10" align="center" class="headers"><img src="inc/themes/outlook/images/icon_high_priority.gif" alt="">
+          <td width="10" align="center" class="headers"><img src="inc/themes/outlook/images/icon_attachment_clip.gif" alt=""></td>
           <td class="headers" colspan=2>{$umLabel.sch_from_hea}</td>
           <td class="headers">{$umLabel.sch_subject_hea}</td>
           <td width="100" class="headers">{$umLabel.sch_date_hea}</td>

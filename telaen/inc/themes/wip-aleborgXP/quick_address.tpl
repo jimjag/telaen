@@ -1,6 +1,6 @@
 {config_load file=$umLanguageFile section="QuickAddress"}
 <title>UebiMiau - {$umLabel.qad_title}</title>
-<link rel="stylesheet" href="themes/aleborgXP/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 <body bgcolor="#FFFFFF" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
 {literal}
 <script language=javascript>

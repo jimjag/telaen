@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>UebiMiau Webmail - {$umLabel.qad_title} - Skin by Beauvoir.net</title>
-<link rel="stylesheet" href="themes/beauvoir2/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 </head>
 <!--
 Skinned by Arnaud BEAUVOIR -  - 

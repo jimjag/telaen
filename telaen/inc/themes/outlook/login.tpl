@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{#lgn_title#|escape:"html"}</title>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 </head>
 {$umJS}
@@ -21,7 +21,7 @@
               <tr>
                 <td colspan=2 style="padding:0"><table cellpadding=0 cellspacing=0>
                     <tr>
-                      <td height="10" style="background-color:#ffffe1;"><img src="themes/outlook/images/icon_warning.gif"></td>
+                      <td height="10" style="background-color:#ffffe1;"><img src="inc/themes/outlook/images/icon_warning.gif"></td>
                       <td height="10" style="padding:2;background-color:#ffffe1;font-family: tahoma,verdana,sans;font-weight: normal ;font-size: 11px;color: #000000;"><nobr> {if $errorCode eq "0"}
                         {$umLabel.err_login_msg}: {$umLabel.error_login}
                         {elseif $errorCode eq "1"}

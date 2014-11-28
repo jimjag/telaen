@@ -6,9 +6,9 @@
 {$pageMetas}
 	{$umJS}
 </head>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<script language="JavaScript" src="themes/outlook/webmail.js" type="text/javascript"></script>
+<script language="JavaScript" src="inc/themes/outlook/webmail.js" type="text/javascript"></script>
 {$umJS}
 
 <body>
@@ -23,9 +23,9 @@
   <tr>
     <td><table width='100%' cellpadding='0' cellspacing='0'>
         <tr>
-          <td class="window_title"><img src='themes/outlook/images/icon_ab.gif'></td>
+          <td class="window_title"><img src='inc/themes/outlook/images/icon_ab.gif'></td>
           <td width='100%' class="window_title">&nbsp;{if $umAddrID=='N'}{$umLabel.adr_new_entry}{else}{$umLabel.adr_title}{/if}</td>
-          <td class='window_title_X'><a href='{$umGoBack}'><img border='0' src='themes/outlook/images/X.png'></a></td>
+          <td class='window_title_X'><a href='{$umGoBack}'><img border='0' src='inc/themes/outlook/images/X.png'></a></td>
         </tr>
       </table>
       <table width='100%' cellpadding='0' cellspacing='0'>
@@ -34,16 +34,16 @@
               <tr>
                 <td id="tab_info" class="tab_info_visible"><table cellpadding='0' cellspacing='0'>
                     <tr>
-                      <td><img src="themes/outlook/images/tab_left.gif"></td>
-                      <td background="themes/outlook/images/tab_middle.gif" onclick="info.className='tab_visible';edit.className='tab_hidden';tab_info.className='tab_info_visible';tab_edit.className='tab_info_hidden'"><nobr><font class='xx-normal'>&nbsp;{$umLabel.adr_name_hea}&nbsp;</font></nobr></td>
-                      <td><img src="themes/outlook/images/tab_right.gif"></td>
+                      <td><img src="inc/themes/outlook/images/tab_left.gif"></td>
+                      <td background="inc/themes/outlook/images/tab_middle.gif" onclick="info.className='tab_visible';edit.className='tab_hidden';tab_info.className='tab_info_visible';tab_edit.className='tab_info_hidden'"><nobr><font class='xx-normal'>&nbsp;{$umLabel.adr_name_hea}&nbsp;</font></nobr></td>
+                      <td><img src="inc/themes/outlook/images/tab_right.gif"></td>
                     </tr>
                   </table></td>
                 <td id="tab_edit" class="tab_info_hidden"><table cellpadding='0' cellspacing='0'>
                     <tr>
-                      <td><img src="themes/outlook/images/tab_left.gif"></td>
-                      <td background="themes/outlook/images/tab_middle.gif" onclick="info.className='tab_hidden';edit.className='tab_visible';tab_info.className='tab_info_hidden';tab_edit.className='tab_info_visible'"><nobr><font class='xx-normal'>&nbsp;{$umLabel.adr_edit_hea}&nbsp;</font></nobr></td>
-                      <td><img src="themes/outlook/images/tab_right.gif"></td>
+                      <td><img src="inc/themes/outlook/images/tab_left.gif"></td>
+                      <td background="inc/themes/outlook/images/tab_middle.gif" onclick="info.className='tab_hidden';edit.className='tab_visible';tab_info.className='tab_info_hidden';tab_edit.className='tab_info_visible'"><nobr><font class='xx-normal'>&nbsp;{$umLabel.adr_edit_hea}&nbsp;</font></nobr></td>
+                      <td><img src="inc/themes/outlook/images/tab_right.gif"></td>
                     </tr>
                   </table></td>
                 <td class="tab_blank" width='100%'>&nbsp;</td>

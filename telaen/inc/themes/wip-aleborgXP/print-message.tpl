@@ -4,7 +4,7 @@
 <head>
 	<title>UebiMiau - {$umPageTitle|escape:"html"}</title>
 </head>
-<link rel="stylesheet" href="themes/aleborg/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/aleborg/webmail.css" type="text/css">
 
 {literal}
 <script language="JavaScript" type="text/javascript">

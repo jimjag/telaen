@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 <title>UebiMiau Webmail - {$umPageTitle|escape:"html"} - Skin by Beauvoir.net</title>
-<link rel="stylesheet" href="themes/beauvoir2/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 </head>
 <!--
 Skinned by Arnaud BEAUVOIR -  - 
@@ -29,9 +29,9 @@ function printIt() {
 <body onLoad="printIt()" leftmargin="5" topmargin="5" marginwidth="5" marginheigth="5">
 <br><br>
 <table width="750" border="0" cellspacing="0" cellpadding="0" class="normal" align="center">
-	<tr><td><img src="themes/beauvoir2/images/bandeau-h.gif" border="0"></td></tr>
-	<tr><td><img src="themes/beauvoir2/images/logo.gif" border="0" alt="Powered by Beauvoir"></td></tr>
-	<tr><td><img src="themes/beauvoir2/images/bandeau-h.gif" border="0"></td></tr>
+	<tr><td><img src="inc/themes/beauvoir2/images/bandeau-h.gif" border="0"></td></tr>
+	<tr><td><img src="inc/themes/beauvoir2/images/logo.gif" border="0" alt="Powered by Beauvoir"></td></tr>
+	<tr><td><img src="inc/themes/beauvoir2/images/bandeau-h.gif" border="0"></td></tr>
 </table>
 <br><br>
 <table width="750" border="0" cellspacing="0" cellpadding="0" class="normal" align="center">
@@ -98,7 +98,7 @@ function printIt() {
 			<area shape="rect" coords="318,5,371,18" href="" target="_blank">
 			<area shape="rect" coords="442,5,552,16" href="" target="_blank">
 			</map>
-			<img src="themes/beauvoir2/images/bandeau-b.gif" border="0" width="750" height="25" alt="Webmail powered by Uebimiau - Skinned by Forum.Beauvoir" usemap="#Uebimiau">
+			<img src="inc/themes/beauvoir2/images/bandeau-b.gif" border="0" width="750" height="25" alt="Webmail powered by Uebimiau - Skinned by Forum.Beauvoir" usemap="#Uebimiau">
 		</td>
 	<tr>
 </table>

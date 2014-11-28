@@ -5,7 +5,7 @@
 	<title>UebiMiau - {$umPageTitle|escape:"html"}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 </head>
-<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/default/webmail.css" type="text/css">
 
 {literal}
 <script language="JavaScript" type="text/javascript">

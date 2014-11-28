@@ -4,7 +4,7 @@
 <html>
 <head>
 	<title>UebiMiau Webmail - {$umLabel.blk_title} - Skin by Beauvoir.net</title>
-	<link rel="stylesheet" href="themes/beauvoir2/webmail.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 </head>
 

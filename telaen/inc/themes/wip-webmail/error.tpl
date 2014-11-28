@@ -4,17 +4,17 @@
 <head>
 	<title>UebiMiau Webmail - {$umLabel.err_title}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-	<link rel="stylesheet" href="themes/webmail/css.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/webmail/css.css" type="text/css">
 </head>
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 <tr><td valign="middle" align="center">
 <table width="750" border="0" cellspacing="0" cellpadding="0" class="frame" align="center">
 
-	<tr><td class=top><img src="themes/webmail/images/logo.gif" border="0""></td></tr>
-	<tr><td><img src="themes/webmail/images/bandeau-h.gif" border="0"></td></tr>
+	<tr><td class=top><img src="inc/themes/webmail/images/logo.gif" border="0""></td></tr>
+	<tr><td><img src="inc/themes/webmail/images/bandeau-h.gif" border="0"></td></tr>
 	<tr>
-		<td background="themes/webmail/images/ligne-fond.gif">
+		<td background="inc/themes/webmail/images/ligne-fond.gif">
 			<table width="450" border="0" cellspacing="1" cellpadding="1" align="center">
 				<tr><td align="center"><br><font color="red">.: <b>{$umLabel.err_title}</b> :.</font><br></td></tr>
 				<tr><td>&nbsp;</td></tr>
@@ -31,7 +31,7 @@
 	</tr>
 	<tr>
 		<td class=bot>
-			<img src="themes/webmail/images/bandeau-b.gif" border="0" width="750" height="25">
+			<img src="inc/themes/webmail/images/bandeau-b.gif" border="0" width="750" height="25">
 		</td>
 	<tr>
 </table>

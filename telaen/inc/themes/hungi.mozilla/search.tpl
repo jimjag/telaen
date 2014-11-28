@@ -55,7 +55,7 @@
           <td class="cent">&nbsp;<a href="{$umMessageList[i].folderlink}">{$umMessageList[i].foldername|escape:"html"}</a></td>
         </tr>
         <tr>
-          <td height="2" colspan="5" background="themes/hungi.mozilla/images/cellseparator.gif"></td>
+          <td height="2" colspan="5" background="inc/themes/hungi.mozilla/images/cellseparator.gif"></td>
         </tr>
         {sectionelse}
         <tr>

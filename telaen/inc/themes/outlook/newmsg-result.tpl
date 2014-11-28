@@ -3,9 +3,9 @@
 <head>
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.compose_mnu}</title>
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 {$pageMetas}
-<script src="themes/outlook/webmail.js" type="text/javascript"></script>
+<script src="inc/themes/outlook/webmail.js" type="text/javascript"></script>
 {$umJS}
 </head>
 <body>
@@ -21,7 +21,7 @@
               <tr>
                 <td><table width="100%" cellspacing="0" cellpadding="10" align="center">
                     <tr>
-                      <td valign='top' width="50" align="center"><img src="themes/outlook/images/msg_info.gif"></td>
+                      <td valign='top' width="50" align="center"><img src="inc/themes/outlook/images/msg_info.gif"></td>
                       <td valign='top'><font class=xx-normal> {$umLabel.result_success} </font></td>
                     </tr>
                       <tr>
@@ -39,7 +39,7 @@
                       <tr>
                         <td><table width="100%" cellspacing="0" cellpadding="10" align="center">
                           <tr>
-                            <td valign='top' width="50" align="center"><img src="themes/outlook/images/msg_error.gif"></td>
+                            <td valign='top' width="50" align="center"><img src="inc/themes/outlook/images/msg_error.gif"></td>
                             <td valign='top'><font class=xx-normal> {$umErrorMessage} </font></td>
                           </tr>
                           <tr>

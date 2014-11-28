@@ -6,19 +6,19 @@
 <html>
 <head>
 	<title>sentiMail - {$umLabel.bdl_title}</title>
-	<link rel="stylesheet" href="themes/senti/webmail.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 </head>
 	<body><!-- Form name used to be "form1" this has been changed for w3c compliancy--><br><br><br><br><br><br>
 	<form action="process.php" method="post">		
 				<table border="0" align="center" cellpadding="0" cellspacing="0">
                                                <tr>
-                                                        <td colspan="3" align="center"><img src="themes/senti/images/globe.jpg" alt=""></td>
+                                                        <td colspan="3" align="center"><img src="inc/themes/senti/images/globe.jpg" alt=""></td>
                                                 </tr>
 						<tr>
-							<td align="left"><img src="themes/senti/images/rounded-top-left.gif" alt=""></td>
-							<td align="center" width="450"><image src="themes/senti/images/top-middle.gif" width="100%" height="30"></td>
-							<td align="right"><img src="themes/senti/images/rounded-senti-top.gif" alt=""></td>
+							<td align="left"><img src="inc/themes/senti/images/rounded-top-left.gif" alt=""></td>
+							<td align="center" width="450"><image src="inc/themes/senti/images/top-middle.gif" width="100%" height="30"></td>
+							<td align="right"><img src="inc/themes/senti/images/rounded-senti-top.gif" alt=""></td>
 						</tr>
 						<tr>		
 							<td colspan="3" class="mainLoginTable">
@@ -34,9 +34,9 @@
 							</td>
 						</tr>
 						<tr>
-							<td width="60" class="bottomEdge" align="left"><img src="themes/senti/images/rounded-bottom-left.gif" alt=""></td>
-							<td class="bottomEdge"><img src="themes/senti/images/theme-images/bottom-middle.gif" alt="" height="49" width="100%" border="0"></td>
-							<td width="60" class="bottomEdge" align="right"><img src="themes/senti/images/rounded-bottom-right.gif" alt=""></td>
+							<td width="60" class="bottomEdge" align="left"><img src="inc/themes/senti/images/rounded-bottom-left.gif" alt=""></td>
+							<td class="bottomEdge"><img src="inc/themes/senti/images/theme-images/bottom-middle.gif" alt="" height="49" width="100%" border="0"></td>
+							<td width="60" class="bottomEdge" align="right"><img src="inc/themes/senti/images/rounded-bottom-right.gif" alt=""></td>
 						</tr>
 						<tr>
 							<td colspan="3" class="footer" align="center"></td>

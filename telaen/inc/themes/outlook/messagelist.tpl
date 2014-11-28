@@ -2,10 +2,10 @@
 <html>
 <head>
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{$umBoxName} - {$umUserEmail}</title>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 {$pageMetas}
-<script src="themes/outlook/webmail.js" type="text/javascript"></script>
+<script src="inc/themes/outlook/webmail.js" type="text/javascript"></script>
 {$umJS}
 </head>
 
@@ -25,9 +25,9 @@
   <tr>
     <td><table width='100%' cellpadding='0' cellspacing='0'>
         <tr>
-          <td class="window_title"><img src='themes/outlook/images/icon_outlook.gif'></td>
+          <td class="window_title"><img src='inc/themes/outlook/images/icon_outlook.gif'></td>
           <td width='100%' class="window_title">&nbsp;{$umBoxName} - {$umUserEmail}</td>
-          <td class='window_title_X'><a href='javascript:goend()'><img border='0' src='themes/outlook/images/X.png'></a></td>
+          <td class='window_title_X'><a href='javascript:goend()'><img border='0' src='inc/themes/outlook/images/X.png'></a></td>
         </tr>
       </table>
       <table width='100%' height='2' cellpadding='0' cellspacing='0'>
@@ -42,27 +42,27 @@
               <tr>
                 <td class='toolbar_inner'><table width='0' cellpadding='0' cellspacing='0'>
                     <tr>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_handler.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:newmsg()"><acronym title="{$umLabel.compose_mnu}"><img src="themes/outlook/images/icon_new.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_handler.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:newmsg()"><acronym title="{$umLabel.compose_mnu}"><img src="inc/themes/outlook/images/icon_new.gif"><font class='xx-normal'><br>
                         {#compose_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:delemsg()"><acronym title="{$umLabel.delete_selected_mnu}"><img src="themes/outlook/images/icon_delete.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:delemsg()"><acronym title="{$umLabel.delete_selected_mnu}"><img src="inc/themes/outlook/images/icon_delete.gif"><font class='xx-normal'><br>
                         {#delete_selected_mnu#|truncate:13:"...":true}</font></acronym></td>
                       <!-- added for telaen -->
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:markmsg()"><acronym title="{$umLabel.mark_selected_mnu}"><img src="themes/outlook/images/icon_read.gif"	alt="mark"><font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:markmsg()"><acronym title="{$umLabel.mark_selected_mnu}"><img src="inc/themes/outlook/images/icon_read.gif"	alt="mark"><font class='xx-normal'><br>
                         {#mark_selected_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:unmarkmsg()"><acronym title="{$umLabel.unmark_selected_mnu}"><img src="themes/outlook/images/icon_unread.gif" alt="unmark"><font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:unmarkmsg()"><acronym title="{$umLabel.unmark_selected_mnu}"><img src="inc/themes/outlook/images/icon_unread.gif" alt="unmark"><font class='xx-normal'><br>
                         {#unmark_selected_mnu#|truncate:13:"...":true}</font></acronym></td>
                       <!-- end telaen add -->
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:refreshlist()"><acronym title="{$umLabel.refresh_mnu}"><img src="themes/outlook/images/icon_sendreceive.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:refreshlist()"><acronym title="{$umLabel.refresh_mnu}"><img src="inc/themes/outlook/images/icon_sendreceive.gif"><font class='xx-normal'><br>
                         {#refresh_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:addresses()"><acronym title="{$umLabel.address_mnu}"><img src="themes/outlook/images/icon_addressbook.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:addresses()"><acronym title="{$umLabel.address_mnu}"><img src="inc/themes/outlook/images/icon_addressbook.gif"><font class='xx-normal'><br>
                         {#address_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:search()"><acronym title="{$umLabel.search_mnu}"><img src="themes/outlook/images/icon_search.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:search()"><acronym title="{$umLabel.search_mnu}"><img src="inc/themes/outlook/images/icon_search.gif"><font class='xx-normal'><br>
                         {#search_mnu#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:prefs()"><acronym title="{$umLabel.prefs_mnu}"><img src="themes/outlook/images/icon_options.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="javascript:prefs()"><acronym title="{$umLabel.prefs_mnu}"><img src="inc/themes/outlook/images/icon_options.gif"><font class='xx-normal'><br>
                         {#prefs_mnu#|truncate:13:"...":true}</font></acronym></td>
                     </tr>
                   </table></td>
@@ -76,7 +76,7 @@
         <tr>
           <td valign=top colspan=3><table width='100%' cellpadding='0' cellspacing='0'>
               <tr>
-                <td onmouseover="this.className='seccion_title_over'" onmouseout="this.className='seccion_title_out'" onmouseup="this.className='seccion_title_out'" onmousedown="this.className='seccion_title_down'" onclick="javascript:folderlist()" class='seccion_title_out'>&nbsp;<img src="themes/outlook/images/icon_folder_other.gif">&nbsp;<nobr>{$umBoxName}<img src="themes/outlook/images/arrow_down.gif" border='0'></nobr></td>
+                <td onmouseover="this.className='seccion_title_over'" onmouseout="this.className='seccion_title_out'" onmouseup="this.className='seccion_title_out'" onmousedown="this.className='seccion_title_down'" onclick="javascript:folderlist()" class='seccion_title_out'>&nbsp;<img src="inc/themes/outlook/images/icon_folder_other.gif">&nbsp;<nobr>{$umBoxName}<img src="inc/themes/outlook/images/arrow_down.gif" border='0'></nobr></td>
                 <td class='seccion_title' align='right'><font class='xx-normal' color='#FFFFFF'>{$umLabel.move_selected_mnu}
                   <select name="aval_folders">
 
@@ -85,7 +85,7 @@
                     <option value="{$umAvalFolders[i].path|escape:"html"}">{$umAvalFolders[i].display|escape:"html"}
                     {/section}
                   </select>
-                  <a class="menu" href="javascript:movemsg()"><img border=0 src="themes/outlook/images/icon_go.gif"></a>&nbsp; </font></td>
+                  <a class="menu" href="javascript:movemsg()"><img border=0 src="inc/themes/outlook/images/icon_go.gif"></a>&nbsp; </font></td>
               </tr>
             </table></td>
         </tr>
@@ -117,9 +117,9 @@
               <tr>
                 <td width=100% height=100% valign='top' class="messages"><table width=100% cellpadding='0' cellspacing='0'>
                     <tr>
-                      <td width="10px" align="center" class="headers" onmousedown="javascript:sel()"><nobr>&nbsp;<img src="themes/outlook/images/icon_checkbox.gif">&nbsp;</nobr></td>
-                      <td width="10px" align="center" class="headers"><img src="themes/outlook/images/icon_high_priority.gif"></td>
-                      <td width="10px" align="center" class="headers"><img src="themes/outlook/images/icon_attachment_clip.gif"></td>
+                      <td width="10px" align="center" class="headers" onmousedown="javascript:sel()"><nobr>&nbsp;<img src="inc/themes/outlook/images/icon_checkbox.gif">&nbsp;</nobr></td>
+                      <td width="10px" align="center" class="headers"><img src="inc/themes/outlook/images/icon_high_priority.gif"></td>
+                      <td width="10px" align="center" class="headers"><img src="inc/themes/outlook/images/icon_attachment_clip.gif"></td>
                       {if $umFolder eq "sent"}
                       <td colspan=2 onclick="javascript:sortby('toname')" class="headers">{$umLabel.to_hea}{$umToArrow}</td>
                       {else}
@@ -182,7 +182,7 @@
                 <!-- SCROLLBAR -->
                 <td><table border=0 width=17px height=100% cellpadding=0 cellspacing=0>
                     <tr>
-                      <td class="outer" width=17px height=17px>{if $umPreviousLink}<a href="{$umPreviousLink}"><img border='0' src="themes/outlook/images/scrollbar_up.gif"></a>{else}<img src="themes/outlook/images/scrollbar_up_off.gif">{/if}</td>
+                      <td class="outer" width=17px height=17px>{if $umPreviousLink}<a href="{$umPreviousLink}"><img border='0' src="inc/themes/outlook/images/scrollbar_up.gif"></a>{else}<img src="inc/themes/outlook/images/scrollbar_up_off.gif">{/if}</td>
                     </tr>
                     {if $umPreviousLink}
                     <tr>
@@ -191,7 +191,7 @@
                     {/if}
                     {if $umPreviousLink || $umNextLink}
                     <tr>
-                      <td width=17px height=75px class="outer"><img src="themes/outlook/images/scrollbar_handler.gif"></td>
+                      <td width=17px height=75px class="outer"><img src="inc/themes/outlook/images/scrollbar_handler.gif"></td>
                     </tr>
                     {else}
                     <tr>
@@ -204,7 +204,7 @@
                     </tr>
                     {/if}
                     <tr>
-                      <td class="outer" width=17px height=17px >{if $umNextLink}<a href="{$umNextLink}"><img border='0' src="themes/outlook/images/scrollbar_down.gif"></a>{else}<img src="themes/outlook/images/scrollbar_down_off.gif">{/if}
+                      <td class="outer" width=17px height=17px >{if $umNextLink}<a href="{$umNextLink}"><img border='0' src="inc/themes/outlook/images/scrollbar_down.gif"></a>{else}<img src="inc/themes/outlook/images/scrollbar_down_off.gif">{/if}
                     </tr>
                   </table></td>
                 <!-- SCROLLBARS --> 

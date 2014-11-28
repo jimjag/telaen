@@ -2,10 +2,10 @@
 <html>
 <head>
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.compose_mnu}</title>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 {$pageMetas}
-<script src="themes/outlook/webmail.js" type="text/javascript"></script>
+<script src="inc/themes/outlook/webmail.js" type="text/javascript"></script>
 {$umJS}
 </head>
 
@@ -14,9 +14,9 @@
   <tr>
     <td><table width='100%' cellpadding='0' cellspacing='0'>
         <tr>
-          <td class="window_title"><img src='themes/outlook/images/icon_outlook_newmsg.gif'></td>
+          <td class="window_title"><img src='inc/themes/outlook/images/icon_outlook_newmsg.gif'></td>
           <td width='100%' class="window_title">&nbsp;{$umLabel.compose_mnu}</td>
-          <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='themes/outlook/images/X.png'></a></td>
+          <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='inc/themes/outlook/images/X.png'></a></td>
         </tr>
       </table>
       <table width='100%' height='2' cellpadding='0' cellspacing='0'>
@@ -31,18 +31,18 @@
               <tr>
                 <td class='toolbar_inner'><table width='0' cellpadding='0' cellspacing='0'>
                     <tr>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_handler.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="enviar()"><acronym title="{$umLabel.send_text}"><img src="themes/outlook/images/icon_send.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_handler.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="enviar()"><acronym title="{$umLabel.send_text}"><img src="inc/themes/outlook/images/icon_send.gif"><font class='xx-normal'><br>
                         {#send_text#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_splitter.gif'></td>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
                       <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'"
-										onclick="document.getElementById('midlayer').className='showmodal';"><acronym title="{$umLabel.attch_add_new}"><img src="themes/outlook/images/icon_attachment.gif"><font class='xx-normal'><br>
+										onclick="document.getElementById('midlayer').className='showmodal';"><acronym title="{$umLabel.attch_add_new}"><img src="inc/themes/outlook/images/icon_attachment.gif"><font class='xx-normal'><br>
                         {#attch_add_new#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off';" onmousedown="this.className='toolbar_button_down'" onclick="setVisible('priority_window',true)"><acronym title="{$umLabel.priority_text}"><img src="themes/outlook/images/icon_priority.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off';" onmousedown="this.className='toolbar_button_down'" onclick="setVisible('priority_window',true)"><acronym title="{$umLabel.priority_text}"><img src="inc/themes/outlook/images/icon_priority.gif"><font class='xx-normal'><br>
                         {#priority_text#|truncate:13:"...":true}</font></acronym></td>
                       {if !$umAddSignature && $umHaveSignature}
-                      <td class="toolbar_splitter"><img src='themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onClick="document.composeForm.cksig.click();"><acronym title="{$umLabel.add_signature}">{if $umAddSignature eq 1}<img src="themes/outlook/images/icon_sign_off.gif">{else}<img src="themes/outlook/images/icon_sign.gif">{/if}<font class='xx-normal'><br>
+                      <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onClick="document.composeForm.cksig.click();"><acronym title="{$umLabel.add_signature}">{if $umAddSignature eq 1}<img src="inc/themes/outlook/images/icon_sign_off.gif">{else}<img src="inc/themes/outlook/images/icon_sign.gif">{/if}<font class='xx-normal'><br>
                         {#add_signature#|truncate:13:"...":true}</font></acronym></td>
                       {/if} </tr>
                   </table></td>
@@ -61,7 +61,7 @@
 	border-right-width: 0px;
 	border-bottom-color: #FFFFFF;
 	">
-          <form target="uploading" onsubmit="this.submit.disabled=true;window.open('themes/outlook/uploading.tpl','uploading','width=400,height=120,scrollbars=0,menubar=0,status=0')" enctype="multipart/form-data" name="upload" id="upload" action="upload.php?sid={$umSid}" method=POST>
+          <form target="uploading" onsubmit="this.submit.disabled=true;window.open('inc/themes/outlook/uploading.tpl','uploading','width=400,height=120,scrollbars=0,menubar=0,status=0')" enctype="multipart/form-data" name="upload" id="upload" action="upload.php?sid={$umSid}" method=POST>
             <tr>
               <td width="100" style="
 	border-style: solid;

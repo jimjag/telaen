@@ -203,7 +203,7 @@
           </tr>
           {/section}
           <tr>
-            <td colspan="6" class="default"><img src="themes/default/images/arrowblue.gif" alt=""> <a href="#" class="menu" onclick="document.filters_form.submit();return false;">{$umLabel.filter_delete_selected}</a></td>
+            <td colspan="6" class="default"><img src="inc/themes/default/images/arrowblue.gif" alt=""> <a href="#" class="menu" onclick="document.filters_form.submit();return false;">{$umLabel.filter_delete_selected}</a></td>
           </tr>
           <tr>
             <td colspan="2" class="default" align="center">&nbsp; {if $message eq "5"}{$umLabel.filter_msg_deleted}{/if} &nbsp; </td>

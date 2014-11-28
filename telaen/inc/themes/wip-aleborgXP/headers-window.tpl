@@ -7,7 +7,7 @@
 <head>
 	<title>UebiMiau - {$umPageTitle|escape:"html"}</title>
 </head>
-<link rel="stylesheet" href="themes/aleborgXP/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 <body bgcolor="#FFFFFF" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
 <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#000000">
   <tr>

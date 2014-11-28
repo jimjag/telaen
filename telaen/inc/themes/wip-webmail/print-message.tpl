@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 <title>UebiMiau Webmail - {$umPageTitle|escape:"html"}</title>
-<link rel="stylesheet" href="themes/webmail/css.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/webmail/css.css" type="text/css">
 </head>
 {literal}
 <script language="JavaScript" type="text/javascript">
@@ -23,8 +23,8 @@ function printIt() {
 <br><br>
 <table width="750" border="0" cellspacing="0" cellpadding="0" class="frame" align="center">
 
-	<tr><td class=top><img src="themes/webmail/images/logo.gif" border="0""></td></tr>
-	<tr><td><img src="themes/webmail/images/bandeau-h.gif" border="0"></td></tr>
+	<tr><td class=top><img src="inc/themes/webmail/images/logo.gif" border="0""></td></tr>
+	<tr><td><img src="inc/themes/webmail/images/bandeau-h.gif" border="0"></td></tr>
 </table>
 <br><br>
 <table width="750" border="0" cellspacing="0" cellpadding="0" class="frame" align="center">
@@ -88,7 +88,7 @@ function printIt() {
 	</tr>
 	<tr>
 		<td class=bot>
-			<img src="themes/webmail/images/bandeau-b.gif" border="0" width="750" height="25">
+			<img src="inc/themes/webmail/images/bandeau-b.gif" border="0" width="750" height="25">
 		</td>
 	<tr>
 </table>

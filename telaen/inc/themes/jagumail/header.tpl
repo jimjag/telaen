@@ -2,16 +2,16 @@
 <html>
 <head>
 <title>{$webmailTitle} - {$pageTitle}</title>
-<link rel="stylesheet" href="themes/jagumail/webmail.css" type="text/css" >
+<link rel="stylesheet" href="inc/themes/jagumail/webmail.css" type="text/css" >
 {$pageMetas}
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}" >
-<script type="text/javascript" src="themes/jagumail/webmail.js"></script>
+<script type="text/javascript" src="inc/themes/jagumail/webmail.js"></script>
 {$umJS}
 </head>
 
 <body onload="{$onLoad}">
 <div id="content">
 {if $showLogo neq "false"}
-<div id="logo"> <img src="themes/jagumail/images/telaen_logo.jpg" width="310" height="73" alt="{$webmailTitle}" title="{$webmailTitle}"> </div>
+<div id="logo"> <img src="inc/themes/jagumail/images/telaen_logo.jpg" width="310" height="73" alt="{$webmailTitle}" title="{$webmailTitle}"> </div>
 {/if} 
 <!-- Page header end --> 

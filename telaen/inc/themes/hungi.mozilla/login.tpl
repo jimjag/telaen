@@ -4,7 +4,7 @@
 <table width="450" border="0" cellspacing="0" cellpadding="2" align="center">
   <tr>
     <td><center>
-        <img src="themes/hungi.mozilla/images/login-logo.gif" alt="" />
+        <img src="inc/themes/hungi.mozilla/images/login-logo.gif" alt="" />
       </center>
       <form name="form1" action="process.php" method="post">
         <table class="login_bg" width="100%" cellspacing="0" cellpadding="1" align="center">

@@ -6,7 +6,7 @@
 <head>
 	<title>UebiMiau Webmail - {$umLabel.ctc_title} - Skin by Beauvoir.net</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-	<link rel="stylesheet" href="themes/beauvoir2/webmail.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 </head>
 
 <!--

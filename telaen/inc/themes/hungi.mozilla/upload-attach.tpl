@@ -5,9 +5,9 @@
   <form name="form1" enctype="multipart/form-data" action="upload.php" method="post">
     <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
       <tr>
-        <td><img src="themes/hungi.mozilla/images/header-bg-left.gif" border="0"></td>
+        <td><img src="inc/themes/hungi.mozilla/images/header-bg-left.gif" border="0"></td>
         <td height="22" width="100%" class="headers"><b>{$umLabel.up_information_text}</b></td>
-        <td><img src="themes/hungi.mozilla/images/header-bg-right.gif" border="0"></td>
+        <td><img src="inc/themes/hungi.mozilla/images/header-bg-right.gif" border="0"></td>
       </tr>
       <tr>
         <td colspan="3" class="cent"><br />

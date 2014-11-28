@@ -6,7 +6,7 @@
 <head>
 	<title>UebiMiau Webmail - {$umLabel.ctc_title}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-	<link rel="stylesheet" href="themes/webmail/css.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/webmail/css.css" type="text/css">
 </head>
 <body>
 <form name="form1" action="catch.php" method="POST">

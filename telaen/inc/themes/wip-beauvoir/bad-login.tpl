@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 <title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umLabel.bdl_title}</title>
-<link rel="stylesheet" href="themes/beauvoir/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 </head>
 {$umJS}
 <!--
@@ -20,7 +20,7 @@ copyright, or worse, to put your name at the place.
 <tr><td valign="middle" align="center">
 <table width="750" border="0" cellspacing="1" cellpadding="0" class="normal" align="center" bgcolor="#999999">
 	<tr>
-		<td align="center"><img src="themes/beauvoir/logo.gif" border="0" alt="Beauvoir Skin"></td>
+		<td align="center"><img src="inc/themes/beauvoir/logo.gif" border="0" alt="Beauvoir Skin"></td>
 	</tr>
 </table>
 <br><br>

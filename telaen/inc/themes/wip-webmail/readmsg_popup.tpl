@@ -4,8 +4,8 @@
 <head>
 	<title>UebiMiau Webmail - {$umPageTitle|escape:"html"}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-	<link rel="stylesheet" href="themes/webmail/css.css" type="text/css">
-	<script language="JavaScript" src="themes/webmail/js.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="inc/themes/webmail/css.css" type="text/css">
+	<script language="JavaScript" src="inc/themes/webmail/js.js" type="text/javascript"></script>
 </head>
 {$umJS}
 <body>
@@ -13,10 +13,10 @@
 <tr><td valign="middle" align="center">
 <table width="750" border="0" cellspacing="0" cellpadding="0" class="frame" align="center">
 
-	<tr><td class=top><img src="themes/webmail/images/logo.gif" border="0""></td></tr>
-	<tr><td><img src="themes/webmail/images/bandeau-h.gif" border="0"></td></tr>
+	<tr><td class=top><img src="inc/themes/webmail/images/logo.gif" border="0""></td></tr>
+	<tr><td><img src="inc/themes/webmail/images/bandeau-h.gif" border="0"></td></tr>
 	<tr>
-		<td background="themes/webmail/images/ligne-fond.gif">
+		<td background="inc/themes/webmail/images/ligne-fond.gif">
 			<table width="99.7%" border="0" cellspacing="0" cellpadding="0" class="normal" align="center">
 			<tr bgcolor="#BFC6D3">
 				<td height="5" colspan="2"></td>
@@ -80,7 +80,7 @@
 	</tr>
 	<tr>
 		<td class=bot>
-			<img src="themes/webmail/images/bandeau-b.gif" border="0" width="750" height="25">
+			<img src="inc/themes/webmail/images/bandeau-b.gif" border="0" width="750" height="25">
 		</td>
 	<tr>
 </table>

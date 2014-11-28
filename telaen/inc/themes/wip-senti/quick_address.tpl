@@ -2,7 +2,7 @@
 <title>sentiMail - {$umLabel.qad_title}</title>
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 <body bgcolor="#DDDCDC" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
-<link rel="stylesheet" href="themes/default/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/default/webmail.css" type="text/css">
 {literal}
 <script language=javascript>
 

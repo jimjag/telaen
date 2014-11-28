@@ -49,7 +49,7 @@
   {if $umQuotaEnabled eq 1}
   <tr>
     <td class="usage" colspan="5">&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b> {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b> {$umLabel.quota_usage_avail}<br />
-      <!-- <img src="themes/hungi.mozilla/images/usage-start.gif" alt="" /> -->{$umUsageGraph}<!-- <img src="themes/hungi.mozilla/images/usage-end.gif" alt="" /> --></td>
+      <!-- <img src="inc/themes/hungi.mozilla/images/usage-start.gif" alt="" /> -->{$umUsageGraph}<!-- <img src="inc/themes/hungi.mozilla/images/usage-end.gif" alt="" /> --></td>
   </tr>
   {/if}
 </table>

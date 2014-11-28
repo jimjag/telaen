@@ -4,7 +4,7 @@
 <head>
 	<title>UebiMiau Webmail - {$umLabel.err_title} - Skin by Beauvoir.net</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-	<link rel="stylesheet" href="themes/beauvoir2/webmail.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 </head>
 
 <!--
@@ -19,11 +19,11 @@ copyright, or worse, to put your name at the place.
 <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 <tr><td valign="middle" align="center">
 <table width="750" border="0" cellspacing="0" cellpadding="0" class="normal" align="center">
-	<tr><td><img src="themes/beauvoir2/images/bandeau-h.gif" border="0"></td></tr>
-	<tr><td><img src="themes/beauvoir2/images/logo.gif" border="0" alt="Powered by Beauvoir"></td></tr>
-	<tr><td><img src="themes/beauvoir2/images/bandeau-h.gif" border="0"></td></tr>
+	<tr><td><img src="inc/themes/beauvoir2/images/bandeau-h.gif" border="0"></td></tr>
+	<tr><td><img src="inc/themes/beauvoir2/images/logo.gif" border="0" alt="Powered by Beauvoir"></td></tr>
+	<tr><td><img src="inc/themes/beauvoir2/images/bandeau-h.gif" border="0"></td></tr>
 	<tr>
-		<td background="themes/beauvoir2/images/ligne-fond.gif">
+		<td background="inc/themes/beauvoir2/images/ligne-fond.gif">
 			<table width="450" border="0" cellspacing="1" cellpadding="1" align="center">
 				<tr><td align="center"><br><font color="red">.: <b>{$umLabel.err_title}</b> :.</font><br></td></tr>
 				<tr><td>&nbsp;</td></tr>
@@ -43,7 +43,7 @@ copyright, or worse, to put your name at the place.
 			<area shape="rect" coords="318,5,371,18" href="" target="_blank">
 			<area shape="rect" coords="442,5,552,16" href="" target="_blank">
 			</map>
-			<img src="themes/beauvoir2/images/bandeau-b.gif" border="0" width="750" height="25" alt="Webmail powered by Uebimiau - Skinned by Forum.Beauvoir" usemap="#Uebimiau">
+			<img src="inc/themes/beauvoir2/images/bandeau-b.gif" border="0" width="750" height="25" alt="Webmail powered by Uebimiau - Skinned by Forum.Beauvoir" usemap="#Uebimiau">
 		</td>
 	<tr>
 </table>

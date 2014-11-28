@@ -54,9 +54,9 @@
                 {/section}
                 {else}
                 <tr>
-                  <td><img src="themes/hungi.mozilla/images/header-bg-left.gif" alt="" /></td>
+                  <td><img src="inc/themes/hungi.mozilla/images/header-bg-left.gif" alt="" /></td>
                   <td height="22" width="100%" class="headers">&nbsp;{$umLabel.attch_no_hea}</td>
-                  <td><img src="themes/hungi.mozilla/images/header-bg-right.gif" alt="" /></td>
+                  <td><img src="inc/themes/hungi.mozilla/images/header-bg-right.gif" alt="" /></td>
                 </tr>
                 {/if}
                 <tr>

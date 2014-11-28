@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>UebiMiau Webmail - {$umLabel.qad_title}</title>
-<link rel="stylesheet" href="themes/webmail/css.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/webmail/css.css" type="text/css">
 </head>
 <body>
 {literal}

@@ -4,7 +4,7 @@
 <html>
 <head>
 	<title>UebiMiau Webmail - {$umLabel.blk_title}</title>
-	<link rel="stylesheet" href="themes/webmail/css.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/webmail/css.css" type="text/css">
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
 </head>
 <body>

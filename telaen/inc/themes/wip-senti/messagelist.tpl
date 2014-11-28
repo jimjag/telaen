@@ -8,7 +8,7 @@
 	<title>sentiMail - {$umLabel.messages_to} {$umUserEmail}</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<link rel="stylesheet" href="themes/senti/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
 {$umJS}
 </head>
 
@@ -16,41 +16,41 @@
 <table width="760" border="0" cellpadding="0" cellspacing="0" align="center">
 	<tr valign="bottom">
 		<td height="61">
-			<img src="themes/senti/images/mail_01.gif" width="18" height="61" alt=""></td>
+			<img src="inc/themes/senti/images/mail_01.gif" width="18" height="61" alt=""></td>
 		<td>
-			<a class="menu" href="javascript:goinbox()"><img src="themes/senti/images/inbox_selected.gif" width="60" height="61" border="0" alt=""></a></td>
+			<a class="menu" href="javascript:goinbox()"><img src="inc/themes/senti/images/inbox_selected.gif" width="60" height="61" border="0" alt=""></a></td>
 		<td>
-			<img src="themes/senti/images/mail_03.gif" width="33" height="61" alt=""></td>
+			<img src="inc/themes/senti/images/mail_03.gif" width="33" height="61" alt=""></td>
 		<td>
-			<a class="menu" href="javascript:newmsg()"><img src="themes/senti/images/write.gif" width="85" height="61" border="0" alt=""></a></td>
+			<a class="menu" href="javascript:newmsg()"><img src="inc/themes/senti/images/write.gif" width="85" height="61" border="0" alt=""></a></td>
 		<td>
-			<img src="themes/senti/images/mail_05.gif" width="32" height="61" alt=""></td>
+			<img src="inc/themes/senti/images/mail_05.gif" width="32" height="61" alt=""></td>
 		<td>
-			<a class="menu" href="javascript:folderlist()"><img src="themes/senti/images/folders.gif" width="72" height="61" border="0" alt=""></a></td>
+			<a class="menu" href="javascript:folderlist()"><img src="inc/themes/senti/images/folders.gif" width="72" height="61" border="0" alt=""></a></td>
 		<td>
-			<img src="themes/senti/images/mail_07.gif" width="36" height="61" alt=""></td>
+			<img src="inc/themes/senti/images/mail_07.gif" width="36" height="61" alt=""></td>
 		<td>
-			<a class="menu" href="javascript:search()"><img src="themes/senti/images/search.gif" width="74" height="61" alt="" border="0"></a></td>
+			<a class="menu" href="javascript:search()"><img src="inc/themes/senti/images/search.gif" width="74" height="61" alt="" border="0"></a></td>
 		<td>
-			<img src="themes/senti/images/mail_09.gif" width="27" height="61" alt=""></td>
+			<img src="inc/themes/senti/images/mail_09.gif" width="27" height="61" alt=""></td>
 		<td>
-			<a class="menu" href="javascript:addresses()"><img src="themes/senti/images/addresses.gif" width="89" height="61" border="0" alt=""></a></td>
+			<a class="menu" href="javascript:addresses()"><img src="inc/themes/senti/images/addresses.gif" width="89" height="61" border="0" alt=""></a></td>
 		<td>
-			<img src="themes/senti/images/mail_11.gif" width="28" height="61" alt=""></td>
+			<img src="inc/themes/senti/images/mail_11.gif" width="28" height="61" alt=""></td>
 		<td>
-			<a class="menu" href="javascript:prefs()"><img src="themes/senti/images/preferences.gif" width="88" height="61" border="0" alt=""></a></td>
+			<a class="menu" href="javascript:prefs()"><img src="inc/themes/senti/images/preferences.gif" width="88" height="61" border="0" alt=""></a></td>
 		<td>
-			<img src="themes/senti/images/mail_13.gif" width="31" height="61" alt=""></td>
+			<img src="inc/themes/senti/images/mail_13.gif" width="31" height="61" alt=""></td>
 		<td>
-			<a class="menu" href="javascript:goend()"><img src="themes/senti/images/logout.gif" width="70" height="61" border="0" alt=""></a></td>
+			<a class="menu" href="javascript:goend()"><img src="inc/themes/senti/images/logout.gif" width="70" height="61" border="0" alt=""></a></td>
 		<td>
-			<img src="themes/senti/images/mail_15.gif" width="17" height="61" alt=""></td>
+			<img src="inc/themes/senti/images/mail_15.gif" width="17" height="61" alt=""></td>
 	</tr>
-	<tr><td width="18"><img src="themes/senti/images/leftside.gif" width="18" height="100%"></td>
+	<tr><td width="18"><img src="inc/themes/senti/images/leftside.gif" width="18" height="100%"></td>
 <td colspan="13" bgcolor="#dddcdc"><br />
 <table cellspacing=0 cellpadding=0 border=0 width="100%" align="center">
 								<tr>
-									<td colspan="3" class="default"><a class="navigation" href="javascript:refreshlist()"><img src="themes/senti/images/mail_get.gif"  alt="" border="0">{$umLabel.refresh_mnu}</a><BR><BR></td>
+									<td colspan="3" class="default"><a class="navigation" href="javascript:refreshlist()"><img src="inc/themes/senti/images/mail_get.gif"  alt="" border="0">{$umLabel.refresh_mnu}</a><BR><BR></td>
 									<form name="form1" action="process.php" method="post">
 									{$umForms}
 									<td colspan="4" class="default" align="right"> &nbsp;&nbsp;
@@ -70,7 +70,7 @@
 
 								<tr>
 								    <td width="5"  class="headers"><input type=checkbox name=chkall onclick="sel()"></td>
-								    <td width="34"  class="headers"><img src="themes/senti/images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="themes/senti/images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
+								    <td width="34"  class="headers"><img src="inc/themes/senti/images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="inc/themes/senti/images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
 								    <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('subject')">{$umLabel.subject_hea}{$umSubjectArrow}</a></b> :.</td>
 
 									{if $umFolder eq "sent"}
@@ -128,9 +128,9 @@
 							</tr>
 							{/if}
 						</table>
-</td><td width="17"><img src="themes/senti/images/rightside.gif" width="17" height="100%"></td>	<tr>
+</td><td width="17"><img src="inc/themes/senti/images/rightside.gif" width="17" height="100%"></td>	<tr>
 		<td colspan="15" valign="top">
-			<img src="themes/senti/images/footer.gif" width="760" height="25" alt=""></td>
+			<img src="inc/themes/senti/images/footer.gif" width="760" height="25" alt=""></td>
 	</tr>
 </table>
 </body>

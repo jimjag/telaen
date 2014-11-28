@@ -7,7 +7,7 @@
 {$pageMetas}
         {$umJS}
 </head>
-<link rel="stylesheet" href="themes/outlook/webmail.css" type="text/css">
+<link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <body>
 <table width=100% height=100%>
   <tr>

@@ -5,7 +5,7 @@
 <head>
 	<title>UebiMiau Webmail - {$umPageTitle|escape:"html"}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-	<link rel="stylesheet" href="themes/beauvoir/css.css" type="text/css">
+	<link rel="stylesheet" href="inc/themes/beauvoir/css.css" type="text/css">
 </head>
 <body>
 <br>
