@@ -65,8 +65,8 @@ if ($folder == 'inbox') {
                     case FL_TYPE_MOVE:
 
                         $TLN->mail_move_msg($message, $filter['moveto']);
-                        unset($mbox['headers'][base64_encode(strtolower($folder))]);
-                        unset($mbox['headers'][base64_encode(strtolower($filter['moveto']))]);
+                        unset($mbox['headers'][$folder]);
+                        unset($mbox['headers'][$filter['moveto']]);
 
                         $require_update = true;
 
@@ -74,8 +74,8 @@ if ($folder == 'inbox') {
                     case FL_TYPE_DELETE:
 
                         $TLN->mail_delete_msg($message, $TLN->prefs['save-to-trash'], $TLN->prefs['st-only-read']);
-                        unset($mbox['headers'][base64_encode(strtolower($folder))]);
-                        unset($mbox['headers'][base64_encode('trash')]);
+                        unset($mbox['headers'][$folder]);
+                        unset($mbox['headers']['trash']);
 
                         $require_update = true;
 
@@ -84,7 +84,7 @@ if ($folder == 'inbox') {
 
                         if (!preg_match('|SEEN|i', $message['flags'])) {
                             $TLN->mail_set_flag($message, 'SEEN', '+');
-                            $mbox['headers'][base64_encode(strtolower($folder))][$index] = $message;
+                            $mbox['headers'][$folder][$index] = $message;
                         }
 
                         break;

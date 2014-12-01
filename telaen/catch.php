@@ -43,7 +43,7 @@ function valid_email($thismail)
     return 1;
 }
 
-$mail_info = $mbox['headers'][base64_encode(strtolower($folder))][$ix];
+$mail_info = $mbox['headers'][$folder][$ix];
 
 $emails = array();
 $from = $mail_info['from'];
@@ -77,7 +77,7 @@ if (isset($ckaval)) {
         $addressbook[$id]['email'] = $aval[$idchecked]['mail'];
     }
 
-    $TLN->save_file($filename, base64_encode(serialize($addressbook)));
+    $TLN->save_file($filename, $addressbook);
 
     echo("
 	<script language=javascript>

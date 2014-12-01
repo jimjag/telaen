@@ -32,8 +32,8 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
             } elseif (strtolower($entry) == 'spam') {
                 ;
             } else {
-                $merged_returnarray = $TLN->mail_list_msgs($entry, $mbox['headers'][base64_encode(strtolower($entry))], $start_pos, $reg_pp);
-                $mbox['headers'][base64_encode(strtolower($entry))] = $merged_returnarray[0];
+                $merged_returnarray = $TLN->mail_list_msgs($entry, $mbox['headers'][$entry], $start_pos, $reg_pp);
+                $mbox['headers'][$entry] = $merged_returnarray[0];
             }
             unset($merged_array);
             unset($merged_returnarray);

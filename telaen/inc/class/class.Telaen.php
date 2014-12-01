@@ -80,7 +80,7 @@ class Telaen extends Telaen_core
      */
     public function is_system_folder($name)
     {
-        return (in_array(strtolower($name), $this->_system_folders));
+        return (in_array($name, $this->_system_folders));
     }
 
     /**
@@ -318,11 +318,10 @@ class Telaen extends Telaen_core
                 $current_folder = $boxes[$i]['name'];
 
                 if ($this->is_system_folder($current_folder)) {
-                    $current_folder = strtolower($current_folder);
                 }
 
                 while (list($index, $value) = each($tmp)) {
-                    if (strtolower($current_folder) == strtolower($value)) {
+                    if ($current_folder == $value) {
                         unset($tmp[$index]);
                     }
                 }
@@ -351,7 +350,6 @@ class Telaen extends Telaen_core
             $value = $this->fix_prefix($value, 1);
             if (!file_exists($this->userfolder.$value)) {
                 if ($this->is_system_folder($value)) {
-                    $value = strtolower($value);
                 }
                 if (!@mkdir($this->userfolder.$value, $this->dirperm) && $this->config['log_errors']) {
                     $this->trigger_error("mkdir error: {$this->userfolder}{$value}", __FUNCTION__);
@@ -365,7 +363,7 @@ class Telaen extends Telaen_core
         $msgheader = $msg['header'];
 
         if ($check) {
-            if (strtolower($this->_current_folder) != strtolower($msg['folder'])) {
+            if ($this->_current_folder != $msg['folder']) {
                 $boxinfo = $this->mail_select_box($msg['folder']);
             }
 
@@ -381,11 +379,11 @@ class Telaen extends Telaen_core
                 $buffer = chop($this->_mail_get_line());
             }
 
-            if (base64_encode($current_id) != base64_encode($msg['message-id'])) {
+            if ($current_id != $msg['message-id']) {
                 if ($this->config['log_errors']) {
                     $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
-                        base64_encode($current_id),
-                        base64_encode($msg['message-id'])), __FUNCTION__);
+                        $current_id,
+                        $msg['message-id']), __FUNCTION__);
                 }
 
                 return false;
@@ -428,7 +426,7 @@ class Telaen extends Telaen_core
     {
         global $mail_use_top;
 
-        if ($check && (strtolower($msg['folder']) == 'inbox' || strtolower($msg['folder']) == 'spam')) {
+        if ($check && ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam')) {
             $muidl = $this->_mail_get_uidl($msg['msg']);
             if ($msg['uidl'] && ($msg['uidl'] != $muidl)) {
                 $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
@@ -441,7 +439,7 @@ class Telaen extends Telaen_core
 
         if (file_exists($msg['localname'])) {
             $msgcontent = $this->read_file($msg['localname']);
-        } elseif (strtolower($msg['folder']) == 'inbox' || strtolower($msg['folder']) == 'spam') {
+        } elseif ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
             $command = ($mail_use_top) ? 'TOP '.$msg['msg'].' '.$msg['size'] : 'RETR '.$msg['msg'];
             $this->_mail_send_command($command);
 
@@ -553,7 +551,7 @@ class Telaen extends Telaen_core
         $read = (preg_match('|\\SEEN|', $msg['flags'])) ? 1 : 0;
 
         /* check the message id to make sure that the messages still in the server */
-        if (strtolower($this->_current_folder) != strtolower($msg['folder'])) {
+        if ($this->_current_folder != $msg['folder']) {
             $boxinfo = $this->mail_select_box($msg['folder']);
         }
 
@@ -576,10 +574,10 @@ class Telaen extends Telaen_core
         }
 
         /* compare the old and the new message id, if different, stop*/
-        if (base64_encode($current_id) != base64_encode($msg['message-id'])) {
+        if ($current_id != $msg['message-id']) {
             $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
-                base64_encode($current_id),
-                base64_encode($msg['message-id'])), __FUNCTION__);
+                $current_id,
+                $msg['message-id']), __FUNCTION__);
 
             return false;
         }
@@ -680,9 +678,9 @@ class Telaen extends Telaen_core
 
     protected function _mail_move_msg_imap($msg, $tofolder)
     {
-        if (strtolower($tofolder) != strtolower($msg['folder'])) {
+        if ($tofolder != $msg['folder']) {
             /* check the message id to make sure that the messages still in the server */
-            if (strtolower($this->_current_folder) != strtolower($msg['folder'])) {
+            if ($this->_current_folder != $msg['folder']) {
                 $boxinfo = $this->mail_select_box($msg['folder']);
             }
 
@@ -705,10 +703,10 @@ class Telaen extends Telaen_core
             }
 
             /* compare the old and the new message id, if different, stop*/
-            if (base64_encode($current_id) != base64_encode($msg['message-id'])) {
+            if ($current_id != $msg['message-id']) {
                 $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
-                    base64_encode($current_id),
-                    base64_encode($msg['message-id'])), __FUNCTION__);
+                    $current_id,
+                    $msg['message-id']), __FUNCTION__);
 
                 return false;
             }
@@ -738,7 +736,7 @@ class Telaen extends Telaen_core
 
     protected function _mail_move_msg_pop($msg, $tofolder)
     {
-        if ((strtoupper($tofolder) != 'INBOX' && strtoupper($tofolder) != 'SPAM') && strtolower($tofolder) != strtolower($msg['folder'])) {
+        if ((strtoupper($tofolder) != 'INBOX' && strtoupper($tofolder) != 'SPAM') && $tofolder != $msg['folder']) {
             /* now we are working with POP3 */
             /* check the message id to make sure that the messages still in the server */
             if (strtoupper($msg['folder']) == 'INBOX' || strtoupper($msg['folder']) == 'SPAM') {
@@ -806,10 +804,6 @@ class Telaen extends Telaen_core
 
     protected function _mail_list_msgs_imap($boxname = 'INBOX', $localmessages = array())
     {
-        if ($this->is_system_folder($boxname)) {
-            $boxname = strtolower($boxname);
-        }
-
         $messages = array();
 
         /* select the mail box and make sure that it exists */
@@ -861,10 +855,6 @@ class Telaen extends Telaen_core
     protected function _mail_list_msgs_pop($boxname = 'INBOX', $localmessages = array())
     {
         // $this->havespam = "";
-
-        if ($this->is_system_folder($boxname)) {
-            $boxname = strtolower($boxname);
-        }
 
         $messages = array();
 
@@ -1011,10 +1001,6 @@ class Telaen extends Telaen_core
         $fetched_part = 0;
         $parallelized = 0;
         // $this->havespam = "";
-
-        if ($this->is_system_folder($boxname)) {
-            $boxname = strtolower($boxname);
-        }
 
         /* choose the protocol */
         if ($this->mail_protocol == IMAP) {
@@ -1262,10 +1248,6 @@ class Telaen extends Telaen_core
         /* if POP3, only list the available folders */
         $d = dir($this->userfolder);
         while ($entry = $d->read()) {
-            if ($this->is_system_folder($entry)) {
-                $entry = strtolower($entry);
-            }
-
             if (is_dir($this->userfolder.$entry) &&
                 $entry != '..' &&
                 substr($entry, 0, 1) != '_' &&
@@ -1477,7 +1459,7 @@ class Telaen extends Telaen_core
 
     private function _mail_set_flag_imap(&$msg, $flagname, $flagtype = '+')
     {
-        if (strtolower($this->_current_folder) != strtolower($msg['folder'])) {
+        if ($this->_current_folder != $msg['folder']) {
             $this->mail_select_box($msg['folder']);
         }
 
@@ -1519,7 +1501,7 @@ class Telaen extends Telaen_core
         }
 
         if ($this->mail_protocol == IMAP && in_array($flagname, $this->flags)) {
-            if (strtolower($this->_current_folder) != strtolower($msg['folder'])) {
+            if ($this->_current_folder != $msg['folder']) {
                 $this->mail_select_box($msg['folder']);
             }
 
@@ -1863,10 +1845,7 @@ class Telaen extends Telaen_core
                         $entry = $this->fix_prefix($boxes[$n]['name'], 1);
                         $file_list = array();
 
-                        if (is_array($curfolder = $mbox['headers'][base64_encode(strtolower($entry))])) {
-                            if ($this->is_system_folder($entry)) {
-                                $entry = strtolower($entry);
-                            }
+                        if (is_array($curfolder = $mbox['headers'][$entry])) {
                             for ($j = 0;$j<count($curfolder);$j++) {
                                 $file_list[] = $curfolder[$j]['localname'];
                             }
@@ -1897,11 +1876,11 @@ class Telaen extends Telaen_core
                         }
                     }
                     $trash = 'trash';
-                    if (!is_array($mbox['headers'][base64_encode($trash)])) {
+                    if (!is_array($mbox['headers'][$trash])) {
                         $retbox = $this->mail_list_msgs($trash);
-                        $mbox['headers'][base64_encode($trash)] = $retbox[0];
+                        $mbox['headers'][$trash] = $retbox[0];
                     }
-                    $trash = $mbox['headers'][base64_encode($trash)];
+                    $trash = $mbox['headers'][$trash];
 
                     if (count($trash) > 0) {
                         for ($j = 0;$j<count($trash);$j++) {
@@ -1922,11 +1901,11 @@ class Telaen extends Telaen_core
                         $this->redirect_and_exit('index.php?err=0');
                     }
                     $trash = 'spam';
-                    if (!is_array($mbox['headers'][base64_encode($trash)])) {
+                    if (!is_array($mbox['headers'][$trash])) {
                         $retbox = $this->mail_list_msgs($trash);
-                        $mbox['headers'][base64_encode($trash)] = $retbox[0];
+                        $mbox['headers'][$trash] = $retbox[0];
                     }
-                    $trash = $mbox['headers'][base64_encode($trash)];
+                    $trash = $mbox['headers'][$trash];
 
                     if (count($trash) > 0) {
                         for ($j = 0;$j<count($trash);$j++) {

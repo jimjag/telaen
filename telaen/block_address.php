@@ -34,7 +34,7 @@ function is_in_filter($email)
     return false;
 }
 
-$mail_info = $mbox['headers'][base64_encode(strtolower($folder))][$ix];
+$mail_info = $mbox['headers'][$folder][$ix];
 
 $emails = array();
 $from = $mail_info['from'];

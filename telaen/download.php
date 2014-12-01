@@ -27,7 +27,7 @@ $folder = $_GET['folder'];
 $ix = $_GET['ix'];
 
 // ensure we have email infos
-$mail_info = $mbox['headers'][base64_encode(strtolower($folder))][$ix];
+$mail_info = $mbox['headers'][$folder][$ix];
 if (!is_array($mail_info)) {
     die();
 }

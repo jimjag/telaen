@@ -112,12 +112,12 @@ for ($n = 0;$n<count($boxes);$n++) {
             /*
              * Sort the arrays and fit them together again.
              */
-            $merged_array = array_merge($mbox['headers'][base64_encode('inbox')], $mbox['headers'][base64_encode('spam')]);
+            $merged_array = array_merge($mbox['headers']['inbox'], $mbox['headers']['spam']);
             Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
 
             $merged_returnarray = $TLN->mail_list_msgs('INBOX', $merged_array);
             $thisbox = $merged_returnarray[0];
-            $mbox['headers'][base64_encode('spam')] = $merged_returnarray[1];
+            $mbox['headers']['spam'] = $merged_returnarray[1];
         } elseif ($entry == 'spam') {
             ;
         } else {
