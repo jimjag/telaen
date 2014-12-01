@@ -1421,7 +1421,7 @@ ENDOFREDIRECT;
     /**
      * Load user prefs
      */
-    public function load_prefs($user, $pref_file = NULL)
+    public function load_prefs($user=NULL, $pref_file = NULL)
     {
         extract($this->config['default_preferences']);
 

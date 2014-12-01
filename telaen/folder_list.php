@@ -1,7 +1,7 @@
 <?php
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-$folders = $mbox['folders'];
+$folders = $mbox['folders'] || array();
 $scounter = 0;
 $pcounter = 0;
 $system = array();

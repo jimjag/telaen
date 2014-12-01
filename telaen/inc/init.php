@@ -205,7 +205,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     $quota_limit = $auth['quota_limit'];
 } else {
     // session expired
-        redirect_and_exit('index.php?err=4');
+        $TLN->redirect_and_exit('index.php?err=4');
 }
 
 $auth['start'] = time();
@@ -281,11 +281,11 @@ if (!isset($sortorder) || !preg_match('/ASC|DESC/', $sortorder)) {
 }
 
 if (isset($need_save)) {
-    save_prefs($TLN->prefs);
+    $TLN->save_prefs($TLN->prefs);
 }
 
 if (!isset($folder) || $folder == "" || strpos($folder, '..') !== false) {
     $folder = 'inbox';
 } elseif (!file_exists($TLN->userfolder.$TLN->fix_prefix($folder, 1))) {
-    redirect_and_exit('logout.php');
+    $TLN->redirect_and_exit('logout.php');
 }

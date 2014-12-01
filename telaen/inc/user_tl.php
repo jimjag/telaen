@@ -23,12 +23,12 @@ if (isset($auth) && is_array($auth) && $auth['thm_lang_inited']) {
 }
 
 if ($TLN->config['allow_user_change_theme'] && isset($tem) && $tem != "") {
-    if (array_key_exists($tem, $themes) && is_dir("./inc/themes/$tem")) {
+    if (array_key_exists($tem, $TLN->config['themes']) && is_dir("./inc/themes/$tem")) {
         $selected_theme = $tid = $tem;
     }
 }
 if ($TLN->config['allow_user_change_language'] && isset($lng) && $lng != "") {
-    if (array_key_exists($lng, $languages) && is_file("./inc/langs/{$lng}.php")) {
+    if (array_key_exists($lng, $TLN->config['languages']) && is_file("./inc/langs/{$lng}.php")) {
         $selected_language = $lid = $lng;
     }
 }
