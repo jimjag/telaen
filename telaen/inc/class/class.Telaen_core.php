@@ -1348,7 +1348,7 @@ class Telaen_core
         if ($this->config['redirects_are_relative']) {
             $url = $location;
         } else {
-            $url = create_abs_url($location);
+            $url = self::create_abs_url($location);
         }
         if ($this->config['enable_debug']) {
             echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$url\">Click here</a> to go to <a href=\"$url\">$url</a></h3><br><br><br><br>");
@@ -1421,12 +1421,11 @@ ENDOFREDIRECT;
     /**
      * Load user prefs
      */
-    public function load_prefs($user=NULL, $pref_file = NULL)
+    public function load_prefs($user='unknown@example.com', $file = 'prefs.upf')
     {
         extract($this->config['default_preferences']);
 
-        if (!$pref_file) $pref_file = $this->userfolder.'_infos/prefs.upf';
-        $pref_file = self::fs_safe_file($pref_file);
+        $pref_file = $this->userfolder.'_infos/'.self::fs_safe_file($file);
 
         if (!file_exists($pref_file)) {
             $this->prefs['real-name'] = UCFirst(substr($user, 0, strpos($user, '@')));
@@ -1459,10 +1458,9 @@ ENDOFREDIRECT;
     /**
      * Save prefs
      */
-    public function save_prefs($prefarray, $pref_file = NULL)
+    public function save_prefs($prefarray, $file = 'prefs.upf')
     {
-        if (!$pref_file) $pref_file = $this->userfolder.'_infos/prefs.upf';
-        $pref_file = self::fs_safe_file($pref_file);
+        $pref_file = $this->userfolder.'_infos/'.self::fs_safe_file($file);
 
         $f = fopen($pref_file, 'w');
         if (!$f) {
