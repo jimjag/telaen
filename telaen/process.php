@@ -12,19 +12,6 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 @ob_start();
 require './inc/init.php';
 
-function mail_connect()
-{
-    global $TLN;
-
-    // server check
-    if (!$TLN->mail_connect()) {
-        $TLN->redirect_and_exit('index.php?err=1', true);
-    }
-    if (!$TLN->mail_auth(true)) {
-        $TLN->redirect_and_exit('index.php?err=0');
-    }
-}
-
 extract(Telaen::pull_from_array($_GET, array('decision'), 'str'));
 extract(Telaen::pull_from_array($_GET, array('refr', 'mlist'), true));
 extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'));
@@ -46,7 +33,9 @@ if (!is_array($headers)
     || isset($decision)
     || isset($refr)
     || isset($mlist)) {
-    mail_connect();
+
+    if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+    if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
 
     $deletecount = 0;
     $auth['auth'] = true;
@@ -143,7 +132,8 @@ if (!is_array($headers)
                 } else {
                     $TLN->mail_disconnect();
                 }
-                mail_connect();
+                if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+                if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
             }
 
             $num = 20;
@@ -202,10 +192,10 @@ if (!is_array($headers)
                 $require_update = false;
             }
             if ($TLN->prefs['save-to-trash']) {
-                unset($mbox['headers'][base64_encode('trash')]);
+                unset($mbox['headers']['trash']);
             }
             if ($decision == 'move') {
-                unset($mbox['headers'][base64_encode(strtolower($aval_folders))]);
+                unset($mbox['headers'][$aval_folders]);
             }
             $UserMbox->Save($mbox);
             if ($back) {
@@ -231,7 +221,8 @@ if (!is_array($headers)
      */
     if ($require_update) {
         $TLN->mail_disconnect();
-        mail_connect();
+        if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+        if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
         require './get_message_list.php';
     }
 

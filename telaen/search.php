@@ -46,7 +46,7 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
     for ($n = 0;$n<count($boxes);$n++) {
         $entry = $boxes[$n]['name'];
-        if (!is_array($mbox['headers'][base64_encode(strtolower($entry))])) {
+        if (!is_array($mbox['headers'][$entry])) {
             if (!$TLN->mail_connected()) {
                 if (!$TLN->mail_connect()) {
                     $TLN->redirect_and_exit('index.php?err=1', true);
@@ -56,10 +56,10 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
                 }
             }
             $retbox = $TLN->mail_list_msgs($entry);
-            $mbox['headers'][base64_encode(strtolower($entry))] = $retbox[0];
+            $mbox['headers'][$entry] = $retbox[0];
             $thisbox = $retbox[0];
         } else {
-            $thisbox = $mbox['headers'][base64_encode(strtolower($entry))];
+            $thisbox = $mbox['headers'][$entry];
         }
     }
     if ($TLN->mail_connected()) {
@@ -106,7 +106,6 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
     }
 
     while (list($current_folder, $messages) = each($boxlist)) {
-        $current_folder = base64_decode($current_folder);
 
         for ($z = 0;$z<count($messages);$z++) {
             $email = $messages[$z];

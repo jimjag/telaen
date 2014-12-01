@@ -168,7 +168,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
                     $TLN->redirect_and_exit('index.php?err=0');
                 }
                 $TLN->mail_save_message('sent', $mail->TelaenGetEmail(), '\\SEEN');
-                unset($mbox['headers'][base64_encode('sent')]);
+                unset($mbox['headers']['sent']);
                 $TLN->mail_disconnect();
                 $UserMbox->Save($mbox);
             }
@@ -386,7 +386,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     $body = stripslashes($body);
 
     if (isset($rtype)) {
-        $mail_info = $mbox['headers'][base64_encode(strtolower($folder))][$ix];
+        $mail_info = $mbox['headers'][$folder][$ix];
 
         if (($rtype == 'forward' && !stristr($mail_info['flags'], '\\FORWARDED'))
             || ($rtype != 'forward' && !stristr($mail_info['flags'], '\\ANSWERED'))) {
@@ -397,11 +397,11 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
                 $TLN->redirect_and_exit('index.php?err=0');
             }
             if ($rtype != 'forward' && $TLN->mail_set_flag($mail_info, '\\ANSWERED', '+')) {
-                $mbox['headers'][base64_encode(strtolower($folder))][$ix] = $mail_info;
+                $mbox['headers'][$folder][$ix] = $mail_info;
                 $UserMbox->Save($mbox);
             }
             if ($rtype == 'forward' && $TLN->mail_set_flag($mail_info, '\\FORWARDED', '+')) {
-                $mbox['headers'][base64_encode(strtolower($folder))][$ix] = $mail_info;
+                $mbox['headers'][$folder][$ix] = $mail_info;
                 $UserMbox->Save($mbox);
             }
             $TLN->mail_disconnect();

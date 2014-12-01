@@ -16,12 +16,8 @@ extract(Telaen::pull_from_array($_GET, array('empty', 'goback', 'nameto', 'mailt
 extract(Telaen::pull_from_array($_POST, array('newfolder'), 's'));
 
 // server check
-if (!$TLN->mail_connect()) {
-    $TLN->redirect_and_exit('index.php?err=1', true);
-}
-if (!$TLN->mail_auth()) {
-    $TLN->redirect_and_exit('index.php?err=0');
-}
+if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
 
 // check and create a new folder
 $newfolder = trim($newfolder);
@@ -38,7 +34,7 @@ if ($TLN->valid_folder_name($newfolder, true) &&
 if ($TLN->valid_folder_name($delfolder, true) &&
    (strpos($delfolder, '..') === false)) {
     if ($TLN->mail_delete_box($delfolder)) {
-        unset($mbox['headers'][base64_encode(strtolower($delfolder))]);
+        unset($mbox['headers'][$delfolder]);
         $require_update = true;
     }
 }
@@ -50,17 +46,17 @@ if ($require_update) {
 require './folder_list.php';
 
 if (isset($empty)) {
-    $headers = $mbox['headers'][base64_encode(strtolower($empty))];
+    $headers = $mbox['headers'][$empty];
     for ($i = 0;$i<count($headers);$i++) {
         $TLN->mail_delete_msg($headers[$i], $TLN->prefs['save-to-trash'], $TLN->prefs['st-only-read']);
         $expunge = true;
     }
     if ($expunge) {
         $TLN->mail_expunge();
-        unset($mbox['headers'][base64_encode(strtolower($empty))]);
+        unset($mbox['headers'][$empty]);
         /* ops.. you have sent anything to trash, then you need refresh it */
         if ($TLN->prefs['save-to-trash']) {
-            unset($mbox['headers'][base64_encode('trash')]);
+            unset($mbox['headers']['trash']);
         }
         $UserMbox->Save($mbox);
     }
@@ -109,10 +105,10 @@ for ($n = 0;$n<count($boxes);$n++) {
 
     $unread = 0;
 
-    if (!is_array($mbox['headers'][base64_encode(strtolower($entry))])) {
+    if (!is_array($mbox['headers'][$entry])) {
         $merged_array = array();
         $merged_returnarray = array();
-        if (strtolower($entry) == 'inbox') {
+        if ($entry == 'inbox') {
             /*
              * Sort the arrays and fit them together again.
              */
@@ -122,18 +118,18 @@ for ($n = 0;$n<count($boxes);$n++) {
             $merged_returnarray = $TLN->mail_list_msgs('INBOX', $merged_array);
             $thisbox = $merged_returnarray[0];
             $mbox['headers'][base64_encode('spam')] = $merged_returnarray[1];
-        } elseif (strtolower($entry) == 'spam') {
+        } elseif ($entry == 'spam') {
             ;
         } else {
-            $merged_returnarray = $TLN->mail_list_msgs($entry, $mbox['headers'][base64_encode(strtolower($entry))]);
+            $merged_returnarray = $TLN->mail_list_msgs($entry, $mbox['headers'][$entry]);
             $thisbox = $merged_returnarray[0];
         }
 
         unset($merged_array);
         unset($merged_returnarray);
-        $mbox['headers'][base64_encode(strtolower($entry))] = $thisbox;
+        $mbox['headers'][$entry] = $thisbox;
     } else {
-        $thisbox = $mbox['headers'][base64_encode(strtolower($entry))];
+        $thisbox = $mbox['headers'][$entry];
     }
 
     $boxsize = 0;
@@ -197,10 +193,9 @@ for ($n = 0;$n<count($boxes);$n++) {
 $AuthSession->Save($auth);
 $TLN->mail_disconnect();
 unset($AuthSession, $TLN);
-
 // Sort and merge the 2 folders arrays
-$TLN->array_qsort2ic($system, 'name');
-$TLN->array_qsort2ic($personal, 'name');
+$Telaen::array_qsort2ic($system, 'name');
+$Telaen::array_qsort2ic($personal, 'name');
 
 $umFolderList = array_merge((array) $system, (array) $personal);
 

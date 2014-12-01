@@ -13,7 +13,7 @@ require './inc/init.php';
 if (!isset($folder) || !isset($ix)) {
     die('Expected parameters');
 }
-$mail_info = $mbox['headers'][base64_encode(strtolower($folder))][$ix];
+$mail_info = $mbox['headers'][$folder][$ix];
 
 $smarty->assign('pageMetas', $nocache);
 

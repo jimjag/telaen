@@ -15,9 +15,7 @@ if (!isset($ix) || !isset($pag)) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
-$folderkey = base64_encode(strtolower($folder));
-
-$mysess = $mbox['headers'][$folderkey];
+$mysess = $mbox['headers'][$folder];
 $mail_info = $mysess[$ix];
 $arAttachment = array();
 
@@ -54,7 +52,7 @@ if (isset($attachment)) {
         $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&pag=$pag&refr=true");
     }
     if ($TLN->mail_set_flag($mail_info, '\\SEEN', '+')) {
-        $mbox['headers'][$folderkey][$ix] = $mail_info;
+        $mbox['headers'][$folder][$ix] = $mail_info;
     }
 
     $TLN->mail_disconnect();
@@ -261,7 +259,7 @@ if (count($anexos) > 0) {
     }
 
     $root = $email['attachments'];
-    $mbox['headers'][$folderkey][$ix] = $mail_info;
+    $mbox['headers'][$folder][$ix] = $mail_info;
 
     $nIndex = count($arAttachment);
     $attachAr = array();
