@@ -1449,8 +1449,8 @@ ENDOFREDIRECT;
             $this->prefs['spamlevel'] = $spamlevel_default;
             $this->prefs['version'] = $this->appversion;
         } else {
-            $this->prefs = file($pref_file);
-            $this->prefs = join("", $prefs);
+            $prefs = file($pref_file);
+            $prefs = join("", $prefs);
             $this->prefs = unserialize(~$prefs);
         }
     }
