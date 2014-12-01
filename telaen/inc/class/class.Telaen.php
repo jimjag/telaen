@@ -256,7 +256,7 @@ class Telaen extends Telaen_core
     {
         $tokens = array();;
         // APOP login mode, more secure
-        if ($this->capabilities['haveapop'] && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
+        if ($this->capabilities['APOP'] && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
             $this->_mail_send_command('APOP '.$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
         }
         // Classic login mode
@@ -1845,15 +1845,15 @@ class Telaen extends Telaen_core
      */
     public function cleanup_dirs($userfolder, $logout)
     {
-        if (($force_unmark_read_overrule && $force_unmark_read_setting) ||
-                 ($this->prefs['unmark-read'] && !$force_unmark_read_overrule)) {
+        if (($this->config['force_unmark_read_overrule'] && $this->config['force_unmark_read_setting']) ||
+                 ($this->prefs['unmark-read'] && !$this->config['force_unmark_read_overrule'])) {
             $cleanme = $userfolder.'inbox/';
-            cleanup_dir($cleanme);
+            self::cleanup_dir($cleanme);
         }
         $cleanme = $userfolder.'_attachments/';
-        cleanup_dir($cleanme);
+        self::cleanup_dir($cleanme);
         $cleanme = $userfolder.'spam/';
-        cleanup_dir($cleanme);
+        self::cleanup_dir($cleanme);
 
         if ($logout) {
             if (is_array($mbox['headers']) && file_exists($userfolder)) {
