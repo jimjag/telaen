@@ -1476,7 +1476,7 @@ ENDOFREDIRECT;
     /**
      *
      */
-    public function load_config($cfile, $merge=true)
+    public function load_config($cfile='configv2', $merge=true)
     {
         $cfile = self::fs_safe_file($cfile);
         $config = array();
