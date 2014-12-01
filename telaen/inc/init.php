@@ -112,7 +112,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     case 'DETECT':
         $f_server = strtolower(getenv('HTTP_HOST'));
         $f_server = str_replace($TLN->config['mail_detect_remove'], "", $f_server);
-        $f_server = $mail_detect_prefix.$f_server;
+        $f_server = $TLN->config['mail_detect_prefix'].$f_server;
 
         if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
             $f_user = trim($regs[1]);
@@ -122,9 +122,9 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
             }
         }
 
-        $f_protocol = $mail_detect_protocol;
-        $f_port = $mail_detect_port;
-        $f_prefix = $mail_detect_folder_prefix;
+        $f_protocol = $TLN->config['mail_detect_protocol'];
+        $f_port = $TLN->config['mail_detect_port'];
+        $f_prefix = $TLN->config['mail_detect_folder_prefix'];
 
         break;
 
@@ -147,8 +147,8 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
             $f_user = trim($regs[1]);
             $domain = trim($regs[2]);
-            if ($one_for_all_login_type != "") {
-                $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $one_for_all_login_type));
+            if ($TLN->config['one_for_all_login_type'] != "") {
+                $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $TLN->config['one_for_all_login_type']));
             }
         }
         $f_server = $TLN->config['default_mail_server'];

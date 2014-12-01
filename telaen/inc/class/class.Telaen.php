@@ -256,7 +256,7 @@ class Telaen extends Telaen_core
     {
         $tokens = array();;
         // APOP login mode, more secure
-        if ($this->haveapop && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
+        if ($this->capabilities['haveapop'] && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
             $this->_mail_send_command('APOP '.$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
         }
         // Classic login mode
