@@ -985,7 +985,7 @@ class Telaen extends Telaen_core
 
             $d->close();
         }
-        $TLN->array_qsort2int($messages, 'msg', 'DESC');
+        $this->array_qsort2int($messages, 'msg', 'DESC');
 
         return $messages;
     }
