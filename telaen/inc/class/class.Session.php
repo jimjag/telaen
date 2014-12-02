@@ -18,7 +18,7 @@ class Session
     /**
      * Session creator
      */
-    public function Session()
+    public function __construct()
     {
         $this->ss = &$_SESSION;
     }

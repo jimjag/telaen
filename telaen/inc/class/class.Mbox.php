@@ -14,7 +14,7 @@ class Mbox
 {
     private $path = "";
 
-    public function Mbox()
+    public function __construct()
     {
     }
 
