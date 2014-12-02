@@ -115,7 +115,7 @@ for ($n = 0;$n<count($boxes);$n++) {
             $merged_array = array_merge($mbox['headers']['inbox'], $mbox['headers']['spam']);
             Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
 
-            $merged_returnarray = $TLN->mail_list_msgs('INBOX', $merged_array);
+            $merged_returnarray = $TLN->mail_list_msgs('inbox', $merged_array);
             $thisbox = $merged_returnarray[0];
             $mbox['headers']['spam'] = $merged_returnarray[1];
         } elseif ($entry == 'spam') {
@@ -152,7 +152,6 @@ for ($n = 0;$n<count($boxes);$n++) {
     }
 
     if ($TLN->is_system_folder($entry)) {
-        $entry = strtolower($entry);
         switch ($entry) {
         case 'inbox':
             $boxname = $lang['inbox_extended'];
@@ -164,7 +163,7 @@ for ($n = 0;$n<count($boxes);$n++) {
             $boxname = $lang['trash_extended'];
             break;
         case 'spam':
-            $boxname = ($lang['spam_extended'] ? $lang['spam_extended'] : 'SPAM');
+            $boxname = ($lang['spam_extended'] ? $lang['spam_extended'] : 'spam');
             break;
         }
         $system[$scounter]['entry'] = $entry;

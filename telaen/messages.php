@@ -249,7 +249,7 @@ $smarty->assign('umNumMessages', $nummsg);
 $smarty->assign('umNumUnread', $newmsgs);
 $smarty->assign('umMessageList', $messagelist);
 
-switch (strtolower($folder)) {
+switch ($folder) {
 case 'inbox':
     $display = $lang['inbox_extended'];
     break;
@@ -321,7 +321,7 @@ while ($entry = $d->read()) {
         $entry != $folder &&
         ($TLN->mail_protocol == IMAP || (($entry != 'inbox') && ($entry != 'spam')))) {
         $entry = $TLN->fix_prefix($entry, 0);
-        switch (strtolower($entry)) {
+        switch ($entry) {
         case 'inbox':
             $display = $lang['inbox_extended'];
             break;

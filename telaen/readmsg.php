@@ -298,7 +298,7 @@ while ($entry = $d->read()) {
         $entry != $folder &&
         ($TLN->mail_protocol == IMAP || ($entry != 'inbox' && $entry != 'spam'))) {
         $entry = $TLN->fix_prefix($entry, 0);
-        switch (strtolower($entry)) {
+        switch ($entry) {
         case 'inbox':
             $display = $lang['inbox_extended'];
             break;

@@ -585,7 +585,7 @@ class Telaen extends Telaen_core
         /*if the pointer is here, no one problem occours*/
 
         if ($send_to_trash &&
-            strtoupper($msg['folder']) != 'TRASH' &&
+            $msg['folder'] != 'trash' &&
             (!$save_only_read || ($save_only_read && $read))) {
             $trash_folder = $this->fix_prefix('trash', 1);
 
@@ -616,7 +616,7 @@ class Telaen extends Telaen_core
 
         /* now we are working with POP3 */
         /* check the message id to make sure that the messages still in the server */
-        if (strtoupper($msg['folder']) == 'INBOX' || strtoupper($msg['folder']) == 'SPAM') {
+        if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
             /* compare the old and the new message uidl, if different, stop*/
             $muidl = $this->_mail_get_uidl($msg['msg']);
             if ($msg['uidl'] != $muidl) {
@@ -642,7 +642,7 @@ class Telaen extends Telaen_core
         }
 
         if ($send_to_trash &&
-            strtoupper($msg['folder']) != 'TRASH' &&
+            $msg['folder'] != 'trash' &&
             (!$save_only_read || ($save_only_read && $read))) {
             if (file_exists($msg['localname'])) {
                 $currentname = $msg['localname'];
@@ -736,10 +736,10 @@ class Telaen extends Telaen_core
 
     protected function _mail_move_msg_pop($msg, $tofolder)
     {
-        if ((strtoupper($tofolder) != 'INBOX' && strtoupper($tofolder) != 'SPAM') && $tofolder != $msg['folder']) {
+        if (($tofolder != 'inbox' && $tofolder != 'spam') && $tofolder != $msg['folder']) {
             /* now we are working with POP3 */
             /* check the message id to make sure that the messages still in the server */
-            if (strtoupper($msg['folder']) == 'INBOX' || strtoupper($msg['folder']) == 'SPAM') {
+            if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
                 /* compare the old and the new message id, if different, stop*/
                 $muidl = $this->_mail_get_uidl($msg['msg']);
                 if ($msg['uidl'] != $muidl) {
@@ -767,7 +767,7 @@ class Telaen extends Telaen_core
                 if (file_exists($newfilename)) {
                     unlink($currentname);
                     // delete from server if we are working on inbox or spam
-                    if (strtoupper($msg['folder']) == 'INBOX' || strtoupper($msg['folder']) == 'SPAM') {
+                    if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
                         $this->_mail_send_command('DELE '.$msg['msg']);
                         $buffer = $this->_mail_get_line();
                         if ($this->mail_nok_resp($buffer)) {
@@ -802,7 +802,7 @@ class Telaen extends Telaen_core
         }
     }
 
-    protected function _mail_list_msgs_imap($boxname = 'INBOX', $localmessages = array())
+    protected function _mail_list_msgs_imap($boxname = 'inbox', $localmessages = array())
     {
         $messages = array();
 
@@ -852,7 +852,7 @@ class Telaen extends Telaen_core
         return $messages;
     }
 
-    protected function _mail_list_msgs_pop($boxname = 'INBOX', $localmessages = array())
+    protected function _mail_list_msgs_pop($boxname = 'inbox', $localmessages = array())
     {
         // $this->havespam = "";
 
@@ -860,9 +860,9 @@ class Telaen extends Telaen_core
 
         /*
         now working with POP3
-        if the boxname is 'INBOX' or 'SPAM', we can check in the server for messsages
+        if the boxname is 'inbox' or 'spam', we can check in the server for messsages
 
-        NOTE how special INBOX is... This is the only Email box that lives on
+        NOTE how special inbox is... This is the only Email box that lives on
         the actual Email server (the pophost) and so we need to jump thru a lot
         of hoops to determine which messages are there.
 
@@ -870,7 +870,7 @@ class Telaen extends Telaen_core
         but don't worry about headers at all, until we really, really
         need to.
         */
-        if (strtoupper($boxname) == 'INBOX' || strtoupper($boxname) == 'SPAM') {
+        if ($boxname == 'inbox' || $boxname == 'spam') {
             $this->_mail_send_command('LIST');
             $buffer = $this->_mail_get_line();
             /* if any problem with this messages list, stop the procedure */
@@ -996,7 +996,7 @@ class Telaen extends Telaen_core
      * @param  integer $wcount
      * @return array
      */
-    public function mail_list_msgs($boxname = 'INBOX', $localmessages = array(), $start = 0, $wcount = 99999)
+    public function mail_list_msgs($boxname = 'inbox', $localmessages = array(), $start = 0, $wcount = 99999)
     {
         $fetched_part = 0;
         $parallelized = 0;
@@ -1069,11 +1069,11 @@ class Telaen extends Telaen_core
             $xspamlevel = $mail_info['x-spam-level'];
             /*
              * Only auto-populate the SPAM folder if
-             * we are checking the INBOX and we have _autospamfolder
+             * we are checking the inbox and we have _autospamfolder
              * set :)
              */
             if (($this->prefs['autospamfolder']) &&
-                (strtoupper($boxname) == 'INBOX' || strtoupper($boxname) == 'SPAM')) {
+                ($boxname == 'inbox' || $boxname == 'spam')) {
                 foreach ($this->_spamregex as $spamregex) {
                     if (preg_match("/$spamregex/i", $spamsubject)) {
                         $havespam = 1;
@@ -1183,7 +1183,7 @@ class Telaen extends Telaen_core
          * Special Hack: if we are listing the SPAM folder for any
          * reason, ensure that the 1st array *IS* the SPAM folder
          */
-        if (strtoupper($boxname) == 'SPAM') {
+        if ($boxname == 'spam') {
             $myreturnarray[0] = $spamcopy;
             $myreturnarray[1] = $messagescopy;
         } else {
@@ -1278,7 +1278,7 @@ class Telaen extends Telaen_core
      * @param  string $boxname Emailbox name to select
      * @return array
      */
-    public function mail_select_box($boxname = 'INBOX')
+    public function mail_select_box($boxname = 'inbox')
     {
         /* this function is used only for IMAP servers */
         if ($this->mail_protocol == IMAP) {
@@ -1320,7 +1320,7 @@ class Telaen extends Telaen_core
      * @param  string  $boxname Emailbox name to subscribe to
      * @return boolean
      */
-    public function mail_subscribe_box($boxname = 'INBOX')
+    public function mail_subscribe_box($boxname = 'inbox')
     {
         /* this function is used only for IMAP servers */
         if ($this->mail_protocol == IMAP) {

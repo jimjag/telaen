@@ -10,7 +10,6 @@ foreach ($folders as $entry) {
     $entry = $entry['name'];
     $boxname = $entry;
     if ($TLN->is_system_folder($entry)) {
-        $entry = strtolower($entry);
         switch ($entry) {
         case 'inbox':
             $boxname = $lang['inbox_extended'];
@@ -22,7 +21,7 @@ foreach ($folders as $entry) {
             $boxname = $lang['trash_extended'];
             break;
         case 'spam':
-            $boxname = ($lang['spam_extended'] ? $lang['spam_extended'] : 'SPAM');
+            $boxname = ($lang['spam_extended'] ? $lang['spam_extended'] : 'spam');
             break;
         }
         $system[$scounter]['systemname'] = $entry;

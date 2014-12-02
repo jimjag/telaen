@@ -182,7 +182,7 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $date = $headers[$i]['date'];
         $size = ceil($headers[$i]['size']/1024);
         $index = count($messagelist);
-        switch (strtolower($headers[$i]['folder'])) {
+        switch ($headers[$i]['folder']) {
         case 'inbox':
             $boxname = $lang['inbox_extended'];
             break;

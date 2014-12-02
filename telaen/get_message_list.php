@@ -8,7 +8,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
             $entry = $boxes[$n]['name'];
             $merged_array = array();
             $merged_returnarray = array();
-            if (strtolower($entry) == 'inbox') {
+            if ($entry == 'inbox') {
                 /*
                  * Only process the inbox once for the spam-/inbox folder
                  */
@@ -18,7 +18,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
                 $merged_array = array_merge((array) $mbox['headers']['inbox'], (array) $mbox['headers']['spam']);
                 Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
 
-                $merged_returnarray = $TLN->mail_list_msgs('INBOX', $merged_array, $start_pos, $reg_pp);
+                $merged_returnarray = $TLN->mail_list_msgs('inbox', $merged_array, $start_pos, $reg_pp);
 
                 /*
                  * Keep the old array if we still got the same messages on the server
@@ -29,7 +29,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
                     $mbox['headers']['inbox'] = $merged_returnarray[0];
                     $mbox['headers']['spam'] = $merged_returnarray[1];
                 }
-            } elseif (strtolower($entry) == 'spam') {
+            } elseif ($entry == 'spam') {
                 ;
             } else {
                 $merged_returnarray = $TLN->mail_list_msgs($entry, $mbox['headers'][$entry], $start_pos, $reg_pp);
@@ -48,7 +48,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
              */
             $merged_array = array_merge((array) $mbox['headers']['inbox'], (array) $mbox['headers']['spam']);
             Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
-            $returnarray = $TLN->mail_list_msgs('INBOX', $merged_array, $start_pos, $reg_pp);
+            $returnarray = $TLN->mail_list_msgs('inbox', $merged_array, $start_pos, $reg_pp);
 
             /*
              * Keep the old array if we still got the same messages on the server
