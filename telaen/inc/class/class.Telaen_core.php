@@ -1431,7 +1431,7 @@ ENDOFREDIRECT;
             $this->prefs['real-name'] = UCFirst(substr($user, 0, strpos($user, '@')));
             $this->prefs['reply-to'] = $user;
             $this->prefs['save-to-trash'] = $send_to_trash_default;
-            $this->prefs['st-only-read'] = $st_only_ready_default;
+            $this->prefs['st-only-read'] = $st_only_read_default;
             $this->prefs['empty-trash'] = $empty_trash_default;
             $this->prefs['empty-spam'] = $empty_spam_default;
             $this->prefs['unmark-read'] = $unmark_read_default;

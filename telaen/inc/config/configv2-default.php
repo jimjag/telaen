@@ -335,23 +335,23 @@ $config['default_sortorder'] = 'DESC';
 ########################################################################
 
 $config['default_preferences'] = array(
-	'send_to_trash_default' 	=> true,		# send deleted messages to trash
-	'st_only_ready_default' 	=> true,		# only read messages, otherwise, delete it
-	'save_to_sent_default'		=> true,		# send sent messages to sent
-	'empty_trash_default'		=> true,		# empty trash on logout
-	'empty_spam_default'		=> true,		# empty spam on logout
-	'unmark_read_default'		=> false,		# Unmark READ messages as read (appear as unread)
-	'sortby_default'		=> 'date',	# alowed: 'attach','subject','fromname','date','size'
-	'sortorder_default'		=> 'DESC',	# alowed: 'ASC','DESC'
-	'rpp_default'			=> 20,		# records per page (messages), alowed: 10,20,30,40,50,100,200
-	'add_signature_default'		=> false,		# add the signature by default
-	'require_receipt_default'	=> false,		# require read receipt by default
-	'signature_default'		=> "",		# a default signature for all users, use text only, with multiple lines if needed
-	'timezone_default'		=> '-0000',	# timezone, format (+|-)HHMM (H=hours, M=minutes)
-	'display_images_default'	=> true,		# automatically show attached images in the body of message
-	'editor_mode_default'		=> 'text',	# use 'html' or 'text' to set default editor.
-	'refresh_time_default'		=> 10,		# after this time, the message list will be refreshed, in minutes
-	'spamlevel_default'		=> 0		# Sensitivity to X-Spam-Level detection
+	'send_to_trash_default' 	=> true,   # send deleted messages to trash
+	'st_only_read_default' 	=> true,       # only read messages, otherwise, delete it
+	'save_to_sent_default'		=> true,   # send sent messages to sent
+	'empty_trash_default'		=> true,   # empty trash on logout
+	'empty_spam_default'		=> true,   # empty spam on logout
+	'unmark_read_default'		=> false,  # Unmark READ messages as read (appear as unread)
+	'sortby_default'		=> 'date',     # alowed: 'attach','subject','fromname','date','size'
+	'sortorder_default'		=> 'DESC',     # alowed: 'ASC','DESC'
+	'rpp_default'			=> 20,         #records per page (messages), alowed: 10,20,30,40,50,100,200
+	'add_signature_default'		=> false,  # add the signature by default
+	'require_receipt_default'	=> false,  # require read receipt by default
+	'signature_default'		=> "",         # a default signature for all users, use text only, with multiple lines if needed
+	'timezone_default'		=> '-0000',	   # timezone, format (+|-)HHMM (H=hours, M=minutes)
+	'display_images_default'	=> true,   # automatically show attached images in the body of message
+	'editor_mode_default'		=> 'text', # use 'html' or 'text' to set default editor.
+	'refresh_time_default'		=> 10,     # after this time, the message list will be refreshed, in minutes
+	'spamlevel_default'		=> 0           # Sensitivity to X-Spam-Level detection
 	);
 
 ########################################################################
