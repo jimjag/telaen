@@ -424,8 +424,6 @@ class Telaen extends Telaen_core
 
     protected function _mail_retr_msg_pop(&$msg, $check = 1)
     {
-        global $mail_use_top;
-
         if ($check && ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam')) {
             $muidl = $this->_mail_get_uidl($msg['msg']);
             if ($msg['uidl'] && ($msg['uidl'] != $muidl)) {
@@ -440,7 +438,7 @@ class Telaen extends Telaen_core
         if (file_exists($msg['localname'])) {
             $msgcontent = $this->read_file($msg['localname']);
         } elseif ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
-            $command = ($mail_use_top) ? 'TOP '.$msg['msg'].' '.$msg['size'] : 'RETR '.$msg['msg'];
+            $command = ($this->config['mail_use_top']) ? 'TOP '.$msg['msg'].' '.$msg['size'] : 'RETR '.$msg['msg'];
             $this->_mail_send_command($command);
 
             $buffer = $this->_mail_get_line();

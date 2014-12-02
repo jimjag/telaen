@@ -159,7 +159,7 @@ $config['mail_detect_folder_prefix'] = "";
 # Note: If you set only one domain, the users are forced to use a single
 # mail server. Can be useful if you want to type only your mail name
 # instead of a complete mail address at login.
-# (example: frank instead of frank@telaen.org)
+# (example: frank instead of frank@example.com)
 ########################################################################
 
 
