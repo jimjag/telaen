@@ -139,7 +139,8 @@ if ($avalthemes == 0) {
     die('You must provide at least one theme');
 }
 
-$smarty->assign('umAllowSelectLanguage', $TLN->config['allow_user_change_language']);// $func(textout);
+$smarty->assign('umAllowSelectLanguage', $TLN->config['allow_user_change_language']);
+printf($textout);
 
 if ($TLN->config['allow_user_change_language']) {
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
