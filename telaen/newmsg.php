@@ -18,7 +18,7 @@ extract(Telaen::pull_from_array($_POST, array('to', 'cc', 'bcc', 'subject', 'req
         'priority', 'body', 'is_html', 'textmode', 'sig', 'tipo', 'rtype', 'ix', ), 'str'));
 
 if (isset($tipo) && $tipo == 'send') {
-    $mail = new PHPMailer_extra();
+    $mail = new PHPMailer();
     $mail->PluginDir = './inc/';
 
     if ($TLN->config['phpmailer_sendmail'] != "") {
@@ -148,7 +148,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         $mail->Body = stripslashes($body);
         $mail->Mailer = $TLN->config['mailer_type'];
 
-        if (($mail->TelaenSend()) === false) {
+        if (($mail->Send()) === false) {
             $smarty->assign('umMailSent', false);
             $smarty->assign('umErrorMessage', $mail->ErrorInfo);
         } else {
@@ -163,7 +163,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             if ($TLN->prefs['save-to-sent']) {
                 if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
                 if (!$TLN->mail_auth(false)) $TLN->redirect_and_exit('index.php?err=0');
-                $TLN->mail_save_message('sent', $mail->TelaenGetEmail(), '\\SEEN');
+                $TLN->mail_save_message('sent', $mail->getSentMIMEMessage(), '\\SEEN');
                 unset($mbox['headers']['sent']);
                 $TLN->mail_disconnect();
                 $UserMbox->Save($mbox);
