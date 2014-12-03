@@ -19,7 +19,6 @@ define('STATUS_NOK_FILE', 2);
 
 class Telaen_core
 {
-    public $mail_connection = null;
     public $mail_server     = 'localhost';
     public $mail_port       = 110;
     public $usessl          = false;
@@ -51,6 +50,8 @@ class Telaen_core
     protected $_content = array();
     private $_sid     = 0;
     protected $_tnef    = "";
+    protected $mail_connection = null;
+    protected $authenticated = false;
 
     /*******************/
 

@@ -272,24 +272,25 @@ td.headerright {
 	border: 1px solid #ddd;
 	padding: 3px;
 	text-align: right;
-	color: #900;
+	color: #b00;
 	font-weight: bold;
 	background-color: #fff;
 }
 #calendar td.tevt:hover {
-	color: #900;
+	color: #b00;
 	background-color: #004080;
 }
 #calendar td.evt {
 	border:1px solid #ddd;
 	padding:3px;
 	text-align:right;
+	font-weight: bold;
 	background-color: #fff;
-	color:#900;
+	color:#b00;
 }
 #calendar td.evt:hover {
 	background-color: #004080;
-	color:#900;
+	color:#b00;
 }
 #calendar .einfo {
 	display:none;

@@ -161,12 +161,8 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             }
 
             if ($TLN->prefs['save-to-sent']) {
-                if (!$TLN->mail_connect()) {
-                    $TLN->redirect_and_exit('index.php?err=1', true);
-                }
-                if (!$TLN->mail_auth(false)) {
-                    $TLN->redirect_and_exit('index.php?err=0');
-                }
+                if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+                if (!$TLN->mail_auth(false)) $TLN->redirect_and_exit('index.php?err=0');
                 $TLN->mail_save_message('sent', $mail->TelaenGetEmail(), '\\SEEN');
                 unset($mbox['headers']['sent']);
                 $TLN->mail_disconnect();

@@ -58,11 +58,11 @@ class Telaen extends Telaen_core
      */
     public function mail_connected()
     {
-        if (!empty($this->mail_connection)) {
-            $sock_status = @socket_get_status($this->mail_connection);
+        if (!empty($this->_mail_connection)) {
+            $sock_status = @socket_get_status($this->_mail_connection);
             if ($sock_status['eof']) {
-                @fclose($this->mail_connection);
-
+                @fclose($this->_mail_connection);
+                $this->_mail_connection = null;
                 return false;
             }
 
@@ -146,7 +146,7 @@ class Telaen extends Telaen_core
 
     protected function _mail_get_line()
     {
-        $buffer = fgets($this->mail_connection, 8192);
+        $buffer = fgets($this->_mail_connection, 8192);
         $buffer = preg_replace('|\r?\n|', "\r\n", $buffer);
         if ($this->config['enable_debug']) {
             $this->debug_msg($buffer, __FUNCTION__);
@@ -176,7 +176,7 @@ class Telaen extends Telaen_core
                     $cmd = $this->get_sid(true).' '.$cmd;
                     $output = $this->get_sid().' '.$output;
                 }
-                fwrite($this->mail_connection, $cmd);
+                fwrite($this->_mail_connection, $cmd);
                 if ($this->config['enable_debug']) {
                     $this->debug_msg($output, __FUNCTION__);
                 }
@@ -204,8 +204,8 @@ class Telaen extends Telaen_core
             }
             $errno = 0;
             $errstr = 0;
-            $this->mail_connection = stream_socket_client($this->_serverurl, $errno, $errstr, 15);
-            if ($this->mail_connection) {
+            $this->_mail_connection = stream_socket_client($this->_serverurl, $errno, $errstr, 15);
+            if ($this->_mail_connection) {
                 $this->greeting = $this->_mail_get_line();
                 if ($this->mail_ok_resp($this->greeting)) {
                     return true;
@@ -236,7 +236,6 @@ class Telaen extends Telaen_core
             if ($checkfolders) {
                 $this->_check_folders();
             }
-
             return true;
         } else {
             return false;
@@ -272,7 +271,6 @@ class Telaen extends Telaen_core
             if ($checkfolders) {
                 $this->_check_folders();
             }
-
             return true;
         } else {
             return false;
@@ -287,13 +285,18 @@ class Telaen extends Telaen_core
     public function mail_auth($checkfolders = false)
     {
         if ($this->mail_connected()) {
-            if ($this->mail_protocol == IMAP) {
-                return $this->_mail_auth_imap($checkfolders);
+            if ($this->_authenticated) {
+                return true;
             } else {
-                return $this->_mail_auth_pop($checkfolders);
+                if ($this->mail_protocol == IMAP) {
+                    $this->_authenticated = $this->_mail_auth_imap($checkfolders);
+                } else {
+                    $this->_authenticated = $this->_mail_auth_pop($checkfolders);
+                }
+                if ($this->_authenticated) $this->mail_get_capa();
+                return $this->_authenticated;
             }
         }
-
         return false;
     }
 
@@ -444,7 +447,7 @@ class Telaen extends Telaen_core
             }
             $last_buffer = 0;
             $msgcontent = "";
-            while (!feof($this->mail_connection)) {
+            while (!feof($this->_mail_connection)) {
                 $buffer = $this->_mail_get_line();
                 if (chop($buffer) == '.') {
                     break;
@@ -509,7 +512,7 @@ class Telaen extends Telaen_core
             return false;
         }
 
-        while (!feof($this->mail_connection)) {
+        while (!feof($this->_mail_connection)) {
             $buffer = $this->_mail_get_line();
             if (chop($buffer) == '.') {
                 break;
@@ -875,7 +878,7 @@ class Telaen extends Telaen_core
 
             $counter = 0;
 
-            while (!feof($this->mail_connection)) {
+            while (!feof($this->_mail_connection)) {
                 $buffer = $this->_mail_get_line();
                 $buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
                 if ($buffer == '.') {
@@ -1581,8 +1584,9 @@ class Telaen extends Telaen_core
                 $this->_mail_send_command('QUIT');
                 $tmp = $this->_mail_get_line();
             }
-            fclose($this->mail_connection);
-            $this->mail_connection = "";
+            fclose($this->_mail_connection);
+            $this->_mail_connection = null;
+            $this->_authenticated = false;
             //usleep(500);
             return true;
         } else {
@@ -1599,10 +1603,11 @@ class Telaen extends Telaen_core
         if ($this->mail_connected()) {
             $this->_mail_send_command('FORCEDQUIT');
             $this->_mail_get_line();
-            fclose($this->mail_connection);
-            $this->mail_connection = "";
+            fclose($this->_mail_connection);
+            $this->_mail_connection = null;
+            $this->_authenticated = false;
             // Sleep to make it possible that the server can resume.
-            sleep(2);
+            sleep(1);
             return true;
         } else {
             return false;
@@ -1641,7 +1646,7 @@ class Telaen extends Telaen_core
         $this->_mail_send_command('CAPA');
         $buffer = $this->_mail_get_line();
         if ($this->mail_ok_resp($buffer)) {
-            while (!feof($this->mail_connection)) {
+            while (!feof($this->_mail_connection)) {
                 $buffer = trim($this->_mail_get_line());
                 if ($buffer[0] == '.') {
                     break;
@@ -1660,7 +1665,7 @@ class Telaen extends Telaen_core
     {
         $capa = array();
         $this->_mail_send_command('cp01 CAPABILITY', false);
-        while (!feof($this->mail_connection)) {
+        while (!feof($this->_mail_connection)) {
             $buffer = trim($this->_mail_get_line());
             $a = preg_split("|\s+|", $buffer);
             if ($a[0] == 'cp01') {
@@ -1677,26 +1682,31 @@ class Telaen extends Telaen_core
     }
 
     /**
-     * List CAPA(BILITY) output of POP3/IMAP server
-     * @param  boolean $oneshot True if we connect/disconnect
-     * @return array
+     * Load CAPA(BILITY) output of POP3/IMAP server
+     * @return void ($this->capabilities[] is loaded)
      */
-    public function mail_get_capa($oneshot = true)
+    public function mail_get_capa()
     {
-        if ($oneshot) {
+        $close = false;
+        if (!$this->mail_connected()) {
             $this->mail_connect();
+            $close = true;
         }
         if ($this->mail_protocol == IMAP) {
             $capa = $this->_mail_capa_imap();
         } else {
             $capa = $this->_mail_capa_pop3();
         }
-        if ($oneshot) {
+        if ($close) {
             $this->mail_disconnect();
         }
         // In case we do this before and after login (eg: IMAP
         // with Dovecot), we merge with the old settings
-        return array_merge($this->capabilities, $capa);
+        $this->capabilities = array_merge($this->capabilities, $capa);
+        // and honor config'ed overrides
+        foreach ($this->config['capa_override'] as $key => $value) {
+            $this->capabilities[$key] = $value;
+        }
     }
 
     /*
@@ -1741,7 +1751,7 @@ class Telaen extends Telaen_core
                     return "";
                 }
                 unset($header);
-                while (!feof($this->mail_connection)) {
+                while (!feof($this->_mail_connection)) {
                     $buffer = $this->_mail_get_line();
                     if (chop($buffer) == '.') {
                         break;
@@ -1759,7 +1769,7 @@ class Telaen extends Telaen_core
 
                 $buffer = $this->_mail_get_line();
                 if ($this->mail_ok_resp($buffer)) {
-                    while (!feof($this->mail_connection)) {
+                    while (!feof($this->_mail_connection)) {
                         $buffer = $this->_mail_get_line();
                         if (trim($buffer) == '.') {
                             break;
@@ -1778,7 +1788,7 @@ class Telaen extends Telaen_core
 
                 if ($this->mail_ok_resp($buffer)) {
                     $messages = array();
-                    while (!feof($this->mail_connection)) {
+                    while (!feof($this->_mail_connection)) {
                         $buffer = $this->_mail_get_line();
                         if (trim($buffer) == '.') {
                             break;
@@ -1795,7 +1805,7 @@ class Telaen extends Telaen_core
 
                         if ($this->mail_ok_resp($buffer)) {
                             unset($header);
-                            while (!feof($this->mail_connection)) {
+                            while (!feof($this->_mail_connection)) {
                                 $buffer = $this->_mail_get_line();
                                 if (trim($buffer) == '.') {
                                     break;
@@ -1862,12 +1872,8 @@ class Telaen extends Telaen_core
 
                 if ($this->prefs['empty-trash']) {
                     if ($this->mail_protocol == IMAP) {
-                        if (!$this->mail_connect()) {
-                            $this->redirect_and_exit('index.php?err=1', true);
-                        }
-                        if (!$this->mail_auth()) {
-                            $this->redirect_and_exit('index.php?err=0');
-                        }
+                        if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
+                        if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
                     }
                     $trash = 'trash';
                     if (!is_array($mbox['headers'][$trash])) {
@@ -1888,12 +1894,8 @@ class Telaen extends Telaen_core
                 }
 
                 if ($this->prefs['empty-spam']) {
-                    if (!$this->mail_connect()) {
-                        $this->redirect_and_exit('index.php?err=1', true);
-                    }
-                    if (!$this->mail_auth()) {
-                        $this->redirect_and_exit('index.php?err=0');
-                    }
+                    if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
+                    if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
                     $trash = 'spam';
                     if (!is_array($mbox['headers'][$trash])) {
                         $retbox = $this->mail_list_msgs($trash);

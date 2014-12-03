@@ -48,12 +48,8 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $entry = $boxes[$n]['name'];
         if (!is_array($mbox['headers'][$entry])) {
             if (!$TLN->mail_connected()) {
-                if (!$TLN->mail_connect()) {
-                    $TLN->redirect_and_exit('index.php?err=1', true);
-                }
-                if (!$TLN->mail_auth()) {
-                    $TLN->redirect_and_exit('index.php?err=0');
-                }
+                if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+                if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
             }
             $retbox = $TLN->mail_list_msgs($entry);
             $mbox['headers'][$entry] = $retbox[0];
