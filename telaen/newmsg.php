@@ -21,10 +21,10 @@ if (isset($tipo) && $tipo == 'send') {
     $mail = new PHPMailer_extra();
     $mail->PluginDir = './inc/';
 
-    if ($phpmailer_sendmail != "") {
+    if ($TLN->config['phpmailer_sendmail'] != "") {
         $mail->Sendmail = $TLN->config['phpmailer_sendmail'];
     }
-    if ($phpmailer_timeout != 0) {
+    if ($TLN->config['phpmailer_timeout'] != 0) {
         $mail->Timeout = $TLN->config['phpmailer_timeout'];
     }
 
@@ -53,7 +53,7 @@ if (isset($tipo) && $tipo == 'send') {
         $mail->SMTPAuth = $TLN->config['use_password_for_smtp'];
 
         // use user data or static data for smtp auth
-        if ($smtp_static_auth) {
+        if ($TLN->config['smtp_static_auth']) {
             $mail->Username = $TLN->config['smtp_static_user'];
             $mail->Password = $TLN->config['smtp_static_password'];
         } else {
@@ -86,7 +86,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         $mail->WordWrap = 76;
         $mail->Priority = $priority;
 
-        if ($smtp_debug) {
+        if ($TLN->config['smtp_debug']) {
             $mail->SMTPDebug = true;
         }
 
