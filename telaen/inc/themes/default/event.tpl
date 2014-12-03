@@ -38,7 +38,7 @@
       <td class="default" colspan="2" align="center"><textarea cols="50" rows="15" id="etext_{$smarty.section.i.index}" name="etext_{$smarty.section.i.index}">{$umEvent[i][3]|escape:"html"}</textarea></td>
     <tr>
     <tr>
-      <td colspam="2">&nbsp;</td>
+      <td colspan="2">&nbsp;</td>
     </tr>
     <tr>
       <td align="left"><input type="submit" name="evsave" value="&nbsp;{$umLabel.evt_save}&nbsp;" /></td>
@@ -50,12 +50,12 @@
 </form>
 <hr align="center" width="75%">
 {/section}
-{else} 
+{else}
 <script type="text/javascript">
 //<![CDATA[
 	refreshParent();
 //]]>
-</script> 
+</script>
 {/if}
 
-{include file=$footerTemplate} 
+{include file=$footerTemplate}
