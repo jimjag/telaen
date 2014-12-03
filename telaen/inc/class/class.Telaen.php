@@ -199,7 +199,7 @@ class Telaen extends Telaen_core
     {
         if (!$this->mail_connected()) {
             if (!$this->_serverurl) {
-                $this->_serverurl = ($this->usessl ? 'ssl://' : 'tcp://').
+                $this->_serverurl = ($this->use_ssl ? 'ssl://' : 'tcp://').
                     $this->mail_server.':'.$this->mail_port;
             }
             $errno = 0;
