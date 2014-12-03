@@ -186,7 +186,7 @@ EOT;
     public function getEvent($day)
     {
         $reta = array();
-        $this->_vcal->parse();
+        //$this->_vcal->parse();
         $this->_vcal->sort();
         $events_arr = $this->_vcal->selectComponents($this->_year, $this->_month, $day);
         if (!is_array($events_arr) || count($events_arr) == 0) {
