@@ -134,7 +134,7 @@ $config['quota_limits'] = array (
 # The default ports are:
 # pop3 -> 110
 # imap -> 143
-# The imap is more fast, but all functions of Telaen works with POP3
+# IMAP is fastest, but all functions of Telaen work with POP3
 ########################################################################
 
 ########################################################################

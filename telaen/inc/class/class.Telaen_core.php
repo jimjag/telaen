@@ -49,7 +49,7 @@ class Telaen_core
     // internal
     protected $_msgbody = "";
     protected $_content = array();
-    protected $_sid     = 1;
+    private $_sid     = 0;
     protected $_tnef    = "";
 
     /*******************/
@@ -1614,4 +1614,12 @@ ENDOFREDIRECT;
       return intval($val);
     }
 
+    /**
+     * Return sid value for IMAP
+     */
+    protected function get_sid($getnext = false)
+    {
+        if ($getnext) $this->_sid++;
+        return sprintf('a%03d', $this->_sid);
+    }
 }

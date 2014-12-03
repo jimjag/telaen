@@ -48,7 +48,7 @@ $auth = &$AuthSession->Load('telaen_sess');
 
 // Only process.php is allowed to be run with expired sessions (for login)
 if ((I_AM_TELAEN != 'process.php') && (!$auth['auth'])) {
-    die('error: your session seems expired');
+    $TLN->redirect_and_exit('index.php?err=4', true);
 }
 
 $TLN->AuthSession = $AuthSession;

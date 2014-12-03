@@ -32,7 +32,6 @@ class Telaen extends Telaen_core
     public function __construct()
     {
         $this->_tnef = new TNEF();
-        $this->_sid = 'a000';
     }
 
     /**
@@ -174,15 +173,12 @@ class Telaen extends Telaen_core
                 $cmd = trim($cmd).$this->CRLF;
                 $output = (preg_match('/^(PASS|LOGIN)/', $cmd, $regs)) ? $regs[1]." ****" : $cmd;
                 if ($this->mail_protocol == IMAP && $addTag) {
-                    $num = (int) substr($this->_sid, 1);
-                    $num++;
-                    $this->_sid = sprintf('a%03d', $num);
-                    $cmd = $this->_sid.' '.$cmd;
-                    $output = $this->_sid.' '.$output;
+                    $cmd = $this->get_sid(true).' '.$cmd;
+                    $output = $this->get_sid().' '.$output;
                 }
                 fwrite($this->mail_connection, $cmd);
                 if ($this->config['enable_debug']) {
-                    $this->debug_msg($cmd, __FUNCTION__);
+                    $this->debug_msg($output, __FUNCTION__);
                 }
             }
 
@@ -1284,7 +1280,7 @@ class Telaen extends Telaen_core
             $boxname = $this->fix_prefix($original_name, 1);
             $this->_mail_send_command("SELECT \"$boxname\"");
             $buffer = $this->_mail_get_line();
-            if (preg_match("/^".$this->_sid." NO/i", $buffer)) {
+            if (preg_match("/^".$this->get_sid()." NO/i", $buffer)) {
                 if ($this->mail_subscribe_box($original_name)) {
                     $this->_mail_send_command("SELECT \"$boxname\"");
                     $buffer = $this->_mail_get_line();
@@ -1420,7 +1416,7 @@ class Telaen extends Telaen_core
 
         $buffer = $this->_mail_get_line();
 
-        if (!preg_match("/^(".$this->_sid." OK)/i", $buffer)) {
+        if (!preg_match("/^(".$this->get_sid()." OK)/i", $buffer)) {
             return false;
         }
         return true;
@@ -1467,7 +1463,7 @@ class Telaen extends Telaen_core
         $this->_mail_send_command('STORE '.$msg['msg'].':'.$msg['msg'].' '.$flagtype."FLAGS ($flagname)");
         $buffer = $this->_mail_get_line();
 
-        while (!preg_match("/^(".$this->_sid." (OK|NO|BAD))/i", $buffer)) {
+        while (!preg_match("/^(".$this->get_sid()." (OK|NO|BAD))/i", $buffer)) {
             $buffer = $this->_mail_get_line();
         }
         if ($this->mail_nok_resp($buffer)) {
@@ -1509,7 +1505,7 @@ class Telaen extends Telaen_core
             $this->_mail_send_command('STORE '.$msg['msg'].':'.$msg['msg'].' '.$flagtype."FLAGS ($flagname)");
             $buffer = $this->_mail_get_line();
 
-            while (!preg_match("/^(".$this->_sid." (OK|NO|BAD))/i", $buffer)) {
+            while (!preg_match("/^(".$this->get_sid()." (OK|NO|BAD))/i", $buffer)) {
                 $buffer = $this->_mail_get_line();
             }
             if ($this->mail_nok_resp($buffer)) {
