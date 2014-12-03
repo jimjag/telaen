@@ -54,7 +54,7 @@
           </tr>
           <tr>
             <td class="default">&nbsp;</td>
-            <td class="default"><textarea cols="50" rows="15" id="body" name="body">{$umBody|escape:"html"}</textarea></td>
+            <td class="default"><textarea cols="80" rows="24" id="body" name="body">{$umBody|escape:"html"}</textarea></td>
           </tr>
           <tr>
             <td class="headerright">{$umLabel.require_receipt}  &nbsp;</td>
@@ -82,4 +82,4 @@
     </tr>
   </table>
 </form>
-{include file=$footerTemplate} 
+{include file=$footerTemplate}

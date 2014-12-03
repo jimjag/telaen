@@ -3,7 +3,7 @@
   <table width="100%" border="0" cellspacing="0" cellpadding="2" align="center" bgcolor="white">
     <tr> {$umForms}
       <td valign="top" width="20%"> {include file=$menuTemplate refresh="false"}
-        {include file=$calendarTemplate}			
+        {include file=$calendarTemplate}
         {include file=$newsTemplate} </td>
       <td bgcolor="white" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="0">
           <tr bgcolor=white>
@@ -54,7 +54,7 @@
           </tr>
           <tr>
             <td class="default">&nbsp;</td>
-            <td class="default"><textarea cols="50" rows="15" id="body" name="body">{$umBody|escape:"html"}</textarea></td>
+            <td class="default"><textarea cols="80" rows="24" id="body" name="body">{$umBody|escape:"html"}</textarea></td>
           </tr>
           <tr>
             <td class="headerright">{$umLabel.require_receipt}  &nbsp;</td>
@@ -82,4 +82,4 @@
     </tr>
   </table>
 </form>
-{include file=$footerTemplate} 
+{include file=$footerTemplate}

@@ -14,7 +14,7 @@ function doDays() {
 		if (tds[i].className=="regday" || tds[i].className=="today" || tds[i].className=="evt" || tds[i].className=="tevt") {
 			tds[i].onclick = function() {
 				var url = "./event.php?edate=" + this.id;
-				window.open(url, "Event", "width=450, height=375, scrollbars=1, resizable=1");
+				window.open(url, "Event", "width=550, height=450, scrollbars=1, resizable=1");
 				return false;
 			}
 		}

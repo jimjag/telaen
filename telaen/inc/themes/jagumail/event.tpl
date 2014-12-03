@@ -1,4 +1,4 @@
-{include file=$popupHeaderTemplate pageTitle=#evt_title# }
+{include file=$popupHeaderTemplate pageTitle=$umLabel.evt_title}
 
 <body>
 <div id="popup">

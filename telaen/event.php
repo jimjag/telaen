@@ -30,7 +30,7 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
     /*
      * Grab the event array and event, if any, for this date
      */
-    $events = new MyMonth($year, $month);
+    $events = new MyMonth($TLN->userfolder, $year, $month);
     $event = $events->getEvent($day);
 
     if (isset($evdelete) && $dayuid) {
@@ -76,5 +76,6 @@ if ($actionDone) {
 }
 unset($events);
 
-$smarty->assign('umPageTitle', 'Calendar Event');
+$smarty->assign('webmailTitle', $TLN->config['webmail_title']);
+$smarty->assign('umPageTitle', $TLN->config['webmail_title']);
 $smarty->display("$selected_theme/event.tpl");
