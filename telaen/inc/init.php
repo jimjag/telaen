@@ -166,15 +166,8 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     $TLN->mail_protocol = $auth['protocol'] = (strcasecmp($f_protocol, 'pop3') ? IMAP : POP3);
     $TLN->mail_prefix = $auth['folder_prefix'] = $f_prefix;
 
-    $capa = $TLN->mail_get_capa(true);
-    //
-    // Override what the server sez it can do with what the
-    // admin sez it can via config.php
-    //
-    foreach ($TLN->config['capa_override'] as $key => $value) {
-        $capa[$key] = $value;
-    }
-    $TLN->capabilities = $auth['capabilities'] = $capa;
+    $TLN->mail_get_capa();
+    $auth['capabilities'] = $TLN->capabilities;
 
     $refr = 1;
 

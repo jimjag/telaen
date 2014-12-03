@@ -50,8 +50,8 @@ class Telaen_core
     protected $_content = array();
     private $_sid     = 0;
     protected $_tnef    = "";
-    protected $mail_connection = null;
-    protected $authenticated = false;
+    protected $_mail_connection = null;
+    protected $_authenticated = false;
 
     /*******************/
 
