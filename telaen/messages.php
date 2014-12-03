@@ -185,7 +185,7 @@ $smarty->assign('umForms', $forms);
 $smarty->assign('umUserEmail', $auth['email']);
 $smarty->assign('umFolder', $folder);
 
-$messagelist = array();$func($textout);
+$messagelist = array();//$func($textout);
 
 $newmsgs = 0;
 if ($nummsg > 0) {
