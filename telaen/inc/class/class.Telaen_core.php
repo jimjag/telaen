@@ -1103,9 +1103,9 @@ class Telaen_core
     public function fetch_structure($email)
     {
         $ARemail = array();
-        $separador = "\r\n\r\n";
-        $header = trim(substr($email, 0, strpos($email, $separador)));
-        $bodypos = strlen($header)+strlen($separador);
+        $separator = "\n\r\n";
+        $header = trim(substr($email, 0, strpos($email, $separator)));
+        $bodypos = strlen($header)+strlen($separator);
         $body = substr($email, $bodypos, strlen($email)-$bodypos);
         $ARemail['header'] = $header;
         $ARemail['body'] = $body;
