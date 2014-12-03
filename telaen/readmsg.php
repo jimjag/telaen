@@ -62,7 +62,7 @@ if (isset($attachment)) {
 $smarty->assign('pageMetas', $nocache);
 
 $TLN->displayimages = $TLN->prefs['display-images'];
-$TLN->sanitize = ($sanitize_html || !$allow_scripts);
+$TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
 
 $email = $TLN->Decode($result);
 

@@ -78,7 +78,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
         $mail->CharSet = $TLN->charset;
         $mail->Hostname = getenv('SERVER_NAME');
-        $mail->From = ($allow_modified_from && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
+        $mail->From = ($TLN->config['allow_modified_from'] && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
         $mail->FromName = $mail->encodeHeader($TLN->prefs['real-name']);
         $mail->AddReplyTo($TLN->prefs['reply-to'], $TLN->mime_encode_headers($TLN->prefs['real-name']));
 
@@ -277,7 +277,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	}
 
 	function enviar() {
-		error_msg = new array();
+		error_msg = new Array();
 		frm = document.composeForm;
 		check_mail(frm.to.value);
 		check_mail(frm.cc.value);
@@ -325,7 +325,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 		chartosplit = ',;';
 		protectchar = '\"';
 		temp = '';
-		armail = new array();
+		armail = new Array();
 		inthechar = false;
 		lt = '<';
 		gt = '>';
@@ -413,7 +413,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true';</script>");
         }
         $result = $TLN->read_file($filename);
-        $TLN->sanitize = ($sanitize_html || !$allow_scripts);
+        $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
         $email = $TLN->Decode($result);
 
         $result = $TLN->fetch_structure($result);

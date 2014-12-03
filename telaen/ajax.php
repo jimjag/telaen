@@ -55,7 +55,7 @@ if (isset($_POST['action'])) {
             $mail->Password = $auth['pass'];
 
             // build the email
-            $mail->From = ($allow_modified_from && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
+            $mail->From = ($TLN->config['allow_modified_from'] && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
             $mail->FromName = $mail->encodeHeader($TLN->prefs['real-name']);
             $mail->AddReplyTo($TLN->prefs['reply-to'], $mail->encodeHeader($TLN->prefs['real-name']));
             $mail->AddAddress($recipient);
