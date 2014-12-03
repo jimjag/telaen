@@ -1579,7 +1579,6 @@ ENDOFREDIRECT;
     {
         $a = "";
         foreach (array('b', 'k', 'M', 'G') as $a) {
-            echo "$val $a \n";
             if ($val > 1024) {
                 $val /= 1024;
             } else {
