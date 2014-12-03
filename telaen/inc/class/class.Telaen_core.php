@@ -1014,7 +1014,7 @@ class Telaen_core
         } else {
             $datetimezone = 0;
         }
-        if (preg_match('/(\\+|-)+([0-9]{2})([0-9]{2})/', $this->timezone, $regs)) {
+        if (preg_match('/(\\+|-)+([0-9]{2})([0-9]{2})/', $this->prefs['timezone'], $regs)) {
             $usertimezone = ($regs[1].$regs[2]*3600)+($regs[1].$regs[3]*60);
         } else {
             $usertimezone = 0;

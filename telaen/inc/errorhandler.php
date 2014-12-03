@@ -9,16 +9,15 @@ trim($log_fname);
 if (empty($log_fname)) {
     $log_fname = "telaen_error.log";
 }
+if ($log_fname[0] == '/') {
+    $elog = $log_fname;
+} else {
+    $elog = $TLN->config['temporary_directory'].'/'.$log_fname;
+}
 
 function errorHandler($errno, $errmsg, $filename, $linenum, $vars)
 {
-    global $log_fname, $TLN;
-    if ($log_fname[0] == '/') {
-        $elog = $log_fname;
-    } else {
-        $elog = $TLN->config['temporary_directory'].'/'.$log_fname;
-    }
-
+    global $elog;
     $dt = date('Ymd H:i:s T');
 
     $etype = array(
@@ -51,5 +50,6 @@ if ($TLN->config['display_all_errors']) {
     error_reporting(-1);
 } else {
     error_reporting(0);
+    ini_set('error_log', $elog);
     $oeh = set_error_handler('errorHandler');
 }
