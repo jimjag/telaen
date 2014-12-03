@@ -1721,7 +1721,7 @@ class Telaen extends Telaen_core
     protected function _mail_get_uidl($id = "", $message = array())
     {
         if (!empty($id)) {
-            if ($this->haveuidl) {
+            if ($this->capabilities['UIDL']) {
                 $this->_mail_send_command("UIDL $id");
                 $buffer = $this->_mail_get_line();
                 list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
@@ -1754,7 +1754,7 @@ class Telaen extends Telaen_core
             }
         } else {
             $retarray = array();
-            if ($this->haveuidl) {
+            if ($this->capabilities['UIDL']) {
                 $this->_mail_send_command('UIDL');
 
                 $buffer = $this->_mail_get_line();

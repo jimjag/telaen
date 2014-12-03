@@ -113,6 +113,7 @@ class Telaen_core
             return;
         }
         $f = fopen($strfile, 'rb');
+        $result = "";
         while (!feof($f)) {
             $result .= preg_replace('/\r?\n/', "\r\n", fread($f, 4096));
             $pos = strpos($result, "\r\n\r\n");
@@ -937,7 +938,7 @@ class Telaen_core
                 if (preg_match('/((\\+|-)[0-9]{4})/i', $user_date, $regs)) {
                     $mytimezone = $regs[1];
                 } else {
-                    $mytimezone = $this->timezone;
+                    $mytimezone = $this->prefs['timezone'];
                 }
             }
         } elseif (preg_match('|(([A-Z]{3})[ ]+([0-9]{1,2})[ ]+([0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]+([0-9]{4}))|i', $received, $regs)) {
@@ -946,7 +947,7 @@ class Telaen_core
             if (preg_match('/((\\+|-)[0-9]{4})/i', $user_date, $regs)) {
                 $mytimezone = $regs[1];
             } else {
-                $mytimezone = $this->timezone;
+                $mytimezone = $this->prefs['timezone'];
             }
         } elseif (preg_match('/([0-9]{1,2}[ ]+[A-Z]{3}[ ]+[0-9]{4}[ ]+[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2})[ ]?((\+|-)[0-9]{4})?/i', $user_date, $regs)) {
             //eg. Tue, 4 Sep 2001 16:22:31 -0000 (from Date header)
@@ -956,12 +957,12 @@ class Telaen_core
                 if (preg_match('/((\\+|-)[0-9]{4})/i', $user_date, $regs)) {
                     $mytimezone = $regs[1];
                 } else {
-                    $mytimezone = $this->timezone;
+                    $mytimezone = $this->prefs['timezone'];
                 }
             }
         } else {
             $mydate = date('d M Y H:i');
-            $mytimezone = $this->timezone;
+            $mytimezone = $this->prefs['timezone'];
         }
 
         $myarray['date'] = $this->build_mime_date($mydate, $mytimezone);
