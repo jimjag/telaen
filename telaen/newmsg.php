@@ -22,10 +22,10 @@ if (isset($tipo) && $tipo == 'send') {
     $mail->PluginDir = './inc/';
 
     if ($phpmailer_sendmail != "") {
-        $mail->Sendmail = $phpmailer_sendmail;
+        $mail->Sendmail = $TLN->config['phpmailer_sendmail'];
     }
     if ($phpmailer_timeout != 0) {
-        $mail->Timeout = $phpmailer_timeout;
+        $mail->Timeout = $TLN->config['phpmailer_timeout'];
     }
 
     $ARTo = $TLN->get_names(stripslashes($to));
@@ -50,12 +50,12 @@ if (isset($tipo) && $tipo == 'send') {
         $mail->SetLanguage('en', 'inc/language/');
 
         // for password authenticated servers
-        $mail->SMTPAuth = $use_password_for_smtp;
+        $mail->SMTPAuth = $TLN->config['use_password_for_smtp'];
 
         // use user data or static data for smtp auth
         if ($smtp_static_auth) {
-            $mail->Username = $smtp_static_user;
-            $mail->Password = $smtp_static_password;
+            $mail->Username = $TLN->config['smtp_static_user'];
+            $mail->Password = $TLN->config['smtp_static_password'];
         } else {
             $mail->Username = $auth['user'];
             $mail->Password = $auth['pass'];
@@ -82,7 +82,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         $mail->FromName = $mail->encodeHeader($TLN->prefs['real-name']);
         $mail->AddReplyTo($TLN->prefs['reply-to'], $TLN->mime_encode_headers($TLN->prefs['real-name']));
 
-        $mail->Host = $smtp_server;
+        $mail->Host = $TLN->config['smtp_server'];
         $mail->WordWrap = 76;
         $mail->Priority = $priority;
 
@@ -146,7 +146,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
         $mail->Subject = $TLN->mime_encode_headers(stripslashes($subject));
         $mail->Body = stripslashes($body);
-        $mail->Mailer = $mailer_type;
+        $mail->Mailer = $TLN->config['mailer_type'];
 
         if (($mail->TelaenSend()) === false) {
             $smarty->assign('umMailSent', false);
