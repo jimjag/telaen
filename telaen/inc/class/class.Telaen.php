@@ -293,7 +293,7 @@ class Telaen extends Telaen_core
                 } else {
                     $this->_authenticated = $this->_mail_auth_pop($checkfolders);
                 }
-                if ($this->_authenticated) $this->mail_get_capa();
+                // if ($this->_authenticated) $this->mail_get_capa();
                 return $this->_authenticated;
             }
         }
