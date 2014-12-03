@@ -1368,7 +1368,6 @@ class Telaen extends Telaen_core
 
         if ($this->mail_ok_resp($buffer)) {
             $this->_RmDirR($this->userfolder.$boxname);
-
             return true;
         } else {
             return false;
