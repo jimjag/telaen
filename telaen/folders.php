@@ -193,8 +193,8 @@ $AuthSession->Save($auth);
 $TLN->mail_disconnect();
 unset($AuthSession, $TLN);
 // Sort and merge the 2 folders arrays
-$Telaen::array_qsort2ic($system, 'name');
-$Telaen::array_qsort2ic($personal, 'name');
+Telaen::array_qsort2ic($system, 'name');
+Telaen::array_qsort2ic($personal, 'name');
 
 $umFolderList = array_merge((array) $system, (array) $personal);
 
