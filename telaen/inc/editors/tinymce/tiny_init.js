@@ -2,11 +2,9 @@
 // this init the editor
 tinyMCE.init({
 	mode : "textareas",
-	theme : "advanced",
+	theme : "modern",
 	language : "en",
-	plugins : 'safari,advhr,directionality,contextmenu,paste,emotions,spellchecker,fullscreen',
-	skin : 'o2k7',
-	skin_variant : 'silver',
+    plugins : 'table,advlist,spellchecker,insertdatetime,preview,searchreplace,print,contextmenu,paste,directionality,fullscreen,emoticons',
 	theme_advanced_buttons1 : "fontselect,fontsizeselect,bold,italic,underline,separator,undo,redo,separator,spellchecker,separator,charmap,outdent,indent,blockquote,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,separator,forecolor,backcolor,separator,emotions,hr,advhr,code,fullscreen",
 	theme_advanced_buttons2 : "",
 	theme_advanced_buttons3 : "",

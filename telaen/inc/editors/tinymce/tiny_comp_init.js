@@ -1,7 +1,7 @@
 // compressor init
 tinyMCE_GZ.init({
-        plugins : 'table,advimage,advlink,iespell,insertdatetime,preview,flash,searchreplace,print,contextmenu,paste,directionality,fullscreen',
-        themes : 'simple,advanced',
+        plugins : 'table,advlist,spellchecker,insertdatetime,preview,searchreplace,print,contextmenu,paste,directionality,fullscreen,emoticons',
+        themes : 'modern',
         languages : 'en',
         disk_cache : true,
         debug : false
