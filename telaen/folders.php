@@ -205,7 +205,7 @@ $smarty->assign('umTotalUsed', Telaen::bytes2bkmg($totalused));
 $quota_enabled = ($quota_limit) ? 1 : 0;
 $smarty->assign('umQuotaEnabled', $quota_enabled);
 $smarty->assign('umQuotaLimit', Telaen::bytes2bkmg($quota_limit));
-$usageGraph = $TLN->get_usage_graphic($totalused, $quota_limit);
+$usageGraph = Telaen::get_usage_graphic($totalused, $quota_limit);
 $smarty->assign('umUsageGraph', $usageGraph);
 $noquota = ($totalused > $quota_limit) ? 1 : 0;
 $smarty->assign('umNoQuota', $noquota);
