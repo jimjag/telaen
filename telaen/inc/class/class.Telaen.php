@@ -1830,6 +1830,7 @@ class Telaen extends Telaen_core
      */
     public function cleanup_dirs($userfolder, $logout)
     {
+        global $mbox;
         if (($this->config['force_unmark_read_overrule'] && $this->config['force_unmark_read_setting']) ||
                  ($this->prefs['unmark-read'] && !$this->config['force_unmark_read_overrule'])) {
             $cleanme = $userfolder.'inbox/';
