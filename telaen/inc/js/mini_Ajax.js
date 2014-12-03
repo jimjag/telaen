@@ -190,7 +190,7 @@ Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
 		if (parameters.length > 0) parameters += '&_=';
 
 		try {
-			if (parameters && this.option.method === 'get') {
+			if (parameters && this.option.method == 'get') {
 			// when GET, append parameters to URL
 				url += (url.include('?') ? '&' : '?') + parameters;
 			}
@@ -209,8 +209,9 @@ Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
 			this.transport.send(this.options.method == 'post' ? body : null);
 
 			/* Force Firefox to handle ready state 4 for synchronous requests */
-			if (!this.options.asynchronous && this.transport.overrideMimeType)
+			if (!this.options.asynchronous && this.transport.overrideMimeType) {
 				this.onStateChange();
+			}
 
 		} catch (e) {
 		}
@@ -259,11 +260,12 @@ Ajax.Request.prototype = Object.extend(new Ajax.Base(), {
 		var event = Ajax.Request.Events[readyState];
 		var transport = this.transport, json = this.evalJSON();
 
-		if (event == 'Complete')
+		if (event == 'Complete') {
 			this._complete = true;
 			(this.options['on' + this.transport.status]
 			 || this.options['on' + (this.responseIsSuccess() ? 'Success' : 'Failure')]
 			 || Prototype.emptyFunction)(transport, json);
+		}
 
 		(this.options['on' + event] || Prototype.emptyFunction)(transport, json);
 
