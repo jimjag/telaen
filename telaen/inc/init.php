@@ -208,9 +208,8 @@ $TLN->userfolder = $TLN->config['temporary_directory'].preg_replace('/[^a-z0-9\.
 //$UserMbox = new Session();
 //$mbox = &$AuthSession->Load('telaen_mbox');
 
-$UserMbox = new Mbox();
+$UserMbox = new Mbox($TLN->userfolder);
 $TLN->UserMbox = $UserMbox;
-$mbox = &$UserMbox->Load($TLN->userfolder.'_infos/mboxes.ucf');
 
 // avoid missing settings allow dirs creation with 000 perms
 if (isset($TLN->config['dirperm']) && $TLN->config['dirperm'] != 0000) {
