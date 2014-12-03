@@ -206,6 +206,18 @@ class Telaen_core
         rmdir($location);
     }
 
+    /*
+     * Encode header strings to be MIME compliant
+     * @param string $string string to encode
+     * @return string
+     */
+    public function mime_encode_headers($string) {
+        if($string == "") return;
+        if(!preg_match("/^([[:print:]]*)$/",$string))
+            $string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
+        return $string;
+    }
+
     /**
      * Add a body, to a container.
      * Some malformed messages have more than one body.
