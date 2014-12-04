@@ -603,7 +603,7 @@ class Telaen extends Telaen_core
         }
         $this->mail_set_flag($msg, '\\DELETED', '+');
 
-        return true;
+        return $this->mbox->del_message($msg);
     }
 
     protected function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0)
@@ -653,7 +653,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        return true;
+        return $this->mbox->del_message($msg);
     }
 
     /**
@@ -1462,6 +1462,7 @@ class Telaen extends Telaen_core
         if ($this->mail_nok_resp($buffer)) {
             return false;
         }
+        return true;
     }
 
     /**
@@ -1488,20 +1489,7 @@ class Telaen extends Telaen_core
         }
 
         if ($this->mail_protocol == IMAP && in_array($flagname, $this->flags)) {
-            if ($this->_current_folder != $msg['folder']) {
-                $this->mail_select_box($msg['folder']);
-            }
-
-            if ($flagtype != '+') {
-                $flagtype = '-';
-            }
-            $this->_mail_send_command('STORE '.$msg['msg'].':'.$msg['msg'].' '.$flagtype."FLAGS ($flagname)");
-            $buffer = $this->_mail_get_line();
-
-            while (!preg_match("/^(".$this->get_sid()." (OK|NO|BAD))/i", $buffer)) {
-                $buffer = $this->_mail_get_line();
-            }
-            if ($this->mail_nok_resp($buffer)) {
+            if (!$this->_mail_set_flag_imap($msg, $flagname, $flagtype)) {
                 return false;
             }
         } elseif (!file_exists($msg['localname'])) {
@@ -1546,6 +1534,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
+            $this->sync_mbox = true;
 
             $email = "$header\r\n\r\n$body";
 

@@ -44,6 +44,7 @@ class Telaen_core
     public $mbox              = null;
     public $AuthSession       = "";
     public $status            = STATUS_OK;
+    public $sync_mbox         = false;
 
     // internal
     protected $_msgbody = "";

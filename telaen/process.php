@@ -21,15 +21,10 @@ $headers = null;
 $folder = Telaen::fs_safe_folder($folder); // just in case!
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
-if (!isset($mbox['headers'])) {
-    $mbox['headers'] = array();
-}
+$headers = $mbox->get_headers($folder);
+$messagecount = count($headers);
 
-if (isset($mbox['headers'][$folder])) {
-    $headers = $mbox['headers'][$folder];
-}
-
-if (!is_array($headers)
+if (!$messagecount
     || isset($decision)
     || isset($refr)
     || isset($mlist)) {
@@ -58,7 +53,6 @@ if (!is_array($headers)
             $other_folder_key = 'inbox';
         }
     }
-    $messagecount = count($headers);
 
     if (isset($start_pos) && isset($end_pos)) {
         $delarray = array();
