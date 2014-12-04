@@ -456,7 +456,9 @@ if ($tempSize) {
 } else {
     $iniLimit = "Unlimited";
 }
-echo("<hr><h2>Testing your memory limits</h2>");
+echo("<hr><h2>Testing your PHP configuration</h2>");
+
+echo("<hr><h3>Testing your memory limits</h3>");
 
 if ($tempSize && $memoryLimit < $megs16) {
     echo('<span class="fail">!! FAILED !!</span>
@@ -470,7 +472,7 @@ if ($tempSize && $memoryLimit < $megs16) {
     echo('<span class="pass">PASSED</span>  (memory_limit: '.$iniLimit.')<br/>');
 }
 
-echo('<hr><h2>Testing server installation</h2>');
+echo('<hr><h3>Testing for safe_mode</h3>');
 
 
 if (ini_get('safe_mode')) {
@@ -480,6 +482,19 @@ if (ini_get('safe_mode')) {
 } else {
     echo('<span class="pass">PASSED</span><br/>');
 }
+
+echo('<hr><h3>Testing for SQLITE3</h3>');
+
+$tfile = '/tmp/telaen-'.uniqid().'-test.db';
+$foo = new SQLite3($tfile);
+if (!$foo) {
+    echo('<span class="pass">PASSED</span><br/>');
+} else {
+    echo('<span class="fail">!! FAILED !!</span>
+	<br/>Could not create a SQLite3 instance at: $tfile<br/>');
+    $error = true;
+}
+
 
 echo('<br/><hr><br/>');
 if ($error) {

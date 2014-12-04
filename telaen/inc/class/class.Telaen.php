@@ -1534,7 +1534,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->sync_mbox = true;
+            $this->mbox->update_message($msg, array('header', 'flags'));
 
             $email = "$header\r\n\r\n$body";
 

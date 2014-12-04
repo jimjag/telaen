@@ -29,6 +29,27 @@ EOF_FOLDERS;
         'type' TEXT,
         'size' INT);
 EOF_ATTACHS;
+    private $mschema = array(
+        'date' => 'INT,',
+        'hparsed' => 'INT,',
+        'id' => 'INT,',
+        'msg' => 'INT,',
+        'size' => 'INT,',
+        'priority' => 'INT,',
+        'attach' => 'INT,',
+        'folder' => 'TEXT,',
+        'uidl' => 'TEXT,',
+        'subject' => 'TEXT,',
+        'from' => 'TEXT,',
+        'fromname' => 'TEXT,',
+        'to' => 'TEXT,',
+        'cc' => 'TEXT,',
+        'flags' => 'TEXT,',
+        'messageid' => 'TEXT,',
+        'localname' => 'TEXT,',
+        'header' => 'TEXT'
+    );
+
     public $folders = array();
     public $attachments = array();
     public $headers = array();
@@ -72,6 +93,17 @@ EOF_ATTACHS;
         $d->close();
         $this->allok();
     }
+
+    /**
+     * Return CRC32 hash of string
+     * @param string $folder
+     * @return int
+     */
+    public function getKey($folder)
+    {
+        return crc32($folder);
+    }
+
 
     private function allok()
     {
@@ -156,16 +188,6 @@ EOF_ATTACHS;
     }
 
     /**
-     * Return CRC32 hash of string
-     * @param string $folder
-     * @return int
-     */
-    public function getKey($folder)
-    {
-        return crc32($folder);
-    }
-
-    /**
      * Add new folder/emailbox to DB
      * @param string $folder
      * @param int $sys
@@ -173,34 +195,18 @@ EOF_ATTACHS;
      */
     public function add_folder($folder, $sys = 0)
     {
-        $table =<<<EOF_MESSAGES
-        CREATE TABLE folder_%s
-        ('date' INT,
-        'hparsed' INT,
-        'id' INT,
-        'msg' INT,
-        'size' INT,
-        'priority' INT,
-        'attach' INT,
-        'folder' TEXT,
-        'uidl' TEXT,
-        'subject' TEXT,
-        'from' TEXT,
-        'fromname' TEXT,
-        'to' TEXT,
-        'cc' TEXT,
-        'flags' TEXT,
-        'messageid' TEXT,
-        'localname' TEXT,
-        'header' TEXT);
-EOF_MESSAGES;
         $this->allok();
+        $table = 'CREATE TABLE folder_%s (';
+        foreach ($this->mschema as $key => $val) {
+            $table .= " '$key' $val";
+        }
+        $table .= ");";
         $query = sprintf($table, $this->getKey($folder));
         if ($this->query($query)) {
             $query = sprintf("INSERT into folders (name, system) VALUES ('%s', %d);",
                 $folder, intval($sys));
             if ($this->query($query)) {
-                $this->folders[$name] = intval($sys);
+                $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys));
                 return true;
             }
         }
@@ -232,21 +238,24 @@ EOF_MESSAGES;
 
     public function add_message($folder, $msg)
     {
-
+        /*
+            end($a);
+            $last_id=key($a);
+         */
     }
 
 
     public function del_message($msg)
     {
         $this->allok();
-        $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'='%s' ;", $msg['folder'], $msg['uidl']);
+        $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'='%s' ;", $this->getKey($msg['folder']), $msg['uidl']);
         if (!$this->query($query)) {
             $this->ok = false;
             $this->message = "query failed: $query";
             return false;
         }
         /* If we deleted from the active folder, then update our array */
-        if ($folder == $this->active_folder) {
+        if ($msg['folder'] == $this->active_folder) {
             unset($this->headers[$msg['index']]);
         }
         return true;
@@ -262,4 +271,56 @@ EOF_MESSAGES;
     {
 
     }
+
+
+    /**
+     * Take the message array and update the fields in the DB
+     * @param type $msg Message to be updated/synced in DB
+     * @param mixed $fields "*" for all, or array of fields
+     * @return boolean
+     */
+    /*
+     * The complexity is allow for the use of $this->mschema:
+     *  Having the message schema defined in one location is nice.
+     */
+    public function update_message($msg, $fields = "*")
+    {
+        $this->allok();
+        $query = sprintf('UPDATE folder_%s SET ', $this->getKey($msg['folder']));
+        if ($fields = "*") {
+            $thelist = $this->mschema;
+        } elseif (is_array($fields) && count($fields) > 0) {
+            foreach ($fields as $key) {
+                if (isset($this->mschema[$key])) {
+                    $thelist[] = array($key => $this->mschema[$key]);
+                }
+            }
+        } elseif (!is_array($field)) {
+            $this->ok = false;
+            $this->message = "bad param fields";
+            return false;
+        } else {
+            /* nothing to do... is this OK or an error? */
+            return true;
+        }
+        if (!count($thelist)) {
+            $this->ok = false;
+            $this->message = "no valid fields";
+            return false;
+        }
+        foreach ($thelist as $key => $val) {
+            $t = ($val[0] == "T" ? "'%s'" : "%d");
+            $query .= " '$key'=$t,";
+            $query = sprintf($query, $msg[$key]);
+        }
+        $query = rtrim($query, ",");
+        $query .= " WHERE 'uidl'='%s' ;";
+        $query = sprintf($query, $msg['uidl']);
+         if (!$this->query($query)) {
+            $this->ok = false;
+            $this->message = "query failed: $query";
+            return false;
+        }
+        return true;
+   }
 }
