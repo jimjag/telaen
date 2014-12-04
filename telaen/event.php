@@ -41,7 +41,7 @@ if ($year > 2009 && $year < 2050 && $month > 0 && $month <  13 && $day > 0 && $d
     if (isset($evsave) && $etext) {
         $starttime = sprintf('%02s%02s00', $starthour, $startmin);
         $stoptime = sprintf('%02s%02s00', $stophour, $stopmin);
-        $etext = HTMLFilter($etext, 'images/trans.gif', $block_external_images);
+        $etext = HTMLFilter($etext, 'images/trans.gif', $this->config['block_external_images']);
         $events->setEvent($day, $starttime, $stoptime, $etext, $dayuid);
         $events->saveEvents();
         $actionDone = true;
