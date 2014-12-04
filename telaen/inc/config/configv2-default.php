@@ -1,18 +1,18 @@
 <?php
-/************************************************************************
-Telaen is a GPL'ed software developed by
 
- - The Telaen Group
- - http://www.telaen.org/
+/* * **********************************************************************
+  Telaen is a GPL'ed software developed by
 
-*************************************************************************/
+  - The Telaen Group
+  - http://www.telaen.org/
+
+ * *********************************************************************** */
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 ########################################################################
 # Load in the version information
 ########################################################################
-
 ########################################################################
 # Location of the Smarty template installation.
 # We bundle Smarty, but you can point it to your
@@ -41,17 +41,13 @@ $config['systemNews'] = $systemNews;
 # _ Please attention _:
 # The temporary files will be stored on this folder
 # For security reasons, do not use web-shared folders
-
 # ** The Web Server needs write-permission on this folder
-
 # * Unix/Linux users use.
 # /tmp/telaen
 # * Win32 users
 # c:/winnt/temp/telaen
-
 # NEVER use backslashes (\). Always use forward slashes (/),
 # for all operating systems, INCLUDING Windows
-
 # For maximum security, do NOT place this under your web site
 # folder !
 ########################################################################
@@ -83,7 +79,6 @@ $config['webmail_title'] = 'Telaen Webmail';
 ########################################################################
 
 $config['quota_limit'] = '4096k';  //  in KB, eg. 4096 Kb = 4MB
-
 ##
 # Example of quota limit array. All users from @example.com
 # will have a quota of 4megs!, except jim@example.com who will
@@ -91,15 +86,14 @@ $config['quota_limit'] = '4096k';  //  in KB, eg. 4096 Kb = 4MB
 # sequentially... If the order was reverse, then jim would
 # also be set to 4M as well!
 ##
-$config['quota_limits'] = array (
-    array ('/@example.com/i', '4M' ),
-    array ('/jim@example.com/i', 0)
+$config['quota_limits'] = array(
+    array('/@example.com/i', '4M'),
+    array('/jim@example.com/i', 0)
 );
 
 ########################################################################
 # Mail server type:
 # allowed values:
-
 # 'DETECT' -------->	Guess the pop3 server. If you are running Telaen
 #			in a domain 'www.company.com', the script will
 #			use 'PREFIX.company.com' as your server. you
@@ -107,23 +101,18 @@ $config['quota_limits'] = array (
 #			Also, the var $config['mail_detect_remove'] can be set
 #			to 'www.', then the script get rid the 'www' and
 #			put the prefix, eg. pop3.company.com.br
-
 #'ONE-FOR-EACH' -->	Each domain have your own mail server.
 #			The script will load the list of domains/servers from
 #			var $config['mail_servers'].
-
 #'ONE-FOR-ALL' --->	If you use this option, your users must supply the
 #			full email address as username. You can set the mail
 #			server in the var $config['default_mail_server']
 #
-
 # LOGIN_TYPE
-
 # Note. You can supply the LOGIN_TYPE according to your MAIL SERVER.
 # Eg. If your mail server requires usernames in user@domain.com, you must
 # specify the LOGIN_TYPE as '%user%@%domain%'. You can combine it according to
 # your server. eg.
-
 # %user%
 # %user%@%domain%
 # %user%.%domain%
@@ -136,7 +125,6 @@ $config['quota_limits'] = array (
 # imap -> 143
 # IMAP is fastest, but all functions of Telaen work with POP3
 ########################################################################
-
 ########################################################################
 
 $config['mail_server_type'] = 'ONE-FOR-ALL';
@@ -164,26 +152,26 @@ $config['mail_detect_folder_prefix'] = "";
 
 
 $config['mail_servers'][] = array(
-	'domain' 	=> 'domain.com',
-	'server' 	=> 'pop3.domain.com',
-	'login_type' 	=> '%user%',
-	'protocol'	=> 'pop3',
-	'port'		=> '110',
-	'folder_prefix'	=> ""
+    'domain' => 'domain.com',
+    'server' => 'pop3.domain.com',
+    'login_type' => '%user%',
+    'protocol' => 'pop3',
+    'port' => '110',
+    'folder_prefix' => ""
 );
 
 
 /*
-$config['mail_servers'][] = array(
-	'domain' 		=> 'another-domain.com',
-	'server' 		=> 'mail.another-domain.com',
-	'login_type' 	=> '%user%@%domain%',
-	'protocol'		=> 'imap',
-	'port'			=> '143',
-	'folder_prefix'	=> 'INBOX.'
-);
+  $config['mail_servers'][] = array(
+  'domain' 		=> 'another-domain.com',
+  'server' 		=> 'mail.another-domain.com',
+  'login_type' 	=> '%user%@%domain%',
+  'protocol'		=> 'imap',
+  'port'			=> '143',
+  'folder_prefix'	=> 'INBOX.'
+  );
 
-*/
+ */
 
 ########################################################################
 # TYPE: ONE-FOR-ALL
@@ -226,7 +214,6 @@ $config['mail_use_top'] = false;
 #
 # NOTE: You can add your own as needed
 ########################################################################
-
 ##
 ## COMPATIBILITY NOTE:
 ##   Telaen 1.x used:
@@ -279,7 +266,6 @@ $config['phpmailer_timeout'] = 0;
 ########################################################################
 
 $config['smtp_server'] = 'localhost';  #YOU NEED CHANGE IT !!
-
 ########################################################################
 # Use SMTP password (AUTH LOGIN type)
 ########################################################################
@@ -335,24 +321,29 @@ $config['default_sortorder'] = 'DESC';
 ########################################################################
 
 $config['default_preferences'] = array(
-	'send_to_trash_default' 	=> true,   # send deleted messages to trash
-	'st_only_read_default' 	=> true,       # only read messages, otherwise, delete it
-	'save_to_sent_default'		=> true,   # send sent messages to sent
-	'empty_trash_default'		=> true,   # empty trash on logout
-	'empty_spam_default'		=> true,   # empty spam on logout
-	'unmark_read_default'		=> false,  # Unmark READ messages as read (appear as unread)
-	'sortby_default'		=> 'date',     # alowed: 'attach','subject','fromname','date','size'
-	'sortorder_default'		=> 'DESC',     # alowed: 'ASC','DESC'
-	'rpp_default'			=> 20,         #records per page (messages), alowed: 10,20,30,40,50,100,200
-	'add_signature_default'		=> false,  # add the signature by default
-	'require_receipt_default'	=> false,  # require read receipt by default
-	'signature_default'		=> "",         # a default signature for all users, use text only, with multiple lines if needed
-	'timezone_default'		=> '-0000',	   # timezone, format (+|-)HHMM (H=hours, M=minutes)
-	'display_images_default'	=> true,   # automatically show attached images in the body of message
-	'editor_mode_default'		=> 'text', # use 'html' or 'text' to set default editor.
-	'refresh_time_default'		=> 10,     # after this time, the message list will be refreshed, in minutes
-	'spamlevel_default'		=> 0           # Sensitivity to X-Spam-Level detection
-	);
+    'send_to_trash_default' => true,    # send deleted messages to trash
+    'st_only_read_default' => true,     # only read messages, otherwise, delete it
+    'save_to_sent_default' => true,     # send sent messages to sent
+    'empty_trash_default' => true,      # empty trash on logout
+    'empty_spam_default' => true,       # empty spam on logout
+    'unmark_read_default' => false,     # Unmark READ messages as read (appear as unread) ??????
+    'sortby_default' => 'date',         # allowed: 'attach','subject','fromname','date','size'
+    'sortorder_default' => 'DESC',      # allowed: 'ASC','DESC'
+    'rpp_default' => 20,                # records per page (messages), alowed: 10,20,30,40,50,100,200
+    'add_signature_default' => false,   # add the signature by default
+    'require_receipt_default' => false, # require read receipt by default
+    'signature_default' => "",          # a default signature for all users, use text only, with multiple lines if needed
+    'timezone_default' => '-0000',      # timezone, format (+|-)HHMM (H=hours, M=minutes)
+    'display_images_default' => true,   # automatically show attached images in the body of message
+    'editor_mode_default' => 'text',    # use 'html' or 'text' to set default editor.
+    'refresh_time_default' => 10,       # after this time, the message list will be refreshed, in minutes
+    'keep_on_server_default' => false,  # Keep Email on server after reading/downloading
+                                        # For IMAP, this should be true usually, since people
+                                        # don't download their email locally; for POP, this
+                                        # this should be false, UNLESS Telaen is NOT their
+                                        # only email client for their account
+    'spamlevel_default' => 0            # Sensitivity to X-Spam-Level detection
+);
 
 ########################################################################
 # Sometimes, we cannot figure out the correct timezone for the
@@ -450,7 +441,6 @@ $config['block_external_images'] = false;
 ########################################################################
 
 $config['idle_timeout'] = 20; //minutes
-
 ########################################################################
 # Require cookies enabled to handle session
 ########################################################################
@@ -475,7 +465,6 @@ $config['allow_user_change_theme'] = true; //allow users select theme
 $config['default_theme'] = 'default'; //key of theme, starting with zero
 $config['allow_user_change_language'] = true; //allow users select language
 $config['default_language'] = 'en_US'; //key of language
-
 # Themes
 $config['themes'] = array(
     'default' => 'Telaen Default',
@@ -490,7 +479,7 @@ $config['themes'] = array(
 $config['languages'] = array(
     'afr' => 'Afrikaans',
     'sq_AL' => 'Albanian (Shqip)',
-    'ar'    => 'Arabic (العربية)',
+    'ar' => 'Arabic (العربية)',
     'hy_AM' => 'Armenian (Հայերեն)',
     'az_AZ' => 'Azerbaijani (Azərbaycanca)',
     'eu_ES' => 'Basque (Euskara)',
@@ -505,7 +494,7 @@ $config['languages'] = array(
     'da_DK' => 'Danish (Dansk)',
     'nl_NL' => 'Dutch (Nederlands)',
     'en_US' => 'English (US)',
-    'eo'    => 'Esperanto',
+    'eo' => 'Esperanto',
     'et_EE' => 'Estonian (Eesti)',
     'fo_FO' => 'Faroese (Føroyskt)',
     'fil' => 'Filipino',
@@ -527,7 +516,7 @@ $config['languages'] = array(
     'kan' => 'Kannada',
     'km_KH' => 'Khmer (ភាសាខ្មែរ)',
     'ko_KR' => 'Korean (한국어)',
-    'ku'    => 'Kurdish (Kurmancî)',
+    'ku' => 'Kurdish (Kurmancî)',
     'lao' => 'Lao',
     'lv_LV' => 'Latvian (Latviešu)',
     'lt_LT' => 'Lithuanian (Lietuviškai)',
