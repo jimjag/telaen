@@ -27,15 +27,6 @@ EOF_FOLDERS;
         type TEXT,
         size TEXT);
 EOF_ATTACHS;
-    private $table_messages =<<<EOF_MESSAGES
-        CREATE TABLE $folder
-        (key INT NOT NULL,
-        folder TEXT NOT NULL,
-        localname TEXT,
-        name TEXT,
-        type TEXT,
-        size TEXT);
-EOF_MESSAGES;
 
     /**
      * Construct: open DB and create tables if needed
@@ -102,7 +93,16 @@ EOF_MESSAGES;
 
     public function add($folder)
     {
-        $stmt = $this->prepare($this->table_messages);
+        $table =<<<EOF_MESSAGES
+        CREATE TABLE $folder
+        (key INT NOT NULL,
+        folder TEXT NOT NULL,
+        localname TEXT,
+        name TEXT,
+        type TEXT,
+        size TEXT);
+EOF_MESSAGES;
+        $stmt = $this->prepare($table);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
