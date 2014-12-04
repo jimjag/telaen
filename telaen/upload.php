@@ -33,9 +33,8 @@ if (isset($rem) && $rem != "") {
 		setTimeout('self.close()',500);\n
 	</script>\n
 	");
-} elseif (isset($userfile) &&
-        ((!is_array($userfile) && is_uploaded_file($userfile)) ||
-        is_uploaded_file($userfile['tmp_name']))) {
+} elseif (isset($userfile)
+    && ((!is_array($userfile) && is_uploaded_file($userfile)) || is_uploaded_file($userfile['tmp_name']))) {
     //if(file_exists($userfile['tmp_name'])) {
 
 

@@ -1245,10 +1245,10 @@ class Telaen_core
      */
     public function fix_prefix($folder, $add = false)
     {
-        if ($this->mail_protocol == IMAP &&
-            !preg_match('|^inbox$|i', $folder) &&
-            $this->mail_prefix &&
-            !preg_match('|^_|', $folder)) {
+        if ($this->mail_protocol == IMAP
+            && !preg_match('|^inbox$|i', $folder)
+            && $this->mail_prefix
+            && !preg_match('|^_|', $folder)) {
             if ($add) {
                 if (!preg_match('/^'.preg_quote($this->mail_prefix).'/', $folder)) {
                     return $this->mail_prefix.$folder;
@@ -1461,6 +1461,7 @@ ENDOFREDIRECT;
             $this->prefs['editor-mode'] = $editor_mode_default;
             $this->prefs['refresh-time'] = $refresh_time_default;
             $this->prefs['spamlevel'] = $spamlevel_default;
+            $this->prefs['keep-on-server'] = $keep_on_server_default;
             $this->prefs['version'] = $this->appversion;
         } else {
             $prefs = file($pref_file);

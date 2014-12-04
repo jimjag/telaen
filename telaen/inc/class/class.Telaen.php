@@ -580,9 +580,9 @@ class Telaen extends Telaen_core
 
         /*if the pointer is here, no one problem occours*/
 
-        if ($send_to_trash &&
-            $msg['folder'] != 'trash' &&
-            (!$save_only_read || ($save_only_read && $read))) {
+        if ($send_to_trash
+            && $msg['folder'] != 'trash'
+            && (!$save_only_read || ($save_only_read && $read))) {
             $trash_folder = $this->fix_prefix('trash', 1);
 
             $this->_mail_send_command('COPY '.$msg['msg'].':'.$msg['msg']." \"$trash_folder\"");
@@ -637,9 +637,9 @@ class Telaen extends Telaen_core
             }
         }
 
-        if ($send_to_trash &&
-            $msg['folder'] != 'trash' &&
-            (!$save_only_read || ($save_only_read && $read))) {
+        if ($send_to_trash
+            && $msg['folder'] != 'trash'
+            && (!$save_only_read || ($save_only_read && $read))) {
             if (file_exists($msg['localname'])) {
                 $currentname = $msg['localname'];
                 $basename = basename($currentname);
@@ -1068,8 +1068,8 @@ class Telaen extends Telaen_core
              * we are checking the inbox and we have _autospamfolder
              * set :)
              */
-            if (($this->prefs['autospamfolder']) &&
-                ($boxname == 'inbox' || $boxname == 'spam')) {
+            if (($this->prefs['autospamfolder'])
+                && ($boxname == 'inbox' || $boxname == 'spam')) {
                 foreach ($this->_spamregex as $spamregex) {
                     if (preg_match("/$spamregex/i", $spamsubject)) {
                         $havespam = 1;
@@ -1534,7 +1534,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->mbox->changed[] = array ($msg['index'], array('header', 'flags'));
+            $this->mbox->changed[] = array ($msg['idx'], array('header', 'flags'));
 
             $email = "$header\r\n\r\n$body";
 
@@ -1808,7 +1808,7 @@ class Telaen extends Telaen_core
      * @param  boolean $logout     TRUE if we also log user out
      * @return void
      */
-    public function cleanup_dirs($userfolder, $logout)
+    public function cleanup_dirs($userfolder, $logout = false)
     {
         global $mbox;
         if (($this->config['force_unmark_read_overrule'] && $this->config['force_unmark_read_setting']) ||

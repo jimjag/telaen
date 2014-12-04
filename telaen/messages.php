@@ -315,12 +315,12 @@ $smarty->assign('umNavBar', $navigation);
 $avalfolders = array();
 $d = dir($TLN->userfolder);
 while ($entry = $d->read()) {
-    if (is_dir($TLN->userfolder.$entry) &&
-        $entry != '..' &&
-        $entry != '.' &&
-        substr($entry, 0, 1) != '_' &&
-        $entry != $folder &&
-        ($TLN->mail_protocol == IMAP || (($entry != 'inbox') && ($entry != 'spam')))) {
+    if (is_dir($TLN->userfolder.$entry)
+        && $entry != '..'
+        && $entry != '.'
+        && substr($entry, 0, 1) != '_'
+        && $entry != $folder
+        && ($TLN->mail_protocol == IMAP || (($entry != 'inbox') && ($entry != 'spam')))) {
         $entry = $TLN->fix_prefix($entry, 0);
         switch ($entry) {
         case 'inbox':

@@ -84,10 +84,10 @@ EOF_ATTACHS;
          */
         $d = dir($userfolder);
         while ($entry = $d->read()) {
-            if (is_dir($userfolder.$entry) &&
-                $entry != '..' &&
-                $entry != '.' &&
-                !isset($this->folders[$entry])) {
+            if (is_dir($userfolder.$entry)
+                && $entry != '..'
+                && $entry != '.'
+                && !isset($this->folders[$entry])) {
                 $this->add_folder($entry);
             }
         }
@@ -227,7 +227,7 @@ EOF_ATTACHS;
             if ($stmt) {
                 while ($foo = $stmt->fetchArray()) {
                     $this->headers[$index] = $foo;
-                    $this->headers[$index]['index'] = $index;
+                    $this->headers[$index]['idx'] = $index;
                     $index++;
                 }
                 $this->active_folder = $folder;
@@ -267,7 +267,7 @@ EOF_ATTACHS;
         $this->headers[] = $msg;
         end($this->headers);
         $index = key($this->headers);
-        $this->headers[$index]['index'] = $index;
+        $this->headers[$index]['idx'] = $index;
         reset($this->headers);
         return true;
     }
@@ -355,7 +355,7 @@ EOF_ATTACHS;
         }
         /* If we deleted from the active folder, then update our array */
         if ($msg['folder'] == $this->active_folder) {
-            unset($this->headers[$msg['index']]);
+            unset($this->headers[$msg['idx']]);
         }
         return true;
     }

@@ -17,7 +17,6 @@ extract(Telaen::pull_from_array($_GET, array('refr', 'mlist'), true));
 extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'));
 extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
 
-$headers = null;
 $folder = Telaen::fs_safe_folder($folder); // just in case!
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
@@ -39,7 +38,7 @@ if (!$messagecount
     $reg_pp = $TLN->prefs['rpp'];
 
     if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
-        $TLN->cleanup_dirs($TLN->userfolder, 0);
+        $TLN->cleanup_dirs($TLN->userfolder);
         $start_pos = 0;
     } else {
         if (isset($pag) && isset($mlist) && !isset($start_pos)) {
@@ -242,7 +241,7 @@ if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
 $mbox['headers'][$folder] = $headers;
 $auth['havespam'] = ($TLN->havespam || count($mbox['headers']['spam']));
 $AuthSession->Save($auth);
-//$UserMbox->Save($mbox);
+$mbox->update_headers();
 
 /*
  * If they used a different version (ignoring patchlevel) then
