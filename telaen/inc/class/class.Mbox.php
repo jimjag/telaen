@@ -28,7 +28,7 @@ EOF_FOLDERS;
         size TEXT);
 EOF_ATTACHS;
     private $table_messages =<<<EOF_MESSAGES
-        CREATE TABLE :id
+        CREATE TABLE $folder
         (key INT NOT NULL,
         folder TEXT NOT NULL,
         localname TEXT,
@@ -103,7 +103,6 @@ EOF_MESSAGES;
     public function add($folder)
     {
         $stmt = $this->prepare($this->table_messages);
-        $stmt->bindValue(':id', $folder, SQLITE3_TEXT);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
