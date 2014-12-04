@@ -30,23 +30,23 @@ EOF_FOLDERS;
         'size' INT);
 EOF_ATTACHS;
     private $mschema = array(
-        'date' => 'INT,',
-        'hparsed' => 'INT,',
-        'id' => 'INT,',
-        'msg' => 'INT,',
-        'size' => 'INT,',
-        'priority' => 'INT,',
-        'attach' => 'INT,',
-        'folder' => 'TEXT,',
-        'uidl' => 'TEXT,',
-        'subject' => 'TEXT,',
-        'from' => 'TEXT,',
-        'fromname' => 'TEXT,',
-        'to' => 'TEXT,',
-        'cc' => 'TEXT,',
-        'flags' => 'TEXT,',
-        'messageid' => 'TEXT,',
-        'localname' => 'TEXT,',
+        'date' => 'INT',
+        'hparsed' => 'INT',
+        'id' => 'INT',
+        'msg' => 'INT',
+        'size' => 'INT',
+        'priority' => 'INT',
+        'attach' => 'INT',
+        'folder' => 'TEXT',
+        'uidl' => 'TEXT',
+        'subject' => 'TEXT',
+        'from' => 'TEXT',
+        'fromname' => 'TEXT',
+        'to' => 'TEXT',
+        'cc' => 'TEXT',
+        'flags' => 'TEXT',
+        'messageid' => 'TEXT',
+        'localname' => 'TEXT',
         'header' => 'TEXT'
     );
 
@@ -56,6 +56,7 @@ EOF_ATTACHS;
     public $system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
     public $ok = true;
     public $message = '';
+    public $changed = array();
 
     /**
      * Construct: open DB and create tables if needed
@@ -110,36 +111,6 @@ EOF_ATTACHS;
         $this->ok = 1;
         $this->message = '';
     }
-    /**
-     * Get list of all message headers in folder/emailbox
-     * $this->headers auto-populated with array
-     * @param string $folder
-     * @param boolean $force TRUE to force a resync
-     * @return array
-     */
-    public function get_headers($folder, $force = false)
-    {
-        $this->allok();
-        if ($folder != $this->active_folder || $force) {
-            $query = sprintf('SELECT * FROM folder_%s;', $this->getKey($folder));
-            $stmt = $this->query($query);
-            $this->headers = array();
-            $index = 0;
-            if ($stmt) {
-                while ($foo = $stmt->fetchArray()) {
-                    $this->headers[$index] = $foo;
-                    $this->headers[$index]['index'] = $index;
-                    $index++;
-                }
-                $this->active_folder = $folder;
-            } else {
-                $this->ok = false;
-                $this->message = "query failed: $query";
-            }
-        }
-        return $this->headers;
-    }
-
     /**
      * Get list of all available attachments
      * $this-attachments auto-populated with array
@@ -198,8 +169,9 @@ EOF_ATTACHS;
         $this->allok();
         $table = 'CREATE TABLE folder_%s (';
         foreach ($this->mschema as $key => $val) {
-            $table .= " '$key' $val";
+            $table .= " '$key' $val,";
         }
+        $table = rtrim($table, ",");
         $table .= ");";
         $query = sprintf($table, $this->getKey($folder));
         if ($this->query($query)) {
@@ -236,58 +208,85 @@ EOF_ATTACHS;
 
     }
 
-    public function add_message($folder, $msg)
+    /**
+     * Get list of all message headers in folder/emailbox
+     * $this->headers auto-populated with array
+     * @param string $folder
+     * @param boolean $force TRUE to force a resync
+     * @return array
+     */
+    public function get_headers($folder, $force = false)
     {
-        /*
-            end($a);
-            $last_id=key($a);
-         */
+        $this->allok();
+        if ($folder != $this->active_folder || $force) {
+            $this->update_headers();
+            $query = sprintf('SELECT * FROM folder_%s;', $this->getKey($folder));
+            $stmt = $this->query($query);
+            $this->headers = array();
+            $index = 0;
+            if ($stmt) {
+                while ($foo = $stmt->fetchArray()) {
+                    $this->headers[$index] = $foo;
+                    $this->headers[$index]['index'] = $index;
+                    $index++;
+                }
+                $this->active_folder = $folder;
+            } else {
+                $this->ok = false;
+                $this->message = "query failed: $query";
+            }
+        }
+        return $this->headers;
     }
 
 
-    public function del_message($msg)
+    /**
+     * Add message
+     * @param type $msg
+     * @return boolean
+     */
+    public function add_header($msg)
     {
         $this->allok();
-        $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'='%s' ;", $this->getKey($msg['folder']), $msg['uidl']);
+        $query = sprintf('INSERT INTO folder_%s (', $this->getKey($msg['folder']));
+        $list = keys($this->mschema);
+        $query .= implode(",",$list);
+        $query .= ') VALUES (';
+        reset($list);
+        foreach ($list as $key) {
+            $t = ($this->mschema[$key] == "T" ? "'%s'" : "%d");
+            $query .= " $t,";
+            $query = sprintf($query, $msg[$key]);
+        }
+        $query = rtrim($query, ",");
         if (!$this->query($query)) {
             $this->ok = false;
             $this->message = "query failed: $query";
             return false;
         }
-        /* If we deleted from the active folder, then update our array */
-        if ($msg['folder'] == $this->active_folder) {
-            unset($this->headers[$msg['index']]);
-        }
+        $this->headers[] = $msg;
+        end($this->headers);
+        $index = key($this->headers);
+        $this->headers[$index]['index'] = $index;
+        reset($this->headers);
         return true;
     }
-
-    public function add_attachment($folder, $msg)
-    {
-
-    }
-
-
-    public function del_attachment($folder, $msg)
-    {
-
-    }
-
 
     /**
      * Take the message array and update the fields in the DB
      * @param type $msg Message to be updated/synced in DB
-     * @param mixed $fields "*" for all, or array of fields
+     * @param boolean $fields "*" for all, or array of fields
      * @return boolean
      */
     /*
      * The complexity is allow for the use of $this->mschema:
      *  Having the message schema defined in one location is nice.
      */
-    public function update_message($msg, $fields = "*")
+    public function update_header($msg, $fields = "*")
     {
         $this->allok();
         $query = sprintf('UPDATE folder_%s SET ', $this->getKey($msg['folder']));
-        if ($fields = "*") {
+        if ($fields == "*") {
             $thelist = $this->mschema;
         } elseif (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $key) {
@@ -316,11 +315,61 @@ EOF_ATTACHS;
         $query = rtrim($query, ",");
         $query .= " WHERE 'uidl'='%s' ;";
         $query = sprintf($query, $msg['uidl']);
-         if (!$this->query($query)) {
+        if (!$this->query($query)) {
             $this->ok = false;
             $this->message = "query failed: $query";
             return false;
         }
         return true;
    }
+
+    /**
+     * Update all changed headers for all messages
+     * @return boolean
+     */
+    public function update_headers()
+    {
+        $this->allok();
+        if (count($this->changed) > 0) {
+            foreach ($this->changed as $foo) {
+                if (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    /**
+     * Delete message from DB
+     * @param array $msg
+     * @return boolean
+     */
+    public function del_header($msg)
+    {
+        $this->allok();
+        $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'='%s' ;", $this->getKey($msg['folder']), $msg['uidl']);
+        if (!$this->query($query)) {
+            $this->ok = false;
+            $this->message = "query failed: $query";
+            return false;
+        }
+        /* If we deleted from the active folder, then update our array */
+        if ($msg['folder'] == $this->active_folder) {
+            unset($this->headers[$msg['index']]);
+        }
+        return true;
+    }
+
+    public function add_attachment($folder, $msg)
+    {
+
+    }
+
+
+    public function del_attachment($folder, $msg)
+    {
+
+    }
+
+
 }

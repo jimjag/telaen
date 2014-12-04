@@ -603,7 +603,7 @@ class Telaen extends Telaen_core
         }
         $this->mail_set_flag($msg, '\\DELETED', '+');
 
-        return $this->mbox->del_message($msg);
+        return $this->mbox->del_header($msg);
     }
 
     protected function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0)
@@ -653,7 +653,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        return $this->mbox->del_message($msg);
+        return $this->mbox->del_header($msg);
     }
 
     /**
@@ -1344,7 +1344,7 @@ class Telaen extends Telaen_core
         } else {
             /* if POP3, only make a new folder */
             if (@mkdir($this->userfolder.$boxname, $this->dirperm)) {
-                return $this->mbox->add($boxname);
+                return $this->mbox->add_folder($boxname);
             } else {
                 return false;
             }
@@ -1534,7 +1534,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->mbox->update_message($msg, array('header', 'flags'));
+            $this->mbox->changed[] = array ($msg['index'], array('header', 'flags'));
 
             $email = "$header\r\n\r\n$body";
 
