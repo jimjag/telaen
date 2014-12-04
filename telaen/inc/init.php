@@ -23,7 +23,17 @@ $sid = session_id();
 require_once './inc/preinit.php';
 
 $TLN = new Telaen();
-$TLN->load_config();
+
+$AuthSession = new Session();
+$auth = &$AuthSession->Load('telaen_sess');
+$TLN->AuthSession = $AuthSession;
+
+if ($auth['auth'] && isset($auth['config'])) {
+    $TLN->config = $auth['config'];
+} else {
+    $TLN->load_config();
+    $auth['config'] = $TLN->config;
+}
 
 umask($TLN->config['default_umask']);
 
@@ -41,17 +51,13 @@ if (!is_dir($smarty->compile_dir)) {
     mkdir($smarty->compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
 }
 
-$AuthSession = new Session();
-$auth = &$AuthSession->Load('telaen_sess');
 
 // Only process.php is allowed to be run with expired sessions (for login)
 if ((I_AM_TELAEN != 'process.php') && (!$auth['auth'])) {
     $TLN->redirect_and_exit('index.php?err=4', true);
 }
 
-$TLN->AuthSession = $AuthSession;
-
-if (!array_key_exists('start', $auth)) {
+if (!isset($auth['start'])) {
     $auth['start'] = time();
 }
 $start = $auth['start'];
@@ -201,22 +207,24 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
 
 $auth['start'] = time();
 
-$AuthSession->Save($auth);
-
 $TLN->userfolder = $TLN->config['temporary_directory'].preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
 
-//$UserMbox = new Session();
-//$mbox = &$AuthSession->Load('telaen_mbox');
-
-$UserMbox = new Mbox($TLN->userfolder);
-$TLN->UserMbox = $UserMbox;
+$mbox = new Mbox($TLN->userfolder);
+$TLN->mbox = &$mbox;
 
 // avoid missing settings allow dirs creation with 000 perms
 if (isset($TLN->config['dirperm']) && $TLN->config['dirperm'] != 0000) {
     $TLN->dirperm = $TLN->config['dirperm'];
 }
 
-$TLN->load_prefs();
+if ($auth['auth'] && isset($auth['prefs'])) {
+    $TLN->prefs = $auth['prefs'];
+} else {
+    $TLN->load_prefs();
+    $auth['prefs'] = $TLN->prefs;
+}
+
+$AuthSession->Save($auth);
 
 $mymo = new MyMonth($TLN->userfolder);
 $mycal = $mymo->monthAsDiv();
@@ -252,7 +260,7 @@ require_once './folder_list.php';
 
 $need_save = false;
 if (!isset($sortby) || !preg_match('/(subject|fromname|date|size|toname)/', $sortby)) {
-    if (array_key_exists('sort-by', $TLN->prefs) && preg_match('/(subject|fromname|date|size|toname)/', $TLN->prefs['sort-by'])) {
+    if (isset($TLN->prefs['sort-by']) && preg_match('/(subject|fromname|date|size|toname)/', $TLN->prefs['sort-by'])) {
         $sortby = $TLN->prefs['sort-by'];
     } else {
         $sortby = $TLN->config['default_sortby'];
@@ -263,7 +271,7 @@ if (!isset($sortby) || !preg_match('/(subject|fromname|date|size|toname)/', $sor
 }
 
 if (!isset($sortorder) || !preg_match('/ASC|DESC/', $sortorder)) {
-    if (array_key_exists('sort-order', $TLN->prefs) && preg_match('/ASC|DESC/', $TLN->prefs['sort-order'])) {
+    if (isset($TLN->prefs['sort-order']) && preg_match('/ASC|DESC/', $TLN->prefs['sort-order'])) {
         $sortorder = $TLN->prefs['sort-order'];
     } else {
         $sortorder = $TLN->config['default_sortorder'];

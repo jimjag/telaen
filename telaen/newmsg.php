@@ -135,7 +135,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             }
         }
 
-        if (array_key_exists('attachments', $mbox)) {
+        if (isset($mbox['attachments'])) {
             $attachs = $mbox['attachments'];
             for ($i = 0;$i<count($attachs);$i++) {
                 if (file_exists($attachs[$i]['localname'])) {
@@ -154,7 +154,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         } else {
             $smarty->assign('umMailSent', true);
 
-            if (array_key_exists('attachments', $mbox)) {
+            if (isset($mbox['attachments'])) {
                 unset($mbox['attachments']);
                 reset($mbox);
                 $UserMbox->Save($mbox);
@@ -630,7 +630,7 @@ $tmpbody";
     $strbcc = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"bcc\" value=\"".htmlspecialchars(stripslashes($bcc))."\" />";
     $strsubject = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"subject\" value=\"".htmlspecialchars(stripslashes($subject))."\" />";
 
-    if (array_key_exists('attachments', $mbox) && count($attachs = $mbox['attachments']) > 0) {
+    if (isset($mbox['attachments']) && count($attachs = $mbox['attachments']) > 0) {
         $smarty->assign('umHaveAttachs', 1);
         $attachlist = array();
         for ($i = 0;$i<count($attachs);$i++) {

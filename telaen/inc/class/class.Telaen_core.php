@@ -41,7 +41,7 @@ class Telaen_core
     public $prefs             = array();
     public $appversion        = "";
     public $appname           = "";
-    public $UserMbox          = "";
+    public $mbox              = null;
     public $AuthSession       = "";
     public $status            = STATUS_OK;
 
@@ -330,7 +330,7 @@ class Telaen_core
                     $dbpoint = strpos($thisheader, ':');
                     $headname = strtolower(substr($thisheader, 0, $dbpoint));
                     $headvalue = trim(substr($thisheader, $dbpoint+1));
-                    if (array_key_exists($headname, $decodedheaders)) {
+                    if (isset($decodedheaders[$headname])) {
                         $decodedheaders[$headname] .= "; $headvalue";
                     } else {
                         $decodedheaders[$headname] = $headvalue;
@@ -934,11 +934,11 @@ class Telaen_core
         $myarray = array();
         $headers = $this->_decode_header($header);
 
-        $myarray['message-id'] = (array_key_exists('message-id', $headers)) ? preg_replace('|<(.*)>|', "$1", trim($headers['message-id'])) : null;
-        $myarray['content-type'] = (array_key_exists('content-type', $headers)) ? $headers['content-type'] : null;
-        $myarray['priority'] = (array_key_exists('x-priority', $headers)) ? $headers['x-priority'][0] : null;
+        $myarray['message-id'] = (isset($headers['message-id'])) ? preg_replace('|<(.*)>|', "$1", trim($headers['message-id'])) : null;
+        $myarray['content-type'] = (isset($headers['content-type'])) ? $headers['content-type'] : null;
+        $myarray['priority'] = (isset($headers['x-priority'])) ? $headers['x-priority'][0] : null;
         $myarray['flags'] = $headers['x-um-flags'];
-        $myarray['content-transfer-encoding'] = (array_key_exists('content-transfer-encoding', $headers)) ? str_replace('GM', '-', $headers['content-transfer-encoding']) : null;
+        $myarray['content-transfer-encoding'] = (isset($headers['content-transfer-encoding'])) ? str_replace('GM', '-', $headers['content-transfer-encoding']) : null;
 
         $received = preg_replace('|  |', ' ', $headers['received']);
         $user_date = preg_replace('|  |', ' ', $headers['date']);

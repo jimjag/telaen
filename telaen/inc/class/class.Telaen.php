@@ -12,7 +12,6 @@ class Telaen extends Telaen_core
     public $capabilities   = array();
     public $flags          = array('\\SEEN', '\\DELETED', '\\ANSWERED', '\\DRAFT', '\\FLAGGED', '\\RECENT');
 
-    protected $_system_folders = array('inbox','trash','sent','spam', 'draft');
     protected $_current_folder = "";
     protected $_spamregex      = array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
     protected $_serverurl      = "";
@@ -79,7 +78,7 @@ class Telaen extends Telaen_core
      */
     public function is_system_folder($name)
     {
-        return (in_array($name, $this->_system_folders));
+        return $this->mbox->folders[strtolower($name)]['system'];
     }
 
     /**
@@ -311,7 +310,7 @@ class Telaen extends Telaen_core
         $boxes = $this->mail_list_boxes();
 
         if ($this->mail_protocol == IMAP) {
-            $tmp = $this->_system_folders;
+            $tmp = $this->mbox->folders;
 
             for ($i = 0;$i<count($boxes);$i++) {
                 $current_folder = $boxes[$i]['name'];
@@ -1243,17 +1242,9 @@ class Telaen extends Telaen_core
     {
         $boxlist = array();
         /* if POP3, only list the available folders */
-        $d = dir($this->userfolder);
-        while ($entry = $d->read()) {
-            if (is_dir($this->userfolder.$entry) &&
-                $entry != '..' &&
-                substr($entry, 0, 1) != '_' &&
-                $entry != '.') {
-                $boxlist[]['name'] = $entry;
-            }
+        foreach ($this->mbox->folders as $foo) {
+            $boxlist[] = $foo;
         }
-        $d->close();
-
         return $boxlist;
     }
     /**
@@ -1353,7 +1344,7 @@ class Telaen extends Telaen_core
         } else {
             /* if POP3, only make a new folder */
             if (@mkdir($this->userfolder.$boxname, $this->dirperm)) {
-                return true;
+                return $this->mbox->add($boxname);
             } else {
                 return false;
             }

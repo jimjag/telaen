@@ -21,11 +21,11 @@ $headers = null;
 $folder = Telaen::fs_safe_folder($folder); // just in case!
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
-if (!array_key_exists('headers', $mbox)) {
+if (!isset($mbox['headers'])) {
     $mbox['headers'] = array();
 }
 
-if (array_key_exists($folder, $mbox['headers'])) {
+if (isset($mbox['headers'][$folder])) {
     $headers = $mbox['headers'][$folder];
 }
 
