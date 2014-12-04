@@ -13,26 +13,29 @@ Telaen is a GPL'ed software developed by
 class Mbox extends SQLite3
 {
     private $db = null;
-    private $table_headers =<<<EOF_HEADERS
-        CREATE TABLE headers
-        (crc32 INT NOT NULL,
-        folder TEXT NOT NULL,
-        headers TEXT NOT NULL);
-EOF_HEADERS;
     private $table_folders =<<<EOF_FOLDERS
         CREATE TABLE folders
-        (crc32 INT NOT NULL,
+        (key INT NOT NULL,
         folder TEXT NOT NULL);
 EOF_FOLDERS;
     private $table_attachs =<<<EOF_ATTACHS
         CREATE TABLE attachs
-        (crc32 INT NOT NULL,
+        (key INT NOT NULL,
         folder TEXT NOT NULL,
         localname TEXT,
         name TEXT,
         type TEXT,
         size TEXT);
 EOF_ATTACHS;
+    private $table_messages =<<<EOF_MESSAGES
+        CREATE TABLE :id
+        (key INT NOT NULL,
+        folder TEXT NOT NULL,
+        localname TEXT,
+        name TEXT,
+        type TEXT,
+        size TEXT);
+EOF_MESSAGES;
 
     /**
      * Construct: open DB and create tables if needed
@@ -41,12 +44,17 @@ EOF_ATTACHS;
     public function __construct($userfolder)
     {
         $this->db = $userfolder.'_infos/mboxes.db';
+        $exists = is_writable($this->db);
         $this->open($this->db, SQLITE3_OPEN_READWRITE| SQLITE3_OPEN_CREATE);
-        $try =  $this->query("SELECT name FROM sqlite_master WHERE type='table' AND name='folders';");
-        if ($try->numColumns == 0) {
+        $this->query('PRAGMA synchronous = 0;');
+        $this->query('PRAGMA journal_mode = MEMORY;');
+        if (!$exists) {
             $this->exec($this->table_folders);
-            $this->exec($this->table_headers);
             $this->exec($this->table_attachs);
+            foreach(array('inbox', 'spam', 'trash', 'draft', 'sent') as $foo) {
+                $this->add($foo);
+                $this->query("INSERT into folders (key, folder) VALUES ({$this->getKey($foo)}, $foo;");
+            }
         }
     }
 
@@ -87,4 +95,17 @@ EOF_ATTACHS;
         return $rarr;
     }
 
+    public function getKey($folder)
+    {
+        return crc32($folder);
+    }
+
+    public function add($folder)
+    {
+        $stmt = $this->prepare($this->table_messages);
+        $stmt->bindValue(':id', $folder, SQLITE3_TEXT);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+   }
 }
