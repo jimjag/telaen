@@ -15,20 +15,18 @@ class Mbox extends SQLite3
     private $active_folder = "";
     private $userfolder = "";
     private $db = null;
-    private $table_folders =<<<EOF_FOLDERS
-        CREATE TABLE folders
-        ('name' TEXT NOT NULL,
-        'system' INT NOT NULL);
-EOF_FOLDERS;
-    private $table_attachs =<<<EOF_ATTACHS
-        CREATE TABLE attachs
-        ('folder' TEXT NOT NULL,
-        'uidl' TEXT NOT NULL,
-        'localname' TEXT,
-        'name' TEXT,
-        'type' TEXT,
-        'size' INT);
-EOF_ATTACHS;
+    private $fschema = array(
+        'name' => 'TEXT NOT NULL',
+        'system' => 'INT NOT NULL'
+    );
+    private $aschema = array(
+        'folder' => 'TEXT NOT NULL',
+        'uidl' => 'TEXT NOT NULL',
+        'localname' => 'TEXT',
+        'name' => 'TEXT',
+        'type' => 'TEXT',
+        'size' => 'INT'
+    );
     private $mschema = array(
         'date' => 'INT',
         'hparsed' => 'INT',
@@ -64,6 +62,7 @@ EOF_ATTACHS;
      */
     public function __construct($userfolder)
     {
+        $this->allok();
         $this->userfolder = $userfolder;
         $this->db = $userfolder.'_infos/mboxes.db';
         $exists = is_writable($this->db);
@@ -72,11 +71,24 @@ EOF_ATTACHS;
         $this->query('PRAGMA synchronous = 0;');
         $this->query('PRAGMA journal_mode = MEMORY;');
         if (!$exists) {
-            $this->exec($this->table_folders);
-            $this->exec($this->table_attachs);
+            $table = $this->create_stmt('folders', $this->fschema);
+            if ($this->exec($table) == false) {
+                $this->ok = false;
+                $this->message .= "bad exec: $table";
+            }
+
+            $table = $this->create_stmt('attachs', $this->aschema);
+            if ($this->exec($table) == false) {
+                $this->ok = false;
+                $this->message .= "bad exec: $table";
+            }
+            $ok = $this->ok;
+            $message = $this->message;
             foreach($this->system_folders as $foo) {
                 $this->add_folder($foo, 1);
             }
+            $this->ok = $this->ok && $ok;
+            $this->message .= $message;
         }
         $this->get_folders();
         /*
@@ -92,7 +104,94 @@ EOF_ATTACHS;
             }
         }
         $d->close();
-        $this->allok();
+    }
+
+    /**
+     * Create array of allowable entry/type from a baseline schema
+     * @param type $fields
+     * @param type $schema
+     * @return type
+     */
+    private function create_uplist($fields, $schema)
+    {
+        if ($fields == "*") {
+            $thelist = $schema;
+        } elseif (is_array($fields) && count($fields) > 0) {
+            foreach ($fields as $key) {
+                if (isset($schema[$key])) {
+                    $thelist[] = array($key => $schema[$key]);
+                }
+            }
+        } elseif (!is_array($field)) {
+            $this->ok = false;
+            $this->message = "bad param fields";
+            return null;
+        } else {
+            /* nothing to do... is this OK or an error? */
+        }
+        if (!count($thelist)) {
+            $this->ok = false;
+            $this->message = "no valid fields";
+            return null;
+        }
+        return $thelist;
+    }
+
+    /**
+     * Creates the 'CREATE table' statement
+     * @param type $table
+     * @param type $schema
+     * @return string
+     */
+    private function create_stmt($table, $schema)
+    {
+        $stmt = sprintf('CREATE TABLE %s (', $table);
+        foreach ($schema as $key => $val) {
+            $stmt .= " '$key' $val,";
+        }
+        $stmt = rtrim($stmt, ",") . ');';
+        return $stmt;
+    }
+    /**
+     * Creates the 'UPDATE table SET... WHERE' statement
+     * @param type $table
+     * @param type $schema
+     * @param type $data
+     * @return string
+     */
+    private function update_stmt($table, $schema, $data)
+    {
+        $stmt = sprintf('UPDATE %s SET ', $table);
+        foreach ($schema as $key => $val) {
+            $t = ($val[0] == "T" ? "'%s'" : "%d");
+            $stmt .= " '$key'=$t,";
+            $stmt = sprintf($stmt, $data[$key]);
+        }
+        $stmt = rtrim($stmt, ",").' WHERE ';
+        return $stmt;
+    }
+
+    /**
+     * Creates the 'INSERT into table (' statement
+     * @param type $table
+     * @param type $schema
+     * @param type $data
+     * @return string
+     */
+    private function create_insert($table, $schema, $data)
+    {
+        $stmt = sprintf('INSERT into %s (', $table);
+        $list = keys($schema);
+        $stmt .= implode(",",$list);
+        $stmt .= ') VALUES (';
+        reset($list);
+        foreach ($list as $key) {
+            $t = ($schema[$key] == "T" ? "'%s'" : "%d");
+            $stmt .= " $t,";
+            $stmt = sprintf($stmt, $data[$key]);
+        }
+        $stmt = rtrim($stmt, ",").');';
+        return $stmt;
     }
 
     /**
@@ -108,7 +207,7 @@ EOF_ATTACHS;
 
     private function allok()
     {
-        $this->ok = 1;
+        $this->ok = true;
         $this->message = '';
     }
     /**
@@ -120,7 +219,6 @@ EOF_ATTACHS;
      */
     public function get_attachments($folder, $uidl)
     {
-        $this->allok();
         $query = sprintf("SELECT * FROM attachs WHERE 'folder='%s' AND 'uidl'='%s' ;",
             $folder, $uidl);
         $stmt = $this->query($query);
@@ -143,7 +241,6 @@ EOF_ATTACHS;
      */
     public function get_folders()
     {
-        $this->allok();
         $query = 'SELECT * FROM folders';
         $stmt = $this->query($query);
         $this->folders = array();
@@ -166,24 +263,18 @@ EOF_ATTACHS;
      */
     public function add_folder($folder, $sys = 0)
     {
-        $this->allok();
-        $table = 'CREATE TABLE folder_%s (';
-        foreach ($this->mschema as $key => $val) {
-            $table .= " '$key' $val,";
-        }
-        $table = rtrim($table, ",");
-        $table .= ");";
-        $query = sprintf($table, $this->getKey($folder));
-        if ($this->query($query)) {
+        $query = sprintf('folder_%s', $this->getKey($folder));
+        $query = $this->create_stmt($query, $this->mschema);
+        if ($this->exec($query)) {
             $query = sprintf("INSERT into folders (name, system) VALUES ('%s', %d);",
                 $folder, intval($sys));
-            if ($this->query($query)) {
+            if ($this->exec($query)) {
                 $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys));
                 return true;
             }
         }
         $this->ok = false;
-        $this->message = "query failed: $query";
+        $this->message = "exec failed: $query";
         return false;
 
     }
@@ -195,12 +286,11 @@ EOF_ATTACHS;
      */
     public function del_folder($folder)
     {
-        $this->allok();
         $table ='DROP TABLE folder_%s ;';
         $query = sprintf($table, $this->getKey($folder));
-        if (!$this->query($query)) {
+        if (!$this->exec($query)) {
             $this->ok = false;
-            $this->message = "query failed: $query";
+            $this->message = "exec failed: $query";
             return false;
         }
         unset($this->folders[$folder]);
@@ -217,7 +307,6 @@ EOF_ATTACHS;
      */
     public function get_headers($folder, $force = false)
     {
-        $this->allok();
         if ($folder != $this->active_folder || $force) {
             $this->update_headers();
             $query = sprintf('SELECT * FROM folder_%s;', $this->getKey($folder));
@@ -239,7 +328,6 @@ EOF_ATTACHS;
         return $this->headers;
     }
 
-
     /**
      * Add message
      * @param type $msg
@@ -247,21 +335,11 @@ EOF_ATTACHS;
      */
     public function add_header($msg)
     {
-        $this->allok();
-        $query = sprintf('INSERT INTO folder_%s (', $this->getKey($msg['folder']));
-        $list = keys($this->mschema);
-        $query .= implode(",",$list);
-        $query .= ') VALUES (';
-        reset($list);
-        foreach ($list as $key) {
-            $t = ($this->mschema[$key] == "T" ? "'%s'" : "%d");
-            $query .= " $t,";
-            $query = sprintf($query, $msg[$key]);
-        }
-        $query = rtrim($query, ",");
-        if (!$this->query($query)) {
+        $query = sprintf('folder_%s', $this->getKey($msg['folder']));
+        $query = $this->create_insert($query, $this->mschema, $msg);
+        if (!$this->exec($query)) {
             $this->ok = false;
-            $this->message = "query failed: $query";
+            $this->message = "exec failed: $query";
             return false;
         }
         $this->headers[] = $msg;
@@ -284,40 +362,16 @@ EOF_ATTACHS;
      */
     public function update_header($msg, $fields = "*")
     {
-        $this->allok();
-        $query = sprintf('UPDATE folder_%s SET ', $this->getKey($msg['folder']));
-        if ($fields == "*") {
-            $thelist = $this->mschema;
-        } elseif (is_array($fields) && count($fields) > 0) {
-            foreach ($fields as $key) {
-                if (isset($this->mschema[$key])) {
-                    $thelist[] = array($key => $this->mschema[$key]);
-                }
-            }
-        } elseif (!is_array($field)) {
-            $this->ok = false;
-            $this->message = "bad param fields";
-            return false;
-        } else {
-            /* nothing to do... is this OK or an error? */
-            return true;
-        }
-        if (!count($thelist)) {
-            $this->ok = false;
-            $this->message = "no valid fields";
+        $thelist = $this->create_uplist($fields, $this->mschema);
+        if ($thelist == null || !is_array($thelist)) {
             return false;
         }
-        foreach ($thelist as $key => $val) {
-            $t = ($val[0] == "T" ? "'%s'" : "%d");
-            $query .= " '$key'=$t,";
-            $query = sprintf($query, $msg[$key]);
-        }
-        $query = rtrim($query, ",");
-        $query .= " WHERE 'uidl'='%s' ;";
+        $query = sprintf('folder_%s', $this->getKey($msg['folder']));
+        $query = $this->update_stmt($query, $thelist, $msg) . " 'uidl'='%s' ;";
         $query = sprintf($query, $msg['uidl']);
-        if (!$this->query($query)) {
+        if (!$this->exec($query)) {
             $this->ok = false;
-            $this->message = "query failed: $query";
+            $this->message = "exec failed: $query";
             return false;
         }
         return true;
@@ -329,7 +383,6 @@ EOF_ATTACHS;
      */
     public function update_headers()
     {
-        $this->allok();
         if (count($this->changed) > 0) {
             foreach ($this->changed as $foo) {
                 if (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
@@ -346,11 +399,10 @@ EOF_ATTACHS;
      */
     public function del_header($msg)
     {
-        $this->allok();
         $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'='%s' ;", $this->getKey($msg['folder']), $msg['uidl']);
-        if (!$this->query($query)) {
+        if (!$this->exec($query)) {
             $this->ok = false;
-            $this->message = "query failed: $query";
+            $this->message = "exec failed: $query";
             return false;
         }
         /* If we deleted from the active folder, then update our array */
