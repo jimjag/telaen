@@ -146,26 +146,27 @@ class Mbox extends SQLite3
      */
     private function create_query($table, $schema)
     {
-        $stmt = sprintf('CREATE TABLE %s (', $table);
+        $query = sprintf('CREATE TABLE %s (', $table);
         foreach ($schema as $key => $val) {
-            $stmt .= " '$key' $val,";
+            $query .= " '$key' $val,";
         }
-        $stmt = rtrim($stmt, ",") . ');';
-        return $stmt;
+        $query = rtrim($query, ",") . ');';
+        return $query;
     }
     /**
      * Creates and Execute the 'UPDATE table SET... WHERE' statement
-     * @param type $table
-     * @param type $list List of elements to update
-     * @param type $data Hash of data to update keyed by list
+     * @param string $table Table to update
+     * @param array $list List of elements to update
+     * @param array $data Hash of data to update keyed by list
+     * @param array $where the WHERE statement field and values (assume =)
      * @return SQLite3Result
      */
     private function do_update($table, $list, $data, $where)
     {
         $query = sprintf('UPDATE %s SET ', $table);
         $temp = array();
-        foreach ($list as $var) {
-            $temp[] = " '$var'=:$var";
+        foreach ($list as $key) {
+            $temp[] = " '$key'=:$key";
         }
         $query = $query.implode(', ', $temp).' WHERE ';
         $temp = array();
@@ -175,26 +176,26 @@ class Mbox extends SQLite3
         $query = $query.implode(' AND ', $temp).');';
         $stmt = $this->prepare($query);
         reset($list);
-        foreach ($list as $val) {
-            $stmt->bindValue(":$var", $data[$var]);
+        foreach ($list as $key) {
+            $stmt->bindValue(":$key", $data[$key]);
         }
         foreach ($where as $key => $val) {
             $stmt->bindValue(":$key", $val);
         }
-        $retval = $stmt->execute();
+        $result = $stmt->execute();
         $stmt->close();
-        if (!retval) {
+        if (!$result) {
             $this->ok = false;
             $this->message .= "execute failed: $query";
         }
-        return $retval;
+        return $result;
     }
 
     /**
      * Creates and Execute the 'INSERT into table (' statement
-     * @param type $table
-     * @param type $list List of elements to insert
-     * @param type $data Hash of data to insert keyed by list
+     * @param string $table Table to insert into
+     * @param array $list List of elements to insert
+     * @param array $data Hash of data to insert keyed by list
      * @return SQLite3Result
      */
     private function do_insert($table, $list, $data)
@@ -207,16 +208,16 @@ class Mbox extends SQLite3
         $query .= ');';
         $stmt = $this->prepare($query);
         reset($list);
-        foreach ($list as $var) {
-            $stmt->bindValue(":$var", $data[$var]);
+        foreach ($list as $key) {
+            $stmt->bindValue(":$key", $data[$key]);
         }
-        $retval = $stmt->execute();
+        $result = $stmt->execute();
         $stmt->close();
-        if (!retval) {
+        if (!$result) {
             $this->ok = false;
             $this->message .= "execute failed: $query";
         }
-        return $retval;
+        return $result;
     }
 
     /**
@@ -248,10 +249,10 @@ class Mbox extends SQLite3
         $stmt = $this->prepare($query);
         $stmt->bindValue(':folder', $folder);
         $stmt->bindValue(':uidl', $uidl);
-        $retval = $stmt->execute($query);
+        $result = $stmt->execute($query);
         $this->attachments = array();
-        if ($retval) {
-            while ($foo = $retval->fetchArray()) {
+        if ($result) {
+            while ($foo = $result->fetchArray()) {
                 $this->attachments[] = $foo;
             }
         } else {
@@ -270,10 +271,10 @@ class Mbox extends SQLite3
     public function get_folders()
     {
         $query = 'SELECT * FROM folders';
-        $stmt = $this->query($query);
+        $result = $this->query($query);
         $this->folders = array();
-        if ($stmt) {
-            while ($foo = $stmt->fetchArray()) {
+        if ($result) {
+            while ($foo = $result->fetchArray()) {
                 $this->folders[$foo['name']] = $foo;
             }
         } else {
@@ -341,11 +342,11 @@ class Mbox extends SQLite3
         if ($folder != $this->active_folder || $force) {
             $this->update_headers();
             $query = sprintf('SELECT * FROM folder_%s;', $this->getKey($folder));
-            $stmt = $this->query($query);
+            $result = $this->query($query);
             $this->headers = array();
             $index = 0;
-            if ($stmt) {
-                while ($foo = $stmt->fetchArray()) {
+            if ($result) {
+                while ($foo = $result->fetchArray()) {
                     $this->headers[$index] = $foo;
                     $this->headers[$index]['idx'] = $index;
                     $index++;
