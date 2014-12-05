@@ -71,13 +71,13 @@ class Mbox extends SQLite3
         $this->query('PRAGMA synchronous = 0;');
         $this->query('PRAGMA journal_mode = MEMORY;');
         if (!$exists) {
-            $table = $this->create_stmt('folders', $this->fschema);
+            $table = $this->create_query('folders', $this->fschema);
             if ($this->exec($table) == false) {
                 $this->ok = false;
                 $this->message .= "bad exec: $table";
             }
 
-            $table = $this->create_stmt('attachs', $this->aschema);
+            $table = $this->create_query('attachs', $this->aschema);
             if ($this->exec($table) == false) {
                 $this->ok = false;
                 $this->message .= "bad exec: $table";
@@ -292,7 +292,7 @@ class Mbox extends SQLite3
     public function add_folder($folder, $sys = 0)
     {
         $query = sprintf('folder_%s', $this->getKey($folder));
-        $query = $this->create_stmt($query, $this->mschema);
+        $query = $this->create_query($query, $this->mschema);
         if ($this->exec($query)) {
             $stmt = $this->prepare("INSERT into folders ('name', 'system') VALUES (:name, :system);");
             $stmt->bindValue(':name', $folder);
