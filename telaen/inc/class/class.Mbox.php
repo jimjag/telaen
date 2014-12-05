@@ -115,11 +115,12 @@ class Mbox extends SQLite3
     private function create_uplist($fields, $schema)
     {
         if ($fields == "*") {
-            $thelist = $schema;
+            $thelist = keys($schema);
         } elseif (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $key) {
+                $key = trim($key);
                 if (isset($schema[$key])) {
-                    $thelist[] = array($key => $schema[$key]);
+                    $thelist[] = $key;
                 }
             }
         } elseif (!is_array($field)) {
@@ -138,12 +139,12 @@ class Mbox extends SQLite3
     }
 
     /**
-     * Creates the 'CREATE table' statement
+     * Creates the 'CREATE table' query
      * @param type $table
      * @param type $schema
      * @return string
      */
-    private function create_stmt($table, $schema)
+    private function create_query($table, $schema)
     {
         $stmt = sprintf('CREATE TABLE %s (', $table);
         foreach ($schema as $key => $val) {
@@ -153,45 +154,69 @@ class Mbox extends SQLite3
         return $stmt;
     }
     /**
-     * Creates the 'UPDATE table SET... WHERE' statement
+     * Creates and Execute the 'UPDATE table SET... WHERE' statement
      * @param type $table
-     * @param type $schema
-     * @param type $data
-     * @return string
+     * @param type $list List of elements to update
+     * @param type $data Hash of data to update keyed by list
+     * @return SQLite3Result
      */
-    private function update_stmt($table, $schema, $data)
+    private function do_update($table, $list, $data, $where)
     {
-        $stmt = sprintf('UPDATE %s SET ', $table);
-        foreach ($schema as $key => $val) {
-            $t = ($val[0] == "T" ? "'%s'" : "%d");
-            $stmt .= " '$key'=$t,";
-            $stmt = sprintf($stmt, $data[$key]);
+        $query = sprintf('UPDATE %s SET ', $table);
+        $temp = array();
+        foreach ($list as $var) {
+            $temp[] = " '$var'=:$var";
         }
-        $stmt = rtrim($stmt, ",").' WHERE ';
-        return $stmt;
+        $query = $query.implode(', ', $temp).' WHERE ';
+        $temp = array();
+        foreach ($where as $key => $val) {
+            $temp[] = "'$key'=:$key";
+        }
+        $query = $query.implode(' AND ', $temp).');';
+        $stmt = $this->prepare($query);
+        reset($list);
+        foreach ($list as $val) {
+            $stmt->bindValue(":$var", $data[$var]);
+        }
+        foreach ($where as $key => $val) {
+            $stmt->bindValue(":$key", $val);
+        }
+        $retval = $stmt->execute();
+        $stmt->close();
+        if (!retval) {
+            $this->ok = false;
+            $this->message .= "execute failed: $query";
+        }
+        return $retval;
     }
 
     /**
-     * Creates the 'INSERT into table (' statement
+     * Creates and Execute the 'INSERT into table (' statement
      * @param type $table
-     * @param type $schema
-     * @param type $data
-     * @return string
+     * @param type $list List of elements to insert
+     * @param type $data Hash of data to insert keyed by list
+     * @return SQLite3Result
      */
-    private function create_insert($table, $schema, $data)
+    private function do_insert($table, $list, $data)
     {
-        $stmt = sprintf('INSERT into %s (', $table);
-        $list = keys($schema);
-        $stmt .= implode(",",$list);
-        $stmt .= ') VALUES (';
+        $query = sprintf('INSERT into %s (\'', $table);
+        $query .= implode("','",$list);
+        $query .= '\') VALUES (:';
         reset($list);
-        foreach ($list as $key) {
-            $t = ($schema[$key] == "T" ? "'%s'" : "%d");
-            $stmt .= " $t,";
-            $stmt = sprintf($stmt, $data[$key]);
+        $query .= implode(",:",$list);
+        $query .= ');';
+        $stmt = $this->prepare($query);
+        reset($list);
+        foreach ($list as $var) {
+            $stmt->bindValue(":$var", $data[$var]);
         }
-        $stmt = rtrim($stmt, ",").');';
-        return $stmt;
+        $retval = $stmt->execute();
+        $stmt->close();
+        if (!retval) {
+            $this->ok = false;
+            $this->message .= "execute failed: $query";
+        }
+        return $retval;
     }
 
     /**
@@ -219,18 +244,21 @@ class Mbox extends SQLite3
      */
     public function get_attachments($folder, $uidl)
     {
-        $query = sprintf("SELECT * FROM attachs WHERE 'folder='%s' AND 'uidl'='%s' ;",
-            $folder, $uidl);
-        $stmt = $this->query($query);
+        $query = "SELECT * FROM attachs WHERE 'folder'=:folder AND 'uidl'=:uidl ;";
+        $stmt = $this->prepare($query);
+        $stmt->bindValue(':folder', $folder);
+        $stmt->bindValue(':uidl', $uidl);
+        $retval = $stmt->execute($query);
         $this->attachments = array();
-        if ($stmt) {
-            while ($foo = $stmt->fetchArray()) {
+        if ($retval) {
+            while ($foo = $retval->fetchArray()) {
                 $this->attachments[] = $foo;
             }
         } else {
             $this->ok = false;
             $this->message = "query failed: $query";
         }
+        $stmt->close();
         return $this->attachments;
     }
 
@@ -266,15 +294,18 @@ class Mbox extends SQLite3
         $query = sprintf('folder_%s', $this->getKey($folder));
         $query = $this->create_stmt($query, $this->mschema);
         if ($this->exec($query)) {
-            $query = sprintf("INSERT into folders (name, system) VALUES ('%s', %d);",
-                $folder, intval($sys));
-            if ($this->exec($query)) {
+            $stmt = $this->prepare("INSERT into folders ('name', 'system') VALUES (:name, :system);");
+            $stmt->bindValue(':name', $folder);
+            $stmt->bindValue(':system', intval($sys));
+            if ($stmt->execute()) {
                 $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys));
                 return true;
+            } else {
+                $this->message .= "execute failed:";
             }
         }
         $this->ok = false;
-        $this->message = "exec failed: $query";
+        $this->message .= "exec failed: $query";
         return false;
 
     }
@@ -335,9 +366,8 @@ class Mbox extends SQLite3
      */
     public function add_header($msg)
     {
-        $query = sprintf('folder_%s', $this->getKey($msg['folder']));
-        $query = $this->create_insert($query, $this->mschema, $msg);
-        if (!$this->exec($query)) {
+        $stmt = $this->do_insert($this->getKey($msg['folder']), $this->mschema, $msg);
+        if (!$stmt->execute($query)) {
             $this->ok = false;
             $this->message = "exec failed: $query";
             return false;
@@ -366,12 +396,9 @@ class Mbox extends SQLite3
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
-        $query = sprintf('folder_%s', $this->getKey($msg['folder']));
-        $query = $this->update_stmt($query, $thelist, $msg) . " 'uidl'='%s' ;";
-        $query = sprintf($query, $msg['uidl']);
-        if (!$this->exec($query)) {
-            $this->ok = false;
-            $this->message = "exec failed: $query";
+        $table = sprintf('folder_%s', $this->getKey($msg['folder']));
+        $result = $this->do_update($table, $thelist, $msg, array('uidl'=>$msg['uidl']));
+        if (!$result) {
             return false;
         }
         return true;
