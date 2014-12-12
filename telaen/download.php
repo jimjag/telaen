@@ -15,7 +15,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 
 if (!$auth['auth']) {
-    die('error: your session seems expired');
+   $TLN->redirect_and_exit('index.php?err=4', true);
 }
 
 // check for main parameters
