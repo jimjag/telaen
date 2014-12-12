@@ -599,7 +599,7 @@ class Telaen extends Telaen_core
         }
         $this->mail_set_flag($msg, '\\DELETED', '+');
 
-        return $this->mbox->del_email($msg);
+        return $this->mbox->del_header($msg);
     }
 
     protected function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0)
@@ -649,7 +649,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        return $this->mbox->del_email($msg);
+        return $this->mbox->del_header($msg);
     }
 
     /**
@@ -949,10 +949,9 @@ class Telaen extends Telaen_core
 
             $datapath = $this->userfolder.$boxname;
             $i = 0;
-            $d = dir($datapath);
             $dirsize = 0;
 
-            while ($entry = $d->read()) {
+            foreach (scandir($datapath) as $entry) {
                 $fullpath = "$datapath/$entry";
                 if (is_file($fullpath)) {
                     $thisheader = $this->_get_headers_from_cache($fullpath);
@@ -964,8 +963,6 @@ class Telaen extends Telaen_core
                     $i++;
                 }
             }
-
-            $d->close();
         }
         $this->array_qsort2int($messages, 'msg', 'DESC');
 

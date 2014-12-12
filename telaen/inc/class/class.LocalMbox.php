@@ -362,11 +362,18 @@ class LocalMbox extends SQLite3
      * @param boolean $force TRUE to force a resync
      * @return array
      */
-    public function get_headers($folder, $force = false)
+    public function get_headers($folder, $force = false, $sortby = "", $sortorder = "")
     {
         if ($folder != $this->active_folder || $force) {
-            $this->update_emails();
-            $query = sprintf('SELECT * FROM folder_%s;', $this->getKey($folder));
+            $this->update_headers();
+            $query = sprintf('SELECT * FROM folder_%s ', $this->getKey($folder));
+            if ($sortby && isset($this->mschema[$sortby])) {
+                $query .= "ORDER BY '$sortby' ";
+                if ($sortorder == 'ASC' || $sortorder == 'DESC') {
+                    $query .= " $sortorder ";
+                }
+            }
+            $query .= ';';
             $result = $this->query($query);
             $this->headers = array();
             $index = 0;
@@ -414,7 +421,7 @@ class LocalMbox extends SQLite3
      * @param type $msg
      * @return boolean
      */
-    public function add_email($msg)
+    public function add_header($msg)
     {
         $stmt = $this->do_insert($this->getKey($msg['folder']), $this->mschema, $msg);
         if (!$stmt->execute($query)) {
@@ -440,7 +447,7 @@ class LocalMbox extends SQLite3
      * The complexity is allow for the use of $this->mschema:
      *  Having the message schema defined in one location is nice.
      */
-    public function update_email($msg, $fields = "*")
+    public function update_header($msg, $fields = "*")
     {
         $thelist = $this->create_uplist($fields, $this->mschema);
         if ($thelist == null || !is_array($thelist)) {
@@ -458,11 +465,11 @@ class LocalMbox extends SQLite3
      * Update all changed headers for all email messages
      * @return boolean
      */
-    public function update_emails()
+    public function update_headers()
     {
         if (count($this->changed) > 0) {
             foreach ($this->changed as $foo) {
-                if (!$this->update_email($this->headers[$foo[0]], $foo[1])) {
+                if (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
                     return false;
                 }
             }
@@ -474,7 +481,7 @@ class LocalMbox extends SQLite3
      * @param array $msg
      * @return boolean
      */
-    public function del_email($msg)
+    public function del_header($msg)
     {
         $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'='%s' ;", $this->getKey($msg['folder']), $msg['uidl']);
         if (!$this->exec($query)) {

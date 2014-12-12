@@ -31,6 +31,7 @@ if (!$messagecount
     $auth['auth'] = true;
 
     $expunge = false;
+    $require_update = false;
     $reg_pp = $TLN->prefs['rpp'];
 
     if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
@@ -72,8 +73,13 @@ if (!$messagecount
             $back_to = $start_pos;
         }
     }
-
-    require './apply_filters.php';
+    if ($mlist) {
+        $TLN->mail_list_msgs($folder, $merged_array, $start_pos, $reg_pp);
+        require './apply_filters.php';
+    }
+    if ($require_update) {
+        $TLN->mail_list_msgs($folder, $merged_array, $start_pos, $reg_pp);
+    }
 
     $TLN->mail_disconnect();
 }
@@ -81,7 +87,7 @@ if (!$messagecount
 $mbox['headers'][$folder] = $headers;
 $auth['havespam'] = ($TLN->havespam || $TLN->mbox->count_headers('spam') > 0);
 $AuthSession->Save($auth);
-$TLN->mbox->update_emails();
+$TLN->mbox->update_headers();
 
 /*
  * If they used a different version (ignoring patchlevel) then

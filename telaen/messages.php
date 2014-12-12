@@ -11,19 +11,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
-$headers = $TLN->mbox->get_headers($folder);
 
-/*
- * Sort the date and size fields with a natural sort, but only
- * for non-POP Inboxes
- */
-if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
-    if ($sortby == 'date' || $sortby == 'size') {
-        $TLN->array_qsort2($headers, $sortby, $sortorder);
-    } else {
-        $TLN->array_qsort2ic($headers, $sortby, $sortorder);
-    }
-}
+$headers = $TLN->mbox->get_headers($folder, $sortby, $sortorder);
 
 $smarty->assign('umUser', $f_user);
 $refreshurl = 'process.php?folder='.urlencode($folder)."&pag=$pag&refr=true";
@@ -107,8 +96,7 @@ if (($start_pos >= $end_pos) && ($pag != 1)) {
 
 /*
  * If the start or end points lack header info, then we know we
- * need get_message_list to grab them for us. So let process.php
- * handle this.
+ * need process.php grab them for us.
  */
 $force_refresh = false;
 for ($i = $start_pos;$i<$end_pos;$i++) {
