@@ -93,7 +93,9 @@ if (isset($f_pass)) {
     $f_pass = stripslashes($f_pass);
 }
 if (isset($f_pass) && strlen($f_pass) > 0) {
-    // Clean up
+    /*
+     * We are logging in...
+     */
     if (isset($f_email)) {
         $f_email = stripslashes($f_email);
     }
@@ -163,6 +165,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         break;
     }
 
+
     $TLN->mail_email = $auth['email'] = $f_email = trim(stripslashes($f_email));
     $TLN->mail_user = $auth['user'] = $f_user = trim(stripslashes($f_user));
     $TLN->mail_pass = $auth['pass'] = $f_pass = stripslashes($f_pass);
@@ -171,6 +174,10 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     $TLN->mail_port = $auth['port'] = $f_port;
     $TLN->mail_protocol = $auth['protocol'] = (strcasecmp($f_protocol, 'pop3') ? IMAP : POP3);
     $TLN->mail_prefix = $auth['folder_prefix'] = $f_prefix;
+
+    if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+    if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
+    $auth['auth'] = true;
 
     $TLN->mail_get_capa();
     $auth['capabilities'] = $TLN->capabilities;
@@ -205,6 +212,9 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         $TLN->redirect_and_exit('index.php?err=4');
 }
 
+/*
+ * Everything after this assumes an authenticated user
+ */
 $auth['start'] = time();
 
 $TLN->userfolder = $TLN->config['temporary_directory'].preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
@@ -217,7 +227,7 @@ if (isset($TLN->config['dirperm']) && $TLN->config['dirperm'] != 0000) {
     $TLN->dirperm = $TLN->config['dirperm'];
 }
 
-if ($auth['auth'] && isset($auth['prefs'])) {
+if (isset($auth['prefs'])) {
     $TLN->prefs = $auth['prefs'];
 } else {
     $TLN->load_prefs();
@@ -285,7 +295,8 @@ if (isset($need_save)) {
     $TLN->save_prefs($TLN->prefs);
 }
 
-if (!isset($folder) || $folder == "" || strpos($folder, '..') !== false) {
+$folder = Telaen::fs_safe_folder($folder);
+if ($folder == "") {
     $folder = 'inbox';
 } elseif (!file_exists($TLN->userfolder.$TLN->fix_prefix($folder, 1))) {
     $TLN->redirect_and_exit('logout.php');

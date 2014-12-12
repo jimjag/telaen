@@ -17,7 +17,6 @@ extract(Telaen::pull_from_array($_GET, array('refr', 'mlist'), true));
 extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'));
 extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
 
-$folder = Telaen::fs_safe_folder($folder); // just in case!
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
 $headers = $mbox->get_headers($folder);
@@ -28,11 +27,13 @@ if (!$messagecount
     || isset($refr)
     || isset($mlist)) {
 
-    if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-    if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
+    if (!$auth['auth']) {
+        if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+        if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
+    }
+    $auth['auth'] = true;
 
     $deletecount = 0;
-    $auth['auth'] = true;
     $expunge = false;
     $require_update = false;
     $reg_pp = $TLN->prefs['rpp'];
