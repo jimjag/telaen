@@ -17,7 +17,8 @@ class LocalMbox extends SQLite3
     private $db = null;
     private $fschema = array(
         'name' => 'TEXT NOT NULL',
-        'system' => 'INT NOT NULL'
+        'system' => 'INT NOT NULL',
+        'size' => 'INT'
     );
     private $aschema = array(
         'folder' => 'TEXT NOT NULL',
@@ -295,11 +296,12 @@ class LocalMbox extends SQLite3
         $query = sprintf('folder_%s', $this->getKey($folder));
         $query = $this->create_query($query, $this->mschema);
         if ($this->exec($query)) {
-            $stmt = $this->prepare("INSERT into folders ('name', 'system') VALUES (:name, :system);");
+            $stmt = $this->prepare("INSERT into folders ('name', 'system', 'size') VALUES (:name, :system, :size);");
             $stmt->bindValue(':name', $folder);
             $stmt->bindValue(':system', intval($sys));
+            $stmt->bindValue(':size', 0);
             if ($stmt->execute()) {
-                $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys));
+                $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys), 'size' => 0);
                 return true;
             } else {
                 $this->message .= "execute failed:";
@@ -330,6 +332,26 @@ class LocalMbox extends SQLite3
 
     }
 
+    /**
+     * Update size field in folders
+     * @param string $folder Folder name
+     * @param int $size Additional size
+     * @return boolean
+     */
+    public function update_folder_size($folder, $size)
+    {
+        $stmt = $this->prepare("UPDATE folder SET 'size'=:size WHERE 'name'=:name ;");
+        $stmt->bindValue(':name', $folder);
+        $this->folders[$folder]['size'] += $size;
+        $stmt->bindValue(':size', $this->folders[$folder]['size']);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            $this->ok = false;
+            $this->message .= "execute failed: ";
+            return false;
+        }
+   }
     /**
      * Get list of all email message headers in folder/emailbox
      * $this->headers auto-populated with array
