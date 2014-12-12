@@ -16,10 +16,9 @@ extract(Telaen::pull_from_array($_GET, array('decision'), 'str'));
 extract(Telaen::pull_from_array($_GET, array('refr', 'mlist'), true));
 extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'));
 extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
+extract(Telaen::pull_from_array($_POST, array('back'), true));
 
-$is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
-
-$headers = $mbox->get_headers($folder);
+$headers = $TLN->mbox->get_headers($folder);
 $messagecount = count($headers);
 
 if (!$messagecount
@@ -27,15 +26,11 @@ if (!$messagecount
     || isset($refr)
     || isset($mlist)) {
 
-    if (!$auth['auth']) {
-        if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-        if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
-    }
+    if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+    if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
     $auth['auth'] = true;
 
-    $deletecount = 0;
     $expunge = false;
-    $require_update = false;
     $reg_pp = $TLN->prefs['rpp'];
 
     if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
@@ -46,203 +41,47 @@ if (!$messagecount
             $start_pos = ($pag-1)*$reg_pp;
         }
     }
-    if ($TLN->autospamfolder) {
-        if ($folder == 'inbox') {
-            $other_folder_key = 'spam';
-        } else {
-            $other_folder_key = 'inbox';
-        }
-    }
 
     if (isset($start_pos) && isset($end_pos)) {
-        $delarray = array();
-        for ($i = 0;$i<$messagecount;$i++) {
-            if (isset($_POST["msg_$i"])) {
+        foreach (keys($_POST) as $key) {
+            $matches = array();
+            if (preg_match('|msg_(\d+)|', $key, $matches)) {
+                $i = intval($matches[1]);
                 if ($decision == 'delete') {
                     $TLN->mail_delete_msg($headers[$i], $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
+                    $expunge = true;
                 } elseif ($decision == 'move') {
                     $TLN->mail_move_msg($headers[$i], $aval_folders);
+                    $expunge = true;
                 } elseif ($decision == 'mark') {
                     $TLN->mail_set_flag($headers[$i], '\\SEEN', '+');
                 } elseif ($decision == 'unmark') {
                     $TLN->mail_set_flag($headers[$i], '\\SEEN', '-');
                 }
-
-                /*
-                 * Fill the deleted mails into an array. We rebuild the
-                 * internal list later.
-                 */
-                if ($decision == 'delete' || $decision == 'move') {
-                    $expunge = true;
-                    $delarray[$i]['del'] = 1;
-                    $deletecount++;
-                } else {
-                    $require_update = true;
-                    $delarray[$i]['del'] = 0;
-                }
-            } else {
-                $delarray[$i]['del'] = 0;
             }
-
-            $msgid = $headers[$i]['msg'];
-            $delarray[$i]['ubiid'] = $i;
-            $delarray[$i]['msgid'] = $msgid;
-            $delarray[$i]['folder'] = "$folder";
         }
-        if ($expunge || $require_update) {
-            /*
-             * Add the spamfolder if we have one.
-             */
-            if ($TLN->autospamfolder && $is_inbox_or_spam) {
-                $j = count($delarray);
-                $othercount = count($mbox['headers'][$other_folder_key]);
-                for ($i = 0;$i<$othercount;$i++) {
-                    $msgid = $mbox['headers'][$other_folder_key][$i]['msg'];
-                    $delarray[$j]['ubiid'] = $i;
-                    $delarray[$j]['msgid'] = $msgid;
-                    $delarray[$j]['folder'] = "$other_folder_key";
-                    $delarray[$j]['del'] = 0;
-                    $j++;
-                }
-            }
+        /*
+         * With Imap we need to expunge ALWAYS when move or delete,
+         * because all the folders are on server.
+         */
+        if ($TLN->mail_protocol == IMAP && $expunge) {
+            $TLN->mail_expunge();
+        }
 
-            /*
-             * With Imap we need to expunge ALWAYS when move or delete,
-             * because all the folders are on server.
-             */
-            if ($TLN->mail_protocol == IMAP && $expunge) {
-                $TLN->mail_expunge();
-            }
-
-            /*
-             * With Pop3 do a reconnect for expunge the deleted messages,
-             * but only if we are working on inbox or spam folders. Else
-             * our internal list does not match what we got on the server.
-             */
-            if ($TLN->mail_protocol == POP3 && $expunge
-                && $is_inbox_or_spam) {
-                if ($TLN->config['mail_use_forcedquit']) {
-                    $TLN->mail_disconnect_force();
-                } else {
-                    $TLN->mail_disconnect();
-                }
-                if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-                if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
-            }
-
-            $num = 20;
-
-            if ($expunge && ($messagecount > $num || (count($delarray) - $deletecount > $num))) {
-                /*
-                 * Renumber the message-ids after we deleted a mail. It's
-                 * still a lot faster than reloading the whole message list.
-                 * We begin with the lowest server-id number and subtract the
-                 * offset. Each time we have a positive hit, increment the
-                 * ubiid variable. Scan through the delarray to find the
-                 * first ID to be deleted.
-                 */
-                Telaen::array_qsort2int($delarray, 'msgid', 'ASC');
-                $delarray_count = count($delarray);
-                $firstid = 0;
-
-                for ($i = 0; $i<$delarray_count; $i++) {
-                    if ($delarray[$i]['del']) {
-                        $firstid = $i;
-                        break;
-                    }
-                }
-                if ($firstid < 0 || $firstid > $delarray_count) {
-                    $firstid = 0;
-                }
-
-                $subtract = 0;
-
-                for ($z = $firstid; $z<$delarray_count; $z++) {
-                    // $msgid = $z + 1; # msgid's always begin with 1, not 0.
-                    $ubiid = $delarray[$z]['ubiid'];
-                    $myfold = $delarray[$z]['folder'];
-                    $del = $delarray[$z]['del'];
-
-                    if ($del) {
-                        $subtract++;
-                        unset($mbox['headers'][$myfold][$ubiid]);
-                    } else {
-                        $mbox['headers'][$myfold][$ubiid]['msg'] -= $subtract;
-                        $mbox['headers'][$myfold][$ubiid]['id'] -= $subtract;
-                    }
-                }
-            } else {
-                /*
-                 * We dont have many messages. Unset the array and fetch everything
-                 * from scratch.
-                 */
-                unset($mbox['headers'][$folder]);
-                $mbox['headers'][$folder] = array();
-                if ($TLN->autospamfolder && $is_inbox_or_spam) {
-                    unset($mbox['headers'][$other_folder_key]);
-                    $mbox['headers'][$other_folder_key] = array();
-                }
-                $expunge = false;
-                $require_update = false;
-            }
-            if ($TLN->prefs['send_to_trash']) {
-                unset($mbox['headers']['trash']);
-            }
-            if ($decision == 'move') {
-                unset($mbox['headers'][$aval_folders]);
-            }
-            $UserMbox->Save($mbox);
-            if ($back) {
-                $back_to = $start_pos;
-            }
+        if ($back) {
+            $back_to = $start_pos;
         }
     }
 
-    $boxes = $TLN->mail_list_boxes();
-    $mbox['folders'] = $boxes;
-
-    /*
-     * If we deleted mails, the message list has already been reloaded.
-     */
-    if (!$expunge || !$is_inbox_or_spam || $mlist) {
-        require './get_message_list.php';
-        require './apply_filters.php';
-    }
-
-    /*
-     * A filter from apply_filters.php needs a reload. Only active if
-     * we use filters.
-     */
-    if ($require_update) {
-        $TLN->mail_disconnect();
-        if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-        if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
-        require './get_message_list.php';
-    }
+    require './apply_filters.php';
 
     $TLN->mail_disconnect();
 }
 
-if (!is_array($headers = $mbox['headers'][$folder])) {
-    $TLN->redirect_and_exit('index.php?err=3', true);
-}
-
-/*
- * Sort the date and size fields with a natural sort, but only
- * for non-POP Inboxes
- */
-if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
-    if ($sortby == 'date' || $sortby == 'size') {
-        $TLN->array_qsort2($headers, $sortby, $sortorder);
-    } else {
-        $TLN->array_qsort2ic($headers, $sortby, $sortorder);
-    }
-}
-
 $mbox['headers'][$folder] = $headers;
-$auth['havespam'] = ($TLN->havespam || count($mbox['headers']['spam']));
+$auth['havespam'] = ($TLN->havespam || $TLN->mbox->count_headers('spam') > 0);
 $AuthSession->Save($auth);
-$mbox->update_emails();
+$TLN->mbox->update_emails();
 
 /*
  * If they used a different version (ignoring patchlevel) then
@@ -270,12 +109,11 @@ if ((!$same_version) ||
 if (!isset($pag) || !is_numeric(trim($pag))) {
     $pag = 1;
 }
-$refreshurl = 'messages.php?folder='.urlencode($folder)."&pag=$pag";
-
 if (isset($back_to)) {
     if (count($headers) > $back_to) {
         $TLN->redirect_and_exit('readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=$back_to");
     }
 }
 
+$refreshurl = 'messages.php?folder='.urlencode($folder)."&pag=$pag";
 $TLN->redirect_and_exit("$refreshurl");

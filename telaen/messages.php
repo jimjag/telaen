@@ -11,13 +11,22 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
+$headers = $TLN->mbox->get_headers($folder);
+
+/*
+ * Sort the date and size fields with a natural sort, but only
+ * for non-POP Inboxes
+ */
+if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
+    if ($sortby == 'date' || $sortby == 'size') {
+        $TLN->array_qsort2($headers, $sortby, $sortorder);
+    } else {
+        $TLN->array_qsort2ic($headers, $sortby, $sortorder);
+    }
+}
 
 $smarty->assign('umUser', $f_user);
 $refreshurl = 'process.php?folder='.urlencode($folder)."&pag=$pag&refr=true";
-
-if (!is_array($headers = $mbox['headers'][$folder])) {
-    $TLN->redirect_and_exit('index.php?err=3', true);
-}
 
 $arrow = ($sortorder == 'ASC') ? 'images/arrow_up.gif' : 'images/arrow_down.gif';
 $arrow = '&nbsp;<img src="'.$arrow.'" width"8" height="7" border="0" alt="" />';
@@ -63,10 +72,8 @@ $smarty->assign('pageMetas', $nocache."\n".$refreshMeta);
 
 /* load total size */
 $totalused = 0;
-while (list($box, $info) = each($mbox['headers'])) {
-    for ($i = 0;$i<count($info);$i++) {
-        $totalused += $info[$i]['size'];
-    }
+foreach ($this->mbox->folders as $key => $val) {
+    $totalused += $val['size'];
 }
 
 $smarty->assign('umTotalUsed', ceil($totalused/1024));
@@ -312,8 +319,7 @@ if ($nummsg > 0) {
 $smarty->assign('umNavBar', $navigation);
 
 $avalfolders = array();
-$d = dir($TLN->userfolder);
-while ($entry = $d->read()) {
+foreach (scandir($TLN->userfolder) as $entry) {
     if (is_dir($TLN->userfolder.$entry)
         && $entry != '..'
         && $entry != '.'
@@ -343,7 +349,6 @@ while ($entry = $d->read()) {
         $avalfolders[] = array('path' => $entry, 'display' => $display);
     }
 }
-$d->close();
 
 unset($TLN);
 
