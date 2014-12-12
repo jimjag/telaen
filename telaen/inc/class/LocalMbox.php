@@ -10,7 +10,7 @@ Telaen is a GPL'ed software developed by
 /**
  * Simple PHP Helper for sqlite3-based Email data
  */
-class Mbox extends SQLite3
+class LocalMbox extends SQLite3
 {
     private $active_folder = "";
     private $userfolder = "";
@@ -331,7 +331,7 @@ class Mbox extends SQLite3
     }
 
     /**
-     * Get list of all message headers in folder/emailbox
+     * Get list of all email message headers in folder/emailbox
      * $this->headers auto-populated with array
      * @param string $folder
      * @param boolean $force TRUE to force a resync
@@ -340,7 +340,7 @@ class Mbox extends SQLite3
     public function get_headers($folder, $force = false)
     {
         if ($folder != $this->active_folder || $force) {
-            $this->update_headers();
+            $this->update_emails();
             $query = sprintf('SELECT * FROM folder_%s;', $this->getKey($folder));
             $result = $this->query($query);
             $this->headers = array();
@@ -361,11 +361,11 @@ class Mbox extends SQLite3
     }
 
     /**
-     * Add message
+     * Add email message to folder
      * @param type $msg
      * @return boolean
      */
-    public function add_header($msg)
+    public function add_email($msg)
     {
         $stmt = $this->do_insert($this->getKey($msg['folder']), $this->mschema, $msg);
         if (!$stmt->execute($query)) {
@@ -382,7 +382,7 @@ class Mbox extends SQLite3
     }
 
     /**
-     * Take the message array and update the fields in the DB
+     * Take the email message array and update the fields in the DB
      * @param type $msg Message to be updated/synced in DB
      * @param boolean $fields "*" for all, or array of fields
      * @return boolean
@@ -391,7 +391,7 @@ class Mbox extends SQLite3
      * The complexity is allow for the use of $this->mschema:
      *  Having the message schema defined in one location is nice.
      */
-    public function update_header($msg, $fields = "*")
+    public function update_email($msg, $fields = "*")
     {
         $thelist = $this->create_uplist($fields, $this->mschema);
         if ($thelist == null || !is_array($thelist)) {
@@ -406,14 +406,14 @@ class Mbox extends SQLite3
    }
 
     /**
-     * Update all changed headers for all messages
+     * Update all changed headers for all email messages
      * @return boolean
      */
-    public function update_headers()
+    public function update_emails()
     {
         if (count($this->changed) > 0) {
             foreach ($this->changed as $foo) {
-                if (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
+                if (!$this->update_email($this->headers[$foo[0]], $foo[1])) {
                     return false;
                 }
             }
@@ -421,11 +421,11 @@ class Mbox extends SQLite3
         return true;
     }
     /**
-     * Delete message from DB
+     * Delete email message from DB
      * @param array $msg
      * @return boolean
      */
-    public function del_header($msg)
+    public function del_email($msg)
     {
         $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'='%s' ;", $this->getKey($msg['folder']), $msg['uidl']);
         if (!$this->exec($query)) {

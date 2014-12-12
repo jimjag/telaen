@@ -603,7 +603,7 @@ class Telaen extends Telaen_core
         }
         $this->mail_set_flag($msg, '\\DELETED', '+');
 
-        return $this->mbox->del_header($msg);
+        return $this->mbox->del_email($msg);
     }
 
     protected function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0)
@@ -653,7 +653,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        return $this->mbox->del_header($msg);
+        return $this->mbox->del_email($msg);
     }
 
     /**

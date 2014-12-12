@@ -209,7 +209,7 @@ $auth['start'] = time();
 
 $TLN->userfolder = $TLN->config['temporary_directory'].preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
 
-$mbox = new Mbox($TLN->userfolder);
+$mbox = new LocalMbox($TLN->userfolder);
 $TLN->mbox = &$mbox;
 
 // avoid missing settings allow dirs creation with 000 perms

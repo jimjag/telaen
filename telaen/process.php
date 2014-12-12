@@ -241,7 +241,7 @@ if (!$is_inbox_or_spam || $TLN->mail_protocol == IMAP) {
 $mbox['headers'][$folder] = $headers;
 $auth['havespam'] = ($TLN->havespam || count($mbox['headers']['spam']));
 $AuthSession->Save($auth);
-$mbox->update_headers();
+$mbox->update_emails();
 
 /*
  * If they used a different version (ignoring patchlevel) then
