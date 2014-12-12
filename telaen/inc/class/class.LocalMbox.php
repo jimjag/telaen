@@ -86,25 +86,23 @@ class LocalMbox extends SQLite3
             $ok = $this->ok;
             $message = $this->message;
             foreach($this->system_folders as $foo) {
-                $this->add_folder($foo, 1);
+                $this->add_folder($foo, true);
+            }
+            /*
+             * We may have folders from previous installs. Check
+             */
+            foreach (scandir($userfolder) as $entry) {
+                if (is_dir($entry)
+                    && $entry != '..'
+                    && $entry != '.'
+                    && !isset($this->folders[$entry])) {
+                    $this->add_folder($entry, true);
+                }
             }
             $this->ok = $this->ok && $ok;
             $this->message .= $message;
         }
         $this->get_folders();
-        /*
-         * We may have folders from previous installs. Check
-         */
-        $d = dir($userfolder);
-        while ($entry = $d->read()) {
-            if (is_dir($userfolder.$entry)
-                && $entry != '..'
-                && $entry != '.'
-                && !isset($this->folders[$entry])) {
-                $this->add_folder($entry);
-            }
-        }
-        $d->close();
     }
 
     /**
@@ -291,15 +289,20 @@ class LocalMbox extends SQLite3
      * @param int $sys
      * @return boolean
      */
-    public function add_folder($folder, $sys = 0)
+    public function add_folder($folder, $calc_size = false)
     {
+        $sys = isset($this->system_folders[$folder]);
+        $size = 0;
+        if ($calc_size && is_dir($this->userfolder.$folder)) {
+            $size = $this->calc_folder_size($this->userfolder.$folder);
+        }
         $query = sprintf('folder_%s', $this->getKey($folder));
         $query = $this->create_query($query, $this->mschema);
         if ($this->exec($query)) {
             $stmt = $this->prepare("INSERT into folders ('name', 'system', 'size') VALUES (:name, :system, :size);");
             $stmt->bindValue(':name', $folder);
             $stmt->bindValue(':system', intval($sys));
-            $stmt->bindValue(':size', 0);
+            $stmt->bindValue(':size', $size);
             if ($stmt->execute()) {
                 $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys), 'size' => 0);
                 return true;
@@ -497,5 +500,25 @@ class LocalMbox extends SQLite3
 
     }
 
+    private function calc_folder_size($path)
+    {
+        $total_size = 0;
+        $path = rtrim($path, '/') . '/';
+
+        foreach(scandir($path) as $f) {
+            if ($f != "." && $f != "..") {
+                $nfile = $path . $f;
+                if (is_dir($nfile)) {
+                    $size = foldersize($nfile);
+                    $total_size += $size;
+                }
+                else {
+                    $size = filesize($nfile);
+                    $total_size += $size;
+                }
+            }
+        }
+        return $total_size;
+    }
 
 }
