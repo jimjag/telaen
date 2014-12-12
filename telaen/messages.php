@@ -323,16 +323,19 @@ while ($entry = $d->read()) {
         $entry = $TLN->fix_prefix($entry, 0);
         switch ($entry) {
         case 'inbox':
-            $display = $lang['inbox_extended'];
+            $display = ($lang['inbox_extended'] ? $lang['inbox_extended'] : 'INBOX');
             break;
         case 'sent':
-            $display = $lang['sent_extended'];
+            $display = ($lang['sent_extended'] ? $lang['sent_extended'] : 'Sent');
             break;
         case 'trash':
-            $display = $lang['trash_extended'];
+            $display = ($lang['trash_extended'] ? $lang['trash_extended'] : 'Trash');
             break;
         case 'spam':
-            $display = ($lang['spam_extended'] ? $lang['spam_extended'] : 'SPAM');
+            $display = ($lang['spam_extended'] ? $lang['spam_extended'] : 'SPAM folder');
+            break;
+        case 'drafts':
+            $display = ($lang['drafts_extended'] ? $lang['drafts_extended'] : 'Drafts');
             break;
         default:
             $display = $entry;
