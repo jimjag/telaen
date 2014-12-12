@@ -160,7 +160,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
                 $UserMbox->Save($mbox);
             }
 
-            if ($TLN->prefs['save-to-sent']) {
+            if ($TLN->prefs['save_to_sent']) {
                 if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
                 if (!$TLN->mail_auth(false)) $TLN->redirect_and_exit('index.php?err=0');
                 $TLN->mail_save_message('sent', $mail->getSentMIMEMessage(), '\\SEEN');
@@ -197,7 +197,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     if (!isset($textmode)) {
         $textmode = null;
     }
-    $show_advanced = ((!$textmode) && ($TLN->prefs['editor-mode'] != 'text')) ? 1 : 0;
+    $show_advanced = ((!$textmode) && ($TLN->prefs['editor_mode'] != 'text')) ? 1 : 0;
     $js_advanced = ($show_advanced) ? 'true' : 'false';
 
         // signature
@@ -206,12 +206,12 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
         $signature = nl2br($signature);
     }
 
-    $add_sig = $TLN->prefs['add-sig'];
+    $add_sig = $TLN->prefs['add_signature'];
     $addSignature = ($add_sig) ? 1 : 0;
     $smarty->assign('umAddSignature', $addSignature);
 
         // return receipt
-        $rr = ($TLN->prefs['require-receipt']) ? true : false;
+        $rr = ($TLN->prefs['require_receipt']) ? true : false;
     $smarty->assign('requireReceipt', $rr);
 
     // hidden inputs ---- Note: these should be moved into template...

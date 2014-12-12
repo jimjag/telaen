@@ -58,7 +58,7 @@ if (!$messagecount
         for ($i = 0;$i<$messagecount;$i++) {
             if (isset($_POST["msg_$i"])) {
                 if ($decision == 'delete') {
-                    $TLN->mail_delete_msg($headers[$i], $TLN->prefs['save-to-trash'], $TLN->prefs['st-only-read']);
+                    $TLN->mail_delete_msg($headers[$i], $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
                 } elseif ($decision == 'move') {
                     $TLN->mail_move_msg($headers[$i], $aval_folders);
                 } elseif ($decision == 'mark') {
@@ -184,7 +184,7 @@ if (!$messagecount
                 $expunge = false;
                 $require_update = false;
             }
-            if ($TLN->prefs['save-to-trash']) {
+            if ($TLN->prefs['send_to_trash']) {
                 unset($mbox['headers']['trash']);
             }
             if ($decision == 'move') {

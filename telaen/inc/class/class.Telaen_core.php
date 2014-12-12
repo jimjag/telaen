@@ -1442,26 +1442,14 @@ ENDOFREDIRECT;
         $pref_file = $this->userfolder.'_infos/'.self::fs_safe_file($file);
 
         if (!file_exists($pref_file)) {
+            foreach ($this->config['default_preferences'] as $key => $val) {
+                if (preg_match('_default$', $key)) {
+                    $pref = substr($key, 0, -8);
+                    $this->prefs[$pref] = $val;
+                }
+            }
             $this->prefs['real-name'] = UCFirst(substr($user, 0, strpos($user, '@')));
             $this->prefs['reply-to'] = $user;
-            $this->prefs['save-to-trash'] = $send_to_trash_default;
-            $this->prefs['st-only-read'] = $st_only_read_default;
-            $this->prefs['empty-trash'] = $empty_trash_default;
-            $this->prefs['empty-spam'] = $empty_spam_default;
-            $this->prefs['unmark-read'] = $unmark_read_default;
-            $this->prefs['save-to-sent'] = $save_to_sent_default;
-            $this->prefs['sort-by'] = $sortby_default;
-            $this->prefs['sort-order'] = $sortorder_default;
-            $this->prefs['rpp'] = $rpp_default;
-            $this->prefs['add-sig'] = $add_signature_default;
-            $this->prefs['signature'] = $signature_default;
-            $this->prefs['require-receipt'] = $require_receipt_default;
-            $this->prefs['timezone'] = $timezone_default;
-            $this->prefs['display-images'] = $display_images_default;
-            $this->prefs['editor-mode'] = $editor_mode_default;
-            $this->prefs['refresh-time'] = $refresh_time_default;
-            $this->prefs['spamlevel'] = $spamlevel_default;
-            $this->prefs['keep-on-server'] = $keep_on_server_default;
             $this->prefs['version'] = $this->appversion;
         } else {
             $prefs = file($pref_file);

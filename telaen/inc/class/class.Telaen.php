@@ -1812,7 +1812,7 @@ class Telaen extends Telaen_core
     {
         global $mbox;
         if (($this->config['force_unmark_read_overrule'] && $this->config['force_unmark_read_setting']) ||
-                 ($this->prefs['unmark-read'] && !$this->config['force_unmark_read_overrule'])) {
+                 ($this->prefs['unmark_read'] && !$this->config['force_unmark_read_overrule'])) {
             $cleanme = $userfolder.'inbox/';
             self::cleanup_dir($cleanme);
         }
@@ -1850,7 +1850,7 @@ class Telaen extends Telaen_core
                     }
                 }
 
-                if ($this->prefs['empty-trash']) {
+                if ($this->prefs['empty_trash']) {
                     if ($this->mail_protocol == IMAP) {
                         if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                         if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
@@ -1873,7 +1873,7 @@ class Telaen extends Telaen_core
                     }
                 }
 
-                if ($this->prefs['empty-spam']) {
+                if ($this->prefs['empty_spam']) {
                     if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                     if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
                     $trash = 'spam';

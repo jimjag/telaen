@@ -22,7 +22,7 @@ if (!file_exists($mail_info['localname'])) {
 }
 $email = $TLN->read_file($mail_info['localname']);
 
-$TLN->displayimages = $TLN->prefs['display-images'];
+$TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
 
 $email = $TLN->Decode($email);

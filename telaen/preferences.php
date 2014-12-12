@@ -55,22 +55,22 @@ if (isset($_POST['action'])) {
         // pick the new settings and save
         $myprefs['real-name'] = $_POST['real_name'];
         $myprefs['reply-to'] = $_POST['reply_to'];
-        $myprefs['save-to-trash'] = $_POST['save_trash'];
-        $myprefs['st-only-read'] = $_POST['st_only_read'];
-        $myprefs['empty-trash'] = $_POST['empty_trash_on_exit'];
-        $myprefs['empty-spam'] = $_POST['empty_spam_on_exit'];
-        $myprefs['unmark-read'] = $_POST['unmark_read_on_exit'];
-        $myprefs['save-to-sent'] = $_POST['save_sent'];
+        $myprefs['send_to_trash'] = $_POST['save_trash'];
+        $myprefs['st_only_read'] = $_POST['st_only_read'];
+        $myprefs['empty_trash'] = $_POST['empty_trash_on_exit'];
+        $myprefs['empty_spam'] = $_POST['empty_spam_on_exit'];
+        $myprefs['unmark_read'] = $_POST['unmark_read_on_exit'];
+        $myprefs['save_to_sent'] = $_POST['save_sent'];
         $myprefs['rpp'] = $_POST['rpp'];
-        $myprefs['add-sig'] = $_POST['add_sig'];
+        $myprefs['add_signature'] = $_POST['add_sig'];
         $myprefs['signature'] = $_POST['sig'];
         $myprefs['timezone'] = $_POST['timezone'];
-        $myprefs['display-images'] = $_POST['display_images'];
-        $myprefs['editor-mode'] = $_POST['editor_mode'];
-        $myprefs['refresh-time'] = $_POST['refresh_time'];
+        $myprefs['display_images'] = $_POST['display_images'];
+        $myprefs['editor_mode'] = $_POST['editor_mode'];
+        $myprefs['refresh_time'] = $_POST['refresh_time'];
         $myprefs['first-login'] = 1;
         $myprefs['spamlevel'] = $_POST['spamlevel'];
-        $myprefs['require-receipt'] = $_POST['require_receipt'];
+        $myprefs['require_receipt'] = $_POST['require_receipt'];
         $myprefs['version'] = $appversion;
         $TLN->save_prefs($myprefs);
         unset($myprefs);
@@ -174,47 +174,47 @@ $smarty->assign('timezone', $TLN->prefs['timezone']);
 $smarty->assign('timezoneVals', $timeVals);
 
 // editor mode
-$smarty->assign('editorMode', $TLN->prefs['editor-mode']);
+$smarty->assign('editorMode', $TLN->prefs['editor_mode']);
 
 // records per page
 $smarty->assign('msgPerPage', $TLN->prefs['rpp']);
 $smarty->assign('msgPerPageVals', array(10, 20, 30, 40, 50, 100, 200));
 
 // refresh time
-$smarty->assign('refreshTime', $TLN->prefs['refresh-time']);
+$smarty->assign('refreshTime', $TLN->prefs['refresh_time']);
 $smarty->assign('refreshTimeVals', array(5, 10, 15, 20, 25));
 
 // signature
-$status = ($TLN->prefs['add-sig']) ? true : false;
+$status = ($TLN->prefs['add_signature']) ? true : false;
 $smarty->assign('addSignature', $status);
 
 $txtsignature = htmlspecialchars($TLN->prefs['signature']);
 $smarty->assign('signature', $txtsignature);
 
 // misc
-$status = ($TLN->prefs['save-to-trash']) ? true : false;
+$status = ($TLN->prefs['send_to_trash']) ? true : false;
 $smarty->assign('saveTrash', $status);
 
-$status = ($TLN->prefs['st-only-read']) ? true : false;
+$status = ($TLN->prefs['st_only_read']) ? true : false;
 $smarty->assign('saveTrashOnlyRead', $status);
 
-$status = ($TLN->prefs['empty-trash']) ? true : false;
+$status = ($TLN->prefs['empty_trash']) ? true : false;
 $smarty->assign('emptyTrashOnExit', $status);
 
-$status = ($TLN->prefs['unmark-read']) ? true : false;
+$status = ($TLN->prefs['unmark_read']) ? true : false;
 $smarty->assign('unmarkReadOnExit', $status);
 
-$status = ($TLN->prefs['save-to-sent']) ? true : false;
+$status = ($TLN->prefs['save_to_sent']) ? true : false;
 $smarty->assign('saveSent', $status);
 
-$status = ($TLN->prefs['display-images']) ? true : false;
+$status = ($TLN->prefs['display_images']) ? true : false;
 $smarty->assign('displayImages', $status);
 
-$status = ($TLN->prefs['require-receipt']) ? true : false;
+$status = ($TLN->prefs['require_receipt']) ? true : false;
 $smarty->assign('requireReceipt', $status);
 
 // spam options
-$status = ($TLN->prefs['empty-spam']) ? true : false;
+$status = ($TLN->prefs['empty_spam']) ? true : false;
 $smarty->assign('emptySpamOnExit', $status);
 
 $smarty->assign('spamLevelVals', array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));

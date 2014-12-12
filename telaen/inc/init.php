@@ -260,25 +260,25 @@ require_once './folder_list.php';
 
 $need_save = false;
 if (!isset($sortby) || !preg_match('/(subject|fromname|date|size|toname)/', $sortby)) {
-    if (isset($TLN->prefs['sort-by']) && preg_match('/(subject|fromname|date|size|toname)/', $TLN->prefs['sort-by'])) {
-        $sortby = $TLN->prefs['sort-by'];
+    if (isset($TLN->prefs['sortby']) && preg_match('/(subject|fromname|date|size|toname)/', $TLN->prefs['sortby'])) {
+        $sortby = $TLN->prefs['sortby'];
     } else {
         $sortby = $TLN->config['default_sortby'];
     }
 } else {
     $need_save = true;
-    $TLN->prefs['sort-by'] = $sortby;
+    $TLN->prefs['sortby'] = $sortby;
 }
 
 if (!isset($sortorder) || !preg_match('/ASC|DESC/', $sortorder)) {
-    if (isset($TLN->prefs['sort-order']) && preg_match('/ASC|DESC/', $TLN->prefs['sort-order'])) {
-        $sortorder = $TLN->prefs['sort-order'];
+    if (isset($TLN->prefs['sortorder']) && preg_match('/ASC|DESC/', $TLN->prefs['sortorder'])) {
+        $sortorder = $TLN->prefs['sortorder'];
     } else {
         $sortorder = $TLN->config['default_sortorder'];
     }
 } else {
     $need_save = true;
-    $TLN->prefs['sort-order'] = $sortorder;
+    $TLN->prefs['sortorder'] = $sortorder;
 }
 
 if (isset($need_save)) {

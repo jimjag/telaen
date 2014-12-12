@@ -61,7 +61,7 @@ if (isset($attachment)) {
 // metas assigned to smarty
 $smarty->assign('pageMetas', $nocache);
 
-$TLN->displayimages = $TLN->prefs['display-images'];
+$TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
 
 $email = $TLN->Decode($result);

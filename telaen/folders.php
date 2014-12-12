@@ -48,14 +48,14 @@ require './folder_list.php';
 if (isset($empty)) {
     $headers = $mbox['headers'][$empty];
     for ($i = 0;$i<count($headers);$i++) {
-        $TLN->mail_delete_msg($headers[$i], $TLN->prefs['save-to-trash'], $TLN->prefs['st-only-read']);
+        $TLN->mail_delete_msg($headers[$i], $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
         $expunge = true;
     }
     if ($expunge) {
         $TLN->mail_expunge();
         unset($mbox['headers'][$empty]);
         /* ops.. you have sent anything to trash, then you need refresh it */
-        if ($TLN->prefs['save-to-trash']) {
+        if ($TLN->prefs['send_to_trash']) {
             unset($mbox['headers']['trash']);
         }
         $UserMbox->Save($mbox);

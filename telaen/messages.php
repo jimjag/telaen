@@ -51,11 +51,11 @@ if ($TLN->mail_protocol == IMAP || !$is_inbox_or_spam) {
 }
 
 $elapsedtime = (time()-$auth['last-update'])/60;
-$timeleft = ($TLN->prefs['refresh-time']-$elapsedtime);
+$timeleft = ($TLN->prefs['refresh_time']-$elapsedtime);
 
 if ($timeleft > 0) {
     $refreshMeta = "	<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";
-} elseif ($TLN->prefs['refresh-time']) {
+} elseif ($TLN->prefs['refresh_time']) {
     $TLN->redirect_and_exit("$refreshurl");
 }
 
