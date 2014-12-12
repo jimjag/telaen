@@ -19,7 +19,6 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 require_once './inc/class/class.Telaen.php';
 require_once './inc/class/class.MyMonth.php';
-require_once './inc/class/class.Mbox.php';
 require_once './inc/class/class.Session.php';
 
 @set_magic_quotes_runtime(0);            // Smarty and magic_quotes_runtime ON do not mix.
