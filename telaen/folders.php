@@ -19,9 +19,6 @@ extract(Telaen::pull_from_array($_POST, array('newfolder'), 's'));
 if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
 if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
 
-// check and create a new folder
-$newfolder = trim($newfolder);
-
 $require_update = false;
 
 if ($TLN->valid_folder_name($newfolder, true)

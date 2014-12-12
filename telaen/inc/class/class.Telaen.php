@@ -342,13 +342,9 @@ class Telaen extends Telaen_core
             }
         }
 
-        $system_folders = array_merge((array) $this->_system_folders, array('_attachments', '_infos'));
-
-        while (list($index, $value) = each($system_folders)) {
+        foreach ($this->mbox->system_folders as $value) {
             $value = $this->fix_prefix($value, 1);
             if (!file_exists($this->userfolder.$value)) {
-                if ($this->is_system_folder($value)) {
-                }
                 if (!@mkdir($this->userfolder.$value, $this->dirperm) && $this->config['log_errors']) {
                     $this->trigger_error("mkdir error: {$this->userfolder}{$value}", __FUNCTION__);
                 }

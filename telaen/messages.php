@@ -10,7 +10,6 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
 
-$folder = Telaen::fs_safe_folder($folder); // just in case!
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
 $smarty->assign('umUser', $f_user);
