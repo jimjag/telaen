@@ -361,6 +361,30 @@ class LocalMbox extends SQLite3
     }
 
     /**
+     * Get count of all email message headers in folder/emailbox
+     * $this->headers is NOT changed!
+     * @param string $folder
+     * @param boolean $force TRUE to force a resync
+     * @return array
+     */
+    public function count_headers($folder, $force = false)
+    {
+        if ($folder != $this->active_folder || $force) {
+            $query = sprintf('SELECT COUNT(*) FROM folder_%s;', $this->getKey($folder));
+            $result = $this->query($query);
+            if ($result) {
+                $count = $result->fetchArray();
+                return $count[0];
+            } else {
+                $this->ok = false;
+                $this->message = "query failed: $query";
+                return null;
+            }
+        }
+        return count($this->headers);
+    }
+
+    /**
      * Add email message to folder
      * @param type $msg
      * @return boolean
