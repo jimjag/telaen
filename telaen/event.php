@@ -13,7 +13,7 @@ require './inc/init.php';
 extract(Telaen::pull_from_array($_GET, array('edate'), 'str'));
 extract(Telaen::pull_from_array($_POST, array('eventn', 'edate', 'evsave', 'evdelete', 'starthour', 'stophour', 'startmin', 'stopmin'), 'str'));
 
-$etext = trim($_POST["etext_{$eventn}"]);
+$etext = Telaen::caster($_POST["etext_{$eventn}"], "s");
 
 list(, $foo, $dayuid) = explode('_', $edate);
 $year = intval(substr($foo, 0, 4));
