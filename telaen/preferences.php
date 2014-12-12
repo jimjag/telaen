@@ -53,24 +53,24 @@ if (isset($_POST['action'])) {
 
     case 'savePrefs':
         // pick the new settings and save
-        $myprefs['real-name'] = $_POST['real_name'];
-        $myprefs['reply-to'] = $_POST['reply_to'];
-        $myprefs['send_to_trash'] = $_POST['save_trash'];
-        $myprefs['st_only_read'] = $_POST['st_only_read'];
-        $myprefs['empty_trash'] = $_POST['empty_trash_on_exit'];
-        $myprefs['empty_spam'] = $_POST['empty_spam_on_exit'];
-        $myprefs['unmark_read'] = $_POST['unmark_read_on_exit'];
-        $myprefs['save_to_sent'] = $_POST['save_sent'];
-        $myprefs['rpp'] = $_POST['rpp'];
-        $myprefs['add_signature'] = $_POST['add_sig'];
-        $myprefs['signature'] = $_POST['sig'];
-        $myprefs['timezone'] = $_POST['timezone'];
-        $myprefs['display_images'] = $_POST['display_images'];
-        $myprefs['editor_mode'] = $_POST['editor_mode'];
-        $myprefs['refresh_time'] = $_POST['refresh_time'];
+        $myprefs['real-name'] = htmlspecialchars($_POST['real_name']);
+        $myprefs['reply-to'] = htmlspecialchars($_POST['reply_to']);
+        $myprefs['send_to_trash'] = (boolean)$_POST['save_trash'];
+        $myprefs['st_only_read'] = (boolean)$_POST['st_only_read'];
+        $myprefs['empty_trash'] = (boolean)$_POST['empty_trash_on_exit'];
+        $myprefs['empty_spam'] = (boolean)$_POST['empty_spam_on_exit'];
+        $myprefs['unmark_read'] = (boolean)$_POST['unmark_read_on_exit'];
+        $myprefs['save_to_sent'] = (boolean)$_POST['save_sent'];
+        $myprefs['rpp'] = intval($_POST['rpp']);
+        $myprefs['add_signature'] = (boolean)$_POST['add_sig'];
+        $myprefs['signature'] = htmlspecialchars($_POST['sig']);
+        $myprefs['timezone'] = intval($_POST['timezone']);
+        $myprefs['display_images'] = (boolean)$_POST['display_images'];
+        $myprefs['editor_mode'] = ($_POST['editor_mode'] == "text" ? "text" : "html");
+        $myprefs['refresh_time'] = intval($_POST['refresh_time']);
         $myprefs['first-login'] = 1;
-        $myprefs['spamlevel'] = $_POST['spamlevel'];
-        $myprefs['require_receipt'] = $_POST['require_receipt'];
+        $myprefs['spamlevel'] = intval($_POST['spamlevel']);
+        $myprefs['require_receipt'] = (boolean)$_POST['require_receipt'];
         $myprefs['version'] = $appversion;
         $TLN->save_prefs($myprefs);
         unset($myprefs);
