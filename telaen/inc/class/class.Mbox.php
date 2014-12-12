@@ -173,7 +173,7 @@ class Mbox extends SQLite3
         foreach ($where as $key => $val) {
             $temp[] = "'$key'=:$key";
         }
-        $query = $query.implode(' AND ', $temp).');';
+        $query = $query.implode(' AND ', $temp).' ;';
         $stmt = $this->prepare($query);
         reset($list);
         foreach ($list as $key) {
