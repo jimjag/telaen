@@ -193,7 +193,7 @@ body,td,th {
             echo('<span class="pass">PASSED</span><br/>');
 ?>
         <hr>
-        <h2 class="Test">Checking for old files:</h2>
+        <h2 class="Test">Checking for other old files:</h2>
         <span class="Description">With the upgrade to version 2.x, some files are no longer required and
         should be deleted. Others have been moved. Checking for these now:</span><br/>
 
@@ -202,7 +202,7 @@ body,td,th {
         $old_files = array();
         $moved_files = array();
 
-        foreach (array('inc/lib.php') as $i) {
+        foreach (array('inc/lib.php', 'get_messages_list.php') as $i) {
             if (file_exists('./' . $i)) {
                 $has_old_files = true;
                 $old_files[] = $i;
