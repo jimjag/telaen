@@ -1458,6 +1458,14 @@ ENDOFREDIRECT;
             $prefs = join("", $prefs);
             $this->prefs = unserialize(~$prefs);
         }
+        foreach ($this->config['default_preferences'] as $key => $val) {
+            if (preg_match('^force_', $key)) {
+                if ($val !== null) {
+                    $pref = substr($key, 6);
+                    $this->prefs[$pref] = (boolean)$val;
+                }
+            }
+        }
     }
 
     /**

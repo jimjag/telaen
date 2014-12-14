@@ -342,7 +342,18 @@ $config['default_preferences'] = array(
                                         # don't download their email locally; for POP, this
                                         # this should be false, UNLESS Telaen is NOT their
                                         # only email client for their account
-    'spamlevel_default' => 0            # Sensitivity to X-Spam-Level detection
+    'spamlevel_default' => 0,           # Sensitivity to X-Spam-Level detection
+    ########################################################################
+    # Control whether the SysAdmin can overrule (set system-wide) the
+    # 'unmark_read' and 'keep_on_server' settings. Can have one of
+    # 3 values:
+    #    null: No system-wide setting; allow user to change/set at will
+    #    false: Force as false; user cannot change
+    #    true: Force as true; user cannot change
+    ########################################################################
+
+    'force_unmark_read' => false,
+    'force_keep_on_server' => null
 );
 
 ########################################################################
@@ -355,17 +366,6 @@ $config['default_preferences'] = array(
 ########################################################################
 
 $config['server_timezone_offset'] = '-0000';
-
-########################################################################
-# Control whether the SysAdmin overrules the unmark READ messages
-# user preference. To use, set $config['force_unmark_read_overrule'] to
-# true (if you want to overrule whatever the user has set)
-# and set $config['force_unmark_read_setting'] to the value you wish
-# to force.
-########################################################################
-
-$config['force_unmark_read_overrule'] = false;
-$config['force_unmark_read_setting'] = false;
 
 ########################################################################
 # Control whether redirects will use META REFRESH and Javascript
