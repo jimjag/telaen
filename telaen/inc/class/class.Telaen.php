@@ -985,7 +985,7 @@ class Telaen extends Telaen_core
      * @param  integer $wcount
      * @return array
      */
-    public function mail_list_msgs($boxname = 'inbox', $localmessages = array(), $start = 0, $wcount = 99999)
+    public function mail_list_msgs($boxname = 'inbox', $localmessages = array(), $start = 0, $wcount = 1024)
     {
         $fetched_part = 0;
         $parallelized = 0;
