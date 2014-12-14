@@ -34,7 +34,7 @@ if (!$messagecount
     $require_update = false;
     $reg_pp = $TLN->prefs['rpp'];
 
-    if (($_POST['f_email'] || $_POST['f_user']) && $_POST['f_pass']) {
+    if ($initial_login) {
         $TLN->cleanup_dirs($TLN->userfolder);
         $start_pos = 0;
     } else {

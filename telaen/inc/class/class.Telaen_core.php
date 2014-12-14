@@ -1272,14 +1272,15 @@ class Telaen_core
      */
     static public function cleanup_dir($folder)
     {
-        if (file_exists($folder)) {
-            $d = dir($folder.'/');
-            while ($entry = $d->read()) {
+        if (file_exists($folder) && is_dir($folder)) {
+            foreach (scandir($folder) as $entry) {
                 if ($entry != '.' && $entry != '..' && $entry != "") {
-                    unlink($folder."/$entry");
+                    if (is_file($entry))
+                        unlink($folder.'/'.$entry);
+                    elseif (is_dir($entry))
+                        self::cleanup_dir($entry);
                 }
             }
-            $d->close();
         }
     }
 

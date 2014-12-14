@@ -50,6 +50,7 @@ $smarty->use_sub_dirs = true;
 if (!is_dir($smarty->compile_dir)) {
     mkdir($smarty->compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
 }
+$initial_login = false;
 
 
 // Only process.php is allowed to be run with expired sessions (for login)
@@ -178,6 +179,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
     if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
     $auth['auth'] = true;
+    $initial_login = true;
 
     $TLN->mail_get_capa();
     $auth['capabilities'] = $TLN->capabilities;
@@ -219,8 +221,6 @@ $auth['start'] = time();
 
 $TLN->userfolder = $TLN->config['temporary_directory'].preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
 
-$TLN->mbox = new LocalMbox($TLN->userfolder);
-
 // avoid missing settings allow dirs creation with 000 perms
 if (isset($TLN->config['dirperm']) && $TLN->config['dirperm'] != 0000) {
     $TLN->dirperm = $TLN->config['dirperm'];
@@ -233,6 +233,7 @@ if (isset($auth['prefs'])) {
     $auth['prefs'] = $TLN->prefs;
 }
 
+$TLN->mbox = new LocalMbox($TLN->userfolder, $TLN->prefs['keep_on_server'] && $initial_login);
 $AuthSession->Save($auth);
 
 $mymo = new MyMonth($TLN->userfolder);

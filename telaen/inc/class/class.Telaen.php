@@ -1798,92 +1798,67 @@ class Telaen extends Telaen_core
     /**
      * Cleanup a set of directorys
      * @param  string  $userfolder The user's local webmail directory
-     * @param  boolean $logout     TRUE if we also log user out
+     * @param  boolean $logout     TRUE if we also perform logout cleanups
      * @return void
      */
     public function cleanup_dirs($userfolder, $logout = false)
     {
-        global $mbox;
-        if (($this->config['force_unmark_read_overrule'] && $this->config['force_unmark_read_setting']) ||
-                 ($this->prefs['unmark_read'] && !$this->config['force_unmark_read_overrule'])) {
+        if ($this->prefs['keep_on_server']) {
             $cleanme = $userfolder.'inbox/';
             self::cleanup_dir($cleanme);
+            $cleanme = $userfolder.'_attachments/';
+            self::cleanup_dir($cleanme);
+            $cleanme = $userfolder.'spam/';
+            self::cleanup_dir($cleanme);
+            foreach ($this->mbox->folders as $folder) {
+                if (!isset($this->mbox->$system_folders[$folder])) {
+                    $cleanme = $userfolder.$folder.'/';
+                    self::cleanup_dir($cleanme);
+                }
+            }
         }
-        $cleanme = $userfolder.'_attachments/';
-        self::cleanup_dir($cleanme);
-        $cleanme = $userfolder.'spam/';
-        self::cleanup_dir($cleanme);
 
         if ($logout) {
-            if (is_array($mbox['headers']) && file_exists($userfolder)) {
-                if (is_array($mbox['folders'])) {
-                    $boxes = $mbox['folders'];
-                    for ($n = 0;$n<count($boxes);$n++) {
-                        $entry = $this->fix_prefix($boxes[$n]['name'], 1);
-                        $file_list = array();
-
-                        if (is_array($curfolder = $mbox['headers'][$entry])) {
-                            for ($j = 0;$j<count($curfolder);$j++) {
-                                $file_list[] = $curfolder[$j]['localname'];
-                            }
-
-                            $d = dir($userfolder."$entry/");
-
-                            while ($curfile = $d->read()) {
-                                if ($curfile != '.' && $curfile != '..') {
-                                    $curfile = $userfolder."$entry/$curfile";
-                                    if (!in_array($curfile, $file_list)) {
-                                        unlink($curfile);
-                                    }
-                                }
-                            }
-
-                            $d->close();
-                        }
-                    }
-                }
-
-                if ($this->prefs['empty_trash']) {
-                    if ($this->mail_protocol == IMAP) {
-                        if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
-                        if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
-                    }
-                    $trash = 'trash';
-                    if (!is_array($mbox['headers'][$trash])) {
-                        $retbox = $this->mail_list_msgs($trash);
-                        $mbox['headers'][$trash] = $retbox[0];
-                    }
-                    $trash = $mbox['headers'][$trash];
-
-                    if (count($trash) > 0) {
-                        for ($j = 0;$j<count($trash);$j++) {
-                            $this->mail_delete_msg($trash[$j], false);
-                        }
-                        $this->mail_expunge();
-                    }
-                    if ($this->mail_protocol == IMAP) {
-                        $this->mail_disconnect();
-                    }
-                }
-
-                if ($this->prefs['empty_spam']) {
+            if ($this->prefs['empty_trash']) {
+                if ($this->mail_protocol == IMAP) {
                     if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                     if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
-                    $trash = 'spam';
-                    if (!is_array($mbox['headers'][$trash])) {
-                        $retbox = $this->mail_list_msgs($trash);
-                        $mbox['headers'][$trash] = $retbox[0];
-                    }
-                    $trash = $mbox['headers'][$trash];
+                }
+                $trash = 'trash';
+                if (!is_array($mbox['headers'][$trash])) {
+                    $retbox = $this->mail_list_msgs($trash);
+                    $mbox['headers'][$trash] = $retbox[0];
+                }
+                $trash = $mbox['headers'][$trash];
 
-                    if (count($trash) > 0) {
-                        for ($j = 0;$j<count($trash);$j++) {
-                            $this->mail_delete_msg($trash[$j], false);
-                        }
-                        $this->mail_expunge();
+                if (count($trash) > 0) {
+                    for ($j = 0;$j<count($trash);$j++) {
+                        $this->mail_delete_msg($trash[$j], false);
                     }
+                    $this->mail_expunge();
+                }
+                if ($this->mail_protocol == IMAP) {
                     $this->mail_disconnect();
                 }
+            }
+
+            if ($this->prefs['empty_spam']) {
+                if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
+                if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
+                $trash = 'spam';
+                if (!is_array($mbox['headers'][$trash])) {
+                    $retbox = $this->mail_list_msgs($trash);
+                    $mbox['headers'][$trash] = $retbox[0];
+                }
+                $trash = $mbox['headers'][$trash];
+
+                if (count($trash) > 0) {
+                    for ($j = 0;$j<count($trash);$j++) {
+                        $this->mail_delete_msg($trash[$j], false);
+                    }
+                    $this->mail_expunge();
+                }
+                $this->mail_disconnect();
             }
         }
     }
