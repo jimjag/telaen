@@ -15,6 +15,7 @@ class LocalMbox extends SQLite3
     private $active_folder = "";
     private $userfolder = "";
     private $db = null;
+    private $force_new = false;
     private $fschema = array(
         'name' => 'TEXT NOT NULL',
         'system' => 'INT NOT NULL',
@@ -61,48 +62,60 @@ class LocalMbox extends SQLite3
      * Construct: open DB and create tables if needed
      * @param type $userfolder
      */
-    public function __construct($userfolder)
+    public function __construct($userfolder, $force_new = false)
     {
         $this->allok();
         $this->userfolder = $userfolder;
+        $this->force_new = $force_new;
         $this->db = $userfolder.'_infos/mboxes.db';
         $exists = is_writable($this->db);
         parent::__construct($this->db, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
         //$this->open($this->db, SQLITE3_OPEN_READWRITE| SQLITE3_OPEN_CREATE);
         $this->query('PRAGMA synchronous = 0;');
         $this->query('PRAGMA journal_mode = MEMORY;');
-        if (!$exists) {
-            $table = $this->create_query('folders', $this->fschema);
-            if ($this->exec($table) == false) {
-                $this->ok = false;
-                $this->message .= "bad exec: $table";
-            }
-
-            $table = $this->create_query('attachs', $this->aschema);
-            if ($this->exec($table) == false) {
-                $this->ok = false;
-                $this->message .= "bad exec: $table";
-            }
-            $ok = $this->ok;
-            $message = $this->message;
-            foreach($this->system_folders as $foo) {
-                $this->add_folder($foo, true);
-            }
-            /*
-             * We may have folders from previous installs. Check
-             */
-            foreach (scandir($userfolder) as $entry) {
-                if (is_dir($entry)
-                    && $entry != '..'
-                    && $entry != '.'
-                    && !isset($this->folders[$entry])) {
-                    $this->add_folder($entry, true);
-                }
-            }
-            $this->ok = $this->ok && $ok;
-            $this->message .= $message;
+        if (!$exists || $force_new) {
+            $this->boot_strap();
         }
         $this->get_folders();
+    }
+
+    /**
+     * Create all required SQLite3 tables
+     *
+     */
+    public function boot_strap()
+    {
+        $this->allok();
+        $table = $this->create_query('folders', $this->fschema);
+        if ($this->exec($table) == false) {
+            $this->ok = false;
+            $this->message .= "bad exec: $table";
+        }
+
+        $table = $this->create_query('attachs', $this->aschema);
+        if ($this->exec($table) == false) {
+            $this->ok = false;
+            $this->message .= "bad exec: $table";
+        }
+        $ok = $this->ok;
+        $message = $this->message;
+        foreach($this->system_folders as $foo) {
+            $this->add_folder($foo, true);
+        }
+        /*
+         * We may have folders from previous installs. Check
+         */
+        foreach (scandir($userfolder) as $entry) {
+            if (is_dir($entry)
+                && $entry != '..'
+                && $entry != '.'
+                && !isset($this->folders[$entry])) {
+                $this->add_folder($entry, true);
+            }
+        }
+        $this->ok = $this->ok && $ok;
+        $this->message .= $message;
+        return $this->ok;
     }
 
     /**
@@ -145,7 +158,7 @@ class LocalMbox extends SQLite3
      */
     private function create_query($table, $schema)
     {
-        $query = sprintf('CREATE TABLE %s (', $table);
+        $query = sprintf('DROP TABLE IF EXISTS %s; CREATE TABLE %s (', $table, $table);
         foreach ($schema as $key => $val) {
             $query .= " '$key' $val,";
         }
