@@ -298,22 +298,7 @@ while ($entry = $d->read()) {
         && $entry != $folder
         && ($TLN->mail_protocol == IMAP || ($entry != 'inbox' && $entry != 'spam'))) {
         $entry = $TLN->fix_prefix($entry, 0);
-        switch ($entry) {
-        case 'inbox':
-            $display = $lang['inbox_extended'];
-            break;
-        case 'spam':
-            $display = $lang['spam_extended'];
-            break;
-        case 'sent':
-            $display = $lang['sent_extended'];
-            break;
-        case 'trash':
-            $display = $lang['trash_extended'];
-            break;
-        default:
-            $display = $entry;
-        }
+        $display = extended_name($entry);
         $avalfolders[] = array('path' => $entry, 'display' => $display);
     }
 }

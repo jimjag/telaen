@@ -19,12 +19,9 @@ extract(Telaen::pull_from_array($_POST, array('newfolder'), 's'));
 if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
 if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
 
-$require_update = false;
-
 if ($TLN->valid_folder_name($newfolder, true)
     && !file_exists($TLN->userfolder.$newfolder)) {
     $TLN->mail_create_box($newfolder);
-    $require_update = true;
 }
 
 // check and delete the especified folder: system folders can not be deleted
@@ -32,12 +29,7 @@ if ($TLN->valid_folder_name($delfolder, true)
     && (strpos($delfolder, '..') === false)) {
     if ($TLN->mail_delete_box($delfolder)) {
         unset($mbox['headers'][$delfolder]);
-        $require_update = true;
     }
-}
-
-if ($require_update) {
-    $mbox['folders'] = $TLN->mail_list_boxes();
 }
 
 require './folder_list.php';
@@ -149,20 +141,7 @@ for ($n = 0;$n<count($boxes);$n++) {
     }
 
     if ($TLN->is_system_folder($entry)) {
-        switch ($entry) {
-        case 'inbox':
-            $boxname = $lang['inbox_extended'];
-            break;
-        case 'sent':
-            $boxname = $lang['sent_extended'];
-            break;
-        case 'trash':
-            $boxname = $lang['trash_extended'];
-            break;
-        case 'spam':
-            $boxname = ($lang['spam_extended'] ? $lang['spam_extended'] : 'spam');
-            break;
-        }
+        $boxname = extended_name($entry);
         $system[$scounter]['entry'] = $entry;
         $system[$scounter]['name'] = $boxname;
         $system[$scounter]['msgs'] = count($thisbox)."/$unread";

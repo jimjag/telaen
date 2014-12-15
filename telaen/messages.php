@@ -244,22 +244,7 @@ $smarty->assign('umNumMessages', $nummsg);
 $smarty->assign('umNumUnread', $newmsgs);
 $smarty->assign('umMessageList', $messagelist);
 
-switch ($folder) {
-case 'inbox':
-    $display = $lang['inbox_extended'];
-    break;
-case 'sent':
-    $display = $lang['sent_extended'];
-    break;
-case 'trash':
-    $display = $lang['trash_extended'];
-    break;
-case 'spam':
-    $display = ($lang['spam_extended'] ? $lang['spam_extended'] : 'SPAM');
-    break;
-default:
-    $display = $folder;
-}
+$display = extended_name($folder);
 
 $smarty->assign('umBoxName', $display);
 
@@ -315,25 +300,7 @@ foreach (scandir($TLN->userfolder) as $entry) {
         && $entry != $folder
         && ($TLN->mail_protocol == IMAP || (($entry != 'inbox') && ($entry != 'spam')))) {
         $entry = $TLN->fix_prefix($entry, 0);
-        switch ($entry) {
-        case 'inbox':
-            $display = ($lang['inbox_extended'] ? $lang['inbox_extended'] : 'INBOX');
-            break;
-        case 'sent':
-            $display = ($lang['sent_extended'] ? $lang['sent_extended'] : 'Sent');
-            break;
-        case 'trash':
-            $display = ($lang['trash_extended'] ? $lang['trash_extended'] : 'Trash');
-            break;
-        case 'spam':
-            $display = ($lang['spam_extended'] ? $lang['spam_extended'] : 'SPAM folder');
-            break;
-        case 'drafts':
-            $display = ($lang['drafts_extended'] ? $lang['drafts_extended'] : 'Drafts');
-            break;
-        default:
-            $display = $entry;
-        }
+        $display = extended_name($entry);
         $avalfolders[] = array('path' => $entry, 'display' => $display);
     }
 }

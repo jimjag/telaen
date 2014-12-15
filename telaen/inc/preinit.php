@@ -57,3 +57,30 @@ define('FL_FIELD_SUBJECT', (1 << 1));
 define('FL_FIELD_TO',      (1 << 2));
 define('FL_FIELD_HEADER',  (1 << 3));
 define('FL_FIELD_BODY',    (1 << 4));
+
+function extended_name($folder)
+{
+    global $lang;
+    switch ($folder) {
+        case 'inbox':
+            $boxname = ($lang['inbox_extended'] ? $lang['inbox_extended'] : 'INBOX');
+            break;
+        case 'sent':
+            $boxname = ($lang['sent_extended'] ? $lang['sent_extended'] : 'Sent');
+            break;
+        case 'trash':
+            $boxname = ($lang['trash_extended'] ? $lang['trash_extended'] : 'Trash');
+            break;
+        case 'spam':
+            $boxname = ($lang['spam_extended'] ? $lang['spam_extended'] : 'SPAM folder');
+            break;
+        case 'drafts':
+            $boxname = ($lang['drafts_extended'] ? $lang['drafts_extended'] : 'Drafts');
+            break;
+        default:
+            $boxname = $folder;
+            break;
+    }
+    return $boxname;
+
+}

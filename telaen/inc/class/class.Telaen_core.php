@@ -43,7 +43,8 @@ class Telaen_core
     public $prefs             = array();
     public $appversion        = "";
     public $appname           = "";
-    public $mbox              = LocalMbox;
+    /* @var $mbox LocalMbox */
+    public $mbox              = null;
     public $AuthSession       = "";
     public $status            = STATUS_OK;
 
@@ -445,7 +446,6 @@ class Telaen_core
         if (trim($strmail) == "") {
             return $ARfrom;
         }
-
         $counter = 0;
         $inthechar = 0;
         $chartosplit = ',;';

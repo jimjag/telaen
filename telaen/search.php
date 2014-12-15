@@ -178,19 +178,7 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $date = $headers[$i]['date'];
         $size = ceil($headers[$i]['size']/1024);
         $index = count($messagelist);
-        switch ($headers[$i]['folder']) {
-        case 'inbox':
-            $boxname = $lang['inbox_extended'];
-            break;
-        case 'sent':
-            $boxname = $lang['sent_extended'];
-            break;
-        case 'trash':
-            $boxname = $lang['trash_extended'];
-            break;
-        default:
-            $boxname = $headers[$i]['folder'];
-        }
+        $boxname = extended_name($headers[$i]['folder']);
         $messagelist[$index]['read'] = $read;
         $messagelist[$index]['readlink'] = $readlink;
         $messagelist[$index]['composelink'] = $composelink;

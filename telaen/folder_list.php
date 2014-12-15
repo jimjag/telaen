@@ -1,32 +1,16 @@
 <?php
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-$folders = $mbox->get_folders();
+$mfolders = $mbox->get_folders();
 $scounter = 0;
 $pcounter = 0;
 $system = array();
 $personal = array();
-foreach ($folders as $entry) {
+foreach ($mfolders as $entry) {
     $entry = $entry['name'];
     $boxname = $entry;
     if ($TLN->is_system_folder($entry)) {
-        switch ($entry) {
-        case 'inbox':
-            $boxname = ($lang['inbox_extended'] ? $lang['inbox_extended'] : 'INBOX');
-            break;
-        case 'sent':
-            $boxname = ($lang['sent_extended'] ? $lang['sent_extended'] : 'Sent');
-            break;
-        case 'trash':
-            $boxname = ($lang['trash_extended'] ? $lang['trash_extended'] : 'Trash');
-            break;
-        case 'spam':
-            $boxname = ($lang['spam_extended'] ? $lang['spam_extended'] : 'SPAM folder');
-            break;
-        case 'drafts':
-            $boxname = ($lang['drafts_extended'] ? $lang['drafts_extended'] : 'Drafts');
-            break;
-        }
+        $boxname = extended_name($entry);
         $system[$scounter]['systemname'] = $entry;
         $system[$scounter]['name'] = $boxname;
         $system[$scounter]['link'] = "process.php?folder=$entry";
