@@ -1819,38 +1819,25 @@ class Telaen extends Telaen_core
         }
 
         if ($logout) {
+            if ($this->mail_protocol == IMAP) {
+                if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
+                if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
+            }
             if ($this->prefs['empty_trash']) {
-                if ($this->mail_protocol == IMAP) {
-                    if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
-                    if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
-                }
-                $trash = 'trash';
-                if (!is_array($mbox['headers'][$trash])) {
-                    $retbox = $this->mail_list_msgs($trash);
-                    $mbox['headers'][$trash] = $retbox[0];
-                }
-                $trash = $mbox['headers'][$trash];
+                $trash = $this->mbox->get_headers('trash');
 
                 if (count($trash) > 0) {
                     for ($j = 0;$j<count($trash);$j++) {
                         $this->mail_delete_msg($trash[$j], false);
                     }
                     $this->mail_expunge();
-                }
-                if ($this->mail_protocol == IMAP) {
-                    $this->mail_disconnect();
                 }
             }
 
             if ($this->prefs['empty_spam']) {
                 if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
-                $trash = 'spam';
-                if (!is_array($mbox['headers'][$trash])) {
-                    $retbox = $this->mail_list_msgs($trash);
-                    $mbox['headers'][$trash] = $retbox[0];
-                }
-                $trash = $mbox['headers'][$trash];
+                $trash = $this->mbox->get_headers('spam');
 
                 if (count($trash) > 0) {
                     for ($j = 0;$j<count($trash);$j++) {
@@ -1858,8 +1845,8 @@ class Telaen extends Telaen_core
                     }
                     $this->mail_expunge();
                 }
-                $this->mail_disconnect();
             }
+            $this->mail_disconnect();
         }
     }
 }

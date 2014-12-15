@@ -18,7 +18,7 @@ extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'
 extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
 extract(Telaen::pull_from_array($_POST, array('back'), true));
 
-$headers = $TLN->mbox->get_headers($folder);
+$headers = $mbox->get_headers($folder);
 $messagecount = count($headers);
 
 if (!$messagecount
@@ -34,16 +34,13 @@ if (!$messagecount
     $require_update = false;
     $reg_pp = $TLN->prefs['rpp'];
 
-    if ($initial_login) {
-        $TLN->cleanup_dirs($TLN->userfolder);
-        $start_pos = 0;
+    if (isset($pag) && isset($mlist) && !isset($start_pos)) {
+        $start_pos = ($pag-1)*$reg_pp;
     } else {
-        if (isset($pag) && isset($mlist) && !isset($start_pos)) {
-            $start_pos = ($pag-1)*$reg_pp;
-        }
+        $start_pos = 0;
     }
 
-    if (isset($start_pos) && isset($end_pos)) {
+    if (isset($start_pos) && isset($end_pos)) { // eg: messages.php or readmsg.php
         foreach (keys($_POST) as $key) {
             $matches = array();
             if (preg_match('|msg_(\d+)|', $key, $matches)) {
@@ -61,11 +58,7 @@ if (!$messagecount
                 }
             }
         }
-        /*
-         * With Imap we need to expunge ALWAYS when move or delete,
-         * because all the folders are on server.
-         */
-        if ($TLN->mail_protocol == IMAP && $expunge) {
+        if ($expunge) {
             $TLN->mail_expunge();
         }
 
@@ -84,10 +77,9 @@ if (!$messagecount
     $TLN->mail_disconnect();
 }
 
-$mbox['headers'][$folder] = $headers;
-$auth['havespam'] = ($TLN->havespam || $TLN->mbox->count_headers('spam') > 0);
+$auth['havespam'] = ($TLN->havespam || $mbox->count_headers('spam') > 0);
 $AuthSession->Save($auth);
-$TLN->mbox->update_headers();
+$mbox->update_headers();
 
 /*
  * If they used a different version (ignoring patchlevel) then

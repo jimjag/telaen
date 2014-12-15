@@ -12,7 +12,7 @@ require './inc/init.php';
 
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
-$headers = $TLN->mbox->get_headers($folder, $sortby, $sortorder);
+$headers = $mbox->get_headers($folder, $sortby, $sortorder);
 
 $smarty->assign('umUser', $f_user);
 $refreshurl = 'process.php?folder='.urlencode($folder)."&pag=$pag&refr=true";
@@ -61,7 +61,7 @@ $smarty->assign('pageMetas', $nocache."\n".$refreshMeta);
 
 /* load total size */
 $totalused = 0;
-foreach ($this->mbox->folders as $key => $val) {
+foreach ($mbox->folders as $key => $val) {
     $totalused += $val['size'];
 }
 

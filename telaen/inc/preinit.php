@@ -34,6 +34,9 @@ if ((double) $phpver < 5.4) {
  */
 
 extract(Telaen::pull_from_array($_GET, array('pag', 'folder', 'sortby', 'sortorder', 'err', 'ix', 'lng', 'tem'), 's'));
+if (isset($folder)) {
+    $folder = urldecode($folder);
+}
 extract(Telaen::pull_from_array($_POST, array('pag', 'folder', 'f_email', 'f_user', 'f_pass', 'six', 'lng', 'tem'), 's'));
 
 $textout = <<<EOF

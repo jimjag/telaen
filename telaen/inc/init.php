@@ -234,6 +234,7 @@ if (isset($auth['prefs'])) {
 }
 
 $TLN->mbox = new LocalMbox($TLN->userfolder, $TLN->prefs['keep_on_server'] && $initial_login);
+$mbox = &$TLN->mbox;
 $AuthSession->Save($auth);
 
 $mymo = new MyMonth($TLN->userfolder);
@@ -300,4 +301,22 @@ if ($folder == "") {
     $folder = 'inbox';
 } elseif (!file_exists($TLN->userfolder.$TLN->fix_prefix($folder, 1))) {
     $TLN->redirect_and_exit('logout.php');
+}
+
+//
+if ($initial_login) {
+    // In case not cleaned-up by logging out, do-so now
+    $TLN->cleanup_dirs($TLN->userfolder);
+    /*
+     * Sync list of folders (boxes) on the server w/ our local cache.
+     * Only needed with IMAP since POP3 only has 1: inbox
+     */
+    if ($TLN->mail_protocol == IMAP) {
+        $folders = $TLN->mail_list_boxes();
+        foreach ($folders as $f) {
+            if (!isset($mbox->folders[strtolower($f)])) {
+                $mbox->add_folder($f);
+            }
+        }
+    }
 }

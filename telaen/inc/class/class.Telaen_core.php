@@ -43,7 +43,7 @@ class Telaen_core
     public $prefs             = array();
     public $appversion        = "";
     public $appname           = "";
-    public $mbox              = null;
+    public $mbox              = LocalMbox;
     public $AuthSession       = "";
     public $status            = STATUS_OK;
 
