@@ -23,9 +23,7 @@ require_once './inc/class/class.Session.php';
 
 @set_magic_quotes_runtime(0);            // Smarty and magic_quotes_runtime ON do not mix.
 
-$phpver = phpversion();
-$phpver = doubleval($phpver[0].'.'.$phpver[2]);
-if ((double) $phpver < 5.4) {
+if (version_compare(PHP_VERSION, "5.4.0", "<")) {
     die('PHP version 5.4 and and greater are required');
 }
 /*

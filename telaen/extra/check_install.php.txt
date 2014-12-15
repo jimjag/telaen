@@ -153,9 +153,7 @@ body,td,th {
 </span>
     <h2>Checking PHP version:</h2>
 <?php
-        $phpver = phpversion();
-        $phpver = doubleval($phpver[0] . '.' . $phpver[2]);
-        if ((double) $phpver < 5.4) {
+        if (version_compare(PHP_VERSION, "5.4.0", "<")) {
             echo('<span class="fail">!! FAILED !!</span><br/>Talaen requires at least version 5.4.x; you are running {$phpver} <br/>');
             $error = true;
         } else
