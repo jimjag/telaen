@@ -1,7 +1,7 @@
 <?php
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-$mfolders = $mbox->get_folders();
+$mfolders = $tdb->get_folders();
 $scounter = 0;
 $pcounter = 0;
 $system = array();

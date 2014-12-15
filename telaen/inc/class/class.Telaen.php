@@ -78,7 +78,7 @@ class Telaen extends Telaen_core
      */
     public function is_system_folder($name)
     {
-        return $this->mbox->folders[strtolower($name)]['system'];
+        return $this->tdb->folders[strtolower($name)]['system'];
     }
 
     /**
@@ -310,7 +310,7 @@ class Telaen extends Telaen_core
         $boxes = $this->mail_list_boxes();
 
         if ($this->mail_protocol == IMAP) {
-            $tmp = $this->mbox->folders;
+            $tmp = $this->tdb->folders;
 
             for ($i = 0;$i<count($boxes);$i++) {
                 $current_folder = $boxes[$i]['name'];
@@ -342,7 +342,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        foreach ($this->mbox->system_folders as $value) {
+        foreach ($this->tdb->system_folders as $value) {
             $value = $this->fix_prefix($value, 1);
             if (!file_exists($this->userfolder.$value)) {
                 if (!@mkdir($this->userfolder.$value, $this->dirperm) && $this->config['log_errors']) {
@@ -599,7 +599,7 @@ class Telaen extends Telaen_core
         }
         $this->mail_set_flag($msg, '\\DELETED', '+');
 
-        return $this->mbox->del_header($msg);
+        return $this->tdb->del_header($msg);
     }
 
     protected function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0)
@@ -649,7 +649,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        return $this->mbox->del_header($msg);
+        return $this->tdb->del_header($msg);
     }
 
     /**
@@ -1235,7 +1235,7 @@ class Telaen extends Telaen_core
     {
         $boxlist = array();
         /* if POP3, only list the available folders */
-        foreach ($this->mbox->folders as $foo) {
+        foreach ($this->tdb->folders as $foo) {
             $boxlist[] = $foo;
         }
         return $boxlist;
@@ -1337,7 +1337,7 @@ class Telaen extends Telaen_core
         } else {
             /* if POP3, only make a new folder */
             if (@mkdir($this->userfolder.$boxname, $this->dirperm)) {
-                return $this->mbox->add_folder($boxname);
+                return $this->tdb->add_folder($boxname);
             } else {
                 return false;
             }
@@ -1527,7 +1527,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->mbox->changed[] = array ($msg['idx'], array('header', 'flags'));
+            $this->tdb->changed[] = array ($msg['idx'], array('header', 'flags'));
 
             $email = "$header\r\n\r\n$body";
 
@@ -1810,8 +1810,8 @@ class Telaen extends Telaen_core
             self::cleanup_dir($cleanme);
             $cleanme = $userfolder.'spam/';
             self::cleanup_dir($cleanme);
-            foreach ($this->mbox->folders as $folder) {
-                if (!isset($this->mbox->$system_folders[$folder])) {
+            foreach ($this->tdb->folders as $folder) {
+                if (!isset($this->tdb->$system_folders[$folder])) {
                     $cleanme = $userfolder.$folder.'/';
                     self::cleanup_dir($cleanme);
                 }
@@ -1824,7 +1824,7 @@ class Telaen extends Telaen_core
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
             }
             if ($this->prefs['empty_trash']) {
-                $trash = $this->mbox->get_headers('trash');
+                $trash = $this->tdb->get_headers('trash');
 
                 if (count($trash) > 0) {
                     for ($j = 0;$j<count($trash);$j++) {
@@ -1837,7 +1837,7 @@ class Telaen extends Telaen_core
             if ($this->prefs['empty_spam']) {
                 if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
-                $trash = $this->mbox->get_headers('spam');
+                $trash = $this->tdb->get_headers('spam');
 
                 if (count($trash) > 0) {
                     for ($j = 0;$j<count($trash);$j++) {

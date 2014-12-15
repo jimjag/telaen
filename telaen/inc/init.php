@@ -233,8 +233,8 @@ if (isset($auth['prefs'])) {
     $auth['prefs'] = $TLN->prefs;
 }
 
-$TLN->mbox = new LocalMbox($TLN->userfolder, $TLN->prefs['keep_on_server'] && $initial_login);
-$mbox = &$TLN->mbox;
+$TLN->tdb = new LocalMbox($TLN->userfolder, $TLN->prefs['keep_on_server'] && $initial_login);
+$tdb = &$TLN->tdb;
 $AuthSession->Save($auth);
 
 $mymo = new MyMonth($TLN->userfolder);
@@ -314,8 +314,8 @@ if ($initial_login) {
     if ($TLN->mail_protocol == IMAP) {
         $folders = $TLN->mail_list_boxes();
         foreach ($folders as $f) {
-            if (!isset($mbox->folders[strtolower($f)])) {
-                $mbox->add_folder($f);
+            if (!isset($tdb->folders[strtolower($f)])) {
+                $tdb->add_folder($f);
             }
         }
     }
