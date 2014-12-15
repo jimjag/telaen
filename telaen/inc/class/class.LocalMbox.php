@@ -207,10 +207,11 @@ class LocalMbox extends SQLite3
      * Creates and Execute the 'INSERT into table (' statement
      * @param string $table Table to insert into
      * @param array $list List of elements to insert
-     * @param array $data Hash of data to insert keyed by list
+     * @param array $datas Array of Hash of data to insert keyed by list
+     * @param arrat $marray $This->?? array to update
      * @return SQLite3Result
      */
-    private function do_insert($table, $list, $data)
+    private function do_insert($table, $list, $datas, $marray)
     {
         $query = sprintf('INSERT into %s (\'', $table);
         $query .= implode("','",$list);
@@ -219,17 +220,25 @@ class LocalMbox extends SQLite3
         $query .= implode(",:",$list);
         $query .= ');';
         $stmt = $this->prepare($query);
-        reset($list);
-        foreach ($list as $key) {
-            $stmt->bindValue(":$key", $data[$key]);
+        foreach ($datas as $data) {
+            reset($list);
+            foreach ($list as $key) {
+                $stmt->bindValue(":$key", $data[$key]);
+            }
+            if ($stmt->execute()) {
+                $marray[] = $data;
+                end($marray);
+                $index = key($marray);
+                $marray[$index]['idx'] = $index;
+                reset($marray);
+            } else {
+                $this->ok = false;
+                $this->message .= "execute failed: $query";
+                return false;
+            }
         }
-        $result = $stmt->execute();
         $stmt->close();
-        if (!$result) {
-            $this->ok = false;
-            $this->message .= "execute failed: $query";
-        }
-        return $result;
+        return true;
     }
 
     /**
@@ -385,7 +394,7 @@ class LocalMbox extends SQLite3
     public function get_headers($folder, $force = false, $sortby = "", $sortorder = "")
     {
         if ($folder != $this->active_folder || $force) {
-            $this->update_headers();
+            $this->sync_headers();
             $query = sprintf('SELECT * FROM folder_%s ', $this->getKey($folder));
             if ($sortby && isset($this->mschema[$sortby])) {
                 $query .= "ORDER BY '$sortby' ";
@@ -437,25 +446,16 @@ class LocalMbox extends SQLite3
     }
 
     /**
-     * Add email message to folder
+     * Add email message(s) to folder (all must be the same folder)
      * @param type $msg
      * @return boolean
      */
-    public function add_header($msg)
+    public function add_headers($msg)
     {
-        $stmt = $this->do_insert($this->getKey($msg['folder']), $this->mschema, $msg);
-        if (!$stmt->execute($query)) {
-            $this->ok = false;
-            $this->message = "exec failed: $query";
-            return false;
+        if (!is_array($msg)) {
+            $msg = (array)$msg;
         }
-        $stmt->close();
-        $this->headers[] = $msg;
-        end($this->headers);
-        $index = key($this->headers);
-        $this->headers[$index]['idx'] = $index;
-        reset($this->headers);
-        return true;
+        return $this->do_insert($this->getKey($msg['folder']), $this->mschema, $msg, $this->headers);
     }
 
     /**
@@ -467,6 +467,8 @@ class LocalMbox extends SQLite3
     /*
      * The complexity is allow for the use of $this->mschema:
      *  Having the message schema defined in one location is nice.
+     *  NOTE: Since the list of updated fields may change, re-use of
+     *        prepared statements is kind of impossible
      */
     public function update_header($msg, $fields = "*")
     {
@@ -486,7 +488,7 @@ class LocalMbox extends SQLite3
      * Update all changed headers for all email messages
      * @return boolean
      */
-    public function update_headers()
+    public function sync_headers()
     {
         if (count($this->changed) > 0) {
             foreach ($this->changed as $foo) {
@@ -498,26 +500,33 @@ class LocalMbox extends SQLite3
         return true;
     }
     /**
-     * Delete email message from DB
+     * Delete email message(s) from DB (must all be in same folder)
      * @param array $msg
      * @return boolean
      */
-    public function del_header($msg)
+    public function del_headers($msgs)
     {
-        $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'=:uidl ;", $this->getKey($msg['folder']));
-        $stmt = $this->prepare($query);
-        $stmt->bindValue(':uidl', $msg['uidl']);
-        if ($stmt->execute($query)) {
-            /* If we deleted from the active folder, then update our array */
-            if ($msg['folder'] == $this->active_folder) {
-                unset($this->headers[$msg['idx']]);
-            }
-            $stmt->close();
-            return true;
+        if (!is_array($msgs)) {
+            $msgs = (array)$msgs;
         }
-        $this->ok = false;
-        $this->message = "exec failed: $query";
-        return false;
+        $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'=:uidl ;", $this->getKey($msgs[0]['folder']));
+        $isactive = ($msgs[0]['folder'] == $this->active_folder ? true : false);
+        $stmt = $this->prepare($query);
+        foreach ($msgs as $msg) {
+            $stmt->bindValue(':uidl', $msg['uidl']);
+            if ($stmt->execute($query)) {
+                /* If we deleted from the active folder, then update our array */
+                if ($isactive) {
+                    unset($this->headers[$msg['idx']]);
+                }
+            } else {
+                $this->ok = false;
+                $this->message = "exec failed: $query";
+                return false;
+            }
+        }
+        $stmt->close();
+        return true;
     }
 
     public function add_attachment($folder, $msg)

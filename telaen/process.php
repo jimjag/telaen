@@ -79,7 +79,7 @@ if (!$messagecount
 
 $auth['havespam'] = ($TLN->havespam || $tdb->count_headers('spam') > 0);
 $AuthSession->Save($auth);
-$tdb->update_headers();
+$tdb->sync_headers();
 
 /*
  * If they used a different version (ignoring patchlevel) then
