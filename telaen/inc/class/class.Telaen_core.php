@@ -260,6 +260,7 @@ class Telaen_core
     protected function _decode_mime_string($subject)
     {
         $string = $subject;
+        $newresult = "";
 
         if (($pos = strpos($string, "=?")) === false) {
             return $string;
@@ -321,6 +322,7 @@ class Telaen_core
     {
         $headers = explode("\r\n", $header);
         $decodedheaders = array();
+        $lasthead = "";
         for ($i = 0;$i<count($headers);$i++) {
             // If current header starts with a TAB or is not very standard,
             // attach it at the prev header
@@ -1505,6 +1507,7 @@ ENDOFREDIRECT;
         if (!file_exists($strfile)) {
             return;
         }
+        $result = "";
         $f = fopen($strfile, 'rb');
         while (!feof($f)) {
             $result .= preg_replace('|\n|', "", fread($f, 100));

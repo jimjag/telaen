@@ -60,7 +60,8 @@ class LocalMbox extends SQLite3
 
     /**
      * Construct: open DB and create tables if needed
-     * @param type $userfolder
+     * @param string $userfolder
+     * @param boolean $force_new
      */
     public function __construct($userfolder, $force_new = false)
     {
@@ -105,7 +106,7 @@ class LocalMbox extends SQLite3
         /*
          * We may have folders from previous installs. Check
          */
-        foreach (scandir($userfolder) as $entry) {
+        foreach (scandir($this->userfolder) as $entry) {
             if (is_dir($entry)
                 && $entry != '..'
                 && $entry != '.'
@@ -120,9 +121,9 @@ class LocalMbox extends SQLite3
 
     /**
      * Create array of allowable entry/type from a baseline schema
-     * @param type $fields
-     * @param type $schema
-     * @return type
+     * @param mixed $fields
+     * @param array $schema
+     * @return array
      */
     private function create_uplist($fields, $schema)
     {
@@ -135,7 +136,7 @@ class LocalMbox extends SQLite3
                     $thelist[] = $key;
                 }
             }
-        } elseif (!is_array($field)) {
+        } elseif (!is_array($fields)) {
             $this->ok = false;
             $this->message = "bad param fields";
             return null;
@@ -152,8 +153,8 @@ class LocalMbox extends SQLite3
 
     /**
      * Creates the 'CREATE table' query
-     * @param type $table
-     * @param type $schema
+     * @param string $table
+     * @param array $schema
      * @return string
      */
     private function create_query($table, $schema)
@@ -210,7 +211,7 @@ class LocalMbox extends SQLite3
      * @param string $table Table to insert into
      * @param array $list List of elements to insert
      * @param array $datas Array of Hash of data to insert keyed by list
-     * @param arrat $marray $This->?? array to update
+     * @param array $marray $This->?? array to update
      * @return SQLite3Result
      */
     private function do_insert($table, $list, $datas, $marray)
@@ -501,10 +502,11 @@ class LocalMbox extends SQLite3
         }
         return true;
     }
+
     /**
      * Delete email message(s) from DB (must all be in same folder)
-     * @param array $msg
-     * @return boolean
+     * @param array $msgs
+     * @return bool
      */
     public function del_headers($msgs)
     {
@@ -545,11 +547,11 @@ class LocalMbox extends SQLite3
     private function calc_folder_size($path)
     {
         $total_size = 0;
-        $path = rtrim($path, '/') . '/';
+        $path = rtrim($path, '/').'/';
 
         foreach(scandir($path) as $f) {
             if ($f != "." && $f != "..") {
-                $nfile = $path . $f;
+                $nfile = $path.$f;
                 if (is_dir($nfile)) {
                     $size = foldersize($nfile);
                     $total_size += $size;

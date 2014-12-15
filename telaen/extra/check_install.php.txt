@@ -200,7 +200,7 @@ body,td,th {
         $old_files = array();
         $moved_files = array();
 
-        foreach (array('inc/lib.php', 'get_messages_list.php') as $i) {
+        foreach (array('inc/lib.php', 'get_messages_list.php', 'database') as $i) {
             if (file_exists('./' . $i)) {
                 $has_old_files = true;
                 $old_files[] = $i;

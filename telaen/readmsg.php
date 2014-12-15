@@ -16,7 +16,7 @@ if (!isset($ix) || !isset($pag)) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
-$mysess = $TLN->get_headers($folder);
+$mysess = $TLN->tdb->get_headers($folder);
 $mail_info = $mysess[$ix];
 
 $is_attached = false;
@@ -129,7 +129,6 @@ function deletemsg() {
 }
 function reply() { document.msg.submit(); }
 function movemsg() { document.move.submit(); }
-function newmsg() { location = 'newmsg.php?folder=$folder&pag=$pag'; }
 function headers() { mywin = window.open('headers.php?folder=".urlencode($folder)."&ix=$ix','Headers','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes,resizable=yes'); }
 function catch_addresses() { window.open('catch.php?folder=".urlencode($folder)."&ix=$ix','Catch','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
 function block_addresses() { window.open('block_address.php?folder=".urlencode($folder)."&ix=$ix','Block','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
@@ -228,8 +227,7 @@ if (count($anexos) > 0) {
 $UserMbox->Save($mbox);
 
 $avalfolders = array();
-$d = dir($TLN->userfolder);
-while ($entry = $d->read()) {
+foreach (scandir($TLN->userfolder) as $entry) {
     if (is_dir($TLN->userfolder.$entry)
         && $entry != '..'
         && $entry != '.'
@@ -241,7 +239,6 @@ while ($entry = $d->read()) {
         $avalfolders[] = array('path' => $entry, 'display' => $display);
     }
 }
-$d->close();
 $smarty->assign('umAvalFolders', $avalfolders);
 unset($TLN);
 
