@@ -205,6 +205,8 @@ class LocalMbox extends SQLite3
 
     /**
      * Creates and Execute the 'INSERT into table (' statement
+     * We re-use the prepared statement by assuming that all INSERTS
+     * are the same.
      * @param string $table Table to insert into
      * @param array $list List of elements to insert
      * @param array $datas Array of Hash of data to insert keyed by list
