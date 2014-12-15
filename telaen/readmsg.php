@@ -10,53 +10,28 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 //defines
 require './inc/init.php';
+/* @var $TLN Telaen */
 
 if (!isset($ix) || !isset($pag)) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
-$mysess = $mbox['headers'][$folder];
+$mysess = $TLN->get_headers($folder);
 $mail_info = $mysess[$ix];
+
+$is_attached = false;
 $arAttachment = array();
 
-if (isset($attachment)) {
-    $is_attached = true;
-    $arAttachment = explode(',', $attachment);
+if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
 
-    $TLN->current_level = $arAttachment;
-
-    $root = $mail_info;
-    foreach ($arAttachment as $item) {
-        if (is_numeric($item)) {
-            $root = &$root['attachments'][$item];
-        }
-    }
-
-    if (!is_array($root) ||
-        !file_exists($root['filename'])) {
-        $TLN->redirect_and_exit('index.php?err=3');
-    }
-
-    $result = $TLN->read_file($root['filename']);
-} else {
-    $is_attached = false;
-    $arAttachment = array();
-    if (!$TLN->mail_connect()) {
-        $TLN->redirect_and_exit('index.php?err=1', true);
-    }
-    if (!$TLN->mail_auth()) {
-        $TLN->redirect_and_exit('index.php?err=0');
-    }
-
-    if (!($result = $TLN->mail_retr_msg($mail_info, 1))) {
-        $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&pag=$pag&refr=true");
-    }
-    if ($TLN->mail_set_flag($mail_info, '\\SEEN', '+')) {
-        $mbox['headers'][$folder][$ix] = $mail_info;
-    }
-
-    $TLN->mail_disconnect();
+if (!($result = $TLN->mail_retr_msg($mail_info, 1))) {
+    $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&pag=$pag&refr=true");
 }
+if (!$TLN->mail_set_flag($mail_info, '\\SEEN', '+')) {
+    $TLN->trigger_error('Could not set SEEN flag', I_AM_TELAEN);
+}
+$TLN->mail_disconnect();
 
 // metas assigned to smarty
 $smarty->assign('pageMetas', $nocache);
@@ -65,7 +40,6 @@ $TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
 
 $email = $TLN->Decode($result);
-
 if ($ix > 0) {
     $umHavePrevious = 1;
     $umPreviousSubject = $mysess[($ix-1)]['subject'];
@@ -96,43 +70,8 @@ $body = preg_replace('|target=["]?[a-zA-Z_]+["]?|i', "target=\"blank\"", $body);
 $body = preg_replace('|href="http([s]?)://|i', "target=\"_blank\" href=\"$redir_path?http$1://", $body);
 $body = preg_replace('|href="mailto:|i', "target=\"_top\" href=\"newmsg.php?to=", $body);
 
-// looking for browser type	   --vola's note: add check for safari and opera??
-$uagent =    $_SERVER['HTTP_USER_AGENT'];
-
-$ns4 =    (preg_match('|Mozilla/4|', $uagent) && !preg_match('|MSIE|', $uagent) && !preg_match('|Gecko|', $uagent));
-$ns6moz =    preg_match('|Gecko|', $uagent);
-$ie4up =    preg_match('/MSIE (4|5|6|7)/', $uagent);
-$other =    (!$ns4 && !$ns6moz && !$ie4up);
-
-// with no recognized browser display inline on the page
-if ($other) {
-    $body =    preg_replace('|<base|i', '<telaen_base_not_alowed',
-                preg_replace('|<link|i', '<telaen_link_not_alowed',
-                $body));
-
-    if (preg_match('/<[ ]*body.*background[ ]*=[ ]*["\']?([A-Za-z0-9._&?=:/{}%+-]+)["\']?.*>/i', $body, $regs)) {
-        $backimg =    " background=\"".$regs[1]."\"";
-    }
-    $smarty->assign('umBackImg', $backimg);
-    if (preg_match('|<[ ]*body[A-Z0-9._&?=:/"\' -]*bgcolor=["\']?([A-Z0-9#]+)["\']?[A-Z0-9._&?=:/"\' -]*>|i', $body, $regs)) {
-        $backcolor = " bgcolor=\"".$regs[1]."\"";
-    }
-    $smarty->assign('umBackColor', $backcolor);
-
-    $body = preg_replace('|<body|i', '<telaen_body_not_alowed', $body);
-    $body = preg_replace("/a:(link|visited|hover)/i", ".".uniqid(""), $body);
-    $body = preg_replace('|(body)[ ]?\\{|i', ".".uniqid(""), $body);
-}
-// with ie4+/mozilla/ns6+ use iframe for display body
-elseif ($ie4up || $ns6moz) {
-    $auth['currentbody'] = $body;
-    $body = "<iframe src=\"show_body.php?folder=".htmlspecialchars($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
-}
-// with ns4 use ilayer
-elseif ($ns4) {
-    $auth["currentbody"] = $body;
-    $body = "<ilayer width=\"100%\" left=\"0\" top=\"0\">$body</ilayer>";
-}
+$auth['currentbody'] = $body;
+$body = "<iframe src=\"show_body.php?folder=".htmlspecialchars($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
 
 $smarty->assign('umMessageBody', $body);
 

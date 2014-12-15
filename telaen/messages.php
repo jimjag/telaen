@@ -9,6 +9,7 @@ Telaen is a GPL'ed software developed by
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
+/* @var $TLN Telaen */
 
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 

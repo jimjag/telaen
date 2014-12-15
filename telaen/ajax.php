@@ -13,6 +13,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
  * All parameters must be sended via POST and the 'action' is mandatory
  */
 require './inc/init.php';
+/* @var $TLN Telaen */
 
 // cheking for main param
 if (isset($_POST['action'])) {

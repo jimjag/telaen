@@ -22,12 +22,12 @@ $sid = session_id();
 
 require_once './inc/preinit.php';
 
+/* @var $TLN Telaen */
 $TLN = new Telaen();
 
 $AuthSession = new Session();
 $auth = &$AuthSession->Load('telaen_sess');
 $TLN->AuthSession = $AuthSession;
-
 if ($auth['auth'] && isset($auth['config'])) {
     $TLN->config = $auth['config'];
 } else {

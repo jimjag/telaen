@@ -11,6 +11,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 // load session management
 require './inc/init.php';
+/* @var $TLN Telaen */
 
 // meta assigned to smarty
 $smarty->assign('pageMetas', $nocache);

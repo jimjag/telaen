@@ -13,6 +13,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 // load session management
 require './inc/init.php';
+/* @var $TLN Telaen */
 
 if (!$auth['auth']) {
    $TLN->redirect_and_exit('index.php?err=4', true);

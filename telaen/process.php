@@ -11,6 +11,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 @ini_set('output_buffering',      1024);
 @ob_start();
 require './inc/init.php';
+/* @var $TLN Telaen */
 
 extract(Telaen::pull_from_array($_GET, array('decision'), 'str'));
 extract(Telaen::pull_from_array($_GET, array('refr', 'mlist'), true));

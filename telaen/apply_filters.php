@@ -1,6 +1,7 @@
 <?php
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
+/* @var $TLN Telaen */
 
 if ($folder == 'inbox') {
     $require_update = false;
