@@ -312,12 +312,13 @@ class LocalMbox extends SQLite3
         $query = sprintf('folder_%s', $this->getKey($folder));
         $query = $this->create_query($query, $this->mschema);
         if ($this->exec($query)) {
-            $stmt = $this->prepare("INSERT into folders ('name', 'system', 'size') VALUES (:name, :system, :size);");
+            $stmt = $this->prepare("INSERT into folders ('name', 'system', 'size') VALUES (:name, :system, :size) ;");
             $stmt->bindValue(':name', $folder);
             $stmt->bindValue(':system', intval($sys));
             $stmt->bindValue(':size', $size);
             if ($stmt->execute()) {
                 $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys), 'size' => 0);
+                $stmt->close();
                 return true;
             } else {
                 $this->message .= "execute failed:";
@@ -338,13 +339,18 @@ class LocalMbox extends SQLite3
     {
         $table ='DROP TABLE folder_%s ;';
         $query = sprintf($table, $this->getKey($folder));
-        if (!$this->exec($query)) {
-            $this->ok = false;
-            $this->message = "exec failed: $query";
-            return false;
+        if ($this->exec($query)) {
+            $stmt = $this->prepare("DELETE FROM folders WHERE 'name'=:name ;");
+            $stmt->bindValue(':name', $folder);
+            if ($stmt->execute()) {
+                unset($this->folders[$folder]);
+                $stmt->close();
+                return true;
+            }
         }
-        unset($this->folders[$folder]);
-        return true;
+        $this->ok = false;
+        $this->message = "exec failed: $query";
+        return false;
 
     }
 
@@ -361,6 +367,7 @@ class LocalMbox extends SQLite3
         $this->folders[$folder]['size'] += $size;
         $stmt->bindValue(':size', $this->folders[$folder]['size']);
         if ($stmt->execute()) {
+            $stmt->close();
             return true;
         } else {
             $this->ok = false;
@@ -442,6 +449,7 @@ class LocalMbox extends SQLite3
             $this->message = "exec failed: $query";
             return false;
         }
+        $stmt->close();
         $this->headers[] = $msg;
         end($this->headers);
         $index = key($this->headers);
@@ -496,17 +504,20 @@ class LocalMbox extends SQLite3
      */
     public function del_header($msg)
     {
-        $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'='%s' ;", $this->getKey($msg['folder']), $msg['uidl']);
-        if (!$this->exec($query)) {
-            $this->ok = false;
-            $this->message = "exec failed: $query";
-            return false;
+        $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'=:uidl ;", $this->getKey($msg['folder']));
+        $stmt = $this->prepare($query);
+        $stmt->bindValue(':uidl', $msg['uidl']);
+        if ($stmt->execute($query)) {
+            /* If we deleted from the active folder, then update our array */
+            if ($msg['folder'] == $this->active_folder) {
+                unset($this->headers[$msg['idx']]);
+            }
+            $stmt->close();
+            return true;
         }
-        /* If we deleted from the active folder, then update our array */
-        if ($msg['folder'] == $this->active_folder) {
-            unset($this->headers[$msg['idx']]);
-        }
-        return true;
+        $this->ok = false;
+        $this->message = "exec failed: $query";
+        return false;
     }
 
     public function add_attachment($folder, $msg)
