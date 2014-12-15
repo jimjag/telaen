@@ -5,7 +5,7 @@ require_once './inc/vendor/class.tnef.php';
 
 class Telaen extends Telaen_core
 {
-    public $havespam       = "";        // NOTE: This is a STRING!
+    public $havespam       = false;
     public $CRLF           = "\r\n";
     public $dirperm        = 0700;        // recall affected by umask value
     public $greeting       = "";        // Internally used for store initial IMAP/POP3 greeting message
@@ -24,6 +24,8 @@ class Telaen extends Telaen_core
     const RESP_BYE = -3;
     const RESP_NOK = -4;
     const RESP_UNKNOWN = 99;
+
+    /* @var $tdb LocalMbox */
 
     /**
      * Contructor
@@ -1053,7 +1055,7 @@ class Telaen extends Telaen_core
 
             $mail_info = $this->get_mail_info($messages[$i]['header']);
 
-            $havespam = 0;
+            $havespam = false;
             $spamsubject = $mail_info['subject'];
             $xspamlevel = $mail_info['x-spam-level'];
             /*
@@ -1065,16 +1067,14 @@ class Telaen extends Telaen_core
                 && ($boxname == 'inbox' || $boxname == 'spam')) {
                 foreach ($this->_spamregex as $spamregex) {
                     if (preg_match("/$spamregex/i", $spamsubject)) {
-                        $havespam = 1;
-                        $this->havespam = 'TRUE';
+                        $this->havespam = $havespam = true;
                         break;
                     }
                 }
                 if ($this->prefs['spamlevel']) {
                     preg_match('|[*+]+|', $xspamlevel, $matches);
                     if (strlen($matches[0]) >= $this->prefs['spamlevel']) {
-                        $havespam = 1;
-                        $this->havespam = 'TRUE';
+                        $this->havespam = $havespam = true;
                     }
                 }
             }
