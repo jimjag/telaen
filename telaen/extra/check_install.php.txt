@@ -505,11 +505,12 @@ echo('<hr><h3>Testing for SQLITE3</h3>');
 
 $tfile = '/tmp/telaen-'.uniqid().'-test.db';
 $foo = new SQLite3($tfile);
-if (!$foo) {
+if ($foo) {
     echo('<span class="pass">PASSED</span><br/>');
+    unlink($tfile);
 } else {
-    echo('<span class="fail">!! FAILED !!</span>
-	<br/>Could not create a SQLite3 instance at: $tfile<br/>');
+    echo('<span class="fail">!! FAILED !!</span>');
+	echo("<br/>Could not create a SQLite3 instance at: $tfile<br/>");
     $error = true;
 }
 
