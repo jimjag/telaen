@@ -41,8 +41,6 @@ require_once './inc/errorhandler.php';
 
 require_once $TLN->config['SMARTY_DIR'].'Smarty.class.php';
 $smarty = new Smarty();
-$smarty->security = true;
-$smarty->secure_dir = array('./');
 $smarty->compile_dir = $TLN->config['temporary_directory'].'/smarty_ct/';
 $smarty->template_dir =     './inc/themes';
 $smarty->config_dir = './inc/langs';
@@ -114,6 +112,12 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         $f_user = 'unknown';
     }
 
+    if (!isset($f_user)) {
+        $f_user = 'unknown';
+    }
+    if (!isset($f_email)) {
+        $f_email = 'unknown@example.com';
+    }
     switch (strtoupper($TLN->config['mail_server_type'])) {
 
     case 'DETECT':
