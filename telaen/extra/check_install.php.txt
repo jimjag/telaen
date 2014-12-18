@@ -511,6 +511,15 @@ if ($foo) {
     $error = true;
 }
 
+echo('<hr><h4>Testing for mb_*() support</h4>');
+
+if (function_exists('mb_convert_encoding') && function_exists('mb_internal_encoding')) {
+    echo('<span class="pass">PASSED</span>');
+} else {
+    echo('<span class="fail">!! FAILED !!</span>');
+	echo("<br/>Could not create a SQLite3 instance at: $tfile");
+    $error = true;
+}
 
 echo('<br/><hr><hr><hr><br/>');
 if ($error) {
