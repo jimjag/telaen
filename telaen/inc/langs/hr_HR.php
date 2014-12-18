@@ -1,7 +1,7 @@
-<? php
-/ *
-  * Američki engleski (kanonski popis i fraziranja)
-  * /
+<?php
+/*
+ * Croatian (Hrvatski) (canonical list and phrasing)
+ */
 
 $lang = array();
 

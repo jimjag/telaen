@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Yoruba (canonical list and phrasing)
  */
 
 $lang = array();

@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Dutch (Nederlands) (canonical list and phrasing)
  */
 
 $lang = array();

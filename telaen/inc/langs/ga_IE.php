@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Irish (Gaedhilge) (canonical list and phrasing)
  */
 
 $lang = array();

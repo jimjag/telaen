@@ -1,7 +1,7 @@
-<? Php
-/ *
-  * Estats Units Anglès (llista canònica i fraseig)
-  * /
+<?php
+/*
+ * Catalan (Català) (canonical list and phrasing)
+ */
 
 $lang = array();
 

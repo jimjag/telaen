@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Norwegian (Bokmål) (canonical list and phrasing)
  */
 
 $lang = array();

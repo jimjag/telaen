@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Romanian (Româneşte) (canonical list and phrasing)
  */
 
 $lang = array();

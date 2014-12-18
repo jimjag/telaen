@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Vietnamese (Tiếng Việt) (canonical list and phrasing)
  */
 
 $lang = array();

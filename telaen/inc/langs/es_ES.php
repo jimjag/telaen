@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Spanish (Español) (canonical list and phrasing)
  */
 
 $lang = array();
@@ -328,14 +328,14 @@ $lang['addr_deleted'] = 'El contacto ha sido eliminado';
 
 // [BlockSender]
 $lang['blk_title'] = 'Block sender'; // FIXME: need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
+$lang['blk_information'] = 'Sólo  Muestra mensajes de correo electrónico que no se encuentran en el filtro pero';
 $lang['blk_email'] = 'E-mail';
 $lang['blk_no_address'] = 'No address available'; // FIXME: need translation
-$lang['blk_close'] = 'Close'; // FIXME: need translation
-$lang['blk_save'] = 'Save'; // FIXME: need translation
+$lang['blk_close'] = 'Cerrar';
+$lang['blk_save'] = 'Guardar';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
+$lang['evt_title'] = 'Evento del Calendario';
 $lang['evt_save'] = 'Guardar';
 $lang['evt_delete'] = 'Borrar';
 $lang['evt_stop'] = 'Stop time'; // FIXME: need translation

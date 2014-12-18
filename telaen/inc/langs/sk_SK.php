@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (kanonické zoznam a frázovanie)
+ * Slovak (Slovenčina) (kanonické zoznam a frázovanie)
  */
 
 $lang = array();

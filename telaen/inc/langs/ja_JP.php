@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Japanese (日本語) (canonical list and phrasing)
  */
 
 $lang = array();

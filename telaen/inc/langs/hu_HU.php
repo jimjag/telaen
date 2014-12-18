@@ -1,6 +1,6 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Hungarian (Magyar) (canonical list and phrasing)
  */
 
 $lang = array();

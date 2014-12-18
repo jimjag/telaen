@@ -1,57 +1,57 @@
 <?php
 /*
- * US English (canonical list and phrasing)
+ * Korean (í•œêµ­ì–´) (canonical list and phrasing)
  */
 
 $lang = array();
 
 // User-friendly names to system folders
-$lang['inbox_extended'] = '¹ŞÀºÆíÁöÇÔ';
-$lang['sent_extended'] = 'º¸³½ÆíÁöÇÔ';
-$lang['trash_extended'] = 'ÈŞÁöÅë';
-$lang['spam_extended'] = '½ºÆÔÆíÁöÇÔ';
+$lang['inbox_extended'] = 'Â¹ÃÃ€ÂºÃ†Ã­ÃÃ¶Ã‡Ã”';
+$lang['sent_extended'] = 'ÂºÂ¸Â³Â½Ã†Ã­ÃÃ¶Ã‡Ã”';
+$lang['trash_extended'] = 'ÃˆÃÃÃ¶Ã…Ã«';
+$lang['spam_extended'] = 'Â½ÂºÃ†Ã”Ã†Ã­ÃÃ¶Ã‡Ã”';
 
 // Navigation texts
-$lang['pages_text'] = 'ÆäÀÌÁö';
-$lang['first_text'] = 'Ã³À½';
-$lang['previous_text'] = 'ÀÌÀü';
-$lang['next_text'] = '´ÙÀ½';
-$lang['last_text'] = '¸¶Áö¸·';
-$lang['total_text'] = 'ÀüÃ¼';
+$lang['pages_text'] = 'Ã†Ã¤Ã€ÃŒÃÃ¶';
+$lang['first_text'] = 'ÃƒÂ³Ã€Â½';
+$lang['previous_text'] = 'Ã€ÃŒÃ€Ã¼';
+$lang['next_text'] = 'Â´Ã™Ã€Â½';
+$lang['last_text'] = 'Â¸Â¶ÃÃ¶Â¸Â·';
+$lang['total_text'] = 'Ã€Ã¼ÃƒÂ¼';
 
 // Mail Server Errors
 $lang['err_login_msg'] = 'Login error'; // FIXME: need translation
 $lang['err_system_msg'] = 'System error'; // FIXME: need translation
 $lang['error_login'] = 'Please check your username or password and try again'; // FIXME: need translation
-$lang['error_connect'] = '¼­¹ö¿¡ ¿¬°áÇÒ¼ö ¾ø½À´Ï´Ù';
-$lang['error_retrieving'] = '¹ŞÀºÆíÁö¸¦ °¡Á®¿Ã¼ö ¾ø½À´Ï´Ù.';
+$lang['error_connect'] = 'Â¼Â­Â¹Ã¶Â¿Â¡ Â¿Â¬Â°Ã¡Ã‡Ã’Â¼Ã¶ Â¾Ã¸Â½Ã€Â´ÃÂ´Ã™';
+$lang['error_retrieving'] = 'Â¹ÃÃ€ÂºÃ†Ã­ÃÃ¶Â¸Â¦ Â°Â¡ÃÂ®Â¿ÃƒÂ¼Ã¶ Â¾Ã¸Â½Ã€Â´ÃÂ´Ã™.';
 $lang['error_session_expired'] = 'Your session is expired, please login again'; // FIXME: need translation
-$lang['error_other'] = '½Ã½ºÅÛÀå¾ÖÀÔ´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä';
+$lang['error_other'] = 'Â½ÃƒÂ½ÂºÃ…Ã›Ã€Ã¥Â¾Ã–Ã€Ã”Â´ÃÂ´Ã™. Â°Ã¼Â¸Â®Ã€ÃšÂ¿Â¡Â°Ã” Â¹Â®Ã€Ã‡Ã‡ÃÂ¼Â¼Â¿Ã¤';
 
 // Invalid name of mailbox
-$lang['error_invalid_name'] = 'Æú´õÀÌ¸§¿£ ¿µ¹®,¼ıÀÚ ±×¸®°í - (»©±â) ¸¸ »ç¿ëÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.';
+$lang['error_invalid_name'] = 'Ã†ÃºÂ´ÃµÃ€ÃŒÂ¸Â§Â¿Â£ Â¿ÂµÂ¹Â®,Â¼Ã½Ã€Ãš Â±Ã—Â¸Â®Â°Ã­ - (Â»Â©Â±Ã¢) Â¸Â¸ Â»Ã§Â¿Ã«Ã‡ÃÂ½Ã‡ Â¼Ã¶ Ã€Ã–Â½Ã€Â´ÃÂ´Ã™.';
 
 // Validations when sending mails
-$lang['error_no_recipients'] = '¿À·ù: ¹Ş´Â»ç¶÷ÀÇ ÁÖ¼Ò¸¦ ÃÖ¼Ò 1°³ÀÌ»ó ÀÔ·ÂÇØ ÁÖ¼¼¿ä!';
-$lang['error_compose_invalid_mail1_s'] = '¿À·ù: ÀÌ¸ŞÀÏ ÁÖ¼Ò°¡ ºñÁ¤»óÀÔ´Ï´Ù';
-$lang['error_compose_invalid_mail1_p'] = '¿À·ù: ÀÌ¸ŞÀÏ ÁÖ¼ÒµéÀÌ ºñÁ¤»óÀÔ´Ï´Ù';
-$lang['error_compose_invalid_mail2_s'] = 'º» ÀÌ¸ŞÀÏÀ» ´Ù½Ã º¸³»±âÀü¿¡ ¹Ş´ÂÀÌÀÇ ÁÖ¼Ò¸¦ È®ÀÎÇØÁÖ¼¼¿ä.';
-$lang['error_compose_invalid_mail2_p'] = 'º» ÀÌ¸ŞÀÏÀ» ´Ù½Ã º¸³»±âÀü¿¡ º»ÀÎÀÇ ÁÖ¼Ò¸¦ È®ÀÎÇØÁÖ¼¼¿ä.';
+$lang['error_no_recipients'] = 'Â¿Ã€Â·Ã¹: Â¹ÃÂ´Ã‚Â»Ã§Â¶Ã·Ã€Ã‡ ÃÃ–Â¼Ã’Â¸Â¦ ÃƒÃ–Â¼Ã’ 1Â°Â³Ã€ÃŒÂ»Ã³ Ã€Ã”Â·Ã‚Ã‡Ã˜ ÃÃ–Â¼Â¼Â¿Ã¤!';
+$lang['error_compose_invalid_mail1_s'] = 'Â¿Ã€Â·Ã¹: Ã€ÃŒÂ¸ÃÃ€Ã ÃÃ–Â¼Ã’Â°Â¡ ÂºÃ±ÃÂ¤Â»Ã³Ã€Ã”Â´ÃÂ´Ã™';
+$lang['error_compose_invalid_mail1_p'] = 'Â¿Ã€Â·Ã¹: Ã€ÃŒÂ¸ÃÃ€Ã ÃÃ–Â¼Ã’ÂµÃ©Ã€ÃŒ ÂºÃ±ÃÂ¤Â»Ã³Ã€Ã”Â´ÃÂ´Ã™';
+$lang['error_compose_invalid_mail2_s'] = 'ÂºÂ» Ã€ÃŒÂ¸ÃÃ€ÃÃ€Â» Â´Ã™Â½Ãƒ ÂºÂ¸Â³Â»Â±Ã¢Ã€Ã¼Â¿Â¡ Â¹ÃÂ´Ã‚Ã€ÃŒÃ€Ã‡ ÃÃ–Â¼Ã’Â¸Â¦ ÃˆÂ®Ã€ÃÃ‡Ã˜ÃÃ–Â¼Â¼Â¿Ã¤.';
+$lang['error_compose_invalid_mail2_p'] = 'ÂºÂ» Ã€ÃŒÂ¸ÃÃ€ÃÃ€Â» Â´Ã™Â½Ãƒ ÂºÂ¸Â³Â»Â±Ã¢Ã€Ã¼Â¿Â¡ ÂºÂ»Ã€ÃÃ€Ã‡ ÃÃ–Â¼Ã’Â¸Â¦ ÃˆÂ®Ã€ÃÃ‡Ã˜ÃÃ–Â¼Â¼Â¿Ã¤.';
 
 // Confirmation of delete
-$lang['confirm_delete'] = 'Á¤¸» ¼±ÅÃµÈ ÀÌ¸ŞÀÏ(µé)À» »èÁ¦ ÇÏ½Ã°Ú½À´Ï±î?';
+$lang['confirm_delete'] = 'ÃÂ¤Â¸Â» Â¼Â±Ã…ÃƒÂµÃˆ Ã€ÃŒÂ¸ÃÃ€Ã(ÂµÃ©)Ã€Â» Â»Ã¨ÃÂ¦ Ã‡ÃÂ½ÃƒÂ°ÃšÂ½Ã€Â´ÃÂ±Ã®?';
 
 // If the message no have a subject or sender
-$lang['no_subject_text'] = '[Á¦¸ñ¾øÀ½]';
-$lang['no_sender_text'] = '[º¸³½ÀÌ ¾Ë¼ö¾øÀ½]';
-$lang['no_recipient_text'] = '[¹Ş´ÂÀÌ ¾Ë¼ö¾øÀ½]';
+$lang['no_subject_text'] = '[ÃÂ¦Â¸Ã±Â¾Ã¸Ã€Â½]';
+$lang['no_sender_text'] = '[ÂºÂ¸Â³Â½Ã€ÃŒ Â¾Ã‹Â¼Ã¶Â¾Ã¸Ã€Â½]';
+$lang['no_recipient_text'] = '[Â¹ÃÂ´Ã‚Ã€ÃŒ Â¾Ã‹Â¼Ã¶Â¾Ã¸Ã€Â½]';
 
 // If the quota limit was exceeded
-$lang['quota_exceeded'] = 'ÀúÀå°ø°£ÀÌ ÃæºĞÇÏÁö ¾Ê½À´Ï´Ù. ¿À·¡µÈ ÀÌ¸ŞÀÏ ¶Ç´Â º¸³½ÀÌ¸ŞÀÏÀ» »èÁ¦ ÇØÁÖ¼¼¿ä.';
-$lang['quota_usage_info'] = '¿ë·®Á¤º¸';
-$lang['quota_usage_used'] = '»ç¿ëÁß = ';
-$lang['quota_usage_of'] = ',ÀüÃ¼';
-$lang['quota_usage_avail'] = '»ç¿ë°¡´É';
+$lang['quota_exceeded'] = 'Ã€ÃºÃ€Ã¥Â°Ã¸Â°Â£Ã€ÃŒ ÃƒÃ¦ÂºÃÃ‡ÃÃÃ¶ Â¾ÃŠÂ½Ã€Â´ÃÂ´Ã™. Â¿Ã€Â·Â¡ÂµÃˆ Ã€ÃŒÂ¸ÃÃ€Ã Â¶Ã‡Â´Ã‚ ÂºÂ¸Â³Â½Ã€ÃŒÂ¸ÃÃ€ÃÃ€Â» Â»Ã¨ÃÂ¦ Ã‡Ã˜ÃÃ–Â¼Â¼Â¿Ã¤.';
+$lang['quota_usage_info'] = 'Â¿Ã«Â·Â®ÃÂ¤ÂºÂ¸';
+$lang['quota_usage_used'] = 'Â»Ã§Â¿Ã«ÃÃŸ = ';
+$lang['quota_usage_of'] = ',Ã€Ã¼ÃƒÂ¼';
+$lang['quota_usage_avail'] = 'Â»Ã§Â¿Ã«Â°Â¡Â´Ã‰';
 
 //
 // Date Format
@@ -64,16 +64,16 @@ $lang['date_format'] = '%Y-%m-%d %H:%M';
 $lang['default_char_set'] = 'euc-kr';
 
 // Menu
-$lang['messages_mnu'] = '¹ŞÀºÆíÁöÇÔ';
-$lang['read_menu'] = 'ÆíÁöÀĞ±â';
-$lang['compose_mnu'] = 'ÆíÁö¾²±â';
-$lang['refresh_mnu'] = '»õ·Î°íÄ§';
-$lang['folders_mnu'] = 'Æú´õµé';
-$lang['search_mnu'] = '°Ë»ö';
-$lang['address_mnu'] = 'ÁÖ¼Ò·Ï';
-$lang['empty_trash_mnu'] = 'ÈŞÁöÅëºñ¿ì±â';
-$lang['prefs_mnu'] = 'È¯°æ¼³Á¤';
-$lang['logoff_mnu'] = '·Î±×¾Æ¿ô';
+$lang['messages_mnu'] = 'Â¹ÃÃ€ÂºÃ†Ã­ÃÃ¶Ã‡Ã”';
+$lang['read_menu'] = 'Ã†Ã­ÃÃ¶Ã€ÃÂ±Ã¢';
+$lang['compose_mnu'] = 'Ã†Ã­ÃÃ¶Â¾Â²Â±Ã¢';
+$lang['refresh_mnu'] = 'Â»ÃµÂ·ÃÂ°Ã­Ã„Â§';
+$lang['folders_mnu'] = 'Ã†ÃºÂ´ÃµÂµÃ©';
+$lang['search_mnu'] = 'Â°Ã‹Â»Ã¶';
+$lang['address_mnu'] = 'ÃÃ–Â¼Ã’Â·Ã';
+$lang['empty_trash_mnu'] = 'ÃˆÃÃÃ¶Ã…Ã«ÂºÃ±Â¿Ã¬Â±Ã¢';
+$lang['prefs_mnu'] = 'ÃˆÂ¯Â°Ã¦Â¼Â³ÃÂ¤';
+$lang['logoff_mnu'] = 'Â·ÃÂ±Ã—Â¾Ã†Â¿Ã´';
 
 // Reply
 $lang['reply_prefix'] = 'Re:';
@@ -94,120 +94,120 @@ $lang['key_hea'] = 'Key';
 $lang['value_hea'] = 'Value';
 
 // [Folders]
-$lang['fld_name_hea'] = 'Æú´õ';
-$lang['fld_messages_hea'] = 'ÀÌ¸ŞÀÏ';
-$lang['fld_size_hea'] = 'Å©±â';
-$lang['fld_empty_hea'] = 'ºñ¿ì±â';
-$lang['fld_delete_hea'] = '»èÁ¦';
-$lang['fld_total'] = 'ÀüÃ¼:';
-$lang['fld_make_new'] = '»õÆú´õ ¸¸µé±â';
-$lang['folders_to'] = 'Æú´õ·Î ÀÌµ¿';
+$lang['fld_name_hea'] = 'Ã†ÃºÂ´Ãµ';
+$lang['fld_messages_hea'] = 'Ã€ÃŒÂ¸ÃÃ€Ã';
+$lang['fld_size_hea'] = 'Ã…Â©Â±Ã¢';
+$lang['fld_empty_hea'] = 'ÂºÃ±Â¿Ã¬Â±Ã¢';
+$lang['fld_delete_hea'] = 'Â»Ã¨ÃÂ¦';
+$lang['fld_total'] = 'Ã€Ã¼ÃƒÂ¼:';
+$lang['fld_make_new'] = 'Â»ÃµÃ†ÃºÂ´Ãµ Â¸Â¸ÂµÃ©Â±Ã¢';
+$lang['folders_to'] = 'Ã†ÃºÂ´ÃµÂ·Ã Ã€ÃŒÂµÂ¿';
 
 // [MessageList]
-$lang['messages_to'] = 'ÀÌ¸ŞÀÏ ÀÌµ¿ ';
-$lang['no_messages'] = '»õ·Î¿î ÀÌ¸ŞÀÏÀÌ ¾ø½À´Ï´Ù -> ';
-$lang['delete_selected_mnu'] = '»èÁ¦ ';
-$lang['move_selected_mnu'] = 'ÀÌµ¿';
-$lang['mark_selected_mnu'] = 'ÀĞÀ½ Ç¥½Ã';
-$lang['unmark_selected_mnu'] = '¾ÈÀĞÀ½ Ç¥½Ã';
-$lang['move_selected_to_trash_mnu'] = 'ÈŞÁöÅëÀ¸·Î';
+$lang['messages_to'] = 'Ã€ÃŒÂ¸ÃÃ€Ã Ã€ÃŒÂµÂ¿ ';
+$lang['no_messages'] = 'Â»ÃµÂ·ÃÂ¿Ã® Ã€ÃŒÂ¸ÃÃ€ÃÃ€ÃŒ Â¾Ã¸Â½Ã€Â´ÃÂ´Ã™ -> ';
+$lang['delete_selected_mnu'] = 'Â»Ã¨ÃÂ¦ ';
+$lang['move_selected_mnu'] = 'Ã€ÃŒÂµÂ¿';
+$lang['mark_selected_mnu'] = 'Ã€ÃÃ€Â½ Ã‡Â¥Â½Ãƒ';
+$lang['unmark_selected_mnu'] = 'Â¾ÃˆÃ€ÃÃ€Â½ Ã‡Â¥Â½Ãƒ';
+$lang['move_selected_to_trash_mnu'] = 'ÃˆÃÃÃ¶Ã…Ã«Ã€Â¸Â·Ã';
 
 
-$lang['delete_mnu'] = '»èÁ¦';
-$lang['move_mnu'] = 'ÀÌµ¿';
-$lang['subject_hea'] = 'Á¦¸ñ:';
-$lang['from_hea'] = 'º¸³½ÀÌ:';
-$lang['to_hea'] = '¹Ş´ÂÀÌ:';
-$lang['date_hea'] = '³¯Â¥:';
-$lang['size_hea'] = 'Å©±â';
-$lang['have_spam'] = '½ºÆÔ¸ŞÀÏÀ» ¹Ş¾Ò½À´Ï´Ù. (½ºÆÔÆú´õ¸¦ È®ÀÎÇÏ¼¼¿ä)';
+$lang['delete_mnu'] = 'Â»Ã¨ÃÂ¦';
+$lang['move_mnu'] = 'Ã€ÃŒÂµÂ¿';
+$lang['subject_hea'] = 'ÃÂ¦Â¸Ã±:';
+$lang['from_hea'] = 'ÂºÂ¸Â³Â½Ã€ÃŒ:';
+$lang['to_hea'] = 'Â¹ÃÂ´Ã‚Ã€ÃŒ:';
+$lang['date_hea'] = 'Â³Â¯Ã‚Â¥:';
+$lang['size_hea'] = 'Ã…Â©Â±Ã¢';
+$lang['have_spam'] = 'Â½ÂºÃ†Ã”Â¸ÃÃ€ÃÃ€Â» Â¹ÃÂ¾Ã’Â½Ã€Â´ÃÂ´Ã™. (Â½ÂºÃ†Ã”Ã†ÃºÂ´ÃµÂ¸Â¦ ÃˆÂ®Ã€ÃÃ‡ÃÂ¼Â¼Â¿Ã¤)';
 
-$lang['msg_you_have'] = '¹ŞÀºÆíÁö = ';
-$lang['msg_message'] = 'Åë';
-$lang['msg_messages'] = 'Åë';
+$lang['msg_you_have'] = 'Â¹ÃÃ€ÂºÃ†Ã­ÃÃ¶ = ';
+$lang['msg_message'] = 'Ã…Ã«';
+$lang['msg_messages'] = 'Ã…Ã«';
 
-$lang['msg_more_unread'] = '¾ÈÀĞÀ½';
-$lang['msg_one_unread'] = '¾ÈÀĞÀ½';
-$lang['msg_none_unread'] = 'ÀĞÁö¾ÊÀº';
-$lang['msg_in_the_folder'] = 'Æú´õ¿¡ ÀÖÀ½';
+$lang['msg_more_unread'] = 'Â¾ÃˆÃ€ÃÃ€Â½';
+$lang['msg_one_unread'] = 'Â¾ÃˆÃ€ÃÃ€Â½';
+$lang['msg_none_unread'] = 'Ã€ÃÃÃ¶Â¾ÃŠÃ€Âº';
+$lang['msg_in_the_folder'] = 'Ã†ÃºÂ´ÃµÂ¿Â¡ Ã€Ã–Ã€Â½';
 
 
 // [Login]
-$lang['lgn_title'] = '·Î±×ÀÎ';
-$lang['lgn_welcome_msg'] = '¾È³çÇÏ¼¼¿ä! ¾Æ·¡¿¡ Á¤È®ÇÑ Á¤º¸¸¦ ÀÔ·ÂÈÄ ·Î±×ÀÎ ÇÏ¼¼¿ä';
-$lang['lng_user_email'] = 'ÀÌ¸ŞÀÏ ÁÖ¼Ò';
-$lang['lng_user_name'] = '¾ÆÀÌµğ';
-$lang['lng_user_pwd'] = 'ºñ¹Ğ¹øÈ£';
-$lang['lng_server'] = '¼­¹ö';
-$lang['lng_theme'] = 'Å×¸¶';
-$lang['lng_language'] = '¾ğ¾î';
-$lang['lng_login_btn'] = '·Î±×ÀÎ &gt;&gt;';
-$lang['lng_cookie_not_enabled'] = 'ÄíÅ°»ç¿ëÀÌ Çã¿ëµÇ¾î¾ß ÇÕ´Ï´Ù. (ºê¶ó¿ìÁ® ¼³Á¤)';
-$lang['lng_cookie_not_valid'] = 'ÄíÅ° º¸¾È°Ë»ç ½ÇÆĞ!';
+$lang['lgn_title'] = 'Â·ÃÂ±Ã—Ã€Ã';
+$lang['lgn_welcome_msg'] = 'Â¾ÃˆÂ³Ã§Ã‡ÃÂ¼Â¼Â¿Ã¤! Â¾Ã†Â·Â¡Â¿Â¡ ÃÂ¤ÃˆÂ®Ã‡Ã‘ ÃÂ¤ÂºÂ¸Â¸Â¦ Ã€Ã”Â·Ã‚ÃˆÃ„ Â·ÃÂ±Ã—Ã€Ã Ã‡ÃÂ¼Â¼Â¿Ã¤';
+$lang['lng_user_email'] = 'Ã€ÃŒÂ¸ÃÃ€Ã ÃÃ–Â¼Ã’';
+$lang['lng_user_name'] = 'Â¾Ã†Ã€ÃŒÂµÃ°';
+$lang['lng_user_pwd'] = 'ÂºÃ±Â¹ÃÂ¹Ã¸ÃˆÂ£';
+$lang['lng_server'] = 'Â¼Â­Â¹Ã¶';
+$lang['lng_theme'] = 'Ã…Ã—Â¸Â¶';
+$lang['lng_language'] = 'Â¾Ã°Â¾Ã®';
+$lang['lng_login_btn'] = 'Â·ÃÂ±Ã—Ã€Ã &gt;&gt;';
+$lang['lng_cookie_not_enabled'] = 'Ã„Ã­Ã…Â°Â»Ã§Â¿Ã«Ã€ÃŒ Ã‡Ã£Â¿Ã«ÂµÃ‡Â¾Ã®Â¾ÃŸ Ã‡Ã•Â´ÃÂ´Ã™. (ÂºÃªÂ¶Ã³Â¿Ã¬ÃÂ® Â¼Â³ÃÂ¤)';
+$lang['lng_cookie_not_valid'] = 'Ã„Ã­Ã…Â° ÂºÂ¸Â¾ÃˆÂ°Ã‹Â»Ã§ Â½Ã‡Ã†Ã!';
 
 // [Newmessage]
 
-$lang['newmsg_title'] = 'ÀÌ¸ŞÀÏ ¾²±â';
+$lang['newmsg_title'] = 'Ã€ÃŒÂ¸ÃÃ€Ã Â¾Â²Â±Ã¢';
 
-$lang['to_hea'] = '¹Ş´ÂÀÌ:';
-$lang['cc_hea'] = 'ÂüÁ¶:';
-$lang['bcc_hea'] = '¼ûÀºÂüÁ¶:';
-$lang['subject_hea'] = 'Á¦¸ñ:';
-$lang['address_tip'] = 'ÁÖ¼Ò·ÏÃ£±â';
+$lang['to_hea'] = 'Â¹ÃÂ´Ã‚Ã€ÃŒ:';
+$lang['cc_hea'] = 'Ã‚Ã¼ÃÂ¶:';
+$lang['bcc_hea'] = 'Â¼Ã»Ã€ÂºÃ‚Ã¼ÃÂ¶:';
+$lang['subject_hea'] = 'ÃÂ¦Â¸Ã±:';
+$lang['address_tip'] = 'ÃÃ–Â¼Ã’Â·ÃÃƒÂ£Â±Ã¢';
 
-$lang['attach_hea'] = 'Ã·ºÎÈ­ÀÏ:';
-$lang['attch_add_new'] = 'È­ÀÏ Ã·ºÎÇÏ±â';
-$lang['attch_name_hea'] = 'ÀÌ¸§';
-$lang['attch_size'] = 'Å©±â';
-$lang['attch_type_hea'] = 'Á¾·ù';
-$lang['attch_dele_hea'] = '»èÁ¦';
-$lang['attch_no_hea'] = 'Ã·ºÎÈ­ÀÏ ¾øÀ½';
+$lang['attach_hea'] = 'ÃƒÂ·ÂºÃÃˆÂ­Ã€Ã:';
+$lang['attch_add_new'] = 'ÃˆÂ­Ã€Ã ÃƒÂ·ÂºÃÃ‡ÃÂ±Ã¢';
+$lang['attch_name_hea'] = 'Ã€ÃŒÂ¸Â§';
+$lang['attch_size'] = 'Ã…Â©Â±Ã¢';
+$lang['attch_type_hea'] = 'ÃÂ¾Â·Ã¹';
+$lang['attch_dele_hea'] = 'Â»Ã¨ÃÂ¦';
+$lang['attch_no_hea'] = 'ÃƒÂ·ÂºÃÃˆÂ­Ã€Ã Â¾Ã¸Ã€Â½';
 
-$lang['add_signature'] = '¼­¸í Ãß°¡ÇÏ±â';
-$lang['send_text'] = 'º¸³»±â';
+$lang['add_signature'] = 'Â¼Â­Â¸Ã­ ÃƒÃŸÂ°Â¡Ã‡ÃÂ±Ã¢';
+$lang['send_text'] = 'ÂºÂ¸Â³Â»Â±Ã¢';
 
-$lang['result_error'] = 'ÀÌ¸ŞÀÏ ¹ß¼Û ½ÇÆĞ!';
-$lang['result_success'] = 'ÀÌ¸ŞÀÏÀÌ ¼º°øÀûÀ¸·Î ¹ß¼ÛµÇ¾ú½À´Ï´Ù.';
-$lang['nav_continue'] = '&lt;&lt; °è¼Ó &gt;&gt;';
-$lang['nav_back'] = 'µÚ·Î';
+$lang['result_error'] = 'Ã€ÃŒÂ¸ÃÃ€Ã Â¹ÃŸÂ¼Ã› Â½Ã‡Ã†Ã!';
+$lang['result_success'] = 'Ã€ÃŒÂ¸ÃÃ€ÃÃ€ÃŒ Â¼ÂºÂ°Ã¸Ã€Ã»Ã€Â¸Â·Ã Â¹ÃŸÂ¼Ã›ÂµÃ‡Â¾ÃºÂ½Ã€Â´ÃÂ´Ã™.';
+$lang['nav_continue'] = '&lt;&lt; Â°Ã¨Â¼Ã“ &gt;&gt;';
+$lang['nav_back'] = 'ÂµÃšÂ·Ã';
 
-$lang['up_title'] = 'È­ÀÏÃß°¡';
-$lang['up_information_text'] = 'È­ÀÏ ¼±ÅÃ';
-$lang['up_button_text'] = 'È­ÀÏ Ã·ºÎ';
+$lang['up_title'] = 'ÃˆÂ­Ã€ÃÃƒÃŸÂ°Â¡';
+$lang['up_information_text'] = 'ÃˆÂ­Ã€Ã Â¼Â±Ã…Ãƒ';
+$lang['up_button_text'] = 'ÃˆÂ­Ã€Ã ÃƒÂ·ÂºÃ';
 
-$lang['require_receipt'] = '¼ö½Å È®ÀÎ¸ŞÀÏ ¹Ş±â';
+$lang['require_receipt'] = 'Â¼Ã¶Â½Ã… ÃˆÂ®Ã€ÃÂ¸ÃÃ€Ã Â¹ÃÂ±Ã¢';
 
-$lang['priority_text'] = 'Áß¿äµµ';
-$lang['priority_low'] = '³·À½';
-$lang['priority_normal'] = 'º¸Åë';
-$lang['priority_high'] = '³ôÀ½';
+$lang['priority_text'] = 'ÃÃŸÂ¿Ã¤ÂµÂµ';
+$lang['priority_low'] = 'Â³Â·Ã€Â½';
+$lang['priority_normal'] = 'ÂºÂ¸Ã…Ã«';
+$lang['priority_high'] = 'Â³Ã´Ã€Â½';
 
 // [Preferences]
-$lang['prf_title'] = 'È¯°æ ¼³Á¤';
-$lang['prf_general_title'] = '±âº» Á¤º¸';
-$lang['prf_name'] = 'ÀÌ¸§';
-$lang['prf_reply_to'] = 'È¸½Å¹ŞÀ» ÁÖ¼Ò';
-$lang['prf_time_zone'] = 'Áö¿ª ½Ã°£ ¼³Á¤';
-$lang['prf_trash_title'] = 'ÈŞÁöÅë';
-$lang['prf_save_to_trash'] = 'ÆíÁö¸¦ <b>»èÁ¦</b> ½Ã ´ÙÀ½ Æú´õ·Î ÀÌµ¿ÇÕ´Ï´Ù. ';
-$lang['prf_save_only_read'] = 'ÀÌ¹Ì <b>ÀĞÀº ÆíÁö</b>¸¸ ´ÙÀ½ Æú´õ·Î ÀÌµ¿ÇÕ´Ï´Ù.';
-$lang['prf_empty_on_exit'] = '·Î±×¾Æ¿ô½Ã ÀÚµ¿À¸·Î <b>ÈŞÁöÅë</b> ºñ¿ì±â';
-$lang['prf_empty_spam_on_exit'] = '·Î±×¾Æ¿ô½Ã ÀÚµ¿À¸·Î <b>½ºÆÔÆú´õ</b> ºñ¿ì±â';
-$lang['prf_unmark_read_on_exit'] = '·Î±×¾Æ¿ô½Ã ÀÚµ¿À¸·Î <b>ÀĞÀºÆíÁö</b>¸¦ ¾ÈÀĞÀ½À¸·Î ¼³Á¤ÇÏ±â';
-$lang['prf_sent_title'] = 'º¸³½ ÆíÁö';
-$lang['prf_save_sent'] = '<b>º¸³½ÆíÁö¸¦</b> ´ÙÀ½ Æú´õ¿¡ ÀúÀåÇÕ´Ï´Ù. ';
-$lang['prf_messages_title'] = 'ÀÌ¸ŞÀÏ°ü·Ã';
-$lang['prf_page_limit'] = 'ÇÑÆäÀÌÁö¿¡ º¸¿©Áú ÀÌ¸ŞÀÏ °¹¼ö';
-$lang['prf_signature_title'] = '¼­¸í';
-$lang['prf_signature'] = '¼­¸í¾²±â';
-$lang['prf_auto_add_sign'] = 'º¸³»´Â ¸ğµç ÆíÁö¿¡ ÀÚµ¿À¸·Î ¼­¸í Ãß°¡ÇÏ±â ';
-$lang['prf_save_button'] = 'ÀúÀåÇÏ±â';
-$lang['prf_display_images'] = 'Ã·ºÎµÈ ÀÌ¹ÌÁö¸¦ ÀÚµ¿À¸·Î ÀÌ¸ŞÀÏ º»¹®¿¡ º¸¿©Áİ´Ï´Ù';
-$lang['prf_default_editor_mode'] = '±âº» ¾²±â¼³Á¤';
-$lang['prf_default_editor_mode_text'] = '"ÅØ½ºÆ®¸¸ »ç¿ë"';
-$lang['prf_default_editor_mode_html'] = '"°í±Ş¿¡µğÅÍ »ç¿ë"';
-$lang['prf_time_to_refesh'] = 'ÀÚµ¿À¸·Î »õ·Î¿Â ÀÌ¸ŞÀÏ È®ÀÎÇÏ±â (~ºĞ°£°İ)';
-$lang['prf_spam_level'] = '½ºÆÔ Â÷´Ü Á¤µµ (0 = Â÷´Ü¾ÈÇÔ, 1 = ¸Å¿ì³ôÀ½, 9 = ¸Å¿ì³·À½)';
+$lang['prf_title'] = 'ÃˆÂ¯Â°Ã¦ Â¼Â³ÃÂ¤';
+$lang['prf_general_title'] = 'Â±Ã¢ÂºÂ» ÃÂ¤ÂºÂ¸';
+$lang['prf_name'] = 'Ã€ÃŒÂ¸Â§';
+$lang['prf_reply_to'] = 'ÃˆÂ¸Â½Ã…Â¹ÃÃ€Â» ÃÃ–Â¼Ã’';
+$lang['prf_time_zone'] = 'ÃÃ¶Â¿Âª Â½ÃƒÂ°Â£ Â¼Â³ÃÂ¤';
+$lang['prf_trash_title'] = 'ÃˆÃÃÃ¶Ã…Ã«';
+$lang['prf_save_to_trash'] = 'Ã†Ã­ÃÃ¶Â¸Â¦ <b>Â»Ã¨ÃÂ¦</b> Â½Ãƒ Â´Ã™Ã€Â½ Ã†ÃºÂ´ÃµÂ·Ã Ã€ÃŒÂµÂ¿Ã‡Ã•Â´ÃÂ´Ã™. ';
+$lang['prf_save_only_read'] = 'Ã€ÃŒÂ¹ÃŒ <b>Ã€ÃÃ€Âº Ã†Ã­ÃÃ¶</b>Â¸Â¸ Â´Ã™Ã€Â½ Ã†ÃºÂ´ÃµÂ·Ã Ã€ÃŒÂµÂ¿Ã‡Ã•Â´ÃÂ´Ã™.';
+$lang['prf_empty_on_exit'] = 'Â·ÃÂ±Ã—Â¾Ã†Â¿Ã´Â½Ãƒ Ã€ÃšÂµÂ¿Ã€Â¸Â·Ã <b>ÃˆÃÃÃ¶Ã…Ã«</b> ÂºÃ±Â¿Ã¬Â±Ã¢';
+$lang['prf_empty_spam_on_exit'] = 'Â·ÃÂ±Ã—Â¾Ã†Â¿Ã´Â½Ãƒ Ã€ÃšÂµÂ¿Ã€Â¸Â·Ã <b>Â½ÂºÃ†Ã”Ã†ÃºÂ´Ãµ</b> ÂºÃ±Â¿Ã¬Â±Ã¢';
+$lang['prf_unmark_read_on_exit'] = 'Â·ÃÂ±Ã—Â¾Ã†Â¿Ã´Â½Ãƒ Ã€ÃšÂµÂ¿Ã€Â¸Â·Ã <b>Ã€ÃÃ€ÂºÃ†Ã­ÃÃ¶</b>Â¸Â¦ Â¾ÃˆÃ€ÃÃ€Â½Ã€Â¸Â·Ã Â¼Â³ÃÂ¤Ã‡ÃÂ±Ã¢';
+$lang['prf_sent_title'] = 'ÂºÂ¸Â³Â½ Ã†Ã­ÃÃ¶';
+$lang['prf_save_sent'] = '<b>ÂºÂ¸Â³Â½Ã†Ã­ÃÃ¶Â¸Â¦</b> Â´Ã™Ã€Â½ Ã†ÃºÂ´ÃµÂ¿Â¡ Ã€ÃºÃ€Ã¥Ã‡Ã•Â´ÃÂ´Ã™. ';
+$lang['prf_messages_title'] = 'Ã€ÃŒÂ¸ÃÃ€ÃÂ°Ã¼Â·Ãƒ';
+$lang['prf_page_limit'] = 'Ã‡Ã‘Ã†Ã¤Ã€ÃŒÃÃ¶Â¿Â¡ ÂºÂ¸Â¿Â©ÃÃº Ã€ÃŒÂ¸ÃÃ€Ã Â°Â¹Â¼Ã¶';
+$lang['prf_signature_title'] = 'Â¼Â­Â¸Ã­';
+$lang['prf_signature'] = 'Â¼Â­Â¸Ã­Â¾Â²Â±Ã¢';
+$lang['prf_auto_add_sign'] = 'ÂºÂ¸Â³Â»Â´Ã‚ Â¸Ã°ÂµÃ§ Ã†Ã­ÃÃ¶Â¿Â¡ Ã€ÃšÂµÂ¿Ã€Â¸Â·Ã Â¼Â­Â¸Ã­ ÃƒÃŸÂ°Â¡Ã‡ÃÂ±Ã¢ ';
+$lang['prf_save_button'] = 'Ã€ÃºÃ€Ã¥Ã‡ÃÂ±Ã¢';
+$lang['prf_display_images'] = 'ÃƒÂ·ÂºÃÂµÃˆ Ã€ÃŒÂ¹ÃŒÃÃ¶Â¸Â¦ Ã€ÃšÂµÂ¿Ã€Â¸Â·Ã Ã€ÃŒÂ¸ÃÃ€Ã ÂºÂ»Â¹Â®Â¿Â¡ ÂºÂ¸Â¿Â©ÃÃÂ´ÃÂ´Ã™';
+$lang['prf_default_editor_mode'] = 'Â±Ã¢ÂºÂ» Â¾Â²Â±Ã¢Â¼Â³ÃÂ¤';
+$lang['prf_default_editor_mode_text'] = '"Ã…Ã˜Â½ÂºÃ†Â®Â¸Â¸ Â»Ã§Â¿Ã«"';
+$lang['prf_default_editor_mode_html'] = '"Â°Ã­Â±ÃÂ¿Â¡ÂµÃ°Ã…Ã Â»Ã§Â¿Ã«"';
+$lang['prf_time_to_refesh'] = 'Ã€ÃšÂµÂ¿Ã€Â¸Â·Ã Â»ÃµÂ·ÃÂ¿Ã‚ Ã€ÃŒÂ¸ÃÃ€Ã ÃˆÂ®Ã€ÃÃ‡ÃÂ±Ã¢ (~ÂºÃÂ°Â£Â°Ã)';
+$lang['prf_spam_level'] = 'Â½ÂºÃ†Ã” Ã‚Ã·Â´Ãœ ÃÂ¤ÂµÂµ (0 = Ã‚Ã·Â´ÃœÂ¾ÃˆÃ‡Ã”, 1 = Â¸Ã…Â¿Ã¬Â³Ã´Ã€Â½, 9 = Â¸Ã…Â¿Ã¬Â³Â·Ã€Â½)';
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
 
 $lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
@@ -244,100 +244,100 @@ $lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
 
 
 // [Catch]
-$lang['ctc_title'] = 'ÁÖ¼Ò·Ï¿¡ Ãß°¡';
-$lang['ctc_information'] = 'ÁÖ¼Ò·Ï¿¡ ¾ø´Â ÁÖ¼Ò·ÎºÎÅÍ ¹ß¼ÛµÈ ÀÌ¸ŞÀÏ¸¸ º¸±â';
-$lang['ctc_name'] = 'ÀÌ¸§';
-$lang['ctc_email'] = 'ÀÌ¸ŞÀÏ';
-$lang['ctc_no_address'] = 'ÀÌ¸ŞÀÏ ÁÖ¼Ò ¾øÀ½';
-$lang['ctc_close'] = '´İ±â';
-$lang['ctc_save'] = 'ÀúÀå';
+$lang['ctc_title'] = 'ÃÃ–Â¼Ã’Â·ÃÂ¿Â¡ ÃƒÃŸÂ°Â¡';
+$lang['ctc_information'] = 'ÃÃ–Â¼Ã’Â·ÃÂ¿Â¡ Â¾Ã¸Â´Ã‚ ÃÃ–Â¼Ã’Â·ÃÂºÃÃ…Ã Â¹ÃŸÂ¼Ã›ÂµÃˆ Ã€ÃŒÂ¸ÃÃ€ÃÂ¸Â¸ ÂºÂ¸Â±Ã¢';
+$lang['ctc_name'] = 'Ã€ÃŒÂ¸Â§';
+$lang['ctc_email'] = 'Ã€ÃŒÂ¸ÃÃ€Ã';
+$lang['ctc_no_address'] = 'Ã€ÃŒÂ¸ÃÃ€Ã ÃÃ–Â¼Ã’ Â¾Ã¸Ã€Â½';
+$lang['ctc_close'] = 'Â´ÃÂ±Ã¢';
+$lang['ctc_save'] = 'Ã€ÃºÃ€Ã¥';
 
 // [Readmsg]
-$lang['next_mnu'] = '´ÙÀ½';
-$lang['previous_mnu'] = 'ÀÌÀü';
-$lang['back_mnu'] = 'µÚ·Î';
-$lang['reply_mnu'] = '´äÀå';
-$lang['reply_all_mnu'] = '¸ğµÎ¿¡°Ô ´äÀå';
-$lang['forward_mnu'] = 'Àü´Ş';
-$lang['headers_mnu'] = 'Çì´õÁ¤º¸';
-$lang['move_mnu'] = 'ÀÌµ¿';
-$lang['move_to_trash_mnu'] = 'ÈŞÁöÅëÀ¸·Î';
-$lang['delete_mnu'] = '»èÁ¦';
-$lang['print_mnu'] = 'ÀÎ¼â';
+$lang['next_mnu'] = 'Â´Ã™Ã€Â½';
+$lang['previous_mnu'] = 'Ã€ÃŒÃ€Ã¼';
+$lang['back_mnu'] = 'ÂµÃšÂ·Ã';
+$lang['reply_mnu'] = 'Â´Ã¤Ã€Ã¥';
+$lang['reply_all_mnu'] = 'Â¸Ã°ÂµÃÂ¿Â¡Â°Ã” Â´Ã¤Ã€Ã¥';
+$lang['forward_mnu'] = 'Ã€Ã¼Â´Ã';
+$lang['headers_mnu'] = 'Ã‡Ã¬Â´ÃµÃÂ¤ÂºÂ¸';
+$lang['move_mnu'] = 'Ã€ÃŒÂµÂ¿';
+$lang['move_to_trash_mnu'] = 'ÃˆÃÃÃ¶Ã…Ã«Ã€Â¸Â·Ã';
+$lang['delete_mnu'] = 'Â»Ã¨ÃÂ¦';
+$lang['print_mnu'] = 'Ã€ÃÂ¼Ã¢';
 $lang['download_mnu'] = 'Download'; // FIXME: need translation
 
-$lang['from_hea'] = 'º¸³½ÀÌ:';
-$lang['to_hea'] = '¹Ş´ÂÀÌ:';
-$lang['cc_hea'] = 'ÂüÁ¶:';
-$lang['date_hea'] = '³¯Â¥:';
-$lang['subject_hea'] = 'Á¦¸ñ:';
-$lang['attach_hea'] = 'Ã·ºÎÈ­ÀÏ:';
+$lang['from_hea'] = 'ÂºÂ¸Â³Â½Ã€ÃŒ:';
+$lang['to_hea'] = 'Â¹ÃÂ´Ã‚Ã€ÃŒ:';
+$lang['cc_hea'] = 'Ã‚Ã¼ÃÂ¶:';
+$lang['date_hea'] = 'Â³Â¯Ã‚Â¥:';
+$lang['subject_hea'] = 'ÃÂ¦Â¸Ã±:';
+$lang['attach_hea'] = 'ÃƒÂ·ÂºÃÃˆÂ­Ã€Ã:';
 
-$lang['attch_name_hea'] = 'ÀÌ¸§';
-$lang['attch_force_hea'] = '´Ù¿î·Îµå';
-$lang['attch_type_hea'] = 'Á¾·ù';
-$lang['attch_size_hea'] = 'Å©±â';
-$lang['catch_address'] = 'ÁÖ¼Ò·Ï¿¡ Ãß°¡';
-$lang['block_address'] = 'ÁÖ¼Ò Â÷´Ü';
+$lang['attch_name_hea'] = 'Ã€ÃŒÂ¸Â§';
+$lang['attch_force_hea'] = 'Â´Ã™Â¿Ã®Â·ÃÂµÃ¥';
+$lang['attch_type_hea'] = 'ÃÂ¾Â·Ã¹';
+$lang['attch_size_hea'] = 'Ã…Â©Â±Ã¢';
+$lang['catch_address'] = 'ÃÃ–Â¼Ã’Â·ÃÂ¿Â¡ ÃƒÃŸÂ°Â¡';
+$lang['block_address'] = 'ÃÃ–Â¼Ã’ Ã‚Ã·Â´Ãœ';
 
 // [Search]
-$lang['sch_title'] = '°Ë»ö';
-$lang['sch_information_text'] = 'Ã£À¸½Ç ´Ü¾î³ª ¹®ÀåÀ» ÀÔ·ÂÇÏ¼¼¿ä<br> ÀÌ¹Ì ÀĞÀº ÆíÁöµé¸¸À» ´ë»óÀ¸·Î °Ë»öÇÕ´Ï´Ù.';
-$lang['sch_button_text'] = '°Ë»ö &gt;&gt;';
-$lang['sch_subject_hea'] = 'Á¦¸ñ';
-$lang['sch_from_hea'] = 'º¸³½ÀÌ';
-$lang['sch_date_hea'] = '³¯Â¥';
-$lang['sch_body_hea'] = 'ÆíÁö³»¿ë';
-$lang['sch_folder_hea'] = 'Æú´õ';
-$lang['sch_no_results'] = 'Ã£À¸½Ã´Â ³»¿ë¿¡ ´ëÇÑ °Ë»ö°á°ú°¡ ¾ø½À´Ï´Ù.';
+$lang['sch_title'] = 'Â°Ã‹Â»Ã¶';
+$lang['sch_information_text'] = 'ÃƒÂ£Ã€Â¸Â½Ã‡ Â´ÃœÂ¾Ã®Â³Âª Â¹Â®Ã€Ã¥Ã€Â» Ã€Ã”Â·Ã‚Ã‡ÃÂ¼Â¼Â¿Ã¤<br> Ã€ÃŒÂ¹ÃŒ Ã€ÃÃ€Âº Ã†Ã­ÃÃ¶ÂµÃ©Â¸Â¸Ã€Â» Â´Ã«Â»Ã³Ã€Â¸Â·Ã Â°Ã‹Â»Ã¶Ã‡Ã•Â´ÃÂ´Ã™.';
+$lang['sch_button_text'] = 'Â°Ã‹Â»Ã¶ &gt;&gt;';
+$lang['sch_subject_hea'] = 'ÃÂ¦Â¸Ã±';
+$lang['sch_from_hea'] = 'ÂºÂ¸Â³Â½Ã€ÃŒ';
+$lang['sch_date_hea'] = 'Â³Â¯Ã‚Â¥';
+$lang['sch_body_hea'] = 'Ã†Ã­ÃÃ¶Â³Â»Â¿Ã«';
+$lang['sch_folder_hea'] = 'Ã†ÃºÂ´Ãµ';
+$lang['sch_no_results'] = 'ÃƒÂ£Ã€Â¸Â½ÃƒÂ´Ã‚ Â³Â»Â¿Ã«Â¿Â¡ Â´Ã«Ã‡Ã‘ Â°Ã‹Â»Ã¶Â°Ã¡Â°ÃºÂ°Â¡ Â¾Ã¸Â½Ã€Â´ÃÂ´Ã™.';
 
 // [QuickAddress]
-$lang['qad_title'] = 'ÁÖ¼Ò·Ï';
-$lang['qad_select_address'] = 'ÁÖ¼Ò ¼±ÅÃ';
-$lang['qad_to'] = '¹Ş´ÂÀÌ';
-$lang['qad_cc'] = 'ÂüÁ¶';
-$lang['qad_bcc'] = '¼ûÀºÂüÁ¶';
+$lang['qad_title'] = 'ÃÃ–Â¼Ã’Â·Ã';
+$lang['qad_select_address'] = 'ÃÃ–Â¼Ã’ Â¼Â±Ã…Ãƒ';
+$lang['qad_to'] = 'Â¹ÃÂ´Ã‚Ã€ÃŒ';
+$lang['qad_cc'] = 'Ã‚Ã¼ÃÂ¶';
+$lang['qad_bcc'] = 'Â¼Ã»Ã€ÂºÃ‚Ã¼ÃÂ¶';
 
 // [AddressBook]
 // edit/display
-$lang['adr_title'] = 'ÁÖ¼Ò·Ï';
-$lang['adr_name'] = 'ÀÌ¸§';
-$lang['adr_email'] = 'ÀÌ¸ŞÀÏ';
-$lang['adr_street'] = 'ÁÖ¼Ò';
-$lang['adr_city'] = 'ÀüÈ­¹øÈ£1';
-$lang['adr_state'] = 'ÀüÈ­¹øÈ£2';
-$lang['adr_work'] = '±âÅ¸»çÇ×';
-$lang['adr_back'] = 'µÚ·Î';
-$lang['adr_save'] = 'ÀúÀå';
+$lang['adr_title'] = 'ÃÃ–Â¼Ã’Â·Ã';
+$lang['adr_name'] = 'Ã€ÃŒÂ¸Â§';
+$lang['adr_email'] = 'Ã€ÃŒÂ¸ÃÃ€Ã';
+$lang['adr_street'] = 'ÃÃ–Â¼Ã’';
+$lang['adr_city'] = 'Ã€Ã¼ÃˆÂ­Â¹Ã¸ÃˆÂ£1';
+$lang['adr_state'] = 'Ã€Ã¼ÃˆÂ­Â¹Ã¸ÃˆÂ£2';
+$lang['adr_work'] = 'Â±Ã¢Ã…Â¸Â»Ã§Ã‡Ã—';
+$lang['adr_back'] = 'ÂµÃšÂ·Ã';
+$lang['adr_save'] = 'Ã€ÃºÃ€Ã¥';
 $lang['adr_phone'] = 'Phone';
 $lang['adr_cell'] = 'Cell';
 $lang['adr_note'] = 'Notes';
 
 // list
-$lang['adr_name_hea'] = 'ÀÌ¸§';
-$lang['adr_email_hea'] = 'ÀÌ¸ŞÀÏ';
-$lang['adr_edit_hea'] = '¼öÁ¤';
-$lang['adr_expo_hea'] = '³»º¸³»±â';
-$lang['adr_dele_hea'] = '»èÁ¦';
-$lang['adr_new_entry'] = '»õ ÁÖ¼Ò';
+$lang['adr_name_hea'] = 'Ã€ÃŒÂ¸Â§';
+$lang['adr_email_hea'] = 'Ã€ÃŒÂ¸ÃÃ€Ã';
+$lang['adr_edit_hea'] = 'Â¼Ã¶ÃÂ¤';
+$lang['adr_expo_hea'] = 'Â³Â»ÂºÂ¸Â³Â»Â±Ã¢';
+$lang['adr_dele_hea'] = 'Â»Ã¨ÃÂ¦';
+$lang['adr_new_entry'] = 'Â»Ãµ ÃÃ–Â¼Ã’';
 
-$lang['addr_saved'] = '¼º°øÀûÀ¸·Î ÀúÀå µÇ¾ú½À´Ï´Ù.';
-$lang['addr_added'] = '¼º°øÀûÀ¸·Î Ãß°¡ µÇ¾ú½À´Ï´Ù.';
-$lang['addr_deleted'] = '¼º°øÀûÀ¸·Î »èÁ¦ µÇ¾ú½À´Ï´Ù.';
+$lang['addr_saved'] = 'Â¼ÂºÂ°Ã¸Ã€Ã»Ã€Â¸Â·Ã Ã€ÃºÃ€Ã¥ ÂµÃ‡Â¾ÃºÂ½Ã€Â´ÃÂ´Ã™.';
+$lang['addr_added'] = 'Â¼ÂºÂ°Ã¸Ã€Ã»Ã€Â¸Â·Ã ÃƒÃŸÂ°Â¡ ÂµÃ‡Â¾ÃºÂ½Ã€Â´ÃÂ´Ã™.';
+$lang['addr_deleted'] = 'Â¼ÂºÂ°Ã¸Ã€Ã»Ã€Â¸Â·Ã Â»Ã¨ÃÂ¦ ÂµÃ‡Â¾ÃºÂ½Ã€Â´ÃÂ´Ã™.';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'º¸³½ÀÌ Â÷´Ü';
-$lang['blk_information'] = 'ÇÊÅÍµÇÁö ¾ÊÀº ÀÌ¸ŞÀÏ¸¸ º¸±â';
-$lang['blk_email'] = 'ÀÌ¸ŞÀÏ';
-$lang['blk_no_address'] = 'ÁÖ¼Ò ¾øÀ½';
-$lang['blk_close'] = '´İ±â';
-$lang['blk_save'] = 'ÀúÀå';
+$lang['blk_title'] = 'ÂºÂ¸Â³Â½Ã€ÃŒ Ã‚Ã·Â´Ãœ';
+$lang['blk_information'] = 'Ã‡ÃŠÃ…ÃÂµÃ‡ÃÃ¶ Â¾ÃŠÃ€Âº Ã€ÃŒÂ¸ÃÃ€ÃÂ¸Â¸ ÂºÂ¸Â±Ã¢';
+$lang['blk_email'] = 'Ã€ÃŒÂ¸ÃÃ€Ã';
+$lang['blk_no_address'] = 'ÃÃ–Â¼Ã’ Â¾Ã¸Ã€Â½';
+$lang['blk_close'] = 'Â´ÃÂ±Ã¢';
+$lang['blk_save'] = 'Ã€ÃºÃ€Ã¥';
 
 // [Event]
 $lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
-$lang['evt_save'] = 'ÀúÀå';
-$lang['evt_delete'] = '»èÁ¦';
+$lang['evt_save'] = 'Ã€ÃºÃ€Ã¥';
+$lang['evt_delete'] = 'Â»Ã¨ÃÂ¦';
 $lang['evt_stop'] = 'Stop time'; // FIXME: need translation
 $lang['evt_start'] = 'Start time'; // FIXME: need translation
 
