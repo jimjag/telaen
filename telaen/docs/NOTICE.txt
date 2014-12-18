@@ -44,48 +44,44 @@ Fell free to contact, send donations or anything to me :-)
 S„o Paulo - Brasil
 *************************************************************************/
 
-/*~ class.phpmailer.php
-.---------------------------------------------------------------------------.
-|  Software: PHPMailer - PHP email class                                    |
-|   Version: 2.0.3                                                          |
-|   Contact: via sourceforge.net support pages (also www.codeworxtech.com)  |
-|      Info: http://phpmailer.sourceforge.net                               |
-|   Support: http://sourceforge.net/projects/phpmailer/                     |
-| ------------------------------------------------------------------------- |
-|    Author: Andy Prevost (project admininistrator)                         |
-|    Author: Brent R. Matzelle (original founder)                           |
-| Copyright (c) 2004-2007, Andy Prevost. All Rights Reserved.               |
-| Copyright (c) 2001-2003, Brent R. Matzelle                                |
-| ------------------------------------------------------------------------- |
-|   License: Distributed under the Lesser General Public License (LGPL)     |
-|            http://www.gnu.org/copyleft/lesser.html                        |
-| This program is distributed in the hope that it will be useful - WITHOUT  |
-| ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or     |
-| FITNESS FOR A PARTICULAR PURPOSE.                                         |
-| ------------------------------------------------------------------------- |
-| We offer a number of paid services (www.codeworxtech.com):                |
-| - Web Hosting on highly optimized fast and secure servers                 |
-| - Technology Consulting                                                   |
-| - Oursourcing (highly qualified programmers and graphic designers)        |
-'---------------------------------------------------------------------------'
-
 /**
- * PHPMailer - PHP email transport class
+ * PHPMailer - PHP email creation and transport class.
+ * PHP Version 5
  * @package PHPMailer
- * @author Andy Prevost
- * @copyright 2004 - 2008 Andy Prevost
+ * @link https://github.com/PHPMailer/PHPMailer/ The PHPMailer GitHub project
+ * @author Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
+ * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
+ * @author Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
+ * @author Brent R. Matzelle (original founder)
+ * @copyright 2012 - 2014 Marcus Bointon
+ * @copyright 2010 - 2012 Jim Jagielski
+ * @copyright 2004 - 2009 Andy Prevost
+ * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @note This program is distributed in the hope that it will be useful - WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-/*********************************************************************************/
 /**
- * iCalcreator class v2.6
- * copyright (c) 2007-2008 Kjell-Inge Gustafsson kigkonsult
- * www.kigkonsult.se/iCalcreator/index.php
- * ical@kigkonsult.se
+ * PHPMailer - PHP email creation and transport class.
+ * @package PHPMailer
+ * @author Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
+ * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
+ * @author Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
+ * @author Brent R. Matzelle (original founder)
+ */
+
+/**
  *
- * Description:
- * This file is a PHP implementation of RFC 2445.
+ * This file is a PHP implementation of rfc2445/rfc5545.
  *
+ * @copyright Copyright (c) 2007-2014 Kjell-Inge Gustafsson, kigkonsult, All rights reserved
+ * @link      http://kigkonsult.se/iCalcreator/index.php
+ * @license   http://kigkonsult.se/downloads/dl.php?f=LGPL
+ * @package   iCalcreator
+ * @version   v2.20.2
+ */
+/**
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -100,3 +96,21 @@ S„o Paulo - Brasil
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/*  Prototype JavaScript framework, version 1.4.0_pre10_ajax
+ *  (c) 2005 Sam Stephenson <sam@conio.net>
+ *
+ *  This is a downcut version for AJAX by Alexander Kirk http://alexander.kirk.at/
+ *
+ *  Prototype is freely distributable under the terms of an MIT-style license.
+ *
+ *  For details, see the Prototype web site: http://prototype.conio.net/
+ *
+ * Renamed to mini-Ajax.js
+ *  * Updated w/ selected backports from Prototype 1.7.2
+/*--------------------------------------------------------------------------*/
+
+/*
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
