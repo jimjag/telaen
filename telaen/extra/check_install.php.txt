@@ -157,10 +157,9 @@ body,td,th {
             echo('<span class="fail">!! FAILED !!</span><br/>Talaen requires at least version 5.4.x; you are running {$phpver} <br/>');
             $error = true;
         } else
-            echo('<span class="pass">PASSED</span> (Running PHP version ' . phpversion() . ') <br/>');
+            echo('<span class="pass">PASSED</span> (Running PHP version ' . phpversion() . ')');
 ?>
-        <hr>
-        <h2 class="Test">Checking for old configuration file(s)</h2>
+        <hr><hr><h2 class="Test">Checking for old configuration file(s)</h2>
 
         <span class="Description">Older versions of Telaen used 3 separate files and a different configuration method.
         Checking if the old configs are still around:</span><br/>
@@ -190,8 +189,7 @@ body,td,th {
         } else
             echo('<span class="pass">PASSED</span><br/>');
 ?>
-        <hr>
-        <h2 class="Test">Checking for other old files:</h2>
+        <hr><hr><h2>Checking for other old files:</h2>
         <span class="Description">With the upgrade to version 2.x, some files are no longer required and
         should be deleted. Others have been moved. Checking for these now:</span><br/>
 
@@ -233,14 +231,13 @@ body,td,th {
                 }
                 echo('</span>'); echo("\n");
                 echo('<br/>Done<br/>');
-                echo('You should delete your old versions and/or move your local changes to <span class="codish">./inc</span>!<br/>');
+                echo('You should delete your old versions and/or move your local changes to <span class="codish">./inc</span>!');
             }
             $warn = true;
         } else
             echo('<span class="pass">PASSED</span><br/>');
 ?>
-        <hr>
-        <h2>Testing inc/config/configv2.php</h2>
+        <hr><hr><h2>Testing inc/config/configv2.php</h2>
         <span class="notice">(if the script stops here, there are parsing problems with your file; try getting a fresh copy and re-editing it)</span><br/>
 
         <span class="Description">Telaen configuration is located in the </span><span class="codish">./inc/config folder</span><span class="Description"> in </span><span class="codish">configv2.php.default</span><span class="Description"> and
@@ -322,7 +319,7 @@ if (count($config) == 0) {
 } else {
     echo('<span class="pass">PASSED</span> <br/>');
     $temporary_directory = $config['temporary_directory'];
-    echo("<h4>- Testing your \$config['temporary_directory'] variable: $temporary_directory... </h4>");
+    echo("<hr><h4>- Testing your \$config['temporary_directory'] variable: $temporary_directory... </h4>");
 
     // Now start checking the location and perms for $temporary_directory
     // Location vars
@@ -380,7 +377,7 @@ if (count($config) == 0) {
         $tgid = filegroup($temporary_directory);
         $mode = substr(sprintf('%o', fileperms($temporary_directory)), -3);
 
-        echo('<span class="pass">PASSED</span><br/>');
+        echo('<span class="pass">PASSED</span>');
         echo("<h5>-- check the permissions..</h5></br>The directory should be mode 700");
         if ($uidisvalid) {
             echo(" with a Owner of $uid and Group of $gid");
@@ -392,7 +389,7 @@ if (count($config) == 0) {
             echo('<span class="warn">&lt; WARNING &gt;</span><br/>Not setup securely!');
             $warn = true;
         } else {
-            echo('<span class="pass">PASSED</span><br/>');
+            echo('<span class="pass">PASSED</span>');
         }
     }
 
@@ -402,13 +399,13 @@ if (count($config) == 0) {
 		<br/>The path given in $temporary_directory points to a folder inside the main folder<br/>
 		Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br/>
 		There are security issues using this configuration, please choose a non-shared folder to store temporary files<br/>
-		/var/telaen is a good choice<br/>');
+		/var/telaen is a good choice');
         $warn = true;
     } else {
-        echo('<span class="pass">PASSED</span><br/>');
+        echo('<span class="pass">PASSED</span>');
     }
 
-    echo("<h4>- Testing your Smarty installation...</h4>");
+    echo("<hr><h4>- Testing your Smarty installation...</h4>");
 
     // Now check to make sure that Smarty is not under here as well.
     $smartyrelative = SMARTY_DIR;
@@ -422,29 +419,29 @@ if (count($config) == 0) {
 		<br/>The path given in SMARTY_DIR points to a folder inside the main folder<br/>
 		Eg. main folder is /var/html/telaen and temp folder is /var/html/telaen/tmp<br/>
 		There are security issues using this configuration, please choose a non-shared folder to store temporary files<br/>
-		/var/telaen is a good choice<br/>');
+		/var/telaen is a good choice');
         $warn = true;
     } else {
-        echo('<span class="pass">PASSED</span><br/>');
+        echo('<span class="pass">PASSED</span>');
     }
 
-    echo("<br/><h5>-- Now checking that ./smarty/ is not here as well... </h5><br/>");
+    echo("<h5>-- Now checking that ./smarty/ is not here as well... </h5>");
     if (is_readable($smartypathold)) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
-		<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
+		<br/>There is a Smarty libs installation here in your public space. It should be removed!');
     } else {
-        echo('<span class="pass">PASSED</span><br/>');
+        echo('<span class="pass">PASSED</span>');
     }
 
-    echo("<br/><h5>-- Now checking that ./smarty_move_me/ is not here as well... </h5><br/>");
+    echo("<h5>-- Now checking that ./smarty_move_me/ is not here as well... </h5>");
     if (is_readable($smartypathnew)) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
-		<br/>There is a Smarty libs installation here in your public space. It should be removed!<br/>');
+		<br/>There is a Smarty libs installation here in your public space. It should be removed!');
     } else {
-        echo('<span class="pass">PASSED</span><br/>');
+        echo('<span class="pass">PASSED</span>');
     }
 
-    echo("<br/><h5>-- Now checking that you are using Smarty3... </h5><br/>");
+    echo("<h5>-- Now checking that you are using Smarty3... </h5>");
     // There should be an easier way
     $smarty3 = false;
     $smarty = fopen(SMARTY_DIR.'/Smarty.class.php', 'r');
@@ -456,10 +453,10 @@ if (count($config) == 0) {
     }
     if (!$smarty3) {
         echo('<span class="fail">!! FAILED !!</span>
-		<br/>Not using Smarty3, or I cannot determine what version you are running.<br/>');
+		<br/>Not using Smarty3, or I cannot determine what version you are running.');
         $error = true;
     } else {
-        echo('<span class="pass">PASSED</span><br/>');
+        echo('<span class="pass">PASSED</span>');
     }
 }
 
@@ -474,48 +471,48 @@ if ($tempSize) {
 } else {
     $iniLimit = "Unlimited";
 }
-echo("<hr><h2>Testing your PHP configuration</h2>");
+echo("<hr><hr><h2>Testing your PHP configuration</h2>");
 
-echo("<hr><h3>Testing your memory limits</h3>");
+echo("<hr><h4>Testing your memory limits</h4>");
 
 if ($tempSize && $memoryLimit < $megs16) {
     echo('<span class="fail">!! FAILED !!</span>
-	<br/>PHP.ini\'s memory_limit</font> must be at least <code>16M</code> (We recommend 32M (32 MegaBytes)<br/>');
+	<br/>PHP.ini\'s memory_limit</font> must be at least <code>16M</code> (We recommend 32M (32 MegaBytes)');
     $error = true;
 } elseif ($tempSize && $memoryLimit >= $megs16 && $memoryLimit < $megs32) {
     echo('<span class="warn">&lt; WARNING &gt;</span>
-	<br/>PHP.ini\'s memory_limit</font> should be at least 32 (32 MegaBytes), but may still work.<br/>');
+	<br/>PHP.ini\'s memory_limit</font> should be at least 32 (32 MegaBytes), but may still work.');
     $warn = true;
 } else {
-    echo('<span class="pass">PASSED</span>  (memory_limit: '.$iniLimit.')<br/>');
+    echo('<span class="pass">PASSED</span>  (memory_limit: '.$iniLimit.')');
 }
 
-echo('<hr><h3>Testing for safe_mode</h3>');
+echo('<hr><h4>Testing for safe_mode</h4>');
 
 
 if (ini_get('safe_mode')) {
     echo('<span class="warn">&lt; WARNING &gt;</span>
-	<br/>PHP.ini\'s safe_mode is on. You may have problems with this configuration<br/>');
+	<br/>PHP.ini\'s safe_mode is on. You may have problems with this configuration');
     $warn = true;
 } else {
-    echo('<span class="pass">PASSED</span><br/>');
+    echo('<span class="pass">PASSED</span>');
 }
 
-echo('<hr><h3>Testing for SQLITE3</h3>');
+echo('<hr><h4>Testing for SQLITE3</h4>');
 
 $tfile = '/tmp/telaen-'.uniqid().'-test.db';
 $foo = new SQLite3($tfile);
 if ($foo) {
-    echo('<span class="pass">PASSED</span><br/>');
+    echo('<span class="pass">PASSED</span>');
     unlink($tfile);
 } else {
     echo('<span class="fail">!! FAILED !!</span>');
-	echo("<br/>Could not create a SQLite3 instance at: $tfile<br/>");
+	echo("<br/>Could not create a SQLite3 instance at: $tfile");
     $error = true;
 }
 
 
-echo('<br/><hr><br/>');
+echo('<br/><hr><hr><br/>');
 if ($error) {
 ?>
 
