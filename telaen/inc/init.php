@@ -257,10 +257,11 @@ Don't remove the following lines, or you will have problems with browser's cache
 @Header('Pragma: no-cache');
 
 // No cache metas
-$nocache = "
+$pmetas = "
 	<meta http-equiv=\"Cache-Control\" content=\"no-cache\" />
 	<meta http-equiv=\"Expires\" content=\"-1\" />
-	<meta http-equiv=\"Pragma\" content=\"no-cache\" />";
+	<meta http-equiv=\"Pragma\" content=\"no-cache\" />
+	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
 
 // Common js included system-wide
 $commonJS = "

@@ -58,7 +58,7 @@ $jssource .= <<<EOT
 	<script type="text/javascript" src="inc/editors/tinymce/tiny_e_init.js"></script>
 EOT;
 
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 $smarty->assign('umJS', $jssource);
 
 if ($actionDone) {

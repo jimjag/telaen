@@ -12,7 +12,7 @@ require './inc/init.php';
 /* @var $TLN Telaen */
 
 // assign metas
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 
 extract(Telaen::pull_from_array($_GET, array('nameto', 'mailto'), 'str'));
 extract(Telaen::pull_from_array($_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',

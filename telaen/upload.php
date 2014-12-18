@@ -11,7 +11,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 
 extract(Telaen::pull_from_array($_GET, array('rem'), 'str'));
 extract(Telaen::pull_from_array($_FILES, array('userfile'), 'str'));

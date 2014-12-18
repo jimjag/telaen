@@ -187,6 +187,6 @@ $smarty->assign('umUsageGraph', $usageGraph);
 $noquota = ($totalused > $quota_limit) ? 1 : 0;
 $smarty->assign('umNoQuota', $noquota);
 
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 
 $smarty->display("$selected_theme/folders.tpl");

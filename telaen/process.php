@@ -8,8 +8,8 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
-@ini_set('output_buffering',      1024);
-@ob_start();
+// @ini_set('output_buffering',      1024);
+// @ob_start();
 require './inc/init.php';
 /* @var $TLN Telaen */
 

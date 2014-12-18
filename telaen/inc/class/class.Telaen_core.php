@@ -31,7 +31,7 @@ class Telaen_core
 
     public $sanitize          = true;
     public $use_html          = false;
-    public $charset           = 'iso-8859-1';
+    public $charset           = 'utf-8';
     public $userfolder        = './';
     public $temp_folder       = './';
     public $idle_timeout      = 10;
@@ -238,20 +238,12 @@ class Telaen_core
     }
 
     /**
-     * This function, if running under PHP 4.3+ will convert any string between charsets.
-     * If running under PHP < 4.3, will convert the string to PHP's default charset (iso-8859-1)
+     * This function will convert any string between charsets.
      */
     protected function _convert_charset($string, $from, $to)
     {
         $string = @htmlentities($string, ENT_COMPAT, $from);
-        if (function_exists('html_entity_decode')) { //PHP 4.3+
-            return html_entity_decode($string, ENT_COMPAT, $to);
-        } else {
-            $trans_tbl = get_html_translation_table(HTML_ENTITIES);
-            $trans_tbl = array_flip($trans_tbl);
-
-            return strtr($string, $trans_tbl);
-        }
+        return html_entity_decode($string, ENT_COMPAT, $to);
     }
 
     /**
@@ -1387,9 +1379,9 @@ ENDOFREDIRECT;
         } else {
             Header("Location: $url");
         }
-        if (ob_get_level()) {
-            ob_end_flush();
-        }
+ //       if (ob_get_level()) {
+ //           ob_end_flush();
+ //       }
         exit;
     }
 

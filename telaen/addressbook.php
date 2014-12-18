@@ -14,7 +14,7 @@ require './inc/init.php';
 /* @var $TLN Telaen */
 
 // meta assigned to smarty
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 
 $filename = $TLN->userfolder.'_infos/addressbook.ucf';
 $myfile = $TLN->read_file($filename);

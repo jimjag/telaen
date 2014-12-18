@@ -16,7 +16,7 @@ if (!isset($folder) || !isset($ix)) {
 }
 $mail_info = $mbox['headers'][$folder][$ix];
 
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 
 if (!file_exists($mail_info['localname'])) {
     die('File not found');

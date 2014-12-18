@@ -33,6 +33,17 @@ class Telaen extends Telaen_core
     public function __construct()
     {
         $this->_tnef = new TNEF();
+        mb_internal_encoding("UTF-8");
+    }
+
+    private function _utf7_to_8($string)
+    {
+        return mb_convert_encoding($string, 'UTF-8', 'UTF7-IMAP');
+    }
+
+    private function _utf8_to_7($string)
+    {
+        return mb_convert_encoding($string, 'UTF7-IMAP', 'UTF-8');
     }
 
     /**
@@ -1222,10 +1233,8 @@ class Telaen extends Telaen_core
             $rest = substr($buffer, $pos+2);
             $pos = strpos($rest, ' ');
             $tmp['prefix'] = preg_replace('|"(.*)"|', "$1", substr($rest, 0, $pos));
-            $tmp['name'] = $this->fix_prefix(trim(preg_replace('|"(.*)"|', "$1", substr($rest, $pos+1))), 0);
-            if (function_exists(mb_convert_encoding)) {
-                $tmp['name'] = mb_convert_encoding($tmp['name'], 'ISO_8859-1', 'UTF7-IMAP');
-            }
+            $tmp['name'] = $this->_utf7_to_8($this->fix_prefix(trim(preg_replace('|"(.*)"|', "$1",
+                                             substr($rest, $pos+1))), 0));
             $buffer = $this->_mail_get_line();
             $boxlist[] = $tmp;
         }
@@ -1266,7 +1275,7 @@ class Telaen extends Telaen_core
         /* this function is used only for IMAP servers */
         if ($this->mail_protocol == IMAP) {
             $original_name = preg_replace('|"(.*)"|', "$1", $boxname);
-            $boxname = $this->fix_prefix($original_name, 1);
+            $boxname = $this->_utf8_to_7($this->fix_prefix($original_name, 1));
             $this->_mail_send_command("SELECT \"$boxname\"");
             $buffer = $this->_mail_get_line();
             if (preg_match("/^".$this->get_sid()." NO/i", $buffer)) {

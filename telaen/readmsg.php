@@ -34,7 +34,7 @@ if (!$TLN->mail_set_flag($mail_info, '\\SEEN', '+')) {
 $TLN->mail_disconnect();
 
 // metas assigned to smarty
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 
 $TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);

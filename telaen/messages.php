@@ -58,7 +58,7 @@ if ($timeleft > 0) {
 }
 
 // Assign metas to smarty, no more bad echos output
-$smarty->assign('pageMetas', $nocache."\n".$refreshMeta);
+$smarty->assign('pageMetas', $pmetas."\n".$refreshMeta);
 
 /* load total size */
 $totalused = 0;

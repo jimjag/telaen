@@ -14,7 +14,7 @@ if (!isset($folder) || !isset($ix)) {
     die('Expected parameters');
 }
 $body = $auth['currentbody'];
-$meta_charset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$lang['default_char_set']."\">";
-echo($nocache);
-echo($meta_charset);
+//$meta_charset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$lang['default_char_set']."\">";
+echo($pmetas);
+//echo($meta_charset);
 echo($body);

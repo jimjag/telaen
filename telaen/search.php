@@ -13,7 +13,7 @@ require './inc/init.php';
 
 extract(Telaen::pull_from_array($_POST, array('srcFrom', 'srcSubject', 'srcBody'), 'str'));
 
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 
 $jsquota = ($exceeded) ? 'true' : 'false';
 

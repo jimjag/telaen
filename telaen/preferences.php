@@ -12,7 +12,7 @@ require './inc/init.php';
 /* @var $TLN Telaen */
 
 // assign metas
-$smarty->assign('pageMetas', $nocache);
+$smarty->assign('pageMetas', $pmetas);
 
 $jssource = $commonJS;
 $jssource .= "
