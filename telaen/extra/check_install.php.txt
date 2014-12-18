@@ -183,7 +183,6 @@ body,td,th {
                 echo('&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '<br/>'); echo("\n");
             }
             echo('</span>'); echo("\n");
-            echo('<br/>Done<br/>');
              echo('These should be deleted!<br/>');
            $warn = true;
         } else
@@ -191,20 +190,35 @@ body,td,th {
 ?>
         <hr><hr><h2>Checking for other old files:</h2>
         <span class="Description">With the upgrade to version 2.x, some files are no longer required and
-        should be deleted. Others have been moved. Checking for these now:</span><br/>
+        should be deleted. Checking for these now:</span><br/>
 
 <?php
-        $has_old_files = false;
         $old_files = array();
         $moved_files = array();
 
         foreach (array('inc/lib.php', 'get_messages_list.php', 'database') as $i) {
             if (file_exists('./' . $i)) {
-                $has_old_files = true;
                 $old_files[] = $i;
             }
         }
 
+        if (count($old_files) > 0) {
+            echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following old files/dirs:<br/>');
+            echo('<span class="codishsml">'); echo("\n");
+            foreach ($old_files as $i) {
+                echo('&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '<br/>');
+            }
+            echo('</span>'); echo("\n");
+            echo('These should be deleted!<br/>');
+            $warn = true;
+        } else
+            echo('<span class="pass">PASSED</span><br/>');
+?>
+
+        <hr><hr><h2>Checking for other old files:</h2>
+        <span class="Description">With the upgrade to version 2.x, some files have been moved from
+            their old locations. Checking for these now:</span><br/>
+<?php
         foreach (array('langs', 'editors', 'themes') as $i) {
             if (file_exists('./' . $i)) {
                 $has_old_files = true;
@@ -212,30 +226,16 @@ body,td,th {
             }
         }
 
-        if ($has_old_files) {
-            if (count($old_files) > 0) {
-                echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following old files/dirs:<br/>');
-                echo('<span class="codishsml">'); echo("\n");
-                foreach ($old_files as $i) {
-                    echo('&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '<br/>');
-                }
-                echo('</span>'); echo("\n");
-                echo('<br/>Done<br/>');
-                echo('These should be deleted!<br/>');
+        if (count($moved_files) > 0) {
+            echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following moved files/dirs:<br/>');
+            echo('<span class="codishsml">'); echo("\n");
+            foreach ($moved_files as $i) {
+                echo('&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '<br/>');
             }
-            if (count($moved_files) > 0) {
-                echo('<span class="warn">&lt; WARNING &gt;</span><br/>I see the following moved files/dirs:<br/>');
-                echo('<span class="codishsml">'); echo("\n");
-                foreach ($moved_files as $i) {
-                    echo('&nbsp;&nbsp;&nbsp;&nbsp;' . $i . '<br/>');
-                }
-                echo('</span>'); echo("\n");
-                echo('<br/>Done<br/>');
-                echo('You should delete your old versions and/or move your local changes to <span class="codish">./inc</span>!');
-            }
+            echo('</span>'); echo("\n");
+            echo('You should move your local changes to <span class="codish">./inc</span>!');
             $warn = true;
-        } else
-            echo('<span class="pass">PASSED</span><br/>');
+        }
 ?>
         <hr><hr><h2>Testing inc/config/configv2.php</h2>
         <span class="notice">(if the script stops here, there are parsing problems with your file; try getting a fresh copy and re-editing it)</span><br/>
@@ -389,7 +389,7 @@ if (count($config) == 0) {
             echo('<span class="warn">&lt; WARNING &gt;</span><br/>Not setup securely!');
             $warn = true;
         } else {
-            echo('<span class="pass">PASSED</span>');
+            echo('<br/><span class="pass">PASSED</span>');
         }
     }
 
@@ -405,7 +405,7 @@ if (count($config) == 0) {
         echo('<span class="pass">PASSED</span>');
     }
 
-    echo("<hr><h4>- Testing your Smarty installation...</h4>");
+    echo("<hr><hr><h2>- Testing your Smarty installation...</h2>");
 
     // Now check to make sure that Smarty is not under here as well.
     $smartyrelative = SMARTY_DIR;
@@ -413,7 +413,7 @@ if (count($config) == 0) {
     $smartypathold = realpath('./smarty/');
     $smartypathnew = realpath('./smarty_move_me/');
 
-    echo("<h5>- Testing your Smarty libs location (SMARTY_DIR:$smartyrelative -> $smartypathdefined)...</h5>");
+    echo("<hr><h4>- Testing your Smarty libs location (SMARTY_DIR:$smartyrelative -> $smartypathdefined)...</h4>");
     if (substr($smartypathdefined, 0, strlen($localpath)) == $localpath) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>The path given in SMARTY_DIR points to a folder inside the main folder<br/>
@@ -425,7 +425,7 @@ if (count($config) == 0) {
         echo('<span class="pass">PASSED</span>');
     }
 
-    echo("<h5>-- Now checking that ./smarty/ is not here as well... </h5>");
+    echo("<hr><h4>-- Now checking that ./smarty/ is not here as well... </h4>");
     if (is_readable($smartypathold)) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>There is a Smarty libs installation here in your public space. It should be removed!');
@@ -433,7 +433,7 @@ if (count($config) == 0) {
         echo('<span class="pass">PASSED</span>');
     }
 
-    echo("<h5>-- Now checking that ./smarty_move_me/ is not here as well... </h5>");
+    echo("<hr><h4>-- Now checking that ./smarty_move_me/ is not here as well... </h4>");
     if (is_readable($smartypathnew)) {
         echo('<span class="warn">&lt; WARNING &gt;</span>
 		<br/>There is a Smarty libs installation here in your public space. It should be removed!');
@@ -441,7 +441,7 @@ if (count($config) == 0) {
         echo('<span class="pass">PASSED</span>');
     }
 
-    echo("<h5>-- Now checking that you are using Smarty3... </h5>");
+    echo("<hr><h4>-- Now checking that you are using Smarty3... </h4>");
     // There should be an easier way
     $smarty3 = false;
     $smarty = fopen(SMARTY_DIR.'/Smarty.class.php', 'r');
@@ -512,7 +512,7 @@ if ($foo) {
 }
 
 
-echo('<br/><hr><hr><br/>');
+echo('<br/><hr><hr><hr><br/>');
 if ($error) {
 ?>
 
