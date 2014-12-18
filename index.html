@@ -12,7 +12,7 @@
   <script type="text/javascript" src="javascripts/script.js"></script>
 
   <title>Telaen</title>
-  <meta name="description" content="Telaen is a webmail interface written in PHP. It does not require any database and is compatible with POP3 or IMAP so it runs under any Server supporting PHP with Sendmail or QMAIL. Additional skins and languages can be easily integrated.">
+  <meta name="description" content="Telaen is a webmail interface written in PHP. It does not require any external database and is compatible with POP3 or IMAP so it runs under any Server supporting PHP with Sendmail, QMAIL, Postfix, etc... Additional skins and languages can be easily integrated.">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -26,7 +26,7 @@
       <h1 class="title"><img src="images/telaen-logo.jpg" alt="Telaen"></h1>
     </header>
     <div id="container">
-      <p class="tagline">Telaen is a webmail interface written in PHP. It does not require any database and is compatible with POP3 or IMAP so it runs under any Server supporting PHP with Sendmail or QMAIL. Additional skins and languages can be easily integrated.</p>
+      <p class="tagline">Telaen is a webmail interface written in PHP. It does not require any database and is compatible with POP3 or IMAP so it runs under any Server supporting PHP with Sendmail, QMAIL, Postfix, etc... Additional skins and languages can be easily integrated.</p>
       <div id="main" role="main">
         <div class="download-bar">
         <div class="inner">
@@ -46,8 +46,8 @@
 <p>Telaen is a web-based e-mail client written in PHP. What is particularly
 nice about Telaen is that it is fast, lean and simple, but also extremely
 powerful. It does not require much more than a "standard" PHP
-installation, nor does it require a database. It supports multiple
-folders, POP3 and IMAP, is SPAM aware and incorporates a WYSIWYG editor
+installation, nor does it require an external database. It supports multiple
+folders, POP3 and IMAP, is SPAM aware and incorporates WYSIWYG editors
 for Email composition. It supports multiple languages as well as
 multiple themes (or "skins").</p>
 
@@ -60,12 +60,31 @@ multiple themes (or "skins").</p>
 especially the CHANGELOG.txt and INSTALL.txt files.</p>
 
 <h2>
+<a name="design-philosophy" class="anchor" href="#design-philosophy"><span class="octicon octicon-link"></span></a>Design Philosophy</h2>
+<p>First of all, Telaen is designed and architectured to be as small
+and as compact as possible; some may even say Telaen is "minimalistic".
+The reason is that as projects get larger and more complex, they are
+more difficult to update, to vet and review, and to keep secure.
+Simplicity, after all, is a virtue.</p>
+
+<p>The other basic philosophy is to leverage PHP and existing 3rd
+party libraries as much as possible, but without making the level
+of dependencies onerous for the sys-admin. There's no need to
+re-create the wheel, unless we can do it faster, or easier.</p>
+
+<p>Finally, as ex-sys-admins ourselves, as well as developers,
+Telaen is designed to be plug-and-play. Plugins are a great
+idea, and maybe Telaen will support them in the future, but
+requiring sys-admins to find, install, config and debug Plugins
+to add basic features that should be core to a webapp, doesn't
+make sense to us.</p>
+
+<h2>
 <a name="why-you-might-need-it" class="anchor" href="#why-you-might-need-it"><span class="octicon octicon-link"></span></a>Why you might need it</h2>
 
-<p>Other PHP-based webmails require database support as well as a long
+<p>Other PHP-based webmails require external database support as well as a long
 laundry-list of other PHP libs and extensions; not Telaen. If
-you need an expandable, powerful yet simple webmail system,
-Telaen will likely fit the bill.</p>
+you need an powerful yet simple and clean webmail system, Telaen will likely fit the bill.</p>
 
 <p>And, if you are stuck running ancient Uebimiau, you should
 really move to Telaen asap.</p>
@@ -93,9 +112,9 @@ software availability and distribution.</p>
 <li>Language support</li>
 <li>Themes support</li>
 <li>Search in messages</li>
-<li>Personalized order messages</li>
+<li>Personalized ordering of messages</li>
 <li>Personal preferences</li>
-<li>Send HTML e-mails</li>
+<li>HTML e-mails (read/write)</li>
 <li>Quota Limit</li>
 <li>Auto population of SPAM folder for tagged SPAM messages</li>
 </ul><h2>
@@ -122,15 +141,15 @@ possible. The below external dependencies are bundled for convenience:</p>
 </ul><p>Telaen is designed to work with both the bundled as well as the system-provided
 versions of these tools.</p>
 
-<p>No database is required.</p>
+<p>No external database is required.</p>
 
 <h2>
 <a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
 <p>Please submit bug reports, suggestions and pull requests to the <a href="https://github.com/jimjag/telaen/issues">GitHub issue tracker</a>.</p>
 
-<p>We're particularly interested in fixing edge-cases, expanding test coverage and dropping support for PHP4, PHP5.1
-and PHP5.2.</p>
+<p>We're particularly interested in fixing edge-cases, expanding test coverage and freshing-up
+the user UI.</p>
 
 <h2>
 <a name="changelog" class="anchor" href="#changelog"><span class="octicon octicon-link"></span></a>Changelog</h2>
