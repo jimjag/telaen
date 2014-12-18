@@ -129,13 +129,11 @@ $smarty->assign('umUser', $f_user);
 $smarty->assign('umPass', $f_pass);
 $smarty->assign('umJS', $jssource);
 
-$avallangs = count($TLN->config['languages']);
-if ($avallangs == 0) {
+if (count($TLN->config['languages']) == 0) {
     die('You must provide at least one language');
 }
 
-$avalthemes = count($TLN->config['themes']);
-if ($avalthemes == 0) {
+if (count($TLN->config['themes']) == 0) {
     die('You must provide at least one theme');
 }
 
@@ -145,6 +143,7 @@ printf($textout);
 if ($TLN->config['allow_user_change_language']) {
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
     foreach ($TLN->config['languages'] as $key => $val) {
+        if (!is_file("./inc/langs/{$key}.php")) continue;
         $selected = ($selected_language == $key) ? "selected=\"selected\"" : "";
         $langsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
