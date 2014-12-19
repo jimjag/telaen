@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Format de data
+//% D = dies,% m = mes,% i = anys,% H = hores,% M = minuts
+// Per obtenir una llista completa, consulteu http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// charset
+$lang['default_char_set'] = 'UTF-8';
 
 // Noms fàcils d'usar per a les carpetes del sistema
 $lang['inbox_extended'] = 'Safata d\'entrada';
 $lang['sent_extended'] = 'Elements enviats';
-$lang['trash_extended'] 'Paperera';
+$lang['trash_extended'] = 'Paperera';
 $lang['spam_extended'] = 'carpeta Spam';
+$lang['drafts_extended'] = 'Esborranys';
 
 // Textos de navegació
 $lang['pages_text'] = 'Pàgines';
@@ -26,7 +36,7 @@ $lang['error_login'] = 'Si us plau, marqui el seu nom d\'suari o contrasenya, i 
 $lang['error_connect'] = 'Ha fallat la connexió amb el servidor';
 $lang['error_retrieving'] = 'Error en obtenir els seus missatges, la safata d\'ntrada ha canviat ';
 $lang['error_session_expired'] = 'La vostra sessió ha caducat, si us plau entra de nou ';
-$lang['error_other'] 'Sistema de fracàs, si us plau poseu-vos en contacte amb l\'dministrador de xarxa';
+$lang['error_other'] = 'Sistema de fracàs, si us plau poseu-vos en contacte amb l\'dministrador de xarxa';
 
 // Nom no vàlid de bústia
 $lang['ERROR_INVALID_NAME'] = 'nom de la carpeta no vàlida - Utilitzeu només els següents caràcters A-Z, a=z, 0-9, i -';
@@ -53,16 +63,6 @@ $lang['quota_usage_used'] = 'utilitza';
 $lang['quota_usage_of'] = 'de';
 $lang['quota_usage_avail'] = 'disponible';
 
-//
-// Format de data
-//% D = dies,% m = mes,% i = anys,% H = hores,% M = minuts
-// Per obtenir una llista completa, consulteu http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// charset
-$lang['default_char_set'] = 'UTF-8';
-
 // Menu
 $lang['messages_mnu'] = 'Safata d\'ntrada';
 $lang['read_menu'] = 'Llegir E-Mail (s)';
@@ -76,13 +76,13 @@ $lang['prefs_mnu'] = 'Preferències';
 $lang['logoff_mnu'] = 'Sortir';
 
 // Respondre
-$lang['reply_prefix'] 'Re:';
+$lang['reply_prefix'] = 'Re:';
 $lang['forward_prefix'] = 'Fw:';
 $lang['reply_delimiter'] = '--------- -------- Missatge original ';
 $lang['reply_from_hea'] = 'D:';
 $lang['reply_to_hea'] = 'Per:';
 $lang['reply_cc_hea'] = 'Cc:';
-$lang['reply_date_hea'] 'Data:';
+$lang['reply_date_hea'] = 'Data:';
 $lang['reply_subject_hea'] = 'Assumpte:';
 // Fet
 
@@ -107,14 +107,14 @@ $lang['folders_to'] = 'Carpetes a';
 $lang['messages_to'] = 'Missatges a';
 $lang['no_messages'] = 'No hi ha nous missatges en el seu';
 $lang['delete_selected_mnu'] = 'Eliminar';
-$lang['move_selected_mnu'] 'Mou a';
+$lang['move_selected_mnu'] = 'Mou a';
 $lang['mark_selected_mnu'] = 'Marca com a llegit ';
 $lang['unmark_selected_mnu'] = 'Marca com a no llegit';
-$lang['move_selected_to_trash_mnu'] 'Mou a la paperera';
+$lang['move_selected_to_trash_mnu'] = 'Mou a la paperera';
 
 
 $lang['delete_mnu'] = 'Eliminar';
-$lang['move_mnu'] 'Mou a';
+$lang['move_mnu'] = 'Mou a';
 $lang['subject_hea'] = 'Assumpte';
 $lang['from_hea'] = 'Des de';
 $lang['to_hea'] = 'Per';
@@ -124,7 +124,7 @@ $lang['have_spam'] = 'Vostè té Spam (revisar la carpeta de Spam)';
 
 $lang['msg_you_have'] = 'Ha';
 $lang['msg_message'] = 'missatge';
-$lang['msg_messages'] 'missatges';
+$lang['msg_messages'] = 'missatges';
 
 $lang['msg_more_unread'] = 'no llegit';
 $lang['msg_one_unread'] = 'no llegit';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"editor HTML avançat"';
 $lang['prf_time_to_refesh'] = 'Comprova automàticament si hi ha correu nou (minuts)';
 $lang['prf_spam_level'] = 'SPAM sensibilitat (0 = Desactivat, 1 = Molt alta, 9 = Molt Baixa)';
 $lang['prf_auto_require_receipt'] = 'Requerir rebut llegit per defecte';
+$lang['prf_keep_on_server'] = 'Mantingui correu electrònic al servidor - no hi ha carpetes locals';
 
 $lang['prf_msg_saved'] = 'Preferències salvar';
 
@@ -233,7 +234,7 @@ $lang['filter_add'] = 'Afegir filtre';
 $lang['filter_delete'] = 'Eliminar';
 $lang['filter_delete_selected'] = 'Esborrar filtres seleccionats';
 
-$lang['filter_field'] 'Filtre en camp';
+$lang['filter_field'] = 'Filtre en camp';
 $lang['filter_match'] = 'Cerca';
 $lang['filter_type'] = 'Acció';
 $lang['filter_folder'] = 'Carpeta de destinació ';
@@ -260,8 +261,8 @@ $lang['reply_mnu'] = 'Respondre';
 $lang['reply_all_mnu'] = 'Respondre a tots ';
 $lang['forward_mnu'] = 'Forward';
 $lang['headers_mnu'] = 'capçalera';
-$lang['move_mnu'] 'Mou a';
-$lang['move_to_trash_mnu'] 'Mou a la paperera';
+$lang['move_mnu'] = 'Mou a';
+$lang['move_to_trash_mnu'] = 'Mou a la paperera';
 $lang['delete_mnu'] = 'Eliminar';
 $lang['print_mnu'] = 'Imprimir';
 $lang['download_mnu'] = 'Descarregar';
@@ -269,7 +270,7 @@ $lang['download_mnu'] = 'Descarregar';
 $lang['from_hea'] = 'D:';
 $lang['to_hea'] = 'Per:';
 $lang['cc_hea'] = 'Cc:';
-$lang['date_hea'] 'Data:';
+$lang['date_hea'] = 'Data:';
 $lang['subject_hea'] = 'Assumpte:';
 $lang['attach_hea'] = 'Annex: ';
 
@@ -335,7 +336,7 @@ $lang['blk_close'] = 'Tancar';
 $lang['blk_save'] = 'Desa';
 
 // [Esdeveniment]
-$lang['evt_title'] 'Calendari d\'sdeveniments';
+$lang['evt_title'] = 'Calendari d\'sdeveniments';
 $lang['evt_save'] = 'Desa';
 $lang['evt_delete'] = 'Eliminar';
 $lang['evt_stop'] = 'Atura el temps ';

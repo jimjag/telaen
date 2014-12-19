@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d-%m-%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'iso-8859-9';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Gelen Kutusu';
 $lang['sent_extended'] = 'Gönderilmiş Öğeler';
 $lang['trash_extended'] = 'Çöp Kutusu';
 $lang['spam_extended'] = 'Spam folder';
+$lang['drafts_extended'] = 'Taslaklar';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Limit';
 $lang['quota_usage_used'] = 'quota_usage_of					= /';
 $lang['quota_usage_of'] = 'of';
 $lang['quota_usage_avail'] = 'kullanımda.';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d-%m-%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'iso-8859-9';
 
 // Menu
 $lang['messages_mnu'] = 'Gelen Kutusu';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Gelişmiş HTML editörü"';
 $lang['prf_time_to_refesh'] = 'Mesajların yenilenme zamanı (dakika)';
 $lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
+$lang['prf_keep_on_server'] = 'Sunucusu e-posta tutun - hibir yerel klasšrler';
 
 $lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 

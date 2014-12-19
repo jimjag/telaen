@@ -1,15 +1,26 @@
+
 <?php
 /*
  * Maltese (canonical list and phrasing)
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Inbox';
 $lang['sent_extended'] = 'oġġetti Mibgħuta';
 $lang['trash_extended'] = 'folder Trash';
 $lang['spam_extended'] = 'folder Spam';
+$lang['drafts_extended'] = 'Rapporteur';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -52,16 +63,6 @@ $lang['quota_usage_info'] = 'limitu tal-kwota';
 $lang['quota_usage_used'] = 'Użati';
 $lang['quota_usage_of'] = 'tal-';
 $lang['quota_usage_avail'] = 'disponibbli';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Inbox';
@@ -209,6 +210,7 @@ $lang['prf_default_editor_mode_html'] = '" editur Advanced HTML "';
 $lang['prf_time_to_refesh'] = 'Awtomatikament jikkontrolla għal posta ġdida (minuti)';
 $lang['prf_spam_level'] = 'sensittività SPAM (0 =-Persuni Diżabbiltà, 1 = Għolja Ħafna, 9 = Baxxa ħafna)';
 $lang['prf_auto_require_receipt'] = 'Jeħtieġu irċevuta tinqara mill default';
+$lang['prf_keep_on_server'] = 'Żomm email fuq server - l-ebda folders lokali';
 
 $lang['prf_msg_saved'] = 'Preferenzi salvati';
 

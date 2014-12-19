@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Indbakke';
 $lang['sent_extended'] = 'Sendte beskeder';
 $lang['trash_extended'] = 'Papirkurv';
 $lang['spam_extended'] = 'mappe Spam';
+$lang['drafts_extended'] = 'Kladder';
 
 // Navigation texts
 $lang['pages_text'] = 'Sider';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'kvote';
 $lang['quota_usage_used'] = 'brugt';
 $lang['quota_usage_of'] = 'af';
 $lang['quota_usage_avail'] = 'til rådighed';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Indbakke';
@@ -209,7 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Avanceret HTML editor"';
 $lang['prf_time_to_refesh'] = 'Se automatisk efter ny post (minutter)';
 $lang['prf_spam_level'] = 'SPAM følsomhed (0 = Deaktiveret, 1 = Very High, 9 = Meget lav)';
 $lang['prf_auto_require_receipt'] = 'Kræv læst kvittering som standard';
-
+$lang['prf_keep_on_server'] = 'Hold e-mail på serveren - ingen lokale mapper';
 $lang['prf_msg_saved'] = 'Indstillinger gemt!';
 
 // filters

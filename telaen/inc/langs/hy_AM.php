@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Inbox';
 $lang['sent_extended'] = 'Ուղարկված իրեր';
 $lang['trash_extended'] = 'Trash թղթապանակ';
 $lang['spam_extended'] = 'Spam թղթապանակ';
+$lang['drafts_extended'] = 'նախագծերը';
 
 // Navigation texts
 $lang['pages_text'] = 'Էջեր';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Սահմանը սահմանը';
 $lang['quota_usage_used'] = 'Նոր';
 $lang['quota_usage_of'] = 'եւ';
 $lang['quota_usage_avail'] = 'մատչելի';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Inbox';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Advanced HTML խմբագրիչի"';
 $lang['prf_time_to_refesh'] = 'ավտոմատ ստուգել նոր փոստով (րոպե)';
 $lang['prf_spam_level'] = 'SPAM զգայունության (0 = Հաշմանդամների, 1 = շատ մեծ է, 9 = Very Low)';
 $lang['prf_auto_require_receipt'] = 'Անհրաժեշտ է կարդալ անդորրագիրը լռակյաց';
+$lang['prf_keep_on_server'] = 'Պահպանեք email սերվերի - ոչ տեղական թղթապանակների';
 
 $lang['prf_msg_saved'] = 'Preferences պահպանվել';
 
@@ -335,7 +336,7 @@ $lang['blk_close'] = 'Close';
 $lang['blk_save'] = 'Պահպանել';
 
 // [Event]
-$lang['evt_title'] = 'Calendar իրադարձություն';
+$lang['evt_title'] = 'Օրացույց իրադարձություն';
 $lang['evt_save'] = 'Պահպանել';
 $lang['evt_delete'] = 'Ջնջել';
 $lang['evt_stop'] = 'Stop ժամանակ';

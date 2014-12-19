@@ -4,55 +4,6 @@
  */
 
 $lang = array();
-
-// User-friendly names to system folders
-$lang['inbox_extended'] = '¶Ò´à¢éÒ';
-$lang['sent_extended'] = '¶Ò´ÍÍ¡';
-$lang['trash_extended'] = '¶Ñ§¢ÂÐ';
-$lang['spam_extended'] = '¨´ËÁÒÂ¢ÂÐ';
-
-// Navigation texts
-$lang['pages_text'] = 'Ë¹éÒ';
-$lang['first_text'] = 'Ë¹éÒáÃ¡';
-$lang['previous_text'] = '¡èÍ¹Ë¹éÒ';
-$lang['next_text'] = '¶Ñ´ä»';
-$lang['last_text'] = 'Ë¹éÒÊØ´·éÒÂ';
-$lang['total_text'] = '·Ñé§ËÁ´';
-
-// Mail Server Errors
-$lang['err_login_msg'] = '¡ÒÃà¢éÒÊÙèÃÐºº¼Ô´¾ÅÒ´';
-$lang['err_system_msg'] = 'à¡Ô´¤ÇÒÁ¼Ô´¾ÅÒ´¨Ò¡ÃÐºº';
-$lang['error_login'] = '¡ÃØ³ÒµÃÇ¨àªç¤ª×èÍ¼ÙéãªéáÅÐÃËÑÊ¼èÒ¹ãËé´ÕáÅéÇÅÍ§ãËÁèÍÕ¡¤ÃÑé§';
-$lang['error_connect'] = 'äÁèÊÒÁÒÃ¶µÔ´µèÍ¡ÑºÃÐººä´é ·Ò§àÃÒ¡ÓÅÑ§»ÃÑº»ÃØ§ ÃÐºº';
-$lang['error_retrieving'] = 'ÁÕ»Ñ­ËÒ ¡ÒÃÃÑº¨´ËÁÒÂ ·ÓãËéäÁèÊÒÁÒÃ¶ÃÑº¨´ËÁÒÂä´é';
-$lang['error_session_expired'] = 'ÃÐÂÐàÇÅÒã¹¡ÒÃà¢éÒÊÙèÃÐºº¢Í§¤Ø³ËÁ´áÅéÇ ¡ÃØ³Òà¢éÒÊÙèÃÐººãËÁèÍÕ¡¤ÃÑé§';
-$lang['error_other'] = 'ÃÐººÁÕ»Ñ­ËÒ ·Ò§àÃÒ¡ÓÅÑ§»ÃÑº»ÃØ§ÃÐºº';
-
-// Invalid name of mailbox
-$lang['error_invalid_name'] = '¡ÒÃµÑé§ª×èÍäÁè¶Ù¡µéÍ§ - ¤Ø³ÊÒÁÒ¶ãªéµÑÇÍÑ¡ÉÃä´é ´Ñ§¹Õé : ¡-Î, A-Z, 0-9, .-';
-
-// Validations when sending mails
-$lang['error_no_recipients'] = '¤Ø³µéÍ§ãÊè mail ¢Í§ ¼ÙéÃÑºÍÂèÒ§¹éÍÂ 1 ¤¹';
-$lang['error_compose_invalid_mail1_s'] = '´ÙàËÁ×Í¹ÇèÒ email ¹Õé¨ÐäÁè¶Ù¡µéÍ§';
-$lang['error_compose_invalid_mail1_p'] = '¡ÒÃÊè§¨´ËÁÒÂÅÙ¡â«èäÁèÊÒÁÒÃ¶·Óä´é';
-$lang['error_compose_invalid_mail2_s'] = 'µÃÇ¨ÊÍº¡ÒÃà¢ÕÂ¹¨´ËÁÒÂ¡èÍ¹Êè§';
-$lang['error_compose_invalid_mail2_p'] = 'µÃÇ¨ÊÍº¡ÒÃà¢ÕÂ¹¨´ËÁÒÂ¡èÍ¹Êè§';
-
-// Confirmation of delete
-$lang['confirm_delete'] = '¤Ø³á¹èã¨·Õè¨ÐÅº¨´ËÁÒÂ¹Õé ?';
-
-// If the message no have a subject or sender
-$lang['no_subject_text'] = 'äÁèÁÕËÑÇàÃ×èÍ§';
-$lang['no_sender_text'] = 'äÁè·ÃÒº';
-$lang['no_recipient_text'] = 'äÁèÁÕ¡ÒÃÃÑºÃÍ§';
-
-// If the quota limit was exceeded
-$lang['quota_exceeded'] = 'à¹×éÍ·Õè¢Í§·èÒ¹àµçÁáÅéÇ \r ¡ÃØ³ÒÅº¨´ËÁÒÂà¡èÒæ ÍÍ¡ à¾×èÍà¾ÔèÁà¹×éÍ·ÕèÇèÒ§ã¹ ÃÐºº¢Í§·èÒ¹';
-$lang['quota_usage_info'] = '¨Ó¡Ñ´à¹×éÍ·Õè';
-$lang['quota_usage_used'] = 'ãªéä»';
-$lang['quota_usage_of'] = '¢Í§';
-$lang['quota_usage_avail'] = 'à¹×éÍ·Õè·Ñé§ËÁ´';
-
 //
 // Date Format
 // %d = day, %m = month, %y = year, %H = hour, %M = minutes
@@ -63,281 +14,297 @@ $lang['date_format'] = '%d/%m/%y %H:%M';
 // CharSet
 $lang['default_char_set'] = 'tis-620';
 
-// Menu
-$lang['messages_mnu'] = '¢éÍ¤ÇÒÁ';
-$lang['read_menu'] = 'Read E-Mail(s)'; // FIXME: need translation
-$lang['compose_mnu'] = 'à¢ÕÂ¹¨´ËÁÒÂ';
-$lang['refresh_mnu'] = 'ÃÕâËÅ´';
-$lang['folders_mnu'] = 'â¿Åà´ÍÃì';
-$lang['search_mnu'] = '¤é¹ËÒ';
-$lang['address_mnu'] = 'ÁØ´ÃÒÂª×èÍ';
-$lang['empty_trash_mnu'] = 'Åº¢ÂÐ';
-$lang['prefs_mnu'] = 'ÃÒÂÅÐàÍÕÂ´ÊèÇ¹µÑÇ';
-$lang['logoff_mnu'] = 'ÍÍ¡¨Ò¡ÃÐºº';
+$lang['inbox_extended'] = 'กล่องขาเข้า';
+$lang['sent_extended'] = 'รายการที่ส่ง';
+$lang['trash_extended'] = 'โฟลเดอร์ถังขยะ';
+$lang['spam_extended'] = 'โฟลเดอร์สแปม';
+$lang['drafts_extended'] = 'ร่าง';
 
-// Reply
-$lang['reply_prefix'] = 'Rv:';
-$lang['forward_prefix'] = 'Fw:';
-$lang['reply_delimiter'] = '--------- ¢éÍ¤ÇÒÁ´Ñ§à´ÔÁ --------';
-$lang['reply_from_hea'] = '¨Ò¡ :';
-$lang['reply_to_hea'] = '¶Ö§ :';
-$lang['reply_cc_hea'] = 'Cc :';
-$lang['reply_date_hea'] = 'ÇÑ¹·Õè :';
-$lang['reply_subject_hea'] = 'ËÑÇàÃ×èÍ§ :';
-// done
+$lang['pages_text'] = 'หน้า';
+$lang['first_text'] = 'ครั้งแรก';
+$lang['previous_text'] = 'ก่อน';
+$lang['next_text'] = 'ถัดไป';
+$lang['last_text'] = 'ล่าสุด';
+$lang['total_text'] = 'รวม';
 
+$lang['err_login_msg'] = 'ข้อผิดพลาดเข้าสู่ระบบ';
+$lang['err_system_msg'] = 'ข้อผิดพลาดของระบบ';
+$lang['error_login'] = 'กรุณาตรวจสอบชื่อผู้ใช้หรือรหัสผ่านของคุณและลองอีกครั้ง';
+$lang['error_connect'] = 'ข้อผิดพลาดการเชื่อมต่อกับเซิร์ฟเวอร์';
+$lang['error_retrieving'] = 'ข้อผิดพลาดได้รับข้อความของคุณกล่องจดหมายของคุณมีการเปลี่ยนแปลง';
+$lang['error_session_expired'] = 'เซสชั่นของคุณจะหมดอายุแล้วกรุณาเข้าสู่ระบบอีกครั้ง';
+$lang['error_other'] = 'ความล้มเหลวของระบบกรุณาติดต่อผู้ดูแลระบบเครือข่ายของคุณ';
 
-// page-specific vars
+$lang['error_invalid_name'] = 'ชื่อโฟลเดอร์ไม่ถูกต้อง - ใช้เฉพาะอักขระต่อไปนี้ az, AZ, 0-9, และ -';
 
-// [Headers]
-$lang['key_hea'] = 'Key';
-$lang['value_hea'] = 'Value';
+$lang['error_no_recipients'] = 'ข้อผิดพลาด: คุณต้องมีอย่างน้อยหนึ่งผู้รับ';
+$lang['error_compose_invalid_mail1_s'] = 'ข้อผิดพลาด: e-mail address นี้ดูเหมือนว่าจะไม่ถูกต้อง';
+$lang['error_compose_invalid_mail1_p'] = 'ข้อผิดพลาดนี้อยู่อีเมลดูเหมือนจะไม่ถูกต้อง';
+$lang['error_compose_invalid_mail2_s'] = 'ตรวจสอบที่อยู่ e-mail ก่อนที่จะ resending อีเมล์นี้.';
+$lang['error_compose_invalid_mail2_p'] = 'ตรวจสอบที่อยู่ของคุณก่อนที่ resending อีเมล์นี้.';
 
-// [Folders]
-$lang['fld_name_hea'] = 'â¿Åà´ÍÃì';
-$lang['fld_messages_hea'] = '¢éÍ¤ÇÒÁ';
-$lang['fld_size_hea'] = '¢¹Ò´';
-$lang['fld_empty_hea'] = 'ÇèÒ§';
-$lang['fld_delete_hea'] = 'Åº';
-$lang['fld_total'] = '·Ñé§ËÁ´ :';
-$lang['fld_make_new'] = 'ÃéÒ§â¿Åà´ÍÃìãËÁè';
-$lang['folders_to'] = 'â¿Åà´ÍÃìs to';
+$lang['confirm_delete'] = 'คุณต้องการจริงๆที่จะลบข้อความนี้ (s)';
 
-// [MessageList]
-$lang['messages_to'] = '¢éÍ¤ÇÒÁ¶Ö§ ';
-$lang['no_messages'] = 'äÁèÁÕ¨´ËÁÒÂãËÁè¶Ö§ ¤Ø³';
-$lang['delete_selected_mnu'] = 'Åº·ÕèàÅ×Í¡';
-$lang['move_selected_mnu'] = 'ÂéÒÂä»·ÕèàÅ×Í¡';
-$lang['mark_selected_mnu'] = '·Óà¤Ã×èÍ§ËÁÒÂÇèÒÍèÒ¹áÅéÇ';
-$lang['unmark_selected_mnu'] = '·Óà¤Ã×èÍ§ËÁÒÂÇèÒÂÑ§äÁèÍèÒ¹';
-$lang['move_selected_to_trash_mnu'] = 'ÂéÒÂ·ÕèàÅ×Í¡Å§¶Ñ§¢ÂÐ';
+$lang['no_subject_text'] = '[ไม่มีหัวเรื่อง]';
+$lang['no_sender_text'] = '[ไม่รู้จักผู้ส่ง]';
+$lang['no_recipient_text'] = '[ผู้รับที่ไม่รู้จัก]';
 
+$lang['quota_exceeded'] = 'พื้นที่ไม่เพียงพอในกล่องจดหมายของคุณเพื่อดำเนินการนี้ \ n กรุณาลบข้อความบางอย่างที่จะดำเนินการต่อไป';
+$lang['quota_usage_info'] = 'ขีด จำกัด โควต้า';
+$lang['quota_usage_used'] = 'ใช้';
+$lang['quota_usage_of'] = 'ของ';
+$lang['quota_usage_avail'] = 'มีอยู่';
 
-$lang['delete_mnu'] = 'Åº';
-$lang['move_mnu'] = 'ÂéÒÂä»';
-$lang['subject_hea'] = 'ËÑÇàÃ×èÍ§ :';
-$lang['from_hea'] = '¨Ò¡ :';
-$lang['to_hea'] = '¶Ö§ :';
-$lang['date_hea'] = 'ÇÑ¹·Õè :';
-$lang['size_hea'] = '¢¹Ò´';
-$lang['have_spam'] = '¤Ø³ÁÕ¨´ËÁÒÂ¢ÂÐ (µÃÇÊÍº·Õèâ¿Åà´ÍÃì¨´ËÁÒÂ¢ÂÐ)';
+$lang['messages_mnu'] = 'กล่องขาเข้า';
+$lang['read_menu'] = 'อ่านอีเมล์ (s)';
+$lang['compose_mnu'] = 'เขียน E-Mail:';
+$lang['refresh_mnu'] = 'รีเฟรช';
+$lang['folders_mnu'] = 'โฟลเดอร์';
+$lang['search_mnu'] = 'ค้นหา';
+$lang['address_mnu'] = 'ที่อยู่ในหนังสือ';
+$lang['empty_trash_mnu'] = 'ว่างเปล่าถังขยะ';
+$lang['prefs_mnu'] = 'การตั้งค่า';
+$lang['logoff_mnu'] = 'ออกจากระบบ';
 
-$lang['msg_you_have'] = '¤Ø³ÁÕ';
-$lang['msg_message'] = '¢éÍ¤ÇÒÁ';
-$lang['msg_messages'] = '¢éÍ¤ÇÒÁ';
+$lang['reply_prefix'] = 'เรื่อง';
+$lang['forward_prefix'] = 'ส่งต่อ';
+$lang['reply_delimiter'] = '--------- ข้อความต้นฉบับ --------';
+$lang['reply_from_hea'] = 'จาก:';
+$lang['reply_to_hea'] = 'เพื่อ';
+$lang['reply_cc_hea'] = 'สำเนา:';
+$lang['reply_date_hea'] = 'วันที่:';
+$lang['reply_subject_hea'] = 'เรื่อง';
 
-$lang['msg_more_unread'] = 'ÂÑ§äÁèä´éÍèÒ¹';
-$lang['msg_one_unread'] = 'ÂÑ§äÁèä´é´Ù';
-$lang['msg_none_unread'] = 'äÁèÁÕ·ÕèÂÑ§äÁèä´éÍèÒ¹';
-$lang['msg_in_the_folder'] = 'ã¹â¿Åà´ÍÃì';
+$lang['key_hea'] = 'คีย์';
+$lang['value_hea'] = 'มูลค่า';
 
+$lang['fld_name_hea'] = 'โฟลเดอร์';
+$lang['fld_messages_hea'] = 'ข้อความ';
+$lang['fld_size_hea'] = 'ขนาด';
+$lang['fld_empty_hea'] = 'ว่างเปล่า';
+$lang['fld_delete_hea'] = 'ลบ';
+$lang['fld_total'] = 'รวม';
+$lang['fld_make_new'] = 'สร้างโฟลเดอร์ใหม่';
+$lang['folders_to'] = 'โฟลเดอร์เพื่อ';
 
-// [Login]
-$lang['lgn_title'] = 'à¢éÒÃÐºº';
-$lang['lgn_welcome_msg'] = 'ÂÔ¹´ÕµéÍ¹ÃÑºÊÙè Telaen webmail';
-$lang['lng_user_email'] = '¨´ËÁÒÂÍÔàÅç¡·ÃÍ¹Ô¡Êì';
-$lang['lng_user_name'] = 'ª×èÍ¼Ùéãªé';
-$lang['lng_user_pwd'] = 'ÃËÑÊ¼èÒ¹';
-$lang['lng_server'] = 'Server';
-$lang['lng_theme'] = 'Ë¹éÒµÒ';
-$lang['lng_language'] = 'ÀÒÉÒ';
-$lang['lng_login_btn'] = 'à¢éÒÊÙèÃÐºº &gt;&gt;';
-$lang['lng_cookie_not_enabled'] = '¤Ø³µéÍ§à»Ô´¡ÒÃãªé§Ò¹ Cookies';
-$lang['lng_cookie_not_valid'] = '¡ÒÃµÇ¨ÊÍº Cookie ÅéÁàËÅÇ';
+// [messagelist]
+$lang['messages_to'] = 'ข้อความที่จะ';
+$lang['no_messages'] = 'ไม่มีข้อความใหม่ในของคุณ';
+$lang['delete_selected_mnu'] = 'ลบ';
+$lang['move_selected_mnu'] = 'ย้ายไป';
+$lang['mark_selected_mnu'] = 'มาร์คว่าอ่าน';
+$lang['unmark_selected_mnu'] = 'มาร์คยังไม่ได้อ่าน';
+$lang['move_selected_to_trash_mnu'] = 'ย้ายไปที่ถังขยะ';
 
-// [Newmessage]
+$lang['delete_mnu'] = 'ลบ';
+$lang['move_mnu'] = 'ย้ายไป';
+$lang['subject_hea'] = 'เรื่อง';
+$lang['from_hea'] = 'จาก:';
+$lang['to_hea'] = 'เพื่อ';
+$lang['date_hea'] = 'วันที่:';
+$lang['size_hea'] = 'ขนาด';
+$lang['have_spam'] = 'คุณมีสแปม (Spam โฟลเดอร์ตรวจสอบ)';
 
-$lang['newmsg_title'] = 'à¢ÕÂ¹¨´ËÁÒÂ';
+$lang['msg_you_have'] = 'คุณมี';
+$lang['msg_message'] = 'ข้อความ';
+$lang['msg_messages'] = 'ข้อความ';
 
-$lang['to_hea'] = '¶Ö§ :';
-$lang['cc_hea'] = 'Cc :';
-$lang['bcc_hea'] = 'Bcc :';
-$lang['subject_hea'] = 'ËÑÇàÃ×èÍ§ :';
-$lang['address_tip'] = '¨Ò¡ÊÁØ´ÃÒÂª×èÍ';
+$lang['msg_more_unread'] = 'ยังไม่ได้อ่าน';
+$lang['msg_one_unread'] = 'ยังไม่ได้อ่าน';
+$lang['msg_none_unread'] = 'ไม่มีการอ่าน';
+$lang['msg_in_the_folder'] = 'ในโฟลเดอร์';
 
-$lang['attach_hea'] = 'á¹ºä¿Åì :';
-$lang['attch_add_new'] = 'à¾ÔèÁä¿ÅìãËÁè';
-$lang['attch_name_hea'] = 'ª×èÍ';
-$lang['attch_size'] = '¢¹Ò´';
-$lang['attch_type_hea'] = 'ª¹Ô´';
-$lang['attch_dele_hea'] = 'Åº';
-$lang['attch_no_hea'] = 'äÁèÁÕ¡ÒÃá¹ºä¿Åì';
+$lang['lgn_title'] = 'เข้าสู่ระบบ';
+$lang['lgn_welcome_msg'] = 'ยินดีต้อนรับคุณ, กรุณาเข้าสู่ระบบในบัญชีของคุณ';
+$lang['lng_user_email'] = 'อีเมล';
+$lang['lng_user_name'] = 'ชื่อผู้ใช้';
+$lang['lng_user_pwd'] = 'รหัสผ่าน';
+$lang['lng_server'] = 'เซิร์ฟเวอร์';
+$lang['lng_theme'] = 'ธีม';
+$lang['lng_language'] = 'ภาษา';
+$lang['lng_login_btn'] = 'เข้าสู่ระบบ & gt; & gt;';
+$lang['lng_cookie_not_enabled'] = 'คุกกี้จะต้องเปิดการใช้งาน';
+$lang['lng_cookie_not_valid'] = 'Cookie รักษาความปลอดภัยตรวจสอบล้มเหลว';
 
-$lang['add_signature'] = 'à¾ÔèÁÅÒÂà«ç¹µì·éÒÂ¨´ËÁÒÂ';
-$lang['send_text'] = 'è§¨´ËÁÒÂ';
+$lang['newmsg_title'] = 'เขียนจดหมาย';
 
-$lang['result_error'] = 'ÁÑ¹äÁèÊÁºÙÃ³ì áµè ÍÒ¨¨ÐÊè§¶Ö§¼ÙéÃÑºä´é';
-$lang['result_success'] = 'è§¨´ËÁÒÂàÃÕÂºÃéÍÂáÅéÇ';
-$lang['nav_continue'] = 'µèÍä»';
-$lang['nav_back'] = '¡ÅÑº';
+$lang['to_hea'] = 'เพื่อ';
+$lang['cc_hea'] = 'สำเนา:';
+$lang['bcc_hea'] = 'สำเนาลับ:';
+$lang['subject_hea'] = 'เรื่อง';
+$lang['address_tip'] = 'จากสมุดที่อยู่';
 
-$lang['up_title'] = 'à¾ÔèÁä¿Åì';
-$lang['up_information_text'] = 'àÅ×Í¡ä¿Åì';
-$lang['up_button_text'] = 'è§';
+$lang['attach_hea'] = 'ที่แนบมา:';
+$lang['attch_add_new'] = 'แนบไฟล์ใหม่';
+$lang['attch_name_hea'] = 'ชื่อ';
+$lang['attch_size'] = 'ขนาด';
+$lang['attch_type_hea'] = 'ประเภท';
+$lang['attch_dele_hea'] = 'ลบ';
+$lang['attch_no_hea'] = 'ไม่มีสิ่งที่แนบมา';
 
-$lang['require_receipt'] = 'Return receipt'; // FIXME: need translation
+$lang['add_signature'] = 'เพิ่มลายเซ็น';
+$lang['send_text'] = 'ส่ง';
 
-$lang['priority_text'] = 'ÅÓ´Ñº¤ÇÒÁÊÓ¤Ñ­';
-$lang['priority_low'] = '¹éÍÂ';
-$lang['priority_normal'] = '»Ò¹¡ÅÒ§';
-$lang['priority_high'] = 'ÁÒ¡';
+$lang['result_error'] = 'มันไม่ได้เป็นไปได้ที่จะส่ง e-mail นี้';
+$lang['result_success'] = 'อีเมลนี้ได้ถูกส่ง';
+$lang['nav_continue'] = '& lt; & lt; ดำเนินการต่อ & gt; & gt; ';
+$lang['nav_back'] = 'กลับ';
 
-// [Preferences]
-$lang['prf_title'] = 'ÃÒÂÅÐàÍÕÂ´ÊèÇ¹µÑÇ';
-$lang['prf_general_title'] = '¢éÍÁÙÅ·ÑèÇä»¢Í§¤Ø³';
-$lang['prf_name'] = 'ª×èÍ';
-$lang['prf_reply_to'] = 'àÁÅÅì¢Í§¤Ø³';
-$lang['prf_time_zone'] = 'àÇÅÒ';
-$lang['prf_trash_title'] = '¶Ñ§¢ÂÐ';
-$lang['prf_save_to_trash'] = 'µÑé§¶Ñ§¢ÂÐäÇé·ÕèäË¹';
-$lang['prf_save_only_read'] = '¨Ñ´à¡çº¨´ËÁÒÂäÇé·ÕèäË¹';
-$lang['prf_empty_on_exit'] = 'Åº¨´ËÁÒÂ¨Ò¡ Folder ËÅÑ§¨Ò¡ÍÍ¡¨Ò¡ÃÐºº';
-$lang['prf_empty_spam_on_exit'] = '<b>ÅéÒ§</b>¡ÅèÍ§¨´ËÁÒÂ¢ÂÐàÁ×èÍÍÍ¡¨Ò¡ÃÐºº';
-$lang['prf_unmark_read_on_exit'] = '·Óà¤Ã×èÍ§ËÁÒÂ¨´ËÁÒÂ·ÕèÍèÒ¹áÅéÇà»ç¹<b>ÂÑ§äÁèÍèÒ¹</b>àÁ×èÍÍÍ¡¨Ò¡ÃÐºº';
-$lang['prf_sent_title'] = 'è§ÃÒÂ¡ÒÃ';
-$lang['prf_save_sent'] = '¨Ñ´à¡çº¨´ËÁÒÂ·ÕèÊè§äÇé·Õè :';
-$lang['prf_messages_title'] = '¢éÍ¤ÇÒÁ';
-$lang['prf_page_limit'] = 'áÊ´§¨Ó¹Ç¹¨´ËÁÒÂµèÍË¹éÒ';
-$lang['prf_signature_title'] = 'ÅÒÂà«ç¹µì';
-$lang['prf_signature'] = 'à¢ÕÂ¹ÅÒÂà«ç¹µì';
-$lang['prf_auto_add_sign'] = 'à¾ÔèÁÅÒÂà«ç¹µì¢Í§¤Ø³¡Ñº¨´ËÁÒÂ·Õè¨ÐÊè§·Ø¡©ºÑº';
-$lang['prf_save_button'] = '¨Ñ´à¡çº';
-$lang['prf_display_images'] = 'áÊ´§ÃÙ»ÀÒ¾·Õèá¹º';
-$lang['prf_default_editor_mode'] = 'âËÁ´¡ÒÃá¡éä¢¢éÍ¤ÇÒÁ¾×é¹°Ò¹';
-$lang['prf_default_editor_mode_text'] = '"¡ÒÃá¡éä¢áºº¢éÍ¤ÇÒÁ¸ÃÃÁ´Ò"';
-$lang['prf_default_editor_mode_html'] = '"¡ÒÃá¡éä¢¢éÍ¤ÇÒÁã¹ÃÙ»áºº HTML"';
-$lang['prf_time_to_refesh'] = 'ÃÕâËÅ´·Ø¡æ [¹Ò·Õ]';
-$lang['prf_spam_level'] = 'ÃÐ´Ñº¡ÒÃµÃÇ¨¨Ñº¨´ËÁÒÂ¢ÂÐ(0 = äÁèµÃÇ¨¨Ñº, 1 = ÊÙ§ÁÒ¡, 9 = µèÓÁÒ¡)';
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
+$lang['up_title'] = 'เพิ่มไฟล์';
+$lang['up_information_text'] = 'เลือกไฟล์';
+$lang['up_button_text'] = 'แนบไฟล์';
 
-$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
+$lang['require_receipt'] = 'ใบเสร็จรับเงินกลับ';
 
-// filters
-$lang['filter_title'] = 'µÑÇ¡ÃÍ§';
+$lang['priority_text'] = 'ลำดับความสำคัญ';
+$lang['priority_low'] = 'ต่ำ';
+$lang['priority_normal'] = 'ปกติ';
+$lang['priority_high'] = 'สูง';
 
-$lang['filter_new'] = 'ÃéÒ§µÑÇ¡ÃÍ§';
-$lang['filter_desc'] = 'àÅ×Í¡ÃÙ»áºº¡ÒÃ¤é¹ËÒ¨´ËÁÒÂ¢ÂÐáÅÐ¡ÒÃ¡ÃÐ·Ó¢Í§¨´ËÁÒÂà¢éÒáµèÅÐ©ºÑº';
-$lang['filter_list'] = 'µÑÇ¡ÃÍ§»Ñ¨¨ØºÑ¹';
+$lang['prf_title'] = 'การตั้งค่า';
+$lang['prf_general_title'] = 'ข้อมูลทั่วไป';
+$lang['prf_name'] = 'ชื่อ';
+$lang['prf_reply_to'] = 'ตอบ';
+$lang['prf_time_zone'] = 'โซนเวลา';
+$lang['prf_trash_title'] = 'ขยะ';
+$lang['prf_save_to_trash'] = 'เมื่อคุณ <b> ลบ </ b> ข้อความย้ายไปยัง';
+$lang['prf_save_only_read'] = 'หลังจากที่คุณ <b> อ่าน </ b> ข้อความย้ายไปยัง';
+$lang['prf_empty_on_exit'] = '<b> เปล่า </ b> โฟลเดอร์ถังขยะเมื่อคุณออกจากระบบ';
+$lang['prf_empty_spam_on_exit'] = '<b> เปล่า </ b> โฟลเดอร์สแปมเมื่อคุณออกจากระบบ';
+$lang['prf_unmark_read_on_exit'] = 'รีเซ็ตอ่านข้อความที่ยังไม่ได้อ่านเมื่อคุณออกจากระบบ';
+$lang['prf_sent_title'] = 'รายการที่ส่ง';
+$lang['prf_save_sent'] = 'บันทึก <b> ส่งข้อความ </ b>';
+$lang['prf_messages_title'] = 'ข้อความ';
+$lang['prf_page_limit'] = 'จำนวนสูงสุดของข้อความต่อหน้า';
+$lang['prf_signature_title'] = 'ลายเซ็น';
+$lang['prf_signature'] = 'เขียนลายเซ็นของคุณ';
+$lang['prf_auto_add_sign'] = 'เพิ่มลายเซ็นของคุณไปยังทุกข้อความที่ส่งออก';
+$lang['prf_save_button'] = 'บันทึกการตั้งค่า';
+$lang['prf_display_images'] = 'แสดงแนบภาพ';
+$lang['prf_default_editor_mode'] = 'เริ่มต้นโหมดแก้ไข';
+$lang['prf_default_editor_mode_text'] = '"ข้อความล้วน"';
+$lang['prf_default_editor_mode_html'] = '"ตกแต่ง HTML"';
+$lang['prf_time_to_refesh'] = 'ตรวจสอบโดยอัตโนมัติจดหมายใหม่ (นาที)';
+$lang['prf_spam_level'] = 'ไว SPAM (0 = พิการ, 1 = สูงมาก, 9 = ต่ำมาก)';
+$lang['prf_auto_require_receipt'] = 'จำเป็นต้องอ่านใบเสร็จรับเงินตามค่าเริ่มต้น';
+$lang['prf_keep_on_server'] = 'เก็บอีเมล์บนเซิร์ฟเวอร์ - โฟลเดอร์ท้องถิ่นไม่มี';
 
-$lang['filter_field_from'] = '¨Ò¡';
-$lang['filter_field_to'] = '¶Ö§';
-$lang['filter_field_subject'] = 'ËÑÇ¢éÍ';
-$lang['filter_field_header'] = 'Header';
-$lang['filter_field_body'] = 'Body';
+$lang['prf_msg_saved'] = 'การตั้งค่าการบันทึกไว้';
 
-$lang['filter_type_move'] = 'ÂéÒÂ';
-$lang['filter_type_delete'] = 'Åº';
-$lang['filter_type_mark'] = '·Óà¤Ã×èÍ§ËÁÒÂÇèÒÍèÒ¹';
+$lang['filter_title'] = 'กรอง';
 
-$lang['filter_add'] = 'à¾ÔèÁµÑÇ¡ÃÍ§';
-$lang['filter_delete'] = 'Åº';
-$lang['filter_delete_selected'] = 'ÅºµÑÇ¡ÃÍ§·ÕèàÅ×Í¡';
+$lang['filter_new'] = 'สร้างตัวกรอง';
+$lang['filter_desc'] = 'เลือกเกณฑ์การค้นหาและการดำเนินการสำหรับข้อความที่เข้ามา';
+$lang['filter_list'] = 'ตัวกรองปัจจุบัน';
 
-$lang['filter_field'] = 'µÑÇ¡ÃÍ§ã¹';
-$lang['filter_match'] = '¤é¹ËÒ¢éÍ¤ÇÒÁ';
-$lang['filter_type'] = '¡ÒÃ¡ÃÐ·Ó';
-$lang['filter_folder'] = 'â¿Åà´ÍÃìà»éÒËÁÒÂ';
+$lang['filter_field_from'] = 'จาก';
+$lang['filter_field_to'] = 'เพื่อ';
+$lang['filter_field_subject'] = 'เรื่อง';
+$lang['filter_field_header'] = 'หัว';
+$lang['filter_field_body'] = 'ร่างกาย';
 
-$lang['filter_msg_nofilters'] = 'ÂÑ§äÁèÁÕµÑÇ¡ÃÍ§';
-$lang['filter_msg_added'] = 'à¾ÔèÁµÑÇ¡ÃÍ§áÅéÇ';
-$lang['filter_msg_deleted'] = 'ÅºµÑÇ¡ÃÍ§áÅéÇ';
+$lang['filter_type_move'] = 'ย้าย';
+$lang['filter_type_delete'] = 'ลบ';
+$lang['filter_type_mark'] = 'มาร์คอ่าน';
 
+$lang['filter_add'] = 'เพิ่มตัวกรอง';
+$lang['filter_delete'] = 'ลบ';
+$lang['filter_delete_selected'] = 'ลบกรองที่เลือก';
 
-// [Catch]
-$lang['ctc_title'] = 'à¾×èÁä»ã¹ÊÁØ´ÃÒÂª×èÍ';
-$lang['ctc_information'] = 'áÊ´§à©¾ÒÐ¨´ËÁÒÂ·ÕèÊè§ÁÒ¡¨Ò¡¤¹ã¹ÊÁØ´ÃÒÂª×èÍ';
-$lang['ctc_name'] = 'ª×èÍ';
-$lang['ctc_email'] = 'E-mail';
-$lang['ctc_no_address'] = 'ÃÒÂª×èÍäÁè¶Ù¡µéÍ§';
-$lang['ctc_close'] = '»Ô´';
-$lang['ctc_save'] = '¨´à¡çº';
+$lang['filter_field'] = 'กรองบนสนาม';
+$lang['filter_match'] = 'ค้นหา';
+$lang['filter_type'] = 'การกระทำ';
+$lang['filter_folder'] = 'โฟลเดอร์ปลายทาง';
 
-// [Readmsg]
-$lang['next_mnu'] = 'µèÍä»';
-$lang['previous_mnu'] = '¡èÍ¹Ë¹éÒ';
-$lang['back_mnu'] = '¡ÅÑº';
-$lang['reply_mnu'] = 'µÍº¡ÅÑº';
-$lang['reply_all_mnu'] = 'µÍº¡ÅÑº·Ñé§ËÁ´';
-$lang['forward_mnu'] = 'è§µèÍ';
-$lang['headers_mnu'] = 'ËÑÇ';
-$lang['move_mnu'] = 'ÂéÒÂä»';
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
-$lang['delete_mnu'] = 'Åº';
-$lang['print_mnu'] = '¾ÔÁ¾ì';
-$lang['download_mnu'] = '´ÒÇ¹ìâËÅ´';
-
-$lang['from_hea'] = '¨Ò¡ :';
-$lang['to_hea'] = '¶Ö§ :';
-$lang['cc_hea'] = 'Cc :';
-$lang['date_hea'] = 'ÇÑ¹·Õè :';
-$lang['subject_hea'] = 'ËÑÇàÃ×èÍ§ :';
-$lang['attach_hea'] = 'á¹ºä¿Åì :';
-
-$lang['attch_name_hea'] = 'ª×èÍ';
-$lang['attch_force_hea'] = 'ÃÑºä¿Åì';
-$lang['attch_type_hea'] = 'ª¹Ô´';
-$lang['attch_size_hea'] = '¢¹Ò´';
-$lang['catch_address'] = 'à¾ÔèÁà¢éÒä»ã¹ÊÁØ´ÃÒÂª×èÍ';
-$lang['block_address'] = 'Block address'; // FIXME: need translation
-
-// [Search]
-$lang['sch_title'] = '¤é¹ËÒ';
-$lang['sch_information_text'] = 'à¢ÕÂ¹¢éÍ¤ÇÒÁ·ÕèµéÍ§¡ÒÃËÒ¨Ò¡ ¨´ËÁÒÂ·ÕèÍèÒ¹ä»áÅéÇ';
-$lang['sch_button_text'] = '¤é¹ËÒ &gt;&gt;';
-$lang['sch_subject_hea'] = 'ËÑÇàÃ×èÍ§';
-$lang['sch_from_hea'] = '¨Ò¡';
-$lang['sch_date_hea'] = 'ÇÑ¹·Õè';
-$lang['sch_body_hea'] = '¢éÍ¤ÇÒÁ';
-$lang['sch_folder_hea'] = 'â¿Åà´ÍÃì';
-$lang['sch_no_results'] = 'äÁè¾º¢éÍ¤ÇÒÁ·Õè¤é¹ËÒ';
-
-// [QuickAddress]
-$lang['qad_title'] = 'ÁØ´ÃÒÂª×èÍ';
-$lang['qad_select_address'] = 'àÅ×Í¡';
-$lang['qad_to'] = '¶Ö§';
-$lang['qad_cc'] = 'Óà¹Ò';
-$lang['qad_bcc'] = 'Óà¹Ò«èÍ¹';
-
-// [AddressBook]
-// edit/display
-$lang['adr_title'] = 'ÁØ´ÃÒÂª×èÍ';
-$lang['adr_name'] = 'ª×èÍ';
-$lang['adr_email'] = 'E-mail';
-$lang['adr_street'] = '¶¹¹';
-$lang['adr_city'] = 'àÁ×Í§';
-$lang['adr_state'] = 'ÍÓàÀÍ';
-$lang['adr_work'] = '§Ò¹';
-$lang['adr_back'] = '¡ÅÑº';
-$lang['adr_save'] = '¨Ñ´à¡çº';
-$lang['adr_phone'] = 'Phone'; // FIXME: need translation
-$lang['adr_cell'] = 'Cell'; // FIXME: need translation
-$lang['adr_note'] = 'Notes'; // FIXME: need translation
-
-// list
-$lang['adr_name_hea'] = 'ª×èÍ';
-$lang['adr_email_hea'] = 'E-mail';
-$lang['adr_edit_hea'] = 'á¡éä¢';
-$lang['adr_expo_hea'] = 'è§ÍÍ¡';
-$lang['adr_dele_hea'] = 'Åº';
-$lang['adr_new_entry'] = 'ÃÒÂª×èÍãËÁè';
-
-$lang['addr_saved'] = '¨Ñ´à¡çº¢éÍÁÙÅÃÒÂª×èÍáÅéÇ';
-$lang['addr_added'] = 'à¾ÔèÁÃÒÂª×èÍáÅéÇ';
-$lang['addr_deleted'] = 'ÅºÃÒÂª×èÍáÅéÇ';
+$lang['filter_msg_nofilters'] = 'ไม่มีฟิลเตอร์ที่มีอยู่.';
+$lang['filter_msg_added'] = 'กรองเพิ่ม';
+$lang['filter_msg_deleted'] = 'กรองลบ';
 
 
-// [BlockSender]
-$lang['blk_title'] = 'Block sender';
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet';
-$lang['blk_email'] = 'E-mail';
-$lang['blk_no_address'] = 'No address available'; // FIXME: need translation
-$lang['blk_close'] = '»Ô´';
-$lang['blk_save'] = '¨´à¡çº';
+$lang['ctc_title'] = 'เพิ่มสมุด';
+$lang['ctc_information'] = 'เท่านั้นที่แสดงให้เห็นถึงอีเมลที่ไม่ได้อยู่ในหนังสือที่อยู่';
+$lang['ctc_name'] = 'ชื่อ';
+$lang['ctc_email'] = 'อีเมล';
+$lang['ctc_no_address'] = 'ไม่มีที่อยู่ที่มีอยู่';
+$lang['ctc_close'] = 'ปิด';
+$lang['ctc_save'] = 'บันทึก';
 
-// [Event]
-$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
-$lang['evt_save'] = '¨Ñ´à¡çº';
-$lang['evt_delete'] = 'Åº';
-$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
-$lang['evt_start'] = 'Start time'; // FIXME: need translation
+$lang['next_mnu'] = 'ถัดไป';
+$lang['previous_mnu'] = 'ก่อน';
+$lang['back_mnu'] = 'กลับ';
+$lang['reply_mnu'] = 'ตอบ';
+$lang['reply_all_mnu'] = 'ตอบกลับทั้งหมด';
+$lang['forward_mnu'] = 'ไปข้างหน้า';
+$lang['headers_mnu'] = 'หัว';
+$lang['move_mnu'] = 'ย้ายไป';
+$lang['move_to_trash_mnu'] = 'ย้ายไปที่ถังขยะ';
+$lang['delete_mnu'] = 'ลบ';
+$lang['print_mnu'] = 'พิมพ์';
+$lang['download_mnu'] = 'ดาวน์โหลด';
 
+$lang['from_hea'] = 'จาก:';
+$lang['to_hea'] = 'เพื่อ';
+$lang['cc_hea'] = 'สำเนา:';
+$lang['date_hea'] = 'วันที่:';
+$lang['subject_hea'] = 'เรื่อง';
+$lang['attach_hea'] = 'ที่แนบมา:';
+
+$lang['attch_name_hea'] = 'ชื่อ';
+$lang['attch_force_hea'] = 'ดาวน์โหลด';
+$lang['attch_type_hea'] = 'ประเภท';
+$lang['attch_size_hea'] = 'ขนาด';
+$lang['catch_address'] = 'เพิ่มสมุด';
+$lang['block_address'] = 'ที่อยู่บล็อก';
+
+$lang['sch_title'] = 'ค้นหา';
+$lang['sch_information_text'] = '.. เขียนวลีหรือคำที่คุณกำลังมองหาเพียงดาวน์โหลดอ่านข้อความที่จะค้นหา';
+$lang['sch_button_text'] = 'Search & gt; & gt;';
+$lang['sch_subject_hea'] = 'เรื่อง';
+$lang['sch_from_hea'] = 'จาก';
+$lang['sch_date_hea'] = 'วัน';
+$lang['sch_body_hea'] = 'ข้อความตัว';
+$lang['sch_folder_hea'] = 'โฟลเดอร์';
+$lang['sch_no_results'] = 'ไม่มีข้อความที่ตรงกับเกณฑ์ของคุณได้รับพบ';
+
+$lang['qad_title'] = 'ที่อยู่ในหนังสือ';
+$lang['qad_select_address'] = 'เลือกรายชื่อ';
+$lang['qad_to'] = 'เพื่อ';
+$lang['qad_cc'] = 'สำเนา';
+$lang['qad_bcc'] = 'สำเนาลับ';
+
+$lang['adr_title'] = 'ที่อยู่ในหนังสือ';
+$lang['adr_name'] = 'ชื่อ';
+$lang['adr_email'] = 'อีเมล';
+$lang['adr_street'] = 'ถนน';
+$lang['adr_city'] = 'เมือง';
+$lang['adr_state'] = 'รัฐ';
+$lang['adr_work'] = 'ทำงาน';
+$lang['adr_back'] = 'กลับ';
+$lang['adr_save'] = 'บันทึก';
+$lang['adr_phone'] = 'โทรศัพท์';
+$lang['adr_cell'] = 'มือถือ';
+$lang['adr_note'] = 'หมายเหตุ';
+
+$lang['adr_name_hea'] = 'ชื่อ';
+$lang['adr_email_hea'] = 'อีเมล';
+$lang['adr_edit_hea'] = 'แก้ไข';
+$lang['adr_expo_hea'] = 'ส่งออก';
+$lang['adr_dele_hea'] = 'ลบ';
+$lang['adr_new_entry'] = 'รายชื่อใหม่';
+
+$lang['addr_saved'] = 'ติดต่อได้รับการบันทึก';
+$lang['addr_added'] = 'ติดต่อได้รับการเพิ่ม';
+$lang['addr_deleted'] = 'ติดต่อได้ถูกลบไปแล้ว';
+
+$lang['blk_title'] = 'บล็อกผู้ส่ง';
+$lang['blk_information'] = 'เท่านั้นที่แสดงให้เห็นถึงอีเมลที่ไม่ได้อยู่ในตัวกรองที่ยัง';
+$lang['blk_email'] = 'อีเมล';
+$lang['blk_no_address'] = 'ไม่มีที่อยู่ที่มีอยู่';
+$lang['blk_close'] = 'ปิด';
+$lang['blk_save'] = 'บันทึก';
+
+$lang['evt_title'] = 'ปฏิทินกิจกรรม';
+$lang['evt_save'] = 'บันทึก';
+$lang['evt_delete'] = 'ลบ';
+$lang['evt_stop'] = 'หยุดเวลา';
+$lang['evt_start'] = 'เวลาเริ่มต้น';

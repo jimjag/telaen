@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '% m /% d /% Y% H:% M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Inbox';
 $lang['sent_extended'] = 'Sent items';
 $lang['trash_extended'] = 'папката за отпадоци';
 $lang['spam_extended'] = 'Spam фолдерот';
+$lang['drafts_extended'] = 'Недовршени';
 
 // Navigation texts
 $lang['pages_text'] = 'Страници';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'квотата граница';
 $lang['quota_usage_used'] = 'користи';
 $lang['quota_usage_of'] = 'на';
 $lang['quota_usage_avail'] = 'на располагање';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '% m /% d /% Y% H:% M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Inbox';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Напредно уредник HTML';
 $lang['prf_time_to_refesh'] = 'Автоматски проверува за нова пошта (минути)';
 $lang['prf_spam_level'] = 'СПАМ чувствителност (0 = Исклучено, 1 = многу висока, 9 = Многу ниско)';
 $lang['prf_auto_require_receipt'] = 'Потребен читаат приемот стандардно';
+$lang['prf_keep_on_server'] = 'Чувајте го внесувачот на серверот - локални папки';
 
 $lang['prf_msg_saved'] = 'Параметри спасени';
 

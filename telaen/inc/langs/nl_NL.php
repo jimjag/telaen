@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d/%m/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Postvak IN';
 $lang['sent_extended'] = 'Verzonden berichten';
 $lang['trash_extended'] = 'Prullenbak';
 $lang['spam_extended'] = 'Spam';
+$lang['drafts_extended'] = 'Concepten';
 
 // Navigation texts
 $lang['pages_text'] = 'Paginas';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'In gebruik';
 $lang['quota_usage_used'] = 'Gebruikt';
 $lang['quota_usage_of'] = 'van';
 $lang['quota_usage_avail'] = 'beschikbaar';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d/%m/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Postvak IN';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = 'Uitgebreide editor (TinyMCE)';
 $lang['prf_time_to_refesh'] = 'Vernieuw berichten om de: (aantal minuten)';
 $lang['prf_spam_level'] = 'Spam gevoeligheid (0 = uitgeschakeld, 1 = hoogste, 9 = laagste)';
 $lang['prf_auto_require_receipt'] = 'Verzoek altijd om leesbevestiging';
+$lang['prf_keep_on_server'] = 'Houd e-mail op de server - geen lokale mappen';
 
 $lang['prf_msg_saved'] = 'Voorkeuren opgeslagen';
 
@@ -335,9 +336,9 @@ $lang['blk_close'] = 'Sluiten';
 $lang['blk_save'] = 'Concept opslaan';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
+$lang['evt_title'] = 'Kalender Event';
 $lang['evt_save'] = 'Opslaan';
 $lang['evt_delete'] = 'Verwijder';
-$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
-$lang['evt_start'] = 'Start time'; // FIXME: need translation
+$lang['evt_stop'] = 'Stop de tijd';
+$lang['evt_start'] = 'Starttijd'; 
 

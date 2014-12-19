@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '% m /% d /% y% H:% M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = '受信トレイ';
 $lang['sent_extended'] = 'アイテムを送信済み';
 $lang['trash_extended'] = 'ごみ箱フォルダを';
 $lang['spam_extended'] = 'スパムフォルダ';
+$lang['drafts_extended']= '下書き';
 
 // Navigation texts
 $lang['pages_text'] = 'ページ';
@@ -29,7 +39,7 @@ $lang['error_session_expired'] = 'あなたのセッションの有効期限が�
 $lang['error_other'] = 'システム障害、ネットワーク管理者に連絡してください';
 
 // Invalid name of mailbox
-$lang['error_invalid_name'] = 'Invalid folder name - Use only the following characters  A-Z, a-z, 0-9, and -'; // FIXME: need translation
+$lang['error_invalid_name'] = '無効なフォルダ名 - のみを使用し、以下の文字A-Z、a-z、0-9、および - ';
 
 // Validations when sending mails
 $lang['error_no_recipients'] = 'エラー：！あなたは少なくとも1人の受信者を持っている必要があります';
@@ -53,16 +63,6 @@ $lang['quota_usage_used'] = 'を使用';
 $lang['quota_usage_of'] = 'の';
 $lang['quota_usage_avail'] = '利用可能';
 
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '% m /% d /% y% H:% M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
-
 // Menu
 $lang['messages_mnu'] = '受信トレイ';
 $lang['read_menu'] = '読むEメール（S）';
@@ -73,7 +73,7 @@ $lang['search_mnu'] = '検索';
 $lang['address_mnu'] = 'アドレス帳';
 $lang['empty_trash_mnu'] = 'ゴミ箱を空にする';
 $lang['prefs_mnu'] = '設定';
-$lang['logoff_mnu'] = 'Log out'; // FIXME: need translation
+$lang['logoff_mnu'] = 'ログアウト';
 
 // Reply
 $lang['reply_prefix'] = '日時：';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"高度なHTMLエディタ"';
 $lang['prf_time_to_refesh'] = '自動で新規メール（分）をチェックする';
 $lang['prf_spam_level'] = 'スパム感度（0=無効、1=非常に高い、9=非常に低い）';
 $lang['prf_auto_require_receipt'] = 'デフォルトで読み取り領収書が必要';
+$lang['prf_keep_on_server'] = 'サーバー上で電子メールをおいてください - ローカルのフォルダを';
 
 $lang['prf_msg_saved'] = '設定が保存';
 

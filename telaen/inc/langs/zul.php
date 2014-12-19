@@ -5,11 +5,22 @@
 
 $lang = array();
 
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
+
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Ibhokisi lokunge';
 $lang['sent_extended'] = 'Sent izinto';
 $lang['trash_extended'] = 'ifolda Trash';
 $lang['spam_extended'] = 'ogaxekile folda';
+$lang['drafts_extended'] = 'Izinhlaka';
 
 // Navigation texts
 $lang['pages_text'] = 'amakhasi';
@@ -52,16 +63,6 @@ $lang['quota_usage_info'] = 'Isabelo Umkhawulo';
 $lang['quota_usage_used'] = 'Used'; // FIXME: need translation
 $lang['quota_usage_of'] = 'of'; // FIXME: need translation
 $lang['quota_usage_avail'] = 'ezikhona';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Ibhokisi lokunge';
@@ -209,6 +210,7 @@ $lang['prf_default_editor_mode_html'] = '"Umhleli Advanced HTML"';
 $lang['prf_time_to_refesh'] = 'hlola ngokuzenzakalela for imeyili entsha (imizuzu)';
 $lang['prf_spam_level'] = 'Opheland sensitivity (0 = Abakhubazekile, 1 = High Very, 9 = Phansi kakhulu)';
 $lang['prf_auto_require_receipt'] = 'Dinga irisidi ukufunda ngokuzenzakalela';
+$lang['prf_keep_on_server'] = 'Gcina imeyili on server - akukho amafolda zendawo';
 
 $lang['prf_msg_saved'] = 'Izintandokazi wasindisa';
 
@@ -256,10 +258,10 @@ $lang['ctc_save'] = 'Londoloza';
 $lang['next_mnu'] = 'Okulandelayo';
 $lang['previous_mnu'] = 'Previous'; // FIXME: need translation
 $lang['back_mnu'] = 'Back'; // FIXME: need translation
-$lang['reply_mnu'] = 'Reply'; // FIXME: need translation
+$lang['reply_mnu'] = 'Phendula'; 
 $lang['reply_all_mnu'] = 'Phendula konke';
 $lang['forward_mnu'] = 'Phambili';
-$lang['headers_mnu'] = 'Header'; // FIXME: need translation
+$lang['headers_mnu'] = 'Isihloko';
 $lang['move_mnu'] = 'Move ukuba';
 $lang['move_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
 $lang['delete_mnu'] = 'Susa';
@@ -287,7 +289,7 @@ $lang['sch_button_text'] = 'Funa &gt;&gt;';
 $lang['sch_subject_hea'] = 'Kuncike';
 $lang['sch_from_hea'] = 'Kusuka';
 $lang['sch_date_hea'] = 'Usuku';
-$lang['sch_body_hea'] = 'Body Message'; // FIXME: need translation
+$lang['sch_body_hea'] = 'Boodskapinhoud';
 $lang['sch_folder_hea'] = 'Ifolda';
 $lang['sch_no_results'] = 'Ayikho imiyalezo criteria zakho zindlela ziye zatholakala';
 
@@ -309,17 +311,17 @@ $lang['adr_state'] = 'State'; // FIXME: need translation
 $lang['adr_work'] = 'Umsebenzi';
 $lang['adr_back'] = 'Back'; // FIXME: need translation
 $lang['adr_save'] = 'Londoloza';
-$lang['adr_phone'] = 'Phone'; // FIXME: need translation
+$lang['adr_phone'] = 'Eliphezulu';
 $lang['adr_cell'] = 'Cell'; // FIXME: need translation
 $lang['adr_note'] = 'Notes'; // FIXME: need translation
 
 // list
 $lang['adr_name_hea'] = 'Igama';
 $lang['adr_email_hea'] = 'E-mail';
-$lang['adr_edit_hea'] = 'Edit'; // FIXME: need translation
+$lang['adr_edit_hea'] = 'Verander';
 $lang['adr_expo_hea'] = 'Export'; // FIXME: need translation
 $lang['adr_dele_hea'] = 'Susa';
-$lang['adr_new_entry'] = 'New contact'; // FIXME: need translation
+$lang['adr_new_entry'] = 'Voeg nuwe kontakpersoon by';
 
 $lang['addr_saved'] = 'Le contact igciniwe';
 $lang['addr_added'] = 'Oxhumana naye wanezela';

@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '% m /% d /% y% H:% M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Envenkesto';
 $lang['sent_extended'] = 'Sent erojn';
 $lang['trash_extended'] = 'Trash dosierujo';
 $lang['spam_extended'] = 'spamo dosierujo';
+$lang ['drafts_extended'] = 'Skizoj';
 
 // Navigation texts
 $lang['pages_text'] = 'Paĝoj';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Kotizo limon';
 $lang['quota_usage_used'] = 'Used';
 $lang['quota_usage_of'] = 'de';
 $lang['quota_usage_avail'] = 'disponebla';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '% m /% d /% y% H:% M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Envenkesto';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Altnivelaj HTML redaktoro"';
 $lang['prf_time_to_refesh'] = 'Aŭtomate kontroli nova poŝto (minutoj)';
 $lang['prf_spam_level'] = 'SPAM sentiveco (0 = Malŝaltita, 1 = Very High, 9 = tre malalta)';
 $lang['prf_auto_require_receipt'] = 'Postulu legi kvitanco defaŭlte';
+$lang['prf_keep_on_server'] = 'Konservu retpoŝto sur servilo - neniu lokaj dosierujoj';
 
 $lang['prf_msg_saved'] = 'Preferoj savitaj';
 

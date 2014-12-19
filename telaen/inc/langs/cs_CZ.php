@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Inbox';
 $lang['sent_extended'] = 'Odeslané položky';
 $lang['trash_extended'] = 'Trash složku';
 $lang['spam_extended'] = 'složky Spam';
+$lang['drafts_extended'] = 'Koncepty';
 
 // Navigation texts
 $lang['pages_text'] = 'Stránky';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Limit Kvóta';
 $lang['quota_usage_used'] = 'Používá';
 $lang['quota_usage_of'] = 'z';
 $lang['quota_usage_avail'] = 'k dispozici';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Inbox';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Advanced HTML editor"';
 $lang['prf_time_to_refesh'] = 'Automaticky kontrolovat novou poštu (minuty)';
 $lang['prf_spam_level'] = 'citlivost SPAM (0 = vypnuto, 1 = velmi vysoká, 9 = velmi nízká)';
 $lang['prf_auto_require_receipt'] = 'Vyžadovat potvrzení přečtení ve výchozím nastavení';
+$lang['prf_keep_on_server'] = 'Mějte e-mailu na serveru - žádné lokální složky';
 
 $lang['prf_msg_saved'] = 'Nastavení uloženo';
 

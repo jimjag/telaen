@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '% m /% d /% y% H:% M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'R-phost Isteach';
 $lang['sent_extended'] = 'ítimí Seolta';
 $lang['trash_extended'] = 'fillteán Bruscar';
 $lang['spam_extended'] = 'fillteán Spam';
+$lang['drafts_extended'] = 'Dréachtaí';
 
 // Navigation texts
 $lang['pages_text'] = 'Leathanaigh';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'teorainn Cuóta';
 $lang['quota_usage_used'] = 'Úsáidte';
 $lang['quota_usage_of'] = 'de';
 $lang['quota_usage_avail'] = 'ar fáil';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '% m /% d /% y% H:% M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'R-phost Isteach';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Casta HTML eagarthóir"';
 $lang['prf_time_to_refesh'] = 'seiceáil go huathoibríoch do phost nua (nóiméid)';
 $lang['prf_spam_level'] = 'Spam íogaireacht (0 = Mhíchumas, 1 = An-Ard, 9 = An-Íseal)';
 $lang['prf_auto_require_receipt'] = 'A cheangal admháil a léamh de réir réamhshocraithe';
+$lang['prf_keep_on_server'] = 'Coinnigh an ríomhphost ar an bhfreastalaí - gan aon fillteáin áitiúla';
 
 $lang['prf_msg_saved'] = 'Preferences shábháil';
 

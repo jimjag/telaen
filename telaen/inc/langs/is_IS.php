@@ -4,15 +4,25 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d/%m/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'InnhÛlf';
 $lang['sent_extended'] = '⁄thÛlf';
 $lang['trash_extended'] = 'Rusl';
 $lang['spam_extended'] = 'Ruslpóstur';
+$lang['drafts_extended'] = 'Drög';
 
 // Navigation texts
-$lang['pages_text'] = 'Pages';
+$lang['pages_text'] = 'Síður';
 $lang['first_text'] = 'First';
 $lang['previous_text'] = 'Fyrri';
 $lang['next_text'] = 'NÊsti';
@@ -20,12 +30,12 @@ $lang['last_text'] = 'Last';
 $lang['total_text'] = 'Total';
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
-$lang['err_system_msg'] = 'System error'; // FIXME: need translation
-$lang['error_login'] = 'Please check your username or password and try again'; // FIXME: need translation
+$lang['err_login_msg'] = 'Login villa';
+$lang['err_system_msg'] = 'System villa'; 
+$lang['error_login'] = 'Vinsamlegast athugaðu notendanafni eða lykilorði og reyndu aftur';
 $lang['error_connect'] = 'Tenging vi pÛst˛jÛn mistÛkst';
 $lang['error_retrieving'] = 'Villa vi a n· Ì pÛst, innhÛlf hefur breyst';
-$lang['error_session_expired'] = 'Your session is expired, please login again'; // FIXME: need translation
+$lang['error_session_expired'] = 'lotan er útrunnið, vinsamlegast skráðu þig inn aftur';
 $lang['error_other'] = 'Kerfisvilla, vinsamlegast hafi samband vi kerfisstjÛra';
 
 // Invalid name of mailbox
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'StÊrartakmˆrk';
 $lang['quota_usage_used'] = 'Notu';
 $lang['quota_usage_of'] = 'af';
 $lang['quota_usage_avail'] = 'laus';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d/%m/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Skilabo';
@@ -209,39 +209,39 @@ $lang['prf_default_editor_mode_html'] = '"HTML texti (Fyrir IE5 ea n˝rri)"';
 $lang['prf_time_to_refesh'] = 'Athuga n˝ skilabo hverjar (mÌn˙tur)';
 $lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
+$lang['prf_keep_on_server'] = 'Halda tölvupóst á miðlara - engin staðbundin möppur';
 
 $lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
-$lang['filter_title'] = 'Filters'; // FIXME: need translation
+$lang ['filter_title'] = 'Síur';
 
-$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
-$lang['filter_list'] = 'Current filters'; // FIXME: need translation
+$lang['filter_new'] = 'Búa til síu';
+$lang['filter_desc'] = 'Veldu leitarskilyrði og aðgerð fyrir textaboð';
+$lang['filter_list'] = 'Núverandi síur';
 
-$lang['filter_field_from'] = 'From'; // FIXME: need translation
-$lang['filter_field_to'] = 'To'; // FIXME: need translation
-$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
-$lang['filter_field_header'] = 'Header'; // FIXME: need translation
-$lang['filter_field_body'] = 'Body'; // FIXME: need translation
+$lang['filter_field_from'] = 'From';
+$lang['filter_field_to'] = 'Til';
+$lang['filter_field_subject'] = 'Subject';
+$lang['filter_field_header'] = 'haus';
+$lang['filter_field_body'] = 'Body';
 
-$lang['filter_type_move'] = 'Move'; // FIXME: need translation
-$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
+$lang['filter_type_move'] = 'Færa';
+$lang['filter_type_delete'] = 'Eyða';
+$lang['filter_type_mark'] = 'Mark lesa';
 
-$lang['filter_add'] = 'Add filter'; // FIXME: need translation
-$lang['filter_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
+$lang['filter_add'] = 'Bæta síu';
+$lang['filter_delete'] = 'Eyða';
+$lang['filter_delete_selected'] = 'Eyða völdum síur';
 
-$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
-$lang['filter_match'] = 'Search for'; // FIXME: need translation
-$lang['filter_type'] = 'Action'; // FIXME: need translation
-$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
+$lang['filter_field'] = 'Sía á sviði';
+$lang['filter_match'] = 'Leita';
+$lang['filter_type'] = 'Action';
+$lang['filter_folder'] = 'Destination mappa';
 
-$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
-$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
-$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
-
+$lang['filter_msg_nofilters'] = 'Engar síur boði.';
+$lang['filter_msg_added'] = 'Sía bætt';
+$lang['filter_msg_deleted'] = 'Sía eytt';
 
 // [Catch]
 $lang['ctc_title'] = 'BÊta vi Ì nafnabÛk';
@@ -261,7 +261,7 @@ $lang['reply_all_mnu'] = 'Svara ˆllum';
 $lang['forward_mnu'] = '¡framsenda';
 $lang['headers_mnu'] = 'Haus';
 $lang['move_mnu'] = 'FÊra Ì';
-$lang['move_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
+$lang['move_to_trash_mnu'] = 'Henda í ruslið';
 $lang['delete_mnu'] = 'Eya';
 $lang['print_mnu'] = 'Prenta';
 $lang['download_mnu'] = 'Download'; // FIXME: need translation
@@ -335,9 +335,9 @@ $lang['blk_close'] = 'Loka';
 $lang['blk_save'] = 'Vista';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
+$lang['evt_title'] = 'Dagatalsviðburður';
 $lang['evt_save'] = 'Vista';
 $lang['evt_delete'] = 'Eya';
-$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
-$lang['evt_start'] = 'Start time'; // FIXME: need translation
+$lang['evt_stop'] = 'Hættu tíma';
+$lang['evt_start'] = 'Upphafstími';
 

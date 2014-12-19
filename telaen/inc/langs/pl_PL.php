@@ -1,15 +1,26 @@
+
 <?php
 /*
  * Polish (Polski) (canonical list and phrasing)
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d/%m/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'iso-8859-2';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Otrzymane';
 $lang['sent_extended'] = 'Wys³ane';
 $lang['trash_extended'] = 'Kosz';
 $lang['spam_extended'] = 'Folderu ze spamem';
+$lang['drafts_extended'] = 'Projekty';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -52,16 +63,6 @@ $lang['quota_usage_info'] = 'Limit dyskowy';
 $lang['quota_usage_used'] = 'Zajête';
 $lang['quota_usage_of'] = 'z';
 $lang['quota_usage_avail'] = 'dostêpnych';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d/%m/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'iso-8859-2';
 
 // Menu
 $lang['messages_mnu'] = 'Wiadomo¶ci';
@@ -209,39 +210,39 @@ $lang['prf_default_editor_mode_html'] = '"Edytor HTML (Tylko dla przegl±darek I
 $lang['prf_time_to_refesh'] = 'Czêstotliwo¶æ od¶wierzania wiadomo¶ci (w minutach)';
 $lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
+$lang['prf_keep_on_server'] = 'E-mail na serwerze przechowywać - żadnych folderów lokalnych';
 
 $lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
-$lang['filter_title'] = 'Filters'; // FIXME: need translation
+$lang['filter_title'] = 'Filtry';
 
-$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
-$lang['filter_list'] = 'Current filters'; // FIXME: need translation
+$lang['filter_new'] = 'Utwórz filtr';
+$lang['filter_desc'] = 'Wybierz kryteria wyszukiwania i działania dla przychodzących wiadomości';
+$lang['filter_list'] = 'Aktualne filtry';
 
-$lang['filter_field_from'] = 'From'; // FIXME: need translation
-$lang['filter_field_to'] = 'To'; // FIXME: need translation
-$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
-$lang['filter_field_header'] = 'Header'; // FIXME: need translation
-$lang['filter_field_body'] = 'Body'; // FIXME: need translation
+$lang['filter_field_from'] = 'Z';
+$lang['filter_field_to'] = 'W';
+$lang['filter_field_subject'] = 'Temat';
+$lang['filter_field_header'] = 'Nagłówek';
+$lang['filter_field_body'] = 'ciała';
 
-$lang['filter_type_move'] = 'Move'; // FIXME: need translation
-$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
+$lang['filter_type_move'] = 'Ruch';
+$lang['filter_type_delete'] = 'Usuń';
+$lang['filter_type_mark'] = 'Mark przeczytać';
 
-$lang['filter_add'] = 'Add filter'; // FIXME: need translation
-$lang['filter_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
+$lang['filter_add'] = 'Dodaj filtr';
+$lang['filter_delete'] = 'Usuń';
+$lang['filter_delete_selected'] = 'Usuń wybrane filtry';
 
-$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
-$lang['filter_match'] = 'Search for'; // FIXME: need translation
-$lang['filter_type'] = 'Action'; // FIXME: need translation
-$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
+$lang['filter_field'] = 'Filtr na pole';
+$lang['filter_match'] = 'Szukaj';
+$lang['filter_type'] = 'Akcja';
+$lang['filter_folder'] = 'Folder docelowy';
 
-$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
-$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
-$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
-
+$lang['filter_msg_nofilters'] = 'Brak dostępnych filtrów.';
+$lang['filter_msg_added'] = 'Filtr dodanej';
+$lang['filter_msg_deleted'] = 'Filtr usunięte';
 
 // [Catch]
 $lang['ctc_title'] = 'Dodaj adres';

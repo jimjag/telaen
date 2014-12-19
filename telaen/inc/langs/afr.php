@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Boks';
 $lang['sent_extended'] = 'Stuur vir items';
 $lang['trash_extended'] = 'asblik';
 $lang['spam_extended'] = 'Spam gids';
+$lang['drafts_extended'] = 'konsep';
 
 // Navigation texts
 $lang['pages_text'] = 'Bladsye';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'kwota limiet';
 $lang['quota_usage_used'] = 'Gebruik';
 $lang['quota_usage_of'] = 'van';
 $lang['quota_usage_avail'] = 'beskikbaar';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Boks';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Advanced HTML editor"';
 $lang['prf_time_to_refesh'] = 'outomaties te monitor vir nuwe pos (minute)';
 $lang['prf_spam_level'] = 'SPAM sensitiwiteit (0 = Gestremdes, 1 = baie hoog, 9 = Baie laag)';
 $lang['prf_auto_require_receipt'] = 'Nodig lees ontvangs by verstek';
+$lang['prf_keep_on_server'] = 'Hou e-pos op die bediener - geen plaaslike dopgehou';
 
 $lang['prf_msg_saved'] = 'Voorkeure gered';
 

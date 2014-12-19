@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d.%m.%Y - %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Posteingang';
 $lang['sent_extended'] = 'Gesendete Objekte';
 $lang['trash_extended'] = 'Gelöschte Objekte';
 $lang['spam_extended'] = 'Spam E-Mail';
+$lang['drafts_extended'] = 'Entwürfe';
 
 // Navigation texts
 $lang['pages_text'] = 'Seiten';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Speicherlimit';
 $lang['quota_usage_used'] = 'verwendet';
 $lang['quota_usage_of'] = 'von';
 $lang['quota_usage_avail'] = 'verfügbar';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d.%m.%Y - %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Posteingang';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Erweiterter HTML Editor"';
 $lang['prf_time_to_refesh'] = '<b>Posteingang</b> alle x Minuten aktualisieren';
 $lang['prf_spam_level'] = '<b>Spam Schwellenwert</b> (0 = Deaktiviert, 1 = sehr hoch, 9 = sehr niedrig)';
 $lang['prf_auto_require_receipt'] = '<b>Empfangsbestätigung</b> anfordern, standardmäßig aktiviert';
+$lang['prf_keep_on_server'] = 'Halten Sie E-Mail auf dem Server - keine lokale Ordner';
 
 $lang['prf_msg_saved'] = 'Einstellungen gespeichert';
 
@@ -335,9 +336,9 @@ $lang['blk_close'] = 'Schließen';
 $lang['blk_save'] = 'Speichern';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
+$lang['evt_title'] = 'Kalenderereignis';
 $lang['evt_save'] = 'Speichern';
 $lang['evt_delete'] = 'Entfernen';
-$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
-$lang['evt_start'] = 'Start time'; // FIXME: need translation
+$lang['evt_stop'] = 'Endzeit';
+$lang['evt_start'] = 'Startzeit';
 

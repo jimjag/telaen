@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Hộp thư đến';
 $lang['sent_extended'] = 'Bị đuổi mục';
 $lang['trash_extended'] = 'thư mục Trash';
 $lang['spam_extended'] = 'thư mục Spam';
+$lang['drafts_extended'] = 'nháp';
 
 // Navigation texts
 $lang['pages_text'] = 'trang';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'hạn ngạch giới hạn"';
 $lang['quota_usage_used'] = 'sử dụng';
 $lang['quota_usage_of'] = 'của';
 $lang['quota_usage_avail'] = 'có sẵn';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8"';
 
 // Menu
 $lang['messages_mnu'] = 'Hộp thư đến';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"biên tập viên nâng cao HTML"';
 $lang['prf_time_to_refesh'] = 'Tự động kiểm tra thư mới (phút)';
 $lang['prf_spam_level'] = 'Spam nhạy cảm (0 = Không cho phép, 1 = rất cao, 9 = Rất thấp)';
 $lang['prf_auto_require_receipt'] = 'Yêu cầu đọc nhận theo mặc định';
+$lang['prf_keep_on_server'] = 'Giữ email trên máy chủ - không có thư mục địa phương';
 
 $lang['prf_msg_saved'] = 'Preferences lưu';
 

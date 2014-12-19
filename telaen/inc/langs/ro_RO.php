@@ -4,28 +4,38 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d/%m/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'iso-8859-2';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Inbox';
 $lang['sent_extended'] = 'Mesaje trimise';
 $lang['trash_extended'] = 'Cos de gunoi';
-$lang['spam_extended'] = 'Spam folder';
+$lang['spam_extended'] = 'director Spam';
+$lang['drafts_extended'] = 'Schițe';
 
 // Navigation texts
-$lang['pages_text'] = 'Pages'; // FIXME: need translation
-$lang['first_text'] = 'First'; // FIXME: need translation
+$lang['pages_text'] = 'Pagini';
+$lang['first_text'] = 'Prima';
 $lang['previous_text'] = 'Precedentul';
 $lang['next_text'] = 'Urmatorul';
-$lang['last_text'] = 'Last'; // FIXME: need translation
-$lang['total_text'] = 'Total'; // FIXME: need translation
+$lang['last_text'] = 'Acum';
+$lang['total_text'] = 'Total';
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
-$lang['err_system_msg'] = 'System error'; // FIXME: need translation
-$lang['error_login'] = 'Please check your username or password and try again'; // FIXME: need translation
+$lang['err_login_msg'] = 'Eroare Autentificare';
+$lang['err_system_msg'] = 'Eroare de sistem'; 
+$lang['error_login'] = 'Vă rugăm să verificați numele de utilizator sau parola și încercați din nou ';
 $lang['error_connect'] = 'Eroare la conectarea cu serverul';
 $lang['error_retrieving'] = 'Eroare la receptionarea mesajelor, Inbox-ul a fost modificat intre timp.';
-$lang['error_session_expired'] = 'Your session is expired, please login again'; // FIXME: need translation
+$lang['error_session_expired'] = 'Sesiunea a expirat, vă rugăm să te autentifici din nou ';
 $lang['error_other'] = 'Eroare fatala, contactati administratorul';
 
 // Invalid name of mailbox
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Limita';
 $lang['quota_usage_used'] = 'Folosire';
 $lang['quota_usage_of'] = 'din';
 $lang['quota_usage_avail'] = 'disponibili';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d/%m/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'iso-8859-2';
 
 // Menu
 $lang['messages_mnu'] = 'Inbox';
@@ -90,8 +90,8 @@ $lang['reply_subject_hea'] = 'Subiect:';
 // page-specific vars
 
 // [Headers]
-$lang['key_hea'] = 'Key';
-$lang['value_hea'] = 'Value';
+$lang['key_hea'] = 'cheie';
+$lang['value_hea'] = 'valoare';
 
 // [Folders]
 $lang['fld_name_hea'] = 'Folder';
@@ -108,9 +108,9 @@ $lang['messages_to'] = 'Mesaje pentru ';
 $lang['no_messages'] = 'Nici un mesaj nou in ';
 $lang['delete_selected_mnu'] = 'Sterge selectate';
 $lang['move_selected_mnu'] = 'Muta selectate in';
-$lang['mark_selected_mnu'] = 'Mark as read';
-$lang['unmark_selected_mnu'] = 'Mark as unread';
-$lang['move_selected_to_trash_mnu'] = 'Move to Trash';
+$lang['mark_selected_mnu'] = 'Marchează ca citit';
+$lang['unmark_selected_mnu'] = 'Marchează ca necitit';
+$lang['move_selected_to_trash_mnu'] = 'Mută la gunoi';
 
 
 $lang['delete_mnu'] = 'Sterge';
@@ -120,7 +120,7 @@ $lang['from_hea'] = 'De la:';
 $lang['to_hea'] = 'Pentru:';
 $lang['date_hea'] = 'Data:';
 $lang['size_hea'] = 'Marime';
-$lang['have_spam'] = 'You have Spam (check Spam folder)'; // FIXME: need translation
+$lang['have_spam'] = 'Ai Spam (verificați director Spam)';
 
 $lang['msg_you_have'] = 'Aveti';
 $lang['msg_message'] = 'mesaj';
@@ -142,8 +142,8 @@ $lang['lng_server'] = 'Server';
 $lang['lng_theme'] = 'Limba';
 $lang['lng_language'] = 'Language';
 $lang['lng_login_btn'] = 'Logare &gt;&gt;';
-$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled';
-$lang['lng_cookie_not_valid'] = 'Cookie Security Check Failed';
+$lang['lng_cookie_not_enabled'] = 'Cookie-urile trebuie să fie activate';
+$lang['lng_cookie_not_valid'] = 'Cookie Securitate Consultați eșuat';
 
 // [Newmessage]
 
@@ -209,39 +209,39 @@ $lang['prf_default_editor_mode_html'] = '"HTML (Doar pentru Internet Explorer 5+
 $lang['prf_time_to_refesh'] = 'Interval pentru verificarea de mesaje noi (minute)';
 $lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
+$lang['prf_keep_on_server'] = 'Păstrați e-mail pe serverul - directoare locale';
 
 $lang['prf_msg_saved'] = 'Preferences saved';
 
 // filters
-$lang['filter_title'] = 'Filters'; // FIXME: need translation
+$lang['filter_title'] = 'filtre';
 
-$lang['filter_new'] = 'Create a filter';
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
-$lang['filter_list'] = 'Current filters'; // FIXME: need translation
+$lang['filter_new'] = 'Creează un filtru ';
+$lang['filter_desc'] = 'Alege criteriile de căutare și de acțiune pentru mesajele primite ';
+$lang['filter_list'] = 'filtre curente';
 
-$lang['filter_field_from'] = 'From'; // FIXME: need translation
-$lang['filter_field_to'] = 'To'; // FIXME: need translation
-$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
-$lang['filter_field_header'] = 'Header'; // FIXME: need translation
-$lang['filter_field_body'] = 'Body'; // FIXME: need translation
+$lang['filter_field_from'] = 'Din';
+$lang['filter_field_to'] = 'În';
+$lang['filter_field_subject'] = 'Subiect';
+$lang['filter_field_header'] = 'Header';
+$lang['filter_field_body'] = 'body';
 
-$lang['filter_type_move'] = 'Move'; // FIXME: need translation
-$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
+$lang['filter_type_move'] = 'mișcare';
+$lang['filter_type_delete'] = 'Șterge';
+$lang['filter_type_mark'] = 'Marcu citit';
 
-$lang['filter_add'] = 'Add filter'; // FIXME: need translation
-$lang['filter_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
+$lang['filter_add'] = 'Adauga filtru';
+$lang['filter_delete'] = 'Șterge';
+$lang['filter_delete_selected'] = 'Sterge filtrele selectate';
 
-$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
-$lang['filter_match'] = 'Search for'; // FIXME: need translation
-$lang['filter_type'] = 'Action'; // FIXME: need translation
-$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
+$lang['filter_field'] = 'Filtru pe teren';
+$lang['filter_match'] = 'Cauta';
+$lang['filter_type'] = 'acțiune';
+$lang['filter_folder'] = 'dosar de destinație';
 
-$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
-$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
-$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
-
+$lang['filter_msg_nofilters'] = 'Nu filtre.';
+$lang['filter_msg_added'] = 'Filtru adăugată';
+$lang['filter_msg_deleted'] = 'Filtru elimină';
 
 // [Catch]
 $lang['ctc_title'] = 'Adauga in agenda';
@@ -327,17 +327,17 @@ $lang['addr_deleted'] = 'Intrare stearsa.';
 
 
 // [BlockSender]
-$lang['blk_title'] = 'Block sender'; // FIXME: need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
+$lang['blk_title'] = 'Blocare expeditor';
+$lang['blk_information'] = 'prezinta doar e-mail-uri care nu sunt în filtrul încă ';
 $lang['blk_email'] = 'E-mail';
-$lang['blk_no_address'] = 'No address available'; // FIXME: need translation
+$lang['blk_no_address'] = 'Nu adresa disponibile'; 
 $lang['blk_close'] = 'Închide';
 $lang['blk_save'] = 'Salveaza';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
+$lang['evt_title'] = 'Calendar evenimente';
 $lang['evt_save'] = 'Salveaza';
 $lang['evt_delete'] = 'Sterge';
-$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
-$lang['evt_start'] = 'Start time'; // FIXME: need translation
+$lang['evt_stop'] = 'Nu mai timp';
+$lang['evt_start'] = 'Start timp';
 

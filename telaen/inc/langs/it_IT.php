@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d/%m/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Posta in arrivo';
 $lang['sent_extended'] = 'Posta spedita';
 $lang['trash_extended'] = 'Cestino';
 $lang['spam_extended'] = 'Spam';
+$lang['drafts_extended'] = 'Bozze';
 
 // Navigation texts
 $lang['pages_text'] = 'Pagine';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Limite di spazio';
 $lang['quota_usage_used'] = 'Usato';
 $lang['quota_usage_of'] = 'di';
 $lang['quota_usage_avail'] = 'disponibile';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d/%m/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Messaggi';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Modo avanzato (editor HTML)"';
 $lang['prf_time_to_refesh'] = 'Refresh dei messaggi (minuti)';
 $lang['prf_spam_level'] = 'Sensibilit&agrave; filtro SPAM (0 = Disattivo, 1 = Molto alta, 9 = Molto bassa)';
 $lang['prf_auto_require_receipt'] = 'Richiedi conferma di lettura nei messaggi in uscita';
+$lang['prf_keep_on_server'] = 'Mantenere e-mail sul server di - non cartelle locali';
 
 $lang['prf_msg_saved'] = 'Preferenze salvate';
 

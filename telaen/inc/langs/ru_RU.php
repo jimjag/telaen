@@ -4,55 +4,6 @@
  */
 
 $lang = array();
-
-// User-friendly names to system folders
-$lang['inbox_extended'] = 'Âõîäÿùèå';
-$lang['sent_extended'] = 'Îòïðàâëåííûå';
-$lang['trash_extended'] = 'Óäàë¸ííûå';
-$lang['spam_extended'] = 'Spam folder'; // FIXME: need translation
-
-// Navigation texts
-$lang['pages_text'] = 'Pages'; // FIXME: need translation
-$lang['first_text'] = 'First'; // FIXME: need translation
-$lang['previous_text'] = 'Íàçàä';
-$lang['next_text'] = 'Äàëåå';
-$lang['last_text'] = 'Last'; // FIXME: need translation
-$lang['total_text'] = 'Total'; // FIXME: need translation
-
-// Mail Server Errors
-$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
-$lang['err_system_msg'] = 'System error'; // FIXME: need translation
-$lang['error_login'] = 'Please check your username or password and try again'; // FIXME: need translation
-$lang['error_connect'] = 'Îøèáêà ïîäêëþ÷åíèÿ ê ïî÷òîâîìó ñåðâåðó';
-$lang['error_retrieving'] = 'Îøèáêà ïîëó÷åíèÿ ïèñüìà - Ïàïêà âõîäÿùèå èçìåíèëàñü';
-$lang['error_session_expired'] = 'Your session is expired, please login again'; // FIXME: need translation
-$lang['error_other'] = 'Îáùèé ñáîé ñèñòåìû';
-
-// Invalid name of mailbox
-$lang['error_invalid_name'] = 'Íåïðàâèëüíîå èìÿ ïàïêè - Èñïîëüçóéòå òîëüêî ñèìâîëû À-Á, A-Z, 0-9, .- èëè ïðîáåëû';
-
-// Validations when sending mails
-$lang['error_no_recipients'] = 'Íåîáõîäèìî äëÿ íà÷àëà óêàçàòü ñâîé Email àäðåñ';
-$lang['error_compose_invalid_mail1_s'] = 'Ýòîò Email àäðåñ íåâåðåí';
-$lang['error_compose_invalid_mail1_p'] = 'Ýòè Email àäðåñà íåâåðíû';
-$lang['error_compose_invalid_mail2_s'] = 'Âûáåðèòå Ñîçäàòü ñîîáùåíèå ïåðåä îòïðàâêîé';
-$lang['error_compose_invalid_mail2_p'] = 'Âûáåðèòå Ñîçäàòü ñîîáùåíèå ïåðåä îòïðàâêîé';
-
-// Confirmation of delete
-$lang['confirm_delete'] = 'Âû äåéñòâèòåëüíî õîòèòå óäàëèòü ýòî ñîîáùåíèå?';
-
-// If the message no have a subject or sender
-$lang['no_subject_text'] = '[Áåç òåìû]';
-$lang['no_sender_text'] = '[Îòïðàâèòåëü íåèçâåñòåí]';
-$lang['no_recipient_text'] = '[Ïîëó÷àòåëü íåèçâåñòåí]';
-
-// If the quota limit was exceeded
-$lang['quota_exceeded'] = 'Íå õâàòàåò ìåñòà â âàøåì ÿùèêå!\Ïîæàëóéñòà, óäàëèòå ÷àñòü ñîîáùåíèé, ÷òîáû ïðîäîëæèòü';
-$lang['quota_usage_info'] = 'Ìåñòî â ÿùèêå';
-$lang['quota_usage_used'] = 'Èñïîëüçîâàíî';
-$lang['quota_usage_of'] = 'èç';
-$lang['quota_usage_avail'] = 'äîñòóïíûõ';
-
 //
 // Date Format
 // %d = day, %m = month, %y = year, %H = hour, %M = minutes
@@ -63,281 +14,297 @@ $lang['date_format'] = '%d/%m/%y %H:%M';
 // CharSet
 $lang['default_char_set'] = 'windows-1251';
 
-// Menu
-$lang['messages_mnu'] = 'Ñîîáùåíèÿ';
-$lang['read_menu'] = 'Read E-Mail(s)';
-$lang['compose_mnu'] = 'Íàïèñàòü';
-$lang['refresh_mnu'] = 'Îáíîâèòü';
-$lang['folders_mnu'] = 'Ïàïêè';
-$lang['search_mnu'] = 'Ïîèñê';
-$lang['address_mnu'] = 'Àäðåñíàÿ êíèãà';
-$lang['empty_trash_mnu'] = 'Î÷èñòèòü êîðçèíó';
-$lang['prefs_mnu'] = 'Íàñòðîéêè';
-$lang['logoff_mnu'] = 'Âûõîä';
+$lang['inbox_extended'] = 'Входящие';
+$lang['sent_extended'] = 'Отправленные';
+$lang['trash_extended'] = 'папку Trash';
+$lang['spam_extended'] = 'Spam папку';
+$lang['drafts_extended'] = 'Проекты';
 
-// Reply
+$lang['pages_text'] = 'Страницы';
+$lang['first_text'] = 'первый';
+$lang['previous_text'] = 'Предыдущий';
+$lang['next_text'] = 'Next';
+$lang['last_text'] = 'Последнее';
+$lang['total_text'] = 'Всего';
+
+$lang['err_login_msg'] = 'Логин об ошибке';
+$lang['err_system_msg'] = 'Системная ошибка';
+$lang['error_login'] = 'Пожалуйста, проверьте свои имя пользователя или пароль и повторите попытку';
+$lang['error_connect'] = 'Ошибка при подключении к серверу';
+$lang['error_retrieving'] = 'Ошибка при получении сообщений, в папке Входящие изменилось ';
+$lang['error_session_expired'] = 'Ваша сессия истек, пожалуйста, войдите снова';
+$lang['error_other'] = 'Системный сбой, обратитесь к администратору сети';
+
+$lang['error_invalid_name'] = 'Неверное имя папки - Используйте только следующие символы AZ, AZ, 0-9, и - ';
+
+$lang['error_no_recipients'] = 'Ошибка: Вы должны иметь по крайней мере одного получателя ';
+$lang['error_compose_invalid_mail1_s'] = 'Ошибка: Этот адрес электронной почты, кажется, инвалид »';
+$lang['error_compose_invalid_mail1_p'] = 'Ошибка: адреса электронной почты, кажется, инвалид »';
+$lang['error_compose_invalid_mail2_s'] = 'Проверьте адрес электронной почты перед повторной эту электронную почту.';
+$lang['error_compose_invalid_mail2_p'] = 'Проверьте ваши адреса перед повторной эту электронную почту.';
+
+$lang['confirm_delete'] = 'Вы действительно хотите удалить это сообщение (ы)';
+
+$lang['no_subject_text'] = '[без темы]';
+$lang['no_sender_text'] = '[Отправитель неизвестен]';
+$lang['no_recipient_text'] = '[Получатель неизвестен]';
+
+$lang['quota_exceeded'] = 'Не хватает места в вашем почтовом ящике для выполнения этого действия \ nПожалуйста удалите некоторые сообщения, чтобы продолжить ';
+$lang['quota_usage_info'] = 'квоту';
+$lang['quota_usage_used'] = 'Используется';
+$lang['quota_usage_of'] = 'из';
+$lang['quota_usage_avail'] = 'доступны';
+
+$lang['messages_mnu'] = 'Входящие';
+$lang['read_menu'] = 'Read E-Mail (ы)';
+$lang['compose_mnu'] = 'Write E-Mail';
+$lang['refresh_mnu'] = 'Refresh';
+$lang['folders_mnu'] = 'Папки';
+$lang['search_mnu'] = 'Поиск';
+$lang['address_mnu'] = 'Адресная книга';
+$lang['empty_trash_mnu'] = 'Очистить корзину ';
+$lang['prefs_mnu'] = 'Настройки';
+$lang['logoff_mnu'] = 'Выйти';
+
 $lang['reply_prefix'] = 'Re:';
 $lang['forward_prefix'] = 'Fw:';
-$lang['reply_delimiter'] = '--------- Îðèãèíàë ïèñüìà --------';
-$lang['reply_from_hea'] = 'Îò:';
-$lang['reply_to_hea'] = 'Äëÿ:';
-$lang['reply_cc_hea'] = 'îïèÿ:';
-$lang['reply_date_hea'] = 'Äàòà:';
-$lang['reply_subject_hea'] = 'Òåìà:';
-// done
+$lang['reply_delimiter'] = '--------- Исходное сообщение --------';
+$lang['reply_from_hea'] = 'От:';
+$lang['reply_to_hea'] = 'To:';
+$lang['reply_cc_hea'] = 'Копия:';
+$lang['reply_date_hea'] = 'Дата:';
+$lang['reply_subject_hea'] = 'Тема:';
 
+$lang['key_hea'] = 'Key';
+$lang['value_hea'] = 'значение';
 
-// page-specific vars
-
-// [Headers]
-$lang['key_hea'] = 'ëþ÷';
-$lang['value_hea'] = 'Çíà÷åíèå';
-
-// [Folders]
-$lang['fld_name_hea'] = 'Ïàïêà';
-$lang['fld_messages_hea'] = 'Ñîîáùåíèÿ';
-$lang['fld_size_hea'] = 'Ðàçìåð';
-$lang['fld_empty_hea'] = 'Î÷èñòèòü';
-$lang['fld_delete_hea'] = 'Óäàëèòü';
-$lang['fld_total'] = 'Èòîãî:';
-$lang['fld_make_new'] = 'Ñîçäàòü ïàïêó';
-$lang['folders_to'] = 'Ïàïêè';
+$lang['fld_name_hea'] = 'Папка';
+$lang['fld_messages_hea'] = 'Сообщения';
+$lang['fld_size_hea'] = 'Размер';
+$lang['fld_empty_hea'] = 'пустой';
+$lang['fld_delete_hea'] = 'Удалить';
+$lang['fld_total'] = 'Общее:';
+$lang['fld_make_new'] = 'Создать новую папку';
+$lang['folders_to'] = 'папки для';
 
 // [MessageList]
-$lang['messages_to'] = 'Ñîîáùåíèÿ ';
-$lang['no_messages'] = 'Íåò íîâûõ ñîîáùåíèé â ïàïêå ';
-$lang['delete_selected_mnu'] = 'Óäàëèòü îòìå÷åííûå';
-$lang['move_selected_mnu'] = 'Ïåðåìåñòèòü îòìå÷åííûå â';
-$lang['mark_selected_mnu'] = 'Mark as read'; // FIXME: need translation
-$lang['unmark_selected_mnu'] = 'Mark as unread'; // FIXME: need translation
-$lang['move_selected_to_trash_mnu'] = 'Move to Trash'; // FIXME: need translation
+$lang['messages_to'] = 'Сообщения в';
+$lang['no_messages'] = 'Нет новых сообщений в почтовом';
+$lang['delete_selected_mnu'] = 'Удалить';
+$lang['move_selected_mnu'] = 'Переместить в';
+$lang['mark_selected_mnu'] = 'Отметить как прочитанное ';
+$lang['unmark_selected_mnu'] = 'Отметить как непрочитанные';
+$lang['move_selected_to_trash_mnu'] = 'Переместить в Корзину';
+
+$lang['delete_mnu'] = 'Удалить';
+$lang['move_mnu'] = 'Переместить в';
+$lang['subject_hea'] = 'Тема:';
+$lang['from_hea'] = 'От:';
+$lang['to_hea'] = 'To:';
+$lang['date_hea'] = 'Дата:';
+$lang['size_hea'] = 'Размер';
+$lang['have_spam'] = 'Вы должны спама (проверить папку Спам)';
+
+$lang['msg_you_have'] = 'Вы должны';
+$lang['msg_message'] = 'сообщение';
+$lang['msg_messages'] = 'сообщения';
+
+$lang['msg_more_unread'] = 'прочитанные';
+$lang['msg_one_unread'] = 'прочитанные';
+$lang['msg_none_unread'] = 'никто не читать ';
+$lang['msg_in_the_folder'] = 'в папке';
+
+$lang['lgn_title'] = 'Логин';
+$lang['lgn_welcome_msg'] = 'Добро пожаловать, пожалуйста, войдите в свой аккаунт ';
+$lang['lng_user_email'] = 'Электронная почта';
+$lang['lng_user_name'] = 'Имя пользователя';
+$lang['lng_user_pwd'] = 'Пароль';
+$lang['lng_server'] = 'Сервер';
+$lang['lng_theme'] = 'Тема';
+$lang['lng_language'] = 'Язык';
+$lang['lng_login_btn'] = 'Логин и GT; & GT;';
+$lang['lng_cookie_not_enabled'] = 'Cookies должны быть разрешены';
+$lang['lng_cookie_not_valid'] = 'Cookie Проверка безопасности Failed';
+
+$lang['newmsg_title'] = 'Написать письмо »';
+
+$lang['to_hea'] = 'To:';
+$lang['cc_hea'] = 'Копия:';
+$lang['bcc_hea'] = 'Копия:';
+$lang['subject_hea'] = 'Тема:';
+$lang['address_tip'] = 'Из адресной книги ';
+
+$lang['attach_hea'] = 'Приложение:';
+$lang['attch_add_new'] = 'Присоединить новый файл ';
+$lang['attch_name_hea'] = 'Имя';
+$lang['attch_size'] = 'Размер';
+$lang['attch_type_hea'] = 'Type';
+$lang['attch_dele_hea'] = 'Удалить';
+$lang['attch_no_hea'] = 'Нет вложений';
+
+$lang['add_signature'] = 'Добавить подпись';
+$lang['send_text'] = 'Отправить';
+
+$lang['result_error'] = 'Не удалось отправить это письмо';
+$lang['result_success'] = 'Это электронная почта была отправлена';
+$lang['nav_continue'] = '& Lt; & Lt; Продолжить & GT; & GT; ';
+$lang['nav_back'] = 'Back';
+
+$lang['up_title'] = 'Добавить файл ';
+$lang['up_information_text'] = 'Выберите файл';
+$lang['up_button_text'] = 'Присоединить файл';
+
+$lang['require_receipt'] = 'уведомлением о вручении ';
+
+$lang['priority_text'] = 'Приоритет';
+$lang['priority_low'] = 'Low';
+$lang['priority_normal'] = 'Normal';
+$lang['priority_high'] = 'High';
+
+$lang['prf_title'] = 'Настройки';
+$lang['prf_general_title'] = 'Общая информация';
+$lang['prf_name'] = 'Имя';
+$lang['prf_reply_to'] = 'Ответить на';
+$lang['prf_time_zone'] = 'Часовой пояс';
+$lang['prf_trash_title'] = 'Trash';
+$lang['prf_save_to_trash'] = 'Когда вы <b>Удалить</b> сообщение, переместите его в';
+$lang['prf_save_only_read'] = 'После <b>прочитать </b> сообщение, переместите его в';
+$lang['prf_empty_on_exit'] = '<b> Пусто </b> папки Корзина, когда вы выйдите';
+$lang['prf_empty_spam_on_exit'] = '<b> Пусто </b> папку Спам когда вы выйдите';
+$lang['prf_unmark_read_on_exit'] = 'Сброс читать сообщения как непрочитанные, когда вы выйдите';
+$lang['prf_sent_title'] = 'Отправленные';
+$lang['prf_save_sent'] = 'Сохранить <b> отправленных сообщений </b> в';
+$lang['prf_messages_title'] = 'Сообщения';
+$lang['prf_page_limit'] = 'Максимальное количество сообщений на странице';
+$lang['prf_signature_title'] = 'Подпись';
+$lang['prf_signature'] = 'Напишите подпись ';
+$lang['prf_auto_add_sign'] = 'Добавить подпись ко всем исходящим сообщениям';
+$lang['prf_save_button'] = 'Сохранить настройки';
+$lang['prf_display_images'] = 'Показать Изображения';
+$lang['prf_default_editor_mode'] = 'По умолчанию режим редактирования';
+$lang['prf_default_editor_mode_text'] = 'Простой текст';
+$lang['prf_default_editor_mode_html'] = 'продвинутый редактор HTML';
+$lang['prf_time_to_refesh'] = 'Автоматически проверять наличие новой почты (в минутах)';
+$lang['prf_spam_level'] = 'чувствительность спам (0 = Отключен, 1 = Very High, 9 = очень низкий)';
+$lang['prf_auto_require_receipt'] = 'Требовать прочтении по умолчанию';
+$lang['prf_keep_on_server'] = 'Держать электронную почту на сервере - не локальные папки';
+
+$lang['prf_msg_saved'] = 'Настройки сохраняются';
+
+$lang['filter_title'] = 'Фильтры';
+
+$lang['filter_new'] = 'Создать фильтр ';
+$lang['filter_desc'] = 'Выберите критерии поиска и действия для входящих сообщений';
+$lang['filter_list'] = 'Текущие фильтры';
+
+$lang['filter_field_from'] = 'From';
+$lang['filter_field_to'] = 'Для';
+$lang['filter_field_subject'] = 'Тема';
+$lang['filter_field_header'] = 'Заголовок';
+$lang['filter_field_body'] = 'Body';
+
+$lang['filter_type_move'] = 'Move';
+$lang['filter_type_delete'] = 'Удалить';
+$lang['filter_type_mark'] = 'Отметить как прочитанное ';
+
+$lang['filter_add'] = 'Добавить фильтр ';
+$lang['filter_delete'] = 'Удалить';
+$lang['filter_delete_selected'] = 'Удалить выбранные фильтры ';
+
+$lang['filter_field'] = 'Фильтр на поле';
+$lang['filter_match'] = 'Поиск';
+$lang['filter_type'] = 'Действие';
+$lang['filter_folder'] = 'Папка назначения';
+
+$lang['filter_msg_nofilters'] = 'Нет доступных фильтров.';
+$lang['filter_msg_added'] = 'Фильтр добавил';
+$lang['filter_msg_deleted'] = 'Фильтр удалена';
 
 
-$lang['delete_mnu'] = 'Óäàëèòü';
-$lang['move_mnu'] = 'Ïåðåìåñòèòü â';
-$lang['subject_hea'] = 'Òåìà:';
-$lang['from_hea'] = 'Îò:';
-$lang['to_hea'] = 'Äëÿ:';
-$lang['date_hea'] = 'Äàòà:';
-$lang['size_hea'] = 'Ðàçìåð';
-$lang['have_spam'] = 'You have Spam (check Spam folder)'; // FIXME: need translation
+$lang['ctc_title'] = 'Добавить в адресную книгу ';
+$lang['ctc_information'] = 'Показывает только по электронной почте, которые не в адресной книге';
+$lang['ctc_name'] = 'Имя';
+$lang['ctc_email'] = 'Электронная почта';
+$lang['ctc_no_address'] = 'Нет адреса доступны';
+$lang['ctc_close'] = 'Close';
+$lang['ctc_save'] = 'Сохранить';
 
-$lang['msg_you_have'] = 'Ó âàñ';
-$lang['msg_message'] = 'ñîîáùåíèå';
-$lang['msg_messages'] = 'ñîîáùåíèé';
+$lang['next_mnu'] = 'Next';
+$lang['previous_mnu'] = 'Предыдущий';
+$lang['back_mnu'] = 'Back';
+$lang['reply_mnu'] = 'Ответить';
+$lang['reply_all_mnu'] = 'Ответить всем ';
+$lang['forward_mnu'] = 'Вперед';
+$lang['headers_mnu'] = 'Заголовок';
+$lang['move_mnu'] = 'Переместить в';
+$lang['move_to_trash_mnu'] = 'Переместить в Корзину';
+$lang['delete_mnu'] = 'Удалить';
+$lang['print_mnu'] = 'Печать';
+$lang['download_mnu'] = 'Скачать';
 
-$lang['msg_more_unread'] = 'íåïðî÷èòàííûõ';
-$lang['msg_one_unread'] = 'íåïðî÷èòàíî';
-$lang['msg_none_unread'] = 'íåïðî÷èòàííûõ íåò';
-$lang['msg_in_the_folder'] = 'â ïàïêå';
+$lang['from_hea'] = 'От:';
+$lang['to_hea'] = 'To:';
+$lang['cc_hea'] = 'Копия:';
+$lang['date_hea'] = 'Дата:';
+$lang['subject_hea'] = 'Тема:';
+$lang['attach_hea'] = 'Приложение:';
 
+$lang['attch_name_hea'] = 'Имя';
+$lang['attch_force_hea'] = 'Скачать';
+$lang['attch_type_hea'] = 'Type';
+$lang['attch_size_hea'] = 'Размер';
+$lang['catch_address'] = 'Добавить в адресную книгу ';
+$lang['block_address'] = 'Блок адрес';
 
-// [Login]
-$lang['lgn_title'] = 'Ëîãèí';
-$lang['lgn_welcome_msg'] = 'Ââåäèòå âàøè Ëîãèí è ïàðîëü äëÿ äîñòóïà ê ïî÷òå';
-$lang['lng_user_email'] = 'E-mail';
-$lang['lng_user_name'] = 'Ëîãèí';
-$lang['lng_user_pwd'] = 'Ïàðîëü';
-$lang['lng_server'] = 'Server';
-$lang['lng_theme'] = 'Òåìà';
-$lang['lng_language'] = 'ßçûê';
-$lang['lng_login_btn'] = 'Ëîãèí &gt;&gt;';
-$lang['lng_cookie_not_enabled'] = 'Cookies must be enabled'; // FIXME: need translation
-$lang['lng_cookie_not_valid'] = 'Cookie Security Check Failed'; // FIXME: need translation
+$lang['sch_title'] = 'Поиск';
+$lang['sch_information_text'] = '.. Написать фразу или слово, которое вы ищете <br> только для чтения будет искать сообщения';
+$lang['sch_button_text'] = 'Поиск и GT; & GT; ';
+$lang['sch_subject_hea'] = 'Тема';
+$lang['sch_from_hea'] = 'From';
+$lang['sch_date_hea'] = 'Дата';
+$lang['sch_body_hea'] = 'Текст сообщения';
+$lang['sch_folder_hea'] = 'Папка';
+$lang['sch_no_results'] = 'Нет сообщений, соответствующих Вашему запросу, не было найдено ';
 
-// [Newmessage]
+$lang['qad_title'] = 'Адресная книга';
+$lang['qad_select_address'] = 'Выберите контакт ';
+$lang['qad_to'] = 'Для';
+$lang['qad_cc'] = 'CC';
+$lang['qad_bcc'] = 'Копия';
 
-$lang['newmsg_title'] = 'Compose mail'; // FIXME: need translation
-
-$lang['to_hea'] = 'Äëÿ:';
-$lang['cc_hea'] = 'îïèÿ:';
-$lang['bcc_hea'] = 'îïèÿ 2:';
-$lang['subject_hea'] = 'Òåìà:';
-$lang['address_tip'] = 'Èç àäðåñíîé êíèãè';
-
-$lang['attach_hea'] = 'Âëîæåíèå:';
-$lang['attch_add_new'] = 'Äîáàâèòü íîâûé ôàéë';
-$lang['attch_name_hea'] = 'Íàçâàíèå';
-$lang['attch_size'] = 'Ðàçìåð';
-$lang['attch_type_hea'] = 'Òèï';
-$lang['attch_dele_hea'] = 'Óäàëèòü';
-$lang['attch_no_hea'] = 'Íåò âëîæåíèé';
-
-$lang['add_signature'] = 'Äîáàâèòü ïîäïèñü';
-$lang['send_text'] = 'Îòïðàâèòü';
-
-$lang['result_error'] = 'Íåâîçìîæíî îòïðàâèòü ïî÷òó';
-$lang['result_success'] = 'Ïèñüìî óñïåøíî îòïðàâëåíî';
-$lang['nav_continue'] = 'Ïðîäîëæèòü';
-$lang['nav_back'] = 'Íàçàä';
-
-$lang['up_title'] = 'Äîáàâèòü ôàéë';
-$lang['up_information_text'] = 'Âûáðàòü ôàéë';
-$lang['up_button_text'] = 'Îòïðàâèòü';
-
-$lang['require_receipt'] = 'Return receipt';
-
-$lang['priority_text'] = 'Ïðèîðèòåò';
-$lang['priority_low'] = 'Íèçêèé';
-$lang['priority_normal'] = 'Ñðåäíèé';
-$lang['priority_high'] = 'Âûñîêèé';
-
-// [Preferences]
-$lang['prf_title'] = 'Íàñòðîéêè';
-$lang['prf_general_title'] = 'Îñíîâíàÿ èíôîðìàöèÿ';
-$lang['prf_name'] = 'Èìÿ';
-$lang['prf_reply_to'] = 'Àäðåñ äëÿ îòâåòîâ';
-$lang['prf_time_zone'] = 'Âðåìåííàÿ çîíà';
-$lang['prf_trash_title'] = 'îðçèíà';
-$lang['prf_save_to_trash'] = 'îãäà Âû <b>óäàëÿåòå</b> ñîîáùåíèÿ, ïîìåùàòü èç â ïàïêå ';
-$lang['prf_save_only_read'] = 'Õðàíèòü òîëüêî <b>ïðî÷èòàííûå ñîîáùåíèÿ</b> â ïàïêå  ';
-$lang['prf_empty_on_exit'] = '<b>Î÷èñòèòü</b> êîðçèíó ïðè âûõîäå èç ïðîãðàììû';
-$lang['prf_empty_spam_on_exit'] = '<b>Empty</b> Spam folder when you logout'; // FIXME: need translation
-$lang['prf_unmark_read_on_exit'] = 'Reset READ messages as UNREAD when you logout'; // FIXME: need translation
-$lang['prf_sent_title'] = 'Îòïðàâëåííûå';
-$lang['prf_save_sent'] = 'Õðàíèòü <b>îòïðàâëÿåìûå ñîîáùåíèÿ</b> â ïàïêå  ';
-$lang['prf_messages_title'] = 'Ñîîáùåíèÿ';
-$lang['prf_page_limit'] = 'îëè÷åñòâî ñîîáùåíèé íà ñòðàíèöó';
-$lang['prf_signature_title'] = 'Ïîäïèñü';
-$lang['prf_signature'] = 'Çäåñü Âû ìîæåòå íàïèñàòü ñâîþ ïîäïèñü äëÿ îòïðàâëÿåìûõ ñîîáùåíèé';
-$lang['prf_auto_add_sign'] = 'Äîáàâëÿòü Âàøó ïîäïèñü êî âñåì îïðàâëÿåìûì ñîîáùåíèÿì ';
-$lang['prf_save_button'] = 'Ñîõðàíèòü';
-$lang['prf_display_images'] = 'Ïîêàçûâàòü ïðèêðåïë¸ííûå èçîáðàæåíèÿ';
-$lang['prf_default_editor_mode'] = 'Ðåæèì ðåäàêòèðîâàíèÿ';
-$lang['prf_default_editor_mode_text'] = '"Ïðîñòîé òåêñòîâûé"';
-$lang['prf_default_editor_mode_html'] = '"HTML ðåäàêòîð (Internet Explorer 5 èëè âûøå, èëè ñõîæèõ)"';
-$lang['prf_time_to_refesh'] = 'Îáíîâëåíèå ïàïêè ñ ñîîáùåíèÿìè (â ìèíóòàõ)';
-$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
-$lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
-
-$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
-
-// filters
-$lang['filter_title'] = 'Filters'; // FIXME: need translation
-
-$lang['filter_new'] = 'Create a filter';
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
-$lang['filter_list'] = 'Current filters'; // FIXME: need translation
-
-$lang['filter_field_from'] = 'From'; // FIXME: need translation
-$lang['filter_field_to'] = 'To'; // FIXME: need translation
-$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
-$lang['filter_field_header'] = 'Header'; // FIXME: need translation
-$lang['filter_field_body'] = 'Body'; // FIXME: need translation
-
-$lang['filter_type_move'] = 'Move'; // FIXME: need translation
-$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
-
-$lang['filter_add'] = 'Add filter'; // FIXME: need translation
-$lang['filter_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
-
-$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
-$lang['filter_match'] = 'Search for'; // FIXME: need translation
-$lang['filter_type'] = 'Action'; // FIXME: need translation
-$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
-
-$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
-$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
-$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
-
-
-// [Catch]
-$lang['ctc_title'] = 'Äîáàâèòü â àäðåñíóþ êíèãó';
-$lang['ctc_information'] = 'Áóäóò ïîêàçàíû àäðåñà, çàïèñàííûå â àäðåñíóþ êíèãó';
-$lang['ctc_name'] = 'Èìÿ';
-$lang['ctc_email'] = 'E-mail';
-$lang['ctc_no_address'] = 'Àäðåñà íåò';
-$lang['ctc_close'] = 'Çàêðûòü';
-$lang['ctc_save'] = 'Ñîõðàíèòü';
-
-// [Readmsg]
-$lang['next_mnu'] = 'Ñëåäóþùåå';
-$lang['previous_mnu'] = 'Ïðåäûäóùåå';
-$lang['back_mnu'] = 'Íàçàä';
-$lang['reply_mnu'] = 'Îòâåòèòü';
-$lang['reply_all_mnu'] = 'Îòâåòèòü âñåì';
-$lang['forward_mnu'] = 'Ïåðåñëàòü';
-$lang['headers_mnu'] = 'Çàãîëîâîê';
-$lang['move_mnu'] = 'Ïåðåìåñòèòü â';
-$lang['move_to_trash_mnu'] = 'Move to Trash';
-$lang['delete_mnu'] = 'Óäàëèòü';
-$lang['print_mnu'] = 'Ðàñïå÷àòàòü';
-$lang['download_mnu'] = 'Download';
-
-$lang['from_hea'] = 'Îò:';
-$lang['to_hea'] = 'Äëÿ:';
-$lang['cc_hea'] = 'îïèÿ:';
-$lang['date_hea'] = 'Äàòà:';
-$lang['subject_hea'] = 'Òåìà:';
-$lang['attach_hea'] = 'Âëîæåíèå:';
-
-$lang['attch_name_hea'] = 'Íàçâàíèå';
-$lang['attch_force_hea'] = 'Ñêà÷àòü';
-$lang['attch_type_hea'] = 'Òèï';
-$lang['attch_size_hea'] = 'Ðàçìåð';
-$lang['catch_address'] = 'Äîáàâèòü â àäðåñíóþ êíèãó';
-$lang['block_address'] = 'Block address'; // FIXME: need translation
-
-// [Search]
-$lang['sch_title'] = 'Search';
-$lang['sch_information_text'] = 'Íàïèøèòå ôðàçó èëè ñëîâî, êîòîðîå Âû èùåòå.<br> Ïîèñê â òåëå ïèñüìà ïðîèçâîäèòñÿ òîëüêî, åñëè ïèñüìî ïðî÷èòàíî';
-$lang['sch_button_text'] = 'Ïîèñê &gt;&gt;';
-$lang['sch_subject_hea'] = 'Òåìà';
-$lang['sch_from_hea'] = 'Îò';
-$lang['sch_date_hea'] = 'Äàòà';
-$lang['sch_body_hea'] = 'Ñîîáùåíèå';
-$lang['sch_folder_hea'] = 'Ïàïêà';
-$lang['sch_no_results'] = 'Ïîäõîäÿùèõ ïèñåì íå íàéäåíî';
-
-// [QuickAddress]
-$lang['qad_title'] = 'Àäðåñíàÿ êíèãà';
-$lang['qad_select_address'] = 'Âûáåðèòå êîíòàêò';
-$lang['qad_to'] = 'Äëÿ';
-$lang['qad_cc'] = 'îïèÿ';
-$lang['qad_bcc'] = 'îïèÿ 2 ';
-
-// [AddressBook]
-// edit/display
-$lang['adr_title'] = 'Àäðåñíàÿ êíèãà';
-$lang['adr_name'] = 'Èìÿ';
-$lang['adr_email'] = 'E-mail';
-$lang['adr_street'] = 'Àäðåñ';
-$lang['adr_city'] = 'Ãîðîä';
-$lang['adr_state'] = 'Ðàéîí';
-$lang['adr_work'] = 'Ðàáîòà';
-$lang['adr_back'] = 'Íàçàä';
-$lang['adr_save'] = 'Ñîõðàíèòü';
-$lang['adr_phone'] = 'Phone';
+$lang['adr_title'] = 'Адресная книга';
+$lang['adr_name'] = 'Имя';
+$lang['adr_email'] = 'Электронная почта';
+$lang['adr_street'] = 'Street';
+$lang['adr_city'] = 'Город';
+$lang['adr_state'] = 'государство';
+$lang['adr_work'] = 'работа';
+$lang['adr_back'] = 'Back';
+$lang['adr_save'] = 'Сохранить';
+$lang['adr_phone'] = 'Телефон';
 $lang['adr_cell'] = 'Cell';
-$lang['adr_note'] = 'Notes';
+$lang['adr_note'] = 'Записки';
 
-// list
-$lang['adr_name_hea'] = 'Èìÿ';
-$lang['adr_email_hea'] = 'E-mail';
-$lang['adr_edit_hea'] = 'Ðåäàêòèðîâàòü';
-$lang['adr_expo_hea'] = 'Ýêñïîðòèðîâàòü';
-$lang['adr_dele_hea'] = 'Óäàëèòü';
-$lang['adr_new_entry'] = 'Íîâûé êîíòàêò';
+$lang['adr_name_hea'] = 'Имя';
+$lang['adr_email_hea'] = 'Электронная почта';
+$lang['adr_edit_hea'] = 'Edit';
+$lang['adr_expo_hea'] = 'Экспорт';
+$lang['adr_dele_hea'] = 'Удалить';
+$lang['adr_new_entry'] = 'Новый контакт';
 
-$lang['addr_saved'] = 'îíòàêò ñîõðàí¸í';
-$lang['addr_added'] = 'îíòàêò äîáàâëåí';
-$lang['addr_deleted'] = 'îíòàêò óíè÷òîæåí';
+$lang['addr_saved'] = 'контакт был сохранен';
+$lang['addr_added'] = 'Контакт добавлен';
+$lang['addr_deleted'] = 'контакт был удален';
 
+$lang['blk_title'] = 'Блок отправителя';
+$lang['blk_information'] = 'Показывает только по электронной почте, которые не в фильтре, но';
+$lang['blk_email'] = 'Электронная почта';
+$lang['blk_no_address'] = 'Нет адреса доступны';
+$lang['blk_close'] = 'Close';
+$lang['blk_save'] = 'Сохранить';
 
-// [BlockSender]
-$lang['blk_title'] = 'Block sender'; // FIXME: need translation
-$lang['blk_information'] = 'Only shows e-mails that are not in the filter yet'; // FIXME: need translation
-$lang['blk_email'] = 'E-mail'; // FIXME: need translation
-$lang['blk_no_address'] = 'No address available'; // FIXME: need translation
-$lang['blk_close'] = 'Çàêðûòü';
-$lang['blk_save'] = 'Ñîõðàíèòü';
-
-// [Event]
-$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
-$lang['evt_save'] = 'Ñîõðàíèòü';
-$lang['evt_delete'] = 'Óäàëèòü';
-$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
-$lang['evt_start'] = 'Start time'; // FIXME: need translation
-
+$lang['evt_title'] = 'Календарь событий';
+$lang['evt_save'] = 'Сохранить';
+$lang['evt_delete'] = 'Удалить';
+$lang['evt_stop'] = 'Время остановки';
+$lang['evt_start'] = 'Время начала';

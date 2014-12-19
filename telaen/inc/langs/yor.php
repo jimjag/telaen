@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Apo-iwọle';
 $lang['sent_extended'] = 'firanšẹ awọn ohun kan';
 $lang['trash_extended'] = 'Ile ile folda';
 $lang['spam_extended'] = 'idoti folda';
+$lang['drafts_extended'] = 'Akọpamọ';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'meeli iye to';
 $lang['quota_usage_used'] = 'lo';
 $lang['quota_usage_of'] = 'ti';
 $lang['quota_usage_avail'] = 'wa';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Apo-iwọle';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"ni ilọsiwaju HTML olootu"';
 $lang['prf_time_to_refesh'] = 'adase ṣayẹwo fun awọn titun mail (iṣẹju)';
 $lang['prf_spam_level'] = 'àwúrúju ifamọ (0 = alaabo, 1 = gan Ga, 9 = gan Low)';
 $lang['prf_auto_require_receipt'] = 'Béèrè ka ọjà nipa aiyipada';
+$lang['prf_keep_on_server'] = 'Jeki imeeli lori olupin - ko si agbegbe awọn folda';
 
 $lang['prf_msg_saved'] = 'saju ti o ti fipamọ';
 

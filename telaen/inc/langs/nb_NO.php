@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d/%m/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Innboks';
 $lang['sent_extended'] = 'Sendte';
 $lang['trash_extended'] = 'Slettede';
 $lang['spam_extended'] = 'Spam folder';
+$lang['drafts_extended'] = 'Kladd';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -20,12 +30,12 @@ $lang['last_text'] = 'Last';
 $lang['total_text'] = 'Total';
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
-$lang['err_system_msg'] = 'System error'; // FIXME: need translation
-$lang['error_login'] = 'Please check your username or password and try again'; // FIXME: need translation
+$lang['err_login_msg'] = 'Pålogging feil';
+$lang['err_system_msg'] = 'Systemfeil';
+$lang['error_login'] = 'Vennligst sjekk ditt brukernavn eller passord, og prøv igjen'; 
 $lang['error_connect'] = 'Kontakt ble ikke oppnådd med server';
 $lang['error_retrieving'] = 'Problemer oppstod under forsøk på å motta dine beskjeder. Din innboks har blitt endret.';
-$lang['error_session_expired'] = 'Your session is expired, please login again'; // FIXME: need translation
+$lang['error_session_expired'] = 'Økten er utløpt, kan du logge inn på nytt'; 
 $lang['error_other'] = 'Systemfeil. Kontakt systemansvarlig.';
 
 // Invalid name of mailbox
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Plassbegrensning';
 $lang['quota_usage_used'] = 'Brukt';
 $lang['quota_usage_of'] = 'av';
 $lang['quota_usage_avail'] = 'tilgjengelig';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d/%m/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Beskjeder (inn)';
@@ -209,39 +209,39 @@ $lang['prf_default_editor_mode_html'] = '"Avansert HTML editor (Kun for IE5 elle
 $lang['prf_time_to_refesh'] = 'Oppdateringsintervall beskjeder (minutter)';
 $lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
+$lang['prf_keep_on_server'] = 'Hold e-post pŒ server - ingen lokale mapper';
 
 $lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
 
 // filters
-$lang['filter_title'] = 'Filters'; // FIXME: need translation
+$lang ['filter_title'] = 'Filter';
 
-$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
-$lang['filter_list'] = 'Current filters'; // FIXME: need translation
+$lang ['filter_new'] = 'Opprett et filter';
+$lang ['filter_desc'] = 'Velg søkekriterier og handlingen for innkommende meldinger';
+$lang ['filter_list'] = 'Nåværende filtre';
 
-$lang['filter_field_from'] = 'From'; // FIXME: need translation
-$lang['filter_field_to'] = 'To'; // FIXME: need translation
-$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
-$lang['filter_field_header'] = 'Header'; // FIXME: need translation
-$lang['filter_field_body'] = 'Body'; // FIXME: need translation
+$lang ['filter_field_from'] = 'Fra';
+$lang ['filter_field_to'] = 'Til';
+$lang ['filter_field_subject'] = 'emne';
+$lang ['filter_field_header'] = 'Header';
+$lang ['filter_field_body'] = 'Body';
 
-$lang['filter_type_move'] = 'Move'; // FIXME: need translation
-$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
+$lang ['filter_type_move'] = 'Move';
+$lang ['filter_type_delete'] = 'Slett';
+$lang ['filter_type_mark'] = 'Mark lese';
 
-$lang['filter_add'] = 'Add filter'; // FIXME: need translation
-$lang['filter_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
+$lang ['filter_add'] = 'Legg til filter';
+$lang ['filter_delete'] = 'Slett';
+$lang ['filter_delete_selected'] = 'Slett valgte filtre';
 
-$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
-$lang['filter_match'] = 'Search for'; // FIXME: need translation
-$lang['filter_type'] = 'Action'; // FIXME: need translation
-$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
+$lang ['filter_field'] = 'Filter på feltet';
+$lang ['filter_match'] = 'Søk etter';
+$lang ['filter_type'] = 'Handling';
+$lang ['filter_folder'] = 'Destination mappen';
 
-$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
-$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
-$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
-
+$lang ['filter_msg_nofilters'] = 'Ingen filtre tilgjengelig.';
+$lang ['filter_msg_added'] = 'Filter lagt';
+$lang ['filter_msg_deleted'] = 'Filter slettet';
 
 // [Catch]
 $lang['ctc_title'] = 'Legg til i adressebok';

@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%d/%m/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'BoÓte de rÈception';
 $lang['sent_extended'] = 'ElÈments envoyÈs';
 $lang['trash_extended'] = 'Corbeille';
 $lang['spam_extended'] = 'dossier Spam';
+$lang['drafts_extended'] = 'Brouillons';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -20,9 +30,9 @@ $lang['last_text'] = 'Last';
 $lang['total_text'] = 'Total';
 
 // Mail Server Errors
-$lang['err_login_msg'] = 'Login error'; // FIXME: need translation
-$lang['err_system_msg'] = 'System error'; // FIXME: need translation
-$lang['error_login'] = 'Veuillez vérifier votre Nom d\'utilisateur ou votre mot de passe, et réessayez';\
+$lang['err_login_msg'] = 'erreur Connexion';
+$lang['err_system_msg'] = 'Erreur systËme';
+$lang['error_login'] = 'Veuillez vérifier votre Nom d\'utilisateur ou votre mot de passe, et réessayez';
 $lang['error_connect'] = 'Connexion au serveur impossible';
 $lang['error_retrieving'] = 'Impossible de recevoir le message, d˚ aux modifications ';
 $lang['error_session_expired'] = 'Votre session a expiré. Veuillez vous reconnecter';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Limite de quota';
 $lang['quota_usage_used'] = 'utilisÈ';
 $lang['quota_usage_of'] = 'de';
 $lang['quota_usage_avail'] = 'Total';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%d/%m/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-85';
 
 // Menu
 $lang['messages_mnu'] = 'Messages';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Editeur HTML avancÈ"';
 $lang['prf_time_to_refesh'] = 'Temps de rafraÓchissement pour les messages (en minutes)';
 $lang['prf_spam_level'] = 'SPAM sensibilité (0 = désactivé, 1 = très élevé, 9 = très faible)';
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default';
+$lang['prf_keep_on_server'] = 'Gardez email sur le serveur - aucun des dossiers locaux';
 
 $lang['prf_msg_saved'] = 'Préférences enregistrées';
 
@@ -233,12 +234,12 @@ $lang['filter_add'] = 'Ajouter un filtre';
 $lang['filter_delete'] = 'Supprimer un filtre';
 $lang['filter_delete_selected'] = 'Supprimer les filtres sélectionnés';
 
-$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
-$lang['filter_match'] = 'Search for'; // FIXME: need translation
+$lang['filter_field'] = 'Filtre sur le champ';
+$lang['filter_match'] = 'Rechercher';
 $lang['filter_type'] = 'Action'; // FIXME: need translation
 $lang['filter_folder'] = 'Dossier de destination';
 
-$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
+$lang['filter_msg_nofilters'] = 'Aucun filtres disponibles.';
 $lang['filter_msg_added'] = 'Filtre ajouté';
 $lang['filter_msg_deleted'] = 'Filtre supprimé';
 

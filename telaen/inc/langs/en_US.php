@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%m/%d/%y %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'UTF-8';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = 'Inbox';
 $lang['sent_extended'] = 'Sent items';
 $lang['trash_extended'] = 'Trash folder';
 $lang['spam_extended'] = 'Spam folder';
+$lang['drafts_extened'] = 'Drafts';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'Quota limit';
 $lang['quota_usage_used'] = 'Used';
 $lang['quota_usage_of'] = 'of';
 $lang['quota_usage_avail'] = 'available';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%m/%d/%y %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Inbox';
@@ -209,6 +209,7 @@ $lang['prf_default_editor_mode_html'] = '"Advanced HTML editor"';
 $lang['prf_time_to_refesh'] = 'Automatically check for new mail (minutes)';
 $lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)';
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default';
+$lang['prf_keep_on_server'] = 'Keep email on server - no local folders';
 
 $lang['prf_msg_saved'] = 'Preferences saved';
 

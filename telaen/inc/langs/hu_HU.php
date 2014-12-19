@@ -4,12 +4,22 @@
  */
 
 $lang = array();
+//
+// Date Format
+// %d = day, %m = month, %y = year, %H = hour, %M = minutes
+// for a complete list, see http://www.php.net/strftime
+//
+$lang['date_format'] = '%y/%m/%d %H:%M';
+
+// CharSet
+$lang['default_char_set'] = 'iso-8859-2';
 
 // User-friendly names to system folders
 $lang['inbox_extended'] = '…rkezett';
 $lang['sent_extended'] = 'Elk¸ldˆtt';
 $lang['trash_extended'] = 'Kuka';
 $lang['spam_extended'] = 'Spam';
+$lang['drafts_extended'] = 'Vázlatok';
 
 // Navigation texts
 $lang['pages_text'] = 'Pages';
@@ -52,16 +62,6 @@ $lang['quota_usage_info'] = 'T·rhely haszn·lat';
 $lang['quota_usage_used'] = 'quota_usage_of					= foglalt az engedÈlyezett';
 $lang['quota_usage_of'] = 'of';
 $lang['quota_usage_avail'] = '-bÛl';
-
-//
-// Date Format
-// %d = day, %m = month, %y = year, %H = hour, %M = minutes
-// for a complete list, see http://www.php.net/strftime
-//
-$lang['date_format'] = '%y/%m/%d %H:%M';
-
-// CharSet
-$lang['default_char_set'] = 'iso-8859-2';
 
 // Menu
 $lang['messages_mnu'] = '…rkezett';
@@ -207,41 +207,41 @@ $lang['prf_default_editor_mode'] = 'Szerkesztı tÌpusa';
 $lang['prf_default_editor_mode_text'] = '"Sima szˆveg"';
 $lang['prf_default_editor_mode_html'] = '"HTML szerkesztı"';
 $lang['prf_time_to_refesh'] = 'BeÈrkezett ¸zenetek automatikus frissÌtÈse (perc)';
-$lang['prf_spam_level'] = 'SPAM sensitivity (0 = Disabled, 1 = Very High, 9 = Very Low)'; // FIXME: need translation
+$lang['prf_spam_level'] = 'SPAM érzékenység (0 = letiltva, 1 = nagyon magas, 9 = nagyon alacsony)';
 $lang['prf_auto_require_receipt'] = 'Require read receipt by default'; // FIXME: need translation
+$lang['prf_keep_on_server'] = 'Tartsa e-mail szerver - nincs helyi mappák';
 
-$lang['prf_msg_saved'] = 'Preferences saved'; // FIXME: need translation
+$lang['prf_msg_saved'] = 'Beállítások mentve';
 
 // filters
-$lang['filter_title'] = 'Filters'; // FIXME: need translation
+$lang['filter_title'] = 'Filters';
 
-$lang['filter_new'] = 'Create a filter'; // FIXME: need translation
-$lang['filter_desc'] = 'Choose the search criteria and the action for the incoming messages'; // FIXME: need translation
-$lang['filter_list'] = 'Current filters'; // FIXME: need translation
+$lang['filter_new'] = 'Hozzon létre egy szűrőt ';
+$lang['filter_desc'] = 'Válassza ki a keresési feltételeket és az akció a bejövő üzenetek';
+$lang['filter_list'] = 'Aktuális szűrők';
 
-$lang['filter_field_from'] = 'From'; // FIXME: need translation
-$lang['filter_field_to'] = 'To'; // FIXME: need translation
-$lang['filter_field_subject'] = 'Subject'; // FIXME: need translation
-$lang['filter_field_header'] = 'Header'; // FIXME: need translation
-$lang['filter_field_body'] = 'Body'; // FIXME: need translation
+$lang['filter_field_from'] = 'A';
+$lang['filter_field_to'] = 'A';
+$lang['filter_field_subject'] = 'Tárgy';
+$lang['filter_field_header'] = 'Fejléc';
+$lang['filter_field_body'] = 'Body';
 
-$lang['filter_type_move'] = 'Move'; // FIXME: need translation
-$lang['filter_type_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_type_mark'] = 'Mark read'; // FIXME: need translation
+$lang['filter_type_move'] = 'Move';
+$lang['filter_type_delete'] = 'Törlés';
+$lang['filter_type_mark'] = 'Mark olvasni';
 
-$lang['filter_add'] = 'Add filter'; // FIXME: need translation
-$lang['filter_delete'] = 'Delete'; // FIXME: need translation
-$lang['filter_delete_selected'] = 'Delete selected filters'; // FIXME: need translation
+$lang['filter_add'] = 'Új szűrő';
+$lang['filter_delete'] = 'Törlés';
+$lang['filter_delete_selected'] = 'Törlés kiválasztott szűrő ';
 
-$lang['filter_field'] = 'Filter on field'; // FIXME: need translation
-$lang['filter_match'] = 'Search for'; // FIXME: need translation
-$lang['filter_type'] = 'Action'; // FIXME: need translation
-$lang['filter_folder'] = 'Destination folder'; // FIXME: need translation
+$lang['filter_field'] = 'Filter terepen ';
+$lang['filter_match'] = 'Keresés';
+$lang['filter_type'] = 'Action';
+$lang['filter_folder'] = 'Destination folder';
 
-$lang['filter_msg_nofilters'] = 'No filters available.'; // FIXME: need translation
-$lang['filter_msg_added'] = 'Filter added'; // FIXME: need translation
-$lang['filter_msg_deleted'] = 'Filter deleted'; // FIXME: need translation
-
+$lang['filter_msg_nofilters'] = 'Nem szűrők állnak. ';
+$lang['filter_msg_added'] = 'Filter hozzá';
+$lang['filter_msg_deleted'] = 'Filter törölve';
 
 // [Catch]
 $lang['ctc_title'] = '˙j cÌmek';
@@ -335,9 +335,8 @@ $lang['blk_close'] = 'Bez·r';
 $lang['blk_save'] = 'Ment';
 
 // [Event]
-$lang['evt_title'] = 'Calendar Event'; // FIXME: need translation
-$lang['evt_save'] = 'MentÈs';
+$lang['evt_title'] = 'Esemény';
 $lang['evt_delete'] = 'TˆrlÈs';
-$lang['evt_stop'] = 'Stop time'; // FIXME: need translation
+$lang['evt_stop'] = 'Állj ideje';
 $lang['evt_start'] = 'Start time'; // FIXME: need translation
 
