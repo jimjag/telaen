@@ -208,7 +208,7 @@ class Telaen_core
         rmdir($location);
     }
 
-    /*
+    /**
      * Encode header strings to be MIME compliant
      * @param string $string string to encode
      * @return string
@@ -239,11 +239,14 @@ class Telaen_core
 
     /**
      * This function will convert any string between charsets.
+     * @param string $string String to convert
+     * @param string $from Charset to convert from
+     * @param string $to Charset to convert to
+     * @return string
      */
-    protected function _convert_charset($string, $from, $to)
+    static public function convert_charset($string, $from, $to)
     {
-        $string = @htmlentities($string, ENT_COMPAT, $from);
-        return html_entity_decode($string, ENT_COMPAT, $to);
+        return mb_convert_encoding($string, $to, $from);
     }
 
     /**
@@ -275,7 +278,7 @@ class Telaen_core
             }
 
             if ($charset != $this->charset) {
-                $mystring = $this->_convert_charset($mystring, $charset, $this->charset);
+                $mystring = self::convert_charset($mystring, $charset, $this->charset);
             }
 
             $newresult .= $mystring;
@@ -345,6 +348,8 @@ class Telaen_core
      * Try to extract all names in a specified field (from, to, cc)
      * In order to guess what is the format (the RFC support 3), it will
      * try different ways to get an array with name and email
+     * @param string $strmail String to parse
+     * @return array
      */
     public function get_names($strmail)
     {
@@ -860,7 +865,7 @@ class Telaen_core
             $body = convert_cyr_string($body, 'k', 'w');
         } elseif (preg_match('|charset ?= ?"?([a-z0-9-]+)"?|i', $ctype, $regs)) {
             if ($regs[1] != $this->charset) {
-                $body = $this->_convert_charset($body, $regs[1], $this->charset);
+                $body = $self::convert_charset($body, $regs[1], $this->charset);
             }
         }
 
