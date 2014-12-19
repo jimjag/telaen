@@ -31,7 +31,7 @@ class Telaen_core
 
     public $sanitize          = true;
     public $use_html          = false;
-    public $charset           = 'utf-8';
+    public $charset           = 'UTF-8';
     public $userfolder        = './';
     public $temp_folder       = './';
     public $idle_timeout      = 10;

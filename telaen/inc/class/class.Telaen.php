@@ -36,14 +36,42 @@ class Telaen extends Telaen_core
         mb_internal_encoding("UTF-8");
     }
 
-    private function _utf7_to_8($string)
+    /**
+     * Convert string from UTF7 (IMAP) to UTF8
+     * @param string $string String to convert
+     * @return string
+     */
+    public function utf7_to_8($string)
     {
         return mb_convert_encoding($string, 'UTF-8', 'UTF7-IMAP');
     }
 
-    private function _utf8_to_7($string)
+    /**
+     * Convert string from UTF8 to UTF7 (IMAP)
+     * @param string $string String to convert
+     * @return string
+     */
+    public function utf8_to_7($string)
     {
         return mb_convert_encoding($string, 'UTF7-IMAP', 'UTF-8');
+    }
+
+    /**
+     * Detect if string is UTF8 (fast) (W3C)
+     * @param string $string
+     * @return boolean
+     */
+    public function is_utf8($string)
+    {
+            return preg_match('%(?:
+            [\xC2-\xDF][\x80-\xBF]
+            |\xE0[\xA0-\xBF][\x80-\xBF]
+            |[\xE1-\xEC\xEE\xEF][\x80-\xBF]{2}
+            |\xED[\x80-\x9F][\x80-\xBF]
+            |\xF0[\x90-\xBF][\x80-\xBF]{2}
+            |[\xF1-\xF3][\x80-\xBF]{3}
+            |\xF4[\x80-\x8F][\x80-\xBF]{2}
+            )+%xs', $string);
     }
 
     /**
@@ -1233,7 +1261,7 @@ class Telaen extends Telaen_core
             $rest = substr($buffer, $pos+2);
             $pos = strpos($rest, ' ');
             $tmp['prefix'] = preg_replace('|"(.*)"|', "$1", substr($rest, 0, $pos));
-            $tmp['name'] = $this->_utf7_to_8($this->fix_prefix(trim(preg_replace('|"(.*)"|', "$1",
+            $tmp['name'] = $this->utf7_to_8($this->fix_prefix(trim(preg_replace('|"(.*)"|', "$1",
                                              substr($rest, $pos+1))), 0));
             $buffer = $this->_mail_get_line();
             $boxlist[] = $tmp;
@@ -1275,7 +1303,7 @@ class Telaen extends Telaen_core
         /* this function is used only for IMAP servers */
         if ($this->mail_protocol == IMAP) {
             $original_name = preg_replace('|"(.*)"|', "$1", $boxname);
-            $boxname = $this->_utf8_to_7($this->fix_prefix($original_name, 1));
+            $boxname = $this->utf8_to_7($this->fix_prefix($original_name, 1));
             $this->_mail_send_command("SELECT \"$boxname\"");
             $buffer = $this->_mail_get_line();
             if (preg_match("/^".$this->get_sid()." NO/i", $buffer)) {
