@@ -61,7 +61,7 @@ $lang['quota_usage_avail'] = '利用可能';
 $lang['date_format'] = '% m /% d /% y% H:% M';
 
 // CharSet
-$lang['default_char_set'] = 'ISO-8859-1';
+$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = '受信トレイ';

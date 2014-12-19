@@ -291,7 +291,7 @@ function getPureHtml() {
 
 </script>
 {/literal}
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta charset="utf-8" />
 <table width="445" border="0" cellspacing="0" cellpadding="0">
    					<tr>
    						<td>

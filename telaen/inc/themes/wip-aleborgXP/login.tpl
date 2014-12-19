@@ -6,7 +6,7 @@ Visit www.cyber.nu
 
 <head>
 <title>UebiMiau - {#lgn_title#|escape:"html"}</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta charset="utf-8" />
 <link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 </head>
 {$umJS}

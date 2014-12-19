@@ -61,7 +61,7 @@ $lang ['quota_usage_avail'] = 'dostupan';
 $lang['date_format'] = '%m/%d/%y %H:%M';
 
 // charset
-$lang['default_char_set'] = 'iso-8859-1';
+$lang['default_char_set'] = 'UTF-8';
 
 // izbornik
 $lang ['messages_mnu'] = 'Inbox';

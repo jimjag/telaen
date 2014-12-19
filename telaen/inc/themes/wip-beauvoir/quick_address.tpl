@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umLabel.qad_title}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 </head>

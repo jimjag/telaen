@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>UebiMiau - {$umLabel.messages_to} {$umUserEmail}</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta charset="utf-8" />
 <link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 <script language="JavaScript" src="inc/themes/aleborgXP/webmail.js" type="text/javascript">
 </script>

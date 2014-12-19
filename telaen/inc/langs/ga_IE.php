@@ -61,7 +61,7 @@ $lang['quota_usage_avail'] = 'ar fáil';
 $lang['date_format'] = '% m /% d /% y% H:% M';
 
 // CharSet
-$lang['default_char_set'] = 'iso-8859-1';
+$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'R-phost Isteach';

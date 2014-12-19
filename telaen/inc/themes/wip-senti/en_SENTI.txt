@@ -50,7 +50,7 @@ quota_usage_avail				= available
 date_format 					= <font color="navy">%m/%d/%y %H:%M</font>
 
 # CharSet 
-default_char_set				= iso-8859-1
+default_char_set				= UTF-8
 
 # Menu
 messages_mnu					= Inbox

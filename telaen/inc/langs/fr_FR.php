@@ -61,7 +61,7 @@ $lang['quota_usage_avail'] = 'Total';
 $lang['date_format'] = '%d/%m/%y %H:%M';
 
 // CharSet
-$lang['default_char_set'] = 'iso-8859-15';
+$lang['default_char_set'] = 'UTF-85';
 
 // Menu
 $lang['messages_mnu'] = 'Messages';

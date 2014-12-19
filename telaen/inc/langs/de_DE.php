@@ -61,7 +61,7 @@ $lang['quota_usage_avail'] = 'verfügbar';
 $lang['date_format'] = '%d.%m.%Y - %H:%M';
 
 // CharSet
-$lang['default_char_set'] = 'iso-8859-1';
+$lang['default_char_set'] = 'UTF-8';
 
 // Menu
 $lang['messages_mnu'] = 'Posteingang';

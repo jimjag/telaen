@@ -6,7 +6,7 @@
 <head>
 	<title>UebiMiau - {$umLabel.err_title}</title>
 	<link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 {$umJS}
