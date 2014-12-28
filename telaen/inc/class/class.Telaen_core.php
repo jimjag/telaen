@@ -517,7 +517,7 @@ class Telaen_core
      * Compile a body for multipart/alternative format.
      * Guess the format we want and add it to the bod container
      */
-    protected function _build_alternative_body($ctype, $body)
+    protected function _build_add_alternative_body($ctype, $body)
     {
         // get the boundary
         $boundary = $this->_get_boundary($ctype);
@@ -565,14 +565,14 @@ class Telaen_core
         // if the subcontent is multipart go to multipart function
         if ($multipartSub) {
             unset($body);
-            $this->_build_complex_body($part['headers']['content-type'], $part['body']);
+            $this->_build_add_complex_body($part['headers']['content-type'], $part['body']);
         } else {
             $body = $this->_compile_body($part['body'], $part['headers']['content-transfer-encoding'], $part['headers']['content-type']);
             if (!$this->config['allow_html'] && $part['type'] != 'text/plain') {
                 $body = $this->_html2text($body);
             }
             if (!$this->config['allow_html']) {
-                $body = $this->_build_text_body($body);
+                $body = $this->_return_text_body($body);
             }
             $this->_add_body($body);
         }
@@ -583,7 +583,7 @@ class Telaen_core
      * 'complex' means multipart/signed|mixed|related|report and other
      * types that can be added in the future
      */
-    protected function _build_complex_body($ctype, $body)
+    protected function _build_add_complex_body($ctype, $body)
     {
         global $ix, $folder;
 
@@ -633,20 +633,20 @@ class Telaen_core
             $is_download = (preg_match('|name=|', $headers['content-disposition'].$headers['content-type']) || $headers['content-id'] != "" || $rctype == 'message/rfc822');
 
             if ($rctype == 'multipart/alternative') {
-                $this->_build_alternative_body($ctype, $body);
+                $this->_build_add_alternative_body($ctype, $body);
             } elseif ($rctype == 'multipart/appledouble') {
                 /*
                  * Special case for mac with resource and data fork
                  */
-                $this->_build_complex_body($ctype, $body);
+                $this->_build_add_complex_body($ctype, $body);
             } elseif ($rctype == 'text/plain' && !$is_download) {
                 $body = $this->_compile_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
-                $this->_add_body($this->_build_text_body($body));
+                $this->_add_body($this->_return_text_body($body));
             } elseif ($rctype == 'text/html' &&    !$is_download) {
                 $body = $this->_compile_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
 
                 if (!$this->config['allow_html']) {
-                    $body = $this->_build_text_body($this->_html2text($body));
+                    $body = $this->_return_text_body($this->_html2text($body));
                 }
                 $this->_add_body($body);
             } elseif ($rctype == 'application/ms-tnef') {
@@ -678,7 +678,7 @@ class Telaen_core
     /**
      * Format a plain text string into a HTML formated string
      */
-    protected function _build_text_body($body)
+    protected function _return_text_body($body)
     {
         $body = preg_replace('/(\r\n|\n|\r|\n\r)/', "<br>$1", $this->_make_link_clickable(htmlspecialchars($body)));
 
@@ -737,13 +737,13 @@ class Telaen_core
             switch ($subtype) {
             case 'html':
                 if (!$this->config['allow_html']) {
-                    $body = $this->_build_text_body($this->_html2text($body));
+                    $body = $this->_return_text_body($this->_html2text($body));
                 }
                 $msgbody = $body;
                 break;
             default:
                 $this->_extract_uuencoded($body);
-                $msgbody = $this->_build_text_body($body);
+                $msgbody = $this->_return_text_body($body);
                 break;
             }
             $this->_add_body($msgbody);
@@ -755,17 +755,17 @@ class Telaen_core
 
             switch ($subtype) {
             case 'alternative':
-                $msgbody = $this->_build_alternative_body($ctype[1], $body);
+                $this->_build_add_alternative_body($ctype[1], $body);
                 break;
             case 'complex':
-                $msgbody = $this->_build_complex_body($type, $body);
+                $this->_build_add_complex_body($type, $body);
                 break;
             default:
-                $thisattach = $this->_build_attach($header, $body, "", 0);
+                $this->_build_attach($header, $body, "", 0);
             }
             break;
         default:
-            $thisattach = $this->_build_attach($header, $body, "", 0);
+            $this->_build_attach($header, $body, "", 0);
         }
     }
 
