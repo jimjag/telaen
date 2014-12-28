@@ -601,14 +601,7 @@ function tln_fixatts($tagname,
                 }
             }
         }
-        /**
-         * Use white list based filtering on attributes which can contain url's
-         */
-        else if ($attname == 'href' || $attname == 'src' || $attname == 'background') {
-            tln_fixurl($attname, $attvalue, $trans_image_path, $block_external_images);
-            $attary{$attname} = $attvalue;
-        }
-    }
+     }
     /**
      * See if we need to append any attributes to this tag.
      */
@@ -1157,8 +1150,7 @@ function HTMLFilter($body, $trans_image_path, $block_external_images = false)
 
     $add_attr_to_tag = array(
         "/^a$/i" =>
-            array('target'=>'"_blank"',
-                'title'=>'"'._("This external link will open in a new window").'"'
+            array('target'=>'"_blank"'
                 )
     );
 
