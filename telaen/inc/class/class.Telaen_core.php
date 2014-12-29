@@ -8,7 +8,6 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
-require_once './inc/htmlfilter.php';
 require_once './inc/class/class.PHPMailer_extra.php';
 require_once './inc/class/class.LocalMbox.php';
 
@@ -20,44 +19,44 @@ define('STATUS_NOK_FILE', 2);
 
 class Telaen_core
 {
-    public $mail_server     = 'localhost';
-    public $mail_port       = 110;
-    public $use_ssl         = false;
-    public $mail_user       = 'unknown';
-    public $mail_pass       = "";
-    public $mail_email      = 'unknown@localhost';
-    public $mail_protocol   = POP3;
-    public $mail_prefix     = "";
+    public $mail_server = 'localhost';
+    public $mail_port = 110;
+    public $use_ssl = false;
+    public $mail_user = 'unknown';
+    public $mail_pass = "";
+    public $mail_email = 'unknown@localhost';
+    public $mail_protocol = POP3;
+    public $mail_prefix = "";
 
-    public $sanitize          = true;
-    public $use_html          = false;
-    public $charset           = 'UTF-8';
-    public $userfolder        = './';
-    public $temp_folder       = './';
-    public $idle_timeout      = 10;
-    public $displayimages     = false;
+    public $sanitize = true;
+    public $use_html = false;
+    public $charset = 'UTF-8';
+    public $userfolder = './';
+    public $temp_folder = './';
+    public $idle_timeout = 10;
+    public $displayimages = false;
     public $save_temp_attachs = true;
-    public $current_level     = array();
-    public $config            = array();
-    public $prefs             = array();
-    public $appversion        = "";
-    public $appname           = "";
+    public $current_level = array();
+    public $config = array();
+    public $prefs = array();
+    public $appversion = "";
+    public $appname = "";
     /* @var $tdb LocalMbox */
-    public $tdb              = null;
-    public $AuthSession       = "";
-    public $status            = STATUS_OK;
+    public $tdb = null;
+    public $AuthSession = "";
+    public $status = STATUS_OK;
 
     // internal
     protected $_msgbody = "";
     protected $_content = array();
-    private $_sid     = 0;
-    protected $_tnef    = "";
+    private $_sid = 0;
+    protected $_tnef = "";
     protected $_mail_connection = null;
     protected $_authenticated = false;
 
     /*******************/
 
-     /**
+    /**
      * Print out debugging info as HTML comments
      * @param  string $str
      * @return void
@@ -88,7 +87,7 @@ class Telaen_core
      * @param string $str
      * @return string
      */
-    static public function fs_safe_file($str, $delete=false)
+    static public function fs_safe_file($str, $delete = false)
     {
         $ret = preg_replace('|[.]{2,}|', ".", $str); // no dir
         return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $ret);
@@ -99,7 +98,7 @@ class Telaen_core
      * @param string $str
      * @return string
      */
-    static public function fs_safe_folder($str, $delete=true)
+    static public function fs_safe_folder($str, $delete = true)
     {
         $ret = self::fs_safe_file($str);
         return preg_replace('|[^A-Za-z0-9_-]|', ($delete ? '' : '_'), $ret);
@@ -154,7 +153,7 @@ class Telaen_core
         fseek($fp, 0, SEEK_END);
         $size = ftell($fp);
         rewind($fp);
-        $result =  preg_replace('|\r?\n|', "\r\n", fread($fp, $size));
+        $result = preg_replace('|\r?\n|', "\r\n", fread($fp, $size));
         fclose($fp);
         unset($fp);
         unset($size);
@@ -165,8 +164,8 @@ class Telaen_core
 
     /**
      * Save content to file
-     * @param  string  $filename The filename to write to
-     * @param  string  $content  The content to write
+     * @param  string $filename The filename to write to
+     * @param  string $content The content to write
      * @return boolean
      */
     public function save_file($filename, $content)
@@ -213,10 +212,11 @@ class Telaen_core
      * @param string $string string to encode
      * @return string
      */
-    public function mime_encode_headers($string) {
-        if($string == "") return;
-        if(!preg_match("/^([[:print:]]*)$/",$string))
-            $string = "=?".$this->charset."?Q?".str_replace("+","_",str_replace("%","=",urlencode($string)))."?=";
+    public function mime_encode_headers($string)
+    {
+        if ($string == "") return;
+        if (!preg_match("/^([[:print:]]*)$/", $string))
+            $string = "=?".$this->charset."?Q?".str_replace("+", "_", str_replace("%", "=", urlencode($string)))."?=";
         return $string;
     }
 
@@ -247,6 +247,37 @@ class Telaen_core
     static public function convert_charset($string, $from, $to)
     {
         return mb_convert_encoding($string, $to, $from);
+    }
+
+    /**
+     * Clean-up/sanitize HTML
+     * @param string $html HTML to sanitize
+     * @param boolean $use_htmLawed Use newer sanitize via htmLawed
+     * @return string Sanitized HTML
+     */
+    public function sanitizeHTML($html, $use_htmLawed = true)
+    {
+        if ($use_htmLawed) {
+            require_once './inc/htmLawed.php';
+            $config = array(
+                'safe' => 1,
+                'comment' => 1,
+                'cdata' => 1,
+                'css_expression' => 1,
+                'deny_attribute' => 'on*,style',
+                'unique_ids' => 0,
+                'elements' => '*-applet-form-input-textarea-iframe-script-style-embed-object',
+                'keep_bad' => 0,
+                'schemes' => 'classid:clsid; href: aim, feed, file, ftp, gopher, http, https, irc, mailto, news, nntp, sftp, ssh, telnet; style: nil; *:file, http, https', // clsid allowed in class
+                'valid_xhtml' => 0,
+                'direct_list_nest' => 1,
+                'balance' => 1
+            );
+            return htmLawed($html, $config);
+        } else {
+            require_once './inc/htmlfilter.php';
+            return HTMLFilter($html, 'images/trans.gif', $this->config['block_external_images']);
+        }
     }
 
     /**
@@ -600,7 +631,7 @@ class Telaen_core
         $part = $this->_split_parts($boundary, $body);
 
         // only for debug
-        //echo "<br>Boundary: " . $boundary . " parts count: " . count($part);
+        //echo "<br>Boundary: ".$boundary." parts count: ".count($part);
 
         for ($i = 0;$i<count($part);$i++) {
             $email = $this->fetch_structure($part[$i]);
@@ -780,7 +811,7 @@ class Telaen_core
         $ctype = $headers['content-type'];
 
         // for debug
-        //echo "<br>CDisp: ". $cdisp . " - CType: " . $ctype;
+        //echo "<br>CDisp: ". $cdisp." - CType: ".$ctype;
 
         // try to extract filename from content-disposition
         preg_match('|filename ?= ?"(.+)"|i', $cdisp, $matches);
@@ -1044,10 +1075,10 @@ class Telaen_core
 
         // debug echos
 /**		echo "Server offset time config:" .$server_timezone_offset ."<br>";
-        echo "Date time offset:" . $timezone ."<br>";
-        echo "Date on function:" . $mydate ."<br>";
+        echo "Date time offset:".$timezone ."<br>";
+        echo "Date on function:".$mydate ."<br>";
         echo "Converted date + date offset + user offset  + server offset:".$intdate." ". $datetimezone ." ". $usertimezone ." ". $servertimezone ."<br>";
-        echo "Returned time:" . ($intdate - $datetimezone + $usertimezone + $servertimezone) ."<br>"; */
+        echo "Returned time:".($intdate - $datetimezone + $usertimezone + $servertimezone) ."<br>"; */
 
         return ($intdate - $datetimezone + $usertimezone + $servertimezone);
     }
@@ -1598,7 +1629,7 @@ ENDOFREDIRECT;
                 break;
             }
         }
-        return round($val, 1) . $a;
+        return round($val, 1).$a;
     }
 
     /**
