@@ -36,10 +36,8 @@ $TLN->mail_disconnect();
 // metas assigned to smarty
 $smarty->assign('pageMetas', $pmetas);
 
-$TLN->displayimages = $TLN->prefs['display_images'];
-$TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
-
 $email = $TLN->Decode($result);
+
 if ($ix > 0) {
     $umHavePrevious = 1;
     $umPreviousSubject = $mysess[($ix-1)]['subject'];
@@ -71,7 +69,7 @@ $body = preg_replace('|href="http([s]?)://|i', "target=\"_blank\" href=\"$redir_
 $body = preg_replace('|href="mailto:|i', "target=\"_top\" href=\"newmsg.php?to=", $body);
 
 $auth['currentbody'] = $body;
-$body = "<iframe src=\"show_body.php?folder=".htmlspecialchars($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
+$body = "<iframe src=\"show_body.php?folder=".urlencode($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
 
 $smarty->assign('umMessageBody', $body);
 
@@ -224,7 +222,8 @@ if (count($anexos) > 0) {
     $smarty->assign('umAttachList', $attachAr);
 }
 
-$UserMbox->Save($mbox);
+$AuthSession->Save($auth);
+$tdb->sync_headers();
 
 $avalfolders = array();
 foreach (scandir($TLN->userfolder) as $entry) {

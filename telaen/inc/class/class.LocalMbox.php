@@ -458,7 +458,7 @@ class LocalMbox extends SQLite3
         if (!is_array($msg)) {
             $msg = (array)$msg;
         }
-        return $this->do_insert($this->getKey($msg['folder']), $this->mschema, $msg, $this->headers);
+        return $this->do_insert($this->getKey($msg[0]['folder']), $this->mschema, $msg, $this->headers);
     }
 
     /**

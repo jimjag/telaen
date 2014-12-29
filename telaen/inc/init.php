@@ -237,6 +237,9 @@ if (isset($auth['prefs'])) {
     $auth['prefs'] = $TLN->prefs;
 }
 
+$TLN->displayimages = $TLN->prefs['display_images'];
+$TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
+
 $TLN->tdb = new LocalMbox($TLN->userfolder, $TLN->prefs['keep_on_server'] && $initial_login);
 $tdb = &$TLN->tdb;
 $AuthSession->Save($auth);
