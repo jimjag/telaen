@@ -227,9 +227,6 @@ class Telaen_core
      */
     protected function _add_body($strbody)
     {
-        if ($this->sanitize) {
-            $strbody = HTMLFilter($strbody, 'images/trans.gif', $this->config['block_external_images']);
-        }
         if ($this->_msgbody == "") {
             $this->_msgbody = $strbody;
         } else {
@@ -253,9 +250,11 @@ class Telaen_core
      * Clean-up/sanitize HTML
      * @param string $html HTML to sanitize
      * @param boolean $use_htmLawed Use newer sanitize via htmLawed
+     * @param string $rep_image Path to replacement image (htmlfilter)
+     * @param boolean $block Block external images (htmlfilter)
      * @return string Sanitized HTML
      */
-    public function sanitizeHTML($html, $use_htmLawed = true)
+    static public function sanitizeHTML($html, $use_htmLawed = true, $rep_image = 'images/trans.gif', $block = true)
     {
         if ($use_htmLawed) {
             require_once './inc/htmLawed.php';
@@ -276,7 +275,7 @@ class Telaen_core
             return htmLawed($html, $config);
         } else {
             require_once './inc/htmlfilter.php';
-            return HTMLFilter($html, 'images/trans.gif', $this->config['block_external_images']);
+            return HTMLFilter($html, $rep_image, $block);
         }
     }
 
@@ -896,7 +895,7 @@ class Telaen_core
             $body = convert_cyr_string($body, 'k', 'w');
         } elseif (preg_match('|charset ?= ?"?([a-z0-9-]+)"?|i', $ctype, $regs)) {
             if ($regs[1] != $this->charset) {
-                $body = $self::convert_charset($body, $regs[1], $this->charset);
+                $body = self::convert_charset($body, $regs[1], $this->charset);
             }
         }
 
