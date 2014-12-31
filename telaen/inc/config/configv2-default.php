@@ -350,6 +350,7 @@ $config['default_preferences'] = array(
     #    null: No system-wide setting; allow user to change/set at will
     #    false: Force as false; user cannot change
     #    true: Force as true; user cannot change
+    #    <whatever>: Force as whatever (int/string/etc...)
     ########################################################################
 
     'force_unmark_read' => false,

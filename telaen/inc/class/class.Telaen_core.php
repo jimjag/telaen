@@ -1491,7 +1491,7 @@ ENDOFREDIRECT;
             if (preg_match('^force_', $key)) {
                 if ($val !== null) {
                     $pref = substr($key, 6);
-                    $this->prefs[$pref] = (boolean)$val;
+                    $this->prefs[$pref] = $val;
                 }
             }
         }
