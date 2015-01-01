@@ -114,3 +114,5 @@ S„o Paulo - Brasil
 Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
+
+ htmLawed is free and open-source software dual copyrighted by Santosh Patnaik, MD, PhD, and licensed under LGPL license version 3:- http://www.gnu.org/licenses/lgpl-3.0.txt, and GPL license version 2:- http://www.gnu.org/licenses/gpl-2.0.txt (or later).
