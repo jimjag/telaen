@@ -489,7 +489,6 @@ if ($tempSize && $memoryLimit < $megs16) {
 
 echo('<hr><h4>Testing for safe_mode</h4>');
 
-
 if (ini_get('safe_mode')) {
     echo('<span class="warn">&lt; WARNING &gt;</span>
 	<br/>PHP.ini\'s safe_mode is on. You may have problems with this configuration');
@@ -517,7 +516,17 @@ if (function_exists('mb_convert_encoding') && function_exists('mb_internal_encod
     echo('<span class="pass">PASSED</span>');
 } else {
     echo('<span class="fail">!! FAILED !!</span>');
-	echo("<br/>Could not create a SQLite3 instance at: $tfile");
+	echo("<br/>mb_*() support missing");
+    $error = true;
+}
+
+echo('<hr><h4>Testing for STARTTLS support</h4>');
+
+if (function_exists('stream_socket_enable_crypto')) {
+    echo('<span class="pass">PASSED</span>');
+} else {
+    echo('<span class="fail">!! FAILED !!</span>');
+	echo("<br/>stream_socket_enable_crypto() not available for STARTTLS");
     $error = true;
 }
 
