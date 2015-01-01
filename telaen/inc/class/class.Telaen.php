@@ -839,16 +839,16 @@ class Telaen extends Telaen_core
     {
         $messages = array();
         $header = '';
-        $curmsg = $size = $flags = '';
+        $curmsg = $size = $flags = $uid = '';
 
         /* select the mail box and make sure that it exists */
         $boxinfo = $this->mail_select_box($boxname);
 
         if (is_array($boxinfo) && $boxinfo['exists']) {
-            /* if the box is ok, fetch the first to the last message, getting the size and the header */
+            /* if the box is ok, fetch the first to the last message, getting the size, header and uid */
             /* This is FAST under IMAP, so we scarf the whole dataset */
 
-            $this->_mail_send_command('FETCH 1:'.$boxinfo['exists'].' (FLAGS RFC822.SIZE RFC822.HEADER)');
+            $this->_mail_send_command('FETCH 1:'.$boxinfo['exists'].' (FLAGS RFC822.SIZE RFC822.HEADER UID)');
             $buffer = $this->_mail_get_line();
 
             /* if any problem, stop the procedure */
@@ -866,6 +866,8 @@ class Telaen extends Telaen_core
                     $size = $regs[1];
                     preg_match('|FLAGS[ ]?\\((.*)\\)|i', $buffer, $regs);
                     $flags = $regs[1];
+                    preg_match('|UID[ ]?([0-9]+)|i', $buffer, $regs);
+                    $uid = $regs[1];
                 /* if any problem, add the current line to buffer */
                 } elseif (trim($buffer) != ")" && trim($buffer) != '') {
                     $header .= $buffer;
@@ -877,13 +879,14 @@ class Telaen extends Telaen_core
                     $messages[$counter]['size'] = intval($size);
                     $messages[$counter]['flags'] = strtoupper($flags);
                     $messages[$counter]['header'] = $header;
+                    $messages[$counter]['folder'] = $boxname;
+                    $messages[$counter]['uidl'] = md5($boxinfo['uidvalidity'].":".$uidl);
                     $counter++;
                     $header = '';
                 }
                 $buffer = $this->_mail_get_line();
             }
         }
-
         return $messages;
     }
 
@@ -927,6 +930,7 @@ class Telaen extends Telaen_core
                     $messages[$counter]['id'] = $counter+1; //$msgs[0];
                     $messages[$counter]['msg'] = intval($msgs[0]);
                     $messages[$counter]['size'] = intval($msgs[1]);
+                    $messages[$counter]['folder'] = $boxname;
                     $counter++;
                 }
             }
@@ -1003,12 +1007,12 @@ class Telaen extends Telaen_core
                     $messages[$i]['header'] = $thisheader;
                     $messages[$i]['size'] = filesize($fullpath);
                     $messages[$i]['localname'] = $fullpath;
+                    $messages[$i]['folder'] = $boxname;
                     $i++;
                 }
             }
         }
         $this->array_qsort2int($messages, 'msg', 'DESC');
-
         return $messages;
     }
 
@@ -1034,7 +1038,9 @@ class Telaen extends Telaen_core
         $parallelized = 0;
         // $this->havespam = '';
 
-        /* choose the protocol */
+        // First get info from DB
+        $this->tdb->get_headers($boxname);
+        /* choose the protocol and get list from server */
         if ($this->mail_protocol == IMAP) {
             $messages = $this->_mail_list_msgs_imap($boxname, $localmessages);
         } else {
@@ -1321,11 +1327,14 @@ class Telaen extends Telaen_core
                 if (preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]EXISTS|i', $buffer, $regs)) {
                     $boxinfo['exists'] = $regs[1];
                 }
-                if (preg_match('|[ ]?\\*[ ]?([0-9])+[ ]RECENT|i', $buffer, $regs)) {
+                if (preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]RECENT|i', $buffer, $regs)) {
                     $boxinfo['recent'] = $regs[1];
                 }
                 if (preg_match('|[ ]?\\*[ ]?FLAGS[ ]?\\((.*)\\)|i', $buffer, $regs)) {
                     $boxinfo['flags'] = $regs[1];
+                }
+                if (preg_match('|[ ]?\\*[ ]?OK[ ]?.*UIDVALIDITY ([0-9]+)|i', $buffer, $regs)) {
+                    $this->_uidvalidity = $boxinfo['uidvalidity'] = $regs[1];
                 }
                 $buffer = $this->_mail_get_line();
             }

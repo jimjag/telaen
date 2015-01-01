@@ -53,6 +53,7 @@ class Telaen_core
     protected $_tnef = "";
     protected $_mail_connection = null;
     protected $_authenticated = false;
+    protected $_uidvalidity = "";
 
     /*******************/
 

@@ -38,7 +38,7 @@ class LocalMbox extends SQLite3
         'priority' => 'INT',
         'attach' => 'INT',
         'folder' => 'TEXT',
-        'uidl' => 'TEXT',
+        'uidl' => 'TEXT PRIMARY KEY',
         'subject' => 'TEXT',
         'from' => 'TEXT',
         'fromname' => 'TEXT',
@@ -57,6 +57,7 @@ class LocalMbox extends SQLite3
     public $ok = true;
     public $message = '';
     public $changed = array();
+    private $_indb = array();
 
     /**
      * Construct: open DB and create tables if needed
@@ -408,11 +409,13 @@ class LocalMbox extends SQLite3
             $query .= ';';
             $result = $this->query($query);
             $this->headers = array();
+            $this->_indb = array();
             $index = 0;
             if ($result) {
                 while ($foo = $result->fetchArray()) {
                     $this->headers[$index] = $foo;
                     $this->headers[$index]['idx'] = $index;
+                    $this->_indb[$foo['uidl']] = true;
                     $index++;
                 }
                 $this->active_folder = $folder;
@@ -488,19 +491,34 @@ class LocalMbox extends SQLite3
    }
 
     /**
-     * Update all changed headers for all email messages
+     * Update all changed/new headers for all email messages
+     * NOTE: We are smart enough to know which messages are
+     *       new, and need to be INSERTed and which ones are
+     *       old, and just need UPDATE. We know this via looking
+     *       at the message's UIDL entry. If it's in the _indb[]
+     *       array, then we've read this message from the DB and
+     *       thus should UPDATE. If not, then we have a new
+     *       message.
      * @return boolean
      */
     public function sync_headers()
     {
+        $retval = true;
+        $adds = array();
         if (count($this->changed) > 0) {
             foreach ($this->changed as $foo) {
-                if (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
-                    return false;
+                if (!array_key_exists($foo[0]['uidl'], $this->_indb)) {
+                    $adds[] = $foo[0];
+                }
+                elseif (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
+                    $retval = false;
                 }
             }
         }
-        return true;
+        if (count($adds) > 0) {
+            return $this->add_headers($adds);
+        }
+        return $retval;
     }
 
     /**
