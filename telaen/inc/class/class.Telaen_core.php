@@ -1381,7 +1381,10 @@ class Telaen_core
     }
 
     /**
-     *
+     * Redirect user to location and die
+     * @param string $location URL location
+     * @param boolean $killsession Destroy session data
+     * @return void
      */
     public function redirect_and_exit($location, $killsession = false)
     {
@@ -1465,6 +1468,9 @@ ENDOFREDIRECT;
 
     /**
      * Load user prefs
+     * @param string $user User email
+     * @param string $file Prefs filename
+     * @return void
      */
     public function load_prefs($user='unknown@example.com', $file = 'prefs.upf')
     {
@@ -1499,6 +1505,9 @@ ENDOFREDIRECT;
 
     /**
      * Save prefs
+     * @param string $prefarray Hash of user prefs
+     * @param string $file Prefs filename
+     * @return void
      */
     public function save_prefs($prefarray, $file = 'prefs.upf')
     {
@@ -1514,7 +1523,10 @@ ENDOFREDIRECT;
     }
 
     /**
-     *
+     * Load in Telaen config
+     * @param string $cfile File to read config from
+     * @param boolean $merge Merge w/ existing stored config
+     * @return array
      */
     public function load_config($cfile='configv2', $merge=true)
     {
@@ -1527,7 +1539,9 @@ ENDOFREDIRECT;
     }
 
     /**
-     *
+     * Get Email headers from stored file
+     * @param string $strfile File to read headers from
+     * @return string
      */
     static public function get_headers_from_file($strfile)
     {
@@ -1577,7 +1591,10 @@ ENDOFREDIRECT;
 
 
     /**
-     *
+     * Force variable to a specific type
+     * @param mixed $var Variable to cast
+     * @param mixed $cast Type to cast $var to
+     * @return mixed
      */
     static public function caster($var, $cast = 'string')
     {
@@ -1601,7 +1618,11 @@ ENDOFREDIRECT;
     }
 
     /**
-     *
+     * Pull various elements from array if they exist
+     * @param array $whofrom Array to pull elements from
+     * @param array $my_vars Elements to pull from $whofrom
+     * @param mixed $cast Type to cast ELement to
+     * @return array
      */
     static public function pull_from_array(&$whofrom, $my_vars = array(), $cast = 'string')
     {
@@ -1616,7 +1637,9 @@ ENDOFREDIRECT;
     }
 
     /**
-     *
+     * Convert bytes to Kilo/Mega/Gigabytes
+     * @param int $val Number of bytes
+     * @return string Converted value
      */
     static public function bytes2bkmg($val)
     {
@@ -1632,7 +1655,9 @@ ENDOFREDIRECT;
     }
 
     /**
-     *
+     * Convert Kilo/Mega/Gigabytes to actual bytes
+     * @param string $val Size
+     * @return int Number of bytes
      */
     static public function bkmg2bytes($val)
     {
