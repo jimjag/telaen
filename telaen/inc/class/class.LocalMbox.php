@@ -38,7 +38,7 @@ class LocalMbox extends SQLite3
         'priority' => 'INT',
         'attach' => 'INT',
         'folder' => 'TEXT',
-        'uidl' => 'TEXT PRIMARY KEY',
+        'uidl' => 'TEXT NOT NULL PRIMARY KEY',
         'subject' => 'TEXT',
         'from' => 'TEXT',
         'fromname' => 'TEXT',
