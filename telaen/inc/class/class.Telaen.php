@@ -1278,12 +1278,7 @@ class Telaen extends Telaen_core
 
     public function _mail_list_boxes_pop($boxname = '*')
     {
-        $boxlist = array();
-        /* if POP3, only list the available folders */
-        foreach ($this->tdb->folders as $foo) {
-            $boxlist[] = $foo;
-        }
-        return $boxlist;
+        return $this->tdb->folders;
     }
     /**
      * List available emailboxes
@@ -1856,9 +1851,15 @@ class Telaen extends Telaen_core
             $cleanme = $userfolder.'inbox/';
             self::cleanup_dir($cleanme);
             if ($this->mail_protocol == IMAP) {
+                /*
+                 * For IMAP, this determines whether we simply
+                 * cache what's on the IMAP server, or we exclusively
+                 * store email. If we simply cache, clean up whatever
+                 * data still exists locally.
+                 */
                 foreach ($this->tdb->folders as $folder) {
                     if ($folder != $this->tdb->udatafolder) {
-                        $cleanme = $userfolder . $folder . '/';
+                        $cleanme = $userfolder.$folder.'/';
                         self::cleanup_dir($cleanme);
                     }
                 }

@@ -323,7 +323,7 @@ if ($initial_login) {
     if ($TLN->mail_protocol == IMAP) {
         $folders = $TLN->mail_list_boxes();
         foreach ($folders as $f) {
-            if (!isset($tdb->folders[strtolower($f)])) {
+            if (!isset($tdb->folders[$f])) {
                 $tdb->add_folder($f);
             }
         }
