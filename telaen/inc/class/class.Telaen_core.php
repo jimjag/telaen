@@ -21,7 +21,8 @@ class Telaen_core
 {
     public $mail_server = 'localhost';
     public $mail_port = 110;
-    public $use_ssl = false;
+    public $use_tls = false;
+    public $upgrade_tls = false;
     public $mail_user = 'unknown';
     public $mail_pass = "";
     public $mail_email = 'unknown@localhost';

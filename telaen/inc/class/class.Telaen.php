@@ -127,10 +127,11 @@ class Telaen extends Telaen_core
      * @param  string $string Response string to parse
      * @return int
      */
-    protected function _mail_parse_resp($string)
+    protected function _mail_parse_resp($string = null)
     {
         $resp = self::RESP_UNKNOWN;
         $match = array();
+        if ($string == null) $string = $this->_mail_get_line();
         if ($this->mail_protocol == IMAP) {
             if (preg_match('|^[a-z0-9*]+\s+(OK|NO|BAD|BYE)(.*)$|i', trim($string), $match)) {
                 $a = strtoupper($match[1]);
@@ -165,8 +166,9 @@ class Telaen extends Telaen_core
      * @param  string  $string Response string to checkout
      * @return boolean True if we saw an explicit OK
      */
-    public function mail_ok_resp($string)
+    public function mail_ok_resp($string = null)
     {
+        if ($string == null) $string = $this->_mail_get_line();
         $resp = $this->_mail_parse_resp($string);
 
         return ($resp == self::RESP_OK);
@@ -177,8 +179,9 @@ class Telaen extends Telaen_core
      * @param  string  $string Response string to checkout
      * @return boolean True if we saw an explicit error
      */
-    public function mail_nok_resp($string)
+    public function mail_nok_resp($string = null)
     {
+        if ($string == null) $string = $this->_mail_get_line();
         $resp = $this->_mail_parse_resp($string);
 
         return ($resp < self::RESP_OK);
@@ -239,7 +242,7 @@ class Telaen extends Telaen_core
     {
         if (!$this->mail_connected()) {
             if (!$this->_serverurl) {
-                $this->_serverurl = ($this->use_ssl ? 'ssl://' : 'tcp://').
+                $this->_serverurl = ($this->use_tls ? 'tls://' : 'tcp://').
                     $this->mail_server.':'.$this->mail_port;
             }
             $errno = 0;
@@ -270,9 +273,17 @@ class Telaen extends Telaen_core
      */
     protected function _mail_auth_imap($checkfolders = false)
     {
+        if ($this->upgrade_tls) {
+            $this->_mail_send_command('STARTTLS');
+            if ($this->mail_ok_resp()) {
+                stream_socket_enable_crypto($this->_mail_connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+            } else {
+                $this->trigger_error("STARTTLS failure", __FUNCTION__);
+                return false;
+            }
+        }
         $this->_mail_send_command('LOGIN '.$this->mail_user.' '.$this->mail_pass);
-        $buffer = $this->_mail_get_line();
-        if ($this->mail_ok_resp($buffer)) {
+        if ($this->mail_ok_resp()) {
             if ($checkfolders) {
                 $this->_check_folders();
             }
@@ -289,7 +300,16 @@ class Telaen extends Telaen_core
      */
     protected function _mail_auth_pop($checkfolders = false)
     {
-        $tokens = array();;
+        $tokens = array();
+        if ($this->upgrade_tls) {
+            $this->_mail_send_command('STLS');
+            if ($this->mail_ok_resp()) {
+                stream_socket_enable_crypto($this->_mail_connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+            } else {
+                $this->trigger_error("STLS failure", __FUNCTION__);
+                return false;
+            }
+        }
         // APOP login mode, more secure
         if ($this->capabilities['APOP'] && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
             $this->_mail_send_command('APOP '.$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
@@ -298,16 +318,14 @@ class Telaen extends Telaen_core
         else {
             $this->_mail_send_command('USER '.$this->mail_user);
 
-            $buffer = $this->_mail_get_line();
-            if ($this->mail_ok_resp($buffer)) {
+            if ($this->mail_ok_resp()) {
                 $this->_mail_send_command('PASS '.$this->mail_pass);
             } else {
                 return false;
             }
         }
 
-        $buffer = $this->_mail_get_line();
-        if ($this->mail_ok_resp($buffer)) {
+        if ($this->mail_ok_resp()) {
             if ($checkfolders) {
                 $this->_check_folders();
             }
@@ -668,8 +686,7 @@ class Telaen extends Telaen_core
             }
 
             $this->_mail_send_command('DELE '.$msg['mnum']);
-            $buffer = $this->_mail_get_line();
-            if ($this->mail_nok_resp($buffer)) {
+            if ($this->mail_nok_resp()) {
                 return false;
             }
         }
@@ -747,10 +764,8 @@ class Telaen extends Telaen_core
             $tofolder = $this->fix_prefix($tofolder, 1);
 
             $this->_mail_send_command('COPY '.$msg['mnum'].':'.$msg['mnum']." \"$tofolder\"");
-            $buffer = $this->_mail_get_line();
-
             /* if any problem with the server, stop the function */
-            if ($this->mail_nok_resp($buffer)) {
+            if ($this->mail_nok_resp()) {
                 return false;
             }
 
@@ -802,8 +817,7 @@ class Telaen extends Telaen_core
                     // delete from server if we are working on inbox or spam
                     if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
                         $this->_mail_send_command('DELE '.$msg['mnum']);
-                        $buffer = $this->_mail_get_line();
-                        if ($this->mail_nok_resp($buffer)) {
+                        if ($this->mail_nok_resp()) {
                             return false;
                         }
                     }
@@ -910,10 +924,8 @@ class Telaen extends Telaen_core
         */
         if ($boxname == 'inbox' || $boxname == 'spam') {
             $this->_mail_send_command('LIST');
-            $buffer = $this->_mail_get_line();
             /* if any problem with this messages list, stop the procedure */
-
-            if ($this->mail_nok_resp($buffer)) {
+            if ($this->mail_nok_resp()) {
                 return -1;
             }
 
@@ -1350,8 +1362,7 @@ class Telaen extends Telaen_core
         if ($this->mail_protocol == IMAP) {
             $boxname = $this->fix_prefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
             $this->_mail_send_command("SUBSCRIBE \"$boxname\"");
-            $buffer = $this->_mail_get_line();
-            if ($this->mail_nok_resp($buffer)) {
+            if ($this->mail_nok_resp()) {
                 return false;
             }
         }
@@ -1369,8 +1380,7 @@ class Telaen extends Telaen_core
         if ($this->mail_protocol == IMAP) {
             $boxname = $this->fix_prefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
             $this->_mail_send_command("CREATE \"$boxname\"");
-            $buffer = $this->_mail_get_line();
-            if ($this->mail_ok_resp($buffer)) {
+            if ($this->mail_ok_resp()) {
                 @mkdir($this->userfolder.$this->fix_prefix($boxname, 0), $this->dirperm);
 
                 return true;
@@ -1391,9 +1401,8 @@ class Telaen extends Telaen_core
     {
         $boxname = $this->fix_prefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
         $this->_mail_send_command("DELETE \"$boxname\"");
-        $buffer = $this->_mail_get_line();
 
-        if ($this->mail_ok_resp($buffer)) {
+        if ($this->mail_ok_resp()) {
             $this->_RmDirR($this->userfolder.$boxname);
             return true;
         } else {
@@ -1441,7 +1450,7 @@ class Telaen extends Telaen_core
 
         // send the msg
         $mailcommand = "$message";
-        $this->_mail_send_command($mailcommand, true);    // not send the session id here!
+        $this->_mail_send_command($mailcommand, true);    // don't send the session id here!
 
         $buffer = $this->_mail_get_line();
 
@@ -1594,10 +1603,10 @@ class Telaen extends Telaen_core
                     $this->mail_expunge();
                 }
                 $this->_mail_send_command('LOGOUT');
-                $tmp = $this->_mail_get_line();
+                $this->_mail_get_line();
             } else {
                 $this->_mail_send_command('QUIT');
-                $tmp = $this->_mail_get_line();
+                $this->_mail_get_line();
             }
             fclose($this->_mail_connection);
             $this->_mail_connection = null;
