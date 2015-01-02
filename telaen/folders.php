@@ -103,7 +103,7 @@ for ($n = 0;$n<count($boxes);$n++) {
              * Sort the arrays and fit them together again.
              */
             $merged_array = array_merge($mbox['headers']['inbox'], $mbox['headers']['spam']);
-            Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
+            Telaen::array_qsort2int($merged_array, 'mnum', 'ASC');
 
             $merged_returnarray = $TLN->mail_list_msgs('inbox', $merged_array);
             $thisbox = $merged_returnarray[0];

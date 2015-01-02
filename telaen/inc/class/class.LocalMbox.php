@@ -33,7 +33,7 @@ class LocalMbox extends SQLite3
         'date' => 'INT',
         'hparsed' => 'INT',
         'id' => 'INT',
-        'msg' => 'INT',
+        'mnum' => 'INT',
         'size' => 'INT',
         'priority' => 'INT',
         'attach' => 'INT',

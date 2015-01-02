@@ -16,7 +16,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
                  * Sort the arrays and fit them together again.
                  */
                 $merged_array = array_merge((array) $mbox['headers']['inbox'], (array) $mbox['headers']['spam']);
-                Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
+                Telaen::array_qsort2int($merged_array, 'mnum', 'ASC');
 
                 $merged_returnarray = $TLN->mail_list_msgs('inbox', $merged_array, $start_pos, $reg_pp);
 
@@ -47,7 +47,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
              * Sort the arrays and fit them together again.
              */
             $merged_array = array_merge((array) $mbox['headers']['inbox'], (array) $mbox['headers']['spam']);
-            Telaen::array_qsort2int($merged_array, 'msg', 'ASC');
+            Telaen::array_qsort2int($merged_array, 'mnum', 'ASC');
             $returnarray = $TLN->mail_list_msgs('inbox', $merged_array, $start_pos, $reg_pp);
 
             /*

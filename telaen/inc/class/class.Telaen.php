@@ -402,7 +402,7 @@ class Telaen extends Telaen_core
                 $boxinfo = $this->mail_select_box($msg['folder']);
             }
 
-            $this->_mail_send_command('FETCH '.$msg['msg'].':'.$msg['msg'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
+            $this->_mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
             $buffer = chop($this->_mail_get_line());
             if ($this->mail_nok_resp($buffer)) {
                 return false;
@@ -428,7 +428,7 @@ class Telaen extends Telaen_core
         if (file_exists($msg['localname'])) {
             $msgcontent = $this->read_file($msg['localname']);
         } else {
-            $this->_mail_send_command('FETCH '.$msg['msg'].':'.$msg['msg'].' BODY[TEXT]');
+            $this->_mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY[TEXT]');
             $buffer = $this->_mail_get_line();
             if ($this->mail_nok_resp($buffer)) {
                 return false;
@@ -461,7 +461,7 @@ class Telaen extends Telaen_core
     protected function _mail_retr_msg_pop(&$msg, $check = 1)
     {
         if ($check && ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam')) {
-            $muidl = $this->_mail_get_uidl($msg['msg']);
+            $muidl = $this->_mail_get_uidl($msg['mnum']);
             if ($msg['uidl'] && ($msg['uidl'] != $muidl)) {
                 $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                     $msg['uidl'],
@@ -474,7 +474,7 @@ class Telaen extends Telaen_core
         if (file_exists($msg['localname'])) {
             $msgcontent = $this->read_file($msg['localname']);
         } elseif ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
-            $command = ($this->config['mail_use_top']) ? 'TOP '.$msg['msg'].' '.$msg['size'] : 'RETR '.$msg['msg'];
+            $command = ($this->config['mail_use_top']) ? 'TOP '.$msg['mnum'].' '.$msg['size'] : 'RETR '.$msg['mnum'];
             $this->_mail_send_command($command);
 
             $buffer = $this->_mail_get_line();
@@ -500,7 +500,7 @@ class Telaen extends Telaen_core
             // time from the server, we need to add in our UIDL
             // header. Thus, it will always now be available on
             // the cached/local version.
-            $uidl = $this->_mail_get_uidl($msg['msg'], $mail_info);
+            $uidl = $this->_mail_get_uidl($msg['mnum'], $mail_info);
             $header .= "\r\nX-UM-UIDL: $uidl";
 
             // Update globally
@@ -541,7 +541,7 @@ class Telaen extends Telaen_core
         /*
          * Fetch headers serially. Very slow.
          */
-        $this->_mail_send_command('TOP '.$msg['msg'].' 0');
+        $this->_mail_send_command('TOP '.$msg['mnum'].' 0');
         $buffer = $this->_mail_get_line();
         /* if any problem with this messages list, stop the procedure */
         if ($this->mail_nok_resp($buffer)) {
@@ -588,7 +588,7 @@ class Telaen extends Telaen_core
             $boxinfo = $this->mail_select_box($msg['folder']);
         }
 
-        $this->_mail_send_command('FETCH '.$msg['msg'].':'.$msg['msg'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
+        $this->_mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
         $buffer = chop($this->_mail_get_line());
 
         /* if any problem with the server, stop the function */
@@ -622,7 +622,7 @@ class Telaen extends Telaen_core
             && (!$save_only_read || ($save_only_read && $read))) {
             $trash_folder = $this->fix_prefix('trash', 1);
 
-            $this->_mail_send_command('COPY '.$msg['msg'].':'.$msg['msg']." \"$trash_folder\"");
+            $this->_mail_send_command('COPY '.$msg['mnum'].':'.$msg['mnum']." \"$trash_folder\"");
             $buffer = $this->_mail_get_line();
 
             /* if any problem with the server, stop the function */
@@ -651,7 +651,7 @@ class Telaen extends Telaen_core
         /* check the message id to make sure that the messages still in the server */
         if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
             /* compare the old and the new message uidl, if different, stop*/
-            $muidl = $this->_mail_get_uidl($msg['msg']);
+            $muidl = $this->_mail_get_uidl($msg['mnum']);
             if ($msg['uidl'] != $muidl) {
                 $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                     $msg['uidl'],
@@ -667,7 +667,7 @@ class Telaen extends Telaen_core
                 $this->mail_set_flag($msg, '\\SEEN', '-');
             }
 
-            $this->_mail_send_command('DELE '.$msg['msg']);
+            $this->_mail_send_command('DELE '.$msg['mnum']);
             $buffer = $this->_mail_get_line();
             if ($this->mail_nok_resp($buffer)) {
                 return false;
@@ -717,7 +717,7 @@ class Telaen extends Telaen_core
                 $boxinfo = $this->mail_select_box($msg['folder']);
             }
 
-            $this->_mail_send_command('FETCH '.$msg['msg'].':'.$msg['msg'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
+            $this->_mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
             $buffer = chop($this->_mail_get_line());
 
             /* if any problem with the server, stop the function */
@@ -746,7 +746,7 @@ class Telaen extends Telaen_core
 
             $tofolder = $this->fix_prefix($tofolder, 1);
 
-            $this->_mail_send_command('COPY '.$msg['msg'].':'.$msg['msg']." \"$tofolder\"");
+            $this->_mail_send_command('COPY '.$msg['mnum'].':'.$msg['mnum']." \"$tofolder\"");
             $buffer = $this->_mail_get_line();
 
             /* if any problem with the server, stop the function */
@@ -774,7 +774,7 @@ class Telaen extends Telaen_core
             /* check the message id to make sure that the messages still in the server */
             if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
                 /* compare the old and the new message id, if different, stop*/
-                $muidl = $this->_mail_get_uidl($msg['msg']);
+                $muidl = $this->_mail_get_uidl($msg['mnum']);
                 if ($msg['uidl'] != $muidl) {
                     $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                         $msg['uidl'],
@@ -801,7 +801,7 @@ class Telaen extends Telaen_core
                     unlink($currentname);
                     // delete from server if we are working on inbox or spam
                     if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
-                        $this->_mail_send_command('DELE '.$msg['msg']);
+                        $this->_mail_send_command('DELE '.$msg['mnum']);
                         $buffer = $this->_mail_get_line();
                         if ($this->mail_nok_resp($buffer)) {
                             return false;
@@ -875,7 +875,7 @@ class Telaen extends Telaen_core
                 /*	the end of message header was reached, increment the counter and store the last message */
                 } elseif (trim($buffer) == ")") {
                     $messages[$counter]['id'] = $counter+1; //$msgs[0];
-                    $messages[$counter]['msg'] = intval($curmsg);
+                    $messages[$counter]['mnum'] = intval($curmsg);
                     $messages[$counter]['size'] = intval($size);
                     $messages[$counter]['flags'] = strtoupper($flags);
                     $messages[$counter]['header'] = $header;
@@ -928,7 +928,7 @@ class Telaen extends Telaen_core
                 $msgs = explode(' ', $buffer);
                 if (is_numeric($msgs[0])) {
                     $messages[$counter]['id'] = $counter+1; //$msgs[0];
-                    $messages[$counter]['msg'] = intval($msgs[0]);
+                    $messages[$counter]['mnum'] = intval($msgs[0]);
                     $messages[$counter]['size'] = intval($msgs[1]);
                     $messages[$counter]['folder'] = $boxname;
                     $counter++;
@@ -957,7 +957,7 @@ class Telaen extends Telaen_core
                  * have or haven't.
                  */
                 $oldid = $localmessages[$localcount - 1]['uidl'];
-                $newid = $this->_mail_get_uidl($messages[$localcount - 1]['msg']);
+                $newid = $this->_mail_get_uidl($messages[$localcount - 1]['mnum']);
 
                 if ("$oldid" == "$newid") {
                     // Ok the ids are the same and we have new messages
@@ -1003,7 +1003,7 @@ class Telaen extends Telaen_core
                 if (is_file($fullpath)) {
                     $thisheader = $this->_get_headers_from_cache($fullpath);
                     $messages[$i]['id'] = $i+1;
-                    $messages[$i]['msg'] = $i;
+                    $messages[$i]['mnum'] = $i;
                     $messages[$i]['header'] = $thisheader;
                     $messages[$i]['size'] = filesize($fullpath);
                     $messages[$i]['localname'] = $fullpath;
@@ -1012,7 +1012,7 @@ class Telaen extends Telaen_core
                 }
             }
         }
-        $this->array_qsort2int($messages, 'msg', 'DESC');
+        $this->array_qsort2int($messages, 'mnum', 'DESC');
         return $messages;
     }
 
@@ -1144,7 +1144,7 @@ class Telaen extends Telaen_core
                 $messagescopy[$j]['cc'] = $mail_info['cc'];
                 $messagescopy[$j]['priority'] = $mail_info['priority'];
                 $messagescopy[$j]['uidl'] = ((!$this->is_valid_md5($mail_info['uidl'])) ?
-                                    $this->_mail_get_uidl($messagescopy[$j]['msg'], $mail_info) :
+                                    $this->_mail_get_uidl($messagescopy[$j]['mnum'], $mail_info) :
                                     $mail_info['uidl']);
                 $messagescopy[$j]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                                     $mail_info['content-type'])) ? 1 : 0;
@@ -1187,7 +1187,7 @@ class Telaen extends Telaen_core
                 $spamcopy[$y]['cc'] = $mail_info['cc'];
                 $spamcopy[$y]['priority'] = $mail_info['priority'];
                 $spamcopy[$y]['uidl'] = ((!$this->is_valid_md5($mail_info['uidl'])) ?
-                                    $this->_mail_get_uidl($spamcopy[$y]['msg'], $mail_info) :
+                                    $this->_mail_get_uidl($spamcopy[$y]['mnum'], $mail_info) :
                                     $mail_info['uidl']);
                 $spamcopy[$y]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                                      $mail_info['content-type'])) ? 1 : 0;
@@ -1489,7 +1489,7 @@ class Telaen extends Telaen_core
         if ($flagtype != '+') {
             $flagtype = '-';
         }
-        $this->_mail_send_command('STORE '.$msg['msg'].':'.$msg['msg'].' '.$flagtype."FLAGS ($flagname)");
+        $this->_mail_send_command('STORE '.$msg['mnum'].':'.$msg['mnum'].' '.$flagtype."FLAGS ($flagname)");
         $buffer = $this->_mail_get_line();
 
         while (!preg_match("/^(".$this->get_sid()." (OK|NO|BAD))/i", $buffer)) {
