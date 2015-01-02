@@ -16,7 +16,7 @@ require './inc/init.php';
 // meta assigned to smarty
 $smarty->assign('pageMetas', $pmetas);
 
-$filename = $TLN->userfolder.'_infos/addressbook.ucf';
+$filename = $TLN->userdatafolder.'/addressbook.ucf';
 $myfile = $TLN->read_file($filename);
 
 if ($myfile != "") {

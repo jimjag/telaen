@@ -14,7 +14,7 @@ require './inc/init.php';
 extract(Telaen::pull_from_array($_GET, array('where'), 'str'));
 extract(Telaen::pull_from_array($_POST, array('contacts'), 'str'));
 
-$filename = $TLN->userfolder.'_infos/addressbook.ucf';
+$filename = $TLN->userdatafolder.'/addressbook.ucf';
 $myfile = $TLN->read_file($filename);
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));

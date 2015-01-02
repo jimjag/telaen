@@ -17,7 +17,7 @@ if (!isset($ix) || !isset($folder)) {
 
 extract(Telaen::pull_from_array($_POST, array('ckaval'), 1));
 
-$filename = $TLN->userfolder.'_infos/addressbook.ucf';
+$filename = $TLN->userdatafolder.'/addressbook.ucf';
 $myfile = $TLN->read_file($filename);
 $addressbook = array();
 

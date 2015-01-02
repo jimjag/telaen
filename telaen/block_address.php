@@ -15,7 +15,7 @@ if (!isset($ix) || !isset($folder)) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
-$filename = $TLN->userfolder.'_infos/filters.ucf';
+$filename = $TLN->userdatafolder.'/filters.ucf';
 $myfile = $TLN->read_file($filename);
 $filters = array();
 

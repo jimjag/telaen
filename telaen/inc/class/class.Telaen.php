@@ -1852,16 +1852,15 @@ class Telaen extends Telaen_core
     public function cleanup_dirs($userfolder, $logout = false)
     {
         if ($this->prefs['keep_on_server']) {
+            // inbox is always cleaned up
             $cleanme = $userfolder.'inbox/';
             self::cleanup_dir($cleanme);
-            $cleanme = $userfolder.'_attachments/';
-            self::cleanup_dir($cleanme);
-            $cleanme = $userfolder.'spam/';
-            self::cleanup_dir($cleanme);
-            foreach ($this->tdb->folders as $folder) {
-                if (!isset($this->tdb->system_folders[$folder])) {
-                    $cleanme = $userfolder.$folder.'/';
-                    self::cleanup_dir($cleanme);
+            if ($this->mail_protocol == IMAP) {
+                foreach ($this->tdb->folders as $folder) {
+                    if ($folder != $this->tdb->udatafolder) {
+                        $cleanme = $userfolder . $folder . '/';
+                        self::cleanup_dir($cleanme);
+                    }
                 }
             }
         }
@@ -1873,10 +1872,9 @@ class Telaen extends Telaen_core
             }
             if ($this->prefs['empty_trash']) {
                 $trash = $this->tdb->get_headers('trash');
-
                 if (count($trash) > 0) {
-                    for ($j = 0;$j<count($trash);$j++) {
-                        $this->mail_delete_msg($trash[$j], false);
+                    foreach ($trash as $msg) {
+                        $this->mail_delete_msg($msg, false);
                     }
                     $this->mail_expunge();
                 }
@@ -1886,10 +1884,9 @@ class Telaen extends Telaen_core
                 if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
                 $trash = $this->tdb->get_headers('spam');
-
                 if (count($trash) > 0) {
-                    for ($j = 0;$j<count($trash);$j++) {
-                        $this->mail_delete_msg($trash[$j], false);
+                    foreach ($trash as $msg) {
+                        $this->mail_delete_msg($msg, false);
                     }
                     $this->mail_expunge();
                 }

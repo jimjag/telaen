@@ -29,11 +29,12 @@ class MyMonth
 
 /**
  * Initialize
+ * @param string $udatafolder
  * @param integer $year  year
  * @param integer $month month
  * @return void
  */
-    public function __construct($userfolder, $year = 0, $month = 0)
+    public function __construct($udatafolder, $year = 0, $month = 0)
     {
         if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050) {
             $this->_mymonth = getdate();
@@ -60,7 +61,7 @@ class MyMonth
             $this->_nmonth = 1;
             $this->_nyear++;
         }
-        $this->_edir = $userfolder."_infos/calendar/{$this->_year}/{$this->_month}";
+        $this->_edir = $udatafolder."/calendar/{$this->_year}/{$this->_month}";
         $this->_vcal = new vcalendar(array( 'unique_id' => 'Telaen'));
         $this->_vcal->setConfig('directory', $this->_edir);
         $this->_vcal->setConfig('filename',  'events.ics');

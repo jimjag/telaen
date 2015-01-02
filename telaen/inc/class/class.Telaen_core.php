@@ -32,6 +32,7 @@ class Telaen_core
     public $use_html = false;
     public $charset = 'UTF-8';
     public $userfolder = './';
+    public $userdatafolder = './_infos';
     public $temp_folder = './';
     public $idle_timeout = 10;
     public $displayimages = false;
@@ -1477,7 +1478,7 @@ ENDOFREDIRECT;
     {
         extract($this->config['default_preferences']);
 
-        $pref_file = $this->userfolder.'_infos/'.self::fs_safe_file($file);
+        $pref_file = $this->userdatafolder.'/'.self::fs_safe_file($file);
 
         if (!file_exists($pref_file)) {
             foreach ($this->config['default_preferences'] as $key => $val) {
@@ -1512,7 +1513,7 @@ ENDOFREDIRECT;
      */
     public function save_prefs($prefarray, $file = 'prefs.upf')
     {
-        $pref_file = $this->userfolder.'_infos/'.self::fs_safe_file($file);
+        $pref_file = $this->userdatafolder.'/'.self::fs_safe_file($file);
 
         $f = fopen($pref_file, 'w');
         if (!$f) {

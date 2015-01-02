@@ -54,6 +54,7 @@ class LocalMbox extends SQLite3
     public $attachments = array();
     public $headers = array();
     public $system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
+    public $udatafolder = '_infos';
     public $ok = true;
     public $message = '';
     public $changed = array();
@@ -69,7 +70,7 @@ class LocalMbox extends SQLite3
         $this->allok();
         $this->userfolder = $userfolder;
         $this->force_new = $force_new;
-        $this->db = $userfolder.'_infos/mboxes.db';
+        $this->db = $userfolder.$this->udatafolder.'/mboxes.db';
         $exists = is_writable($this->db);
         parent::__construct($this->db, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
         //$this->open($this->db, SQLITE3_OPEN_READWRITE| SQLITE3_OPEN_CREATE);

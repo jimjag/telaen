@@ -242,9 +242,10 @@ $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts'
 
 $TLN->tdb = new LocalMbox($TLN->userfolder, $TLN->prefs['keep_on_server'] && $initial_login);
 $tdb = &$TLN->tdb;
+$TLN->userdatafolder = $TLN->userfolder.$tdb->udatafolder;
 $AuthSession->Save($auth);
 
-$mymo = new MyMonth($TLN->userfolder);
+$mymo = new MyMonth($TLN->userdatafolder);
 $mycal = $mymo->monthAsDiv();
 $smarty->assign('umCalendar', $mycal);
 $smarty->assign('umSystemNews', $TLN->config['systemNews']);
