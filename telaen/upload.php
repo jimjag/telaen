@@ -50,7 +50,7 @@ if (isset($rem) && $rem != "") {
         $ind = count($mbox['attachments']);
     }
 
-    $filename = $TLN->userfolder.'_attachments/'.md5(uniqid("")).$userfile_name;
+    $filename = $TLN->userfolder.'_attachments/'.$TLN->hashme(uniqid("")).$userfile_name;
 
     move_uploaded_file($userfile, $filename);
 

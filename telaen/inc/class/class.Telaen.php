@@ -312,7 +312,7 @@ class Telaen extends Telaen_core
         }
         // APOP login mode, more secure
         if ($this->capabilities['APOP'] && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
-            $this->_mail_send_command('APOP '.$this->mail_user.' '.hash('md5', $tokens[0].$this->mail_pass));
+            $this->_mail_send_command('APOP '.$this->mail_user.' '.self::hashme($tokens[0].$this->mail_pass));
         }
         // Classic login mode
         else {
@@ -894,7 +894,7 @@ class Telaen extends Telaen_core
                     $messages[$counter]['flags'] = strtoupper($flags);
                     $messages[$counter]['header'] = $header;
                     $messages[$counter]['folder'] = $boxname;
-                    $messages[$counter]['uidl'] = hash('md5', $boxinfo['uidvalidity'].":".$uidl);
+                    $messages[$counter]['uidl'] = self::hashme($boxinfo['uidvalidity'].":".$uidl);
                     $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'size', 'flags', 'header', 'folder', 'uidl'));
                     $counter++;
                     $header = '';
@@ -1158,7 +1158,7 @@ class Telaen extends Telaen_core
                 $messagescopy[$j]['to'] = $mail_info['to'];
                 $messagescopy[$j]['cc'] = $mail_info['cc'];
                 $messagescopy[$j]['priority'] = $mail_info['priority'];
-                $messagescopy[$j]['uidl'] = ((!$this->is_valid_md5($mail_info['uidl'])) ?
+                $messagescopy[$j]['uidl'] = ((!$this->is_valid_hash($mail_info['uidl'])) ?
                                     $this->_mail_get_uidl($messagescopy[$j]['mnum'], $mail_info) :
                                     $mail_info['uidl']);
                 $messagescopy[$j]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
@@ -1201,7 +1201,7 @@ class Telaen extends Telaen_core
                 $spamcopy[$y]['to'] = $mail_info['to'];
                 $spamcopy[$y]['cc'] = $mail_info['cc'];
                 $spamcopy[$y]['priority'] = $mail_info['priority'];
-                $spamcopy[$y]['uidl'] = ((!$this->is_valid_md5($mail_info['uidl'])) ?
+                $spamcopy[$y]['uidl'] = ((!$this->is_valid_hash($mail_info['uidl'])) ?
                                     $this->_mail_get_uidl($spamcopy[$y]['mnum'], $mail_info) :
                                     $mail_info['uidl']);
                 $spamcopy[$y]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
@@ -1251,7 +1251,7 @@ class Telaen extends Telaen_core
     protected function _get_local_name($message, $boxname)
     {
         if (is_array($message)) {
-            $flocalname = trim($this->userfolder."$boxname/".hash('md5', trim($message['subject'].$message['date'].$message['message-id'])).'.eml');
+            $flocalname = trim($this->userfolder."$boxname/".self::hashme(trim($message['subject'].$message['date'].$message['message-id'])).'.eml');
         } else {
             $flocalname = trim($this->userfolder."$boxname/".$message.'.eml');
         }
@@ -1764,12 +1764,12 @@ class Telaen extends Telaen_core
                 $buffer = $this->_mail_get_line();
                 list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
                 if ($resp == '+OK') {
-                    return hash('md5', $uidl);
+                    return self::hashme($uidl);
                 }
                 // If we DON'T get the OK response, we drop through
             }
             if (isset($msg['subject']) && isset($msg['date']) && isset($msg['message-id'])) {
-                return hash('md5', trim($msg['subject'].$msg['date'].$msg['message-id']));
+                return self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
             } else {
                 $this->_mail_send_command('TOP '.$id.' 0');
                 $buffer = $this->_mail_get_line();
@@ -1792,7 +1792,7 @@ class Telaen extends Telaen_core
                 $msg['message-id'] = $mail_info['message-id'];
                 $msg['header'] = $header;
                 $this->tdb->changed[] = array ($msg, array('header', 'subject', 'date', 'message-id'));
-                return hash('md5', trim($msg['subject'].$msg['date'].$msg['message-id']));
+                return self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
             }
         } else {
             $retarray = array();
@@ -1808,7 +1808,7 @@ class Telaen extends Telaen_core
                         }
                         list($num, $uidl) = explode(' ', $buffer);
                         if (!empty($uidl)) {
-                            $retarray[intval($num)] = hash('md5', $uidl);
+                            $retarray[intval($num)] = self::hashme($uidl);
                         }
                     }
                 }
@@ -1845,7 +1845,7 @@ class Telaen extends Telaen_core
                                 $header .= $buffer;
                             }
                             $mail_info = $this->get_mail_info($header);
-                            $retarray[intval($id)] = hash('md5', trim($mail_info['subject'].$mail_info['date'].$mail_info['message-id']));
+                            $retarray[intval($id)] = self::hashme(trim($mail_info['subject'].$mail_info['date'].$mail_info['message-id']));
                         }
                     }
                 }
