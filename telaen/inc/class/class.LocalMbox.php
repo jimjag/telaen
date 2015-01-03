@@ -508,7 +508,7 @@ class LocalMbox extends SQLite3
         $adds = array();
         if (count($this->changed) > 0) {
             foreach ($this->changed as $foo) {
-                if (!array_key_exists($foo[0]['uidl'], $this->_indb)) {
+                if (!isset($foo[0]['uidl'][$this->_indb]) {
                     $adds[] = $foo[0];
                 }
                 elseif (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
