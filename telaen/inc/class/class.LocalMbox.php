@@ -216,7 +216,7 @@ class LocalMbox extends SQLite3
      * @param array $marray $This->?? array to update
      * @return SQLite3Result
      */
-    private function do_insert($table, $list, $datas, $marray)
+    private function do_insert($table, $list, $datas, &$marray)
     {
         $query = sprintf('INSERT into %s (\'', $table);
         $query .= implode("','",$list);
@@ -467,8 +467,8 @@ class LocalMbox extends SQLite3
 
     /**
      * Take the email message array and update the fields in the DB
-     * @param type $msg Message to be updated/synced in DB
-     * @param boolean $fields "*" for all, or array of fields
+     * @param array $msg Message to be updated/synced in DB
+     * @param Mixed $fields "*" for all, or array of fields
      * @return boolean
      */
     /*
@@ -508,7 +508,7 @@ class LocalMbox extends SQLite3
         $adds = array();
         if (count($this->changed) > 0) {
             foreach ($this->changed as $foo) {
-                if (!isset($foo[0]['uidl'][$this->_indb]) {
+                if (!isset($foo[0]['uidl'][$this->_indb])) {
                     $adds[] = $foo[0];
                 }
                 elseif (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
