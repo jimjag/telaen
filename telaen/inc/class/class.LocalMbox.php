@@ -247,13 +247,13 @@ class LocalMbox extends SQLite3
     }
 
     /**
-     * Return CRC32 hash of string
+     * Return hex hash of string - Just need something *fast*
      * @param string $folder
-     * @return int
+     * @return string (hexint)
      */
     public function getKey($folder)
     {
-        return crc32($folder);
+        return hash('adler32', $folder);
     }
 
 
