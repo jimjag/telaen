@@ -312,7 +312,7 @@ class Telaen extends Telaen_core
         }
         // APOP login mode, more secure
         if ($this->capabilities['APOP'] && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
-            $this->_mail_send_command('APOP '.$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
+            $this->_mail_send_command('APOP '.$this->mail_user.' '.hash('md5', $tokens[0].$this->mail_pass));
         }
         // Classic login mode
         else {
@@ -894,7 +894,7 @@ class Telaen extends Telaen_core
                     $messages[$counter]['flags'] = strtoupper($flags);
                     $messages[$counter]['header'] = $header;
                     $messages[$counter]['folder'] = $boxname;
-                    $messages[$counter]['uidl'] = md5($boxinfo['uidvalidity'].":".$uidl);
+                    $messages[$counter]['uidl'] = hash('md5', $boxinfo['uidvalidity'].":".$uidl);
                     $counter++;
                     $header = '';
                 }
@@ -1248,7 +1248,7 @@ class Telaen extends Telaen_core
     protected function _get_local_name($message, $boxname)
     {
         if (is_array($message)) {
-            $flocalname = trim($this->userfolder."$boxname/".md5(trim($message['subject'].$message['date'].$message['message-id'])).'.eml');
+            $flocalname = trim($this->userfolder."$boxname/".hash('md5', trim($message['subject'].$message['date'].$message['message-id'])).'.eml');
         } else {
             $flocalname = trim($this->userfolder."$boxname/".$message.'.eml');
         }
@@ -1760,12 +1760,12 @@ class Telaen extends Telaen_core
                 $buffer = $this->_mail_get_line();
                 list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
                 if ($resp == '+OK') {
-                    return md5($uidl);
+                    return hash('md5', $uidl);
                 }
                 // If we DON'T get the OK response, we drop through
             }
             if (count($message)) {// provided a header hash
-                return md5(trim($message['subject'].$message['date'].$message['message-id']));
+                return hash('md5', trim($message['subject'].$message['date'].$message['message-id']));
             } else {
                 $this->_mail_send_command('TOP '.$id.' 0');
                 $buffer = $this->_mail_get_line();
@@ -1784,7 +1784,7 @@ class Telaen extends Telaen_core
                 }
                 $mail_info = $this->get_mail_info($header);
 
-                return md5(trim($mail_info['subject'].$mail_info['date'].$mail_info['message-id']));
+                return hash('md5', trim($mail_info['subject'].$mail_info['date'].$mail_info['message-id']));
             }
         } else {
             $retarray = array();
@@ -1800,7 +1800,7 @@ class Telaen extends Telaen_core
                         }
                         list($num, $uidl) = explode(' ', $buffer);
                         if (!empty($uidl)) {
-                            $retarray[intval($num)] = md5($uidl);
+                            $retarray[intval($num)] = hash('md5', $uidl);
                         }
                     }
                 }
@@ -1837,7 +1837,7 @@ class Telaen extends Telaen_core
                                 $header .= $buffer;
                             }
                             $mail_info = $this->get_mail_info($header);
-                            $retarray[intval($id)] = md5(trim($mail_info['subject'].$mail_info['date'].$mail_info['message-id']));
+                            $retarray[intval($id)] = hash('md5', trim($mail_info['subject'].$mail_info['date'].$mail_info['message-id']));
                         }
                     }
                 }

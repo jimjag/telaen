@@ -870,7 +870,7 @@ class Telaen_core
         $temp_array['content-disposition'] = strtolower(trim($content_disposition));
         $temp_array['boundary'] = $boundary;
         $temp_array['part'] = $part;
-        $temp_array['filename'] = $this->userfolder.'_attachments/'.md5($temp_array['boundary']).'_'.$safefilename;
+        $temp_array['filename'] = $this->userfolder.'_attachments/'.hash('md5', $temp_array['boundary']).'_'.$safefilename;
         $temp_array['type'] = 'mime';
         $temp_array['index'] = $nIndex;
 
@@ -1235,7 +1235,7 @@ class Telaen_core
             $temp_array['boundary'] = $boundary;
             $temp_array['part'] = 0;
             $temp_array['type'] = 'uue';
-            $temp_array['filename'] = $this->userfolder.'_attachments/'.md5($temp_array['boundary']).'_'.$temp_array['name'];
+            $temp_array['filename'] = $this->userfolder.'_attachments/'.hash('md5', $temp_array['boundary']).'_'.$temp_array['name'];
             $this->_content['attachments'][] = $temp_array;
             $this->save_file($temp_array['filename'], $stream);
             unset($temp_array);
@@ -1261,7 +1261,7 @@ class Telaen_core
             $temp_array['part'] = $part;
             $temp_array['type'] = 'tnef';
             $temp_array['tnef'] = $i;
-            $temp_array['filename'] = $this->userfolder.'_attachments/'.md5($temp_array['boundary']).'_'.$temp_array['name'];
+            $temp_array['filename'] = $this->userfolder.'_attachments/'.hash('md5', $temp_array['boundary']).'_'.$temp_array['name'];
 
             $this->_content['attachments'][] = $temp_array;
 
