@@ -253,7 +253,7 @@ class LocalMbox extends SQLite3
      */
     public function getKey($folder)
     {
-        return hash('adler32', $folder);
+        return hash('md5', $folder);
     }
 
 

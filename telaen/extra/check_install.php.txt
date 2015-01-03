@@ -532,11 +532,11 @@ if (function_exists('stream_socket_enable_crypto')) {
 
 echo('<hr><h4>Testing for hash() support</h4>');
 
-if (function_exists('hash') && ($foo = hash('adler32', "test"))) {
+if (function_exists('hash') && ($foo = hash('md5', "test"))) {
     echo('<span class="pass">PASSED</span>');
 } else {
     echo('<span class="fail">!! FAILED !!</span>');
-	echo("<br/>hash('adler32', ) not available");
+	echo("<br/>hash('md5', ) not available");
     $error = true;
 }
 
