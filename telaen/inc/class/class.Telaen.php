@@ -729,7 +729,7 @@ class Telaen extends Telaen_core
     protected function _mail_move_msg_imap($msg, $tofolder)
     {
         if ($tofolder != $msg['folder']) {
-            /* check the message id to make sure that the messages still in the server */
+            /* check the message id to make sure that the message is still on the server */
             if ($this->_current_folder != $msg['folder']) {
                 $boxinfo = $this->mail_select_box($msg['folder']);
             }
@@ -853,7 +853,7 @@ class Telaen extends Telaen_core
     {
         $messages = array();
         $header = '';
-        $curmsg = $size = $flags = $uid = '';
+        $curmsg = $size = $flags = $uidl = '';
 
         /* select the mail box and make sure that it exists */
         $boxinfo = $this->mail_select_box($boxname);
@@ -881,7 +881,7 @@ class Telaen extends Telaen_core
                     preg_match('|FLAGS[ ]?\\((.*)\\)|i', $buffer, $regs);
                     $flags = $regs[1];
                     preg_match('|UID[ ]?([0-9]+)|i', $buffer, $regs);
-                    $uid = $regs[1];
+                    $uidl = $regs[1];
                 /* if any problem, add the current line to buffer */
                 } elseif (trim($buffer) != ")" && trim($buffer) != '') {
                     $header .= $buffer;
@@ -895,6 +895,7 @@ class Telaen extends Telaen_core
                     $messages[$counter]['header'] = $header;
                     $messages[$counter]['folder'] = $boxname;
                     $messages[$counter]['uidl'] = hash('md5', $boxinfo['uidvalidity'].":".$uidl);
+                    $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'size', 'flags', 'header', 'folder', 'uidl'));
                     $counter++;
                     $header = '';
                 }
@@ -922,7 +923,7 @@ class Telaen extends Telaen_core
         but don't worry about headers at all, until we really, really
         need to.
         */
-        if ($boxname == 'inbox' || $boxname == 'spam') {
+        if ($boxname == 'inbox') {
             $this->_mail_send_command('LIST');
             /* if any problem with this messages list, stop the procedure */
             if ($this->mail_nok_resp()) {
@@ -943,6 +944,8 @@ class Telaen extends Telaen_core
                     $messages[$counter]['mnum'] = intval($msgs[0]);
                     $messages[$counter]['size'] = intval($msgs[1]);
                     $messages[$counter]['folder'] = $boxname;
+                    $messages[$counter]['uidl'] = $this->_mail_get_uidl($messages[$counter]['mnum']);
+                    $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'size', 'folder', 'uidl'));
                     $counter++;
                 }
             }
@@ -1346,6 +1349,7 @@ class Telaen extends Telaen_core
                 $buffer = $this->_mail_get_line();
             }
         }
+        $this->tdb->sync_headers();
         $this->_current_folder = $boxname;
 
         return $boxinfo;
@@ -1579,7 +1583,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->tdb->changed[] = array ($msg['idx'], array('header', 'flags'));
+            $this->tdb->changed[] = array ($msg, array('header', 'flags'));
 
             $email = "$header\r\n\r\n$body";
 
@@ -1748,13 +1752,13 @@ class Telaen extends Telaen_core
      */
     /**
      * Get UIDL of specific message or of all
-     * @param  string $id      ID of message
-     * @param  array  $message
-     * @return array
+     * @param  array  $msg
+     * @return Mixed
      */
-    protected function _mail_get_uidl($id = '', $message = array())
+    protected function _mail_get_uidl(&$msg)
     {
-        if (!empty($id)) {
+        if (!empty($msg)) {
+            $id = $msg['mnum'];
             if ($this->capabilities['UIDL']) {
                 $this->_mail_send_command("UIDL $id");
                 $buffer = $this->_mail_get_line();
@@ -1764,8 +1768,8 @@ class Telaen extends Telaen_core
                 }
                 // If we DON'T get the OK response, we drop through
             }
-            if (count($message)) {// provided a header hash
-                return hash('md5', trim($message['subject'].$message['date'].$message['message-id']));
+            if (isset($msg['subject']) && isset($msg['date']) && isset($msg['message-id'])) {
+                return hash('md5', trim($msg['subject'].$msg['date'].$msg['message-id']));
             } else {
                 $this->_mail_send_command('TOP '.$id.' 0');
                 $buffer = $this->_mail_get_line();
@@ -1783,8 +1787,12 @@ class Telaen extends Telaen_core
                     $header .= $buffer;
                 }
                 $mail_info = $this->get_mail_info($header);
-
-                return hash('md5', trim($mail_info['subject'].$mail_info['date'].$mail_info['message-id']));
+                $msg['subject'] = $mail_info['subject'];
+                $msg['date'] = $mail_info['date'];
+                $msg['message-id'] = $mail_info['message-id'];
+                $msg['header'] = $header;
+                $this->tdb->changed[] = array ($msg, array('header', 'subject', 'date', 'message-id'));
+                return hash('md5', trim($msg['subject'].$msg['date'].$msg['message-id']));
             }
         } else {
             $retarray = array();
