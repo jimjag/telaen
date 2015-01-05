@@ -849,11 +849,12 @@ class Telaen extends Telaen_core
         }
     }
 
-    protected function _mail_list_msgs_imap($boxname = 'inbox', $localmessages = array())
+    protected function _mail_list_msgs_imap($boxname = 'inbox')
     {
         $messages = array();
         $header = '';
         $curmsg = $size = $flags = $uidl = '';
+        $counter = 0;
 
         /* select the mail box and make sure that it exists */
         $boxinfo = $this->mail_select_box($boxname);
@@ -867,10 +868,9 @@ class Telaen extends Telaen_core
 
             /* if any problem, stop the procedure */
             if ($this->mail_nok_resp($buffer)) {
-                return $messages;
+                return false;
             }
 
-            $counter = 0;
             /* the end mark is <sid> OK FETCH, we are waiting for it*/
             while (!$this->mail_ok_resp($buffer)) {
                 /* if the return is something such as * N FETCH, a new message will displayed  */
@@ -894,43 +894,73 @@ class Telaen extends Telaen_core
                     $messages[$counter]['flags'] = strtoupper($flags);
                     $messages[$counter]['header'] = $header;
                     $messages[$counter]['folder'] = $boxname;
+                    $messages[$counter]['islocal'] = false;
                     $messages[$counter]['uidl'] = self::hashme($boxinfo['uidvalidity'].":".$uidl);
-                    $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'size', 'flags', 'header', 'folder', 'uidl'));
+                    $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'size', 'flags', 'header', 'folder', 'uidl', 'islocal'));
                     $counter++;
                     $header = '';
                 }
                 $buffer = $this->_mail_get_line();
             }
+            $this->tdb->sync_headers();
         }
-        return $messages;
+        /*
+         * Could also live locally
+         */
+        if (!$this->tdb->is_folder_bootstrapped($boxname)) {
+            /*
+             * Ideally, we do this only once per user, after which any changes
+             * to the local system will be also reflected automatically in the DB.
+             * If no email is stored locally, though, we do this everytime
+             * (but no messages exist, so it's moot)
+             */
+            $this->tdb->bootstrap_folder($boxname);
+            $datapath = $this->userfolder.$boxname;
+            foreach (scandir($datapath) as $entry) {
+                $fullpath = "$datapath/$entry";
+                if (is_file($fullpath)) {
+                    $thisheader = $this->_get_headers_from_cache($fullpath);
+                    $messages[$counter]['id'] = $counter + 1;
+                    $messages[$counter]['mnum'] = $counter;
+                    $messages[$counter]['header'] = $thisheader;
+                    $messages[$counter]['size'] = filesize($fullpath);
+                    $messages[$counter]['localname'] = $fullpath;
+                    $messages[$counter]['folder'] = $boxname;
+                    $messages[$counter]['islocal'] = true;
+                    $messages[$counter]['uidl'] = $this->_mail_get_uidl($messages[$counter]);
+                    $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'header', 'size', 'localname', 'folder', 'islocal', 'uidl'));
+                    $counter++;
+                }
+            }
+            $this->tdb->sync_headers();
+        }
+        return true;
     }
 
-    protected function _mail_list_msgs_pop($boxname = 'inbox', $localmessages = array())
+    protected function _mail_list_msgs_pop($boxname = 'inbox')
     {
         // $this->havespam = '';
 
         $messages = array();
+        $counter = 0;
 
         /*
-        now working with POP3
-        if the boxname is 'inbox' or 'spam', we can check in the server for messsages
-
         NOTE how special inbox is... This is the only Email box that lives on
-        the actual Email server (the pophost) and so we need to jump thru a lot
-        of hoops to determine which messages are there.
+        the actual Email server (the pophost) and so we need to jump thru some
+        hoops to determine which messages are there.
 
         Due to how SLOW POP is, we simply read in the full list of message
         but don't worry about headers at all, until we really, really
         need to.
         */
         if ($boxname == 'inbox') {
+            /* First, see what messages live on the server */
             $this->_mail_send_command('LIST');
             /* if any problem with this messages list, stop the procedure */
             if ($this->mail_nok_resp()) {
-                return -1;
+                return false;
             }
 
-            $counter = 0;
 
             while (!feof($this->_mail_connection)) {
                 $buffer = $this->_mail_get_line();
@@ -940,95 +970,47 @@ class Telaen extends Telaen_core
                 }
                 $msgs = explode(' ', $buffer);
                 if (is_numeric($msgs[0])) {
-                    $messages[$counter]['id'] = $counter+1; //$msgs[0];
+                    $messages[$counter]['id'] = $counter + 1; //$msgs[0];
                     $messages[$counter]['mnum'] = intval($msgs[0]);
                     $messages[$counter]['size'] = intval($msgs[1]);
                     $messages[$counter]['folder'] = $boxname;
-                    $messages[$counter]['uidl'] = $this->_mail_get_uidl($messages[$counter]['mnum']);
-                    $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'size', 'folder', 'uidl'));
+                    $messages[$counter]['islocal'] = false;
+                    $messages[$counter]['uidl'] = $this->_mail_get_uidl($messages[$counter]);
+                    $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'size', 'folder', 'uidl', 'islocal'));
                     $counter++;
                 }
             }
+            /* If we've added messages, sync */
+            $this->tdb->sync_headers();
+            /*
+             * Now that $this->tdb->headers[] contains all the read-in messages,
+             * see if we need to read in messages stored locally
+             */
+        }
 
-            if (!is_array($localmessages)) {
-                $localmessages = (array) $localmessages;
-            }
-            $localcount = count($localmessages);
-            $onservercount = count($messages);
-
-            if ($onservercount < $localcount || $localcount == 0) {
-                /*
-                 * Someone deleted some messages on the server, refetch all
-                 * headers via TOP, or we just didn't had any messages previously.
-                 */
-
-                ; // pass;
-            } elseif ($onservercount >= $localcount) {
-                /*
-                 * More messages have arrived or we still have the same amount of messages.
-                 * Keep our old array and skip all the rest. Check if the last message
-                 * is still at the same place, else we refetch all message
-                 * headers again, because it is too complicated to see which messages we
-                 * have or haven't.
-                 */
-                $oldid = $localmessages[$localcount - 1]['uidl'];
-                $newid = $this->_mail_get_uidl($messages[$localcount - 1]['mnum']);
-
-                if ("$oldid" == "$newid") {
-                    // Ok the ids are the same and we have new messages
-
-                    /*
-                     * Quick check. If we have the same number and all
-                     * have been seen, no need to parse anything.
-                     */
-                    if ($localcount == $onservercount) {
-                        $seen_all = true;
-                        for ($i = 0; $i<$onservercount; $i++) {
-                            if (!$messages[$i]['hparsed']) {
-                                $seen_all = false;
-                                break;
-                            }
-                        }
-                        if ($seen_all) {
-                            return false;
-                        }
-                    }
-
-                    for ($i = $localcount; $i<$onservercount; $i++) {
-                        /**
-                         * Add the basic info (index and size) and then msg header
-                         * of the new msg to the old headers array
-                         */
-                        $localmessages[$i] = $messages[$i];
-                        $localmessages[$i]['header'] = '';
-                    }
-                    // now the localmessages are updated with the new ones
-                    $messages = $localmessages;
-                }
-            }
-        } else {
-            /* otherwise (not inbox or spam), we need get the message list from a cache (currently, hard disk)*/
-
+        if (!$this->tdb->is_folder_bootstrapped($boxname)) {
+            $this->tdb->bootstrap_folder($boxname);
             $datapath = $this->userfolder.$boxname;
-            $i = 0;
-            $dirsize = 0;
-
             foreach (scandir($datapath) as $entry) {
                 $fullpath = "$datapath/$entry";
                 if (is_file($fullpath)) {
                     $thisheader = $this->_get_headers_from_cache($fullpath);
-                    $messages[$i]['id'] = $i+1;
-                    $messages[$i]['mnum'] = $i;
-                    $messages[$i]['header'] = $thisheader;
-                    $messages[$i]['size'] = filesize($fullpath);
-                    $messages[$i]['localname'] = $fullpath;
-                    $messages[$i]['folder'] = $boxname;
-                    $i++;
+                    $messages[$counter]['id'] = $counter + 1;
+                    $messages[$counter]['mnum'] = $counter;
+                    $messages[$counter]['header'] = $thisheader;
+                    $messages[$counter]['size'] = filesize($fullpath);
+                    $messages[$counter]['localname'] = $fullpath;
+                    $messages[$counter]['folder'] = $boxname;
+                    $messages[$counter]['islocal'] = true;
+                    $messages[$counter]['uidl'] = $this->_mail_get_uidl($messages[$counter]);
+                    $this->tdb->changed[] = array($messages[$counter], array('id', 'mnum', 'header', 'size', 'localname',
+                        'folder', 'uidl', 'islocal'));
+                    $counter++;
                 }
             }
+            $this->tdb->sync_headers();
         }
-        $this->array_qsort2int($messages, 'mnum', 'DESC');
-        return $messages;
+        return true;
     }
 
     /*
@@ -1047,7 +1029,7 @@ class Telaen extends Telaen_core
      * @param  integer $wcount
      * @return array
      */
-    public function mail_list_msgs($boxname = 'inbox', $localmessages = array(), $start = 0, $wcount = 1024)
+    public function mail_list_msgs($boxname = 'inbox', $start = 0, $wcount = 1024)
     {
         $fetched_part = 0;
         $parallelized = 0;
@@ -1060,15 +1042,11 @@ class Telaen extends Telaen_core
             $messages = $this->_mail_list_msgs_imap($boxname, $localmessages);
         } else {
             $messages = $this->_mail_list_msgs_pop($boxname, $localmessages);
-            if (!is_array($messages)) {
-                $shortcut = array();
-                $shortcut[0] = array();
-                $shortcut[1] = array();
-                $shortcut[2] = $messages;
-
-                return $shortcut;
-            }
         }
+        if (!$messages) {
+            return false;
+        }
+        $messages = &$this->tdb->headers;
         /*
          * OK, now we have the message list, that contains id and size and possibly
          * the header as well (if not, we grab as needed).
@@ -1757,28 +1735,32 @@ class Telaen extends Telaen_core
      */
     protected function _mail_get_uidl(&$msg)
     {
-        if (!empty($msg)) {
-            $id = $msg['mnum'];
-            if ($this->capabilities['UIDL']) {
-                $this->_mail_send_command("UIDL $id");
-                $buffer = $this->_mail_get_line();
-                list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
-                if ($resp == '+OK') {
-                    return self::hashme($uidl);
-                }
-                // If we DON'T get the OK response, we drop through
+        $id = $msg['mnum'];
+        if ($this->capabilities['UIDL'] && !$msg['islocal']) {
+            $this->_mail_send_command("UIDL $id");
+            $buffer = $this->_mail_get_line();
+            list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
+            if ($resp == '+OK') {
+                return self::hashme($uidl);
             }
-            if (isset($msg['subject']) && isset($msg['date']) && isset($msg['message-id'])) {
-                return self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
-            } else {
-                $this->_mail_send_command('TOP '.$id.' 0');
+            // If we DON'T get the OK response, we drop through
+        }
+        if (isset($msg['uidl'])) {
+            return $msg['uidl'];
+        } elseif (isset($msg['subject']) && isset($msg['date']) && isset($msg['message-id'])) {
+            return self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
+        } else {
+            $header = '';
+            if (isset($msg['header'])) {
+                $header = $msg['header'];
+            } elseif (!$msg['islocal']) {
+                $this->_mail_send_command('TOP ' . $id . ' 0');
                 $buffer = $this->_mail_get_line();
 
                 /* if any problem with the server, stop the function */
                 if ($this->mail_nok_resp($buffer)) {
                     return '';
                 }
-                $header = '';
                 while (!feof($this->_mail_connection)) {
                     $buffer = $this->_mail_get_line();
                     if (chop($buffer) == '.') {
@@ -1786,72 +1768,19 @@ class Telaen extends Telaen_core
                     }
                     $header .= $buffer;
                 }
-                $mail_info = $this->get_mail_info($header);
-                $msg['subject'] = $mail_info['subject'];
-                $msg['date'] = $mail_info['date'];
-                $msg['message-id'] = $mail_info['message-id'];
-                $msg['header'] = $header;
-                $this->tdb->changed[] = array ($msg, array('header', 'subject', 'date', 'message-id'));
-                return self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
+            } else {
+                return '';
             }
-        } else {
-            $retarray = array();
-            if ($this->capabilities['UIDL']) {
-                $this->_mail_send_command('UIDL');
-
-                $buffer = $this->_mail_get_line();
-                if ($this->mail_ok_resp($buffer)) {
-                    while (!feof($this->_mail_connection)) {
-                        $buffer = $this->_mail_get_line();
-                        if (trim($buffer) == '.') {
-                            break;
-                        }
-                        list($num, $uidl) = explode(' ', $buffer);
-                        if (!empty($uidl)) {
-                            $retarray[intval($num)] = self::hashme($uidl);
-                        }
-                    }
-                }
+            $mail_info = $this->get_mail_info($header);
+            if (isset($mail_info['uidl'])) {
+                return $mail_info['uidl'];
             }
-            // Drop through if we got a UIDL error (the array is still empty)
-            if (!count($retarray)) {
-                $this->_mail_send_command('LIST');
-                $buffer = $this->_mail_get_line();
-
-                if ($this->mail_ok_resp($buffer)) {
-                    $messages = array();
-                    while (!feof($this->_mail_connection)) {
-                        $buffer = $this->_mail_get_line();
-                        if (trim($buffer) == '.') {
-                            break;
-                        }
-                        $msgs = explode(' ', $buffer);
-                        if (is_numeric($msgs[0])) {// store message number
-                            $messages[] = $msgs[0];
-                        }
-                    }
-                    // now grab the header info
-                    foreach ($messages as $id) {
-                        $this->_mail_send_command('TOP '.$id.' 0');
-                        $buffer = $this->_mail_get_line();
-
-                        if ($this->mail_ok_resp($buffer)) {
-                            $header = '';
-                            while (!feof($this->_mail_connection)) {
-                                $buffer = $this->_mail_get_line();
-                                if (trim($buffer) == '.') {
-                                    break;
-                                }
-                                $header .= $buffer;
-                            }
-                            $mail_info = $this->get_mail_info($header);
-                            $retarray[intval($id)] = self::hashme(trim($mail_info['subject'].$mail_info['date'].$mail_info['message-id']));
-                        }
-                    }
-                }
-            }
-
-            return $retarray;
+            $msg['subject'] = $mail_info['subject'];
+            $msg['date'] = $mail_info['date'];
+            $msg['message-id'] = $mail_info['message-id'];
+            $msg['header'] = $header;
+            $this->tdb->changed[] = array ($msg, array('header', 'subject', 'date', 'message-id'));
+            return self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
         }
     }
 

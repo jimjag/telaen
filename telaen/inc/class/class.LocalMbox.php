@@ -19,35 +19,37 @@ class LocalMbox extends SQLite3
     private $fschema = array(
         'name' => 'TEXT NOT NULL',
         'system' => 'INT NOT NULL',
-        'size' => 'INT'
+        'size' => 'INT DEFAULT 0',
+        'bootstrapped' => 'INT DEFAULT 0'
     );
     private $aschema = array(
         'folder' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL',
         'localname' => 'TEXT',
-        'name' => 'TEXT',
-        'type' => 'TEXT',
-        'size' => 'INT'
+        'name' => 'TEXT DEFAULT ""',
+        'type' => 'TEXT DEFAULT ""',
+        'size' => 'INT DEFAULT 0'
     );
     private $mschema = array(
-        'date' => 'INT',
-        'hparsed' => 'INT',
-        'id' => 'INT',
-        'mnum' => 'INT',
-        'size' => 'INT',
-        'priority' => 'INT',
-        'attach' => 'INT',
-        'folder' => 'TEXT',
+        'date' => 'INT DEFAULT 0',
+        'hparsed' => 'INT DEFAULT 0',
+        'id' => 'INT DEFAULT 0',
+        'mnum' => 'INT DEFAULT 0',
+        'size' => 'INT DEFAULT 0',
+        'priority' => 'INT DEFAULT 0',
+        'attach' => 'INT DEFAULT 0',
+        'folder' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY',
-        'subject' => 'TEXT',
-        'from' => 'TEXT',
-        'fromname' => 'TEXT',
-        'to' => 'TEXT',
-        'cc' => 'TEXT',
-        'flags' => 'TEXT',
-        'messageid' => 'TEXT',
-        'localname' => 'TEXT',
-        'header' => 'TEXT'
+        'subject' => 'TEXT DEFAULT ""',
+        'from' => 'TEXT DEFAULT ""',
+        'fromname' => 'TEXT DEFAULT ""',
+        'to' => 'TEXT DEFAULT ""',
+        'cc' => 'TEXT DEFAULT ""',
+        'flags' => 'TEXT DEFAULT ""',
+        'messageid' => 'TEXT DEFAULT ""',
+        'localname' => 'TEXT DEFAULT ""',
+        'header' => 'TEXT DEFAULT ""',
+        'islocal' => 'int DEFAULT 0'
     );
 
     public $folders = array();
@@ -77,7 +79,7 @@ class LocalMbox extends SQLite3
         $this->query('PRAGMA synchronous = 0;');
         $this->query('PRAGMA journal_mode = MEMORY;');
         if (!$exists || $force_new) {
-            $this->boot_strap();
+            $this->init_tables();
         }
         $this->get_folders();
     }
@@ -86,7 +88,7 @@ class LocalMbox extends SQLite3
      * Create all required SQLite3 tables
      *
      */
-    public function boot_strap()
+    public function init_tables()
     {
         $this->allok();
         $table = $this->create_query('folders', $this->fschema);
@@ -235,6 +237,7 @@ class LocalMbox extends SQLite3
                 end($marray);
                 $index = key($marray);
                 $marray[$index]['idx'] = $index;
+                $marray[$index]['uidl'] = $data['uidl'];
                 reset($marray);
             } else {
                 $this->ok = false;
@@ -331,7 +334,7 @@ class LocalMbox extends SQLite3
             $stmt->bindValue(':system', intval($sys));
             $stmt->bindValue(':size', $size);
             if ($stmt->execute()) {
-                $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys), 'size' => 0);
+                $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys), 'size' => $size, 'bootstrapped' => 0);
                 $stmt->close();
                 return true;
             } else {
@@ -388,7 +391,38 @@ class LocalMbox extends SQLite3
             $this->message .= "execute failed: ";
             return false;
         }
-   }
+    }
+
+     /**
+      * Update inited field in folders to current time
+      * @param string $folder Folder name
+      * @return boolean
+      */
+     public function is_folder_bootstrapped($folder)
+    {
+        return $this->folders[$folder]['bootstrapped'];
+    }
+
+    /**
+     * Update inited field in folders to current time
+     * @param string $folder Folder name
+     * @return boolean
+     */
+    public function bootstrap_folder($folder)
+    {
+        $stmt = $this->prepare("UPDATE folder SET 'bootstrapped'=:bootstrapped WHERE 'name'=:name ;");
+        $stmt->bindValue(':name', $folder);
+        $this->folders[$folder]['bootstrapped'] = time();;
+        $stmt->bindValue(':bootstrapped', $this->folders[$folder]['bootstrapped']);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        } else {
+            $this->ok = false;
+            $this->message .= "execute failed: ";
+            return false;
+        }
+    }
     /**
      * Get list of all email message headers in folder/emailbox
      * $this->headers auto-populated with array
@@ -416,6 +450,7 @@ class LocalMbox extends SQLite3
                 while ($foo = $result->fetchArray()) {
                     $this->headers[$index] = $foo;
                     $this->headers[$index]['idx'] = $index;
+                    $this->headers[$index]['uidl'] = $foo['uidl'];
                     $this->_indb[$foo['uidl']] = true;
                     $index++;
                 }
@@ -485,6 +520,7 @@ class LocalMbox extends SQLite3
         }
         $table = sprintf('folder_%s', $this->getKey($msg['folder']));
         $result = $this->do_update($table, $thelist, $msg, array('uidl'=>$msg['uidl']));
+        $this->headers[$msg['uidl']] = $msg;
         if (!$result) {
             return false;
         }
