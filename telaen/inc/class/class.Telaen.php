@@ -858,8 +858,11 @@ class Telaen extends Telaen_core
 
         /* select the mail box and make sure that it exists */
         $boxinfo = $this->mail_select_box($boxname);
-
-        if (is_array($boxinfo) && $boxinfo['exists']) {
+        $now = time();
+        if (is_array($boxinfo) &&
+            $boxinfo['exists'] &&
+            ($this->tdb->folders[$boxname]['refreshed'] < ($now - $this->prefs['refresh_time']))) {
+            $this->tdb->update_folder_refreshed($boxname, $now);
             /* if the box is ok, fetch the first to the last message, getting the size, header and uid */
             /* This is FAST under IMAP, so we scarf the whole dataset */
 
@@ -943,7 +946,7 @@ class Telaen extends Telaen_core
 
         $messages = array();
         $counter = 0;
-
+        $now = time();
         /*
         NOTE how special inbox is... This is the only Email box that lives on
         the actual Email server (the pophost) and so we need to jump thru some
@@ -953,7 +956,9 @@ class Telaen extends Telaen_core
         but don't worry about headers at all, until we really, really
         need to.
         */
-        if ($boxname == 'inbox') {
+        if ($boxname == 'inbox' &&
+            ($this->tdb->folders[$boxname]['refreshed'] < ($now - $this->prefs['refresh_time']))) {
+             $this->tdb->update_folder_refreshed($boxname, $now);
             /* First, see what messages live on the server */
             $this->_mail_send_command('LIST');
             /* if any problem with this messages list, stop the procedure */
@@ -983,7 +988,7 @@ class Telaen extends Telaen_core
             /* If we've added messages, sync */
             $this->tdb->sync_headers();
             /*
-             * Now that $this->tdb->headers[] contains all the read-in messages,
+             * Now that $this->tdb->headers[] contains all the downloaded info,
              * see if we need to read in messages stored locally
              */
         }
@@ -1039,9 +1044,9 @@ class Telaen extends Telaen_core
         $this->tdb->get_headers($boxname);
         /* choose the protocol and get list from server */
         if ($this->mail_protocol == IMAP) {
-            $messages = $this->_mail_list_msgs_imap($boxname, $localmessages);
+            $messages = $this->_mail_list_msgs_imap($boxname);
         } else {
-            $messages = $this->_mail_list_msgs_pop($boxname, $localmessages);
+            $messages = $this->_mail_list_msgs_pop($boxname);
         }
         if (!$messages) {
             return false;

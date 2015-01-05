@@ -20,6 +20,7 @@ class LocalMbox extends SQLite3
         'name' => 'TEXT NOT NULL',
         'system' => 'INT NOT NULL',
         'size' => 'INT DEFAULT 0',
+        'refreshed' => 'INT DEFAULT 0',
         'bootstrapped' => 'INT DEFAULT 0'
     );
     private $aschema = array(
@@ -49,7 +50,7 @@ class LocalMbox extends SQLite3
         'messageid' => 'TEXT DEFAULT ""',
         'localname' => 'TEXT DEFAULT ""',
         'header' => 'TEXT DEFAULT ""',
-        'islocal' => 'int DEFAULT 0'
+        'islocal' => 'INT DEFAULT 0'
     );
 
     public $folders = array();
@@ -372,6 +373,29 @@ class LocalMbox extends SQLite3
     }
 
     /**
+     * Update refreshed field in folders
+     * @param string $folder Folder name
+     * @param int refreshed Time
+     * @return boolean
+     */
+    public function update_folder_refreshed($folder, $refreshed)
+    {
+        $stmt = $this->prepare("UPDATE folder SET 'refreshed'=:refreshed WHERE 'name'=:name ;");
+        $stmt->bindValue(':name', $folder);
+        $this->folders[$folder]['refreshed'] = $refreshed;
+        $stmt->bindValue(':refreshed', $this->folders[$folder]['refreshed']);
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        } else {
+            $this->ok = false;
+            $this->message .= "execute failed: ";
+            return false;
+        }
+    }
+
+
+    /**
      * Update size field in folders
      * @param string $folder Folder name
      * @param int $size Additional size
@@ -520,7 +544,7 @@ class LocalMbox extends SQLite3
         }
         $table = sprintf('folder_%s', $this->getKey($msg['folder']));
         $result = $this->do_update($table, $thelist, $msg, array('uidl'=>$msg['uidl']));
-        $this->headers[$msg['uidl']] = $msg;
+        //$this->headers[$msg['uidl']] = $msg;
         if (!$result) {
             return false;
         }
