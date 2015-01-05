@@ -21,7 +21,8 @@ class LocalMbox extends SQLite3
         'system' => 'INT NOT NULL',
         'size' => 'INT DEFAULT 0',
         'refreshed' => 'INT DEFAULT 0',
-        'bootstrapped' => 'INT DEFAULT 0'
+        'bootstrapped' => 'INT DEFAULT 0',
+        'prefix' => 'TEXT DEFAULT ""'
     );
     private $aschema = array(
         'folder' => 'TEXT NOT NULL',
@@ -106,7 +107,7 @@ class LocalMbox extends SQLite3
         $ok = $this->ok;
         $message = $this->message;
         foreach($this->system_folders as $foo) {
-            $this->add_folder($foo, true);
+            $this->add_folder(array('name' => $foo), true);
         }
         /*
          * We may have folders from previous installs. Check
@@ -116,7 +117,7 @@ class LocalMbox extends SQLite3
                 && $entry != '..'
                 && $entry != '.'
                 && !isset($this->folders[$entry])) {
-                $this->add_folder($entry, true);
+                $this->add_folder(array('name' => $entry), true);
             }
         }
         $this->ok = $this->ok && $ok;
@@ -273,7 +274,7 @@ class LocalMbox extends SQLite3
      * @param string $uidl
      * @return array
      */
-    public function get_attachments($folder, $uidl)
+    public function &get_attachments($folder, $uidl)
     {
         $query = "SELECT * FROM attachs WHERE 'folder'=:folder AND 'uidl'=:uidl ;";
         $stmt = $this->prepare($query);
@@ -298,7 +299,7 @@ class LocalMbox extends SQLite3
      * $this-folders auto-populated with hash
      * @return hash
      */
-    public function get_folders()
+    public function &get_folders()
     {
         $query = 'SELECT * FROM folders';
         $result = $this->query($query);
@@ -316,26 +317,26 @@ class LocalMbox extends SQLite3
 
     /**
      * Add new folder/emailbox to DB
-     * @param string $folder
+     * @param array $folder
      * @param int $sys
      * @return boolean
      */
     public function add_folder($folder, $calc_size = false)
     {
-        $sys = isset($this->system_folders[$folder]);
-        $size = 0;
-        if ($calc_size && is_dir($this->userfolder.$folder)) {
-            $size = $this->calc_folder_size($this->userfolder.$folder);
+        $folder['system'] = isset($this->system_folders[$folder['name']]);
+        if ($calc_size && is_dir($this->userfolder.$folder['name'])) {
+            $folder['size'] = $this->calc_folder_size($this->userfolder.$folder['name']);
         }
-        $query = sprintf('folder_%s', $this->getKey($folder));
+        $query = sprintf('folder_%s', $this->getKey($folder['name']));
         $query = $this->create_query($query, $this->mschema);
         if ($this->exec($query)) {
-            $stmt = $this->prepare("INSERT into folders ('name', 'system', 'size') VALUES (:name, :system, :size) ;");
-            $stmt->bindValue(':name', $folder);
-            $stmt->bindValue(':system', intval($sys));
-            $stmt->bindValue(':size', $size);
+            $stmt = $this->prepare("INSERT into folders ('name', 'system', 'size', 'prefix') VALUES (:name, :system, :size, :prefix) ;");
+            $stmt->bindValue(':name', $folder['name']);
+            $stmt->bindValue(':system', intval($folder['system']));
+            $stmt->bindValue(':size', intval($folder['size']));
+            $stmt->bindValue(':prefix', $folder['prefix']);
             if ($stmt->execute()) {
-                $this->folders[$folder] = array('name' => $folder, 'system' => intval($sys), 'size' => $size, 'bootstrapped' => 0);
+                $this->folders[$folder['name']] = $folder;
                 $stmt->close();
                 return true;
             } else {
@@ -375,38 +376,19 @@ class LocalMbox extends SQLite3
     /**
      * Update refreshed field in folders
      * @param string $folder Folder name
-     * @param int refreshed Time
+     * @param string $field Name of field
      * @return boolean
      */
-    public function update_folder_refreshed($folder, $refreshed)
+    public function update_folder_field($folder, $field)
     {
-        $stmt = $this->prepare("UPDATE folder SET 'refreshed'=:refreshed WHERE 'name'=:name ;");
-        $stmt->bindValue(':name', $folder);
-        $this->folders[$folder]['refreshed'] = $refreshed;
-        $stmt->bindValue(':refreshed', $this->folders[$folder]['refreshed']);
-        if ($stmt->execute()) {
-            $stmt->close();
-            return true;
-        } else {
+        if (!isset($this->fschema[$field])) {
             $this->ok = false;
-            $this->message .= "execute failed: ";
+            $this->message .= "bad field: $field";
             return false;
         }
-    }
-
-
-    /**
-     * Update size field in folders
-     * @param string $folder Folder name
-     * @param int $size Additional size
-     * @return boolean
-     */
-    public function update_folder_size($folder, $size)
-    {
-        $stmt = $this->prepare("UPDATE folder SET 'size'=:size WHERE 'name'=:name ;");
+        $stmt = $this->prepare("UPDATE folder SET '$field'=:$field WHERE 'name'=:name ;");
         $stmt->bindValue(':name', $folder);
-        $this->folders[$folder]['size'] += $size;
-        $stmt->bindValue(':size', $this->folders[$folder]['size']);
+        $stmt->bindValue(":$field", $this->folders[$folder][$field]);
         if ($stmt->execute()) {
             $stmt->close();
             return true;
@@ -454,7 +436,7 @@ class LocalMbox extends SQLite3
      * @param boolean $force TRUE to force a resync
      * @return array
      */
-    public function get_headers($folder, $force = false, $sortby = "", $sortorder = "")
+    public function &get_headers($folder, $force = false, $sortby = "", $sortorder = "")
     {
         if ($folder != $this->active_folder || $force) {
             $this->sync_headers();

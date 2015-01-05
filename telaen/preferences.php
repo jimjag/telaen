@@ -69,6 +69,7 @@ if (isset($_POST['action'])) {
         $myprefs['display_images'] = (boolean)$_POST['display_images'];
         $myprefs['editor_mode'] = ($_POST['editor_mode'] == "text" ? "text" : "html");
         $myprefs['refresh_time'] = intval($_POST['refresh_time']);
+        if ($myprefs['refresh_time'] < 5) $myprefs['refresh_time'] = 5;
         $myprefs['first-login'] = 1;
         $myprefs['spamlevel'] = intval($_POST['spamlevel']);
         $myprefs['require_receipt'] = (boolean)$_POST['require_receipt'];

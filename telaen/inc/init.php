@@ -309,6 +309,10 @@ if (!isset($sortorder) || !preg_match('/ASC|DESC/', $sortorder)) {
     $TLN->prefs['sortorder'] = $sortorder;
 }
 
+if ($TLN->prefs['refresh_time'] < 5) {
+    $TLN->prefs['refresh_time'] = 5;
+    $need_save = true;
+}
 if (isset($need_save)) {
     $TLN->save_prefs($TLN->prefs);
 }
@@ -324,16 +328,5 @@ if ($folder == "") {
 if ($initial_login) {
     // In case not cleaned-up by logging out, do-so now
     $TLN->cleanup_dirs($TLN->userfolder);
-    /*
-     * Sync list of folders (boxes) on the server w/ our local cache.
-     * Only needed with IMAP since POP3 only has 1: inbox
-     */
-    if ($TLN->mail_protocol == IMAP) {
-        $folders = $TLN->mail_list_boxes();
-        foreach ($folders as $f) {
-            if (!isset($tdb->folders[$f])) {
-                $tdb->add_folder($f);
-            }
-        }
-    }
+    $folders = $TLN->mail_list_boxes('*');
 }
