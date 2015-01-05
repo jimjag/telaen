@@ -66,8 +66,9 @@ class LocalMbox extends SQLite3
     public $udatafolder = '_infos';
     public $ok = true;
     public $message = '';
-    public $changed = array();
-    private $_indb = array();
+    public $changed = array(); /* key = message; value = array() of field changes */
+    private $_indb = array(); /* key = uidl; value = is it in the DB? */
+    private $_idx = array(); /* key = uidl; value = index to this->headers */
 
     /**
      * Construct: open DB and create tables if needed
@@ -239,14 +240,7 @@ class LocalMbox extends SQLite3
             foreach ($list as $key) {
                 $stmt->bindValue(":$key", $data[$key]);
             }
-            if ($stmt->execute()) {
-                $marray[] = $data;
-                end($marray);
-                $index = key($marray);
-                $marray[$index]['idx'] = $index;
-                $marray[$index]['uidl'] = $data['uidl'];
-                reset($marray);
-            } else {
+            if (!$stmt->execute()) {
                 $this->ok = false;
                 $this->message .= "execute failed: $query";
                 return false;
@@ -356,7 +350,7 @@ class LocalMbox extends SQLite3
 
     /**
      * Remove/delete a folder from the DB
-     * @param string $folder Folder to rm from DB
+     * @param string $folder Folder name to rm from DB
      * @return boolean
      */
     public function del_folder($folder)
@@ -456,12 +450,13 @@ class LocalMbox extends SQLite3
             $result = $this->query($query);
             $this->headers = array();
             $this->_indb = array();
+            $this->_idx = array();
             $index = 0;
             if ($result) {
                 while ($foo = $result->fetchArray()) {
                     $this->headers[$index] = $foo;
                     $this->headers[$index]['idx'] = $index;
-                    $this->headers[$index]['uidl'] = $foo['uidl'];
+                    $this->_idx[$foo['uidl']] = $index;
                     $this->_indb[$foo['uidl']] = true;
                     $index++;
                 }
@@ -531,7 +526,6 @@ class LocalMbox extends SQLite3
         }
         $table = sprintf('folder_%s', $this->getKey($msg['folder']));
         $result = $this->do_update($table, $thelist, $msg, array('uidl'=>$msg['uidl']));
-        //$this->headers[$msg['uidl']] = $msg;
         if (!$result) {
             return false;
         }
@@ -539,7 +533,33 @@ class LocalMbox extends SQLite3
    }
 
     /**
+     * Add or update this->headers with the msg data
+     * @param array $data Message data
+     */
+    public function add_message($data)
+    {
+        if (isset($this->_idx[$data['uidl']])) {
+            $idx = $this->_idx[$data['uidl']];
+            $keys = array();
+            foreach ($data as $k=>$v) {
+                $this->headers[$idx][$k] = $v;
+                if ($k != 'uidl') $keys[] = $k;
+            }
+            $this->changed[] = array($this->headers[$idx], $keys);
+        } else {
+            $this->headers[] = $data;
+            end($this->headers);
+            $index = key($this->headers);
+            $this->headers[$index]['idx'] = $index;
+            $this->_idx[$data['uidl']] = $index;
+            reset($this->headers);
+            $this->changed[] = array($this->headers[$index], array('*'));
+
+        }
+    }
+    /**
      * Update all changed/new headers for all email messages
+     * from the changed list.
      * NOTE: We are smart enough to know which messages are
      *       new, and need to be INSERTed and which ones are
      *       old, and just need UPDATE. We know this via looking
@@ -553,18 +573,26 @@ class LocalMbox extends SQLite3
     {
         $retval = true;
         $adds = array();
+        $ups = array();
+        /* We need to add 1st, and then allow for updates */
         if (count($this->changed) > 0) {
             foreach ($this->changed as $foo) {
-                if (!isset($foo[0]['uidl'][$this->_indb])) {
+                if (!isset($this->_indb[$foo[0]['uidl']])) {
                     $adds[] = $foo[0];
-                }
-                elseif (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
-                    $retval = false;
+                } else {
+                    $ups[] = $foo;
                 }
             }
         }
         if (count($adds) > 0) {
-            return $this->add_headers($adds);
+            $retval = $this->add_headers($adds);
+        }
+        if (count($ups) > 0) {
+            foreach ($ups as $foo) {
+                if (!$this->update_header($this->headers[$foo[0]], $foo[1])) {
+                    $retval = false;
+                }
+            }
         }
         $this->changed = array();
         return $retval;
@@ -580,24 +608,33 @@ class LocalMbox extends SQLite3
         if (!is_array($msgs)) {
             $msgs = (array)$msgs;
         }
+        $this->ok = true;
         $query = sprintf("DELETE FROM folder_%s WHERE 'uidl'=:uidl ;", $this->getKey($msgs[0]['folder']));
         $isactive = ($msgs[0]['folder'] == $this->active_folder ? true : false);
         $stmt = $this->prepare($query);
+        $idxs = array();
         foreach ($msgs as $msg) {
-            $stmt->bindValue(':uidl', $msg['uidl']);
-            if ($stmt->execute($query)) {
-                /* If we deleted from the active folder, then update our array */
-                if ($isactive) {
-                    unset($this->headers[$msg['idx']]);
+            $idx = $msg['idx'];
+            if (!isset($idxs[$idx])) {
+                $idxs[$idx] = $idx;
+                $stmt->bindValue(':uidl', $msg['uidl']);
+                if (!$stmt->execute($query)) {
+                    $this->ok = false;
+                    $this->message = "exec failed: $query";
+                } else {
+                    $idxs[$idx] = $idx;
                 }
-            } else {
-                $this->ok = false;
-                $this->message = "exec failed: $query";
-                return false;
+            }
+        }
+        /* If we deleted from the active folder, then update our array */
+        if ($isactive) {
+            foreach ($idxs as $idx) {
+                unset($this->_idx[$this->headers[$idx]['uidl']]);
+                unset($this->headers[$idx]);
             }
         }
         $stmt->close();
-        return true;
+        return $this->ok;
     }
 
     public function add_attachment($folder, $msg)
