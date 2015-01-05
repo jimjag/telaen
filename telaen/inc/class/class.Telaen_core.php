@@ -108,6 +108,18 @@ class Telaen_core
     }
 
     /**
+     * Add elements of $n to $m. $m is updated inline (since a ref)
+     * @param array ref $m Array to add to
+     * @param array $n Array to grab from
+     */
+    static public function add2me(&$m, $n)
+    {
+        foreach ($n as $k=>$v) {
+            $m[$k] = $v;
+        }
+    }
+
+    /**
      * Open a file and read it until a double line break
      * is reached.
      * Used to get the list of cached messages from cache
@@ -1045,6 +1057,7 @@ class Telaen_core
         if ($this->is_valid_hash($uidl)) {
             $myarray['uidl'] = $uidl;
         }
+        $myarray['hparsed'] = true;
         unset($headers);
 
         return $myarray;

@@ -22,15 +22,15 @@ class LocalMbox extends SQLite3
         'size' => 'INT DEFAULT 0',
         'refreshed' => 'INT DEFAULT 0',
         'bootstrapped' => 'INT DEFAULT 0',
-        'prefix' => 'TEXT DEFAULT ""'
+        'prefix' => 'TEXT DEFAULT ""',
     );
     private $aschema = array(
         'folder' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL',
-        'localname' => 'TEXT',
+        'localname' => 'TEXT DEFAULT ""',
         'name' => 'TEXT DEFAULT ""',
         'type' => 'TEXT DEFAULT ""',
-        'size' => 'INT DEFAULT 0'
+        'size' => 'INT DEFAULT 0',
     );
     private $mschema = array(
         'date' => 'INT DEFAULT 0',
@@ -40,6 +40,7 @@ class LocalMbox extends SQLite3
         'size' => 'INT DEFAULT 0',
         'priority' => 'INT DEFAULT 0',
         'attach' => 'INT DEFAULT 0',
+        'islocal' => 'INT DEFAULT 0',
         'folder' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY',
         'subject' => 'TEXT DEFAULT ""',
@@ -48,10 +49,14 @@ class LocalMbox extends SQLite3
         'to' => 'TEXT DEFAULT ""',
         'cc' => 'TEXT DEFAULT ""',
         'flags' => 'TEXT DEFAULT ""',
-        'messageid' => 'TEXT DEFAULT ""',
+        'message-id' => 'TEXT DEFAULT ""',
         'localname' => 'TEXT DEFAULT ""',
+        'receipt-to' => 'TEXT DEFAULT ""',
+        'x-spam-level' => 'TEXT DEFAULT ""',
+        'reply-to' => 'TEXT DEFAULT ""',
+        'content-type' => 'TEXT DEFAULT ""',
+        'content-transfer-encoding' => 'TEXT DEFAULT ""',
         'header' => 'TEXT DEFAULT ""',
-        'islocal' => 'INT DEFAULT 0'
     );
 
     public $folders = array();
@@ -561,6 +566,7 @@ class LocalMbox extends SQLite3
         if (count($adds) > 0) {
             return $this->add_headers($adds);
         }
+        $this->changed = array();
         return $retval;
     }
 

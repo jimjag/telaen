@@ -1044,7 +1044,7 @@ class Telaen extends Telaen_core
          * if the header has already been parsed. If not, then just
          * copy away.
          */
-        for ($i = 0; $i<$mcount; $i++) {
+        for ($i = 0; $i < $mcount; $i++) {
             $workit = false;
             if ((($j < $start) || ($j >= $end_pos)) && $messages[$i]['hparsed']) {
                 $workit = true;
@@ -1054,7 +1054,6 @@ class Telaen extends Telaen_core
             }
 
             if (!$workit) {
-                $messagescopy[$j] = $messages[$i];
                 $j++;
                 continue;
             }
@@ -1068,76 +1067,49 @@ class Telaen extends Telaen_core
                 $messages[$i]['header'] = $header;
             }
 
-            $mail_info = $this->get_mail_info($messages[$i]['header']);
+            if (!$messages[$i]['hparsed']) {
+                $mail_info = $this->get_mail_info($messages[$i]['header']);
+                self::add2me($messages[$i], $mail_info);
+                $messages[$i]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
+                    $mail_info['content-type'])) ? 1 : 0;
 
-            $havespam = false;
+                if ($messages[$i]['localname'] == '') {
+                    $messages[$i]['localname'] = $this->_get_local_name($messages[$i]['uidl'], $boxname);
+                }
+                if ($this->mail_protocol != IMAP && file_exists($messages[$i]['localname'])) {
+                    $iheaders = $this->_get_headers_from_cache($messages[$i]['localname']);
+                    $iheaders = $this->_decode_header($iheaders);
+                    $messages[$i]['flags'] = strtoupper($iheaders['x-um-flags']);
+                }
+                $this->tdb->changed[] = array($messages[$i], array('*'));
+            }
+            $isspam = false;
             $spamsubject = $mail_info['subject'];
             $xspamlevel = $mail_info['x-spam-level'];
             /*
              * Only auto-populate the SPAM folder if
-             * we are checking the inbox and we have _autospamfolder
-             * set :)
+             * we have _autospamfolder set :)
              */
-            if (($this->prefs['autospamfolder'])
-                && ($boxname == 'inbox' || $boxname == 'spam')) {
+            if ($this->prefs['autospamfolder']) {
                 foreach ($this->_spamregex as $spamregex) {
                     if (preg_match("/$spamregex/i", $spamsubject)) {
-                        $this->havespam = $havespam = true;
+                        $this->havespam = $isspam = true;
                         break;
                     }
                 }
                 if ($this->prefs['spamlevel']) {
                     preg_match('|[*+]+|', $xspamlevel, $matches);
                     if (strlen($matches[0]) >= $this->prefs['spamlevel']) {
-                        $this->havespam = $havespam = true;
+                        $this->havespam = $isspam = true;
                     }
                 }
             }
 
-            if (! $havespam) {
-                $messagescopy[$j] = $messages[$i];
-
-                if ($messages[$i]['hparsed']) {
-                    $j++;
-                    continue;
-                }
-                $messagescopy[$j]['hparsed'] = 1;
-                $messagescopy[$j]['subject'] = $mail_info['subject'];
-                $messagescopy[$j]['date'] = $mail_info['date'];
-                $messagescopy[$j]['message-id'] = $mail_info['message-id'];
-                $messagescopy[$j]['from'] = $mail_info['from'];
-                $messagescopy[$j]['to'] = $mail_info['to'];
-                $messagescopy[$j]['fromname'] = $mail_info['from'][0]['name'];
-                $messagescopy[$j]['to'] = $mail_info['to'];
-                $messagescopy[$j]['cc'] = $mail_info['cc'];
-                $messagescopy[$j]['priority'] = $mail_info['priority'];
-                $messagescopy[$j]['uidl'] = ((!$this->is_valid_hash($mail_info['uidl'])) ?
-                                    $this->_mail_get_uidl($messagescopy[$j]['mnum'], $mail_info) :
-                                    $mail_info['uidl']);
-                $messagescopy[$j]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
-                                    $mail_info['content-type'])) ? 1 : 0;
-
-                if ($messagescopy[$j]['localname'] == '') {
-                    $messagescopy[$j]['localname'] = $this->_get_local_name($messagescopy[$j]['uidl'], $boxname);
-                }
-
-                // $messagescopy[$j]['read'] = file_exists($messagescopy[$j]['localname'])?1:0;
-
+            if ($isspam) {
                 /*
-                 * ops, a trick. if the message is not imap, the flags are stored in
-                 * a special field on headers
+                 * This message is spam... we need to move it to the SPAM
+                 * folder
                  */
-
-                if ($this->mail_protocol != IMAP && file_exists($messagescopy[$j]['localname'])) {
-                    $iheaders = $this->_get_headers_from_cache($messagescopy[$j]['localname']);
-                    $iheaders = $this->_decode_header($iheaders);
-                    $messagescopy[$j]['flags'] = strtoupper($iheaders['x-um-flags']);
-                    unset($iheaders);
-                }
-                $messagescopy[$j]['folder'] = $boxname;
-
-                $j++;
-            } else {
                 $spamcopy[$y] = $messages[$i];
                 if ($messages[$i]['hparsed']) {
                     $y++;
