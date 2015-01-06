@@ -90,9 +90,9 @@ $tdb->sync_headers();
  * HACK:
  */
 $same_version = true;
-if ($TLN->prefs['version'] != $appversion) {
+if ($TLN->prefs['version'] != $TLN->appversion) {
     list($their_major, $their_minor, $patch_level) = explode('.', $TLN->prefs['version']);
-    list($our_major, $our_minor, $patch_level, $devver) = explode('.', $appversion);
+    list($our_major, $our_minor, $patch_level, $devver) = explode('.', $TLN->appversion);
     if (!$devver && (($their_minor != $our_minor) || ($their_major != $our_major))) {
         $same_version = false;
     }

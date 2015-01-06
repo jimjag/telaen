@@ -252,7 +252,7 @@ if (count($config) == 0) {
     //
     // Try to create one for them...
     //
-    $keep = array('appversion', 'appname', 'themes', 'languages', 'default_theme',
+    $keep = array('appname', 'themes', 'languages', 'default_theme',
         'default_language', 'log_errors', 'log_fname');
     // $config = array();
     @include './inc/config/configv2-default.php';
@@ -276,7 +276,7 @@ if (count($config) == 0) {
             fwrite($fp, " *    DO NOT USE WITHOUT DOUBLE AND TRIPLE CHECKING!!\n");
             fwrite($fp, " */\n\n");
             fwrite($fp, "defined('I_AM_TELAEN') or die('Direct access not permitted');\n");
-            if (isset($appname)) {
+            if (!empty($appname)) {
                 fwrite($fp, "\$config['appname'] = '$appname';\n");
             } else {
                 fwrite($fp, "/* \$config['appname'] = '<whatever>'; */\n");

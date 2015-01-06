@@ -73,7 +73,7 @@ if (isset($_POST['action'])) {
         $myprefs['first-login'] = 1;
         $myprefs['spamlevel'] = intval($_POST['spamlevel']);
         $myprefs['require_receipt'] = (boolean)$_POST['require_receipt'];
-        $myprefs['version'] = $appversion;
+        $myprefs['version'] = $TLN->appversion;
         $TLN->save_prefs($myprefs);
         unset($myprefs);
 
