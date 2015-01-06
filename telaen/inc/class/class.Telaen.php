@@ -1033,10 +1033,10 @@ class Telaen extends Telaen_core
             $version = $this->_version;
         }
         foreach (scandir($folder) as $entry) {
-            $fullpath = "$folder/$entry";
-            if ($fullpath == '' || $fullpath == '.' || $fullpath == '..') {
+            if ($entry == '' || $entry == '.' || $entry == '..') {
                 continue;
             }
+            $fullpath = $folder.'/'.$entry;
             if (is_file($fullpath)) {
                 unset($msg);
                 $msg = array();
