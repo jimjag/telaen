@@ -393,7 +393,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        foreach ($this->tdb->system_folders as $value) {
+        foreach ($this->tdb->required_dirs() as $value) {
             $value = $this->fix_prefix($value, 1);
             if (!file_exists($this->userfolder.$value)) {
                 if (!@mkdir($this->userfolder.$value, $this->dirperm)) {

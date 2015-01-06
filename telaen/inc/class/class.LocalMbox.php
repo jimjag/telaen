@@ -65,7 +65,9 @@ class LocalMbox extends SQLite3
     public $folders = array();
     public $attachments = array();
     public $headers = array();
-    public $system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
+    public $allfolders = array();
+    private $_system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
+    private $_invisible = array('_attachments', '_infos');
     public $udatafolder = '_infos';
     public $ok = true;
     public $message = '';
@@ -115,7 +117,7 @@ class LocalMbox extends SQLite3
         }
         $ok = $this->ok;
         $message = $this->message;
-        foreach($this->system_folders as $foo) {
+        foreach($this->_system_folders as $foo) {
             $this->add_folder(array('name' => $foo), true);
         }
         /*
@@ -132,6 +134,14 @@ class LocalMbox extends SQLite3
         $this->ok = $this->ok && $ok;
         $this->message .= $message;
         return $this->ok;
+    }
+
+    /**
+     * Return array of all required folders
+     * @return array
+     */
+    public function required_dirs() {
+        return $this->_system_folders;
     }
 
     /**
@@ -314,9 +324,13 @@ class LocalMbox extends SQLite3
         $query = 'SELECT * FROM folders';
         $result = $this->query($query);
         $this->folders = array();
+        $this->allfolders = array();
         if ($result) {
             while ($foo = $result->fetchArray()) {
-                $this->folders[$foo['name']] = $foo;
+                $this->allfolders[$foo['name']] = $foo;
+                if (!in_array($foo['name'], $this->_invisible)) {
+                    $this->folders[$foo['name']] = $foo;
+                }
             }
         } else {
             $this->ok = false;
@@ -333,7 +347,7 @@ class LocalMbox extends SQLite3
      */
     public function add_folder($folder, $calc_size = false)
     {
-        $folder['system'] = in_array($folder['name'], $this->system_folders);
+        $folder['system'] = in_array($folder['name'], $this->_system_folders);
         if ($calc_size && is_dir($this->userfolder.$folder['name'])) {
             $folder['size'] = $this->calc_folder_size($this->userfolder.$folder['name']);
         }
