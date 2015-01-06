@@ -683,7 +683,7 @@ class LocalMbox extends SQLite3
             if ($f != "." && $f != "..") {
                 $nfile = $path.$f;
                 if (is_dir($nfile)) {
-                    $size = foldersize($nfile);
+                    $size = $this->calc_folder_size($nfile);
                     $total_size += $size;
                 }
                 else {
