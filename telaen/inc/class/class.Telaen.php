@@ -1431,7 +1431,7 @@ class Telaen extends Telaen_core
 
         $dir = $this->userfolder.$boxname;
         if (!is_dir($dir)) {
-            if (!mkdir($dir)) {
+            if (!mkdir($dir, $this->dirperm)) {
                 $this->trigger_error("cannot mkdir $dir", __FUNCTION__);
                 return false;
             }
@@ -1441,7 +1441,7 @@ class Telaen extends Telaen_core
         list($filename, $name) = $this->_get_local_name($mail_info, $boxname);
         $dir = $dir.'/'.$name[0];
         if (!is_dir($dir)) {
-            if (!mkdir($dir)) {
+            if (!mkdir($dir, $this->dirperm)) {
                 $this->trigger_error("cannot mkdir $dir", __FUNCTION__);
                 return false;
             }
