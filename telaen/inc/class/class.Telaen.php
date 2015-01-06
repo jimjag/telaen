@@ -17,6 +17,7 @@ class Telaen extends Telaen_core
     protected $_serverurl      = '';
     protected $_respnum        = 0;
     protected $_respstr        = '';
+    protected $_version        = 2;
 
     const RESP_OK =   0;
     const RESP_NO =  -1;
@@ -929,6 +930,7 @@ class Telaen extends Telaen_core
                         self::add2me($msg, $mail_info);
                         $this->tdb->add_message($msg);
                     }
+                    unset($msg);
                     $msg = array();
                     $header = '';
                     $counter++;
@@ -1013,6 +1015,7 @@ class Telaen extends Telaen_core
                     if (!$this->tdb->message_exists($msg)) {
                         $this->tdb->add_message($msg);
                     }
+                    unset($msg);
                     $msg = array();
                     $counter++;
                 }
@@ -1027,14 +1030,18 @@ class Telaen extends Telaen_core
         return $counter;
     }
 
-    private function _walk_folder($boxname, $folder, &$i)
+    private function _walk_folder($boxname, $folder, &$i, $version = null)
     {
+        if ($version === null) {
+            $version = $this->_version;
+        }
         foreach (scandir($folder) as $entry) {
             $fullpath = "$folder/$entry";
             if ($fullpath == '' || $fullpath == '.' || $fullpath == '..') {
                 continue;
             }
             if (is_file($fullpath)) {
+                unset($msg);
                 $msg = array();
                 $thisheader = $this->_get_headers_from_cache($fullpath);
                 $msg['id'] = $i + 1;
@@ -1044,9 +1051,10 @@ class Telaen extends Telaen_core
                 $msg['localname'] = $fullpath;
                 $msg['folder'] = $boxname;
                 $msg['islocal'] = true;
+                $msg['version'] = $version;
                 $mail_info = $this->get_mail_info($thisheader);
                 self::add2me($msg, $mail_info);
-                $messages[$i]['uidl'] = $this->_mail_get_uidl($msg);
+                $msg['uidl'] = $this->_mail_get_uidl($msg);
                 $this->tdb->add_message($msg);
                 $i++;
             }
@@ -1079,23 +1087,23 @@ class Telaen extends Telaen_core
 
         // First get info from DB
         $this->tdb->get_headers($boxname);
-        if (!$this->tdb->is_folder_bootstrapped($boxname)) {
+        if (!$this->tdb->current_version($boxname, $this->_version)) {
             /*
              * Ideally, we do this only once per user, after which any changes
              * to the local system will be also reflected automatically in the DB.
              * If no email is stored locally, though, we do this everytime
              * (but no messages exist, so it's moot)
              */
-            $this->tdb->bootstrap_folder($boxname);
+            $this->tdb->upgrade_version($boxname, $this->_version);
             $datapath = $this->userfolder.$boxname;
             $i = 0;
-            $this->_walk_folder($boxname, $datapath, $i);
+            $this->_walk_folder($boxname, $datapath, $i, 1);
         }
         /* choose the protocol and get list from server */
         if ($this->mail_protocol == IMAP) {
-            $counter = $this->_mail_list_msgs_imap($boxname);
+            $this->_mail_list_msgs_imap($boxname);
         } else {
-            $counter = $this->_mail_list_msgs_pop($boxname);
+            $this->_mail_list_msgs_pop($boxname);
         }
         $messages = &$this->tdb->get_headers($boxname);
         /*
