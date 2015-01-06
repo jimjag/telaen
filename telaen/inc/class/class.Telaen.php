@@ -1000,7 +1000,7 @@ class Telaen extends Telaen_core
                 if (is_numeric($msgs[0])) {
                     $mnum = intval($msgs[0]);
                     $msg['id'] = $counter + 1; //$msgs[0];
-                    $msg['mnum'] = $mnums[] = intval($msgs[0]);
+                    $msg['mnum'] = $mnum;
                     $msg['size'] = intval($msgs[1]);
                     $msg['folder'] = $boxname;
                     $msg['islocal'] = false;
@@ -1013,6 +1013,7 @@ class Telaen extends Telaen_core
                     if (!$this->tdb->message_exists($msg)) {
                         $this->tdb->add_message($msg);
                     }
+                    $msg = array();
                     $counter++;
                 }
             }
@@ -1106,7 +1107,6 @@ class Telaen extends Telaen_core
         $i = 0;
         $j = 0;
         $y = 0;
-        $messagescopy = array();
         $spamcopy = array();
         $mcount = count($messages);
         $end_pos = $start + $wcount;
