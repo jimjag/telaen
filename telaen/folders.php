@@ -105,13 +105,13 @@ for ($n = 0;$n<count($boxes);$n++) {
             $merged_array = array_merge($mbox['headers']['inbox'], $mbox['headers']['spam']);
             Telaen::array_qsort2int($merged_array, 'mnum', 'ASC');
 
-            $merged_returnarray = $TLN->mail_list_msgs('inbox', $merged_array);
+            $thisbox = $TLN->mail_list_msgs('inbox');
             $thisbox = $merged_returnarray[0];
             $mbox['headers']['spam'] = $merged_returnarray[1];
         } elseif ($entry == 'spam') {
             ;
         } else {
-            $merged_returnarray = $TLN->mail_list_msgs($entry, $mbox['headers'][$entry]);
+            $thisbox = $TLN->mail_list_msgs($entry);
             $thisbox = $merged_returnarray[0];
         }
 

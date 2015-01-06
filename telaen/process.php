@@ -68,11 +68,11 @@ if (!$messagecount
         }
     }
     if ($mlist) {
-        $TLN->mail_list_msgs($folder, $merged_array, $start_pos, $reg_pp);
+        $TLN->mail_list_msgs($folder, $start_pos, $reg_pp);
         require './apply_filters.php';
     }
     if ($require_update) {
-        $TLN->mail_list_msgs($folder, $merged_array, $start_pos, $reg_pp);
+        $TLN->mail_list_msgs($folder, $start_pos, $reg_pp);
     }
 
     $TLN->mail_disconnect();
