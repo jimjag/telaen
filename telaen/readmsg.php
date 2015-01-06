@@ -16,7 +16,7 @@ if (!isset($ix) || !isset($pag)) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
-$mysess = &$TLN->tdb->get_headers($folder);
+$mysess = &$TLN->tdb->get_messages($folder);
 $mail_info = $mysess[$ix];
 
 $is_attached = false;
@@ -223,7 +223,7 @@ if (count($anexos) > 0) {
 }
 
 $AuthSession->Save($auth);
-$tdb->sync_headers();
+$tdb->sync_messages();
 
 $avalfolders = array();
 foreach (scandir($TLN->userfolder) as $entry) {

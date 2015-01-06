@@ -247,7 +247,7 @@ $TLN->userdatafolder = $TLN->userfolder.$tdb->udatafolder;
  */
 if (($TLN->mail_protocol == POP3) && $TLN->prefs['keep_on_server'] && $initial_login) {
     $tdb->del_folder('inbox');
-    $tdb->add_folder('inbox');
+    $tdb->new_folder('inbox');
 }
 $AuthSession->Save($auth);
 

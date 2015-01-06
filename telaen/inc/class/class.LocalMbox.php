@@ -64,14 +64,14 @@ class LocalMbox extends SQLite3
 
     public $folders = array();
     public $attachments = array();
-    public $headers = array();
+    public $messages = array();
     public $allfolders = array();
     private $_system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
     private $_invisible = array('_attachments', '_infos');
     public $udatafolder = '_infos';
     public $ok = true;
     public $message = '';
-    public $changed = array(); /* key = message; value = array() of field changes */
+    public $changed_m = array(); /* key = message; value = array() of field changes */
     private $_indb = array(); /* key = uidl; value = is it in the DB? */
     private $_idx = array(); /* key = uidl; value = index to this->headers */
 
@@ -118,7 +118,7 @@ class LocalMbox extends SQLite3
         $ok = $this->ok;
         $message = $this->message;
         foreach($this->_system_folders as $foo) {
-            $this->add_folder(array('name' => $foo), true);
+            $this->new_folder(array('name' => $foo), true);
         }
         /*
          * We may have folders from previous installs. Check
@@ -128,7 +128,7 @@ class LocalMbox extends SQLite3
                 && $entry != '..'
                 && $entry != '.'
                 && !isset($this->folders[$entry])) {
-                $this->add_folder(array('name' => $entry), true);
+                $this->new_folder(array('name' => $entry), true);
             }
         }
         $this->ok = $this->ok && $ok;
@@ -345,7 +345,7 @@ class LocalMbox extends SQLite3
      * @param int $sys
      * @return boolean
      */
-    public function add_folder($folder, $calc_size = false)
+    public function new_folder($folder, $calc_size = false)
     {
         $folder['system'] = in_array($folder['name'], $this->_system_folders);
         if ($calc_size && is_dir($this->userfolder.$folder['name'])) {
@@ -459,10 +459,10 @@ class LocalMbox extends SQLite3
      * @param boolean $force TRUE to force a resync
      * @return array
      */
-    public function &get_headers($folder, $force = false, $sortby = "", $sortorder = "")
+    public function &get_messages($folder, $force = false, $sortby = "", $sortorder = "")
     {
         if ($folder != $this->active_folder || $force) {
-            $this->sync_headers();
+            $this->sync_messages();
             $query = sprintf('SELECT * FROM %s ', self::_get_folder_name($folder));
             if ($sortby && isset($this->mschema[$sortby])) {
                 $query .= "ORDER BY '$sortby' ";
@@ -472,14 +472,14 @@ class LocalMbox extends SQLite3
             }
             $query .= ';';
             $result = $this->query($query);
-            $this->headers = array();
+            $this->messages = array();
             $this->_indb = array();
             $this->_idx = array();
             $index = 0;
             if ($result) {
                 while ($foo = $result->fetchArray()) {
-                    $this->headers[$index] = $foo;
-                    $this->headers[$index]['idx'] = $index;
+                    $this->messages[$index] = $foo;
+                    $this->messages[$index]['idx'] = $index;
                     $this->_idx[$foo['uidl']] = $index;
                     $this->_indb[$foo['uidl']] = true;
                     $index++;
@@ -490,7 +490,7 @@ class LocalMbox extends SQLite3
                 $this->message = "query failed: $query";
             }
         }
-        return $this->headers;
+        return $this->messages;
     }
 
     /**
@@ -500,7 +500,7 @@ class LocalMbox extends SQLite3
      * @param boolean $force TRUE to force a resync
      * @return array
      */
-    public function count_headers($folder, $force = false)
+    public function count_messages($folder, $force = false)
     {
         if ($folder != $this->active_folder || $force) {
             $query = sprintf('SELECT COUNT(*) FROM %s;', self::_get_folder_name($folder));
@@ -514,15 +514,15 @@ class LocalMbox extends SQLite3
                 return null;
             }
         }
-        return count($this->headers);
+        return count($this->messages);
     }
 
     /**
-     * Add email message to folder
+     * Add new email message to folder
      * @param type $msg
      * @return boolean
      */
-    public function add_header($msg)
+    public function new_message($msg)
     {
         $thelist = $this->create_uplist(keys($msg), $this->mschema);
         if ($thelist == null || !is_array($thelist)) {
@@ -543,7 +543,7 @@ class LocalMbox extends SQLite3
      *  NOTE: Since the list of updated fields may change, re-use of
      *        prepared statements is kind of impossible
      */
-    public function update_header($msg, $fields = "*")
+    public function update_message($msg, $fields = "*")
     {
         $thelist = $this->create_uplist($fields, $this->mschema, array('uidl'));
         if ($thelist == null || !is_array($thelist)) {
@@ -561,7 +561,7 @@ class LocalMbox extends SQLite3
     {
         $uidl = $msg['uidl'];
         return (isset($this->_idx[$uidl]) &&
-            !empty($this->headers[$this->_idx[$uidl]]['folder']));
+            !empty($this->messages[$this->_idx[$uidl]]['folder']));
     }
 
     /**
@@ -574,22 +574,22 @@ class LocalMbox extends SQLite3
             $idx = $this->_idx[$msg['uidl']];
             $keys = array();
             foreach ($msg as $k=>$v) {
-                if (($v !== null) && ($this->headers[$idx][$k] != $v) && ($k != 'uidl')) {
+                if (($v !== null) && ($this->messages[$idx][$k] != $v) && ($k != 'uidl')) {
                     $keys[] = $k;
-                    $this->headers[$idx][$k] = $v;
+                    $this->messages[$idx][$k] = $v;
                 }
             }
             if (count($keys) > 0) {
-                $this->changed[] = array($this->headers[$idx], $keys);
+                $this->changed_m[] = array($this->messages[$idx], $keys);
             }
         } else {
-            $this->headers[] = $msg;
-            end($this->headers);
-            $index = key($this->headers);
-            $this->headers[$index]['idx'] = $index;
+            $this->messages[] = $msg;
+            end($this->messages);
+            $index = key($this->messages);
+            $this->messages[$index]['idx'] = $index;
             $this->_idx[$msg['uidl']] = $index;
-            reset($this->headers);
-            $this->changed[] = array($this->headers[$index], array('*'));
+            reset($this->messages);
+            $this->changed_m[] = array($this->messages[$index], array('*'));
 
         }
     }
@@ -605,14 +605,14 @@ class LocalMbox extends SQLite3
      *       message.
      * @return boolean
      */
-    public function sync_headers()
+    public function sync_messages()
     {
         $retval = true;
         $adds = array();
         $ups = array();
         /* We need to add 1st, and then allow for updates */
-        if (count($this->changed) > 0) {
-            foreach ($this->changed as $foo) {
+        if (count($this->changed_m) > 0) {
+            foreach ($this->changed_m as $foo) {
                 if (!isset($this->_indb[$foo[0]['uidl']])) {
                     $adds[] = $foo[0];
                 } else {
@@ -622,19 +622,19 @@ class LocalMbox extends SQLite3
         }
         if (count($adds) > 0) {
             foreach ($adds as $add) {
-                if (!$this->add_header($add)) {
+                if (!$this->new_message($add)) {
                     $retval = false;
                 }
             }
         }
         if (count($ups) > 0) {
             foreach ($ups as $foo) {
-                if (!$this->update_header($foo[0], $foo[1])) {
+                if (!$this->update_message($foo[0], $foo[1])) {
                     $retval = false;
                 }
             }
         }
-        $this->changed = array();
+        $this->changed_m = array();
         return $retval;
     }
 
@@ -643,7 +643,7 @@ class LocalMbox extends SQLite3
      * @param array $msgs
      * @return bool
      */
-    public function del_headers($msgs)
+    public function del_messages($msgs)
     {
         if (!is_array($msgs)) {
             $msgs = (array)$msgs;
@@ -669,8 +669,8 @@ class LocalMbox extends SQLite3
         /* If we deleted from the active folder, then update our array */
         if ($isactive) {
             foreach ($idxs as $idx) {
-                unset($this->_idx[$this->headers[$idx]['uidl']]);
-                unset($this->headers[$idx]);
+                unset($this->_idx[$this->messages[$idx]['uidl']]);
+                unset($this->messages[$idx]);
             }
         }
         $stmt->close();

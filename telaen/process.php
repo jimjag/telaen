@@ -19,7 +19,7 @@ extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'
 extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
 extract(Telaen::pull_from_array($_POST, array('back'), true));
 
-$headers = &$tdb->get_headers($folder);
+$headers = &$tdb->get_messages($folder);
 $messagecount = count($headers);
 
 if (!$messagecount
@@ -78,9 +78,9 @@ if (!$messagecount
     $TLN->mail_disconnect();
 }
 
-$auth['havespam'] = ($TLN->havespam || $tdb->count_headers('spam') > 0);
+$auth['havespam'] = ($TLN->havespam || $tdb->count_messages('spam') > 0);
 $AuthSession->Save($auth);
-$tdb->sync_headers();
+$tdb->sync_messages();
 
 /*
  * If they used a different version (ignoring patchlevel) then

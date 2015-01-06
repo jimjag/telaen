@@ -460,7 +460,7 @@ class Telaen extends Telaen_core
 
             // Update globally
             $msg['header'] = $msgheader;
-            $this->tdb->changed[] = array($msg, array('header'));
+            $this->tdb->changed_m[] = array($msg, array('header'));
 
             $msgcontent = "$msgheader\r\n\r\n$msgbody";
 
@@ -514,7 +514,7 @@ class Telaen extends Telaen_core
 
             // Update globally
             $msg['header'] = $header;
-            $this->tdb->changed[] = array($msg, array('header'));
+            $this->tdb->changed_m[] = array($msg, array('header'));
 
             $msgcontent = "$header\r\n\r\n$body";
 
@@ -678,7 +678,7 @@ class Telaen extends Telaen_core
         }
         $this->mail_set_flag($msg, '\\DELETED', '+');
 
-        return $this->tdb->del_headers($msg);
+        return $this->tdb->del_messages($msg);
     }
 
     protected function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0)
@@ -727,7 +727,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        return $this->tdb->del_headers($msg);
+        return $this->tdb->del_messages($msg);
     }
 
     /**
@@ -1083,7 +1083,7 @@ class Telaen extends Telaen_core
         // $this->havespam = '';
 
         // First get info from DB
-        $this->tdb->get_headers($boxname);
+        $this->tdb->get_messages($boxname);
         if (!$this->tdb->current_version($boxname, $this->_version)) {
             /*
              * Ideally, we do this only once per user, after which any changes
@@ -1102,7 +1102,7 @@ class Telaen extends Telaen_core
         } else {
             $this->_mail_list_msgs_pop($boxname);
         }
-        $messages = &$this->tdb->get_headers($boxname);
+        $messages = &$this->tdb->get_messages($boxname);
         /*
          * OK, now we have the message list, that contains id and size and possibly
          * the header as well (if not, we grab as needed).
@@ -1237,7 +1237,7 @@ class Telaen extends Telaen_core
                     substr($rest, $pos + 1))), 0));
                 $buffer = $this->_mail_get_line();
                 if (empty($this->$tdb->folders[$tmp['name']])) {
-                    $this->tdb->add_folder($tmp);
+                    $this->tdb->new_folder($tmp);
                 }
             }
         }
@@ -1302,7 +1302,7 @@ class Telaen extends Telaen_core
                 $buffer = $this->_mail_get_line();
             }
         }
-        $this->tdb->sync_headers();
+        $this->tdb->sync_messages();
         $this->_current_folder = $boxname;
 
         return $boxinfo;
@@ -1346,7 +1346,7 @@ class Telaen extends Telaen_core
         } else {
             /* if POP3, only make a new folder */
             if (@mkdir($this->userfolder.$boxname, $this->dirperm)) {
-                return $this->tdb->add_folder($boxname);
+                return $this->tdb->new_folder($boxname);
             } else {
                 return false;
             }
@@ -1545,7 +1545,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->tdb->changed[] = array ($msg, array('header', 'flags'));
+            $this->tdb->changed_m[] = array ($msg, array('header', 'flags'));
 
             $email = "$header\r\n\r\n$body";
 
@@ -1813,7 +1813,7 @@ class Telaen extends Telaen_core
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
             }
             if ($this->prefs['empty_trash']) {
-                $trash = &$this->tdb->get_headers('trash');
+                $trash = &$this->tdb->get_messages('trash');
                 if (count($trash) > 0) {
                     foreach ($trash as $msg) {
                         $this->mail_delete_msg($msg, false);
@@ -1825,7 +1825,7 @@ class Telaen extends Telaen_core
             if ($this->prefs['empty_spam']) {
                 if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
-                $trash = &$this->tdb->get_headers('spam');
+                $trash = &$this->tdb->get_messages('spam');
                 if (count($trash) > 0) {
                     foreach ($trash as $msg) {
                         $this->mail_delete_msg($msg, false);
