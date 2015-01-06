@@ -230,12 +230,7 @@ if (isset($TLN->config['dirperm']) && $TLN->config['dirperm'] != 0000) {
     $TLN->dirperm = $TLN->config['dirperm'];
 }
 
-if (isset($auth['prefs'])) {
-    $TLN->prefs = $auth['prefs'];
-} else {
-    $TLN->load_prefs();
-    $auth['prefs'] = $TLN->prefs;
-}
+$TLN->load_prefs();
 
 $TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
