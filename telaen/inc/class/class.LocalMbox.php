@@ -122,7 +122,7 @@ class LocalMbox extends SQLite3
          * We may have folders from previous installs. Check
          */
         foreach (scandir($this->userfolder) as $entry) {
-            if (is_dir($entry)
+            if (is_dir($this->userfolder.$entry)
                 && $entry != '..'
                 && $entry != '.'
                 && !isset($this->folders[$entry])) {

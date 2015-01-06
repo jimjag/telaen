@@ -1345,10 +1345,10 @@ class Telaen_core
         if (file_exists($folder) && is_dir($folder)) {
             foreach (scandir($folder) as $entry) {
                 if ($entry != '.' && $entry != '..' && $entry != "") {
-                    if (is_file($entry))
+                    if (is_file($folder.'/'.$entry))
                         unlink($folder.'/'.$entry);
-                    elseif (is_dir($entry))
-                        self::cleanup_dir($entry);
+                    elseif (is_dir($folder.'/'.$entry))
+                        self::cleanup_dir($folder.'/'.$entry);
                 }
             }
         }
