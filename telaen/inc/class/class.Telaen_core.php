@@ -82,7 +82,9 @@ class Telaen_core
         if ($this->config['enable_debug']) {
             $this->debug_msg($str, $caller);
         }
-        \trigger_error($str);
+        if ($this->config['log_errors']) {
+            \trigger_error($str);
+        }
     }
 
     /**

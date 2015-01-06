@@ -227,10 +227,7 @@ class Telaen extends Telaen_core
 
             return true;
         }
-        if ($this->config['log_errors']) {
-            $this->trigger_error("attempt to send command w/o connection", __FUNCTION__);
-        }
-
+        $this->trigger_error("attempt to send command w/o connection", __FUNCTION__);
         return false;
     }
 
@@ -256,10 +253,7 @@ class Telaen extends Telaen_core
                     return false;
                 }
             }
-            if ($this->config['log_errors']) {
-                $this->trigger_error("Cannot connect to: $this->_serverurl", __FUNCTION__);
-            }
-
+            $this->trigger_error("Cannot connect to: $this->_serverurl", __FUNCTION__);
             return false;
         }
 
@@ -361,7 +355,7 @@ class Telaen extends Telaen_core
     protected function _check_folders()
     {
         if (!file_exists($this->userfolder)) {
-            if (!@mkdir($this->userfolder, $this->dirperm) && $this->config['log_errors']) {
+            if (!@mkdir($this->userfolder, $this->dirperm)) {
                 $this->trigger_error("mkdir error: $this->userfolder", __FUNCTION__);
             }
         }
@@ -393,7 +387,7 @@ class Telaen extends Telaen_core
                 $current_folder = $this->fix_prefix($boxes[$i]['name'], 1);
                 if (!$this->is_system_folder($current_folder)) {
                     if (!file_exists($this->userfolder.$current_folder)) {
-                        if (!@mkdir($this->userfolder.$current_folder, $this->dirperm) && $this->config['log_errors']) {
+                        if (!@mkdir($this->userfolder.$current_folder, $this->dirperm)) {
                             $this->trigger_error("mkdir error: {$this->userfolder}{$current_folder}", __FUNCTION__);
                         }
                     }
@@ -404,7 +398,7 @@ class Telaen extends Telaen_core
         foreach ($this->tdb->system_folders as $value) {
             $value = $this->fix_prefix($value, 1);
             if (!file_exists($this->userfolder.$value)) {
-                if (!@mkdir($this->userfolder.$value, $this->dirperm) && $this->config['log_errors']) {
+                if (!@mkdir($this->userfolder.$value, $this->dirperm)) {
                     $this->trigger_error("mkdir error: {$this->userfolder}{$value}", __FUNCTION__);
                 }
             }
@@ -433,12 +427,9 @@ class Telaen extends Telaen_core
             }
 
             if ($current_id != $msg['message-id']) {
-                if ($this->config['log_errors']) {
-                    $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
-                        $current_id,
-                        $msg['message-id']), __FUNCTION__);
-                }
-
+                $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
+                    $current_id,
+                    $msg['message-id']), __FUNCTION__);
                 return false;
             }
         }
@@ -1335,12 +1326,11 @@ class Telaen extends Telaen_core
             $boxname = $this->fix_prefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
             $this->_mail_send_command("CREATE \"$boxname\"");
             if ($this->mail_ok_resp()) {
-                @mkdir($this->userfolder.$this->fix_prefix($boxname, 0), $this->dirperm);
-
-                return true;
-            } else {
-                return false;
+                if (@mkdir($this->userfolder.$this->fix_prefix($boxname, 0), $this->dirperm)) {
+                    return true;
+                }
             }
+            return false;
         } else {
             /* if POP3, only make a new folder */
             if (@mkdir($this->userfolder.$boxname, $this->dirperm)) {
@@ -1404,7 +1394,7 @@ class Telaen extends Telaen_core
 
         // send the msg
         $mailcommand = "$message";
-        $this->_mail_send_command($mailcommand, true);    // don't send the session id here!
+        $this->_mail_send_command($mailcommand, false);    // don't send the session id here!
 
         $buffer = $this->_mail_get_line();
 
@@ -1431,7 +1421,7 @@ class Telaen extends Telaen_core
 
         $dir = $this->userfolder.$boxname;
         if (!is_dir($dir)) {
-            if (!mkdir($dir, $this->dirperm)) {
+            if (!@mkdir($dir, $this->dirperm)) {
                 $this->trigger_error("cannot mkdir $dir", __FUNCTION__);
                 return false;
             }
@@ -1441,7 +1431,7 @@ class Telaen extends Telaen_core
         list($filename, $name) = $this->_get_local_name($mail_info, $boxname);
         $dir = $dir.'/'.$name[0];
         if (!is_dir($dir)) {
-            if (!mkdir($dir, $this->dirperm)) {
+            if (!@mkdir($dir, $this->dirperm)) {
                 $this->trigger_error("cannot mkdir $dir", __FUNCTION__);
                 return false;
             }
@@ -1487,9 +1477,7 @@ class Telaen extends Telaen_core
     {
         $flagname = strtoupper($flagname);
         if (!in_array($flagname, $this->flags)) {
-            if ($this->config['log_errors']) {
-                $this->trigger_error("unknown flag: $this->userfolder", __FUNCTION__);
-            }
+            $this->trigger_error("unknown flag: $this->userfolder", __FUNCTION__);
             return false;
         }
         if ($flagtype == '+' && strstr($msg['flags'], $flagname)) {
