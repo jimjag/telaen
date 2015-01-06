@@ -395,7 +395,7 @@ class LocalMbox extends SQLite3
             $this->message .= "bad field: $field";
             return false;
         }
-        $stmt = $this->prepare("UPDATE folder SET '$field'=:$field WHERE 'name'=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET '$field'=:$field WHERE 'name'=:name ;");
         $stmt->bindValue(':name', $folder);
         $stmt->bindValue(":$field", $this->folders[$folder][$field]);
         if ($stmt->execute()) {
@@ -425,7 +425,7 @@ class LocalMbox extends SQLite3
      */
     public function upgrade_version($folder, $version)
     {
-        $stmt = $this->prepare("UPDATE folder SET 'version'=:version WHERE 'name'=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET 'version'=:version WHERE 'name'=:name ;");
         $stmt->bindValue(':name', $folder);
         $this->folders[$folder]['version'] = $version;
         $stmt->bindValue(':version', $this->folders[$folder]['version']);
