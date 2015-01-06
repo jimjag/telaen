@@ -266,7 +266,7 @@ class Telaen extends Telaen_core
      * @param  boolean $checkfolders
      * @return booean
      */
-    protected function _mail_auth_imap($checkfolders = false)
+    protected function _mail_auth_imap()
     {
         if ($this->upgrade_tls) {
             $this->_mail_send_command('STARTTLS');
@@ -279,9 +279,6 @@ class Telaen extends Telaen_core
         }
         $this->_mail_send_command('LOGIN '.$this->mail_user.' '.$this->mail_pass);
         if ($this->mail_ok_resp()) {
-            if ($checkfolders) {
-                $this->_check_folders();
-            }
             return true;
         } else {
             return false;
@@ -293,7 +290,7 @@ class Telaen extends Telaen_core
      * @param  boolean $checkfolders
      * @return booean
      */
-    protected function _mail_auth_pop($checkfolders = false)
+    protected function _mail_auth_pop()
     {
         $tokens = array();
         if ($this->upgrade_tls) {
@@ -321,9 +318,6 @@ class Telaen extends Telaen_core
         }
 
         if ($this->mail_ok_resp()) {
-            if ($checkfolders) {
-                $this->_check_folders();
-            }
             return true;
         } else {
             return false;
@@ -335,16 +329,16 @@ class Telaen extends Telaen_core
      * @param  boolean $checkfolders Check folder access as well
      * @return boolean
      */
-    public function mail_auth($checkfolders = false)
+    public function mail_auth()
     {
         if ($this->mail_connected()) {
             if ($this->_authenticated) {
                 return true;
             } else {
                 if ($this->mail_protocol == IMAP) {
-                    $this->_authenticated = $this->_mail_auth_imap($checkfolders);
+                    $this->_authenticated = $this->_mail_auth_imap();
                 } else {
-                    $this->_authenticated = $this->_mail_auth_pop($checkfolders);
+                    $this->_authenticated = $this->_mail_auth_pop();
                 }
                 // if ($this->_authenticated) $this->mail_get_capa();
                 return $this->_authenticated;
@@ -353,7 +347,10 @@ class Telaen extends Telaen_core
         return false;
     }
 
-    protected function _check_folders()
+    /**
+     * Prep folders on initial login
+     */
+    public function prep_folders()
     {
         if (!file_exists($this->userfolder)) {
             if (!@mkdir($this->userfolder, $this->dirperm)) {

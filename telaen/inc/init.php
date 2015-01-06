@@ -181,7 +181,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     $TLN->mail_prefix = $auth['folder_prefix'] = $f_prefix;
 
     if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-    if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
+    if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
     $auth['auth'] = true;
     $initial_login = true;
 
@@ -326,6 +326,7 @@ if ($folder == "") {
 
 //
 if ($initial_login) {
+    $TLN->prep_folders();
     // In case not cleaned-up by logging out, do-so now
     $TLN->cleanup_dirs($TLN->userfolder);
     $folders = $TLN->mail_list_boxes('*');
