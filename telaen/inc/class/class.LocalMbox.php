@@ -333,7 +333,7 @@ class LocalMbox extends SQLite3
      */
     public function add_folder($folder, $calc_size = false)
     {
-        $folder['system'] = isset($this->system_folders[$folder['name']]);
+        $folder['system'] = in_array($folder['name'], $this->system_folders);
         if ($calc_size && is_dir($this->userfolder.$folder['name'])) {
             $folder['size'] = $this->calc_folder_size($this->userfolder.$folder['name']);
         }
