@@ -873,7 +873,7 @@ class Telaen extends Telaen_core
 
     protected function _mail_list_msgs_imap($boxname = 'inbox')
     {
-        $messages = array();
+        $msg = array();
         $header = '';
         $curmsg = $size = $flags = $uid = '';
         $counter = 0;
@@ -915,35 +915,34 @@ class Telaen extends Telaen_core
 
                 /*	the end of message header was reached, increment the counter and store the last message */
                 } elseif ($tbuffer == ")") {
-                    $messages[$counter]['uidl'] = self::md5($uid);
-                    if (!$this->tdb->message_exists($messages[$counter])) {
-                        $messages[$counter]['id'] = $counter + 1; //$msgs[0];
-                        $messages[$counter]['mnum'] = intval($curmsg);
-                        $messages[$counter]['size'] = intval($size);
-                        $messages[$counter]['flags'] = strtoupper($flags);
-                        $messages[$counter]['header'] = $header;
-                        $messages[$counter]['folder'] = $boxname;
-                        $messages[$counter]['islocal'] = false;
-                        $messages[$counter]['uid'] = $uid;
+                    $msg['uidl'] = self::md5($uid);
+                    if (!$this->tdb->message_exists($msg)) {
+                        $msg['id'] = $counter + 1; //$msgs[0];
+                        $msg['mnum'] = intval($curmsg);
+                        $msg['size'] = intval($size);
+                        $msg['flags'] = strtoupper($flags);
+                        $msg['header'] = $header;
+                        $msg['folder'] = $boxname;
+                        $msg['islocal'] = false;
+                        $msg['uid'] = $uid;
                         $mail_info = $this->get_mail_info($header);
-                        self::add2me($messages[$counter], $mail_info);
-                        $this->tdb->add_message($messages[$counter]);
+                        self::add2me($msg, $mail_info);
+                        $this->tdb->add_message($msg);
                     }
-                    $counter++;
+                    $msg = array();
                     $header = '';
+                    $counter++;
                 }
                 $buffer = $this->_mail_get_line();
             }
         }
-        return $counter;
     }
 
     protected function _mail_list_msgs_pop($boxname = 'inbox')
     {
         // $this->havespam = '';
 
-        $messages = array();
-        $mnums = array();
+        $msg = array();
         $counter = 0;
         $now = time();
         /*
@@ -1000,33 +999,61 @@ class Telaen extends Telaen_core
                 $msgs = explode(' ', $buffer);
                 if (is_numeric($msgs[0])) {
                     $mnum = intval($msgs[0]);
+                    $msg['id'] = $counter + 1; //$msgs[0];
+                    $msg['mnum'] = $mnums[] = intval($msgs[0]);
+                    $msg['size'] = intval($msgs[1]);
+                    $msg['folder'] = $boxname;
+                    $msg['islocal'] = false;
                     /* If we have a UIDL, then use it, otherwise, we check later */
                     if (isset($uids[$mnum])) {
-                        $messages[$counter]['uidl'] = $uids[$mnum];
+                        $msg['uidl'] = $uids[$mnum];
                     } else {
-                        $nouids[] = $counter;
+                        $nouids[] = $msg;
                     }
-                    $messages[$counter]['id'] = $counter + 1; //$msgs[0];
-                    $messages[$counter]['mnum'] = $mnums[] = intval($msgs[0]);
-                    $messages[$counter]['size'] = intval($msgs[1]);
-                    $messages[$counter]['folder'] = $boxname;
-                    $messages[$counter]['islocal'] = false;
-                    if (!$this->tdb->message_exists($messages[$counter])) {
-                        $this->tdb->add_message($messages[$counter]);
+                    if (!$this->tdb->message_exists($msg)) {
+                        $this->tdb->add_message($msg);
                     }
                     $counter++;
                 }
             }
-            foreach ($nouids as $i) {
-                $messages[$i]['uidl'] = $this->_mail_get_uidl($messages[$i]);
-                if (!$this->tdb->message_exists($messages[$i])) {
-                    $this->tdb->add_message($messages[$i]);
+            foreach ($nouids as $msg) {
+                $msg['uidl'] = $this->_mail_get_uidl($msg);
+                if (!$this->tdb->message_exists($msg)) {
+                    $this->tdb->add_message($msg);
                 }
             }
         }
         return $counter;
     }
 
+    private function _walk_folder($boxname, $folder, &$i)
+    {
+        foreach (scandir($folder) as $entry) {
+            $fullpath = "$folder/$entry";
+            if ($fullpath == '' || $fullpath == '.' || $fullpath == '..') {
+                continue;
+            }
+            if (is_file($fullpath)) {
+                $msg = array();
+                $thisheader = $this->_get_headers_from_cache($fullpath);
+                $msg['id'] = $i + 1;
+                $msg['mnum'] = $i;
+                $msg['header'] = $thisheader;
+                $msg['size'] = filesize($fullpath);
+                $msg['localname'] = $fullpath;
+                $msg['folder'] = $boxname;
+                $msg['islocal'] = true;
+                $mail_info = $this->get_mail_info($thisheader);
+                self::add2me($msg, $mail_info);
+                $messages[$i]['uidl'] = $this->_mail_get_uidl($msg);
+                $this->tdb->add_message($msg);
+                $i++;
+            }
+            if (is_dir($fullpath)) {
+                $this->_walk_folder($boxname, $fullpath, $i);
+            }
+        }
+    }
     /*
      * The below returns an 3 element array:
      *	 $myreturnarray[0] == The message list
@@ -1051,16 +1078,6 @@ class Telaen extends Telaen_core
 
         // First get info from DB
         $this->tdb->get_headers($boxname);
-        $messages = array();
-        /* choose the protocol and get list from server */
-        if ($this->mail_protocol == IMAP) {
-            $counter = $this->_mail_list_msgs_imap($boxname);
-        } else {
-            $counter = $this->_mail_list_msgs_pop($boxname);
-        }
-        /*
-         * Could also live locally
-         */
         if (!$this->tdb->is_folder_bootstrapped($boxname)) {
             /*
              * Ideally, we do this only once per user, after which any changes
@@ -1070,24 +1087,14 @@ class Telaen extends Telaen_core
              */
             $this->tdb->bootstrap_folder($boxname);
             $datapath = $this->userfolder.$boxname;
-            foreach (scandir($datapath) as $entry) {
-                $fullpath = "$datapath/$entry";
-                if (is_file($fullpath)) {
-                    $thisheader = $this->_get_headers_from_cache($fullpath);
-                    $messages[$counter]['id'] = $counter + 1;
-                    $messages[$counter]['mnum'] = $counter;
-                    $messages[$counter]['header'] = $thisheader;
-                    $messages[$counter]['size'] = filesize($fullpath);
-                    $messages[$counter]['localname'] = $fullpath;
-                    $messages[$counter]['folder'] = $boxname;
-                    $messages[$counter]['islocal'] = true;
-                    $mail_info = $this->get_mail_info($thisheader);
-                    self::add2me($messages[$counter], $mail_info);
-                    $messages[$counter]['uidl'] = $this->_mail_get_uidl($messages[$counter]);
-                    $this->tdb->add_message($messages[$counter]);
-                    $counter++;
-                }
-            }
+            $i = 0;
+            $this->_walk_folder($boxname, $datapath, $i);
+        }
+        /* choose the protocol and get list from server */
+        if ($this->mail_protocol == IMAP) {
+            $counter = $this->_mail_list_msgs_imap($boxname);
+        } else {
+            $counter = $this->_mail_list_msgs_pop($boxname);
         }
         $messages = &$this->tdb->get_headers($boxname);
         /*
