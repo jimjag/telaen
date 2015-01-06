@@ -276,9 +276,11 @@ if (count($config) == 0) {
             fwrite($fp, " *    DO NOT USE WITHOUT DOUBLE AND TRIPLE CHECKING!!\n");
             fwrite($fp, " */\n\n");
             fwrite($fp, "defined('I_AM_TELAEN') or die('Direct access not permitted');\n");
-            fwrite($fp, "require('./inc/version.php');\n");
-            fwrite($fp, "\$config['appversion'] = \$appversion;\n");
-            fwrite($fp, "\$config['appname'] = \$appname;\n");
+            if (isset($appname)) {
+                fwrite($fp, "\$config['appname'] = '$appname';\n");
+            } else {
+                fwrite($fp, "/* \$config['appname'] = '<whatever>'; */\n");
+            }
             fwrite($fp, "@include('./inc/news/news.system.php');\n");
             fwrite($fp, "\$config['systemNews'] = \$systemNews;\n");
             fwrite($fp, "/*\n");

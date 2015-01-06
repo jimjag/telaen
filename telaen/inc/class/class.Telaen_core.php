@@ -41,8 +41,8 @@ class Telaen_core
     public $current_level = array();
     public $config = array();
     public $prefs = array();
-    public $appversion = "";
-    public $appname = "";
+    public $appversion = "2.0.0-dev";
+    public $appname = 'Telaen Webmail';
     /* @var $tdb LocalMbox */
     public $tdb = null;
     public $AuthSession = "";
