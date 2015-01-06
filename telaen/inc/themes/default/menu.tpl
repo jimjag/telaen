@@ -13,8 +13,8 @@
       {/section} 
 
       <!-- personal folders --> 
-      {section name=persFolder loop=$umPersonalFolders} <li class="menuFldItem"<a class="menu" href="{$umPersonalFolders[persFolder].link}">{$umPersonalFolders[persFolder].name}</a>
-      </li>
+      {section name=persFolder loop=$umPersonalFolders}
+      <li class="menuFldItem"><a class="menu" href="{$umPersonalFolders[persFolder].link}">{$umPersonalFolders[persFolder].name}</a></li>
       {/section} </td>
   </tr>
   <tr>
