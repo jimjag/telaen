@@ -86,6 +86,16 @@ class Telaen_core
     }
 
     /**
+     * Strip all non-hex from a string
+     * @param string $str
+     * @return string
+     */
+    static public function strip_nonhex($str)
+    {
+        return preg_replace('|[^A-Fa-f0-9]+|', '', $str);
+    }
+
+    /**
      * Return a file-system safe filename
      * @param string $str
      * @return string
@@ -115,6 +125,7 @@ class Telaen_core
     static public function add2me(&$m, $n)
     {
         foreach ($n as $k=>$v) {
+            if ($v === null) continue;
             $m[$k] = $v;
         }
     }
@@ -755,7 +766,7 @@ class Telaen_core
     }
 
     /**
-     * Guess the type of the part and call the apropriated
+     * Guess the type of the part and call the appropriate
      * method
      */
     protected function _process_message($header, $body)
@@ -959,17 +970,17 @@ class Telaen_core
     }
 
     /**
-     * True if string is a valid MD4/MD5 hash
-     * @param  string  $val Possible MD5 hash
+     * True if string is a valid hexadec
+     * @param  string  $val
      * @return boolean
      */
-    static public function is_valid_hash($val)
+    static public function is_hex($val)
     {
-        return preg_match('|^[A-Fa-f0-9]{32}$|D', $val);
+        return preg_match('|[^A-Fa-f0-9]|', $val);
     }
 
     /**
-     * Return valid MD4 hash
+     * Return valid MD5 hash
      * @param  string  $val String to hash
      * @return string
      */
@@ -989,9 +1000,15 @@ class Telaen_core
         $myarray = array();
         $headers = $this->_decode_header($header);
 
-        $myarray['message-id'] = (!empty($headers['message-id'])) ? preg_replace('|<(.*)>|', "$1", trim($headers['message-id'])) : null;
-        $myarray['content-type'] = (!empty($headers['content-type'])) ? $headers['content-type'] : null;
-        $myarray['priority'] = (!empty($headers['x-priority'])) ? $headers['x-priority'][0] : null;
+        if (!empty($headers['message-id'])) {
+            $myarray['message-id'] = preg_replace('|<(.*)>|', "$1", trim($headers['message-id']));
+        }
+        if (!empty($headers['content-type'])) {
+            $myarray['content-type'] = $headers['content-type'];
+        }
+        if (!empty($headers['x-priority'])) {
+            $myarray['priority'] = $headers['x-priority'][0];
+        }
         $myarray['flags'] = $headers['x-um-flags'];
         $myarray['content-transfer-encoding'] = (!empty($headers['content-transfer-encoding'])) ? str_replace('GM', '-', $headers['content-transfer-encoding']) : null;
 
@@ -1053,10 +1070,15 @@ class Telaen_core
         $receiptTo = $this->_get_first_of_names($headers['disposition-notification-to']);
         $myarray['receipt-to'] = $receiptTo[0]['mail'];
 
-        $uidl = $headers['x-um-uidl'];
-        if ($this->is_valid_hash($uidl)) {
+        $ouidl = self::strip_nonhex($headers['x-um-uidl']);
+        if (!empty($ouidl)) {
+            $myarray['ouidl'] = $ouidl;
+        }
+        $uidl = self::strip_nonhex($headers['x-tln-uidl']);
+        if (!empty($uidl)) {
             $myarray['uidl'] = $uidl;
         }
+
         $myarray['hparsed'] = true;
         unset($headers);
 
@@ -1113,28 +1135,18 @@ class Telaen_core
      * @param  string $email Email message
      * @return array
      */
-    public function Decode($email)
+    public function Decode(&$email)
     {
-        $email = $this->fetch_structure($email);
+        $this->_content = array();
+        $memail = $this->fetch_structure($email);
         $this->_msgbody = "";
-        $body = $email['body'];
-        $header = $email['header'];
+        $body = $memail['body'];
+        $header = $memail['header'];
         $mail_info = $this->get_mail_info($header);
         $this->_process_message($header, $body);
+        self::add2me($this->_content, $mail_info);
         $this->_content['headers'] = $header;
-        $this->_content['date'] = $mail_info['date'];
-        $this->_content['subject'] = $mail_info['subject'];
-        $this->_content['message-id'] = $mail_info['message-id'];
-        $this->_content['from'] = $mail_info['from'];
-        $this->_content['to'] = $mail_info['to'];
-        $this->_content['cc'] = $mail_info['cc'];
-        $this->_content['reply-to'] = $mail_info['reply-to'];
         $this->_content['body'] = $this->_msgbody;
-        $this->_content['read'] = $mail_info['read'];
-        $this->_content['priority'] = $mail_info['priority'];
-        $this->_content['flags'] = $mail_info['flags'];
-        $this->_content['x-spam-level'] = $mail_info['x-spam-level'];
-        $this->_content['receipt-to'] = $mail_info['receipt-to'];
 
         return $this->_content;
     }
@@ -1156,7 +1168,7 @@ class Telaen_core
      * @param  string $email Email message
      * @return array
      */
-    public function fetch_structure($email)
+    public function fetch_structure(&$email)
     {
         $ARemail = array();
         $separator = "\n\r\n";

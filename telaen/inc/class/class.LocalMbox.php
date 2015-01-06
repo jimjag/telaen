@@ -43,6 +43,7 @@ class LocalMbox extends SQLite3
         'islocal' => 'INT DEFAULT 0',
         'folder' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY',
+        'ouidl' => 'TEXT DEFAULT ""',
         'subject' => 'TEXT DEFAULT ""',
         'from' => 'TEXT DEFAULT ""',
         'fromname' => 'TEXT DEFAULT ""',
@@ -533,6 +534,18 @@ class LocalMbox extends SQLite3
    }
 
     /**
+     * Checks if message already exists
+     * @param array $data Message data
+     * @return boolean
+     */
+    public function message_exists($data)
+    {
+        $uidl = $data['uidl'];
+        return (isset($this->_idx[$uidl]) &&
+            !empty($this->headers[$this->_idx[$uidl]]['header']));
+    }
+
+    /**
      * Add or update this->headers with the msg data
      * @param array $data Message data
      */
@@ -542,7 +555,7 @@ class LocalMbox extends SQLite3
             $idx = $this->_idx[$data['uidl']];
             $keys = array();
             foreach ($data as $k=>$v) {
-                if (($this->headers[$idx][$k] != $v) && ($k != 'uidl')) {
+                if (($v !== null) && ($this->headers[$idx][$k] != $v) && ($k != 'uidl')) {
                     $keys[] = $k;
                     $this->headers[$idx][$k] = $v;
                 }

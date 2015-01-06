@@ -312,7 +312,7 @@ class Telaen extends Telaen_core
         }
         // APOP login mode, more secure
         if ($this->capabilities['APOP'] && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
-            $this->_mail_send_command('APOP '.$this->mail_user.' '.self::hashme($tokens[0].$this->mail_pass));
+            $this->_mail_send_command('APOP '.$this->mail_user.' '.md5($tokens[0].$this->mail_pass));
         }
         // Classic login mode
         else {
@@ -467,6 +467,11 @@ class Telaen extends Telaen_core
             if (!($pos === false)) {
                 $msgbody = substr($msgbody, 0, $pos);
             }
+            $msgheader .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
+
+            // Update globally
+            $msg['header'] = $msgheader;
+            $this->tdb->changed[] = array($msg, array('header'));
 
             $msgcontent = "$msgheader\r\n\r\n$msgbody";
 
@@ -478,8 +483,8 @@ class Telaen extends Telaen_core
 
     protected function _mail_retr_msg_pop(&$msg, $check = 1)
     {
-        if ($check && ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam')) {
-            $muidl = $this->_mail_get_uidl($msg['mnum']);
+        if ($check && ($msg['folder'] == 'inbox')) {
+            $muidl = $this->_mail_get_uidl($msg);
             if ($msg['uidl'] && ($msg['uidl'] != $muidl)) {
                 $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                     $msg['uidl'],
@@ -491,7 +496,7 @@ class Telaen extends Telaen_core
 
         if (file_exists($msg['localname'])) {
             $msgcontent = $this->read_file($msg['localname']);
-        } elseif ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
+        } elseif ($msg['folder'] == 'inbox') {
             $command = ($this->config['mail_use_top']) ? 'TOP '.$msg['mnum'].' '.$msg['size'] : 'RETR '.$msg['mnum'];
             $this->_mail_send_command($command);
 
@@ -500,7 +505,6 @@ class Telaen extends Telaen_core
             if ($this->mail_nok_resp($buffer)) {
                 return false;
             }
-            $last_buffer = 0;
             $msgcontent = '';
             while (!feof($this->_mail_connection)) {
                 $buffer = $this->_mail_get_line();
@@ -512,18 +516,16 @@ class Telaen extends Telaen_core
             $email = $this->fetch_structure($msgcontent);
             $header = $email['header'];
             $body = $email['body'];
-            $mail_info = $this->get_mail_info($header);
 
             // Since we are pulling this message for the first
             // time from the server, we need to add in our UIDL
             // header. Thus, it will always now be available on
             // the cached/local version.
-            $uidl = $this->_mail_get_uidl($msg['mnum'], $mail_info);
-            $header .= "\r\nX-UM-UIDL: $uidl";
+            $header .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
 
             // Update globally
             $msg['header'] = $header;
-            $msg['uidl'] = $uidl;
+            $this->tdb->changed[] = array($msg, array('header'));
 
             $msgcontent = "$header\r\n\r\n$body";
 
@@ -870,7 +872,7 @@ class Telaen extends Telaen_core
             /* if the box is ok, fetch the first to the last message, getting the size, header and uid */
             /* This is FAST under IMAP, so we scarf the whole dataset */
 
-            $this->_mail_send_command('FETCH 1:'.$boxinfo['exists'].' (FLAGS RFC822.SIZE RFC822.HEADER UID)');
+            $this->_mail_send_command('UID FETCH 1:* (FLAGS RFC822.SIZE RFC822.HEADER)');
             $buffer = $this->_mail_get_line();
 
             /* if any problem, stop the procedure */
@@ -880,6 +882,7 @@ class Telaen extends Telaen_core
 
             /* the end mark is <sid> OK FETCH, we are waiting for it*/
             while (!$this->mail_ok_resp($buffer)) {
+                $tbuffer = trim($buffer);
                 /* if the return is something such as * N FETCH, a new message will displayed  */
                 if (preg_match('|[ ]?\\*[ ]?([0-9]+)[ ]?FETCH|i', $buffer, $regs)) {
                     $curmsg = $regs[1];
@@ -890,22 +893,24 @@ class Telaen extends Telaen_core
                     preg_match('|UID[ ]?([0-9]+)|i', $buffer, $regs);
                     $uidl = $regs[1];
                 /* if any problem, add the current line to buffer */
-                } elseif (trim($buffer) != ")" && trim($buffer) != '') {
+                } elseif ($tbuffer != ")" && $tbuffer != '') {
                     $header .= $buffer;
 
                 /*	the end of message header was reached, increment the counter and store the last message */
-                } elseif (trim($buffer) == ")") {
-                    $messages[$counter]['id'] = $counter+1; //$msgs[0];
-                    $messages[$counter]['mnum'] = intval($curmsg);
-                    $messages[$counter]['size'] = intval($size);
-                    $messages[$counter]['flags'] = strtoupper($flags);
-                    $messages[$counter]['header'] = $header;
-                    $messages[$counter]['folder'] = $boxname;
-                    $messages[$counter]['islocal'] = false;
-                    $mail_info = $this->get_mail_info($header);
-                    self::add2me($messages[$counter], $mail_info);
-                    $messages[$counter]['uidl'] = self::hashme($boxinfo['uidvalidity'].":".$uidl);
-                    $this->tdb->add_message($messages[$counter]);
+                } elseif ($tbuffer == ")") {
+                    $messages[$counter]['uidl'] = $uidl;
+                    if (!$this->tdb->message_exists($messages[$counter])) {
+                        $messages[$counter]['id'] = $counter + 1; //$msgs[0];
+                        $messages[$counter]['mnum'] = intval($curmsg);
+                        $messages[$counter]['size'] = intval($size);
+                        $messages[$counter]['flags'] = strtoupper($flags);
+                        $messages[$counter]['header'] = $header;
+                        $messages[$counter]['folder'] = $boxname;
+                        $messages[$counter]['islocal'] = false;
+                        $mail_info = $this->get_mail_info($header);
+                        self::add2me($messages[$counter], $mail_info);
+                        $this->tdb->add_message($messages[$counter]);
+                    }
                     $counter++;
                     $header = '';
                 }
@@ -1138,7 +1143,7 @@ class Telaen extends Telaen_core
     protected function _get_local_name($message, $boxname)
     {
         if (is_array($message)) {
-            $flocalname = trim($this->userfolder."$boxname/".self::hashme(trim($message['subject'].$message['date'].$message['message-id'])).'.eml');
+            $flocalname = trim($this->userfolder."$boxname/".self::hashme(trim($message['uidl'])).'.eml');
         } else {
             $flocalname = trim($this->userfolder."$boxname/".$message.'.eml');
         }
@@ -1652,7 +1657,7 @@ class Telaen extends Telaen_core
             $buffer = $this->_mail_get_line();
             list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
             if ($resp == '+OK') {
-                $msg['uidl'] = self::hashme($uidl);
+                $msg['uidl'] = $uidl;
             }
             // If we DON'T get the OK response, we drop through
         }
