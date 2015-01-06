@@ -616,7 +616,7 @@ class Telaen extends Telaen_core
         }
     }
 
-    protected function _mail_delete_msg_imap($msg, $send_to_trash = 1, $save_only_read = 0)
+    protected function _mail_delete_msg_imap($msg, $send_to_trash = true, $save_only_read = false)
     {
         $read = (preg_match('|\\SEEN|', $msg['flags'])) ? 1 : 0;
 
@@ -680,7 +680,7 @@ class Telaen extends Telaen_core
         return $this->tdb->del_messages($msg);
     }
 
-    protected function _mail_delete_msg_pop($msg, $send_to_trash = 1, $save_only_read = 0)
+    protected function _mail_delete_msg_pop($msg, $send_to_trash = true, $save_only_read = false)
     {
         $read = (preg_match('|\\SEEN|', $msg['flags'])) ? 1 : 0;
 
@@ -736,7 +736,7 @@ class Telaen extends Telaen_core
      * @param  boolean $save_only_read
      * @return boolean
      */
-    public function mail_delete_msg($msg, $send_to_trash = 1, $save_only_read = 0)
+    public function mail_delete_msg($msg, $send_to_trash = true, $save_only_read = false)
     {
         if ($this->mail_protocol == IMAP) {
             return $this->_mail_delete_msg_imap($msg, $send_to_trash, $save_only_read);
