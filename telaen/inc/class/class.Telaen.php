@@ -10,7 +10,6 @@ class Telaen extends Telaen_core
     public $dirperm        = 0700;        // recall affected by umask value
     public $greeting       = '';        // Internally used for store initial IMAP/POP3 greeting message
     public $capabilities   = array();
-    public $flags          = array('\\SEEN', '\\DELETED', '\\ANSWERED', '\\DRAFT', '\\FLAGGED', '\\RECENT', '\\FORWARDED');
 
     protected $_current_folder = '';
     protected $_spamregex      = array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");

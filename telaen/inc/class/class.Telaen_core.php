@@ -47,6 +47,15 @@ class Telaen_core
     public $tdb = null;
     public $AuthSession = "";
     public $status = STATUS_OK;
+    public $flags = array(
+        'seen' =>' \\SEEN',
+        'deleted' => '\\DELETED',
+        'answered' => '\\ANSWERED',
+        'draft' => '\\DRAFT',
+        'flagged' => '\\FLAGGED',
+        'recent' => '\\RECENT',
+        'forwarded' => '\\FORWARDED'
+    );
 
     // internal
     protected $_msgbody = "";
@@ -1014,6 +1023,7 @@ class Telaen_core
             $myarray['priority'] = $headers['x-priority'][0];
         }
         $myarray['flags'] = $headers['x-um-flags'];
+        $myarray['unread'] = (!preg_match("|{$this->flags['seen']}|i", $headers['x-um-status']) ? 1 : 0);
         $myarray['content-transfer-encoding'] = (!empty($headers['content-transfer-encoding'])) ? str_replace('GM', '-', $headers['content-transfer-encoding']) : null;
 
         $received = preg_replace('|  |', ' ', $headers['received']);
@@ -1068,7 +1078,6 @@ class Telaen_core
             $myarray['reply-to'] = $this->get_names($headers['reply-to']);
         }
         $myarray['status'] = $headers['status'];
-        $myarray['read'] = $headers['x-um-status'];
         $myarray['x-spam-level'] = $headers['x-spam-level'];
 
         $receiptTo = $this->_get_first_of_names($headers['disposition-notification-to']);

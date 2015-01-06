@@ -45,6 +45,7 @@ class LocalMbox extends SQLite3
         'islocal' => 'INT DEFAULT 0', // Does it live on web server?
         'uid' => 'INT DEFAULT 0', // IMAP UID
         'version' => 'INT DEFAULT 2',
+        'unread' => 'INT DEFAULT 1',
         'folder' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY', // Our unique key (md5)
         'ouidl' => 'TEXT DEFAULT ""', // Old uidl from Telaen 1.x
