@@ -47,7 +47,7 @@ if ($TLN->mail_protocol == IMAP || !$is_inbox_or_spam) {
             break;
     }
 }
-
+/*
 $elapsedtime = (time()-$auth['last-update'])/60;
 $timeleft = ($TLN->prefs['refresh_time']-$elapsedtime);
 
@@ -56,7 +56,7 @@ if ($timeleft > 0) {
 } elseif ($TLN->prefs['refresh_time']) {
     $TLN->redirect_and_exit("$refreshurl");
 }
-
+*/
 // Assign metas to smarty, no more bad echos output
 $smarty->assign('pageMetas', $pmetas."\n".$refreshMeta);
 

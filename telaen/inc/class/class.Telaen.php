@@ -884,7 +884,7 @@ class Telaen extends Telaen_core
         $now = time();
         if (is_array($boxinfo) &&
             $boxinfo['exists'] &&
-            ($this->tdb->folders[$boxname]['refreshed'] < ($now - $this->prefs['refresh_time']))) {
+            ($this->tdb->folders[$boxname]['refreshed'] < ($now - ($this->prefs['refresh_time']/2)))) {
             $this->tdb->folders[$boxname]['refreshed'] = $now;
             $this->tdb->update_folder_field($boxname, 'refreshed');
             /* if the box is ok, fetch the first to the last message, getting the size, header and uid */
@@ -959,7 +959,7 @@ class Telaen extends Telaen_core
         we really, really need to.
         */
         if ($boxname == 'inbox' &&
-            ($this->tdb->folders[$boxname]['refreshed'] < ($now - $this->prefs['refresh_time']))) {
+            ($this->tdb->folders[$boxname]['refreshed'] < ($now - ($this->prefs['refresh_time']/2)))) {
             $this->tdb->folders[$boxname]['refreshed'] = $now;
             $this->tdb->update_folder_field($boxname, 'refreshed');
             /*
