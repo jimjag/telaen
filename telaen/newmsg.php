@@ -65,16 +65,16 @@ if (isset($tipo) && $tipo == 'send') {
         // if using the advanced editor
         if ($is_html == 'true') {
             $mail->IsHTML(1);
-            if ($footer != "") {
-                $body .= preg_replace('|(\r?\n)|', "<br>$1", $footer);
+            if (!empty($TLN->config['footer'])) {
+                $body .= preg_replace('|(\r?\n)|', "<br>$1", $TLN->config['footer']);
             }
             // add html head and foot
             $body = $htmlHead.$body.$htmlFoot;
             $mail->AltBody = "
 This Email is formatted in HTML. Your Email client appears to be incompatible.
 ";
-        } elseif ($footer != "") {
-            $body .= $footer;
+        } elseif (!empty($TLN->config['footer'])) {
+            $body .= $TLN->config['footer'];
         }
 
         $mail->CharSet = $TLN->charset;

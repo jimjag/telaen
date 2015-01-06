@@ -24,11 +24,6 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 $config['SMARTY_DIR'] = '/some/place/safe/smarty/';
 
-require('./inc/version.php');
-$config['appversion'] = $appversion;
-$config['appname'] = $appname;
-
-
 ########################################################################
 # Read in $systemNews (not required)
 ########################################################################
@@ -266,6 +261,7 @@ $config['phpmailer_timeout'] = 0;
 ########################################################################
 
 $config['smtp_server'] = 'localhost';  #YOU NEED CHANGE IT !!
+
 ########################################################################
 # Use SMTP password (AUTH LOGIN type)
 ########################################################################
@@ -291,9 +287,8 @@ $config['smtp_static_password'] = 'yourSmtpPasswd';
 $config['footer'] = "
 
 ________________________________________________________________
-Message sent using $appname $appversion
+Message sent using Telaen
 ";
-
 
 ########################################################################
 # Redirect new users to the preferences page at first login

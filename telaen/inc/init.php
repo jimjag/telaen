@@ -35,6 +35,9 @@ if ($auth['auth'] && isset($auth['config'])) {
     $auth['config'] = $TLN->config;
 }
 
+if (!empty($TLN->config['appname'])) {
+    $TLN->appname = $TLN->config['appname'];
+}
 umask($TLN->config['default_umask']);
 
 require_once './inc/errorhandler.php';
