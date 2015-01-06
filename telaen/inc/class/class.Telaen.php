@@ -10,7 +10,7 @@ class Telaen extends Telaen_core
     public $dirperm        = 0700;        // recall affected by umask value
     public $greeting       = '';        // Internally used for store initial IMAP/POP3 greeting message
     public $capabilities   = array();
-    public $flags          = array('\\SEEN', '\\DELETED', '\\ANSWERED', '\\DRAFT', '\\FLAGGED', '\\RECENT');
+    public $flags          = array('\\SEEN', '\\DELETED', '\\ANSWERED', '\\DRAFT', '\\FLAGGED', '\\RECENT', '\\FORWARDED');
 
     protected $_current_folder = '';
     protected $_spamregex      = array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
@@ -18,6 +18,7 @@ class Telaen extends Telaen_core
     protected $_respnum        = 0;
     protected $_respstr        = '';
     protected $_version        = 2;
+    protected $_now = 0;
 
     const RESP_OK =   0;
     const RESP_NO =  -1;
@@ -35,6 +36,7 @@ class Telaen extends Telaen_core
     {
         $this->_tnef = new TNEF();
         mb_internal_encoding("UTF-8");
+        $this->_now = time();  // Save expensive calls to time()
     }
 
     /**
@@ -77,8 +79,8 @@ class Telaen extends Telaen_core
 
     /**
      * Is this a valid folder name?
-     * @param type $name folder name to check
-     * @param type $checksys Check against system folders?
+     * @param string $name folder name to check
+     * @param boolean $checksys Check against system folders?
      * @return boolean
      */
     public function valid_folder_name($name, $checksys = false)
@@ -263,8 +265,7 @@ class Telaen extends Telaen_core
 
     /**
      * Authentication for IMAP
-     * @param  boolean $checkfolders
-     * @return booean
+     * @return boolean
      */
     protected function _mail_auth_imap()
     {
@@ -287,8 +288,7 @@ class Telaen extends Telaen_core
 
     /**
      * Authentication for POP3
-     * @param  boolean $checkfolders
-     * @return booean
+     * @return boolean
      */
     protected function _mail_auth_pop()
     {
@@ -303,7 +303,7 @@ class Telaen extends Telaen_core
             }
         }
         // APOP login mode, more secure
-        if ($this->capabilities['APOP'] && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
+        if (isset($this->capabilities['APOP']) && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
             $this->_mail_send_command('APOP '.$this->mail_user.' '.self::md5($tokens[0].$this->mail_pass));
         }
         // Classic login mode
@@ -326,7 +326,6 @@ class Telaen extends Telaen_core
 
     /**
      * Check if user is authenticated to the email server
-     * @param  boolean $checkfolders Check folder access as well
      * @return boolean
      */
     public function mail_auth()
@@ -875,15 +874,13 @@ class Telaen extends Telaen_core
         $header = '';
         $curmsg = $size = $flags = $uid = '';
         $counter = 0;
-
+        $new = 0;
         /* select the mail box and make sure that it exists */
         $boxinfo = $this->mail_select_box($boxname);
         $now = time();
         if (is_array($boxinfo) &&
             $boxinfo['exists'] &&
-            ($this->tdb->folders[$boxname]['refreshed'] < ($now - ($this->prefs['refresh_time']/2)))) {
-            $this->tdb->folders[$boxname]['refreshed'] = $now;
-            $this->tdb->update_folder_field($boxname, 'refreshed');
+            $this->iam_stale($boxname)) {
             /* if the box is ok, fetch the first to the last message, getting the size, header and uid */
             /* This is FAST under IMAP, so we scarf the whole dataset */
 
@@ -926,6 +923,7 @@ class Telaen extends Telaen_core
                         $mail_info = $this->get_mail_info($header);
                         self::add2me($msg, $mail_info);
                         $this->tdb->add_message($msg);
+                        $new++;
                     }
                     unset($msg);
                     $msg = array();
@@ -935,6 +933,7 @@ class Telaen extends Telaen_core
                 $buffer = $this->_mail_get_line();
             }
         }
+        return $new;
     }
 
     protected function _mail_list_msgs_pop($boxname = 'inbox')
@@ -943,7 +942,7 @@ class Telaen extends Telaen_core
 
         $msg = array();
         $counter = 0;
-        $now = time();
+        $new = 0;
         /*
         NOTE how special inbox is... This is the only Email box that lives on
         the actual Email server (the pophost) and so we need to jump thru some
@@ -955,10 +954,7 @@ class Telaen extends Telaen_core
         read in the full list of messages but don't worry about headers at all, until
         we really, really need to.
         */
-        if ($boxname == 'inbox' &&
-            ($this->tdb->folders[$boxname]['refreshed'] < ($now - ($this->prefs['refresh_time']/2)))) {
-            $this->tdb->folders[$boxname]['refreshed'] = $now;
-            $this->tdb->update_folder_field($boxname, 'refreshed');
+        if ($boxname == 'inbox' && $this->iam_stale($boxname)) {
             /*
              * First, grab list of UIDLs and message numbers from the server
              * If we have these, then we can populate and add the message
@@ -1011,6 +1007,7 @@ class Telaen extends Telaen_core
                     }
                     if (!$this->tdb->message_exists($msg)) {
                         $this->tdb->add_message($msg);
+                        $new++;
                     }
                     unset($msg);
                     $msg = array();
@@ -1021,10 +1018,11 @@ class Telaen extends Telaen_core
                 $msg['uidl'] = $this->_mail_get_uidl($msg);
                 if (!$this->tdb->message_exists($msg)) {
                     $this->tdb->add_message($msg);
+                    $new++;
                 }
             }
         }
-        return $counter;
+        return $new;
     }
 
     private function _walk_folder($boxname, $folder, &$i, $version = null)
@@ -1834,6 +1832,33 @@ class Telaen extends Telaen_core
                 }
             }
             $this->mail_disconnect();
+        }
+    }
+
+    /**
+     * If we are past the "check for new mail" deadline,
+     * we call this to poll for new messages for all
+     * emailboxes/folders and then update the folders DB
+     * as needed.
+     */
+    public function refresh_folders()
+    {
+        foo;
+    }
+
+    /**
+     * See if the folder info is "stale" (ie: time to check for new messages)
+     * @param string $folder Folder to check
+     * @return bool
+     */
+    public function iam_stale($folder)
+    {
+        if ($this->tdb->folders[$folder]['refreshed'] < ($this->now - $this->prefs['refresh_time'])) {
+            $this->tdb->folders[$folder]['refreshed'] = $this->now;
+            $this->tdb->update_folder_field($folder, 'refreshed');
+            return true;
+        } else {
+            return false;
         }
     }
 }

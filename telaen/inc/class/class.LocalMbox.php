@@ -20,6 +20,8 @@ class LocalMbox extends SQLite3
         'name' => 'TEXT NOT NULL',
         'system' => 'INT NOT NULL', // Is it a system folder?
         'size' => 'INT DEFAULT 0',
+        'count' => 'INT DEFAULT 0',
+        'unread' => 'INT DEFAULT 0',
         'refreshed' => 'INT DEFAULT 0', // time() of last refresh from server
         'version' => 'INT DEFAULT 0', // Have we read old messages?
         'prefix' => 'TEXT DEFAULT ""',
@@ -565,7 +567,7 @@ class LocalMbox extends SQLite3
     }
 
     /**
-     * Add or update this->headers with the msg msg
+     * Add or update this->headers with the msg
      * @param array $msg Message msg
      */
     public function add_message($msg)
@@ -595,7 +597,10 @@ class LocalMbox extends SQLite3
     }
     /**
      * Update all changed/new headers for all email messages
-     * from the changed list.
+     * from the changed list. The idea being that if we have
+     * a lot of bulk updates, it's best(??) to simply use
+     * our PHP arrays and update the DB all in one go
+     * when we are finishing up.
      * NOTE: We are smart enough to know which messages are
      *       new, and need to be INSERTed and which ones are
      *       old, and just need UPDATE. We know this via looking
@@ -619,22 +624,22 @@ class LocalMbox extends SQLite3
                     $ups[] = $foo;
                 }
             }
-        }
-        if (count($adds) > 0) {
-            foreach ($adds as $add) {
-                if (!$this->new_message($add)) {
-                    $retval = false;
+            if (count($adds) > 0) {
+                foreach ($adds as $add) {
+                    if (!$this->new_message($add)) {
+                        $retval = false;
+                    }
                 }
             }
-        }
-        if (count($ups) > 0) {
-            foreach ($ups as $foo) {
-                if (!$this->update_message($foo[0], $foo[1])) {
-                    $retval = false;
+            if (count($ups) > 0) {
+                foreach ($ups as $foo) {
+                    if (!$this->update_message($foo[0], $foo[1])) {
+                        $retval = false;
+                    }
                 }
             }
+            $this->changed_m = array();
         }
-        $this->changed_m = array();
         return $retval;
     }
 
