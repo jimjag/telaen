@@ -18,10 +18,10 @@ class LocalMbox extends SQLite3
     private $force_new = false;
     private $fschema = array(
         'name' => 'TEXT NOT NULL',
-        'system' => 'INT NOT NULL',
+        'system' => 'INT NOT NULL', // Is it a system folder?
         'size' => 'INT DEFAULT 0',
-        'refreshed' => 'INT DEFAULT 0',
-        'bootstrapped' => 'INT DEFAULT 0',
+        'refreshed' => 'INT DEFAULT 0', // time() of last refresh from server
+        'bootstrapped' => 'INT DEFAULT 0', // Have we read old messages?
         'prefix' => 'TEXT DEFAULT ""',
     );
     private $aschema = array(
@@ -34,16 +34,17 @@ class LocalMbox extends SQLite3
     );
     private $mschema = array(
         'date' => 'INT DEFAULT 0',
-        'hparsed' => 'INT DEFAULT 0',
+        'hparsed' => 'INT DEFAULT 0', // Have we parsed the header?
         'id' => 'INT DEFAULT 0',
-        'mnum' => 'INT DEFAULT 0',
+        'mnum' => 'INT DEFAULT 0', // message number
         'size' => 'INT DEFAULT 0',
         'priority' => 'INT DEFAULT 0',
         'attach' => 'INT DEFAULT 0',
-        'islocal' => 'INT DEFAULT 0',
+        'islocal' => 'INT DEFAULT 0', // Does it live on web server?
+        'uid' => 'INT DEFAULT 0', // IMAP UID
         'folder' => 'TEXT NOT NULL',
-        'uidl' => 'TEXT NOT NULL PRIMARY KEY',
-        'ouidl' => 'TEXT DEFAULT ""',
+        'uidl' => 'TEXT NOT NULL PRIMARY KEY', // Our unique key (md5)
+        'ouidl' => 'TEXT DEFAULT ""', // Old uidl from Telaen 1.x
         'subject' => 'TEXT DEFAULT ""',
         'from' => 'TEXT DEFAULT ""',
         'fromname' => 'TEXT DEFAULT ""',
@@ -542,7 +543,7 @@ class LocalMbox extends SQLite3
     {
         $uidl = $data['uidl'];
         return (isset($this->_idx[$uidl]) &&
-            !empty($this->headers[$this->_idx[$uidl]]['header']));
+            !empty($this->headers[$this->_idx[$uidl]]['folder']));
     }
 
     /**

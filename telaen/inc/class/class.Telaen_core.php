@@ -893,7 +893,7 @@ class Telaen_core
         $temp_array['content-disposition'] = strtolower(trim($content_disposition));
         $temp_array['boundary'] = $boundary;
         $temp_array['part'] = $part;
-        $temp_array['filename'] = $this->userfolder.'_attachments/'.self::hashme($temp_array['boundary']).'_'.$safefilename;
+        $temp_array['filename'] = $this->userfolder.'_attachments/'.self::md5($temp_array['boundary']).'_'.$safefilename;
         $temp_array['type'] = 'mime';
         $temp_array['index'] = $nIndex;
 
@@ -970,21 +970,23 @@ class Telaen_core
     }
 
     /**
-     * True if string is a valid hexadec
+     * True if string is a valid md5 hexadec
      * @param  string  $val
      * @return boolean
      */
-    static public function is_hex($val)
+    static public function is_md5($val)
     {
-        return preg_match('|[^A-Fa-f0-9]|', $val);
+        return preg_match('|^[A-Fa-f0-9]{32}$|', $val);
     }
+
 
     /**
      * Return valid MD5 hash
+     * (NOTE: hash(md5...) is faster than md5()
      * @param  string  $val String to hash
      * @return string
      */
-    static public function hashme($val)
+    static public function md5($val)
     {
         return hash('md5', $val);
     }
@@ -1070,11 +1072,11 @@ class Telaen_core
         $receiptTo = $this->_get_first_of_names($headers['disposition-notification-to']);
         $myarray['receipt-to'] = $receiptTo[0]['mail'];
 
-        $ouidl = self::strip_nonhex($headers['x-um-uidl']);
+        $ouidl = self::is_md5($headers['x-um-uidl']);
         if (!empty($ouidl)) {
             $myarray['ouidl'] = $ouidl;
         }
-        $uidl = self::strip_nonhex($headers['x-tln-uidl']);
+        $uidl = self::is_md5($headers['x-tln-uidl']);
         if (!empty($uidl)) {
             $myarray['uidl'] = $uidl;
         }
@@ -1270,7 +1272,7 @@ class Telaen_core
             $temp_array['boundary'] = $boundary;
             $temp_array['part'] = 0;
             $temp_array['type'] = 'uue';
-            $temp_array['filename'] = $this->userfolder.'_attachments/'.self::hashme($temp_array['boundary']).'_'.$temp_array['name'];
+            $temp_array['filename'] = $this->userfolder.'_attachments/'.self::md5($temp_array['boundary']).'_'.$temp_array['name'];
             $this->_content['attachments'][] = $temp_array;
             $this->save_file($temp_array['filename'], $stream);
             unset($temp_array);
@@ -1296,7 +1298,7 @@ class Telaen_core
             $temp_array['part'] = $part;
             $temp_array['type'] = 'tnef';
             $temp_array['tnef'] = $i;
-            $temp_array['filename'] = $this->userfolder.'_attachments/'.self::hashme($temp_array['boundary']).'_'.$temp_array['name'];
+            $temp_array['filename'] = $this->userfolder.'_attachments/'.self::md5($temp_array['boundary']).'_'.$temp_array['name'];
 
             $this->_content['attachments'][] = $temp_array;
 
