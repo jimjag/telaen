@@ -122,7 +122,7 @@ class LocalMbox extends SQLite3
             if (is_dir($entry)
                 && $entry != '..'
                 && $entry != '.'
-                && !isset($this->folders[$entry])) {
+                && empty($this->folders[$entry])) {
                 $this->add_folder(array('name' => $entry), true);
             }
         }
@@ -542,10 +542,14 @@ class LocalMbox extends SQLite3
             $idx = $this->_idx[$data['uidl']];
             $keys = array();
             foreach ($data as $k=>$v) {
-                $this->headers[$idx][$k] = $v;
-                if ($k != 'uidl') $keys[] = $k;
+                if (($this->headers[$idx][$k] != $v) && ($k != 'uidl')) {
+                    $keys[] = $k;
+                    $this->headers[$idx][$k] = $v;
+                }
             }
-            $this->changed[] = array($this->headers[$idx], $keys);
+            if (count($keys) > 0) {
+                $this->changed[] = array($this->headers[$idx], $keys);
+            }
         } else {
             $this->headers[] = $data;
             end($this->headers);

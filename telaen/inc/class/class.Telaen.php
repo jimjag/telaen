@@ -1172,7 +1172,7 @@ class Telaen extends Telaen_core
                 $tmp['name'] = self::utf7_to_8($this->fix_prefix(trim(preg_replace('|"(.*)"|', "$1",
                     substr($rest, $pos + 1))), 0));
                 $buffer = $this->_mail_get_line();
-                if (!isset($this->$tdb->folders[$tmp['name']])) {
+                if (empty($this->$tdb->folders[$tmp['name']])) {
                     $this->tdb->add_folder($tmp);
                 }
             }
@@ -1458,7 +1458,7 @@ class Telaen extends Telaen_core
                         $pos = $key;
                     }
                 }
-                if (isset($pos)) {
+                if (!empty($pos)) {
                     unset($flags[$pos]);
                 }
             }
@@ -1652,17 +1652,18 @@ class Telaen extends Telaen_core
             $buffer = $this->_mail_get_line();
             list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
             if ($resp == '+OK') {
-                return self::hashme($uidl);
+                $msg['uidl'] = self::hashme($uidl);
             }
             // If we DON'T get the OK response, we drop through
         }
-        if (isset($msg['uidl'])) {
+        if (!empty($msg['uidl'])) {
             return $msg['uidl'];
-        } elseif (isset($msg['subject']) && isset($msg['date']) && isset($msg['message-id'])) {
-            return self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
+        } elseif (!empty($msg['subject']) && !empty($msg['date']) && !empty($msg['message-id'])) {
+            $msg['uidl'] = self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
         } else {
+            /* try to grab from header */
             $header = '';
-            if (isset($msg['header'])) {
+            if (!empty($msg['header'])) {
                 $header = $msg['header'];
             } elseif (!$msg['islocal']) {
                 $this->_mail_send_command('TOP ' . $id . ' 0');
@@ -1670,7 +1671,8 @@ class Telaen extends Telaen_core
 
                 /* if any problem with the server, stop the function */
                 if ($this->mail_nok_resp($buffer)) {
-                    return '';
+                    $msg['uidl'] = self::hashme(uniqid(''));
+                    return $msg['uidl'];
                 }
                 while (!feof($this->_mail_connection)) {
                     $buffer = $this->_mail_get_line();
@@ -1680,16 +1682,28 @@ class Telaen extends Telaen_core
                     $header .= $buffer;
                 }
             } else {
-                return '';
+                if (file_exists($msg['localname'])) {
+                    $email = $this->read_file($msg['localname']);
+                    $email = $this->fetch_structure($email);
+                    $header = $email['header'];
+                    $msg['header'] = $header;
+                } else {
+                    $msg['uidl'] = self::hashme(uniqid(''));
+                    return $msg['uidl'];
+                }
             }
             $mail_info = $this->get_mail_info($header);
             self::add2me($msg, $mail_info);
-            $this->tdb->changed[] = array ($msg, array('*'));
-            if (isset($mail_info['uidl'])) {
+            // $this->tdb->add_headers($msg);
+            if (!empty($mail_info['uidl'])) {
                 return $mail_info['uidl'];
             }
-            return self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
+            $msg['uidl'] = self::hashme(trim($msg['subject'].$msg['date'].$msg['message-id']));
         }
+        if (empty($msg['uidl'])) {
+            $msg['uidl'] = self::hashme(uniqid(''));
+        }
+        return $msg['uidl'];
     }
 
     /**

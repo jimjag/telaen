@@ -374,7 +374,7 @@ class Telaen_core
                     $dbpoint = strpos($thisheader, ':');
                     $headname = strtolower(substr($thisheader, 0, $dbpoint));
                     $headvalue = trim(substr($thisheader, $dbpoint+1));
-                    if (isset($decodedheaders[$headname])) {
+                    if (!empty($decodedheaders[$headname])) {
                         $decodedheaders[$headname] .= "; $headvalue";
                     } else {
                         $decodedheaders[$headname] = $headvalue;
@@ -602,7 +602,7 @@ class Telaen_core
         }
 
         // no recognizable content, use first part, usually text only
-        if (!isset($part)) {
+        if (empty($part)) {
             $part = $parts[0];
         }
         unset($parts);
@@ -989,11 +989,11 @@ class Telaen_core
         $myarray = array();
         $headers = $this->_decode_header($header);
 
-        $myarray['message-id'] = (isset($headers['message-id'])) ? preg_replace('|<(.*)>|', "$1", trim($headers['message-id'])) : null;
-        $myarray['content-type'] = (isset($headers['content-type'])) ? $headers['content-type'] : null;
-        $myarray['priority'] = (isset($headers['x-priority'])) ? $headers['x-priority'][0] : null;
+        $myarray['message-id'] = (!empty($headers['message-id'])) ? preg_replace('|<(.*)>|', "$1", trim($headers['message-id'])) : null;
+        $myarray['content-type'] = (!empty($headers['content-type'])) ? $headers['content-type'] : null;
+        $myarray['priority'] = (!empty($headers['x-priority'])) ? $headers['x-priority'][0] : null;
         $myarray['flags'] = $headers['x-um-flags'];
-        $myarray['content-transfer-encoding'] = (isset($headers['content-transfer-encoding'])) ? str_replace('GM', '-', $headers['content-transfer-encoding']) : null;
+        $myarray['content-transfer-encoding'] = (!empty($headers['content-transfer-encoding'])) ? str_replace('GM', '-', $headers['content-transfer-encoding']) : null;
 
         $received = preg_replace('|  |', ' ', $headers['received']);
         $user_date = preg_replace('|  |', ' ', $headers['date']);
@@ -1506,7 +1506,7 @@ ENDOFREDIRECT;
 
         if (!file_exists($pref_file)) {
             foreach ($this->config['default_preferences'] as $key => $val) {
-                if (preg_match('_default$', $key)) {
+                if (preg_match('|_default$|', $key)) {
                     $pref = substr($key, 0, -8);
                     $this->prefs[$pref] = $val;
                 }
@@ -1520,7 +1520,7 @@ ENDOFREDIRECT;
             $this->prefs = unserialize(~$prefs);
         }
         foreach ($this->config['default_preferences'] as $key => $val) {
-            if (preg_match('^force_', $key)) {
+            if (preg_match('|^force_|', $key)) {
                 if ($val !== null) {
                     $pref = substr($key, 6);
                     $this->prefs[$pref] = $val;
