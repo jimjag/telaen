@@ -98,7 +98,7 @@ if ($TLN->prefs['version'] != $appversion) {
     }
 }
 if ((!$same_version) ||
-    ($check_first_login && !$TLN->prefs['first-login'])) {
+    ($TLN->config['check_first_login'] && !$TLN->prefs['first-login'])) {
     $TLN->prefs['first-login'] = 1;
     $TLN->save_prefs($TLN->prefs);
     $TLN->redirect_and_exit('preferences.php?folder='.urlencode($folder));

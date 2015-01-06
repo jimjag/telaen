@@ -125,7 +125,7 @@ class LocalMbox extends SQLite3
             if (is_dir($entry)
                 && $entry != '..'
                 && $entry != '.'
-                && empty($this->folders[$entry])) {
+                && !isset($this->folders[$entry])) {
                 $this->add_folder(array('name' => $entry), true);
             }
         }
