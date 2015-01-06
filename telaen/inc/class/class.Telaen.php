@@ -974,11 +974,13 @@ class Telaen extends Telaen_core
                 if (substr($buffer, 0, 3) == "+OK") {
                     while (!feof($this->mail_connection)) {
                         $buffer = $this->mail_get_line();
-                        if(trim($buffer) == ".")
+                        if(trim($buffer) == ".") {
                             break;
+                        }
                         list ($num,$uidl) = explode(" ",$buffer);
-                        if (!empty($uidl))
+                        if (!empty($uidl)) {
                             $uids[intval($num)] = self::md5($uidl);
+                        }
                     }
                 }
             }
@@ -989,8 +991,6 @@ class Telaen extends Telaen_core
             if ($this->mail_nok_resp()) {
                 return $counter;
             }
-
-
             while (!feof($this->_mail_connection)) {
                 $buffer = $this->_mail_get_line();
                 $buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
