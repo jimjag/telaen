@@ -2,7 +2,7 @@
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 /* @var $TLN Telaen */
 
-$mfolders = $tdb->get_folders();
+$mfolders = &$tdb->get_folders();
 $scounter = 0;
 $pcounter = 0;
 $system = array();

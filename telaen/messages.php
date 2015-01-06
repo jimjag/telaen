@@ -13,7 +13,7 @@ require './inc/init.php';
 
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
-$headers = $tdb->get_headers($folder, $sortby, $sortorder);
+$headers = &$tdb->get_headers($folder, $sortby, $sortorder);
 
 $smarty->assign('umUser', $f_user);
 $refreshurl = 'process.php?folder='.urlencode($folder)."&pag=$pag&refr=true";

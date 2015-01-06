@@ -16,7 +16,7 @@ if (!isset($ix) || !isset($pag)) {
     $TLN->redirect_and_exit('index.php?err=3', true);
 }
 
-$mysess = $TLN->tdb->get_headers($folder);
+$mysess = &$TLN->tdb->get_headers($folder);
 $mail_info = $mysess[$ix];
 
 $is_attached = false;

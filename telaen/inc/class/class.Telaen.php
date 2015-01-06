@@ -1813,7 +1813,7 @@ class Telaen extends Telaen_core
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
             }
             if ($this->prefs['empty_trash']) {
-                $trash = $this->tdb->get_headers('trash');
+                $trash = &$this->tdb->get_headers('trash');
                 if (count($trash) > 0) {
                     foreach ($trash as $msg) {
                         $this->mail_delete_msg($msg, false);
@@ -1825,7 +1825,7 @@ class Telaen extends Telaen_core
             if ($this->prefs['empty_spam']) {
                 if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
-                $trash = $this->tdb->get_headers('spam');
+                $trash = &$this->tdb->get_headers('spam');
                 if (count($trash) > 0) {
                     foreach ($trash as $msg) {
                         $this->mail_delete_msg($msg, false);
