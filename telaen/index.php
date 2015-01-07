@@ -86,13 +86,10 @@ $smarty->assign('umServerType', $mail_server_type);
 
 switch ($mail_server_type) {
     case 'DETECT':
-
         break;
     case 'ONE-FOR-EACH':
-
         $aval_servers = count($TLN->config['mail_servers']);
         $smarty->assign('umAvailableServers', $aval_servers);
-
         if (!$aval_servers) {
             die("You must set at least one server in \$mail_servers, please review your config.php");
         }
@@ -106,11 +103,9 @@ switch ($mail_server_type) {
             }
             $strServers .= "</select>\r";
         }
-
         $smarty->assign('umServer', $strServers);
         break;
     case 'ONE-FOR-ALL':
-
         break;
     default:
         die('Unknown server mode, please see config.php');
