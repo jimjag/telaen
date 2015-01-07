@@ -225,21 +225,24 @@ class LocalMbox extends SQLite3
         $query = sprintf('UPDATE %s SET ', $table);
         $temp = array();
         foreach ($list as $key) {
-            $temp[] = " '$key'=:$key";
+            $temp[] = " '$key'=?";
         }
         $query = $query.implode(', ', $temp).' WHERE ';
         $temp = array();
         foreach ($where as $key => $val) {
-            $temp[] = "'$key'=:$key";
+            $temp[] = "'$key'=?";
         }
         $query = $query.implode(' AND ', $temp).' ;';
         $stmt = $this->prepare($query);
         reset($list);
+        $i = 1;
         foreach ($list as $key) {
-            $stmt->bindValue(":$key", (in_array($key, $this->m_serialize) ? serialize($data[$key]) : $data[$key]));
+            $stmt->bindValue("$i", (in_array($key, $this->m_serialize) ? serialize($data[$key]) : $data[$key]));
+            $i++;
         }
         foreach ($where as $key => $val) {
-            $stmt->bindValue(":$key", $val);
+            $stmt->bindValue("$i", $val);
+            $i++;
         }
         $result = $stmt->execute();
         $stmt->close();
@@ -263,14 +266,16 @@ class LocalMbox extends SQLite3
     {
         $query = sprintf('INSERT into %s (\'', $table);
         $query .= implode("','",$list);
-        $query .= '\') VALUES (:';
+        $query .= '\') VALUES (?';
         reset($list);
-        $query .= implode(",:",$list);
+        $query .= str_repeat(",?", count($list) - 1);
         $query .= ');';
         $stmt = $this->prepare($query);
         reset($list);
+        $i = 1;
         foreach ($list as $key) {
-            $stmt->bindValue(":$key", (in_array($key, $this->m_serialize) ? serialize($data[$key]) : $data[$key]));
+            $stmt->bindValue("$i", (in_array($key, $this->m_serialize) ? serialize($data[$key]) : $data[$key]));
+            $i++;
         }
         if (!$stmt->execute()) {
             $this->ok = false;
