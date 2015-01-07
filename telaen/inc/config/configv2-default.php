@@ -420,6 +420,7 @@ $config['allow_html'] = true;
 ##  $config['allow_script'] is DEPRECIATED and exists for backward
 ##  compatibility only. Instead, use $config['sanitize_html']
 ########################################################################
+
 $config['allow_scripts'] = false;
 $config['sanitize_html'] = true;
 
@@ -437,11 +438,6 @@ $config['block_external_images'] = false;
 ########################################################################
 
 $config['idle_timeout'] = 20; //minutes
-########################################################################
-# Require cookies enabled to handle session
-########################################################################
-
-$config['enable_cookies'] = true;
 
 ########################################################################
 # Control the default permissions of files and directories created
