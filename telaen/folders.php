@@ -54,17 +54,7 @@ function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder).
 function refreshlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function search() { location = 'search.php'; }
 function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-function create() {
-	strPat = /[^A-Za-z0-9\-]/;
-	frm = document.forms[0];
-	strName = frm.newfolder.value
-	mathArray = strName.match(strPat)
-	if(mathArray != null) {
-		alert('".preg_replace("/'/", "\\'", $lang['error_invalid_name'])."')
-		return false;
-	}else
-		frm.submit();
-}
+function create() { frm = document.forms[0]; frm.submit(); }
 //]]>
 </script>
 ";
