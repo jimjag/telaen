@@ -72,46 +72,7 @@ $pcounter = 0;
 $system = array();
 $personal = array();
 
-for ($n = 0;$n<count($boxes);$n++) {
-    $entry = $boxes[$n]['name'];
-
-    $unread = 0;
-
-    if (!is_array($mbox['headers'][$entry])) {
-        $merged_array = array();
-        $merged_returnarray = array();
-        if ($entry == 'inbox') {
-            /*
-             * Sort the arrays and fit them together again.
-             */
-            $merged_array = array_merge($mbox['headers']['inbox'], $mbox['headers']['spam']);
-            Telaen::array_qsort2int($merged_array, 'mnum', 'ASC');
-
-            $thisbox = $TLN->mail_list_msgs('inbox');
-            $thisbox = $merged_returnarray[0];
-            $mbox['headers']['spam'] = $merged_returnarray[1];
-        } elseif ($entry == 'spam') {
-            ;
-        } else {
-            $thisbox = $TLN->mail_list_msgs($entry);
-            $thisbox = $merged_returnarray[0];
-        }
-
-        unset($merged_array);
-        unset($merged_returnarray);
-        $mbox['headers'][$entry] = $thisbox;
-    } else {
-        $thisbox = $mbox['headers'][$entry];
-    }
-
-    $boxsize = 0;
-    for ($i = 0;$i<count($thisbox);$i++) {
-        if (!preg_match('|\\SEEN|i', $thisbox[$i]['flags'])) {
-            $unread++;
-        }
-        $boxsize += $thisbox[$i]['size'];
-    }
-
+foreach ($boxes as $entry => $f) {
     // prep vars
     if (!$TLN->is_system_folder($entry)) {
         $delete = '<a href="folders.php?delfolder='.urlencode($entry).'&folder='.urlencode($folder).'">OK</a>';
@@ -119,26 +80,28 @@ for ($n = 0;$n<count($boxes);$n++) {
         $delete = '&nbsp;';
     }
     $boxname = $entry;
+    $unread = $f['unread'];
     if ($unread != 0) {
         $unread = "<b>$unread</b>";
     }
+
 
     if ($TLN->is_system_folder($entry)) {
         $boxname = extended_name($entry);
         $system[$scounter]['entry'] = $entry;
         $system[$scounter]['name'] = $boxname;
-        $system[$scounter]['msgs'] = count($thisbox)."/$unread";
+        $system[$scounter]['msgs'] = $f['count']."/$unread";
         $system[$scounter]['del'] = $delete;
-        $system[$scounter]['boxsize'] = Telaen::bytes2bkmg($boxsize);
+        $system[$scounter]['boxsize'] = Telaen::bytes2bkmg($f['size']);
         $system[$scounter]['chlink'] = 'process.php?folder='.urlencode($entry)."";
         $system[$scounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
         $scounter++;
     } else {
         $personal[$pcounter]['entry'] = $entry;
         $personal[$pcounter]['name'] = $boxname;
-        $personal[$pcounter]['msgs'] = count($thisbox)."/$unread";
+        $personal[$pcounter]['msgs'] = $f['count']."/$unread";
         $personal[$pcounter]['del'] = $delete;
-        $personal[$pcounter]['boxsize'] = Telaen::bytes2bkmg($boxsize);
+        $personal[$pcounter]['boxsize'] = Telaen::bytes2bkmg($f['size']);
         $personal[$pcounter]['chlink'] = 'process.php?folder='.urlencode($entry)."";
         $personal[$pcounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
         $pcounter++;
