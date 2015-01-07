@@ -143,7 +143,7 @@ class Telaen extends Telaen_core
         $match = array();
         if ($string == null) $string = $this->_mail_read_response();
         if ($this->mail_protocol == IMAP) {
-            if (preg_match('|^'.$this->_get_sid().'\s+(OK|NO|BAD|BYE)(.*)$|i', trim($string), $match)) {
+            if (preg_match('|^\s*'.$this->_get_sid().'\s+(OK|NO|BAD|BYE)(.*)$|i', trim($string), $match)) {
                 $a = strtoupper($match[1]);
                 switch ($a) {
                     case 'OK':
@@ -270,6 +270,17 @@ class Telaen extends Telaen_core
         return true;
     }
 
+    private function _crammd5_response($challenge)
+    {
+        $pass = $this->mail_pass;
+        $padlen = 64 - strlen($pass);
+        $pass .= str_repeat(chr(0x00), $padlen);
+        $ipad = str_repeat(chr(0x36), 64);
+        $opad = str_repeat(chr(0x5c), 64);
+        $hash = $this->md5($this->_xor($pass, $opad).pack("H*", $this->md5($this->_xor($pass, $ipad).base64_decode($challenge))));
+        return base64_encode($this->mail_user.' '.$hash);
+    }
+
     /**
      * Authentication for IMAP
      * @return boolean
@@ -294,13 +305,7 @@ class Telaen extends Telaen_core
             $buffer = $this->_mail_read_response();
             if ($buffer[0] == '+') {
                 $challenge = base64_decode(substr($buffer, 2));
-                $pass = $this->mail_pass;
-                $padlen = 64 - strlen($pass);
-                $pass .= str_repeat(chr(0x00), $padlen);
-                $ipad = str_repeat(chr(0x36), 64);
-                $opad = str_repeat(chr(0x5c), 64);
-                $hash = $this->md5($this->_xor($pass, $opad) . pack("H*", $this->md5($this->_xor($pass, $ipad) . base64_decode($challenge))));
-                $challenge_response = base64_encode($this->mail_user . ' ' . $hash);
+                $challenge_response = $this->_crammd5_response($challenge);
                 $this->_mail_send_command($challenge_response, false);
                 return $this->mail_ok_resp();
             } else {
@@ -332,6 +337,18 @@ class Telaen extends Telaen_core
             }
         }
         // APOP login mode, more secure
+        if ($this->capabilities['CRAM-MD5']) {
+            $this->_mail_send_command('AUTH CRAM-MD5');
+            $buffer = $this->_mail_read_response();
+            if ($buffer[0] == '+') {
+                $challenge = base64_decode(substr($buffer, 2));
+                $challenge_response = $this->_crammd5_response($challenge);
+                $this->_mail_send_command($challenge_response, false);
+                return $this->mail_ok_resp();
+            } else {
+                $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Trying others.", __FUNCTION__);
+            }
+        }
         if (isset($this->capabilities['APOP']) && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
             $this->_mail_send_command('APOP '.$this->mail_user.' '.self::md5($tokens[0].$this->mail_pass));
         }
@@ -1649,8 +1666,6 @@ class Telaen extends Telaen_core
      * Use the optional POP3 CAPA command to determine
      * what extensions the pop server supports. Returns
      * a hash of supported options.
-     * NOTE: Any whitespace within a capability string is
-     * squeezed down to a single '_'.
      */
     protected function _mail_capa_pop3()
     {
@@ -1669,7 +1684,6 @@ class Telaen extends Telaen_core
                 }
             }
         }
-
         return $capa;
     }
 
@@ -1689,7 +1703,6 @@ class Telaen extends Telaen_core
                 }
             }
         }
-
         return $capa;
     }
 
