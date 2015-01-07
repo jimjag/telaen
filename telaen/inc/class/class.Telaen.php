@@ -199,7 +199,7 @@ class Telaen extends Telaen_core
 
     protected function _mail_read_response()
     {
-        $buffer = fgets($this->_mail_connection, 8192);
+        $buffer = @fgets($this->_mail_connection, 8192);
         $buffer = preg_replace('|\r?\n|', "\r\n", $buffer);
         if ($this->config['enable_debug']) {
             $this->debug_msg($buffer, __FUNCTION__);
@@ -237,7 +237,7 @@ class Telaen extends Telaen_core
 
             return true;
         }
-        $this->trigger_error("attempt to send command w/o connection", __FUNCTION__);
+        $this->trigger_error("attempt to send command w/o connection: $output", __FUNCTION__);
         return false;
     }
 
