@@ -310,4 +310,4 @@ unset($TLN);
 
 $smarty->assign('umHaveSpam', $auth['havespam']);
 $smarty->assign('umAvalFolders', $avalfolders);
-$smarty->display("$selected_theme/messagelist.tpl");
+$smarty->display("$themez/messagelist.tpl");

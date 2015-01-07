@@ -106,4 +106,4 @@ if (count($anexos) > 0) {
 
 unset($TLN);
 
-$smarty->display("$selected_theme/print-message.tpl");
+$smarty->display("$themez/print-message.tpl");

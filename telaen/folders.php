@@ -180,4 +180,4 @@ $smarty->assign('umNoQuota', $noquota);
 
 $smarty->assign('pageMetas', $pmetas);
 
-$smarty->display("$selected_theme/folders.tpl");
+$smarty->display("$themez/folders.tpl");

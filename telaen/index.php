@@ -116,14 +116,6 @@ switch ($mail_server_type) {
         die('Unknown server mode, please see config.php');
 }
 
-// Protect from XSS
-if (isset($f_email) && !PHPMailer::validateAddress($f_email)) {
-    $f_email = 'unknown@example.com';
-}
-if (isset($f_user) && !PHPMailer::validateAddress("$f_user@example.com")) {
-    $f_user = 'unknown';
-}
-
 $smarty->assign('umEmail', $f_email);
 $smarty->assign('umUser', $f_user);
 $smarty->assign('umPass', $f_pass);
@@ -144,7 +136,7 @@ if ($TLN->config['allow_user_change_language']) {
     $langsel = "<select name=\"lng\" onchange=\"selectLanguage()\">\r";
     foreach ($TLN->config['languages'] as $key => $val) {
         if (!is_file("./inc/langs/{$key}.php")) continue;
-        $selected = ($selected_language == $key) ? "selected=\"selected\"" : "";
+        $selected = ($langz == $key) ? "selected=\"selected\"" : "";
         $langsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
     $langsel .= "</select>\r";
@@ -156,11 +148,11 @@ $smarty->assign('umAllowSelectTheme', $TLN->config['allow_user_change_theme']);
 if ($TLN->config['allow_user_change_theme']) {
     $themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";
     foreach ($TLN->config['themes'] as $key => $val) {
-        $selected = ($selected_theme == $key) ? "selected=\"selected\"" : "";
+        $selected = ($themez == $key) ? "selected=\"selected\"" : "";
         $themsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
     $themsel .= "</select>\r";
     $smarty->assign('umThemes', $themsel);
 }
 
-$smarty->display("$selected_theme/login.tpl");
+$smarty->display("$themez/login.tpl");

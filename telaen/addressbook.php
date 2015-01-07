@@ -214,4 +214,4 @@ switch ($opt) {
         $smarty->assign('umAddressList', $addresslist);
 }
 
-$smarty->display("$selected_theme/$templatename");
+$smarty->display("$themez/$templatename");

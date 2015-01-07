@@ -68,5 +68,5 @@ if (isset($rem) && $rem != "") {
 	</script>\n
 	");
 } else {
-    $smarty->display("$selected_theme/upload-attach.tpl");
+    $smarty->display("$themez/upload-attach.tpl");
 }

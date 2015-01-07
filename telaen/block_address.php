@@ -74,5 +74,5 @@ if (isset($fFilter)) {
 
     $smarty->assign('umAddressList', $emails);
 
-    $smarty->display("$selected_theme/block-address.tpl");
+    $smarty->display("$themez/block-address.tpl");
 }

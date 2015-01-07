@@ -42,4 +42,4 @@ for ($i = 0;$i<count($addressbook);$i++) {
 $listbox .= '</select>';
 
 $smarty->assign('umContacts', $listbox);
-$smarty->display("$selected_theme/quick_address.tpl");
+$smarty->display("$themez/quick_address.tpl");

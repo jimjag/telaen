@@ -80,4 +80,4 @@ unset($events);
 
 $smarty->assign('webmailTitle', $TLN->config['webmail_title']);
 $smarty->assign('umPageTitle', $TLN->config['webmail_title']);
-$smarty->display("$selected_theme/event.tpl");
+$smarty->display("$themez/event.tpl");

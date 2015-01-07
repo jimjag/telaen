@@ -14,22 +14,22 @@ Telaen is a GPL'ed software developed by
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-$selected_theme = $tid = $TLN->config['default_theme'];
-$selected_language = $lid = $TLN->config['default_language'];
+$themez = $tid = $TLN->config['default_theme'];
+$langz = $lid = $TLN->config['default_language'];
 
 if (isset($auth) && is_array($auth) && $auth['thm_lang_inited']) {
-    $selected_theme = $tid = $auth['tid'];
-    $selected_language = $lid = $auth['lid'];
+    $themez = $tid = $auth['tid'];
+    $langz = $lid = $auth['lid'];
 }
 
 if ($TLN->config['allow_user_change_theme'] && isset($tem) && $tem != "") {
     if (isset($TLN->config['themes'][$tem]) && is_dir("./inc/themes/$tem")) {
-        $selected_theme = $tid = $tem;
+        $themez = $tid = $tem;
     }
 }
 if ($TLN->config['allow_user_change_language'] && isset($lng) && $lng != "") {
     if (isset($TLN->config['languages'][$lng]) && is_file("./inc/langs/{$lng}.php")) {
-        $selected_language = $lid = $lng;
+        $langz = $lid = $lng;
     }
 }
 if (isset($auth) && is_array($auth)) {
@@ -43,12 +43,12 @@ if (isset($auth) && is_array($auth)) {
 Templates
 ********************************************************/
 
-$menu_template = "$selected_theme/menu.tpl";
-$calendar_template = "$selected_theme/calendar.tpl";
-$news_template = "$selected_theme/news.tpl";
-$header_template = "$selected_theme/header.tpl";
-$footer_template = "$selected_theme/footer.tpl";
-$popup_header_template = "$selected_theme/popup-header.tpl";
+$menu_template = "$themez/menu.tpl";
+$calendar_template = "$themez/calendar.tpl";
+$news_template = "$themez/news.tpl";
+$header_template = "$themez/header.tpl";
+$footer_template = "$themez/footer.tpl";
+$popup_header_template = "$themez/popup-header.tpl";
 
 // Pull in correct $lang[] array for select language
-require_once 'langs/'.$selected_language.'.php';
+require_once 'langs/'.$langz.'.php';
