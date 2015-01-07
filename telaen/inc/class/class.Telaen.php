@@ -400,7 +400,8 @@ class Telaen extends Telaen_core
 
         $boxes = $this->mail_list_boxes();
 
-        if ($this->mail_protocol == IMAP) {
+        if ($this->mail_protocol == IMAP && false) {  // skip for now
+
             $tmp = $this->tdb->folders;
 
             for ($i = 0;$i<count($boxes);$i++) {
