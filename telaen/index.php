@@ -108,7 +108,7 @@ switch ($mail_server_type) {
         break;
     default:
         die("Bad mail_server_type: {$mail_server_type}");
- }
+}
 
 $smarty->assign('umEmail', $f_email);
 $smarty->assign('umUser', $f_user);

@@ -25,6 +25,7 @@ class LocalMbox extends SQLite3
         'refreshed' => 'INT DEFAULT 0', // time() of last refresh from server
         'version' => 'INT DEFAULT 0', // Have we read old messages?
         'prefix' => 'TEXT DEFAULT ""',
+        'dirname' => 'TEXT NOT NULL',
     );
     private $aschema = array(
         'folder' => 'TEXT NOT NULL',
@@ -65,18 +66,18 @@ class LocalMbox extends SQLite3
         'header' => 'TEXT DEFAULT ""',
     );
 
-    public $folders = array();
+    public $folders = array();  // All Email boxes/folders
     public $attachments = array();
-    public $messages = array();
-    public $allfolders = array();
-    private $_system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
-    private $_invisible = array('_attachments', '_infos');
+    public $messages = array(); // All messages from the current email folder
+    public $m_idx = array(); /* key = uidl; value = index to this->messages */
+    public $allfolders = array(); // All folders/directors
     public $udatafolder = '_infos';
     public $ok = true;
     public $message = '';
-    public $changed_m = array(); /* key = message; value = array() of field changes */
+    public $m_delta = array(); /* key = message; value = array() of field changes */
+    private $_system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
+    private $_invisible = array('_attachments', '_infos');
     private $_indb = array(); /* key = uidl; value = is it in the DB? */
-    private $_idx = array(); /* key = uidl; value = index to this->headers */
 
     /**
      * Construct: open DB and create tables if needed
@@ -121,7 +122,7 @@ class LocalMbox extends SQLite3
         $ok = $this->ok;
         $message = $this->message;
         foreach($this->_system_folders as $foo) {
-            $this->new_folder(array('name' => $foo), true);
+            $this->new_folder(array('name' => $foo, 'dirname' => $foo), true);
         }
         /*
          * We may have folders from previous installs. Check
@@ -131,7 +132,7 @@ class LocalMbox extends SQLite3
                 && $entry != '..'
                 && $entry != '.'
                 && !isset($this->folders[$entry])) {
-                $this->new_folder(array('name' => $entry), true);
+                $this->new_folder(array('name' => $entry, 'dirname' => $entry), true);
             }
         }
         $this->ok = $this->ok && $ok;
@@ -354,6 +355,14 @@ class LocalMbox extends SQLite3
         if ($calc_size && is_dir($this->userfolder.$folder['name'])) {
             $folder['size'] = $this->calc_folder_size($this->userfolder.$folder['name']);
         }
+        /*
+         * Since user folder names can be weird, on the file system,
+         * make the dirname for the folder something safe (ie: a md5 hash
+         * of the name)
+         */
+        if (empty($folder['dirname'])) {
+            $folder['dirname'] = self::getKey($folder['name']);
+        }
         $query = self::_get_folder_name($folder['name']);
         $query = $this->create_query($query, $this->mschema);
         if ($this->exec($query)) {
@@ -400,7 +409,7 @@ class LocalMbox extends SQLite3
     }
 
     /**
-     * Update refreshed field in folders
+     * Update misc field in folders
      * @param string $folder Folder name
      * @param string $field Name of field
      * @return boolean
@@ -436,8 +445,9 @@ class LocalMbox extends SQLite3
     }
 
     /**
-     * Update inited field in folders to current time
+     * Update version field in folders
      * @param string $folder Folder name
+     * @param int $version
      * @return boolean
      */
     public function upgrade_version($folder, $version)
@@ -477,13 +487,13 @@ class LocalMbox extends SQLite3
             $result = $this->query($query);
             $this->messages = array();
             $this->_indb = array();
-            $this->_idx = array();
+            $this->m_idx = array();
             $index = 0;
             if ($result) {
                 while ($foo = $result->fetchArray()) {
                     $this->messages[$index] = $foo;
                     $this->messages[$index]['idx'] = $index;
-                    $this->_idx[$foo['uidl']] = $index;
+                    $this->m_idx[$foo['uidl']] = $index;
                     $this->_indb[$foo['uidl']] = true;
                     $index++;
                 }
@@ -563,8 +573,8 @@ class LocalMbox extends SQLite3
     public function message_exists($msg)
     {
         $uidl = $msg['uidl'];
-        return (isset($this->_idx[$uidl]) &&
-            !empty($this->messages[$this->_idx[$uidl]]['folder']));
+        return (isset($this->m_idx[$uidl]) &&
+            !empty($this->messages[$this->m_idx[$uidl]]['folder']));
     }
 
     /**
@@ -573,8 +583,8 @@ class LocalMbox extends SQLite3
      */
     public function add_message($msg)
     {
-        if (isset($this->_idx[$msg['uidl']])) {
-            $idx = $this->_idx[$msg['uidl']];
+        if (isset($this->m_idx[$msg['uidl']])) {
+            $idx = $this->m_idx[$msg['uidl']];
             $keys = array();
             foreach ($msg as $k=>$v) {
                 if (($v !== null) && ($this->messages[$idx][$k] != $v) && ($k != 'uidl')) {
@@ -583,16 +593,16 @@ class LocalMbox extends SQLite3
                 }
             }
             if (count($keys) > 0) {
-                $this->changed_m[] = array($this->messages[$idx], $keys);
+                $this->m_delta[] = array($this->messages[$idx], $keys);
             }
         } else {
             $this->messages[] = $msg;
             end($this->messages);
             $index = key($this->messages);
             $this->messages[$index]['idx'] = $index;
-            $this->_idx[$msg['uidl']] = $index;
+            $this->m_idx[$msg['uidl']] = $index;
             reset($this->messages);
-            $this->changed_m[] = array($this->messages[$index], array('*'));
+            $this->m_delta[] = array($this->messages[$index], array('*'));
 
         }
     }
@@ -617,8 +627,8 @@ class LocalMbox extends SQLite3
         $adds = array();
         $ups = array();
         /* We need to add 1st, and then allow for updates */
-        if (count($this->changed_m) > 0) {
-            foreach ($this->changed_m as $foo) {
+        if (count($this->m_delta) > 0) {
+            foreach ($this->m_delta as $foo) {
                 if (!isset($this->_indb[$foo[0]['uidl']])) {
                     $adds[] = $foo[0];
                 } else {
@@ -639,7 +649,7 @@ class LocalMbox extends SQLite3
                     }
                 }
             }
-            $this->changed_m = array();
+            $this->m_delta = array();
         }
         return $retval;
     }
@@ -675,7 +685,7 @@ class LocalMbox extends SQLite3
         /* If we deleted from the active folder, then update our array */
         if ($isactive) {
             foreach ($idxs as $idx) {
-                unset($this->_idx[$this->messages[$idx]['uidl']]);
+                unset($this->m_idx[$this->messages[$idx]['uidl']]);
                 unset($this->messages[$idx]);
             }
         }

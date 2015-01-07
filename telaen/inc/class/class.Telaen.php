@@ -466,7 +466,7 @@ class Telaen extends Telaen_core
 
             // Update globally
             $msg['header'] = $msgheader;
-            $this->tdb->changed_m[] = array($msg, array('header'));
+            $this->tdb->m_delta[] = array($msg, array('header'));
 
             $msgcontent = "$msgheader\r\n\r\n$msgbody";
 
@@ -520,7 +520,7 @@ class Telaen extends Telaen_core
 
             // Update globally
             $msg['header'] = $header;
-            $this->tdb->changed_m[] = array($msg, array('header'));
+            $this->tdb->m_delta[] = array($msg, array('header'));
 
             $msgcontent = "$header\r\n\r\n$body";
 
@@ -1550,7 +1550,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->tdb->changed_m[] = array ($msg, array('header', 'flags'));
+            $this->tdb->m_delta[] = array ($msg, array('header', 'flags'));
 
             $email = "$header\r\n\r\n$body";
 
