@@ -36,7 +36,7 @@ if (!isset($TLN->config['webmail_title'])) {
 }
 $smarty->assign('webmailTitle', $TLN->config['webmail_title']);
 
-// Assing the header and footer paths because inc.php is not loaded in index
+// the header and footer paths because inc.php is not loaded in index
 $smarty->assign('headerTemplate', $header_template);
 $smarty->assign('footerTemplate', $footer_template);
 
@@ -85,13 +85,14 @@ $mail_server_type = strtoupper($TLN->config['mail_server_type']);
 $smarty->assign('umServerType', $mail_server_type);
 
 switch ($mail_server_type) {
+    case 'ONE-FOR-ALL':
     case 'DETECT':
         break;
     case 'ONE-FOR-EACH':
         $aval_servers = count($TLN->config['mail_servers']);
         $smarty->assign('umAvailableServers', $aval_servers);
         if (!$aval_servers) {
-            die("You must set at least one server in \$mail_servers, please review your config.php");
+            die("You must set at least one server in \$mail_servers, please review your configv2.php");
         }
         if ($aval_servers == 1) {
             $strServers = '@'.$TLN->config['mail_servers'][0]['domain']." <input type=\"hidden\" name=\"six\" value=\"0\" />";
@@ -105,11 +106,9 @@ switch ($mail_server_type) {
         }
         $smarty->assign('umServer', $strServers);
         break;
-    case 'ONE-FOR-ALL':
-        break;
     default:
-        die('Unknown server mode, please see config.php');
-}
+        die("Bad mail_server_type: {$mail_server_type}");
+ }
 
 $smarty->assign('umEmail', $f_email);
 $smarty->assign('umUser', $f_user);

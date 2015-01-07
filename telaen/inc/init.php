@@ -96,58 +96,56 @@ if (!empty($f_pass)) {
      * We are logging in...
      */
     switch (strtoupper($TLN->config['mail_server_type'])) {
+        case 'DETECT':
+            if (!isset($f_email)) $TLN->redirect_and_exit('index.php');
+            $f_server = strtolower(getenv('HTTP_HOST'));
+            $f_server = str_replace($TLN->config['mail_detect_remove'], "", $f_server);
+            $f_server = $TLN->config['mail_detect_prefix'].$f_server;
 
-    case 'DETECT':
-        if (!isset($f_email)) $TLN->redirect_and_exit('index.php');
-        $f_server = strtolower(getenv('HTTP_HOST'));
-        $f_server = str_replace($TLN->config['mail_detect_remove'], "", $f_server);
-        $f_server = $TLN->config['mail_detect_prefix'].$f_server;
-
-        if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
-            $f_user = trim($regs[1]);
-            $domain = trim($regs[2]);
-            if ($TLN->config['mail_detect_login_type'] != "") {
-                $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $TLN->config['mail_detect_login_type']));
+            if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
+                $f_user = trim($regs[1]);
+                $domain = trim($regs[2]);
+                if ($TLN->config['mail_detect_login_type'] != "") {
+                    $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $TLN->config['mail_detect_login_type']));
+                }
             }
-        }
 
-        $f_protocol = $TLN->config['mail_detect_protocol'];
-        $f_port = $TLN->config['mail_detect_port'];
-        $f_prefix = $TLN->config['mail_detect_folder_prefix'];
-        break;
+            $f_protocol = $TLN->config['mail_detect_protocol'];
+            $f_port = $TLN->config['mail_detect_port'];
+            $f_prefix = $TLN->config['mail_detect_folder_prefix'];
+            break;
+        case 'ONE-FOR-EACH':
+            if (!isset($f_user)) $TLN->redirect_and_exit('index.php');
+            $domain = trim($TLN->config['mail_servers'][$six]['domain']);
+            $f_email = $f_user.'@'.$domain;
+            $f_server = $TLN->config['mail_servers'][$six]['server'];
+            $login_type = $TLN->config['mail_servers'][$six]['login_type'];
 
-    case 'ONE-FOR-EACH':
-        if (!isset($f_user)) $TLN->redirect_and_exit('index.php');
-        $domain = trim($TLN->config['mail_servers'][$six]['domain']);
-        $f_email = $f_user.'@'.$domain;
-        $f_server = $TLN->config['mail_servers'][$six]['server'];
-        $login_type = $TLN->config['mail_servers'][$six]['login_type'];
+            $f_protocol = $TLN->config['mail_servers'][$six]['protocol'];
+            $f_port = $TLN->config['mail_servers'][$six]['port'];
+            $f_prefix = $TLN->config['mail_servers'][$six]['folder_prefix'];
 
-        $f_protocol = $TLN->config['mail_servers'][$six]['protocol'];
-        $f_port = $TLN->config['mail_servers'][$six]['port'];
-        $f_prefix = $TLN->config['mail_servers'][$six]['folder_prefix'];
-
-        if ($login_type != "") {
-            $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $login_type));
-        }
-        break;
-
-    case 'ONE-FOR-ALL':
-        if (!isset($f_email)) $TLN->redirect_and_exit('index.php');
-        if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
-            $f_user = trim($regs[1]);
-            $domain = trim($regs[2]);
-            if ($TLN->config['one_for_all_login_type'] != "") {
-                $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $TLN->config['one_for_all_login_type']));
+            if ($login_type != "") {
+                $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $login_type));
             }
-        }
-        $f_server = $TLN->config['default_mail_server'];
-        $f_protocol = $TLN->config['default_protocol'];
-        $f_port = $TLN->config['default_port'];
-        $f_prefix = $TLN->config['default_folder_prefix'];
-        break;
+            break;
+        case 'ONE-FOR-ALL':
+            if (!isset($f_email)) $TLN->redirect_and_exit('index.php');
+            if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
+                $f_user = trim($regs[1]);
+                $domain = trim($regs[2]);
+                if ($TLN->config['one_for_all_login_type'] != "") {
+                    $f_user = preg_replace('/%user%/i', $f_user, preg_replace('/%domain%/i', $domain, $TLN->config['one_for_all_login_type']));
+                }
+            }
+            $f_server = $TLN->config['default_mail_server'];
+            $f_protocol = $TLN->config['default_protocol'];
+            $f_port = $TLN->config['default_port'];
+            $f_prefix = $TLN->config['default_folder_prefix'];
+            break;
+        default:
+            die("Bad mail_server_type: {$TLN->config['mail_server_type']}");
     }
-
 
     $TLN->mail_email = $auth['email'] = $f_email = trim(stripslashes($f_email));
     $TLN->mail_user = $auth['user'] = $f_user = trim(stripslashes($f_user));
