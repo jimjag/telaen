@@ -535,7 +535,7 @@ class Telaen extends Telaen_core
                 return false;
             }
             $msgcontent = '';
-            while (!feof($this->_mail_connection)) {
+            while (!self::_feof($this->_mail_connection)) {
                 $buffer = $this->_mail_read_response();
                 if (chop($buffer) == '.') {
                     break;
@@ -626,7 +626,7 @@ class Telaen extends Telaen_core
             return false;
         }
         $header = '';;
-        while (!feof($this->_mail_connection)) {
+        while (!self::_feof($this->_mail_connection)) {
             $buffer = $this->_mail_read_response();
             if (chop($buffer) == '.') {
                 break;
@@ -1007,7 +1007,7 @@ class Telaen extends Telaen_core
                 $this->mail_send_command("UIDL");
                 $buffer = $this->mail_get_line();
                 if (substr($buffer, 0, 3) == "+OK") {
-                    while (!feof($this->mail_connection)) {
+                    while (!self::_feof($this->mail_connection)) {
                         $buffer = $this->mail_get_line();
                         if(trim($buffer) == ".") {
                             break;
@@ -1026,7 +1026,7 @@ class Telaen extends Telaen_core
             if ($this->mail_nok_resp()) {
                 return $counter;
             }
-            while (!feof($this->_mail_connection)) {
+            while (!self::_feof($this->_mail_connection)) {
                 $buffer = $this->_mail_read_response();
                 $buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
                 if ($buffer == '.') {
@@ -1673,7 +1673,7 @@ class Telaen extends Telaen_core
         $this->_mail_send_command('CAPA');
         $buffer = $this->_mail_read_response();
         if ($this->mail_ok_resp($buffer)) {
-            while (!feof($this->_mail_connection)) {
+            while (!self::_feof($this->_mail_connection)) {
                 $buffer = trim($this->_mail_read_response());
                 if ($buffer[0] == '.') {
                     break;
@@ -1691,7 +1691,7 @@ class Telaen extends Telaen_core
     {
         $capa = array();
         $this->_mail_send_command('cp01 CAPABILITY', false);
-        while (!feof($this->_mail_connection)) {
+        while (!self::_feof($this->_mail_connection)) {
             $buffer = trim($this->_mail_read_response());
             $a = preg_split("|\s+|", $buffer);
             if ($a[0] == 'cp01') {
@@ -1782,7 +1782,7 @@ class Telaen extends Telaen_core
                     $msg['uidl'] = self::md5(uniqid(''));
                     return $msg['uidl'];
                 }
-                while (!feof($this->_mail_connection)) {
+                while (!self::_feof($this->_mail_connection)) {
                     $buffer = $this->_mail_read_response();
                     if (chop($buffer) == '.') {
                         break;

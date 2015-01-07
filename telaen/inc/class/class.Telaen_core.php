@@ -153,7 +153,7 @@ class Telaen_core
         }
         $f = fopen($strfile, 'rb');
         $result = "";
-        while (!feof($f)) {
+        while (!self::_feof($f)) {
             $result .= preg_replace('/\r?\n/', "\r\n", fread($f, 4096));
             $pos = strpos($result, "\r\n\r\n");
             if (!($pos === false)) {
@@ -1601,7 +1601,7 @@ ENDOFREDIRECT;
         }
         $result = "";
         $f = fopen($strfile, 'rb');
-        while (!feof($f)) {
+        while (!self::_feof($f)) {
             $result .= preg_replace('|\n|', "", fread($f, 100));
             $pos = strpos($result, '\r\r');
             if (!($pos === false)) {
@@ -1748,5 +1748,13 @@ ENDOFREDIRECT;
              $result .= chr(ord($s1[$i]) ^ ord($s2[$i]));
          }
          return $result;
+     }
+
+    static protected function _feof($handle)
+     {
+         if (!$handle || !is_resource($handle)) {
+             return true;
+         }
+         return feof($handle);
      }
 }
