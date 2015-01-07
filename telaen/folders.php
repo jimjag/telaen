@@ -62,6 +62,7 @@ function create() { frm = document.forms[0]; frm.submit(); }
 $smarty->assign('umJS', $jssource);
 $smarty->assign('umUserEmail', $auth['email']);
 
+$TLN->refresh_folders();
 $boxes = $TLN->mail_list_boxes();
 
 $scounter = 0;

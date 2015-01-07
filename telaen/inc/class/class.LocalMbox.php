@@ -66,18 +66,18 @@ class LocalMbox extends SQLite3
         'header' => 'TEXT DEFAULT ""',
     );
 
-    public $folders = array();  // All Email boxes/folders
+    public $folders = array();  // Hash: All Email boxes/folders; key = name
     public $attachments = array();
-    public $messages = array(); // All messages from the current email folder
-    public $m_idx = array(); /* key = uidl; value = index to this->messages */
+    public $messages = array(); // List: All messages from the current email folder;
+    public $m_idx = array(); /* Hash: key = uidl; value = index to this->messages */
     public $allfolders = array(); // All folders/directors
     public $udatafolder = '_infos';
     public $ok = true;
     public $message = '';
-    public $m_delta = array(); /* key = message; value = array() of field changes */
+    public $m_delta = array(); /* Hash: key = message; value = array() of field changes */
     private $_system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
     private $_invisible = array('_attachments', '_infos');
-    private $_indb = array(); /* key = uidl; value = is it in the DB? */
+    private $_indb = array(); /* Hash: key = uidl; value = is it in the DB? */
     private $_folder_need_sync = array();
 
     /**

@@ -1882,7 +1882,7 @@ class Telaen extends Telaen_core
     {
         $boxes = $this->mail_list_boxes();
         foreach ($boxes as $folder) {
-            if ($this->iam_stale($folder)) {
+            if ($this->iam_stale($folder['name'])) {
                 $this->mail_list_msgs($folder);
             }
         }
