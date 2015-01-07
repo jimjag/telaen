@@ -120,14 +120,14 @@ for ($n = 0;$n<count($boxes);$n++) {
         }
         $boxsize += $thisbox[$i]['size'];
     }
-    $delete = '&nbsp;';
 
+    // prep vars
     if (!$TLN->is_system_folder($entry)) {
-        $delete = "<a href=\"folders.php?delfolder=$entry&folder=$folder\">OK</a>";
+        $delete = '<a href="folders.php?delfolder='.urlencode($entry).'&folder='.urlencode($folder).'">OK</a>';
+    } else {
+        $delete = '&nbsp;';
     }
-
     $boxname = $entry;
-
     if ($unread != 0) {
         $unread = "<b>$unread</b>";
     }
@@ -139,9 +139,8 @@ for ($n = 0;$n<count($boxes);$n++) {
         $system[$scounter]['msgs'] = count($thisbox)."/$unread";
         $system[$scounter]['del'] = $delete;
         $system[$scounter]['boxsize'] = Telaen::bytes2bkmg($boxsize);
-        $system[$scounter]['chlink'] = "process.php?folder=$entry";
-        $system[$scounter]['emptylink'] = 'folders.php?empty='.$entry.'&folder='.$entry."";
-
+        $system[$scounter]['chlink'] = 'process.php?folder='.urlencode($entry)."";
+        $system[$scounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
         $scounter++;
     } else {
         $personal[$pcounter]['entry'] = $entry;
@@ -151,7 +150,6 @@ for ($n = 0;$n<count($boxes);$n++) {
         $personal[$pcounter]['boxsize'] = Telaen::bytes2bkmg($boxsize);
         $personal[$pcounter]['chlink'] = 'process.php?folder='.urlencode($entry)."";
         $personal[$pcounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
-
         $pcounter++;
     }
     $totalused += $boxsize;
