@@ -25,6 +25,7 @@ class LocalMbox extends SQLite3
         'refreshed' => 'INT DEFAULT 0', // time() of last refresh from server
         'version' => 'INT DEFAULT 0', // Have we read old messages?
         'prefix' => 'TEXT DEFAULT ""',
+        'table_name' => 'TEXT DEFAULT ""',
         'dirname' => 'TEXT NOT NULL',
     );
     private $aschema = array(
@@ -347,15 +348,12 @@ class LocalMbox extends SQLite3
     /**
      * Add new folder/emailbox to DB
      * @param array $folder
-     * @param int $sys
+     * @param boolean $calc_size
      * @return boolean
      */
     public function new_folder($folder, $calc_size = false)
     {
         $folder['system'] = in_array($folder['name'], $this->_system_folders);
-        if ($calc_size && is_dir($this->userfolder.$folder['name'])) {
-            $folder['size'] = $this->calc_folder_size($this->userfolder.$folder['name']);
-        }
         /*
          * Since user folder names can be weird, on the file system,
          * make the dirname for the folder something safe (ie: a md5 hash
@@ -365,11 +363,15 @@ class LocalMbox extends SQLite3
         if (empty($folder['dirname'])) {
             $folder['dirname'] = self::getKey($folder['name']);
         }
-        $query = self::_get_folder_name($folder['name']);
+        if ($calc_size && is_dir($this->userfolder.$folder['dirname'])) {
+            $folder['size'] = $this->calc_folder_size($this->userfolder.$folder['dirname']);
+        }
+        $table = self::_get_folder_name($folder['name']);
+        $folder['table_name'] = $table;
         /*
          * First create the new table for the new folder (to hold the messages)
          */
-        $query = $this->create_query($query, $this->mschema);
+        $query = $this->create_query($table, $this->mschema);
         if ($this->exec($query)) {
             /*
              * Now add it to the folders tables and array
@@ -378,11 +380,11 @@ class LocalMbox extends SQLite3
                 $this->folders[$folder['name']] = $folder;
                 return true;
             } else {
-                $this->message .= "execute failed:";
+                $this->message .= "do_insert exec failed:";
             }
         }
         $this->ok = false;
-        $this->message .= "exec failed: $query";
+        $this->message .= "new_folder exec failed: $query";
         return false;
 
     }

@@ -1881,7 +1881,7 @@ class Telaen extends Telaen_core
     public function refresh_folders()
     {
         $boxes = $this->mail_list_boxes();
-        foreach ($boxes as $folder) {
+        foreach ($boxes as $folder => $f) {
             if ($this->iam_stale($folder['name'])) {
                 $this->mail_list_msgs($folder);
             }
