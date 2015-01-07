@@ -95,7 +95,7 @@ if (isset($_POST['action'])) {
         if (intval($_POST['filter_type']) == FL_TYPE_MOVE) {
             $destFolder = trim($_POST['filter_folder']);
             // Check if the user entered a valid folder
-            if (!$TLN->valid_folder_name($destFolder) || !file_exists($TLN->userfolder.$destFolder)) {
+            if (empty($TLN->tdb->folders[$destFolder])) {
                 break;
             }
         }

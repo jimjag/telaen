@@ -51,7 +51,7 @@ class Telaen extends Telaen_core
      * @param string $string String to convert
      * @return string
      */
-    static public function utf7_to_8($string)
+    static public function utf7_8($string)
     {
         return mb_convert_encoding($string, 'UTF-8', 'UTF7-IMAP');
     }
@@ -61,7 +61,7 @@ class Telaen extends Telaen_core
      * @param string $string String to convert
      * @return string
      */
-    static public function utf8_to_7($string)
+    static public function utf8_7($string)
     {
         return mb_convert_encoding($string, 'UTF7-IMAP', 'UTF-8');
     }
@@ -85,22 +85,25 @@ class Telaen extends Telaen_core
     }
 
     /**
-     * Is this a valid folder name?
+     * Is this a valid folder name? If so, gen it
      * @param string $name folder name to check
-     * @param boolean $checksys Check against system folders?
-     * @return boolean
+     * @param boolean quick Don't bother gen'ing, just check
+     * @return Mixed
      */
-    public function valid_folder_name($name, $checksys = true)
+    public function fname($name, $quick = false)
     {
+        $name = trim($name);
         if ($name == '') {
             return false;
         }
         // Folder names that match system folder names are NOT valid
-        if ($checksys && $this->is_system_folder($name)) {
+        if ($this->is_system_folder($name)) {
             return false;
         }
-
-        return !preg_match('|[^A-Za-z0-9_-]|', $name);
+        if ($quick) {
+            return true;
+        }
+        return array((($this->mail_protocol == IMAP) ? self::utf8_7($name) : $name ), self::md5($name));
     }
     /**
      * Check if we are connected to email server
@@ -1238,7 +1241,7 @@ class Telaen extends Telaen_core
                 $rest = substr($buffer, $pos + 2);
                 $pos = strpos($rest, ' ');
                 $tmp['prefix'] = preg_replace('|"(.*)"|', "$1", substr($rest, 0, $pos));
-                $tmp['name'] = self::utf7_to_8($this->fix_prefix(trim(preg_replace('|"(.*)"|', "$1",
+                $tmp['name'] = self::utf7_8($this->fix_prefix(trim(preg_replace('|"(.*)"|', "$1",
                     substr($rest, $pos + 1))), 0));
                 $buffer = $this->_mail_get_line();
                 if (empty($this->$tdb->folders[$tmp['name']])) {
@@ -1278,7 +1281,7 @@ class Telaen extends Telaen_core
         $boxinfo = array();
         if ($this->mail_protocol == IMAP) {
             $original_name = preg_replace('|"(.*)"|', "$1", $boxname);
-            $boxname = self::utf8_to_7($this->fix_prefix($original_name, 1));
+            $boxname = self::utf8_7($this->fix_prefix($original_name, 1));
             $this->_mail_send_command("SELECT \"$boxname\"");
             $buffer = $this->_mail_get_line();
             if (preg_match("/^".$this->get_sid()." NO/i", $buffer)) {
