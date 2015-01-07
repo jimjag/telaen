@@ -87,10 +87,9 @@ class Telaen extends Telaen_core
     /**
      * Is this a valid folder name? If so, gen it
      * @param string $name folder name to check
-     * @param boolean quick Don't bother gen'ing, just check
-     * @return Mixed
+     * @return boolean
      */
-    public function fname($name, $quick = false)
+    public function valid_fname($name)
     {
         $name = trim($name);
         if ($name == '') {
@@ -100,11 +99,9 @@ class Telaen extends Telaen_core
         if ($this->is_system_folder($name)) {
             return false;
         }
-        if ($quick) {
-            return true;
-        }
-        return array((($this->mail_protocol == IMAP) ? self::utf8_7($name) : $name ), self::md5($name));
+        return true;
     }
+
     /**
      * Check if we are connected to email server
      * @return boolean
@@ -1249,7 +1246,7 @@ class Telaen extends Telaen_core
                 }
             }
         }
-         return $this->tdb->folders;
+        return $this->tdb->folders;
     }
 
     public function _mail_list_boxes_pop($boxname = '')
@@ -1853,7 +1850,12 @@ class Telaen extends Telaen_core
      */
     public function refresh_folders()
     {
-        foo;
+        $boxes = $this->mail_list_boxes();
+        foreach ($boxes as $folder) {
+            if ($this->iam_stale($folder)) {
+                $this->mail_list_msgs($folder);
+            }
+        }
     }
 
     /**

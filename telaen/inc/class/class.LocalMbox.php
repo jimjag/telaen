@@ -78,6 +78,7 @@ class LocalMbox extends SQLite3
     private $_system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
     private $_invisible = array('_attachments', '_infos');
     private $_indb = array(); /* key = uidl; value = is it in the DB? */
+    private $_folder_need_sync = array();
 
     /**
      * Construct: open DB and create tables if needed
@@ -542,6 +543,7 @@ class LocalMbox extends SQLite3
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
+        $this->_folder_need_sync[$msg['folder']] = true;
         return $this->do_insert(self::_get_folder_name($msg['folder']), $msg, $thelist);
     }
 
@@ -563,6 +565,7 @@ class LocalMbox extends SQLite3
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
+        $this->_folder_need_sync[$msg['folder']] = true;
         return $this->do_update(self::_get_folder_name($msg['folder']), $msg, $thelist,  array('uidl'=>$msg['uidl']));
     }
 
@@ -604,9 +607,15 @@ class LocalMbox extends SQLite3
             $this->m_idx[$msg['uidl']] = $index;
             reset($this->messages);
             $this->m_delta[] = array($this->messages[$index], array('*'));
-
         }
+        $this->folders[$msg['folder']]['size'] += $msg['size'];
+        $this->folders[$msg['folder']]['count'] += 1;
+        if ($msg['unread']) {
+            $this->folders[$msg['folder']]['unread'] += 1;
+        }
+        $this->_folder_need_sync[$msg['folder']] = true;
     }
+
     /**
      * Update all changed/new headers for all email messages
      * from the changed list. The idea being that if we have
@@ -652,6 +661,15 @@ class LocalMbox extends SQLite3
             }
             $this->m_delta = array();
         }
+        if (count($this->_folder_need_sync) > 0) {
+            foreach ($this->_folder_need_sync as $name=>$v) {
+                $this->do_update('folders', $this->folders[$name],
+                    array('size', 'count', 'unread'), array('name' => $name));
+            }
+            unset($this->_folder_need_sync);
+            $this->_folder_need_sync = array();
+        }
+
         return $retval;
     }
 
@@ -681,6 +699,11 @@ class LocalMbox extends SQLite3
                 } else {
                     $idxs[$idx] = $idx;
                 }
+                $this->folders[$msg['folder']]['size'] -= $msg['size'];
+                $this->folders[$msg['folder']]['count'] -= 1;
+                if ($msg['unread']) {
+                    $this->folders[$msg['folder']]['unread'] -= 1;
+                }
             }
         }
         /* If we deleted from the active folder, then update our array */
@@ -691,6 +714,7 @@ class LocalMbox extends SQLite3
             }
         }
         $stmt->close();
+        $this->$_folder_need_sync = true;
         return $this->ok;
     }
 

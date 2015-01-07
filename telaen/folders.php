@@ -16,12 +16,12 @@ require './inc/init.php';
 extract(Telaen::pull_from_array($_GET, array('empty', 'goback', 'nameto', 'mailto'), 's'));
 extract(Telaen::pull_from_array($_POST, array('newfolder'), 's'));
 
-if ($TLN->fname($newfolder, true)) {
+if ($TLN->valid_fname($newfolder)) {
     $TLN->mail_create_box($newfolder);
 }
 
 // check and delete the especified folder: system folders can not be deleted
-if ($TLN->fname($delfolder, true)) {
+if ($TLN->valid_fname($delfolder)) {
     $TLN->mail_delete_box($delfolder);
 }
 
