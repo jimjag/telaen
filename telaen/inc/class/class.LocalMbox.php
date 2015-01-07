@@ -70,12 +70,19 @@ class LocalMbox extends SQLite3
     public $folders = array();  // Hash: All Email boxes/folders; key = name
     public $attachments = array();
     public $messages = array(); // List: All messages from the current email folder;
-    public $m_idx = array(); /* Hash: key = uidl; value = index to this->messages */
+    public $m_idx = array(); // Hash: key = uidl; value = index to this->messages
     public $allfolders = array(); // All folders/directors
     public $udatafolder = '_infos';
     public $ok = true;
     public $message = '';
-    public $m_delta = array(); /* Hash: key = message; value = array() of field changes */
+    public $m_delta = array(); // Hash: key = message; value = array() of field changes
+    /*
+     * Some message elements are arrays, that need to be serialize when storing and
+     * unserialize when read. Thankfully, all these are unique field names and
+     * so we don't need to check that we are updating/inserting messages, specifically,
+     * when serializing.
+     */
+    public $m_serialize = array('to', 'from', 'cc', 'reply-to', 'receipt-to');
     private $_system_folders = array('inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos');
     private $_invisible = array('_attachments', '_infos');
     private $_indb = array(); /* Hash: key = uidl; value = is it in the DB? */
@@ -229,7 +236,7 @@ class LocalMbox extends SQLite3
         $stmt = $this->prepare($query);
         reset($list);
         foreach ($list as $key) {
-            $stmt->bindValue(":$key", $data[$key]);
+            $stmt->bindValue(":$key", (in_array($key, $this->m_serialize) ? serialize($data[$key]) : $data[$key]));
         }
         foreach ($where as $key => $val) {
             $stmt->bindValue(":$key", $val);
@@ -263,7 +270,7 @@ class LocalMbox extends SQLite3
         $stmt = $this->prepare($query);
         reset($list);
         foreach ($list as $key) {
-            $stmt->bindValue(":$key", $data[$key]);
+            $stmt->bindValue(":$key", (in_array($key, $this->m_serialize) ? serialize($data[$key]) : $data[$key]));
         }
         if (!$stmt->execute()) {
             $this->ok = false;
@@ -500,6 +507,9 @@ class LocalMbox extends SQLite3
             $index = 0;
             if ($result) {
                 while ($foo = $result->fetchArray()) {
+                    foreach($this->m_serialize as $k) {
+                        $foo[$k] = unserialize($foo[$k]);
+                    }
                     $this->messages[$index] = $foo;
                     $this->messages[$index]['idx'] = $index;
                     $this->m_idx[$foo['uidl']] = $index;
