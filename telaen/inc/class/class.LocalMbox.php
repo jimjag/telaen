@@ -205,14 +205,14 @@ class LocalMbox extends SQLite3
     }
     /**
      * Creates and Execute the 'UPDATE table SET... WHERE' statement
-     * @param array $msg Hash of data to update keyed by list
+     * @param string $table Table to update
+     * @param array $data Hash of data to update keyed by list
      * @param array $list List of elements to update
      * @param array $where the WHERE statement field and values (assume =)
      * @return SQLite3Result
      */
-    private function do_update($msg, $list, $where)
+    private function do_update($table, $data, $list, $where)
     {
-        $table = self::_get_folder_name($msg['folder']);
         $query = sprintf('UPDATE %s SET ', $table);
         $temp = array();
         foreach ($list as $key) {
@@ -227,7 +227,7 @@ class LocalMbox extends SQLite3
         $stmt = $this->prepare($query);
         reset($list);
         foreach ($list as $key) {
-            $stmt->bindValue(":$key", $msg[$key]);
+            $stmt->bindValue(":$key", $data[$key]);
         }
         foreach ($where as $key => $val) {
             $stmt->bindValue(":$key", $val);
@@ -245,13 +245,13 @@ class LocalMbox extends SQLite3
      * Creates and Execute the 'INSERT into table (' statement
      * We re-use the prepared statement by assuming that all INSERTS
      * are the same.
-     * @param array $msg Hash of data to update keyed by list
+     * @param string $table Table to update
+     * @param array $data Hash of data to update keyed by list
      * @param array $list List of elements to insert
      * @return SQLite3Result
      */
-    private function do_insert($msg, $list)
+    private function do_insert($table, $data, $list)
     {
-        $table = self::_get_folder_name($msg['folder']);
         $query = sprintf('INSERT into %s (\'', $table);
         $query .= implode("','",$list);
         $query .= '\') VALUES (:';
@@ -261,7 +261,7 @@ class LocalMbox extends SQLite3
         $stmt = $this->prepare($query);
         reset($list);
         foreach ($list as $key) {
-            $stmt->bindValue(":$key", $msg[$key]);
+            $stmt->bindValue(":$key", $data[$key]);
         }
         if (!$stmt->execute()) {
             $this->ok = false;
@@ -358,22 +358,23 @@ class LocalMbox extends SQLite3
         /*
          * Since user folder names can be weird, on the file system,
          * make the dirname for the folder something safe (ie: a md5 hash
-         * of the name)
+         * of the name). This requires, of course, that when we
+         * create the local directory, we use the same name. :/
          */
         if (empty($folder['dirname'])) {
             $folder['dirname'] = self::getKey($folder['name']);
         }
         $query = self::_get_folder_name($folder['name']);
+        /*
+         * First create the new table for the new folder (to hold the messages)
+         */
         $query = $this->create_query($query, $this->mschema);
         if ($this->exec($query)) {
-            $stmt = $this->prepare("INSERT into folders ('name', 'system', 'size', 'prefix') VALUES (:name, :system, :size, :prefix) ;");
-            $stmt->bindValue(':name', $folder['name']);
-            $stmt->bindValue(':system', intval($folder['system']));
-            $stmt->bindValue(':size', intval($folder['size']));
-            $stmt->bindValue(':prefix', $folder['prefix']);
-            if ($stmt->execute()) {
+            /*
+             * Now add it to the folders tables and array
+             */
+            if ($this->do_insert('folders', $folder, keys($this->fschema))) {
                 $this->folders[$folder['name']] = $folder;
-                $stmt->close();
                 return true;
             } else {
                 $this->message .= "execute failed:";
@@ -532,7 +533,7 @@ class LocalMbox extends SQLite3
 
     /**
      * Add new email message to folder
-     * @param type $msg
+     * @param array $msg
      * @return boolean
      */
     public function new_message($msg)
@@ -541,7 +542,7 @@ class LocalMbox extends SQLite3
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
-        return $this->do_insert($msg, $thelist);
+        return $this->do_insert(self::_get_folder_name($msg['folder']), $msg, $thelist);
     }
 
     /**
@@ -562,7 +563,7 @@ class LocalMbox extends SQLite3
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
-        return $this->do_update($msg, $thelist,  array('uidl'=>$msg['uidl']));
+        return $this->do_update(self::_get_folder_name($msg['folder']), $msg, $thelist,  array('uidl'=>$msg['uidl']));
     }
 
     /**
