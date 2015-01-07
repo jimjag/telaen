@@ -207,7 +207,7 @@ $config['mail_use_top'] = false;
 #       message
 # APOP: provides an encrypted login system instead of clean password sent.
 #
-# NOTE: You can add your own as needed
+# NOTE: You can add your own as needed, eg: STARTTLS, etc
 ########################################################################
 ##
 ## COMPATIBILITY NOTE:

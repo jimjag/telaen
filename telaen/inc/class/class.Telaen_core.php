@@ -1734,9 +1734,19 @@ ENDOFREDIRECT;
     /**
      * Return sid value for IMAP
      */
-    protected function get_sid($getnext = false)
+    protected function _get_sid($getnext = false)
     {
         if ($getnext) $this->_sid++;
         return sprintf('a%03d', $this->_sid);
     }
+
+    protected function _xor($s1, $s2)
+     {
+         $result = '';
+         $len = strlen($s1);
+         for ($i = 0; $i < $len; $i++) {
+             $result .= chr(ord($s1[$i]) ^ ord($s2[$i]));
+         }
+         return $result;
+     }
 }

@@ -141,9 +141,9 @@ class Telaen extends Telaen_core
     {
         $resp = self::RESP_UNKNOWN;
         $match = array();
-        if ($string == null) $string = $this->_mail_get_line();
+        if ($string == null) $string = $this->_mail_read_response();
         if ($this->mail_protocol == IMAP) {
-            if (preg_match('|^[a-z0-9*]+\s+(OK|NO|BAD|BYE)(.*)$|i', trim($string), $match)) {
+            if (preg_match('|^'.$this->_get_sid().'\s+(OK|NO|BAD|BYE)(.*)$|i', trim($string), $match)) {
                 $a = strtoupper($match[1]);
                 switch ($a) {
                     case 'OK':
@@ -178,7 +178,7 @@ class Telaen extends Telaen_core
      */
     public function mail_ok_resp($string = null)
     {
-        if ($string == null) $string = $this->_mail_get_line();
+        if ($string == null) $string = $this->_mail_read_response();
         $resp = $this->_mail_parse_resp($string);
 
         return ($resp == self::RESP_OK);
@@ -191,13 +191,13 @@ class Telaen extends Telaen_core
      */
     public function mail_nok_resp($string = null)
     {
-        if ($string == null) $string = $this->_mail_get_line();
+        if ($string == null) $string = $this->_mail_read_response();
         $resp = $this->_mail_parse_resp($string);
 
         return ($resp < self::RESP_OK);
     }
 
-    protected function _mail_get_line()
+    protected function _mail_read_response()
     {
         $buffer = fgets($this->_mail_connection, 8192);
         $buffer = preg_replace('|\r?\n|', "\r\n", $buffer);
@@ -226,8 +226,8 @@ class Telaen extends Telaen_core
                 $cmd = trim($cmd).$this->CRLF;
                 $output = (preg_match('/^(PASS|LOGIN)/', $cmd, $regs)) ? $regs[1]." ****" : $cmd;
                 if ($this->mail_protocol == IMAP && $addTag) {
-                    $cmd = $this->get_sid(true).' '.$cmd;
-                    $output = $this->get_sid().' '.$output;
+                    $cmd = $this->_get_sid(true).' '.$cmd;
+                    $output = $this->_get_sid().' '.$output;
                 }
                 fwrite($this->_mail_connection, $cmd);
                 if ($this->config['enable_debug']) {
@@ -256,7 +256,7 @@ class Telaen extends Telaen_core
             $errstr = 0;
             $this->_mail_connection = stream_socket_client($this->_serverurl, $errno, $errstr, 15);
             if ($this->_mail_connection) {
-                $this->greeting = $this->_mail_get_line();
+                $this->greeting = $this->_mail_read_response();
                 if ($this->mail_ok_resp($this->greeting)) {
                     return true;
                 } else {
@@ -277,6 +277,10 @@ class Telaen extends Telaen_core
     protected function _mail_auth_imap()
     {
         if ($this->upgrade_tls) {
+            if (!isset($this->capabilities['STARTTLS'])) {
+                $this->trigger_error("Want STARTTLS but server doesn't support it.", __FUNCTION__);
+                return false;
+            }
             $this->_mail_send_command('STARTTLS');
             if ($this->mail_ok_resp()) {
                 stream_socket_enable_crypto($this->_mail_connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
@@ -285,12 +289,26 @@ class Telaen extends Telaen_core
                 return false;
             }
         }
-        $this->_mail_send_command('LOGIN '.$this->mail_user.' '.$this->mail_pass);
-        if ($this->mail_ok_resp()) {
-            return true;
-        } else {
-            return false;
+        if ($this->capabilities['AUTH=CRAM-MD5']) {
+            $this->_mail_send_command('AUTHENTICATE CRAM-MD5');
+            $buffer = $this->_mail_read_response();
+            if ($buffer[0] == '+') {
+                $challenge = base64_decode(substr($buffer, 2));
+                $pass = $this->mail_pass;
+                $padlen = 64 - strlen($pass);
+                $pass .= str_repeat(chr(0x00), $padlen);
+                $ipad = str_repeat(chr(0x36), 64);
+                $opad = str_repeat(chr(0x5c), 64);
+                $hash = $this->md5($this->_xor($pass, $opad) . pack("H*", $this->md5($this->_xor($pass, $ipad) . base64_decode($challenge))));
+                $challenge_response = base64_encode($this->mail_user . ' ' . $hash);
+                $this->_mail_send_command($challenge_response, false);
+                return $this->mail_ok_resp();
+            } else {
+                $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Downgrading to LOGIN", __FUNCTION__);
+            }
         }
+        $this->_mail_send_command('LOGIN '.$this->mail_user.' '.$this->mail_pass);
+        return $this->mail_ok_resp();
     }
 
     /**
@@ -301,6 +319,10 @@ class Telaen extends Telaen_core
     {
         $tokens = array();
         if ($this->upgrade_tls) {
+            if (!isset($this->capabilities['STLS'])) {
+                $this->trigger_error("Want STLS but server doesn't support it.", __FUNCTION__);
+                return false;
+            }
             $this->_mail_send_command('STLS');
             if ($this->mail_ok_resp()) {
                 stream_socket_enable_crypto($this->_mail_connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
@@ -323,12 +345,7 @@ class Telaen extends Telaen_core
                 return false;
             }
         }
-
-        if ($this->mail_ok_resp()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->mail_ok_resp();
     }
 
     /**
@@ -419,7 +436,7 @@ class Telaen extends Telaen_core
             }
 
             $this->_mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
-            $buffer = chop($this->_mail_get_line());
+            $buffer = chop($this->_mail_read_response());
             if ($this->mail_nok_resp($buffer)) {
                 return false;
             }
@@ -427,7 +444,7 @@ class Telaen extends Telaen_core
                 if (preg_match('|message-id: (.*)|i', $buffer, $regs)) {
                     $current_id = preg_replace('|<(.*)>|', "$1", $regs[1]);
                 }
-                $buffer = chop($this->_mail_get_line());
+                $buffer = chop($this->_mail_read_response());
             }
 
             if ($current_id != $msg['message-id']) {
@@ -442,7 +459,7 @@ class Telaen extends Telaen_core
             $msgcontent = $this->read_file($msg['localname']);
         } else {
             $this->_mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY[TEXT]');
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
             if ($this->mail_nok_resp($buffer)) {
                 return false;
             }
@@ -450,13 +467,13 @@ class Telaen extends Telaen_core
                 $bytes = $regs[1];
             }
 
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
             $msgbody = '';
             while (!$this->mail_ok_resp($buffer)) {
                 if (!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i', $buffer)) {
                     $msgbody .= $buffer;
                 }
-                $buffer = $this->_mail_get_line();
+                $buffer = $this->_mail_read_response();
             }
             $pos = strrpos($msgbody, ")");
             if (!($pos === false)) {
@@ -495,14 +512,14 @@ class Telaen extends Telaen_core
             $command = ($this->config['mail_use_top']) ? 'TOP '.$msg['mnum'].' '.$msg['size'] : 'RETR '.$msg['mnum'];
             $this->_mail_send_command($command);
 
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
 
             if ($this->mail_nok_resp($buffer)) {
                 return false;
             }
             $msgcontent = '';
             while (!feof($this->_mail_connection)) {
-                $buffer = $this->_mail_get_line();
+                $buffer = $this->_mail_read_response();
                 if (chop($buffer) == '.') {
                     break;
                 }
@@ -552,7 +569,7 @@ class Telaen extends Telaen_core
 ;       }
         $ret = $header = '';
         $this->_mail_send_command('UID FETCH '.$msg['uid'].' (RFC822.HEADER)');
-        $buffer = $this->_mail_get_line();
+        $buffer = $this->_mail_read_response();
 
         /* if any problem, stop the procedure */
         if ($this->mail_nok_resp($buffer)) {
@@ -572,7 +589,7 @@ class Telaen extends Telaen_core
             } elseif ($tbuffer == ")") {
                 $ret = $header;
             }
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
         }
         return $ret;
     }
@@ -586,14 +603,14 @@ class Telaen extends Telaen_core
             return $msg['header'];
 ;       }
         $this->_mail_send_command('TOP '.$msg['mnum'].' 0');
-        $buffer = $this->_mail_get_line();
+        $buffer = $this->_mail_read_response();
         /* if any problem with this messages list, stop the procedure */
         if ($this->mail_nok_resp($buffer)) {
             return false;
         }
         $header = '';;
         while (!feof($this->_mail_connection)) {
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
             if (chop($buffer) == '.') {
                 break;
             }
@@ -633,7 +650,7 @@ class Telaen extends Telaen_core
         }
 
         $this->_mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
-        $buffer = chop($this->_mail_get_line());
+        $buffer = chop($this->_mail_read_response());
 
         /* if any problem with the server, stop the function */
         if ($this->mail_nok_resp($buffer)) {
@@ -647,7 +664,7 @@ class Telaen extends Telaen_core
                 $current_id = preg_replace('|<(.*)>|', "$1", $regs[1]);
             }
 
-            $buffer = chop($this->_mail_get_line());
+            $buffer = chop($this->_mail_read_response());
         }
 
         /* compare the old and the new message id, if different, stop*/
@@ -667,7 +684,7 @@ class Telaen extends Telaen_core
             $trash_folder = $this->fix_prefix('trash', 1);
 
             $this->_mail_send_command('COPY '.$msg['mnum'].':'.$msg['mnum']." \"$trash_folder\"");
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
 
             /* if any problem with the server, stop the function */
             if ($this->mail_nok_resp($buffer)) {
@@ -761,7 +778,7 @@ class Telaen extends Telaen_core
             }
 
             $this->_mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
-            $buffer = chop($this->_mail_get_line());
+            $buffer = chop($this->_mail_read_response());
 
             /* if any problem with the server, stop the function */
             if ($this->mail_nok_resp($buffer)) {
@@ -775,7 +792,7 @@ class Telaen extends Telaen_core
                     $current_id = preg_replace('|<(.*)>|', "$1", $regs[1]);
                 }
 
-                $buffer = chop($this->_mail_get_line());
+                $buffer = chop($this->_mail_read_response());
             }
 
             /* compare the old and the new message id, if different, stop*/
@@ -892,7 +909,7 @@ class Telaen extends Telaen_core
             /* This is FAST under IMAP, so we scarf the whole dataset */
 
             $this->_mail_send_command('UID FETCH 1:* (FLAGS RFC822.SIZE RFC822.HEADER)');
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
 
             /* if any problem, stop the procedure */
             if ($this->mail_nok_resp($buffer)) {
@@ -937,7 +954,7 @@ class Telaen extends Telaen_core
                     $header = '';
                     $counter++;
                 }
-                $buffer = $this->_mail_get_line();
+                $buffer = $this->_mail_read_response();
             }
         }
         return $new;
@@ -993,7 +1010,7 @@ class Telaen extends Telaen_core
                 return $counter;
             }
             while (!feof($this->_mail_connection)) {
-                $buffer = $this->_mail_get_line();
+                $buffer = $this->_mail_read_response();
                 $buffer = chop($buffer); // trim buffer here avoid CRLF include on msg size (causes error on TOP)
                 if ($buffer == '.') {
                     break;
@@ -1219,7 +1236,7 @@ class Telaen extends Telaen_core
     {
         if ($boxname == '*') {
             $this->_mail_send_command("LIST \"\" $boxname");
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
             /* if any problem, stop the script */
             if ($this->mail_nok_resp($buffer)) {
                 return $this->tdb->folders;
@@ -1240,7 +1257,7 @@ class Telaen extends Telaen_core
                 $tmp['prefix'] = preg_replace('|"(.*)"|', "$1", substr($rest, 0, $pos));
                 $tmp['name'] = self::utf7_8($this->fix_prefix(trim(preg_replace('|"(.*)"|', "$1",
                     substr($rest, $pos + 1))), 0));
-                $buffer = $this->_mail_get_line();
+                $buffer = $this->_mail_read_response();
                 if (empty($this->$tdb->folders[$tmp['name']])) {
                     $this->tdb->new_folder($tmp);
                 }
@@ -1280,11 +1297,11 @@ class Telaen extends Telaen_core
             $original_name = preg_replace('|"(.*)"|', "$1", $boxname);
             $boxname = self::utf8_7($this->fix_prefix($original_name, 1));
             $this->_mail_send_command("SELECT \"$boxname\"");
-            $buffer = $this->_mail_get_line();
-            if (preg_match("/^".$this->get_sid()." NO/i", $buffer)) {
+            $buffer = $this->_mail_read_response();
+            if ($this->_mail_parse_resp($buffer) == self::RESP_NO) {
                 if ($this->mail_subscribe_box($original_name)) {
                     $this->_mail_send_command("SELECT \"$boxname\"");
-                    $buffer = $this->_mail_get_line();
+                    $buffer = $this->_mail_read_response();
                 }
             }
             if ($this->mail_nok_resp($buffer)) {
@@ -1304,7 +1321,7 @@ class Telaen extends Telaen_core
                 if (preg_match('|[ ]?\\*[ ]?OK[ ]?.*UIDVALIDITY ([0-9]+)|i', $buffer, $regs)) {
                     $this->_uidvalidity = $boxinfo['uidvalidity'] = $regs[1];
                 }
-                $buffer = $this->_mail_get_line();
+                $buffer = $this->_mail_read_response();
             }
         }
         $this->tdb->sync_messages();
@@ -1404,7 +1421,7 @@ class Telaen extends Telaen_core
         $this->_mail_send_command($mailcommand);
 
         // wait for a "+ Something" here and not after the msg sent!!
-        $buffer = $this->_mail_get_line();
+        $buffer = $this->_mail_read_response();
         if ($buffer[0] != '+') {
             return false;    // problem appending
         }
@@ -1413,9 +1430,9 @@ class Telaen extends Telaen_core
         $mailcommand = "$message";
         $this->_mail_send_command($mailcommand, false);    // don't send the session id here!
 
-        $buffer = $this->_mail_get_line();
+        $buffer = $this->_mail_read_response();
 
-        if (!preg_match("/^(".$this->get_sid()." OK)/i", $buffer)) {
+        if (!preg_match("|^(".$this->_get_sid()." OK)|i", $buffer)) {
             return false;
         }
         return true;
@@ -1472,10 +1489,10 @@ class Telaen extends Telaen_core
             $flagtype = '-';
         }
         $this->_mail_send_command('STORE '.$msg['mnum'].':'.$msg['mnum'].' '.$flagtype."FLAGS ($flagname)");
-        $buffer = $this->_mail_get_line();
+        $buffer = $this->_mail_read_response();
 
-        while (!preg_match("/^(".$this->get_sid()." (OK|NO|BAD))/i", $buffer)) {
-            $buffer = $this->_mail_get_line();
+        while (!preg_match("/^(".$this->_get_sid()." (OK|NO|BAD))/i", $buffer)) {
+            $buffer = $this->_mail_read_response();
         }
         if ($this->mail_nok_resp($buffer)) {
             return false;
@@ -1574,10 +1591,10 @@ class Telaen extends Telaen_core
                     $this->mail_expunge();
                 }
                 $this->_mail_send_command('LOGOUT');
-                $this->_mail_get_line();
+                $this->_mail_read_response();
             } else {
                 $this->_mail_send_command('QUIT');
-                $this->_mail_get_line();
+                $this->_mail_read_response();
             }
             fclose($this->_mail_connection);
             $this->_mail_connection = null;
@@ -1597,7 +1614,7 @@ class Telaen extends Telaen_core
     {
         if ($this->mail_connected()) {
             $this->_mail_send_command('FORCEDQUIT');
-            $this->_mail_get_line();
+            $this->_mail_read_response();
             fclose($this->_mail_connection);
             $this->_mail_connection = null;
             $this->_authenticated = false;
@@ -1617,12 +1634,12 @@ class Telaen extends Telaen_core
     {
         if ($this->mail_protocol == IMAP) {
             $this->_mail_send_command('EXPUNGE');
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
             if ($this->mail_nok_resp($buffer)) {
                 return false;
             }
             while (!$this->mail_ok_resp($buffer)) {
-                $buffer = $this->_mail_get_line();
+                $buffer = $this->_mail_read_response();
             }
         }
         return true;
@@ -1639,10 +1656,10 @@ class Telaen extends Telaen_core
     {
         $capa = array();
         $this->_mail_send_command('CAPA');
-        $buffer = $this->_mail_get_line();
+        $buffer = $this->_mail_read_response();
         if ($this->mail_ok_resp($buffer)) {
             while (!feof($this->_mail_connection)) {
-                $buffer = trim($this->_mail_get_line());
+                $buffer = trim($this->_mail_read_response());
                 if ($buffer[0] == '.') {
                     break;
                 }
@@ -1661,7 +1678,7 @@ class Telaen extends Telaen_core
         $capa = array();
         $this->_mail_send_command('cp01 CAPABILITY', false);
         while (!feof($this->_mail_connection)) {
-            $buffer = trim($this->_mail_get_line());
+            $buffer = trim($this->_mail_read_response());
             $a = preg_split("|\s+|", $buffer);
             if ($a[0] == 'cp01') {
                 break;
@@ -1727,7 +1744,7 @@ class Telaen extends Telaen_core
         $id = $msg['mnum'];
         if ($this->capabilities['UIDL'] && !$msg['islocal']) {
             $this->_mail_send_command("UIDL $id");
-            $buffer = $this->_mail_get_line();
+            $buffer = $this->_mail_read_response();
             list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
             if ($resp == '+OK') {
                 $msg['uidl'] = $uidl;
@@ -1745,7 +1762,7 @@ class Telaen extends Telaen_core
                 $header = $msg['header'];
             } elseif (!$msg['islocal']) {
                 $this->_mail_send_command('TOP ' . $id . ' 0');
-                $buffer = $this->_mail_get_line();
+                $buffer = $this->_mail_read_response();
 
                 /* if any problem with the server, stop the function */
                 if ($this->mail_nok_resp($buffer)) {
@@ -1753,7 +1770,7 @@ class Telaen extends Telaen_core
                     return $msg['uidl'];
                 }
                 while (!feof($this->_mail_connection)) {
-                    $buffer = $this->_mail_get_line();
+                    $buffer = $this->_mail_read_response();
                     if (chop($buffer) == '.') {
                         break;
                     }
