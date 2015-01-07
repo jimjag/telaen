@@ -51,7 +51,7 @@ class Session
     public function Kill()
     {
         unset($this->sid);
-        unset($this->ss[$this->id]));
+        unset($this->ss[$this->id]);
         @session_destroy();
         $_SESSION = array();
     }
