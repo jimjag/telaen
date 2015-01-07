@@ -13,14 +13,16 @@ Telaen is a GPL'ed software developed by
 class Session
 {
     private $ss = null;
-    private $index = 'default';
+    private $id = 'default';
+    private $sid = null;
 
     /**
      * Session creator
      */
-    public function __construct()
+    public function __construct($sid)
     {
         $this->ss = &$_SESSION;
+        $this->sid = $sid;
     }
 
     /**
@@ -28,14 +30,13 @@ class Session
      * @param  string $index key of Session superglobal
      * @return string
      */
-    public function &Load($index = 'default')
+    public function &Load($id = 'default')
     {
-        $this->index = $index;
-        if (!is_array($this->ss[$this->index])) {
-            $this->ss[$this->index] = array();
+        $this->id = $id;
+        if (!is_array($this->ss[$this->id])) {
+            $this->ss[$this->id] = array();
         }
-
-        return $this->ss[$this->index];
+        return $this->ss[$this->id];
     }
 
     /**
@@ -44,11 +45,13 @@ class Session
      */
     public function Save(&$array2save)
     {
-        $this->ss[$this->index] = $array2save;
+        $this->ss[$this->id] = $array2save;
     }
 
     public function Kill()
     {
+        unset($this->sid);
+        unset($this->ss[$this->id]));
         @session_destroy();
         $_SESSION = array();
     }

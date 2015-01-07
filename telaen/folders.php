@@ -16,21 +16,13 @@ require './inc/init.php';
 extract(Telaen::pull_from_array($_GET, array('empty', 'goback', 'nameto', 'mailto'), 's'));
 extract(Telaen::pull_from_array($_POST, array('newfolder'), 's'));
 
-// server check
-if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
-
-if ($TLN->valid_folder_name($newfolder, true)
-    && !file_exists($TLN->userfolder.$newfolder)) {
+if ($TLN->valid_folder_name($newfolder)) {
     $TLN->mail_create_box($newfolder);
 }
 
 // check and delete the especified folder: system folders can not be deleted
-if ($TLN->valid_folder_name($delfolder, true)
-    && (strpos($delfolder, '..') === false)) {
-    if ($TLN->mail_delete_box($delfolder)) {
-        unset($mbox['headers'][$delfolder]);
-    }
+if ($TLN->valid_folder_name($delfolder)) {
+    $TLN->mail_delete_box($delfolder);
 }
 
 require './folder_list.php';
@@ -48,7 +40,6 @@ if (isset($empty)) {
         if ($TLN->prefs['send_to_trash']) {
             unset($mbox['headers']['trash']);
         }
-        $UserMbox->Save($mbox);
     }
     if (isset($goback)) {
         $TLN->redirect_and_exit('process.php?folder='.urlencode($folder)."");

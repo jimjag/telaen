@@ -25,7 +25,7 @@ require_once './inc/preinit.php';
 /* @var $TLN Telaen */
 $TLN = new Telaen();
 
-$AuthSession = new Session();
+$AuthSession = new Session($sid);
 $auth = &$AuthSession->Load('telaen_sess');
 $TLN->AuthSession = $AuthSession;
 if ($auth['auth'] && isset($auth['config'])) {
@@ -60,7 +60,7 @@ if ((I_AM_TELAEN != 'process.php') && (!$auth['auth'])) {
 }
 
 if (!isset($auth['start'])) {
-    $auth['start'] = time();
+    $auth['start'] = $TLN->now();;
 }
 $start = $auth['start'];
 
@@ -91,39 +91,14 @@ if (!isset($TLN->config['webmail_title'])) {
 }
 $smarty->assign('webmailTitle', $TLN->config['webmail_title']);
 
-if (isset($f_pass)) {
-    $f_pass = stripslashes($f_pass);
-}
-if (isset($f_pass) && strlen($f_pass) > 0) {
+if (!empty($f_pass)) {
     /*
      * We are logging in...
      */
-    if (isset($f_email)) {
-        $f_email = stripslashes($f_email);
-    }
-    if (isset($f_user)) {
-        $f_user = stripslashes($f_user);
-    }
-    if (isset($f_server)) {
-        $f_server = stripslashes($f_server);
-    }
-
-    if (isset($f_email) && !PHPMailer::validateAddress($f_email)) {
-        $f_email = 'unknown@example.com';
-    }
-    if (isset($f_user) && !PHPMailer::validateAddress("$f_user@example.com")) {
-        $f_user = 'unknown';
-    }
-
-    if (!isset($f_user)) {
-        $f_user = 'unknown';
-    }
-    if (!isset($f_email)) {
-        $f_email = 'unknown@example.com';
-    }
     switch (strtoupper($TLN->config['mail_server_type'])) {
 
     case 'DETECT':
+        if (!isset($f_email)) $TLN->redirect_and_exit('index.php');
         $f_server = strtolower(getenv('HTTP_HOST'));
         $f_server = str_replace($TLN->config['mail_detect_remove'], "", $f_server);
         $f_server = $TLN->config['mail_detect_prefix'].$f_server;
@@ -139,10 +114,10 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         $f_protocol = $TLN->config['mail_detect_protocol'];
         $f_port = $TLN->config['mail_detect_port'];
         $f_prefix = $TLN->config['mail_detect_folder_prefix'];
-
         break;
 
     case 'ONE-FOR-EACH':
+        if (!isset($f_user)) $TLN->redirect_and_exit('index.php');
         $domain = trim($TLN->config['mail_servers'][$six]['domain']);
         $f_email = $f_user.'@'.$domain;
         $f_server = $TLN->config['mail_servers'][$six]['server'];
@@ -158,6 +133,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         break;
 
     case 'ONE-FOR-ALL':
+        if (!isset($f_email)) $TLN->redirect_and_exit('index.php');
         if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
             $f_user = trim($regs[1]);
             $domain = trim($regs[2]);
@@ -169,7 +145,6 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
         $f_protocol = $TLN->config['default_protocol'];
         $f_port = $TLN->config['default_port'];
         $f_prefix = $TLN->config['default_folder_prefix'];
-
         break;
     }
 
@@ -177,7 +152,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     $TLN->mail_email = $auth['email'] = $f_email = trim(stripslashes($f_email));
     $TLN->mail_user = $auth['user'] = $f_user = trim(stripslashes($f_user));
     $TLN->mail_pass = $auth['pass'] = $f_pass = stripslashes($f_pass);
-    $TLN->mail_server = $auth['server'] = $f_server = stripslashes($f_server);
+    $TLN->mail_server = $auth['server'] = $f_server = trim(stripslashes($f_server));
 
     $TLN->mail_port = $auth['port'] = $f_port;
     $TLN->mail_protocol = $auth['protocol'] = (strcasecmp($f_protocol, 'pop3') ? IMAP : POP3);
@@ -203,7 +178,7 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     }
     $quota_limit = Telaen::bkmg2bytes($quota_limit); // ensure bytes
     $auth['quota_limit'] = $quota_limit;
-} elseif ($auth['auth'] && ((time() - $start) < ($TLN->config['idle_timeout'] * 60))) {
+} elseif ($auth['auth'] && (($TLN->now() - $start) < ($TLN->config['idle_timeout'] * 60))) {
     $TLN->mail_user = $f_user = $auth['user'];
     $TLN->mail_pass = $f_pass = $auth['pass'];
     $TLN->mail_server = $f_server = $auth['server'];
@@ -216,15 +191,17 @@ if (isset($f_pass) && strlen($f_pass) > 0) {
     $TLN->capabilities = $auth['capabilities'];
 
     $quota_limit = $auth['quota_limit'];
+} elseif ($auth['auth']) {
+    $AuthSession->Kill();
+    $TLN->redirect_and_exit('index.php?err=4');
 } else {
-    // session expired
-        $TLN->redirect_and_exit('index.php?err=4');
+    $TLN->redirect_and_exit('index.php');
 }
 
 /*
  * Everything after this assumes an authenticated user
  */
-$auth['start'] = time();
+$auth['start'] = $TLN->now();
 
 $TLN->userfolder = $TLN->config['temporary_directory'].preg_replace('/[^a-z0-9\._-]/', '_', strtolower($f_user)).'_'.strtolower($f_server).'/';
 

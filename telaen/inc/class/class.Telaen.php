@@ -17,7 +17,7 @@ class Telaen extends Telaen_core
     protected $_respnum        = 0;
     protected $_respstr        = '';
     protected $_version        = 2;
-    protected $_now = 0;
+    private $_now = 0;
 
     const RESP_OK =   0;
     const RESP_NO =  -1;
@@ -38,6 +38,14 @@ class Telaen extends Telaen_core
         $this->_now = time();  // Save expensive calls to time()
     }
 
+    /**
+     * Save on time() calls
+     * @return int time()
+     */
+    public function now()
+    {
+        return $this->_now;
+    }
     /**
      * Convert string from UTF7 (IMAP) to UTF8
      * @param string $string String to convert
@@ -82,7 +90,7 @@ class Telaen extends Telaen_core
      * @param boolean $checksys Check against system folders?
      * @return boolean
      */
-    public function valid_folder_name($name, $checksys = false)
+    public function valid_folder_name($name, $checksys = true)
     {
         if ($name == '') {
             return false;
@@ -1852,8 +1860,8 @@ class Telaen extends Telaen_core
      */
     public function iam_stale($folder)
     {
-        if ($this->tdb->folders[$folder]['refreshed'] < ($this->now - $this->prefs['refresh_time'])) {
-            $this->tdb->folders[$folder]['refreshed'] = $this->now;
+        if ($this->tdb->folders[$folder]['refreshed'] < ($this->_now - $this->prefs['refresh_time'])) {
+            $this->tdb->folders[$folder]['refreshed'] = $this->_now;
             $this->tdb->update_folder_field($folder, 'refreshed');
             return true;
         } else {

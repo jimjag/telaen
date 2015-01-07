@@ -1677,14 +1677,13 @@ ENDOFREDIRECT;
      */
     static public function pull_from_array(&$whofrom, $my_vars = array(), $cast = 'string')
     {
-        $reta = array();
+        $whoto = array();
         foreach ($my_vars as $to_pull) {
             if (isset($whofrom[$to_pull])) {
-                $reta[$to_pull] = self::caster($whofrom[$to_pull], $cast);
+                $whoto[$to_pull] = self::caster($whofrom[$to_pull], $cast);
             }
         }
-
-        return $reta;
+        return $whoto;
     }
 
     /**

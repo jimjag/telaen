@@ -53,9 +53,9 @@ if (!$messagecount
                     $TLN->mail_move_msg($headers[$i], $aval_folders);
                     $expunge = true;
                 } elseif ($decision == 'mark') {
-                    $TLN->mail_set_flag($headers[$i], '\\SEEN', '+');
+                    $TLN->mail_set_flag($headers[$i], $TLN->flags['seen'], '+');
                 } elseif ($decision == 'unmark') {
-                    $TLN->mail_set_flag($headers[$i], '\\SEEN', '-');
+                    $TLN->mail_set_flag($headers[$i], $TLN->flags['seen'], '-');
                 }
             }
         }
