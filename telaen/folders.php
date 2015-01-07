@@ -75,7 +75,7 @@ $pcounter = 0;
 // Reset these arrays because are used on previous included funcs!!
 $system = array();
 $personal = array();
-
+$totalused = 0;
 foreach ($boxes as $entry => $f) {
     // prep vars
     if (!$TLN->is_system_folder($entry)) {
@@ -110,7 +110,7 @@ foreach ($boxes as $entry => $f) {
         $personal[$pcounter]['emptylink'] = 'folders.php?empty='.urlencode($entry).'&folder='.urlencode($entry)."";
         $pcounter++;
     }
-    $totalused += $boxsize;
+    $totalused += $f['size'];
 }
 
 $AuthSession->Save($auth);
