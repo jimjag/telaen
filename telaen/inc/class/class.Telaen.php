@@ -237,7 +237,7 @@ class Telaen extends Telaen_core
 
             return true;
         }
-        $this->trigger_error("attempt to send command w/o connection: $output", __FUNCTION__);
+        $this->trigger_error("attempt to send command w/o connection: ".var_dump(cmds), __FUNCTION__);
         return false;
     }
 
@@ -1882,7 +1882,7 @@ class Telaen extends Telaen_core
     {
         $boxes = $this->mail_list_boxes();
         foreach ($boxes as $folder => $f) {
-            if ($this->iam_stale($folder['name'])) {
+            if ($this->iam_stale($folder)) {
                 $this->mail_list_msgs($folder);
             }
         }
