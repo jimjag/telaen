@@ -160,7 +160,7 @@ class LocalMbox extends SQLite3
         $tmp = array();
         $thelist = array();
         if ($fields == "*") {
-            $tmp = keys($schema);
+            $tmp = array_keys($schema);
         } elseif (is_array($fields) && count($fields) > 0) {
             foreach ($fields as $key) {
                 $key = trim($key);
@@ -374,7 +374,7 @@ class LocalMbox extends SQLite3
             /*
              * Now add it to the folders tables and array
              */
-            if ($this->do_insert('folders', $folder, keys($this->fschema))) {
+            if ($this->do_insert('folders', $folder, array_keys($this->fschema))) {
                 $this->folders[$folder['name']] = $folder;
                 return true;
             } else {
@@ -539,7 +539,7 @@ class LocalMbox extends SQLite3
      */
     public function new_message($msg)
     {
-        $thelist = $this->create_uplist(keys($msg), $this->mschema);
+        $thelist = $this->create_uplist(array_keys($msg), $this->mschema);
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }

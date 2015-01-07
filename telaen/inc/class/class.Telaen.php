@@ -300,7 +300,7 @@ class Telaen extends Telaen_core
                 return false;
             }
         }
-        if ($this->capabilities['AUTH=CRAM-MD5']) {
+        if (isset($this->capabilities['AUTH=CRAM-MD5'])) {
             $this->_mail_send_command('AUTHENTICATE CRAM-MD5');
             $buffer = $this->_mail_read_response();
             if ($buffer[0] == '+') {
@@ -336,8 +336,7 @@ class Telaen extends Telaen_core
                 return false;
             }
         }
-        // APOP login mode, more secure
-        if ($this->capabilities['CRAM-MD5']) {
+        if (isset($this->capabilities['CRAM-MD5'])) {
             $this->_mail_send_command('AUTH CRAM-MD5');
             $buffer = $this->_mail_read_response();
             if ($buffer[0] == '+') {
