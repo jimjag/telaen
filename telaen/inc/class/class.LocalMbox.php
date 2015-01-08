@@ -453,9 +453,9 @@ class LocalMbox extends SQLite3
             $this->_log[] = "bad folder name: $folder";
             return false;
         }
-        $stmt = $this->prepare("UPDATE folders SET \"$field\"=:$field WHERE name=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET \"$field\"=:val WHERE name=:name ;");
         $stmt->bindValue(':name', $folder);
-        $stmt->bindValue(":$field", $this->folders[$folder][$field]);
+        $stmt->bindValue(":val", $this->folders[$folder][$field]);
         if ($stmt->execute()) {
             $stmt->close();
             return true;
