@@ -47,7 +47,7 @@ class Telaen_core
     public $tdb = null;
     public $AuthSession = "";
     public $status = STATUS_OK;
-    public $flags = array(
+    public $flags = [
         'seen' =>' \\SEEN',
         'deleted' => '\\DELETED',
         'answered' => '\\ANSWERED',
@@ -55,7 +55,7 @@ class Telaen_core
         'flagged' => '\\FLAGGED',
         'recent' => '\\RECENT',
         'forwarded' => '\\FORWARDED'
-    );
+    ];
 
     // internal
     protected $_msgbody = "";
@@ -391,7 +391,9 @@ class Telaen_core
         for ($i = 0;$i<count($headers);$i++) {
             // If current header starts with a TAB or is not very standard,
             // attach it at the prev header
-            if (($headers[$i][0] == "\t") || !preg_match('|^[A-Z0-9a-z_-]+:|', trim($headers[$i]))) {
+            if (empty($headers[$i])) {
+                continue;
+            } elseif (($headers[$i][0] == "\t") || !preg_match('|^[A-Z0-9a-z_-]+:|', trim($headers[$i]))) {
                 $decodedheaders[$lasthead] .= ' '.trim($headers[$i]);
             } else { // otherwise extract the header
                 $thisheader = trim($headers[$i]);
@@ -1638,7 +1640,7 @@ ENDOFREDIRECT;
     {
         return preg_replace_callback(
             '|([^[:print:]])|',
-            function ($match) { return '_x{'.dechex(ord($match[1])).'}'; },
+            function ($match) { return '_x'.dechex(ord($match[1])); },
             $str
         );
     }
