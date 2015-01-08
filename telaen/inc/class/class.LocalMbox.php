@@ -108,7 +108,7 @@ class LocalMbox extends SQLite3
             $this->init_tables();
         }
         $this->get_folders();
-        register_shutdown_function(array($this, '__destruct'));
+        register_shutdown_function([$this, '__destruct']);
     }
 
     public function __destruct()
@@ -137,7 +137,7 @@ class LocalMbox extends SQLite3
         $ok = $this->_ok;
         $message = $this->_log;
         foreach($this->_system_folders as $foo) {
-            $this->new_folder(array('name' => $foo, 'dirname' => $foo), true);
+            $this->new_folder(['name' => $foo, 'dirname' => $foo]);
         }
         /*
          * We may have folders from previous installs. Check
@@ -147,7 +147,7 @@ class LocalMbox extends SQLite3
                 && $entry != '..'
                 && $entry != '.'
                 && !isset($this->folders[$entry])) {
-                $this->new_folder(array('name' => $entry, 'dirname' => $entry), true);
+                $this->new_folder(['name' => $entry, 'dirname' => $entry]);
             }
         }
         $this->_ok = $this->_ok && $ok;
@@ -169,7 +169,7 @@ class LocalMbox extends SQLite3
      * @param array $schema
      * @return array
      */
-    private function create_uplist($fields, $schema, $ignore=array())
+    private function create_uplist($fields, $schema, $ignore=[])
     {
         $tmp = [];
         $thelist = [];

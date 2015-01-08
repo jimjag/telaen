@@ -36,7 +36,7 @@ class Telaen extends Telaen_core
         $this->_tnef = new TNEF();
         mb_internal_encoding("UTF-8");
         $this->_now = time();  // Save expensive calls to time()
-        register_shutdown_function(array($this, '__destruct'));
+        register_shutdown_function([$this, '__destruct']);
     }
 
     public function __destruct()
