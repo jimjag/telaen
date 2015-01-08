@@ -328,7 +328,7 @@ class LocalMbox extends SQLite3
         $result = $stmt->execute($query);
         $this->attachments = [];
         if ($result) {
-            while ($foo = $result->fetchArray()) {
+            while ($foo = $result->fetchArray(SQLITE3_ASSOC)) {
                 $this->attachments[] = $foo;
             }
         } else {
@@ -351,7 +351,7 @@ class LocalMbox extends SQLite3
         $this->folders = [];
         $this->allfolders = [];
         if ($result) {
-            while ($foo = $result->fetchArray()) {
+            while ($foo = $result->fetchArray(SQLITE3_ASSOC)) {
                 $this->allfolders[$foo['name']] = $foo;
                 if (!in_array($foo['name'], $this->_invisible)) {
                     $this->folders[$foo['name']] = $foo;
@@ -387,6 +387,11 @@ class LocalMbox extends SQLite3
         }
         $table = self::_get_folder_name($folder['name']);
         $folder['table_name'] = $table;
+        foreach (['size', 'count', 'unread'] as $f) {
+            if (empty($folder[$f])) {
+                $folder[$f] = 0;
+            }
+        }
         /*
          * First create the new table for the new folder (to hold the messages)
          */
@@ -518,7 +523,7 @@ class LocalMbox extends SQLite3
             $this->m_idx = [];
             $index = 0;
             if ($result) {
-                while ($foo = $result->fetchArray()) {
+                while ($foo = $result->fetchArray(SQLITE3_ASSOC)) {
                     foreach($this->m_serialize as $k) {
                         $foo[$k] = unserialize($foo[$k]);
                     }
@@ -550,7 +555,7 @@ class LocalMbox extends SQLite3
             $query = sprintf('SELECT COUNT(*) FROM %s;', self::_get_folder_name($folder));
             $result = $this->query($query);
             if ($result) {
-                $count = $result->fetchArray();
+                $count = $result->fetchArray(SQLITE3_NUM);
                 return $count[0];
             } else {
                 $this->_ok = false;
