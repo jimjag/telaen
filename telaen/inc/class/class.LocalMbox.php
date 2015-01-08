@@ -114,6 +114,7 @@ class LocalMbox extends SQLite3
     public function __destruct()
     {
         $this->sync_messages();
+        $this->close();
     }
 
     /**
@@ -132,10 +133,9 @@ class LocalMbox extends SQLite3
         $table = $this->create_query('attachs', $this->aschema);
         if ($this->exec($table) == false) {
             $this->_ok = false;
-            $this->_log .= "bad exec: $table";
+            $this->_log = "bad exec: $table";
         }
         $ok = $this->_ok;
-        $message = $this->_log;
         foreach($this->_system_folders as $foo) {
             $this->new_folder(['name' => $foo, 'dirname' => $foo]);
         }
@@ -151,7 +151,6 @@ class LocalMbox extends SQLite3
             }
         }
         $this->_ok = $this->_ok && $ok;
-        $this->_log[] = $message;
         return $this->_ok;
     }
 
@@ -388,7 +387,7 @@ class LocalMbox extends SQLite3
         $table = self::_get_folder_name($folder['name']);
         $folder['table_name'] = $table;
         foreach (['size', 'count', 'unread'] as $f) {
-            if (empty($folder[$f])) {
+            if (!isset($folder[$f])) {
                 $folder[$f] = 0;
             }
         }
