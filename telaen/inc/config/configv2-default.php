@@ -10,29 +10,29 @@
 
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
-########################################################################
+/*
 # Load in the version information
-########################################################################
-########################################################################
+*/
+/*
 # Location of the Smarty template installation.
 # We bundle Smarty, but you can point it to your
 # locally installed version if you like. Not matter
 # what, make sure Smarty is not located under your
 # public web-space. DO NOT USE THE BUNDLED VERSION
 # AS IS WITHOUT MOVING IT TO A SAFE LOCATION
-########################################################################
+*/
 
 $config['SMARTY_DIR'] = '/some/place/safe/smarty/';
 
-########################################################################
+/*
 # Read in $systemNews (not required)
-########################################################################
+*/
 
 @include('./inc/news/news.system.php');
 $config['systemNews'] = $systemNews;
 
 
-########################################################################
+/*
 # _ Please attention _:
 # The temporary files will be stored on this folder
 # For security reasons, do not use web-shared folders
@@ -45,17 +45,17 @@ $config['systemNews'] = $systemNews;
 # for all operating systems, INCLUDING Windows
 # For maximum security, do NOT place this under your web site
 # folder !
-########################################################################
+*/
 
 $config['temporary_directory'] = './ChangeMe!/';
 
-########################################################################
+/*
 # Title prefix for webmail pages
-########################################################################
+*/
 
 $config['webmail_title'] = 'Telaen Webmail';
 
-########################################################################
+/*
 # Quota handling:
 # Telaen allows for quotas to be set that limit the maximum size
 # for all stored files and folders. For backwards compatibility
@@ -71,22 +71,24 @@ $config['webmail_title'] = 'Telaen Webmail';
 # A value of 0|"" means no limit (and no quotas)
 # NOTE: All values are in *bytes*, but you can append k|M|G for
 #       kilobytes, Megabytes and Gigabytes
-########################################################################
+*/
 
 $config['quota_limit'] = '4096k';  //  in KB, eg. 4096 Kb = 4MB
-##
+
+/*
 # Example of quota limit array. All users from @example.com
 # will have a quota of 4megs!, except jim@example.com who will
 # have his quota disabled. Recall that this array is scanned
 # sequentially... If the order was reverse, then jim would
 # also be set to 4M as well!
-##
+
 $config['quota_limits'] = array(
     array('/@example.com/i', '4M'),
     array('/jim@example.com/i', 0)
 );
+*/
 
-########################################################################
+/*
 # Mail server type:
 # allowed values:
 # 'DETECT' -------->	Guess the pop3 server. If you are running Telaen
@@ -119,14 +121,13 @@ $config['quota_limits'] = array(
 # pop3 -> 110
 # imap -> 143
 # IMAP is fastest, but all functions of Telaen work with POP3
-########################################################################
-########################################################################
+*/
 
 $config['mail_server_type'] = 'ONE-FOR-ALL';
 
-########################################################################
+/*
 # TYPE: DETECT
-########################################################################
+*/
 
 $config['mail_detect_remove'] = 'www.';
 $config['mail_detect_prefix'] = 'mail.';
@@ -135,7 +136,7 @@ $config['mail_detect_protocol'] = 'pop3';
 $config['mail_detect_port'] = '110';
 $config['mail_detect_folder_prefix'] = "";
 
-########################################################################
+/*
 # TYPE: ONE-FOR-EACH
 # Each domain have your own mail server
 #
@@ -143,7 +144,7 @@ $config['mail_detect_folder_prefix'] = "";
 # mail server. Can be useful if you want to type only your mail name
 # instead of a complete mail address at login.
 # (example: frank instead of frank@example.com)
-########################################################################
+/*
 
 
 $config['mail_servers'][] = array(
@@ -168,10 +169,10 @@ $config['mail_servers'][] = array(
 
  */
 
-########################################################################
+/*
 # TYPE: ONE-FOR-ALL
 # the default mail server for all domains
-########################################################################
+*/
 
 $config['default_mail_server'] = 'localhost';
 $config['one_for_all_login_type'] = '%user%@%domain%';
@@ -179,16 +180,16 @@ $config['default_protocol'] = 'pop3';
 $config['default_port'] = '110';
 $config['default_folder_prefix'] = "";
 
-########################################################################
+/*
 # In some POP3 servers, if you send a 'RETR' command, your
 # message will be automatically deleted :(
 # This option prevents this inconvenience. Assumes
 # that the server supports TOP
-########################################################################
+*/
 
 $config['mail_use_top'] = false;
 
-########################################################################
+/*
 # These enable you to overrule the automatic detection of
 # the following POP3 server capabilities: PIPELINING, ATOP,
 # UIDL and APOP. If you find that Telaen is using one of these
@@ -208,7 +209,7 @@ $config['mail_use_top'] = false;
 # APOP: provides an encrypted login system instead of clean password sent.
 #
 # NOTE: You can add your own as needed, eg: STARTTLS, etc
-########################################################################
+#
 ##
 ## COMPATIBILITY NOTE:
 ##   Telaen 1.x used:
@@ -223,10 +224,11 @@ $config['mail_use_top'] = false;
 #	'PIPELINING' = 0;
 #	'APOP' = 0;
 #);
+*/
 
 $config['capa_override'] = array();
 
-########################################################################
+/*
 # Specify mail transport type
 # Allowed values:
 # 'smtp'       - To use an external SMTP Server specified in
@@ -234,11 +236,11 @@ $config['capa_override'] = array();
 # 'sendmail'   - To use server's sendmail-compatible MTA. If you need to
 #                change the path, see $config['phpmailer_sendmail'] below
 # 'mail'       - To use default PHP's mail() function
-########################################################################
+*/
 
 $config['mailer_type'] = 'mail';
 
-########################################################################
+/*
 # Telaen uses PHPMailer for many mailing functions. Sometimes we
 # need or want to override PHPMailer defaults for the path to
 # 'sendmail' (see the 'sendmail' mail transport type, above)
@@ -250,39 +252,39 @@ $config['mailer_type'] = 'mail';
 # Examples:
 #    $config['phpmailer_sendmail'] = '/usr/lib/sendmail';
 #    $config['phpmailer_timeout'] = 60;
-########################################################################
+*/
 
 $config['phpmailer_sendmail'] = "";
 $config['phpmailer_timeout'] = 0;
 
-########################################################################
+/*
 # Your local SMTP Server (alias or IP) such as 'smtp.yourdomain.com'
 # eg. 'server1;server2;server3'   -> specify main and backup server
-########################################################################
+*/
 
 $config['smtp_server'] = 'localhost';  #YOU NEED CHANGE IT !!
 
-########################################################################
+/*
 # Use SMTP password (AUTH LOGIN type)
-########################################################################
+*/
 
 $config['use_password_for_smtp'] = true;
 
-########################################################################
+/*
 # Use static authentication info for smtp.
 # Always the same user and password will be used for smtp authentication
 # instead of user data.
 # Useful when you have multiple incoming domains but a single SMTP
 # Note: You need to enable also the option above.
-########################################################################
+*/
 
 $config['smtp_static_auth'] = false;
 $config['smtp_static_user'] = 'yourSmtpUser';
 $config['smtp_static_password'] = 'yourSmtpPasswd';
 
-########################################################################
+/*
 # Add a 'footer' to sent mails
-########################################################################
+*/
 
 $config['footer'] = "
 
@@ -290,55 +292,55 @@ ________________________________________________________________
 Message sent using Telaen
 ";
 
-########################################################################
+/*
 # Redirect new users to the preferences page at first login
-########################################################################
+*/
 
 $config['check_first_login'] = true;
 
-########################################################################
+/*
 # Turn this option to 'true' if you want allow users send messages using
 # they 'Reply to' preference's option as your 'From' header, otherwise
 # the From field will be the email wich the users log in
-########################################################################
+*/
 
 $config['allow_modified_from'] = true;
 
-########################################################################
+/*
 # Order setting
-########################################################################
+*/
 
 $config['default_sortby'] = 'date';
 $config['default_sortorder'] = 'DESC';
 
-########################################################################
+/*
 # Default preferences...
-########################################################################
+*/
 
 $config['default_preferences'] = array(
-    'send_to_trash_default' => true,    # send deleted messages to trash
-    'st_only_read_default' => true,     # only read messages, otherwise, delete it
-    'save_to_sent_default' => true,     # send sent messages to sent
-    'empty_trash_default' => true,      # empty trash on logout
-    'empty_spam_default' => true,       # empty spam on logout
-    'unmark_read_default' => false,     # Unmark READ messages as read (appear as unread) ??????
-    'sortby_default' => 'date',         # allowed: 'attach','subject','fromname','date','size'
-    'sortorder_default' => 'DESC',      # allowed: 'ASC','DESC'
-    'rpp_default' => 20,                # records per page (messages), alowed: 10,20,30,40,50,100,200
-    'add_signature_default' => false,   # add the signature by default
-    'require_receipt_default' => false, # require read receipt by default
-    'signature_default' => "",          # a default signature for all users, use text only, with multiple lines if needed
-    'timezone_default' => '-0000',      # timezone, format (+|-)HHMM (H=hours, M=minutes)
-    'display_images_default' => true,   # automatically show attached images in the body of message
-    'editor_mode_default' => 'text',    # use 'html' or 'text' to set default editor.
-    'refresh_time_default' => 10,       # after this time, the message list will be refreshed, in minutes
-    'keep_on_server_default' => false,  # Keep Email on server after reading/downloading
-                                        # For IMAP, this should be true usually, since people
-                                        # don't download their email locally; for POP, this
-                                        # this should be false, UNLESS Telaen is NOT their
-                                        # only email client for their account
-    'spamlevel_default' => 0,           # Sensitivity to X-Spam-Level detection
-    ########################################################################
+    'send_to_trash_default' => true,    // send deleted messages to trash
+    'st_only_read_default' => true,     // only read messages, otherwise, delete it
+    'save_to_sent_default' => true,     // send sent messages to sent
+    'empty_trash_default' => true,      // empty trash on logout
+    'empty_spam_default' => true,       // empty spam on logout
+    'unmark_read_default' => false,     // Unmark READ messages as read (appear as unread) ??????
+    'sortby_default' => 'date',         // allowed: 'attach','subject','fromname','date','size'
+    'sortorder_default' => 'DESC',      // allowed: 'ASC','DESC'
+    'rpp_default' => 20,                // records per page (messages), alowed: 10,20,30,40,50,100,200
+    'add_signature_default' => false,   // add the signature by default
+    'require_receipt_default' => false, // require read receipt by default
+    'signature_default' => "",          // a default signature for all users, use text only, with multiple lines if needed
+    'timezone_default' => '-0000',      // timezone, format (+|-)HHMM (H=hours, M=minutes)
+    'display_images_default' => true,   // automatically show attached images in the body of message
+    'editor_mode_default' => 'text',    // use 'html' or 'text' to set default editor.
+    'refresh_time_default' => 10,       // after this time, the message list will be refreshed, in minutes
+    'keep_on_server_default' => false,  // Keep Email on server after reading/downloading
+                                        // For IMAP, this should be true usually, since people
+                                        // don't download their email locally; for POP, this
+                                        // this should be false, UNLESS Telaen is NOT their
+                                        // only email client for their account
+    'spamlevel_default' => 0,           // Sensitivity to X-Spam-Level detection
+/*
     # Control whether the SysAdmin can overrule (set system-wide) the
     # 'unmark_read' and 'keep_on_server' settings. Can have one of
     # 3 values:
@@ -346,118 +348,114 @@ $config['default_preferences'] = array(
     #    false: Force as false; user cannot change
     #    true: Force as true; user cannot change
     #    <whatever>: Force as whatever (int/string/etc...)
-    ########################################################################
+*/
 
     'force_unmark_read' => false,
     'force_keep_on_server' => null
 );
 
-########################################################################
+/*
 # Sometimes, we cannot figure out the correct timezone for the
 # server, as compared to the user. So setting the user timezone
 # to, for example '-0500' when the server is '-0800' results
 # in the mail time display being 3 hours off. To adjust for
 # this, set $config['server_timezone_offset'] to the correct
 # adjustment (that is, '-0300') . For most sites, this isn't required.
-########################################################################
+*/
 
 $config['server_timezone_offset'] = '-0000';
 
-########################################################################
+/*
 # Control whether redirects will use META REFRESH and Javascript
 # to send the person to the required page ('true') or whether to
 # use the HTTP Location header and do a 'real' HTTP redirect. Some
 # browsers have issues setting Cookies during HTTP redirects, in
 # those cases, setting the below to 'true' will help.
-########################################################################
+*/
 
 $config['redirects_use_meta'] = false;
 
-########################################################################
+/*
 # Control whether redirects refer to an absolute or relative URL.
 # HTTP redirects are required to be absolute, but in some environments
 # Telaen has a hard time determining what the absolute URL should be.
 # Setting the below to 'true' avoids this.
-########################################################################
+*/
 
 $config['redirects_are_relative'] = false;
 
-########################################################################
-# Enable mailserver debug :)
-# false - disabled
-# true - enabled with servers communications
-########################################################################
-
-$config['enable_debug'] = false;
-
-########################################################################
+/*
 # Show debug infos on smtp communications
-########################################################################
+*/
 
 $config['smtp_debug'] = false;
 
-########################################################################
+/*
 # When $config['log_errors'] is enabled, PHP errors are printed to
 #      $config['log_fname'].
+# When $config['log_debug'] is enabled, Telaen debug statements are
+#      printed to $config['log_fname'].
 # $config['log_fname'] is relative to $config['temporary_directory']
 #      unless $config['log_fname'] is an absolute path
-########################################################################
+*/
 
 $config['log_errors'] = true;
+$config['log_debug'] = false;
 $config['log_fname'] = 'telaen_error.log';
 
-########################################################################
+/*
 # Enable visualization of HTML messages
 # *This option afect only incoming messages, the  HTML editor
 # for new messages (compose page) is automatically activated
 # when the client's browser support it (IE5 or higher)
-########################################################################
+*/
 
 $config['allow_html'] = true;
 
-########################################################################
+/*
 # FILTER javascript (and others scripts) from incoming messages
 ##  $config['allow_script'] is DEPRECIATED and exists for backward
 ##  compatibility only. Instead, use $config['sanitize_html']
-########################################################################
+*/
 
 $config['allow_scripts'] = false;
 $config['sanitize_html'] = true;
 
 
-########################################################################
+/*
 # Block external images.
 # If an HTML message have external images, it will be
 # blocked. This feature prevent spam tracking
-########################################################################
+*/
 
 $config['block_external_images'] = false;
 
-########################################################################
+/*
 # Session timeout for inactivity
-########################################################################
+*/
 
 $config['idle_timeout'] = 20; //minutes
 
-########################################################################
+/*
 # Control the default permissions of files and directories created
 # by Telaen. For max security, the value of $config['default_umask']
 # should be 0077 and $config['dirperm'] should be 0700, but in shared
 # environments, this may need to be adjusted
-########################################################################
+*/
 
 $config['default_umask'] = 0077;
 $config['dirperm'] = 0700;
 
-########################################################################
+/*
 # Language & themes settings
-########################################################################
+*/
 
 $config['allow_user_change_theme'] = true; //allow users select theme
 $config['default_theme'] = 'default'; //key of theme, starting with zero
 $config['allow_user_change_language'] = true; //allow users select language
 $config['default_language'] = 'en_US'; //key of language
-# Themes
+
+// Themes
 $config['themes'] = array(
     'default' => 'Telaen Default',
     'hungi.mozilla' => 'Hungi Mozilla',
@@ -465,8 +463,8 @@ $config['themes'] = array(
     'jagumail' => 'jaguMail'
 );
 
-# Languages
-## This is extremely ambitious
+// Languages
+// This is extremely ambitious
 
 $config['languages'] = array(
     'afr' => 'Afrikaans',
