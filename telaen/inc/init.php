@@ -157,12 +157,11 @@ if (!empty($f_pass)) {
     $TLN->mail_prefix = $auth['folder_prefix'] = $f_prefix;
 
     if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
+    $TLN->mail_get_capa();
+    $auth['capabilities'] = $TLN->capabilities;
     if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
     $auth['auth'] = true;
     $initial_login = true;
-
-    $TLN->mail_get_capa();
-    $auth['capabilities'] = $TLN->capabilities;
 
     $refr = 1;
 
