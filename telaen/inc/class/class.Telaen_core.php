@@ -73,12 +73,17 @@ class Telaen_core
      * @param  string $str
      * @return void
      */
-    static public function debug_msg($str, $caller = "")
+    public function debug_msg($str, $caller = "")
     {
-        echo "<!-- $caller:\n";
-        echo preg_replace('|-->|', '__>', self::safe_print($str));
-        echo "\n-->\n";
-        @flush();
+        if ($this->config['enable_debug']) {
+            echo "<!-- $caller:\n";
+            echo preg_replace('|-->|', '__>', self::safe_print($str));
+            echo "\n-->\n";
+            @flush();
+        }
+        if ($this->config['log_debug']) {
+            \trigger_error($str);
+        }
     }
 
     /**
@@ -88,9 +93,7 @@ class Telaen_core
      */
     public function trigger_error($str, $caller = "")
     {
-        if ($this->config['enable_debug']) {
-            $this->debug_msg($str, $caller);
-        }
+        $this->debug_msg($str, $caller);
         if ($this->config['log_errors']) {
             \trigger_error($str);
         }

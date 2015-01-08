@@ -205,9 +205,7 @@ class Telaen extends Telaen_core
     {
         $buffer = @fgets($this->_mail_connection, 8192);
         $buffer = preg_replace('|\r?\n|', "\r\n", $buffer);
-        if ($this->config['enable_debug']) {
-            $this->debug_msg($buffer, __FUNCTION__);
-        }
+        $this->debug_msg($buffer, __FUNCTION__);
 
         return $buffer;
     }
@@ -215,34 +213,44 @@ class Telaen extends Telaen_core
     /*
      * Send the supplied command to the mail server. Auto-
      * appends the required EOL chars to the command.
-     * The provided parameter is either the command string to
-     * send or an array of command strings that will be
-     * sent one after another in order.
+     * The provided parameter is the command string to
+     * send.
      */
-    protected function _mail_send_command($cmds, $addTag = true)
+    protected function _mail_send_command($cmd, $addTag = true)
     {
+        $cmd = trim($cmd).$this->CRLF;
+        $output = (preg_match('/^(PASS|LOGIN)/', $cmd, $regs)) ? $regs[1]." ****" : $cmd;
         if ($this->mail_connected()) {
-            if (!is_array($cmds)) {
-                $cmds = (array) $cmds;
+            $regs = array();
+            if ($this->mail_protocol == IMAP && $addTag) {
+                $cmd = $this->_get_sid(true).' '.$cmd;
+                $output = $this->_get_sid().' '.$output;
             }
-            foreach ($cmds as $cmd) {
-                $regs = array();
-                $cmd = trim($cmd).$this->CRLF;
-                $output = (preg_match('/^(PASS|LOGIN)/', $cmd, $regs)) ? $regs[1]." ****" : $cmd;
-                if ($this->mail_protocol == IMAP && $addTag) {
-                    $cmd = $this->_get_sid(true).' '.$cmd;
-                    $output = $this->_get_sid().' '.$output;
-                }
-                fwrite($this->_mail_connection, $cmd);
-                if ($this->config['enable_debug']) {
-                    $this->debug_msg($output, __FUNCTION__);
-                }
-            }
-
+            fwrite($this->_mail_connection, $cmd);
+            $this->debug_msg($output, __FUNCTION__);
             return true;
         }
-        $this->trigger_error("attempt to send command w/o connection: ".var_dump(cmds), __FUNCTION__);
+        $this->trigger_error("attempt to send command w/o connection: $output", __FUNCTION__);
         return false;
+    }
+
+    /*
+     * Send the supplied command to the mail server. Auto-
+     * appends the required EOL chars to the command.
+     * The provided parameter is an array of command strings
+     * that will be sent one after another in order.
+     */
+    protected function _mail_send_commands($cmds, $addTag = true)
+    {
+        if (!is_array($cmds)) {
+            $cmds = (array) $cmds;
+        }
+        foreach ($cmds as $cmd) {
+            if (!$this->_mail_send_command($cmd, $addTag)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
