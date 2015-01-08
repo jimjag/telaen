@@ -235,7 +235,7 @@ class LocalMbox extends SQLite3
         $query = $query.implode(', ', $temp).' WHERE ';
         $temp = [];
         foreach ($where as $key => $val) {
-            $temp[] = "$key=?";
+            $temp[] = "\"$key\"=?";
         }
         $query = $query.implode(' AND ', $temp).' ;';
         $stmt = $this->prepare($query);
@@ -453,7 +453,7 @@ class LocalMbox extends SQLite3
             $this->_log[] = "bad folder name: $folder";
             return false;
         }
-        $stmt = $this->prepare("UPDATE folders SET $field=:$field WHERE name=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET '$field'=:$field WHERE name=:name ;");
         $stmt->bindValue(':name', $folder);
         $stmt->bindValue(":$field", $this->folders[$folder][$field]);
         if ($stmt->execute()) {
@@ -484,7 +484,7 @@ class LocalMbox extends SQLite3
      */
     public function upgrade_version($folder, $version)
     {
-        $stmt = $this->prepare("UPDATE folders SET 'version'=:version WHERE 'name'=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET 'version'=:version WHERE name=:name ;");
         $stmt->bindValue(':name', $folder);
         $this->folders[$folder]['version'] = $version;
         $stmt->bindValue(':version', $this->folders[$folder]['version']);
