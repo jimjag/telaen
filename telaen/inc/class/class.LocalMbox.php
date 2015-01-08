@@ -230,7 +230,7 @@ class LocalMbox extends SQLite3
         $query = sprintf('UPDATE %s SET ', $table);
         $temp = [];
         foreach ($list as $key) {
-            $temp[] = " '$key'=?";
+            $temp[] = " \"$key\"=?";
         }
         $query = $query.implode(', ', $temp).' WHERE ';
         $temp = [];
@@ -269,11 +269,11 @@ class LocalMbox extends SQLite3
      */
     private function do_insert($table, $data, $list)
     {
-        $query = sprintf('INSERT into %s (\'', $table);
-        $query .= implode("','",$list);
-        $query .= '\') VALUES (?';
+        $query = sprintf('INSERT into %s ("', $table);
+        $query .= implode('","',$list);
+        $query .= '") VALUES (?';
         reset($list);
-        $query .= str_repeat(",?", count($list) - 1);
+        $query .= str_repeat(',?', count($list) - 1);
         $query .= ');';
         $stmt = $this->prepare($query);
         reset($list);
@@ -453,7 +453,7 @@ class LocalMbox extends SQLite3
             $this->_log[] = "bad folder name: $folder";
             return false;
         }
-        $stmt = $this->prepare("UPDATE folders SET '$field'=:$field WHERE name=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET \"$field\"=:$field WHERE name=:name ;");
         $stmt->bindValue(':name', $folder);
         $stmt->bindValue(":$field", $this->folders[$folder][$field]);
         if ($stmt->execute()) {
@@ -484,7 +484,7 @@ class LocalMbox extends SQLite3
      */
     public function upgrade_version($folder, $version)
     {
-        $stmt = $this->prepare("UPDATE folders SET 'version'=:version WHERE name=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET version=:version WHERE name=:name ;");
         $stmt->bindValue(':name', $folder);
         $this->folders[$folder]['version'] = $version;
         $stmt->bindValue(':version', $this->folders[$folder]['version']);
