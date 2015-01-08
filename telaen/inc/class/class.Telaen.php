@@ -9,10 +9,10 @@ class Telaen extends Telaen_core
     public $CRLF           = "\r\n";
     public $dirperm        = 0700;        // recall affected by umask value
     public $greeting       = '';        // Internally used for store initial IMAP/POP3 greeting message
-    public $capabilities   = array();
+    public $capabilities   = [];
 
     protected $_current_folder = '';
-    protected $_spamregex      = array("^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*");
+    protected $_spamregex      = ["^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*"];
     protected $_serverurl      = '';
     protected $_respnum        = 0;
     protected $_respstr        = '';
@@ -144,7 +144,7 @@ class Telaen extends Telaen_core
     protected function _mail_parse_resp($string = null)
     {
         $resp = self::RESP_UNKNOWN;
-        $match = array();
+        $match = [];
         if ($string == null) $string = $this->_mail_read_response();
         if ($this->mail_protocol == IMAP) {
             if (preg_match('|^\s*'.$this->_get_sid().'\s+(OK|NO|BAD|BYE)(.*)$|i', trim($string), $match)) {
@@ -336,7 +336,7 @@ class Telaen extends Telaen_core
      */
     protected function _mail_auth_pop()
     {
-        $tokens = array();
+        $tokens = [];
         if ($this->upgrade_tls) {
             if (!isset($this->capabilities['STLS'])) {
                 $this->trigger_error("Want STLS but server doesn't support it.", __FUNCTION__);
@@ -514,7 +514,7 @@ class Telaen extends Telaen_core
 
             // Update globally
             $msg['header'] = $msgheader;
-            $this->tdb->m_delta[] = array($msg, array('header'));
+            $this->tdb->m_delta[] = [$msg, ['header']];
 
             $msgcontent = "$msgheader\r\n\r\n$msgbody";
 
@@ -568,7 +568,7 @@ class Telaen extends Telaen_core
 
             // Update globally
             $msg['header'] = $header;
-            $this->tdb->m_delta[] = array($msg, array('header'));
+            $this->tdb->m_delta[] = [$msg, ['header']];
 
             $msgcontent = "$header\r\n\r\n$body";
 
@@ -925,7 +925,7 @@ class Telaen extends Telaen_core
 
     protected function _mail_list_msgs_imap($boxname = 'inbox')
     {
-        $msg = array();
+        $msg = [];
         $header = '';
         $curmsg = $size = $flags = $uid = '';
         $counter = 0;
@@ -981,7 +981,7 @@ class Telaen extends Telaen_core
                         $new++;
                     }
                     unset($msg);
-                    $msg = array();
+                    $msg = [];
                     $header = '';
                     $counter++;
                 }
@@ -995,7 +995,7 @@ class Telaen extends Telaen_core
     {
         // $this->havespam = '';
 
-        $msg = array();
+        $msg = [];
         $counter = 0;
         $new = 0;
         /*
@@ -1015,8 +1015,8 @@ class Telaen extends Telaen_core
              * If we have these, then we can populate and add the message
              * immediately, otherwise, we need to do so one at a time
              */
-            $uids = array();
-            $nouids = array();
+            $uids = [];
+            $nouids = [];
             if ($this->capabilities['UIDL']) {
                 $this->mail_send_command("UIDL");
                 $buffer = $this->mail_get_line();
@@ -1065,7 +1065,7 @@ class Telaen extends Telaen_core
                         $new++;
                     }
                     unset($msg);
-                    $msg = array();
+                    $msg = [];
                     $counter++;
                 }
             }
@@ -1092,7 +1092,7 @@ class Telaen extends Telaen_core
             $fullpath = $folder.'/'.$entry;
             if (is_file($fullpath)) {
                 unset($msg);
-                $msg = array();
+                $msg = [];
                 $thisheader = $this->_get_headers_from_cache($fullpath);
                 $msg['id'] = $i + 1;
                 $msg['mnum'] = $i;
@@ -1165,7 +1165,7 @@ class Telaen extends Telaen_core
         $i = 0;
         $j = 0;
         $y = 0;
-        $spamcopy = array();
+        $spamcopy = [];
         $mcount = count($messages);
         $end_pos = $start + $wcount;
         /*
@@ -1260,7 +1260,7 @@ class Telaen extends Telaen_core
             $fname = self::md5($fname);
         }
         $fullpath = trim($this->userfolder."$boxname/".$fname[0].'/'.$fname.'.eml');
-        return array($fullpath, $fname);
+        return [$fullpath, $fname];
     }
 
     protected function _mail_list_boxes_imap($boxname = '')
@@ -1274,7 +1274,7 @@ class Telaen extends Telaen_core
             }
             /* loop throught the list and split the parts */
             while (!$this->mail_ok_resp($buffer)) {
-                $tmp = array();
+                $tmp = [];
                 preg_match('|\\((.*)\\)|', $buffer, $regs);
                 $flags = $regs[1];
                 $tmp['flags'] = $flags;
@@ -1323,7 +1323,7 @@ class Telaen extends Telaen_core
     public function mail_select_box($boxname = 'inbox')
     {
         /* this function is used only for IMAP servers */
-        $boxinfo = array();
+        $boxinfo = [];
         if ($this->mail_protocol == IMAP) {
             $original_name = preg_replace('|"(.*)"|', "$1", $boxname);
             $boxname = self::utf8_7($this->fix_prefix($original_name, 1));
@@ -1569,7 +1569,7 @@ class Telaen extends Telaen_core
 
             $strFlags = trim(strtoupper($msg['flags']));
 
-            $flags = array();
+            $flags = [];
             if (!empty($strFlags)) {
                 $flags = explode(' ', $strFlags);
             }
@@ -1598,7 +1598,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->tdb->m_delta[] = array ($msg, array('header', 'flags'));
+            $this->tdb->m_delta[] = [$msg, ['header', 'flags']];
 
             $email = "$header\r\n\r\n$body";
 
@@ -1683,7 +1683,7 @@ class Telaen extends Telaen_core
      */
     protected function _mail_capa_pop3()
     {
-        $capa = array();
+        $capa = [];
         $this->_mail_send_command('CAPA', ['autolog' => false]);
         $buffer = $this->_mail_read_response();
         if ($this->mail_ok_resp($buffer)) {
@@ -1703,7 +1703,7 @@ class Telaen extends Telaen_core
 
     protected function _mail_capa_imap()
     {
-        $capa = array();
+        $capa = [];
         $this->_mail_send_command('cp01 CAPABILITY', ['autolog' => false, 'addtag' => false]);
         while (!self::_feof($this->_mail_connection)) {
             $buffer = trim($this->_mail_read_response());

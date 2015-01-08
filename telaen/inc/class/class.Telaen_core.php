@@ -38,9 +38,9 @@ class Telaen_core
     public $idle_timeout = 10;
     public $displayimages = false;
     public $save_temp_attachs = true;
-    public $current_level = array();
-    public $config = array();
-    public $prefs = array();
+    public $current_level = [];
+    public $config = [];
+    public $prefs = [];
     public $appversion = "2.0.0-dev";
     public $appname = 'Telaen Webmail';
     /* @var $tdb LocalMbox */
@@ -59,7 +59,7 @@ class Telaen_core
 
     // internal
     protected $_msgbody = "";
-    protected $_content = array();
+    protected $_content = [];
     private $_sid = 0;
     protected $_tnef = "";
     protected $_mail_connection = null;
@@ -386,7 +386,7 @@ class Telaen_core
     protected function _decode_header($header)
     {
         $headers = explode("\r\n", $header);
-        $decodedheaders = array();
+        $decodedheaders = [];
         $lasthead = "";
         for ($i = 0;$i<count($headers);$i++) {
             // If current header starts with a TAB or is not very standard,
@@ -423,14 +423,14 @@ class Telaen_core
      */
     public function get_names($strmail)
     {
-        $ARfrom = array();
+        $ARfrom = [];
         $strmail = stripslashes(preg_replace('/(\t|\r|\n)/', "", $strmail));
 
         if (trim($strmail) == "") {
             return $ARfrom;
         }
 
-        $armail = array();
+        $armail = [];
         $counter = 0;
         $inthechar = 0;
         $chartosplit = ',;';
@@ -508,7 +508,7 @@ class Telaen_core
      */
     protected function _get_first_of_names($strmail)
     {
-        $ARfrom = array();
+        $ARfrom = [];
         $strmail = stripslashes(preg_replace('/(\t|\r|\n)/', "", $strmail));
 
         if (trim($strmail) == "") {
@@ -724,7 +724,7 @@ class Telaen_core
                 $this->_extract_tnef($body, $boundary, $i);
             } elseif ($is_download) {
                 $thisattach = $this->_build_attach($header, $body, $boundary, $i);
-                $tree = array_merge((array) $this->current_level, array($thisattach['index']));
+                $tree = array_merge((array) $this->current_level, [$thisattach['index']]);
                 $thisfile = 'download.php?folder='.urlencode($folder).'&ix='.$ix.'&attach='.join(',', $tree);
                 $filename = $thisattach['filename'];
                 $cid = preg_replace('|<(.*)\\>|', "$1", $cid);
@@ -734,7 +734,7 @@ class Telaen_core
                     $this->_msgbody = preg_replace('/'.preg_quote($cid, '/').'/i', $thisfile, $this->_msgbody);
                 } elseif ($this->displayimages) {
                     $ext = strtolower(substr($thisattach['name'], -4));
-                    $allowed_ext = array('.gif','.jpg','.png','.bmp');
+                    $allowed_ext = ['.gif','.jpg','.png','.bmp'];
                     if (in_array($ext, $allowed_ext)) {
                         $this->_add_body("<img src=\"$thisfile\" alt=\"\">");
                     }
@@ -1013,7 +1013,7 @@ class Telaen_core
      */
     public function get_mail_info($header, $first = 'ALL')
     {
-        $myarray = array();
+        $myarray = [];
         $headers = $this->_decode_header($header);
 
         if (!empty($headers['message-id'])) {
@@ -1153,7 +1153,7 @@ class Telaen_core
      */
     public function Decode(&$email)
     {
-        $this->_content = array();
+        $this->_content = [];
         $memail = $this->fetch_structure($email);
         $this->_msgbody = "";
         $body = $memail['body'];
@@ -1186,7 +1186,7 @@ class Telaen_core
      */
     public function fetch_structure(&$email)
     {
-        $ARemail = array();
+        $ARemail = [];
         $separator = "\n\r\n";
         $header = trim(substr($email, 0, strpos($email, $separator)));
         $bodypos = strlen($header)+strlen($separator);
@@ -1585,7 +1585,7 @@ ENDOFREDIRECT;
     public function load_config($cfile='configv2', $merge=true)
     {
         $cfile = self::fs_safe_file($cfile);
-        $config = array();
+        $config = [];
         @include_once './inc/config/'.$cfile.'-default.php';
         @include_once './inc/config/'.$cfile.'.php';
         if ($merge) $this->config = array_merge($this->config, $config);
@@ -1678,9 +1678,9 @@ ENDOFREDIRECT;
      * @param mixed $cast Type to cast ELement to
      * @return array
      */
-    static public function pull_from_array(&$whofrom, $my_vars = array(), $cast = 'string')
+    static public function pull_from_array(&$whofrom, $my_vars = [], $cast = 'string')
     {
-        $whoto = array();
+        $whoto = [];
         foreach ($my_vars as $to_pull) {
             if (isset($whofrom[$to_pull])) {
                 $whoto[$to_pull] = self::caster($whofrom[$to_pull], $cast);
