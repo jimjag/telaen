@@ -1752,7 +1752,7 @@ ENDOFREDIRECT;
 
     static protected function _feof($handle)
      {
-         if (!$handle || !is_resource($handle)) {
+         if (!isset($handle) || !is_resource($handle)) {
              return true;
          }
          return feof($handle);
