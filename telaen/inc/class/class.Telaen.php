@@ -1902,6 +1902,15 @@ class Telaen extends Telaen_core
         if ($this->tdb->folders[$folder]['refreshed'] < ($this->_now - $this->prefs['refresh_time'])) {
             $this->tdb->folders[$folder]['refreshed'] = $this->_now;
             $this->tdb->update_folder_field($folder, 'refreshed');
+            /*
+             * Now is as good a time as whenever to poll the DB log
+             */
+            list($ok, $log) = $this->tdb->status();
+            if (!$ok) {
+                foreach ($log as $l) {
+                    $this->debug_msg($l, __FUNCTION__);
+                }
+            }
             return true;
         } else {
             return false;

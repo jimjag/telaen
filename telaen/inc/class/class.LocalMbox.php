@@ -73,8 +73,6 @@ class LocalMbox extends SQLite3
     public $m_idx = array(); // Hash: key = uidl; value = index to this->messages
     public $allfolders = array(); // All folders/directors
     public $udatafolder = '_infos';
-    public $ok = true;
-    public $message = '';
     public $m_delta = array(); // Hash: key = message; value = array() of field changes
     /*
      * Some message elements are arrays, that need to be serialize when storing and
@@ -87,6 +85,8 @@ class LocalMbox extends SQLite3
     private $_invisible = array('_attachments', '_infos');
     private $_indb = array(); /* Hash: key = uidl; value = is it in the DB? */
     private $_folder_need_sync = array();
+    private $_ok = true;
+    private $_log = array();
 
     /**
      * Construct: open DB and create tables if needed
@@ -95,7 +95,7 @@ class LocalMbox extends SQLite3
      */
     public function __construct($userfolder, $force_new = false)
     {
-        $this->allok();
+        $this->_allok();
         $this->userfolder = $userfolder;
         $this->force_new = $force_new;
         $this->db = $userfolder.$this->udatafolder.'/mboxes.db';
@@ -122,20 +122,20 @@ class LocalMbox extends SQLite3
      */
     public function init_tables()
     {
-        $this->allok();
+        $this->_allok();
         $table = $this->create_query('folders', $this->fschema);
         if ($this->exec($table) == false) {
-            $this->ok = false;
-            $this->message .= "bad exec: $table";
+            $this->_ok = false;
+            $this->_log[] = "bad exec: $table";
         }
 
         $table = $this->create_query('attachs', $this->aschema);
         if ($this->exec($table) == false) {
-            $this->ok = false;
-            $this->message .= "bad exec: $table";
+            $this->_ok = false;
+            $this->_log .= "bad exec: $table";
         }
-        $ok = $this->ok;
-        $message = $this->message;
+        $ok = $this->_ok;
+        $message = $this->_log;
         foreach($this->_system_folders as $foo) {
             $this->new_folder(array('name' => $foo, 'dirname' => $foo), true);
         }
@@ -150,9 +150,9 @@ class LocalMbox extends SQLite3
                 $this->new_folder(array('name' => $entry, 'dirname' => $entry), true);
             }
         }
-        $this->ok = $this->ok && $ok;
-        $this->message .= $message;
-        return $this->ok;
+        $this->_ok = $this->_ok && $ok;
+        $this->_log[] = $message;
+        return $this->_ok;
     }
 
     /**
@@ -183,8 +183,8 @@ class LocalMbox extends SQLite3
                 }
             }
         } elseif (!is_array($fields)) {
-            $this->ok = false;
-            $this->message = "bad param fields";
+            $this->_ok = false;
+            $this->_log[] = "bad param fields";
             return null;
         } else {
             /* nothing to do... is this OK or an error? */
@@ -196,8 +196,8 @@ class LocalMbox extends SQLite3
             }
         }
         if (!count($thelist)) {
-            $this->ok = false;
-            $this->message = "no valid fields";
+            $this->_ok = false;
+            $this->_log[] = "no valid fields";
             return null;
         }
         return $thelist;
@@ -253,8 +253,8 @@ class LocalMbox extends SQLite3
         $result = $stmt->execute();
         $stmt->close();
         if (!$result) {
-            $this->ok = false;
-            $this->message .= "execute failed: $query";
+            $this->_ok = false;
+            $this->_log[] = "execute failed: $query";
         }
         return $result;
     }
@@ -284,8 +284,8 @@ class LocalMbox extends SQLite3
             $i++;
         }
         if (!$stmt->execute()) {
-            $this->ok = false;
-            $this->message .= "execute failed: $query";
+            $this->_ok = false;
+            $this->_log[] = "execute failed: $query";
             return false;
         }
         $stmt->close();
@@ -306,10 +306,11 @@ class LocalMbox extends SQLite3
         return sprintf('folder_%s', self::getKey($folder));
     }
 
-    private function allok()
+    private function _allok()
     {
-        $this->ok = true;
-        $this->message = '';
+        $this->_ok = true;
+        unset($this->_log);
+        $this->_log = array();
     }
     /**
      * Get list of all available attachments
@@ -331,8 +332,8 @@ class LocalMbox extends SQLite3
                 $this->attachments[] = $foo;
             }
         } else {
-            $this->ok = false;
-            $this->message = "query failed: $query";
+            $this->_ok = false;
+            $this->_log[] = "query failed: $query";
         }
         $stmt->close();
         return $this->attachments;
@@ -357,8 +358,8 @@ class LocalMbox extends SQLite3
                 }
             }
         } else {
-            $this->ok = false;
-            $this->message = "query failed: $query";
+            $this->_ok = false;
+            $this->_log[] = "query failed: $query";
         }
         return $this->folders;
     }
@@ -398,11 +399,11 @@ class LocalMbox extends SQLite3
                 $this->folders[$folder['name']] = $folder;
                 return true;
             } else {
-                $this->message .= "do_insert exec failed:";
+                $this->_log[] = "do_insert exec failed:";
             }
         }
-        $this->ok = false;
-        $this->message .= "new_folder exec failed: $query";
+        $this->_ok = false;
+        $this->_log[] = "new_folder exec failed: $query";
         return false;
 
     }
@@ -424,8 +425,8 @@ class LocalMbox extends SQLite3
                 return true;
             }
         }
-        $this->ok = false;
-        $this->message = "exec failed: $query";
+        $this->_ok = false;
+        $this->_log[] = "exec failed: $query";
         return false;
 
     }
@@ -439,13 +440,13 @@ class LocalMbox extends SQLite3
     public function update_folder_field($folder, $field)
     {
         if (!isset($this->fschema[$field])) {
-            $this->ok = false;
-            $this->message .= "bad field: $field";
+            $this->_ok = false;
+            $this->_log[] = "bad field: $field";
             return false;
         }
         if (!isset($this->folders[$folder])) {
-            $this->ok = false;
-            $this->message .= "bad folder name: $folder";
+            $this->_ok = false;
+            $this->_log[] = "bad folder name: $folder";
             return false;
         }
         $stmt = $this->prepare("UPDATE folders SET '$field'=:$field WHERE 'name'=:name ;");
@@ -455,8 +456,8 @@ class LocalMbox extends SQLite3
             $stmt->close();
             return true;
         } else {
-            $this->ok = false;
-            $this->message .= "execute failed: ";
+            $this->_ok = false;
+            $this->_log[] = "execute failed: ";
             return false;
         }
     }
@@ -487,8 +488,8 @@ class LocalMbox extends SQLite3
             $stmt->close();
             return true;
         } else {
-            $this->ok = false;
-            $this->message .= "execute failed: ";
+            $this->_ok = false;
+            $this->_log[] = "execute failed: ";
             return false;
         }
     }
@@ -529,8 +530,8 @@ class LocalMbox extends SQLite3
                 }
                 $this->active_folder = $folder;
             } else {
-                $this->ok = false;
-                $this->message = "query failed: $query";
+                $this->_ok = false;
+                $this->_log[] = "query failed: $query";
             }
         }
         return $this->messages;
@@ -552,8 +553,8 @@ class LocalMbox extends SQLite3
                 $count = $result->fetchArray();
                 return $count[0];
             } else {
-                $this->ok = false;
-                $this->message = "query failed: $query";
+                $this->_ok = false;
+                $this->_log[] = "query failed: $query";
                 return null;
             }
         }
@@ -712,7 +713,7 @@ class LocalMbox extends SQLite3
         if (!is_array($msgs)) {
             $msgs = (array)$msgs;
         }
-        $this->ok = true;
+        $this->_ok = true;
         $query = sprintf("DELETE FROM %s WHERE 'uidl'=:uidl ;", self::_get_folder_name($msgs[0]['folder']));
         $isactive = ($msgs[0]['folder'] == $this->active_folder ? true : false);
         $stmt = $this->prepare($query);
@@ -723,8 +724,8 @@ class LocalMbox extends SQLite3
                 $idxs[$idx] = $idx;
                 $stmt->bindValue(':uidl', $msg['uidl']);
                 if (!$stmt->execute($query)) {
-                    $this->ok = false;
-                    $this->message = "exec failed: $query";
+                    $this->_ok = false;
+                    $this->_log[] = "exec failed: $query";
                 } else {
                     $idxs[$idx] = $idx;
                 }
@@ -744,7 +745,7 @@ class LocalMbox extends SQLite3
         }
         $stmt->close();
         $this->$_folder_need_sync = true;
-        return $this->ok;
+        return $this->_ok;
     }
 
     public function add_attachment($folder, $msg)
@@ -779,4 +780,10 @@ class LocalMbox extends SQLite3
         return $total_size;
     }
 
+    public function status()
+    {
+        $ret = array($this->_ok, $this->_log);
+        $this->_allok();
+        return $ret;
+    }
 }
