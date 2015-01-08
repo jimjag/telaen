@@ -102,8 +102,8 @@ class LocalMbox extends SQLite3
         $exists = is_writable($this->db);
         parent::__construct($this->db, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
         //$this->open($this->db, SQLITE3_OPEN_READWRITE| SQLITE3_OPEN_CREATE);
-        $this->query('PRAGMA synchronous = 0;');
-        $this->query('PRAGMA journal_mode = MEMORY;');
+        // $this->query('PRAGMA synchronous = 0;');
+        // $this->query('PRAGMA journal_mode = MEMORY;');
         if (!$exists || $force_new) {
             $this->init_tables();
         }
