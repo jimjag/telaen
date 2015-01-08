@@ -108,6 +108,12 @@ class LocalMbox extends SQLite3
             $this->init_tables();
         }
         $this->get_folders();
+        register_shutdown_function(array($this, '__destruct'));
+    }
+
+    public function __destruct()
+    {
+        $this->sync_messages();
     }
 
     /**
@@ -681,6 +687,7 @@ class LocalMbox extends SQLite3
                     }
                 }
             }
+            unset($this->m_delta);
             $this->m_delta = array();
         }
         if (count($this->_folder_need_sync) > 0) {

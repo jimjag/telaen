@@ -36,6 +36,12 @@ class Telaen extends Telaen_core
         $this->_tnef = new TNEF();
         mb_internal_encoding("UTF-8");
         $this->_now = time();  // Save expensive calls to time()
+        register_shutdown_function(array($this, '__destruct'));
+    }
+
+    public function __destruct()
+    {
+        $this->mail_disconnect();
     }
 
     /**
@@ -108,17 +114,15 @@ class Telaen extends Telaen_core
      */
     public function mail_connected()
     {
-        if (!empty($this->_mail_connection)) {
+        if (isset($this->_mail_connection) && is_resource($this->_mail_connection)) {
             $sock_status = @socket_get_status($this->_mail_connection);
             if ($sock_status['eof']) {
                 @fclose($this->_mail_connection);
                 $this->_mail_connection = null;
                 return false;
             }
-
             return true;
         }
-
         return false;
     }
 
