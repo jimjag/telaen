@@ -1746,23 +1746,15 @@ class Telaen extends Telaen_core
         }
     }
 
-    /*
-     * Get the UIDL for the specified message. If none
-     * provided, then return an array of all UIDLs for
-     * all non-deleted messages, indexed by message id.
+    /**
+     * Get the UIDL for the specified message.
      *
      * If the server does not provide for the UIDL command,
      * then we generate our own by reading the message
      * headers and using the Message-ID, Date and Subject
-     * headers to craft one. If passed a message header
-     * hash, we grab them from there, otherwise we need
-     * to query the server. Note that the provided array
-     * only makes sense for single UIDL lookups.
-     */
-    /**
-     * Get UIDL of specific message or of all
+     * headers to craft one.
      * @param  array  $msg
-     * @return Mixed
+     * @return string
      */
     protected function _mail_get_uidl(&$msg)
     {
@@ -1808,7 +1800,7 @@ class Telaen extends Telaen_core
                     $header = $email['header'];
                     $msg['header'] = $header;
                 } else {
-                    $msg['uidl'] = self::md5(uniqid(''));
+                    $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']).uniqid(''));
                     return $msg['uidl'];
                 }
             }
@@ -1821,7 +1813,7 @@ class Telaen extends Telaen_core
             $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']));
         }
         if (empty($msg['uidl'])) {
-            $msg['uidl'] = self::md5(uniqid(''));
+            $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']).uniqid(''));
         }
         return $msg['uidl'];
     }
