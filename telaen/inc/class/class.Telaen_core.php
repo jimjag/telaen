@@ -69,6 +69,16 @@ class Telaen_core
     /*******************/
 
     /**
+     * Create LocalMbox instance
+     * @param  boolean $force_new Force creation of DB file
+     * @return void
+     */
+    public function init_tdb($force_new = false)
+    {
+        $this->tdb = new LocalMbox($this->userfolder, $force_new);
+    }
+
+    /**
      * Print out debugging info as HTML comments
      * @param  string $str
      * @return void
