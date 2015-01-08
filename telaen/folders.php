@@ -13,10 +13,6 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
-$auth['auth'] = true;
-
 extract(Telaen::pull_from_array($_GET, array('empty', 'goback', 'nameto', 'mailto'), 's'));
 extract(Telaen::pull_from_array($_POST, array('newfolder'), 's'));
 
