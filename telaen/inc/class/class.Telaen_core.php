@@ -394,7 +394,9 @@ class Telaen_core
             if (empty($headers[$i])) {
                 continue;
             } elseif (($headers[$i][0] == "\t") || !preg_match('|^[A-Z0-9a-z_-]+:|', trim($headers[$i]))) {
-                $decodedheaders[$lasthead] .= ' '.trim($headers[$i]);
+                if (!empty($lasthead)) {
+                    $decodedheaders[$lasthead] .= ' ' . trim($headers[$i]);
+                }
             } else { // otherwise extract the header
                 $thisheader = trim($headers[$i]);
                 if (!empty($thisheader)) {
