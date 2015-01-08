@@ -302,7 +302,7 @@ class Telaen extends Telaen_core
     protected function _mail_auth_imap()
     {
         if ($this->upgrade_tls) {
-            if (!isset($this->capabilities['STARTTLS'])) {
+            if (empty($this->capabilities['STARTTLS'])) {
                 $this->trigger_error("Want STARTTLS but server doesn't support it.", __FUNCTION__);
                 return false;
             }
@@ -314,7 +314,7 @@ class Telaen extends Telaen_core
                 return false;
             }
         }
-        if (isset($this->capabilities['AUTH=CRAM-MD5'])) {
+        if (!empty($this->capabilities['AUTH=CRAM-MD5'])) {
             $this->_mail_send_command('AUTHENTICATE CRAM-MD5', ['autolog' => false]);
             $buffer = $this->_mail_read_response();
             if ($buffer[0] == '+') {
@@ -338,7 +338,7 @@ class Telaen extends Telaen_core
     {
         $tokens = [];
         if ($this->upgrade_tls) {
-            if (!isset($this->capabilities['STLS'])) {
+            if (empty($this->capabilities['STLS'])) {
                 $this->trigger_error("Want STLS but server doesn't support it.", __FUNCTION__);
                 return false;
             }
@@ -350,7 +350,7 @@ class Telaen extends Telaen_core
                 return false;
             }
         }
-        if (isset($this->capabilities['CRAM-MD5'])) {
+        if (!empty($this->capabilities['CRAM-MD5'])) {
             $this->_mail_send_command('AUTH CRAM-MD5', ['autolog' => false]);
             $buffer = $this->_mail_read_response();
             if ($buffer[0] == '+') {
@@ -362,7 +362,7 @@ class Telaen extends Telaen_core
                 $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Trying others.", __FUNCTION__);
             }
         }
-        if (isset($this->capabilities['APOP']) && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
+        if (!empty($this->capabilities['APOP']) && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
             $this->_mail_send_command('APOP '.$this->mail_user.' '.self::md5($tokens[0].$this->mail_pass), ['autolog' => false]);
         }
         // Classic login mode
