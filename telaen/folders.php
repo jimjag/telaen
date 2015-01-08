@@ -14,7 +14,7 @@ require './inc/init.php';
 /* @var $TLN Telaen */
 
 if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
+if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
 $auth['auth'] = true;
 
 extract(Telaen::pull_from_array($_GET, array('empty', 'goback', 'nameto', 'mailto'), 's'));

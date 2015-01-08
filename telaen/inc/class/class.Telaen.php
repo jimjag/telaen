@@ -216,23 +216,28 @@ class Telaen extends Telaen_core
      * The provided parameter is the command string to
      * send.
      */
-    protected function _mail_send_command($cmd, $addTag = true)
+    protected function _mail_send_command($cmd, $opt=['autolog' => true, 'addtag' => true])
     {
         $cmd = trim($cmd).$this->CRLF;
         $output = (preg_match('/^(PASS|LOGIN)/', $cmd, $regs)) ? $regs[1]." ****" : $cmd;
-        if ($this->mail_connected()) {
-            $regs = array();
-            if ($this->mail_protocol == IMAP && $addTag) {
-                $cmd = $this->_get_sid(true).' '.$cmd;
-                $output = $this->_get_sid().' '.$output;
-            }
-            fwrite($this->_mail_connection, $cmd);
-            $this->debug_msg($output, __FUNCTION__);
-            return true;
+        if (!$this->mail_connect()) {
+            $this->trigger_error("could not connect to server", __FUNCTION__);
+            return false;
         }
-        $this->trigger_error("attempt to send command w/o connection: $output", __FUNCTION__);
-        return false;
-    }
+        if (!$this->_authenticated && $opt['autolog']) {
+            if (!$this->mail_auth()) {
+                $this->trigger_error("could not auto_login: $output", __FUNCTION__);
+                return false;
+            }
+        }
+        if ($this->mail_protocol == IMAP && $opt['addtag']) {
+            $cmd = $this->_get_sid(true).' '.$cmd;
+            $output = $this->_get_sid().' '.$output;
+        }
+        fwrite($this->_mail_connection, $cmd);
+        $this->debug_msg($output, __FUNCTION__);
+        return true;
+}
 
     /*
      * Send the supplied command to the mail server. Auto-
@@ -240,13 +245,13 @@ class Telaen extends Telaen_core
      * The provided parameter is an array of command strings
      * that will be sent one after another in order.
      */
-    protected function _mail_send_commands($cmds, $addTag = true)
+    protected function _mail_send_commands($cmds, $opt=['autolog' => true, 'addtag' => true])
     {
         if (!is_array($cmds)) {
             $cmds = (array) $cmds;
         }
         foreach ($cmds as $cmd) {
-            if (!$this->_mail_send_command($cmd, $addTag)) {
+            if (!$this->_mail_send_command($cmd, $opt)) {
                 return false;
             }
         }
@@ -271,14 +276,11 @@ class Telaen extends Telaen_core
                 $this->greeting = $this->_mail_read_response();
                 if ($this->mail_ok_resp($this->greeting)) {
                     return true;
-                } else {
-                    return false;
                 }
             }
             $this->trigger_error("Cannot connect to: $this->_serverurl", __FUNCTION__);
             return false;
         }
-
         return true;
     }
 
@@ -304,7 +306,7 @@ class Telaen extends Telaen_core
                 $this->trigger_error("Want STARTTLS but server doesn't support it.", __FUNCTION__);
                 return false;
             }
-            $this->_mail_send_command('STARTTLS');
+            $this->_mail_send_command('STARTTLS', ['autolog' => false]);
             if ($this->mail_ok_resp()) {
                 stream_socket_enable_crypto($this->_mail_connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             } else {
@@ -313,18 +315,18 @@ class Telaen extends Telaen_core
             }
         }
         if (isset($this->capabilities['AUTH=CRAM-MD5'])) {
-            $this->_mail_send_command('AUTHENTICATE CRAM-MD5');
+            $this->_mail_send_command('AUTHENTICATE CRAM-MD5', ['autolog' => false]);
             $buffer = $this->_mail_read_response();
             if ($buffer[0] == '+') {
                 $challenge = base64_decode(substr($buffer, 2));
                 $challenge_response = $this->_crammd5_response($challenge);
-                $this->_mail_send_command($challenge_response, false);
+                $this->_mail_send_command($challenge_response, ['autolog' => false, 'addtag' => false]);
                 return $this->mail_ok_resp();
             } else {
                 $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Downgrading to LOGIN", __FUNCTION__);
             }
         }
-        $this->_mail_send_command('LOGIN '.$this->mail_user.' '.$this->mail_pass);
+        $this->_mail_send_command('LOGIN '.$this->mail_user.' '.$this->mail_pass, ['autolog' => false]);
         return $this->mail_ok_resp();
     }
 
@@ -340,7 +342,7 @@ class Telaen extends Telaen_core
                 $this->trigger_error("Want STLS but server doesn't support it.", __FUNCTION__);
                 return false;
             }
-            $this->_mail_send_command('STLS');
+            $this->_mail_send_command('STLS', ['autolog' => false]);
             if ($this->mail_ok_resp()) {
                 stream_socket_enable_crypto($this->_mail_connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             } else {
@@ -349,26 +351,26 @@ class Telaen extends Telaen_core
             }
         }
         if (isset($this->capabilities['CRAM-MD5'])) {
-            $this->_mail_send_command('AUTH CRAM-MD5');
+            $this->_mail_send_command('AUTH CRAM-MD5', ['autolog' => false]);
             $buffer = $this->_mail_read_response();
             if ($buffer[0] == '+') {
                 $challenge = base64_decode(substr($buffer, 2));
                 $challenge_response = $this->_crammd5_response($challenge);
-                $this->_mail_send_command($challenge_response, false);
+                $this->_mail_send_command($challenge_response, ['autolog' => false]);
                 return $this->mail_ok_resp();
             } else {
                 $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Trying others.", __FUNCTION__);
             }
         }
         if (isset($this->capabilities['APOP']) && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
-            $this->_mail_send_command('APOP '.$this->mail_user.' '.self::md5($tokens[0].$this->mail_pass));
+            $this->_mail_send_command('APOP '.$this->mail_user.' '.self::md5($tokens[0].$this->mail_pass), ['autolog' => false]);
         }
         // Classic login mode
         else {
-            $this->_mail_send_command('USER '.$this->mail_user);
+            $this->_mail_send_command('USER '.$this->mail_user, ['autolog' => false]);
 
             if ($this->mail_ok_resp()) {
-                $this->_mail_send_command('PASS '.$this->mail_pass);
+                $this->_mail_send_command('PASS '.$this->mail_pass, ['autolog' => false]);
             } else {
                 return false;
             }
@@ -1457,7 +1459,7 @@ class Telaen extends Telaen_core
 
         // send the msg
         $mailcommand = "$message";
-        $this->_mail_send_command($mailcommand, false);    // don't send the session id here!
+        $this->_mail_send_command($mailcommand, ['addtag' => false]);    // don't send the session id here!
 
         $buffer = $this->_mail_read_response();
 
@@ -1619,10 +1621,10 @@ class Telaen extends Telaen_core
                 if ($this->_require_expunge) {
                     $this->mail_expunge();
                 }
-                $this->_mail_send_command('LOGOUT');
+                $this->_mail_send_command('LOGOUT', ['autolog' => false]);
                 $this->_mail_read_response();
             } else {
-                $this->_mail_send_command('QUIT');
+                $this->_mail_send_command('QUIT', ['autolog' => false]);
                 $this->_mail_read_response();
             }
             fclose($this->_mail_connection);
@@ -1642,7 +1644,7 @@ class Telaen extends Telaen_core
     public function mail_disconnect_force()
     {
         if ($this->mail_connected()) {
-            $this->_mail_send_command('FORCEDQUIT');
+            $this->_mail_send_command('FORCEDQUIT', ['autolog' => false]);
             $this->_mail_read_response();
             fclose($this->_mail_connection);
             $this->_mail_connection = null;
@@ -1682,7 +1684,7 @@ class Telaen extends Telaen_core
     protected function _mail_capa_pop3()
     {
         $capa = array();
-        $this->_mail_send_command('CAPA');
+        $this->_mail_send_command('CAPA', ['autolog' => false]);
         $buffer = $this->_mail_read_response();
         if ($this->mail_ok_resp($buffer)) {
             while (!self::_feof($this->_mail_connection)) {
@@ -1702,7 +1704,7 @@ class Telaen extends Telaen_core
     protected function _mail_capa_imap()
     {
         $capa = array();
-        $this->_mail_send_command('cp01 CAPABILITY', false);
+        $this->_mail_send_command('cp01 CAPABILITY', ['autolog' => false, 'addtag' => false]);
         while (!self::_feof($this->_mail_connection)) {
             $buffer = trim($this->_mail_read_response());
             $a = preg_split("|\s+|", $buffer);
