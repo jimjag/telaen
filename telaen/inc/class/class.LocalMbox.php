@@ -235,7 +235,7 @@ class LocalMbox extends SQLite3
         $query = $query.implode(', ', $temp).' WHERE ';
         $temp = [];
         foreach ($where as $key => $val) {
-            $temp[] = "'$key'=?";
+            $temp[] = "$key=?";
         }
         $query = $query.implode(' AND ', $temp).' ;';
         $stmt = $this->prepare($query);
@@ -320,7 +320,7 @@ class LocalMbox extends SQLite3
      */
     public function &get_attachments($folder, $uidl)
     {
-        $query = "SELECT * FROM attachs WHERE 'folder'=:folder AND 'uidl'=:uidl ;";
+        $query = "SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;";
         $stmt = $this->prepare($query);
         $stmt->bindValue(':folder', $folder);
         $stmt->bindValue(':uidl', $uidl);
@@ -421,7 +421,7 @@ class LocalMbox extends SQLite3
     {
         $query = 'DROP TABLE '.self::_get_folder_name($folder).' ;';
         if ($this->exec($query)) {
-            $stmt = $this->prepare("DELETE FROM folders WHERE 'name'=:name ;");
+            $stmt = $this->prepare("DELETE FROM folders WHERE name=:name ;");
             $stmt->bindValue(':name', $folder);
             if ($stmt->execute()) {
                 unset($this->folders[$folder]);
@@ -453,7 +453,7 @@ class LocalMbox extends SQLite3
             $this->_log[] = "bad folder name: $folder";
             return false;
         }
-        $stmt = $this->prepare("UPDATE folders SET '$field'=:$field WHERE 'name'=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET $field=:$field WHERE name=:name ;");
         $stmt->bindValue(':name', $folder);
         $stmt->bindValue(":$field", $this->folders[$folder][$field]);
         if ($stmt->execute()) {
@@ -718,7 +718,7 @@ class LocalMbox extends SQLite3
             $msgs = (array)$msgs;
         }
         $this->_ok = true;
-        $query = sprintf("DELETE FROM %s WHERE 'uidl'=:uidl ;", self::_get_folder_name($msgs[0]['folder']));
+        $query = sprintf("DELETE FROM %s WHERE uidl=:uidl ;", self::_get_folder_name($msgs[0]['folder']));
         $isactive = ($msgs[0]['folder'] == $this->active_folder ? true : false);
         $stmt = $this->prepare($query);
         $idxs = [];
