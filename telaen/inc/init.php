@@ -298,7 +298,7 @@ if ($folder == "") {
 
 //
 if ($initial_login) {
-    $TLN->prep_folders();
+    $TLN->prep_local_dirs();
     // In case not cleaned-up by logging out, do-so now
     $TLN->cleanup_dirs($TLN->userfolder);
     $folders = $TLN->mail_list_boxes('*');

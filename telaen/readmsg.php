@@ -22,9 +22,6 @@ $mail_info = $mysess[$ix];
 $is_attached = false;
 $arAttachment = array();
 
-if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
-
 if (!($result = $TLN->mail_retr_msg($mail_info, 1))) {
     $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&pag=$pag&refr=true");
 }

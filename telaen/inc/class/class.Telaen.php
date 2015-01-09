@@ -408,7 +408,7 @@ class Telaen extends Telaen_core
     /**
      * Prep folders on initial login
      */
-    public function prep_folders()
+    public function prep_local_dirs()
     {
         if (!file_exists($this->userfolder)) {
             if (!@mkdir($this->userfolder, $this->dirperm)) {
