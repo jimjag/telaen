@@ -610,19 +610,6 @@ $tmpbody";
     $haveSig = empty($signature) ? 0 : 1;
     $smarty->assign('umHaveSignature', $haveSig);
 
-    if (!isset($to)) {
-        $to = null;
-    }
-    if (!isset($cc)) {
-        $cc = null;
-    }
-    if (!isset($bcc)) {
-        $bcc = null;
-    }
-    if (!isset($subject)) {
-        $subject = null;
-    }
-
     $strto = (isset($nameto) && preg_match('|([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_])|i', $mailto)) ?
     "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"to\" value=\"&quot;".htmlspecialchars(stripslashes($nameto))."&quot; <".htmlspecialchars(stripslashes($mailto)).">\" />
 	" : "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"to\" value=\"".htmlspecialchars(stripslashes($to))."\" />";
