@@ -40,11 +40,11 @@ extract(Telaen::pull_from_array($_POST, array('folder', 'f_email', 'f_user', 'f_
  * Clean up user login info
  */
 $pag = (abs($pag) ? $pag : 1);
-$err = (abs($err) ? $err : 0);
-$lng = (abs($lng) ? $lng : 0);
-$tem = (abs($tem) ? $tem : 0);
-$six = (abs($six) ? $six : 0);
-$ix  = (abs($ix)  ? $ix  : 0);
+$err = abs($err);
+$lng = abs($lng);
+$tem = abs($tem);
+$six = abs($six);
+$ix  = abs($ix);
 if (isset($folder))
     $folder = urldecode($folder);
 else
