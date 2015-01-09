@@ -286,12 +286,17 @@ class Telaen extends Telaen_core
 
     private function _crammd5_response($challenge)
     {
+        if (function_exists('hash_hmac')) {
+            return base64_encode($this->mail_user.' '.hash_hmac('md5', $challenge, $this->mail_pass));
+        }
         $pass = $this->mail_pass;
-        $padlen = 64 - strlen($pass);
-        $pass .= str_repeat(chr(0x00), $padlen);
+        if (strlen($pass) > 64) {
+            $pass = pack('H*', md5($pass));
+        }
+        $pass = str_pad($pass, 64, chr(0x00));
         $ipad = str_repeat(chr(0x36), 64);
         $opad = str_repeat(chr(0x5c), 64);
-        $hash = $this->md5($this->_xor($pass, $opad).pack("H*", $this->md5($this->_xor($pass, $ipad).base64_decode($challenge))));
+        $hash = $this->md5(($pass ^ $opad).pack("H*", $this->md5(($pass ^ $ipad).$challenge)));
         return base64_encode($this->mail_user.' '.$hash);
     }
 

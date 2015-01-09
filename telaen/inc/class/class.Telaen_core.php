@@ -1757,16 +1757,6 @@ ENDOFREDIRECT;
         return sprintf('a%03d', $this->_sid);
     }
 
-    protected function _xor($s1, $s2)
-     {
-         $result = '';
-         $len = strlen($s1);
-         for ($i = 0; $i < $len; $i++) {
-             $result .= chr(ord($s1[$i]) ^ ord($s2[$i]));
-         }
-         return $result;
-     }
-
     static protected function _feof($handle)
      {
          if (!isset($handle) || !is_resource($handle)) {
