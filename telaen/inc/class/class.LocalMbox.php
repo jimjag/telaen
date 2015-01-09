@@ -576,7 +576,6 @@ class LocalMbox extends SQLite3
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
-        $this->_folder_need_sync[$msg['folder']] = true;
         return $this->do_insert(self::_get_folder_name($msg['folder']), $msg, $thelist);
     }
 
@@ -621,6 +620,7 @@ class LocalMbox extends SQLite3
     public function do_message($msg)
     {
         if (isset($this->m_idx[$msg['uidl']])) {
+            /* This is an UPDATE */
             $idx = $this->m_idx[$msg['uidl']];
             $keys = [];
             foreach ($msg as $k=>$v) {
@@ -633,6 +633,7 @@ class LocalMbox extends SQLite3
                 $this->m_delta[] = [$this->messages[$idx], $keys];
             }
         } else {
+            /* This is an INSERT */
             $this->messages[] = $msg;
             end($this->messages);
             $index = key($this->messages);
@@ -640,13 +641,13 @@ class LocalMbox extends SQLite3
             $this->m_idx[$msg['uidl']] = $index;
             reset($this->messages);
             $this->m_delta[] = [$this->messages[$index], ['*']];
+            $this->folders[$msg['folder']]['size'] += $msg['size'];
+            $this->folders[$msg['folder']]['count'] += 1;
+            if ($msg['unread']) {
+                $this->folders[$msg['folder']]['unread'] += 1;
+            }
+            $this->_folder_need_sync[$msg['folder']] = true;
         }
-        $this->folders[$msg['folder']]['size'] += $msg['size'];
-        $this->folders[$msg['folder']]['count'] += 1;
-        if ($msg['unread']) {
-            $this->folders[$msg['folder']]['unread'] += 1;
-        }
-        $this->_folder_need_sync[$msg['folder']] = true;
     }
 
     /**
