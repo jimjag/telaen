@@ -44,12 +44,14 @@ require_once './inc/errorhandler.php';
 
 require_once $TLN->config['SMARTY_DIR'].'Smarty.class.php';
 $smarty = new Smarty();
-$smarty->compile_dir = $TLN->config['temporary_directory'].'/smarty_ct/';
-$smarty->template_dir =     './inc/themes';
-$smarty->config_dir = './inc/langs';
+$smarty_compile_dir  = $TLN->config['temporary_directory'].'/smarty_ct/';
+$smarty->setCompileDir($smarty_compile_dir);
+$smarty->setConfigDir('./inc/langs');
+$smarty->setTemplateDir('./inc/themes');
+
 $smarty->use_sub_dirs = true;
-if (!is_dir($smarty->compile_dir)) {
-    mkdir($smarty->compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
+if (!is_dir($smarty_compile_dir)) {
+    mkdir($smarty_compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
 }
 $initial_login = false;
 

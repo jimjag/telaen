@@ -18,14 +18,14 @@ require_once './inc/user_tl.php';
 
 require_once $TLN->config['SMARTY_DIR'].'Smarty.class.php';
 $smarty = new Smarty();
-$smarty->security = true;
-$smarty->secure_dir = array('./');
-$smarty->compile_dir = $TLN->config['temporary_directory'].'/smarty_ct/';
-$smarty->template_dir = './inc/themes';
-$smarty->config_dir = './inc/langs';
+$smarty_compile_dir  = $TLN->config['temporary_directory'].'/smarty_ct/';
+$smarty->setCompileDir($smarty_compile_dir);
+$smarty->setConfigDir('./inc/langs');
+$smarty->setTemplateDir('./inc/themes');
+
 $smarty->use_sub_dirs = true;
-if (!is_dir($smarty->compile_dir)) {
-    mkdir($smarty->compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
+if (!is_dir($smarty_compile_dir)) {
+    mkdir($smarty_compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
 }
 
 $smarty->assign('umLabel', $lang);
@@ -73,7 +73,7 @@ $jssource = "
 			sLocation = 'index.php?lng='+sLanguage+'&tem='+sTheme+'&f_user='+escape(sUser)+'&six='+sSix+'&f_email='+sEmail;
 			location.replace(sLocation);
 		} catch(err) {
-			alert('Your browser do not support JS'); // Vola: this is stupid... if js doesn't work also alert doesn't work :)
+			alert('Your browser does not support JS'); // Vola: this is stupid... if js doesn't work also alert doesn't work :)
 		}
 	}
 //]]>
