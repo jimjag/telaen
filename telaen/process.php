@@ -104,10 +104,6 @@ if ((!$same_version) ||
     $TLN->redirect_and_exit('preferences.php?folder='.urlencode($folder));
     exit;
 }
-
-if (!isset($pag) || !is_numeric(trim($pag))) {
-    $pag = 1;
-}
 if (isset($back_to)) {
     if (count($headers) > $back_to) {
         $TLN->redirect_and_exit('readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=$back_to");
