@@ -1022,7 +1022,7 @@ class Telaen extends Telaen_core
              */
             $uids = [];
             $nouids = [];
-            if ($this->capabilities['UIDL']) {
+            if (!empty($this->capabilities['UIDL'])) {
                 $this->mail_send_command("UIDL");
                 $buffer = $this->mail_get_line();
                 if (substr($buffer, 0, 3) == "+OK") {
@@ -1749,7 +1749,9 @@ class Telaen extends Telaen_core
         $this->capabilities = array_merge($this->capabilities, $capa);
         // and honor config'ed overrides
         foreach ($this->config['capa_override'] as $key => $value) {
-            $this->capabilities[$key] = $value;
+            if ($value !== null) {
+                $this->capabilities[$key] = $value;
+            }
         }
     }
 
@@ -1766,7 +1768,7 @@ class Telaen extends Telaen_core
     protected function _mail_get_uidl(&$msg)
     {
         $id = $msg['mnum'];
-        if ($this->capabilities['UIDL'] && !$msg['islocal']) {
+        if (!empty($this->capabilities['UIDL']) && !$msg['islocal']) {
             $this->_mail_send_command("UIDL $id");
             $buffer = $this->_mail_read_response();
             list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
