@@ -1023,7 +1023,7 @@ class Telaen extends Telaen_core
             $uids = [];
             $nouids = [];
             if (!empty($this->capabilities['UIDL'])) {
-                $this->mail_send_command("UIDL");
+                $this->_mail_send_command("UIDL");
                 $buffer = $this->mail_get_line();
                 if (substr($buffer, 0, 3) == "+OK") {
                     while (!self::_feof($this->mail_connection)) {
