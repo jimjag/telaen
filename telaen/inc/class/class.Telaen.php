@@ -417,7 +417,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        $boxes = $this->mail_list_boxes();
+        $boxes = $this->mail_list_boxes('*');
 
         if ($this->mail_protocol == IMAP && false) {  // skip for now
 

@@ -192,7 +192,7 @@ class Telaen_core
     public function read_file($strfile)
     {
         if ($strfile == "" || !file_exists($strfile)) {
-            return;
+            return '';
         }
         $fp = fopen($strfile, 'rb');
         if (!$fp) {
@@ -264,7 +264,7 @@ class Telaen_core
      */
     public function mime_encode_headers($string)
     {
-        if ($string == "") return;
+        if ($string == "") return '';
         if (!preg_match("/^([[:print:]]*)$/", $string))
             $string = "=?".$this->charset."?Q?".str_replace("+", "_", str_replace("%", "=", urlencode($string)))."?=";
         return $string;

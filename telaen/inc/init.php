@@ -290,18 +290,13 @@ if ($TLN->prefs['refresh_time'] < 5) {
 if (isset($need_save)) {
     $TLN->save_prefs($TLN->prefs);
 }
-
-$folder = Telaen::fs_safe_folder($folder);
-if ($folder == "") {
-    $folder = 'inbox';
-} elseif (!file_exists($TLN->userfolder.$TLN->fix_prefix($folder, 1))) {
-    $TLN->redirect_and_exit('logout.php');
-}
-
 //
 if ($initial_login) {
     $TLN->prep_local_dirs();
     // In case not cleaned-up by logging out, do-so now
     $TLN->cleanup_dirs($TLN->userfolder);
-    $folders = $TLN->mail_list_boxes('*');
+}
+$folders = $TLN->mail_list_boxes();
+if (empty($folders[$folder])) {
+    $TLN->redirect_and_exit('logout.php');
 }
