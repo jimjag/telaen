@@ -618,7 +618,7 @@ class LocalMbox extends SQLite3
      * Add or update this->headers with the msg
      * @param array $msg Message msg
      */
-    public function add_message($msg)
+    public function do_message($msg)
     {
         if (isset($this->m_idx[$msg['uidl']])) {
             $idx = $this->m_idx[$msg['uidl']];

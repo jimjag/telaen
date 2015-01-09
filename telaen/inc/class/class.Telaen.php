@@ -982,7 +982,7 @@ class Telaen extends Telaen_core
                         $msg['uid'] = $uid;
                         $mail_info = $this->get_mail_info($header);
                         self::add2me($msg, $mail_info);
-                        $this->tdb->add_message($msg);
+                        $this->tdb->do_message($msg);
                         $new++;
                     }
                     unset($msg);
@@ -1066,7 +1066,7 @@ class Telaen extends Telaen_core
                         $nouids[] = $msg;
                     }
                     if (!$this->tdb->message_exists($msg)) {
-                        $this->tdb->add_message($msg);
+                        $this->tdb->do_message($msg);
                         $new++;
                     }
                     unset($msg);
@@ -1077,7 +1077,7 @@ class Telaen extends Telaen_core
             foreach ($nouids as $msg) {
                 $msg['uidl'] = $this->_mail_get_uidl($msg);
                 if (!$this->tdb->message_exists($msg)) {
-                    $this->tdb->add_message($msg);
+                    $this->tdb->do_message($msg);
                     $new++;
                 }
             }
@@ -1110,7 +1110,7 @@ class Telaen extends Telaen_core
                 $mail_info = $this->get_mail_info($thisheader);
                 self::add2me($msg, $mail_info);
                 $msg['uidl'] = $this->_mail_get_uidl($msg);
-                $this->tdb->add_message($msg);
+                $this->tdb->do_message($msg);
                 $i++;
             }
             if (is_dir($fullpath)) {
@@ -1213,7 +1213,7 @@ class Telaen extends Telaen_core
                 if ($messages[$i]['localname'] == '') {
                     $messages[$i]['localname'] = $this->_get_local_name($messages[$i]['uidl'], $boxname);
                 }
-                $this->tdb->add_message($messages[$i]);
+                $this->tdb->do_message($messages[$i]);
             }
             $isspam = false;
             $spamsubject = $mail_info['subject'];
@@ -1891,10 +1891,24 @@ class Telaen extends Telaen_core
      */
     public function refresh_folders()
     {
+        $wasstale = false;
         $boxes = $this->mail_list_boxes();
         foreach ($boxes as $folder => $f) {
             if ($this->iam_stale($folder)) {
                 $this->mail_list_msgs($folder);
+                $wasstale = true;
+                $this->unstale($folder);
+            }
+        }
+        if ($wasstale) {
+        /*
+         * Now is as good a time as whenever to poll the DB log
+         */
+            list($ok, $log) = $this->tdb->status();
+            if (!$ok) {
+                foreach ($log as $l) {
+                    $this->debug_msg($l, __FUNCTION__);
+                }
             }
         }
     }
@@ -1906,21 +1920,17 @@ class Telaen extends Telaen_core
      */
     public function iam_stale($folder)
     {
-        if ($this->tdb->folders[$folder]['refreshed'] < ($this->_now - $this->prefs['refresh_time'])) {
-            $this->tdb->folders[$folder]['refreshed'] = $this->_now;
-            $this->tdb->update_folder_field($folder, 'refreshed');
-            /*
-             * Now is as good a time as whenever to poll the DB log
-             */
-            list($ok, $log) = $this->tdb->status();
-            if (!$ok) {
-                foreach ($log as $l) {
-                    $this->debug_msg($l, __FUNCTION__);
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
+        return ($this->tdb->folders[$folder]['refreshed'] < ($this->_now - $this->prefs['refresh_time']));
+    }
+
+    /**
+     * Reset refreshed field and make the folder no longer "stale"
+     * @param string $folder Folder to check
+     * @return bool
+     */
+    public function unstale($folder)
+    {
+        $this->tdb->folders[$folder]['refreshed'] = $this->_now;
+        $this->tdb->update_folder_field($folder, 'refreshed');
     }
 }
