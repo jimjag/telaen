@@ -602,7 +602,7 @@ class Telaen extends Telaen_core
     {
         if ($msg['header'] != '') {
             return $msg['header'];
-;       }
+        }
         $ret = $header = '';
         $this->_mail_send_command('UID FETCH '.$msg['uid'].' (RFC822.HEADER)');
         $buffer = $this->_mail_read_response();
@@ -637,7 +637,7 @@ class Telaen extends Telaen_core
          */
         if ($msg['header'] != '') {
             return $msg['header'];
-;       }
+        }
         $this->_mail_send_command('TOP '.$msg['mnum'].' 0');
         $buffer = $this->_mail_read_response();
         /* if any problem with this messages list, stop the procedure */
@@ -1024,10 +1024,10 @@ class Telaen extends Telaen_core
             $nouids = [];
             if (!empty($this->capabilities['UIDL'])) {
                 $this->_mail_send_command("UIDL");
-                $buffer = $this->mail_get_line();
+                $buffer = $this->_mail_read_response();
                 if (substr($buffer, 0, 3) == "+OK") {
-                    while (!self::_feof($this->mail_connection)) {
-                        $buffer = $this->mail_get_line();
+                    while (!self::_feof($this->_mail_connection)) {
+                        $buffer = $this->_mail_read_response();
                         if(trim($buffer) == ".") {
                             break;
                         }
