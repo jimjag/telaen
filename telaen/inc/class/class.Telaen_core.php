@@ -41,7 +41,7 @@ class Telaen_core
     public $current_level = [];
     public $config = [];
     public $prefs = [];
-    public $appversion = "2.0.0-dev";
+    public $appversion = "2.0.0.dev";
     public $appname = 'Telaen Webmail';
     /* @var $tdb LocalMbox */
     public $tdb = null;
@@ -1555,10 +1555,9 @@ ENDOFREDIRECT;
             }
             $this->prefs['real-name'] = UCFirst(substr($user, 0, strpos($user, '@')));
             $this->prefs['reply-to'] = $user;
-            $this->prefs['version'] = $this->appversion;
+            $this->prefs['version'] = '0.0.0'; // Just in case we want them to check on 1st login
         } else {
-            $prefs = file($pref_file);
-            $prefs = join("", $prefs);
+            $prefs = file_get_contents($pref_file);
             $this->prefs = unserialize(~$prefs);
         }
         foreach ($this->config['default_preferences'] as $key => $val) {

@@ -161,7 +161,7 @@ if (!empty($f_pass)) {
     if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
     $TLN->mail_get_capa();
     $auth['capabilities'] = $TLN->capabilities;
-    if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
+    if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php');
     $auth['auth'] = true;
     $initial_login = true;
 

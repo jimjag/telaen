@@ -27,10 +27,6 @@ if (!$messagecount
     || isset($refr)
     || isset($mlist)) {
 
-    if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-    if (!$TLN->mail_auth(true)) $TLN->redirect_and_exit('index.php?err=0');
-    $auth['auth'] = true;
-
     $expunge = false;
     $require_update = false;
     $reg_pp = $TLN->prefs['rpp'];
