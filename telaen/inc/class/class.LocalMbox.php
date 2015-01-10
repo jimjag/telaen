@@ -520,6 +520,15 @@ class LocalMbox extends SQLite3
     public function &get_messages($folder, $force = false, $sortby = "", $sortorder = "")
     {
         if ($folder != $this->active_folder || $force) {
+            /* keep sorting info between calls */
+            static $ssortby = "";
+            static $ssortorder = "";
+            if ($sortby != $ssortby) {
+                $ssortby = $sortby;
+            }
+            if ($sortorder != $ssortorder) {
+                $ssortorder = $sortorder;
+            }
             $this->sync_messages();
             $query = sprintf('SELECT * FROM %s ', self::_get_folder_name($folder));
             if ($sortby && isset($this->mschema[$sortby])) {

@@ -169,23 +169,23 @@ $smarty->assign('umUserEmail', $auth['email']);
 $smarty->assign('umFolder', $folder);
 
 $messagelist = array();
+$index = 0;
 printf($textout);
 
 if ($nummsg > 0) {
     for ($i = $start_pos;$i<$end_pos;$i++) {
-        $read = (stristr($headers[$i]['flags'], '\\SEEN')) ? 'true' : 'false';
-        $readlink = "javascript:readmsg($i,$read)";
+        $readlink = "javascript:readmsg($i,!$headers[$i]['unread'])";
         $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]['from'][0]['name'])."&mailto=".htmlspecialchars($headers[$i]['from'][0]['mail'])."";
         $composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]['to'][0]['name'])."&mailto=".htmlspecialchars($headers[$i]['to'][0]['name'])."";
 
         $from = $headers[$i]['from'][0]['name'];
         $to = $headers[$i]['to'][0]['name'];
         $subject = $headers[$i]['subject'];
-        if ($read != 'true') {
+        if ($headers[$i]['unread']) {
             $msg_img = './images/msg_unread.gif';
-        } elseif (stristr($headers[$i]['flags'], '\\ANSWERED')) {
+        } elseif (stristr($headers[$i]['flags'], $TLN->flags['answered'])) {
             $msg_img = './images/msg_answered.gif';
-        } elseif (stristr($headers[$i]['flags'], '\\FORWARDED')) {
+        } elseif (stristr($headers[$i]['flags'], $TLN->flags['forwarded'])) {
             $msg_img = './images/msg_forwarded.gif';
         } else {
             $msg_img = './images/msg_read.gif';
@@ -205,9 +205,8 @@ if ($nummsg > 0) {
 
         $date = $headers[$i]['date'];
         $size = $headers[$i]['size'];
-        $index = count($messagelist);
 
-        $messagelist[$index]['read'] = $read;
+        $messagelist[$index]['read'] = !$headers[$i]['unread'];
         $messagelist[$index]['readlink'] = $readlink;
         $messagelist[$index]['composelink'] = $composelink;
         $messagelist[$index]['composelinksent'] = $composelinksent;
@@ -220,6 +219,7 @@ if ($nummsg > 0) {
         $messagelist[$index]['attachimg'] = $attachimg;
         $messagelist[$index]['priorimg'] = $img_prior;
         $messagelist[$index]['size'] = Telaen::bytes2bkmg($size);
+        $index++;
     }
 }
 $smarty->assign('umNumMessages', $nummsg);
