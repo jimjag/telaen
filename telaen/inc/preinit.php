@@ -31,18 +31,18 @@ if (version_compare(PHP_VERSION, "5.4.0", "<")) {
  * vars used by just about all main entry points (see inc/init.php)
  */
 
-extract(Telaen::pull_from_array($_GET, array('pag', 'err', 'ix', 'lng', 'tem'), 1));
-extract(Telaen::pull_from_array($_GET, array('folder', 'sortby', 'sortorder'), 's'));
-extract(Telaen::pull_from_array($_POST, array('pag', 'six', 'lng', 'tem'), 1));
-extract(Telaen::pull_from_array($_POST, array('folder', 'f_email', 'f_user', 'f_pass'), 's'));
+extract(Telaen::pull_from_array($_GET, array('pag', 'err', 'ix'), 1));
+extract(Telaen::pull_from_array($_GET, array('folder', 'sortby', 'sortorder', 'lng', 'tem'), 's'));
+extract(Telaen::pull_from_array($_POST, array('pag', 'six'), 1));
+extract(Telaen::pull_from_array($_POST, array('folder', 'f_email', 'f_user', 'f_pass', 'lng', 'tem'), 's'));
 
 /*
  * Clean up user login info
  */
 if (isset($pag)) $pag = (abs($pag) ? $pag : 1);
 if (isset($err)) $err = abs($err);
-if (isset($lng)) $lng = abs($lng);
-if (isset($tem)) $tem = abs($tem);
+if (isset($lng)) $lng = trim($lng);
+if (isset($tem)) $tem = trim($tem);
 if (isset($six)) $six = abs($six);
 if (isset($ix)) $ix  = abs($ix);
 if (isset($folder))
