@@ -13,8 +13,6 @@ require './inc/init.php';
 
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
-$headers = &$tdb->get_messages($folder, $sortby, $sortorder);
-
 $smarty->assign('umUser', $f_user);
 $refreshurl = 'process.php?folder='.urlencode($folder)."&pag=$pag&refr=true";
 
@@ -58,7 +56,7 @@ if ($timeleft > 0) {
 }
 */
 // Assign metas to smarty, no more bad echos output
-$smarty->assign('pageMetas', $pmetas."\n".$refreshMeta);
+//$smarty->assign('pageMetas', $pmetas."\n".$refreshMeta);
 
 /* load total size */
 $totalused = 0;
@@ -95,20 +93,8 @@ if (($start_pos >= $end_pos) && ($pag != 1)) {
     $TLN->redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
 }
 
-/*
- * If the start or end points lack header info, then we know we
- * need process.php grab them for us.
- */
-$force_refresh = false;
-for ($i = $start_pos;$i<$end_pos;$i++) {
-    if (!$headers[$i]['hparsed']) {
-        $force_refresh = true;
-        break;
-    }
-}
-if ($force_refresh) {
-    $TLN->redirect_and_exit('process.php?folder='.urlencode($folder)."&pag=$pag&mlist=true");
-}
+$tdb->get_messages($folder, true, $sortby, $sortorder);
+$headers = &$TLN->mail_list_msgs($folder, $start_pos, $end_pos);
 
 $jsquota = ($exceeded) ? 'true' : 'false';
 

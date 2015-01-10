@@ -341,6 +341,7 @@ class LocalMbox extends SQLite3
     /**
      * Get list of all available folders/emailboxes
      * $this-folders auto-populated with hash
+     * This is quick so a SELECT is OK
      * @return hash
      */
     public function &get_folders()
@@ -361,6 +362,18 @@ class LocalMbox extends SQLite3
             $this->_log[] = "query failed: $query";
         }
         return $this->folders;
+    }
+
+    /**
+     * Get list of all available folders/emailboxes
+     * $this-folders auto-populated with hash
+     * This is quick so a SELECT is OK
+     * @param string $string
+     * @return hash
+     */
+    public function &get_folder($name)
+    {
+        return $this->folders[$name];
     }
 
     /**
