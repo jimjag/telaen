@@ -39,7 +39,7 @@ extract(Telaen::pull_from_array($_POST, array('folder', 'f_email', 'f_user', 'f_
 /*
  * Clean up user login info
  */
-if (isset($pag)) $pag = (abs($pag) ? $pag : 1);
+$pag = (abs($pag) ? $pag : 1);
 if (isset($err)) $err = abs($err);
 if (isset($lng)) $lng = trim($lng);
 if (isset($tem)) $tem = trim($tem);
