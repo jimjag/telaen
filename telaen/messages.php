@@ -81,10 +81,10 @@ $smarty->assign('umFromArrow', $fromname_arrow);
 $smarty->assign('umDateArrow', $date_arrow);
 $smarty->assign('umSizeArrow', $size_arrow);
 
-if (!isset($pag) || !is_numeric(trim($pag))) {
-    $pag = 1;
-}
-
+$tdb->get_messages($folder, true, $sortby, $sortorder);
+$headers = &$TLN->mail_list_msgs($folder, $start_pos, $end_pos);
+$nummsg = $folders[$folder]['count'];
+$newmsgs = $folders[$folder]['unread'];
 $reg_pp = $TLN->prefs['rpp'];
 $start_pos = ($pag-1)*$reg_pp;
 $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
@@ -92,11 +92,6 @@ $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
 if (($start_pos >= $end_pos) && ($pag != 1)) {
     $TLN->redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
 }
-
-$tdb->get_messages($folder, true, $sortby, $sortorder);
-$headers = &$TLN->mail_list_msgs($folder, $start_pos, $end_pos);
-$nummsg = $folders[$folder]['count'];
-$newmsgs = $folders[$folder]['unread'];
 
 $jsquota = ($exceeded) ? 'true' : 'false';
 
