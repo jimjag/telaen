@@ -457,10 +457,10 @@ $config['default_language'] = 'en_US'; //key of language
 
 // Themes
 $config['themes'] = array(
+    'jagumail' => 'jaguMail',
     'default' => 'Telaen Default',
     'hungi.mozilla' => 'Hungi Mozilla',
     'outlook' => 'MS Outlook',
-    'jagumail' => 'jaguMail'
 );
 
 // Languages
