@@ -60,7 +60,8 @@ if ($timeleft > 0) {
 
 /* load total size */
 $totalused = 0;
-foreach ($tdb->folders as $key => $val) {
+$folders = &$tdb->get_folders();
+foreach ($folders as $key => $val) {
     $totalused += $val['size'];
 }
 
@@ -80,7 +81,6 @@ $smarty->assign('umFromArrow', $fromname_arrow);
 $smarty->assign('umDateArrow', $date_arrow);
 $smarty->assign('umSizeArrow', $size_arrow);
 
-$nummsg = count($headers);
 if (!isset($pag) || !is_numeric(trim($pag))) {
     $pag = 1;
 }
@@ -95,6 +95,8 @@ if (($start_pos >= $end_pos) && ($pag != 1)) {
 
 $tdb->get_messages($folder, true, $sortby, $sortorder);
 $headers = &$TLN->mail_list_msgs($folder, $start_pos, $end_pos);
+$nummsg = $folders[$folder]['count'];
+$newmsgs = $folders[$folder]['unread'];
 
 $jsquota = ($exceeded) ? 'true' : 'false';
 
@@ -169,14 +171,7 @@ $smarty->assign('umFolder', $folder);
 $messagelist = array();
 printf($textout);
 
-$newmsgs = 0;
 if ($nummsg > 0) {
-    for ($i = 0;$i<count($headers);$i++) {
-        if (!stristr($headers[$i]['flags'], '\\SEEN')) {
-            $newmsgs++;
-        }
-    }
-
     for ($i = $start_pos;$i<$end_pos;$i++) {
         $read = (stristr($headers[$i]['flags'], '\\SEEN')) ? 'true' : 'false';
         $readlink = "javascript:readmsg($i,$read)";
