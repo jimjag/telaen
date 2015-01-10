@@ -209,14 +209,14 @@ if (isset($TLN->config['dirperm']) && $TLN->config['dirperm'] != 0000) {
     $TLN->dirperm = $TLN->config['dirperm'];
 }
 
+$TLN->init_tdb(($TLN->mail_protocol == IMAP) && $TLN->prefs['keep_on_server'] && $initial_login);
+$tdb = &$TLN->tdb;
+$TLN->userdatafolder = $TLN->userfolder.$tdb->udatafolder;
 $TLN->load_prefs();
 
 $TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
 
-$TLN->init_tdb(($TLN->mail_protocol == IMAP) && $TLN->prefs['keep_on_server'] && $initial_login);
-$tdb = &$TLN->tdb;
-$TLN->userdatafolder = $TLN->userfolder.$tdb->udatafolder;
 /*
  * Special case: Always start w/ fresh inbox cache for POP3 if we aren't
  * their exclusive email client
