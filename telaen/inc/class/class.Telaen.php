@@ -4,14 +4,15 @@ require_once './inc/class/class.Telaen_core.php';
 require_once './inc/vendor/class.tnef.php';
 
 /**
- * Main Telaen Class implementing webmail functionality
+ * Telaen - Main Telaen Class implementing webmail functionality.
+ * @package Telaen
+ * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
  */
 class Telaen extends Telaen_core
 {
     public $havespam       = false;
     public $CRLF           = "\r\n";
-    public $dirperm        = 0700;        // recall affected by umask value
-    public $greeting       = '';        // Internally used for store initial IMAP/POP3 greeting message
+    public $dirperm        = 0700;
     public $capabilities   = [];
 
     protected $_current_folder = '';
@@ -20,7 +21,8 @@ class Telaen extends Telaen_core
     protected $_respnum        = 0;
     protected $_respstr        = '';
     protected $_version        = 2;
-    private $_now = 0;
+    protected $_greeting       = '';        // Internally used for store initial IMAP/POP3 greeting message
+    protected $_now = 0;
 
     const RESP_OK =   0;
     const RESP_NO =  -1;
@@ -277,8 +279,8 @@ class Telaen extends Telaen_core
             $errstr = 0;
             $this->_mail_connection = stream_socket_client($this->_serverurl, $errno, $errstr, 15);
             if ($this->_mail_connection) {
-                $this->greeting = $this->mail_read_response();
-                if ($this->mail_ok_resp($this->greeting)) {
+                $this->_greeting = $this->mail_read_response();
+                if ($this->mail_ok_resp($this->_greeting)) {
                     return true;
                 }
             }
@@ -371,7 +373,7 @@ class Telaen extends Telaen_core
                 $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Trying others.", __FUNCTION__);
             }
         }
-        if (!empty($this->capabilities['APOP']) && preg_match('/<.+@.+>/U', $this->greeting, $tokens)) {
+        if (!empty($this->capabilities['APOP']) && preg_match('/<.+@.+>/U', $this->_greeting, $tokens)) {
             $this->mail_send_command('APOP '.$this->mail_user.' '.self::md5($tokens[0].$this->mail_pass), ['autolog' => false]);
         }
         // Classic login mode

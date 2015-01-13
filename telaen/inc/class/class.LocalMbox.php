@@ -8,7 +8,9 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 /**
- * Simple PHP Helper for sqlite3-based Email data
+ * LocalMox - SQLite3-based local caching and email storage.
+ * @package Telaen
+ * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
  */
 class LocalMbox extends SQLite3
 {
