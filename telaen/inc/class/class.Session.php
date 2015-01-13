@@ -8,7 +8,7 @@ Telaen is a GPL'ed software developed by
 *************************************************************************/
 
 /**
- * Simple PHP Helper for sessions
+ * Simple PHP Helper Class for sessions
  */
 class Session
 {

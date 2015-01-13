@@ -17,6 +17,9 @@ define('STATUS_OK', 0);
 define('STATUS_NOK', 1);
 define('STATUS_NOK_FILE', 2);
 
+/**
+ * Core aspects of Telaen
+ */
 class Telaen_core
 {
     public $mail_server = 'localhost';

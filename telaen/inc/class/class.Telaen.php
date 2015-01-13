@@ -3,6 +3,9 @@
 require_once './inc/class/class.Telaen_core.php';
 require_once './inc/vendor/class.tnef.php';
 
+/**
+ * Main Telaen Class implementing webmail functionality
+ */
 class Telaen extends Telaen_core
 {
     public $havespam       = false;
