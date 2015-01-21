@@ -1762,10 +1762,54 @@ ENDOFREDIRECT;
     }
 
     static protected function _feof($handle)
-     {
-         if (!isset($handle) || !is_resource($handle)) {
-             return true;
-         }
-         return feof($handle);
-     }
+    {
+        if (!isset($handle) || !is_resource($handle)) {
+            return true;
+        }
+        return feof($handle);
+    }
+
+    /**
+     * Parse a THREAD string (eg: '(2)(3 6 (4 23)(44 7 96))'
+     * @param string $thread
+     * @return array
+     */
+    static public function do_thread2($thread)
+    {
+        $thread = preg_replace('|[^ ()[:alnum:]]|', '', $thread);
+        $end = strlen($thread);
+        $stack = [];
+        $depth = 0;
+        $start = null;
+        $out = [];
+        for ($i = 0; $i < $end; $i++) {
+            switch ($thread[$i]) {
+                case '(':
+                    $stack[] = $depth;
+                    $start = null;
+                    break;
+                case ' ':
+                    if ($start !== null) {
+                        $out[] = [substr($thread, $start, $i - $start), $depth];
+                        $depth++;
+                        $start = null;
+                    }
+                    break;
+                case ')':
+                    if ($start !== null) {
+                        $out[] = [substr($thread, $start, $i - $start), $depth];
+                    }
+                    $depth = array_pop($stack);
+                    $start = null;
+                    break;
+                default:
+                    if ($start === null) {
+                        $start = $i;
+                    }
+                    break;
+            }
+        }
+        return $out;
+    }
+
 }
