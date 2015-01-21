@@ -982,11 +982,10 @@ class Telaen extends Telaen_core
                         $msg['mnum'] = intval($curmsg);
                         $msg['size'] = intval($size);
                         $msg['flags'] = strtoupper($flags);
-                        $msg['header'] = $header;
                         $msg['folder'] = $boxname;
                         $msg['islocal'] = false;
                         $msg['uid'] = $uid;
-                        $mail_info = $this->get_mail_info($header);
+                        $mail_info = $this->formalize_headers($header);
                         self::add2me($msg, $mail_info);
                         $this->tdb->do_message($msg);
                         $new++;
@@ -1107,13 +1106,12 @@ class Telaen extends Telaen_core
                 $thisheader = $this->_get_headers_from_cache($fullpath);
                 $msg['id'] = $i + 1;
                 $msg['mnum'] = $i;
-                $msg['header'] = $thisheader;
                 $msg['size'] = filesize($fullpath);
                 $msg['localname'] = $fullpath;
                 $msg['folder'] = $boxname;
                 $msg['islocal'] = true;
                 $msg['version'] = $version;
-                $mail_info = $this->get_mail_info($thisheader);
+                $mail_info = $this->formalize_headers($thisheader);
                 self::add2me($msg, $mail_info);
                 $msg['uidl'] = $this->_mail_get_uidl($msg);
                 $this->tdb->do_message($msg);
@@ -1211,7 +1209,7 @@ class Telaen extends Telaen_core
                     $header = $this->mail_retr_header($messages[$i]);
                     $messages[$i]['header'] = $header;
                 }
-                $mail_info = $this->get_mail_info($messages[$i]['header']);
+                $mail_info = $this->formalize_headers($messages[$i]['header']);
                 self::add2me($messages[$i], $mail_info);
                 $messages[$i]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                     $mail_info['content-type'])) ? 1 : 0;
@@ -1222,8 +1220,8 @@ class Telaen extends Telaen_core
                 $this->tdb->do_message($messages[$i]);
             }
             $isspam = false;
-            $spamsubject = $mail_info['subject'];
-            $xspamlevel = $mail_info['x-spam-level'];
+            $spamsubject = $mail_info['headers']['subject'];
+            $xspamlevel = $mail_info['headers']['x-spam-level'];
             /*
              * Only auto-populate the SPAM folder if
              * we have _autospamfolder set :)
@@ -1503,7 +1501,7 @@ class Telaen extends Telaen_core
             }
         }
         $email = $this->fetch_structure($message);
-        $mail_info = $this->get_mail_info($email['header']);
+        $mail_info = $this->formalize_headers($email['header']);
         list($filename, $name) = $this->_get_local_name($mail_info, $boxname);
         $dir = $dir.'/'.$name[0];
         if (!is_dir($dir)) {
@@ -1576,7 +1574,7 @@ class Telaen extends Telaen_core
             $email = $this->fetch_structure($email);
             $header = $email['header'];
             $body = $email['body'];
-            $headerinfo = $this->_decode_header($header);
+            $headerinfo = $this->_parse_headers($header);
 
             $strFlags = trim(strtoupper($msg['flags']));
 
@@ -1819,7 +1817,7 @@ class Telaen extends Telaen_core
                     return $msg['uidl'];
                 }
             }
-            $mail_info = $this->get_mail_info($header);
+            $mail_info = $this->formalize_headers($header);
             self::add2me($msg, $mail_info);
             // $this->tdb->add_headers($msg);
             if (!empty($mail_info['uidl'])) {

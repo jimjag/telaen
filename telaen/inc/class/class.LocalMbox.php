@@ -44,7 +44,6 @@ class LocalMbox extends SQLite3
         'id' => 'INT DEFAULT 0',
         'mnum' => 'INT DEFAULT 0', // message number
         'size' => 'INT DEFAULT 0',
-        'priority' => 'INT DEFAULT 0',
         'attach' => 'INT DEFAULT 0',
         'islocal' => 'INT DEFAULT 0', // Does it live on web server?
         'uid' => 'INT DEFAULT 0', // IMAP UID
@@ -53,20 +52,7 @@ class LocalMbox extends SQLite3
         'folder' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY', // Our unique key (md5)
         'ouidl' => 'TEXT DEFAULT ""', // Old uidl from Telaen 1.x
-        'subject' => 'TEXT DEFAULT ""',
-        'from' => 'TEXT DEFAULT ""', // note: array
-        'fromname' => 'TEXT DEFAULT ""',
-        'to' => 'TEXT DEFAULT ""', // note: array
-        'cc' => 'TEXT DEFAULT ""', // note: array
-        'flags' => 'TEXT DEFAULT ""',
-        'message-id' => 'TEXT DEFAULT ""',
-        'localname' => 'TEXT DEFAULT ""',
-        'receipt-to' => 'TEXT DEFAULT ""', // note: array
-        'x-spam-level' => 'TEXT DEFAULT ""',
-        'reply-to' => 'TEXT DEFAULT ""', // note: array
-        'content-type' => 'TEXT DEFAULT ""',
-        'content-transfer-encoding' => 'TEXT DEFAULT ""',
-        'header' => 'TEXT DEFAULT ""',
+        'headers' => 'TEXT DEFAULT ""', // NOTE: array
     );
 
     public $folders = [];  // Hash: All Email boxes/folders; key = name
@@ -82,7 +68,7 @@ class LocalMbox extends SQLite3
      * so we don't need to check that we are updating/inserting messages, specifically,
      * when serializing.
      */
-    public $m_serialize = ['to', 'from', 'cc', 'reply-to', 'receipt-to'];
+    public $m_serialize = ['headers'];
     private $_system_folders = ['inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos'];
     private $_invisible = ['_attachments', '_infos'];
     private $_indb = []; /* Hash: key = uidl; value = is it in the DB? */
@@ -548,7 +534,7 @@ class LocalMbox extends SQLite3
             if ($result) {
                 while ($foo = $result->fetchArray(SQLITE3_ASSOC)) {
                     foreach($this->m_serialize as $k) {
-                        $foo[$k] = unserialize($foo[$k]);
+                        $foo[$k] = @unserialize($foo[$k]);
                     }
                     $this->messages[$index] = $foo;
                     $this->messages[$index]['idx'] = $index;

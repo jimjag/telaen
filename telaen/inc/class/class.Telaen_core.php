@@ -398,7 +398,7 @@ class Telaen_core
      *
      * Some headers are broken into multiples lines, prefixed with a TAB (\t)
      */
-    protected function _decode_header($header)
+    protected function _parse_headers($header)
     {
         $headers = explode("\r\n", $header);
         $decodedheaders = [];
@@ -623,7 +623,7 @@ class Telaen_core
             $email = $this->fetch_structure($value);
 
             $parts[$index] = $email;
-            $parts[$index]['headers'] = $headers = $this->_decode_header($email['header']);
+            $parts[$index]['headers'] = $headers = $this->_parse_headers($email['header']);
             unset($email);
             $ctype = explode(';', $headers['content-type']);
             $ctype = strtolower($ctype[0]);
@@ -700,7 +700,7 @@ class Telaen_core
             // free unused vars
             unset($email);
 
-            $headers = $this->_decode_header($header);
+            $headers = $this->_parse_headers($header);
             $ctype = $headers['content-type'];
 
             //echo "<br>Part: $i - ctype: $ctype";
@@ -804,9 +804,9 @@ class Telaen_core
      */
     protected function _process_message($header, $body)
     {
-        $mail_info = $this->get_mail_info($header);
-        $ctype = $mail_info['content-type'];
-        $ctenc = $mail_info['content-transfer-encoding'];
+        $mail_info = $this->formalize_headers($header);
+        $ctype = $mail_info['headers']['content-type'];
+        $ctenc = $mail_info['headers']['content-transfer-encoding'];
 
         if ($ctype == "") {
             $ctype = 'text/plain';
@@ -822,7 +822,7 @@ class Telaen_core
 
         switch ($maintype) {
         case 'text':
-            $body = $this->_compile_body($body, $ctenc, $mail_info['content-type']);
+            $body = $this->_compile_body($body, $ctenc, $mail_info['headers']['content-type']);
             switch ($subtype) {
             case 'html':
                 if (!$this->config['allow_html']) {
@@ -864,7 +864,7 @@ class Telaen_core
      */
     protected function _build_attach($header, $body, $boundary, $part)
     {
-        $headers = $this->_decode_header($header);
+        $headers = $this->_parse_headers($header);
         $cdisp = $headers['content-disposition'];
         $ctype = $headers['content-type'];
 
@@ -909,7 +909,7 @@ class Telaen_core
 
         if ($filename == "" && $main_type == 'message') {
             $attachheader = $this->fetch_structure($body);
-            $attachheader = $this->_decode_header($attachheader['header']);
+            $attachheader = $this->_parse_headers($attachheader['header']);
             $filename = $attachheader['subject'].'.eml';
             unset($attachheader);
         } elseif ($filename == "") {
@@ -1026,28 +1026,38 @@ class Telaen_core
 
     /**
      * Get all needed info about an email message
+     *  - create ['headers'] : hash of headers and values
+     *  - create ['ouidl']
+     *  - create ['uidl']
+     *  - create ['flags']
+     *  - create ['unread']
+     *  - set ['hparsed'] as true
      * @param  string $header Header of email
      * @param  string $first  Names
      * @return array
      */
-    public function get_mail_info($header, $first = 'ALL')
+    public function formalize_headers($header)
     {
         $myarray = [];
-        $headers = $this->_decode_header($header);
+        $headers = $this->_parse_headers($header);
 
-        if (!empty($headers['message-id'])) {
-            $myarray['message-id'] = preg_replace('|<(.*)>|', "$1", trim($headers['message-id']));
+        /*
+         * First, create some message fields
+         */
+        $ouidl = self::is_md5($headers['x-um-uidl']);
+        if (!empty($ouidl)) {
+            $myarray['ouidl'] = $ouidl;
         }
-        if (!empty($headers['content-type'])) {
-            $myarray['content-type'] = $headers['content-type'];
-        }
-        if (!empty($headers['x-priority'])) {
-            $myarray['priority'] = $headers['x-priority'][0];
+        $uidl = self::is_md5($headers['x-tln-uidl']);
+        if (!empty($uidl)) {
+            $myarray['uidl'] = $uidl;
         }
         $myarray['flags'] = $headers['x-um-flags'];
         $myarray['unread'] = (!preg_match("|{$this->flags['seen']}|i", $headers['x-um-status']) ? 1 : 0);
-        $myarray['content-transfer-encoding'] = (!empty($headers['content-transfer-encoding'])) ? str_replace('GM', '-', $headers['content-transfer-encoding']) : null;
 
+        /*
+         * Now, create canon Date
+         */
         $received = preg_replace('|  |', ' ', $headers['received']);
         $user_date = preg_replace('|  |', ' ', $headers['date']);
 
@@ -1085,36 +1095,28 @@ class Telaen_core
             $mydate = date('d M Y H:i');
             $mytimezone = $this->prefs['timezone'];
         }
+        $headers['date'] = $this->build_mime_date($mydate, $mytimezone);
 
-        $myarray['date'] = $this->build_mime_date($mydate, $mytimezone);
-        $myarray['subject'] = $this->_decode_mime_string($headers['subject']);
-        if ($first == 'FIRST_ONLY') {
-            $myarray['from'] = $this->_get_first_of_names($headers['from']);
-            $myarray['to'] = $this->_get_first_of_names($headers['to']);
-            $myarray['cc'] = $this->_get_first_of_names($headers['cc']);
-            $myarray['reply-to'] = $this->_get_first_of_names($headers['reply-to']);
-        } else {
-            $myarray['from'] = $this->get_names($headers['from']);
-            $myarray['to'] = $this->get_names($headers['to']);
-            $myarray['cc'] = $this->get_names($headers['cc']);
-            $myarray['reply-to'] = $this->get_names($headers['reply-to']);
-        }
-        $myarray['status'] = $headers['status'];
-        $myarray['x-spam-level'] = $headers['x-spam-level'];
+        /*
+         * Now, clean up some headers[] values
+         */
+        $headers['subject'] = $this->_decode_mime_string($headers['subject']);
 
         $receiptTo = $this->_get_first_of_names($headers['disposition-notification-to']);
-        $myarray['receipt-to'] = $receiptTo[0]['mail'];
+        $headers['x-receipt-to'] = $receiptTo[0]['mail'];
 
-        $ouidl = self::is_md5($headers['x-um-uidl']);
-        if (!empty($ouidl)) {
-            $myarray['ouidl'] = $ouidl;
+        if (!empty($headers['message-id'])) {
+            $headers['message-id'] = preg_replace('|<(.*)>|', "$1", trim($headers['message-id']));
         }
-        $uidl = self::is_md5($headers['x-tln-uidl']);
-        if (!empty($uidl)) {
-            $myarray['uidl'] = $uidl;
+        if (!empty($headers['x-priority']) && !empty($headers['priority'])) {
+            $headers['priority'] = $headers['x-priority'][0];
+        }
+        if (!empty($headers['content-transfer-encoding'])) {
+            $headers['content-transfer-encoding'] = str_replace('GM', '-', $headers['content-transfer-encoding']);
         }
 
         $myarray['hparsed'] = true;
+        $myarray['headers'] = $headers;
         unset($headers);
 
         return $myarray;
@@ -1170,17 +1172,17 @@ class Telaen_core
      * @param  string $email Email message
      * @return array
      */
-    public function Decode(&$email)
+    public function Decode($email)
     {
         $this->_content = [];
         $memail = $this->fetch_structure($email);
         $this->_msgbody = "";
         $body = $memail['body'];
         $header = $memail['header'];
-        $mail_info = $this->get_mail_info($header);
+        $mail_info = $this->formalize_headers($header);
         $this->_process_message($header, $body);
         self::add2me($this->_content, $mail_info);
-        $this->_content['headers'] = $header;
+        $this->_content['header'] = $header;
         $this->_content['body'] = $this->_msgbody;
 
         return $this->_content;
