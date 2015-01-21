@@ -50,6 +50,8 @@ class LocalMbox extends SQLite3
         'version' => 'INT DEFAULT 2',
         'unread' => 'INT DEFAULT 1',
         'folder' => 'TEXT NOT NULL',
+        'flags' => 'TEXT DEFAULT ""',
+        'localname' => 'TEXT DEFAULT ""',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY', // Our unique key (md5)
         'ouidl' => 'TEXT DEFAULT ""', // Old uidl from Telaen 1.x
         'headers' => 'TEXT DEFAULT ""', // NOTE: array
