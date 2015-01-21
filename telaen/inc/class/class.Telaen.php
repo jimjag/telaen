@@ -1790,23 +1790,8 @@ class Telaen extends Telaen_core
             $msg['uidl'] = self::md5(trim($msg['headers']['subject'].$msg['headers']['date'].$msg['headers']['message-id']));
         } else {
             /* try to grab from header */
-            $header = '';
             if (!$msg['islocal']) {
-                $this->mail_send_command('TOP ' . $id . ' 0');
-                $buffer = $this->mail_read_response();
-
-                /* if any problem with the server, stop the function */
-                if ($this->mail_nok_resp($buffer)) {
-                    $msg['uidl'] = self::md5(uniqid(''));
-                    return $msg['uidl'];
-                }
-                while (!self::_feof($this->_mail_connection)) {
-                    $buffer = $this->mail_read_response();
-                    if (chop($buffer) == '.') {
-                        break;
-                    }
-                    $header .= $buffer;
-                }
+                $header = $this->_mail_retr_header_pop($msg);
             } else {
                 if (file_exists($msg['localname'])) {
                     $email = $this->read_file($msg['localname']);
@@ -1817,9 +1802,14 @@ class Telaen extends Telaen_core
                     return $msg['uidl'];
                 }
             }
+            if ($header == '') {
+                $msg['uidl'] = self::md5(uniqid(''));
+                return $msg['uidl'];
+            }
             $mail_info = $this->formalize_headers($header);
             self::add2me($msg, $mail_info);
-            // $this->tdb->add_headers($msg);
+            $msg['header'] = $header;
+            $this->tdb->do_message($msg);
             if (!empty($mail_info['uidl'])) {
                 return $mail_info['uidl'];
             }
