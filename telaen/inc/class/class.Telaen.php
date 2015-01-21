@@ -1064,6 +1064,7 @@ class Telaen extends Telaen_core
                     $msg['size'] = intval($msgs[1]);
                     $msg['folder'] = $boxname;
                     $msg['islocal'] = false;
+                    $msg['headers'] = [];
                     /* If we have a UIDL, then use it, otherwise, we check later */
                     if (isset($uids[$mnum])) {
                         $msg['uidl'] = $uids[$mnum];

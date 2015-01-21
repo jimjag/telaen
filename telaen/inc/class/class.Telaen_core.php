@@ -1033,7 +1033,7 @@ class Telaen_core
      *  - create ['uidl']
      *  - create ['flags']
      *  - create ['unread']
-     *  - set ['hparsed'] as true
+     *  - set ['hparsed'] to true
      * @param  string $header Header of email
      * @param  string $first  Names
      * @return array
@@ -1121,8 +1121,6 @@ class Telaen_core
 
         $myarray['hparsed'] = true;
         $myarray['headers'] = $headers;
-        unset($headers);
-
         return $myarray;
     }
 
