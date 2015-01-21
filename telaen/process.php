@@ -19,7 +19,7 @@ extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'
 extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
 extract(Telaen::pull_from_array($_POST, array('back'), true));
 
-$headers = &$tdb->get_messages($folder);
+$headers = $tdb->get_messages($folder);
 $messagecount = count($headers);
 
 if (!$messagecount

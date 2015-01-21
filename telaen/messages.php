@@ -60,7 +60,7 @@ if ($timeleft > 0) {
 
 /* load total size */
 $totalused = 0;
-$folders = &$tdb->get_folders();
+$folders = $tdb->get_folders();
 foreach ($folders as $key => $val) {
     $totalused += $val['size'];
 }
@@ -82,7 +82,7 @@ $smarty->assign('umDateArrow', $date_arrow);
 $smarty->assign('umSizeArrow', $size_arrow);
 
 $tdb->get_messages($folder, true, $sortby, $sortorder);
-$headers = &$TLN->mail_list_msgs($folder, $start_pos, $end_pos);
+$headers = $TLN->mail_list_msgs($folder, $start_pos, $end_pos);
 $nummsg = $folders[$folder]['count'];
 $newmsgs = $folders[$folder]['unread'];
 $reg_pp = $TLN->prefs['rpp'];
@@ -175,7 +175,7 @@ if ($nummsg > 0) {
 
         $from = $headers[$i]['headers']['from'][0]['name'];
         $to = $headers[$i]['headers']['to'][0]['name'];
-        $subject = $headers[$i]['headers']['subject'];
+        $subject = $headers[$i]['subject'];
         if ($headers[$i]['unread']) {
             $msg_img = './images/msg_unread.gif';
         } elseif (stristr($headers[$i]['flags'], $TLN->flags['answered'])) {
@@ -198,7 +198,7 @@ if ($nummsg > 0) {
         $checkbox = '<input type="checkbox" name="msg_'.$i.'" value="1" />';
         $attachimg = ($headers[$i]['attach']) ? '&nbsp;<img src\"images/attach.gif" border="0" />' : '';
 
-        $date = $headers[$i]['headers']['date'];
+        $date = $headers[$i]['date'];
         $size = $headers[$i]['size'];
 
         $messagelist[$index]['read'] = !$headers[$i]['unread'];

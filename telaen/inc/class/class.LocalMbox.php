@@ -310,7 +310,7 @@ class LocalMbox extends SQLite3
      * @param string $uidl
      * @return array
      */
-    public function &get_attachments($folder, $uidl)
+    public function get_attachments($folder, $uidl)
     {
         $query = "SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;";
         $stmt = $this->prepare($query);
@@ -336,7 +336,7 @@ class LocalMbox extends SQLite3
      * This is quick so a SELECT is OK
      * @return hash
      */
-    public function &get_folders()
+    public function get_folders()
     {
         $query = 'SELECT * FROM folders';
         $result = $this->query($query);
@@ -363,7 +363,7 @@ class LocalMbox extends SQLite3
      * @param string $string
      * @return hash
      */
-    public function &get_folder($name)
+    public function get_folder($name)
     {
         return $this->folders[$name];
     }
@@ -509,7 +509,7 @@ class LocalMbox extends SQLite3
      * @param boolean $force TRUE to force a resync
      * @return array
      */
-    public function &get_messages($folder, $force = false, $sortby = "", $sortorder = "")
+    public function get_messages($folder, $force = false, $sortby = "", $sortorder = "")
     {
         if ($folder != $this->active_folder || $force) {
             /* keep sorting info between calls */

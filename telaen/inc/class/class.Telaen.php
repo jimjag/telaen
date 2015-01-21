@@ -1114,6 +1114,7 @@ class Telaen extends Telaen_core
                 $msg['folder'] = $boxname;
                 $msg['islocal'] = true;
                 $msg['version'] = $version;
+                $msg['header'] = $thisheader;
                 $mail_info = $this->formalize_headers($thisheader);
                 self::add2me($msg, $mail_info);
                 $msg['uidl'] = $this->_mail_get_uidl($msg);
@@ -1141,7 +1142,7 @@ class Telaen extends Telaen_core
      * @param  integer $wcount
      * @return array
      */
-    public function &mail_list_msgs($boxname = 'inbox', $start = 0, $wcount = 1024)
+    public function mail_list_msgs($boxname = 'inbox', $start = 0, $wcount = 1024)
     {
         $fetched_part = 0;
         $parallelized = 0;
@@ -1167,7 +1168,7 @@ class Telaen extends Telaen_core
         } else {
             $this->_mail_list_msgs_pop($boxname);
         }
-        $messages = &$this->tdb->get_messages($boxname);
+        $messages = $this->tdb->get_messages($boxname);
         /*
          * OK, now we have the message list, that contains id and size and possibly
          * the header as well (if not, we grab as needed).
@@ -1855,7 +1856,7 @@ class Telaen extends Telaen_core
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
             }
             if ($this->prefs['empty_trash']) {
-                $trash = &$this->tdb->get_messages('trash');
+                $trash = $this->tdb->get_messages('trash');
                 if (count($trash) > 0) {
                     foreach ($trash as $msg) {
                         $this->mail_delete_msg($msg, false);
@@ -1867,7 +1868,7 @@ class Telaen extends Telaen_core
             if ($this->prefs['empty_spam']) {
                 if (!$this->mail_connect()) $this->redirect_and_exit('index.php?err=1', true);
                 if (!$this->mail_auth()) $this->redirect_and_exit('index.php?err=0');
-                $trash = &$this->tdb->get_messages('spam');
+                $trash = $this->tdb->get_messages('spam');
                 if (count($trash) > 0) {
                     foreach ($trash as $msg) {
                         $this->mail_delete_msg($msg, false);
