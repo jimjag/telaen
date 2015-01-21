@@ -1117,6 +1117,11 @@ class Telaen_core
             $headers['content-transfer-encoding'] = str_replace('GM', '-', $headers['content-transfer-encoding']);
         }
 
+        /*
+         * Date and Subject are top level, as well as in the headers[]
+         */
+        $myarray['date'] = $headers['date'];
+        $myarray['subject'] = $headers['subject'];
         $myarray['hparsed'] = true;
         $myarray['headers'] = $headers;
         return $myarray;

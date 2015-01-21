@@ -524,8 +524,9 @@ class Telaen extends Telaen_core
             $msgheader .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
 
             // Update globally
+            $msg['headers']['x-tln-uidl'] = $msg['uidl'];
             $msg['header'] = $msgheader;
-            $this->tdb->m_delta[] = [$msg, ['header']];
+            $this->tdb->m_delta[] = [$msg, ['headers', 'header']];
 
             $msgcontent = "$msgheader\r\n\r\n$msgbody";
 
@@ -578,8 +579,9 @@ class Telaen extends Telaen_core
             $header .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
 
             // Update globally
+            $msg['headers']['x-tln-uidl'] = $msg['uidl'];
             $msg['header'] = $header;
-            $this->tdb->m_delta[] = [$msg, ['header']];
+            $this->tdb->m_delta[] = [$msg, ['headers', 'header']];
 
             $msgcontent = "$header\r\n\r\n$body";
 
@@ -1210,7 +1212,7 @@ class Telaen extends Telaen_core
                 $mail_info = $this->formalize_headers($header);
                 self::add2me($messages[$i], $mail_info);
                 $messages[$i]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
-                    $mail_info['content-type'])) ? 1 : 0;
+                    $mail_info['headers']['content-type'])) ? 1 : 0;
 
                 if ($messages[$i]['localname'] == '') {
                     $messages[$i]['localname'] = $this->_get_local_name($messages[$i]['uidl'], $boxname);
@@ -1218,8 +1220,8 @@ class Telaen extends Telaen_core
                 $this->tdb->do_message($messages[$i]);
             }
             $isspam = false;
-            $spamsubject = $mail_info['headers']['subject'];
-            $xspamlevel = $mail_info['headers']['x-spam-level'];
+            $spamsubject = $messages[$i]['headers']['subject'];
+            $xspamlevel = $messages[$i]['headers']['x-spam-level'];
             /*
              * Only auto-populate the SPAM folder if
              * we have _autospamfolder set :)

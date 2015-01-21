@@ -49,12 +49,14 @@ class LocalMbox extends SQLite3
         'uid' => 'INT DEFAULT 0', // IMAP UID
         'version' => 'INT DEFAULT 2',
         'unread' => 'INT DEFAULT 1',
+        'subject' => 'TEXT DEFAULT ""',
         'folder' => 'TEXT NOT NULL',
         'flags' => 'TEXT DEFAULT ""',
         'localname' => 'TEXT DEFAULT ""',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY', // Our unique key (md5)
         'ouidl' => 'TEXT DEFAULT ""', // Old uidl from Telaen 1.x
-        'headers' => 'TEXT DEFAULT ""', // NOTE: array
+        'header' => 'TEXT DEFAULT ""', // Raw header for Email
+        'headers' => 'TEXT DEFAULT ""', // NOTE: array of headers
     );
 
     public $folders = [];  // Hash: All Email boxes/folders; key = name
