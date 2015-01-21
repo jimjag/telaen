@@ -1046,13 +1046,11 @@ class Telaen_core
         /*
          * First, create some message fields
          */
-        $ouidl = self::is_md5($headers['x-um-uidl']);
-        if (!empty($ouidl)) {
-            $myarray['ouidl'] = $ouidl;
+        if (self::is_md5($headers['x-um-uidl'])) {
+            $myarray['ouidl'] = $headers['x-um-uidl'];
         }
-        $uidl = self::is_md5($headers['x-tln-uidl']);
-        if (!empty($uidl)) {
-            $myarray['uidl'] = $uidl;
+        if (self::is_md5($headers['x-tln-uidl'])) {
+            $myarray['uidl'] = $headers['x-tln-uidl'];
         } elseif (!empty($myarray['ouidl'])) {
             $myarray['uidl'] = $myarray['ouidl'];
         }

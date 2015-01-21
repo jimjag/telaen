@@ -1206,11 +1206,8 @@ class Telaen extends Telaen_core
              * as well
              */
             if (!$messages[$i]['hparsed']) {
-                if ($messages[$i]['header'] == '') {
-                    $header = $this->mail_retr_header($messages[$i]);
-                    $messages[$i]['header'] = $header;
-                }
-                $mail_info = $this->formalize_headers($messages[$i]['header']);
+                $header = $this->mail_retr_header($messages[$i]);
+                $mail_info = $this->formalize_headers($header);
                 self::add2me($messages[$i], $mail_info);
                 $messages[$i]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                     $mail_info['content-type'])) ? 1 : 0;
@@ -1772,6 +1769,9 @@ class Telaen extends Telaen_core
      */
     protected function _mail_get_uidl(&$msg)
     {
+        if (!empty($msg['uidl'])) {
+            return $msg['uidl'];
+        }
         $id = $msg['mnum'];
         if (!empty($this->capabilities['UIDL']) && !$msg['islocal']) {
             $this->mail_send_command("UIDL $id");
