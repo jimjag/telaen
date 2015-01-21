@@ -1216,7 +1216,7 @@ class Telaen extends Telaen_core
                     $mail_info['headers']['content-type'])) ? 1 : 0;
 
                 if ($messages[$i]['localname'] == '') {
-                    $messages[$i]['localname'] = $this->_get_local_name($messages[$i]['uidl'], $boxname);
+                    list($messages[$i]['localname'], $nil) = $this->_get_local_name($messages[$i]['uidl'], $boxname);
                 }
                 $this->tdb->do_message($messages[$i]);
             }
