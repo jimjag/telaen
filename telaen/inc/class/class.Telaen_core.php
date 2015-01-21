@@ -1774,31 +1774,39 @@ ENDOFREDIRECT;
      * @param string $thread
      * @return array
      */
-    static public function do_thread2($thread)
+    static public function parse_thread($thread)
     {
         $thread = preg_replace('|[^ ()[:alnum:]]|', '', $thread);
         $end = strlen($thread);
         $stack = [];
+        $pstack = [];
         $depth = 0;
         $start = null;
         $out = [];
+        $parent = null;
         for ($i = 0; $i < $end; $i++) {
             switch ($thread[$i]) {
                 case '(':
                     $stack[] = $depth;
                     $start = null;
+                    $pstack[] = $parent;
                     break;
                 case ' ':
                     if ($start !== null) {
-                        $out[] = [substr($thread, $start, $i - $start), $depth];
+                        $parent = array_pop($pstack);
+                        $uid = substr($thread, $start, $i - $start);
+                        $out[] = [$uid, $depth, $parent];
+                        $pstack[] = $parent = $uid;
                         $depth++;
                         $start = null;
                     }
                     break;
                 case ')':
+                    $parent = array_pop($pstack);
                     if ($start !== null) {
-                        $out[] = [substr($thread, $start, $i - $start), $depth];
+                        $out[] = [substr($thread, $start, $i - $start), $depth, $parent];
                     }
+                    $parent = end($pstack);
                     $depth = array_pop($stack);
                     $start = null;
                     break;
