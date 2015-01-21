@@ -173,9 +173,9 @@ if ($nummsg > 0) {
         $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]['from'][0]['name'])."&mailto=".htmlspecialchars($headers[$i]['from'][0]['mail'])."";
         $composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]['to'][0]['name'])."&mailto=".htmlspecialchars($headers[$i]['to'][0]['name'])."";
 
-        $from = $headers[$i]['from'][0]['name'];
-        $to = $headers[$i]['to'][0]['name'];
-        $subject = $headers[$i]['subject'];
+        $from = $headers[$i]['headers']['from'][0]['name'];
+        $to = $headers[$i]['headers']['to'][0]['name'];
+        $subject = $headers[$i]['headers']['subject'];
         if ($headers[$i]['unread']) {
             $msg_img = './images/msg_unread.gif';
         } elseif (stristr($headers[$i]['flags'], $TLN->flags['answered'])) {
@@ -185,7 +185,7 @@ if ($nummsg > 0) {
         } else {
             $msg_img = './images/msg_read.gif';
         }
-        $prior = $headers[$i]['priority'];
+        $prior = $headers[$i]['headers']['priority'];
         if ($prior == 4 || $prior == 5) {
             $img_prior = '&nbsp;<img src="./images/prior_low.gif" width="5" height="11" border="0" alt="" />';
         } elseif ($prior == 1 || $prior == 2) {
@@ -198,7 +198,7 @@ if ($nummsg > 0) {
         $checkbox = '<input type="checkbox" name="msg_'.$i.'" value="1" />';
         $attachimg = ($headers[$i]['attach']) ? '&nbsp;<img src\"images/attach.gif" border="0" />' : '';
 
-        $date = $headers[$i]['date'];
+        $date = $headers[$i]['headers']['date'];
         $size = $headers[$i]['size'];
 
         $messagelist[$index]['read'] = !$headers[$i]['unread'];

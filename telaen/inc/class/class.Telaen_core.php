@@ -524,8 +524,10 @@ class Telaen_core
      * Try to extract the first name in a specified field (from, to, cc)
      * In order to guess what is the format (the RFC support 3), it will
      * try different ways to get the name and email
+     * @param string $strmail
+     * @return array
      */
-    protected function _get_first_of_names($strmail)
+    public function get_first_of_names($strmail)
     {
         $ARfrom = [];
         $strmail = stripslashes(preg_replace('/(\t|\r|\n)/', "", $strmail));
@@ -1102,7 +1104,7 @@ class Telaen_core
          */
         $headers['subject'] = $this->_decode_mime_string($headers['subject']);
 
-        $receiptTo = $this->_get_first_of_names($headers['disposition-notification-to']);
+        $receiptTo = $this->get_first_of_names($headers['disposition-notification-to']);
         $headers['x-receipt-to'] = $receiptTo[0]['mail'];
 
         if (!empty($headers['message-id'])) {
