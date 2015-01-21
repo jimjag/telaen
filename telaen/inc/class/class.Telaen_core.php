@@ -1053,6 +1053,8 @@ class Telaen_core
         $uidl = self::is_md5($headers['x-tln-uidl']);
         if (!empty($uidl)) {
             $myarray['uidl'] = $uidl;
+        } elseif (!empty($myarray['ouidl'])) {
+            $myarray['uidl'] = $myarray['ouidl'];
         }
         $myarray['flags'] = $headers['x-um-flags'];
         $myarray['unread'] = (!preg_match("|{$this->flags['seen']}|i", $headers['x-um-status']) ? 1 : 0);
