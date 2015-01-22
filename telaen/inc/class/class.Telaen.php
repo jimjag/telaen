@@ -686,7 +686,7 @@ class Telaen extends Telaen_core
 
     protected function _mail_delete_msg_imap($msg, $send_to_trash = true, $save_only_read = false)
     {
-        $read = (preg_match('|\\SEEN|', $msg['flags'])) ? 1 : 0;
+        $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
 
         /* check the message id to make sure that the messages still in the server */
         if ($this->_current_folder != $msg['folder']) {
@@ -743,14 +743,14 @@ class Telaen extends Telaen_core
                 unlink($currentname);
             }
         }
-        $this->mail_set_flag($msg, '\\DELETED', '+');
+        $this->mail_set_flag($msg, $this->flags['deleted'], '+');
 
         return $this->tdb->del_messages($msg);
     }
 
     protected function _mail_delete_msg_pop($msg, $send_to_trash = true, $save_only_read = false)
     {
-        $read = (preg_match('|\\SEEN|', $msg['flags'])) ? 1 : 0;
+        $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
 
         /* now we are working with POP3 */
         /* check the message id to make sure that the messages still in the server */
@@ -769,7 +769,7 @@ class Telaen extends Telaen_core
                 if (!$this->mail_retr_msg($msg, 0)) {
                     return false;
                 }
-                $this->mail_set_flag($msg, '\\SEEN', '-');
+                $this->mail_set_flag($msg, $this->flags['seen'], '-');
             }
 
             $this->mail_send_command('DELE '.$msg['mnum']);
@@ -863,7 +863,7 @@ class Telaen extends Telaen_core
                 copy($currentname, $newfilename);
                 unlink($currentname);
             }
-            $this->mail_set_flag($msg, '\\DELETED', '+');
+            $this->mail_set_flag($msg, $this->flags['deleted'], '+');
         }
 
         return true;
@@ -889,7 +889,7 @@ class Telaen extends Telaen_core
                     if (!$this->mail_retr_msg($msg, 0)) {
                         return false;
                     }
-                    $this->mail_set_flag($msg, '\\SEEN', '-');
+                    $this->mail_set_flag($msg, $this->flags['seen'], '-');
                 }
             }
             // ensure that the original file exist
