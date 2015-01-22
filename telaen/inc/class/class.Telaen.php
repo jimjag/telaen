@@ -1066,7 +1066,6 @@ class Telaen extends Telaen_core
                     $msg['size'] = intval($msgs[1]);
                     $msg['folder'] = $boxname;
                     $msg['islocal'] = false;
-                    $msg['headers'] = [];
                     /* If we have a UIDL, then use it, otherwise, we check later */
                     if (isset($uids[$mnum])) {
                         $msg['uidl'] = $uids[$mnum];
@@ -1192,7 +1191,7 @@ class Telaen extends Telaen_core
          */
         for ($i = 0; $i < $mcount; $i++) {
             $workit = false;
-            if ((($j < $start) || ($j >= $end_pos)) && $messages[$i]['hparsed']) {
+            if ((($j < $start) || ($j >= $end_pos)) && !empty($messages[$i]['headers'])) {
                 $workit = true;
             }
             if (($j >= $start) && ($j <= $end_pos)) {
@@ -1208,20 +1207,22 @@ class Telaen extends Telaen_core
              * headers for the message list. We also check for SPAM here
              * as well
              */
-            if (!$messages[$i]['hparsed']) {
-                $header = $this->mail_retr_header($messages[$i]);
-                $mail_info = $this->formalize_headers($header);
+            if (empty($messages[$i]['headers'])) {
+                if (empty($messages[$i]['header'])) {
+                    $messages[$i]['header'] = $this->mail_retr_header($messages[$i]);
+                }
+                $mail_info = $this->formalize_headers($messages[$i]['header']);
                 self::add2me($messages[$i], $mail_info);
                 $messages[$i]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                     $mail_info['headers']['content-type'])) ? 1 : 0;
 
                 if ($messages[$i]['localname'] == '') {
-                    list($messages[$i]['localname'], $nil) = $this->_get_local_name($messages[$i]['uidl'], $boxname);
+                    $messages[$i]['localname'] = $this->_get_local_name($messages[$i]['uidl'], $boxname)[0];
                 }
                 $this->tdb->do_message($messages[$i]);
             }
             $isspam = false;
-            $spamsubject = $messages[$i]['headers']['subject'];
+            $spamsubject = $messages[$i]['subject'];
             $xspamlevel = $messages[$i]['headers']['x-spam-level'];
             /*
              * Only auto-populate the SPAM folder if
@@ -1787,8 +1788,8 @@ class Telaen extends Telaen_core
         }
         if (!empty($msg['uidl'])) {
             return $msg['uidl'];
-        } elseif (!empty($msg['headers']['subject']) && !empty($msg['headers']['date']) && !empty($msg['headers']['message-id'])) {
-            $msg['uidl'] = self::md5(trim($msg['headers']['subject'].$msg['headers']['date'].$msg['headers']['message-id']));
+        } elseif (!empty($msg['subject']) && !empty($msg['date']) && !empty($msg['message-id'])) {
+            $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']));
         } else {
             /* try to grab from header */
             if (!$msg['islocal']) {
@@ -1799,7 +1800,7 @@ class Telaen extends Telaen_core
                     $email = $this->fetch_structure($email);
                     $header = $email['header'];
                 } else {
-                    $msg['uidl'] = self::md5(trim($msg['headers']['subject'].$msg['headers']['date'].$msg['headers']['message-id']).uniqid(''));
+                    $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']).uniqid(''));
                     return $msg['uidl'];
                 }
             }
@@ -1814,10 +1815,10 @@ class Telaen extends Telaen_core
             if (!empty($mail_info['uidl'])) {
                 return $mail_info['uidl'];
             }
-            $msg['uidl'] = self::md5(trim($msg['headers']['subject'].$msg['headers']['date'].$msg['headers']['message-id']));
+            $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']));
         }
         if (empty($msg['uidl'])) {
-            $msg['uidl'] = self::md5(trim($msg['headers']['subject'].$msg['headers']['date'].$msg['headers']['message-id']).uniqid(''));
+            $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']).uniqid(''));
         }
         return $msg['uidl'];
     }

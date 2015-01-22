@@ -40,7 +40,6 @@ class LocalMbox extends SQLite3
     );
     private $mschema = array(
         'date' => 'INT DEFAULT 0',
-        'hparsed' => 'INT DEFAULT 0', // Have we parsed the header?
         'id' => 'INT DEFAULT 0',
         'mnum' => 'INT DEFAULT 0', // message number
         'size' => 'INT DEFAULT 0',
@@ -50,13 +49,13 @@ class LocalMbox extends SQLite3
         'version' => 'INT DEFAULT 2',
         'unread' => 'INT DEFAULT 1',
         'subject' => 'TEXT DEFAULT ""',
+        'message-id' => 'TEXT DEFAULT ""',
         'folder' => 'TEXT NOT NULL',
         'flags' => 'TEXT DEFAULT ""',
         'localname' => 'TEXT DEFAULT ""',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY', // Our unique key (md5)
         'ouidl' => 'TEXT DEFAULT ""', // Old uidl from Telaen 1.x
         'header' => 'TEXT DEFAULT ""', // Raw header for Email
-        'headers' => 'TEXT DEFAULT ""', // NOTE: array of headers
     );
 
     public $folders = [];  // Hash: All Email boxes/folders; key = name
@@ -66,13 +65,6 @@ class LocalMbox extends SQLite3
     public $allfolders = []; // All folders/directors
     public $udatafolder = '_infos';
     public $m_delta = []; // Hash: key = message; value = array() of field changes
-    /*
-     * Some message elements are arrays, that need to be serialize when storing and
-     * unserialize when read. Thankfully, all these are unique field names and
-     * so we don't need to check that we are updating/inserting messages, specifically,
-     * when serializing.
-     */
-    public $m_serialize = ['headers'];
     private $_system_folders = ['inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos'];
     private $_invisible = ['_attachments', '_infos'];
     private $_indb = []; /* Hash: key = uidl; value = is it in the DB? */
@@ -234,7 +226,7 @@ class LocalMbox extends SQLite3
         reset($list);
         $i = 1;
         foreach ($list as $key) {
-            $stmt->bindValue("$i", (in_array($key, $this->m_serialize) ? serialize($data[$key]) : $data[$key]));
+            $stmt->bindValue("$i", $data[$key]);
             $i++;
         }
         foreach ($where as $key => $val) {
@@ -271,7 +263,7 @@ class LocalMbox extends SQLite3
         reset($list);
         $i = 1;
         foreach ($list as $key) {
-            $stmt->bindValue("$i", (in_array($key, $this->m_serialize) ? serialize($data[$key]) : $data[$key]));
+            $stmt->bindValue("$i", $data[$key]);
             $i++;
         }
         if (!$stmt->execute()) {
@@ -537,9 +529,6 @@ class LocalMbox extends SQLite3
             $index = 0;
             if ($result) {
                 while ($foo = $result->fetchArray(SQLITE3_ASSOC)) {
-                    foreach($this->m_serialize as $k) {
-                        $foo[$k] = @unserialize($foo[$k]);
-                    }
                     $this->messages[$index] = $foo;
                     $this->messages[$index]['idx'] = $index;
                     $this->m_idx[$foo['uidl']] = $index;
