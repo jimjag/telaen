@@ -169,13 +169,15 @@ printf($textout);
 
 if ($nummsg > 0) {
     for ($i = $start_pos;$i<$end_pos;$i++) {
-        $readlink = "javascript:readmsg($i,!$headers[$i]['unread'])";
-        $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]['from'][0]['name'])."&mailto=".htmlspecialchars($headers[$i]['from'][0]['mail'])."";
-        $composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]['to'][0]['name'])."&mailto=".htmlspecialchars($headers[$i]['to'][0]['name'])."";
-
-        $from = $headers[$i]['headers']['from'][0]['name'];
-        $to = $headers[$i]['headers']['to'][0]['name'];
+        $from = $TLN->get_names($headers[$i]['headers']['from'])[0]['name'];
+        $to = $TLN->get_names($headers[$i]['headers']['to'])[0]['name'];
+        $email = $TLN->get_names($headers[$i]['from'])[0]['mail'];
         $subject = $headers[$i]['subject'];
+
+        $readlink = "javascript:readmsg($i,!$headers[$i]['unread'])";
+        $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($from)."&mailto=".htmlspecialchars($email);
+        $composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($to)."&mailto=".htmlspecialchars($to);
+
         if ($headers[$i]['unread']) {
             $msg_img = './images/msg_unread.gif';
         } elseif (stristr($headers[$i]['flags'], $TLN->flags['answered'])) {

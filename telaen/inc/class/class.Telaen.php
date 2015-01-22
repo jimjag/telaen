@@ -1136,7 +1136,6 @@ class Telaen extends Telaen_core
     /**
      * List all messages in emailbox
      * @param  string  $boxname       The name of emailbox
-     * @param  array   $localmessages
      * @param  integer $start
      * @param  integer $wcount
      * @return array
