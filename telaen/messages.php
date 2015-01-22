@@ -60,7 +60,7 @@ if ($timeleft > 0) {
 
 /* load total size */
 $totalused = 0;
-$folders = $tdb->get_folders();
+$folders = &$tdb->get_folders();
 foreach ($folders as $key => $val) {
     $totalused += $val['size'];
 }

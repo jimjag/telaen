@@ -94,8 +94,8 @@ class LocalMbox extends SQLite3
         $exists = is_writable($this->db);
         parent::__construct($this->db, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
         //$this->open($this->db, SQLITE3_OPEN_READWRITE| SQLITE3_OPEN_CREATE);
-        // $this->query('PRAGMA synchronous = 0;');
-        // $this->query('PRAGMA journal_mode = MEMORY;');
+        $this->query('PRAGMA synchronous = 0;');
+        $this->query('PRAGMA journal_mode = MEMORY;');
         if (!$exists || $force_new) {
             $this->init_tables();
         }
@@ -333,10 +333,10 @@ class LocalMbox extends SQLite3
     /**
      * Get list of all available folders/emailboxes
      * $this-folders auto-populated with hash
-     * This is quick so a SELECT is OK
-     * @return hash
+     * This is quick so a SELECT is OK.
+     * @return array (reference)
      */
-    public function get_folders()
+    public function &get_folders()
     {
         $query = 'SELECT * FROM folders';
         $result = $this->query($query);
@@ -357,11 +357,9 @@ class LocalMbox extends SQLite3
     }
 
     /**
-     * Get list of all available folders/emailboxes
-     * $this-folders auto-populated with hash
-     * This is quick so a SELECT is OK
+     * Get folder array
      * @param string $string
-     * @return hash
+     * @return array
      */
     public function get_folder($name)
     {
