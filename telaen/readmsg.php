@@ -22,7 +22,7 @@ $mail_info = $mysess[$ix];
 $is_attached = false;
 $arAttachment = array();
 
-if (!($result = $TLN->mail_retr_msg($mail_info, 1))) {
+if (!($result = $TLN->mail_retr_msg($mail_info))) {
     $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&pag=$pag&refr=true");
 }
 if (!$TLN->mail_set_flag($mail_info, '\\SEEN', '+')) {

@@ -45,6 +45,7 @@ class LocalMbox extends SQLite3
         'size' => 'INT DEFAULT 0',
         'attach' => 'INT DEFAULT 0',
         'islocal' => 'INT DEFAULT 0', // Does it live on web server?
+        'iscached' => 'INT DEFAULT 0', // Do we have a cached copy?
         'uid' => 'INT DEFAULT 0', // IMAP UID
         'version' => 'INT DEFAULT 2',
         'unread' => 'INT DEFAULT 1',
@@ -505,6 +506,8 @@ class LocalMbox extends SQLite3
      * $this->headers auto-populated with array
      * @param string $folder
      * @param boolean $force TRUE to force a resync
+     * @param string $sortby
+     * @param string $sortorder
      * @return array
      */
     public function get_messages($folder, $force = false, $sortby = "", $sortorder = "")

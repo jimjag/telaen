@@ -468,39 +468,19 @@ class Telaen extends Telaen_core
         }
     }
 
-    protected function _mail_retr_msg_imap(&$msg, $check = 1)
+    /**
+     * Grab Email message content (body)
+     * @param array $msg Message to grab (REF)
+     * @return string
+     */
+    protected function _mail_retr_msg_imap(&$msg)
     {
         $msgheader = trim($msg['header']);
-
-        if ($check) {
-            if ($this->_current_folder != $msg['folder']) {
-                $boxinfo = $this->mail_select_box($msg['folder']);
-            }
-
-            $this->mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
-            $buffer = chop($this->mail_read_response());
-            if ($this->mail_nok_resp($buffer)) {
-                return false;
-            }
-            while (!$this->mail_ok_resp($buffer)) {
-                if (preg_match('|message-id: (.*)|i', $buffer, $regs)) {
-                    $current_id = preg_replace('|<(.*)>|', "$1", $regs[1]);
-                }
-                $buffer = chop($this->mail_read_response());
-            }
-
-            if ($current_id != $msg['message-id']) {
-                $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
-                    $current_id,
-                    $msg['message-id']), __FUNCTION__);
-                return false;
-            }
-        }
 
         if (file_exists($msg['localname'])) {
             $msgcontent = $this->read_file($msg['localname']);
         } else {
-            $this->mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY[TEXT]');
+            $this->mail_send_command("UID FETCH {$msg['uid']} BODY[TEXT]");
             $buffer = $this->mail_read_response();
             if ($this->mail_nok_resp($buffer)) {
                 return false;
@@ -526,7 +506,7 @@ class Telaen extends Telaen_core
             // Update globally
             $msg['headers']['x-tln-uidl'] = $msg['uidl'];
             $msg['header'] = $msgheader;
-            $this->tdb->m_delta[] = [$msg, ['headers', 'header']];
+            $this->tdb->do_message($msg);
 
             $msgcontent = "$msgheader\r\n\r\n$msgbody";
 
@@ -536,19 +516,13 @@ class Telaen extends Telaen_core
         return $msgcontent;
     }
 
-    protected function _mail_retr_msg_pop(&$msg, $check = 1)
+    /**
+     * Grab Email message content (body)
+     * @param array $msg Message to grab (REF)
+     * @return string
+     */
+    protected function _mail_retr_msg_pop(&$msg)
     {
-        if ($check && ($msg['folder'] == 'inbox')) {
-            $muidl = $this->_mail_get_uidl($msg);
-            if ($msg['uidl'] && ($msg['uidl'] != $muidl)) {
-                $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
-                    $msg['uidl'],
-                    $muidl),__FUNCTION__);
-
-                return false;
-            }
-        }
-
         if (file_exists($msg['localname'])) {
             $msgcontent = $this->read_file($msg['localname']);
         } elseif ($msg['folder'] == 'inbox') {
@@ -581,7 +555,7 @@ class Telaen extends Telaen_core
             // Update globally
             $msg['headers']['x-tln-uidl'] = $msg['uidl'];
             $msg['header'] = $header;
-            $this->tdb->m_delta[] = [$msg, ['headers', 'header']];
+            $this->tdb->do_message($msg);
 
             $msgcontent = "$header\r\n\r\n$body";
 
@@ -597,12 +571,12 @@ class Telaen extends Telaen_core
      * @param  boolean $check if it exists
      * @return string
      */
-    public function mail_retr_msg(&$msg, $check = 1)
+    public function mail_retr_msg(&$msg)
     {
         if ($this->mail_protocol == IMAP) {
-            return $this->_mail_retr_msg_imap($msg, $check);
+            return $this->_mail_retr_msg_imap($msg);
         } else {
-            return $this->_mail_retr_msg_pop($msg, $check);
+            return $this->_mail_retr_msg_pop($msg);
         }
     }
 
@@ -612,7 +586,7 @@ class Telaen extends Telaen_core
             return $msg['header'];
         }
         $ret = $header = '';
-        $this->mail_send_command('UID FETCH '.$msg['uid'].' (RFC822.HEADER)');
+        $this->mail_send_command("UID FETCH {$msg['uid']} (RFC822.HEADER)");
         $buffer = $this->mail_read_response();
 
         /* if any problem, stop the procedure */
@@ -693,34 +667,13 @@ class Telaen extends Telaen_core
             $boxinfo = $this->mail_select_box($msg['folder']);
         }
 
-        $this->mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
+        $this->mail_send_command("UID FETCH {$msg['uid']} BODY.PEEK[HEADER.FIELDS (Message-Id)]");
         $buffer = chop($this->mail_read_response());
 
         /* if any problem with the server, stop the function */
         if ($this->mail_nok_resp($buffer)) {
             return false;
         }
-
-        while (!$this->mail_ok_resp($buffer)) {
-            /* we need only the message id yet */
-
-            if (preg_match('|message-id: (.*)|i', $buffer, $regs)) {
-                $current_id = preg_replace('|<(.*)>|', "$1", $regs[1]);
-            }
-
-            $buffer = chop($this->mail_read_response());
-        }
-
-        /* compare the old and the new message id, if different, stop*/
-        if ($current_id != $msg['message-id']) {
-            $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
-                $current_id,
-                $msg['message-id']), __FUNCTION__);
-
-            return false;
-        }
-
-        /*if the pointer is here, no one problem occours*/
 
         if ($send_to_trash
             && $msg['folder'] != 'trash'
@@ -754,7 +707,7 @@ class Telaen extends Telaen_core
 
         /* now we are working with POP3 */
         /* check the message id to make sure that the messages still in the server */
-        if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
+        if ($msg['folder'] == 'inbox' && !$msg['islocal']) {
             /* compare the old and the new message uidl, if different, stop*/
             $muidl = $this->_mail_get_uidl($msg['mnum']);
             if ($msg['uidl'] != $muidl) {
@@ -766,7 +719,7 @@ class Telaen extends Telaen_core
             }
 
             if (!file_exists($msg['localname'])) {
-                if (!$this->mail_retr_msg($msg, 0)) {
+                if (!$this->mail_retr_msg($msg)) {
                     return false;
                 }
                 $this->mail_set_flag($msg, $this->flags['seen'], '-');
@@ -821,30 +774,11 @@ class Telaen extends Telaen_core
                 $boxinfo = $this->mail_select_box($msg['folder']);
             }
 
-            $this->mail_send_command('FETCH '.$msg['mnum'].':'.$msg['mnum'].' BODY.PEEK[HEADER.FIELDS (Message-Id)]');
+            $this->mail_send_command("UID FETCH {$msg['uid']} BODY.PEEK[HEADER.FIELDS (Message-Id)]");
             $buffer = chop($this->mail_read_response());
 
             /* if any problem with the server, stop the function */
             if ($this->mail_nok_resp($buffer)) {
-                return false;
-            }
-
-            while (!$this->mail_ok_resp($buffer)) {
-                /* we need only the message id yet */
-
-                if (preg_match('|message-id: (.*)|i', $buffer, $regs)) {
-                    $current_id = preg_replace('|<(.*)>|', "$1", $regs[1]);
-                }
-
-                $buffer = chop($this->mail_read_response());
-            }
-
-            /* compare the old and the new message id, if different, stop*/
-            if ($current_id != $msg['message-id']) {
-                $this->trigger_error(sprintf("Message ID's differ: [%s/%s]",
-                    $current_id,
-                    $msg['message-id']), __FUNCTION__);
-
                 return false;
             }
 
@@ -886,7 +820,7 @@ class Telaen extends Telaen_core
                 }
 
                 if (!file_exists($msg['localname'])) {
-                    if (!$this->mail_retr_msg($msg, 0)) {
+                    if (!$this->mail_retr_msg($msg)) {
                         return false;
                     }
                     $this->mail_set_flag($msg, $this->flags['seen'], '-');
@@ -1567,7 +1501,7 @@ class Telaen extends Telaen_core
                 return false;
             }
         } elseif (!file_exists($msg['localname'])) {
-            $this->mail_retr_msg($msg, 0);
+            $this->mail_retr_msg($msg);
         }
 
         if (file_exists($msg['localname'])) {
