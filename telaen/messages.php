@@ -142,7 +142,7 @@ sort_order = '$sortorder';
 function sortby(col) {
 	if(col == sort_colum) ord = (sort_order == 'ASC')?'DESC':'ASC';
 	else ord = 'ASC';
-	location = 'process.php?folder=$folder&pag=$pag&sortby='+col+'&sortorder='+ord+'';
+	location = 'process.php?folder=".urlencode($folder)."&pag=$pag&sortby='+col+'&sortorder='+ord+'';
 }
 //]]>
 </script>
@@ -152,11 +152,11 @@ if (isset($msg)) {
     $smarty->assign('umErrorMessage', $msg);
 }
 
-$forms = "<input type=\"hidden\" name=\"decision\" value=\"delete\" />
-<input type=\"hidden\" name=\"folder\" value=\"".urlencode($folder)."\" />
-<input type=\"hidden\" name=\"pag\" value=\"$pag\" />
-<input type=\"hidden\" name=\"start_pos\" value=\"$start_pos\" />
-<input type=\"hidden\" name=\"end_pos\" value=\"$end_pos\" />";
+$forms = "<input type='hidden' name='decision' value='delete' />
+<input type='hidden' name='folder' value='".urlencode($folder)."' />
+<input type='hidden' name='pag' value='".$pag."' />
+<input type='hidden' name='start_pos' value='".$start_pos."' />
+<input type='hidden' name='end_pos' value='".$end_pos."' />";
 
 $smarty->assign('umJS', $jssource);
 $smarty->assign('umForms', $forms);
@@ -189,16 +189,16 @@ if ($nummsg > 0) {
         }
         $prior = $headers[$i]['headers']['priority'];
         if ($prior > 3) {
-            $img_prior = '&nbsp;<img src="./images/prior_low.gif" width="5" height="11" border="0" alt="" />';
+            $img_prior = '&nbsp;<img src="images/prior_low.gif" width="5" height="11" border="0" alt="" />';
         } elseif ($prior < 3) {
-            $img_prior = '&nbsp;<img src="./images/prior_high.gif" width="5" height="11" border="0" alt="" />';
+            $img_prior = '&nbsp;<img src="images/prior_high.gif" width="5" height="11" border="0" alt="" />';
         } else {
             $img_prior = "";
         }
 
         $msg_img = '&nbsp;<img src="'.$msg_img.'" width="14" height="14" border="0" alt="" />';
         $checkbox = '<input type="checkbox" name="msg_'.$i.'" value="1" />';
-        $attachimg = ($headers[$i]['attach']) ? '&nbsp;<img src\"images/attach.gif" border="0" />' : '';
+        $attachimg = ($headers[$i]['attach']) ? '&nbsp;<img src="images/attach.gif" border="0" />' : '';
 
         $date = $headers[$i]['date'];
         $size = $headers[$i]['size'];
