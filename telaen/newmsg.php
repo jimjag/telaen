@@ -204,8 +204,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     $show_advanced = ((!$textmode) && ($TLN->prefs['editor_mode'] != 'text')) ? 1 : 0;
     $js_advanced = ($show_advanced) ? 'true' : 'false';
 
-        // signature
-        $signature = $TLN->prefs['signature'];
+    $signature = $TLN->prefs['signature'];
     if ($show_advanced) {
         $signature = nl2br($signature);
     }
