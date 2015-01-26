@@ -153,7 +153,7 @@ if (isset($msg)) {
 }
 
 $forms = "<input type=\"hidden\" name=\"decision\" value=\"delete\" />
-<input type=\"hidden\" name=\"folder\" value=\"".htmlspecialchars($folder)."\" />
+<input type=\"hidden\" name=\"folder\" value=\"".urlencode($folder)."\" />
 <input type=\"hidden\" name=\"pag\" value=\"$pag\" />
 <input type=\"hidden\" name=\"start_pos\" value=\"$start_pos\" />
 <input type=\"hidden\" name=\"end_pos\" value=\"$end_pos\" />";
@@ -175,8 +175,8 @@ if ($nummsg > 0) {
         $subject = $headers[$i]['subject'];
 
         $readlink = "javascript:readmsg($i,!$headers[$i]['unread'])";
-        $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($from)."&mailto=".htmlspecialchars($email);
-        $composelinksent = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($to)."&mailto=".htmlspecialchars($to);
+        $composelink = "newmsg.php?folder=".urlencode($folder)."&nameto=".htmlspecialchars($from)."&mailto=".htmlspecialchars($email);
+        $composelinksent = "newmsg.php?folder=".urlencode($folder)."&nameto=".htmlspecialchars($to)."&mailto=".htmlspecialchars($to);
 
         if ($headers[$i]['unread']) {
             $msg_img = './images/msg_unread.gif';
@@ -188,9 +188,9 @@ if ($nummsg > 0) {
             $msg_img = './images/msg_read.gif';
         }
         $prior = $headers[$i]['headers']['priority'];
-        if ($prior == 4 || $prior == 5) {
+        if ($prior > 3) {
             $img_prior = '&nbsp;<img src="./images/prior_low.gif" width="5" height="11" border="0" alt="" />';
-        } elseif ($prior == 1 || $prior == 2) {
+        } elseif ($prior < 3) {
             $img_prior = '&nbsp;<img src="./images/prior_high.gif" width="5" height="11" border="0" alt="" />';
         } else {
             $img_prior = "";
@@ -246,24 +246,36 @@ $wlcmessage .= $lang['msg_in_the_folder']." <b><i>$display</i></b>";
 $smarty->assign('umWelcomeMessage2', $wlcmessage);
 
 // Page navigation
+$navigation = '';
 if ($nummsg > 0) {
     if ($pag > 1) {
-        $smarty->assign('umFirstLink', "messages.php?folder=$folder&pag=1");
-        $smarty->assign('umPreviousLink', "messages.php?folder=$folder&pag=".($pag-1)."");
+        $smarty->assign('umFirstLink', "messages.php?folder=".urlencode($folder)."&pag=1");
+        $smarty->assign('umPreviousLink', "messages.php?folder=".urlencode($folder)."&pag=".($pag-1)."");
     }
 
-    for ($i = 1;$i <= ceil($nummsg / $reg_pp);$i++) {
-        if ($pag == $i) {
+    $start = $pag - 2;
+    if ($start < 1) {
+        $start = 1;
+    } else {
+        $navigation = '... ';
+    }
+    $totPages = ceil($nummsg / $reg_pp;
+    for ($i = $start; $i <= ($pag + 2); $i++) {
+        if ($i > $totPages) {
+            break;
+        } elseif ($pag == $i) {
             $navigation .= "[<b>$i</b>] ";
         } else {
             $navigation .= "<a href=\"messages.php?folder=$folder&pag=$i\" class=\"navigation\">$i</a> ";
         }
     }
+    if ($i < $totPages) {
+        $navigation .= ' ...';
+    }
 
-    $totPages = ceil($nummsg / $reg_pp);
     if ($end_pos < $nummsg) {
-        $smarty->assign('umNextLink', "messages.php?folder=$folder&pag=".($pag+1)."");
-        $smarty->assign('umLastLink', "messages.php?folder=$folder&pag=".$totPages."");
+        $smarty->assign('umNextLink', "messages.php?folder=".urlencode($folder)."&pag=".($pag+1)."");
+        $smarty->assign('umLastLink', "messages.php?folder=".urlencode($folder)."&pag=".$totPages."");
     }
     $navigation .= " ($pag/".$totPages.")";
 }
@@ -277,7 +289,7 @@ foreach (scandir($TLN->userfolder) as $entry) {
         && $entry != '.'
         && substr($entry, 0, 1) != '_'
         && $entry != $folder
-        && ($TLN->mail_protocol == IMAP || (($entry != 'inbox') && ($entry != 'spam')))) {
+        && ($TLN->mail_protocol == IMAP || ($entry != 'inbox')) ) {
         $entry = $TLN->fix_prefix($entry, 0);
         $display = extended_name($entry);
         $avalfolders[] = array('path' => $entry, 'display' => $display);
