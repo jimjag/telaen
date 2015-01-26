@@ -937,7 +937,7 @@ class Telaen_core
             $filename = $attachheader['subject'].'.eml';
             unset($attachheader);
         } elseif ($filename == "") {
-            $filename = uniqid("").'.tmp';
+            $filename = self::uniq_id().'.tmp';
         }
 
         $filename = preg_replace('|[.]{2,}|', ".", preg_replace("'(/|\\\\)+'", "_", trim($this->_decode_mime_string($filename))));
@@ -1046,6 +1046,15 @@ class Telaen_core
     static public function md5($val)
     {
         return hash('md5', $val);
+    }
+
+    /**
+     * Generate a unique ID string
+     * @param string $prefix prefix to prepend
+     * @return string
+     */
+    static public function uniq_id($prefix = '') {
+        return uniqid($prefix).(string)mt_rand();
     }
 
     /**

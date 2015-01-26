@@ -1733,12 +1733,12 @@ class Telaen extends Telaen_core
                     $email = $this->fetch_structure($email);
                     $header = $email['header'];
                 } else {
-                    $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']).uniqid(''));
+                    $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']).self::uniq_id());
                     return $msg['uidl'];
                 }
             }
             if ($header == '') {
-                $msg['uidl'] = self::md5(uniqid(''));
+                $msg['uidl'] = self::md5(self::uniq_id());
                 return $msg['uidl'];
             }
             $mail_info = $this->formalize_headers($header);
@@ -1751,7 +1751,7 @@ class Telaen extends Telaen_core
             $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']));
         }
         if (empty($msg['uidl'])) {
-            $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']).uniqid(''));
+            $msg['uidl'] = self::md5(trim($msg['subject'].$msg['date'].$msg['message-id']).self::uniq_id());
         }
         return $msg['uidl'];
     }

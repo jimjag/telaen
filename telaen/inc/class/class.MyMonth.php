@@ -95,7 +95,7 @@ EOT;
         $smonth = sprintf("%02s", $this->_month);
         $ret .= "<tr>";
         if ($weekday > 0) {
-            $ret .= "<td class=\"blankday\" colspan=\"{$weekday}\">&nbsp;</td>";
+            $ret .= "<td class='blankday' colspan='{$weekday}'>&nbsp;</td>";
         }
         for ($day = 1; $day <= $this->_lastday; $day++, $weekday++) {
             if ($weekday == 7) {
@@ -113,21 +113,21 @@ EOT;
                 if ($day == $today) {
                     $dclass = "tevt";
                 }
-                $fullevent = "<div class=\"einfo\">| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>";
+                $fullevent = "<div class='einfo'>| {$this->_mymonth['month']} {$day}, {$this->_year} |<hr/>";
                 foreach ($event as $foo) {
                     $start = $this->_xtime($foo[1]);
                     $stop = $this->_xtime($foo[2]);
-                    $fullevent .= "<div id=\"e_{$foo[0]}\">";
-                    $fullevent .= "<div class=\"etimes\"> {$start} ==> {$stop} </div><br/>";
+                    $fullevent .= "<div id='e_{$foo[0]}'>";
+                    $fullevent .= "<div class='etimes'> {$start} ==> {$stop} </div><br/>";
                     $fullevent .= $foo[3]."</div><hr/>";
                 }
                 $fullevent .= "</div>";
             }
             $sday = sprintf("%02s", $day);
-            $ret .= "<td id=\"d_{$this->_year}{$smonth}{$sday}\" class=\"{$dclass}\"> $day $fullevent </td>";
+            $ret .= "<td id='d_{$this->_year}{$smonth}{$sday}' class='{$dclass}'> $day $fullevent </td>";
         }
         if ($weekday != 7) {
-            $ret .= "<td class=\"blankday\" colspan=".(7-$weekday).">&nbsp;</td>";
+            $ret .= "<td class='blankday' colspan=".(7-$weekday).">&nbsp;</td>";
         }
         $ret .= "</tr>\n</table>";
 
@@ -157,7 +157,7 @@ EOT;
 //]]>
 </script>
 EOT;
-        $ret = "<script type=\"text/javascript\" src=\"./inc/js/calendar.js\"></script>\n<div id=\"calendar\">".$this->monthAsTable().$end;
+        $ret = "<script type='text/javascript' src='./inc/js/calendar.js'></script>\n<div id='calendar'>".$this->monthAsTable().$end;
 
         return $ret;
     }
@@ -216,11 +216,11 @@ EOT;
 
     /**
      * Create and set an event
-     * @param  string  $day         Day
-     * @param  string  $start       Start time
-     * @param  string  $stop        Stop time
-     * @param  string  $description Description of event
-     * @param  string  $dayuid      Day ID
+     * @param string $day Day
+     * @param string $start Start time
+     * @param string $stop Stop time
+     * @param string $description Description of event
+     * @param string $dayuid Day ID
      * @return boolean
      */
     public function setEvent($day, $start, $stop, $description, $dayuid = "")
@@ -231,7 +231,7 @@ EOT;
             @$this->delEvent($eventuid);    // just simpler
         } else {
             /* new event, new id */
-            $eventuid = $ymd.'_'.uniqid();
+            $eventuid = $ymd.uniqid('_').(string)mt_rand();
         }
         $v = new vevent();
 
@@ -250,7 +250,7 @@ EOT;
      */
     public function delEvent($eventuid)
     {
-        return $this->_vcal->deleteComponent($eventuid);
+        $this->_vcal->deleteComponent($eventuid);
     }
 
     /**
@@ -258,9 +258,11 @@ EOT;
      */
     private function _xdtime($dt)
     {
-        $ret = sprintf('%4s%02s%02sT%02s%02s%02s',
-                       $dt['year'], $dt['month'], $dt['day'],
-                       $dt['hour'], $dt['min'], $dt['sec']);
+        $ret = sprintf(
+            '%4s%02s%02sT%02s%02s%02s',
+            $dt['year'], $dt['month'], $dt['day'],
+            $dt['hour'], $dt['min'], $dt['sec']
+        );
 
         return $ret;
     }

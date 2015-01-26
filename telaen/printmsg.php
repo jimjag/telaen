@@ -40,8 +40,8 @@ if (preg_match('|<[ ]*body[A-Z0-9._&?=:/"\' -]*bgcolor=["\']?([A-Z0-9#]+)["\']?[
 $smarty->assign('umBackColor', $backcolor);
 
 $body = preg_replace('|<body|i', '<telaen_body_not_alowed', $body);
-$body = preg_replace('/a:(link|visited|hover)/i', '.'.uniqid(""), $body);
-$body = preg_replace('|(body)[ ]?\\{|i', '.'.uniqid(""), $body);
+$body = preg_replace('/a:(link|visited|hover)/i', '.'.$TLN->uniq_id(), $body);
+$body = preg_replace('|(body)[ ]?\\{|i', '.'.$TLN->uniq_id(), $body);
 
 $smarty->assign('umMessageBody', $body);
 
