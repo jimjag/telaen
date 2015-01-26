@@ -521,6 +521,28 @@ class Telaen_core
     }
 
     /**
+     * @param $strMail
+     * @return string
+     */
+    public function clear_names($strMail)
+    {
+        $result = '';
+        $strMail = $this->get_names($strMail);
+        for ($i = 0;$i<count($strMail);$i++) {
+            $thismail = $strMail[$i];
+            $thisline = ($thismail['mail'] != $thismail['name']) ? "\"".$thismail['name']."\""." <".$thismail['mail'].">" : $thismail['mail'];
+            if ($thismail['mail'] != "" && strpos($result, $thismail['mail']) === false) {
+                if ($result != "") {
+                    $result .= ', '.$thisline;
+                } else {
+                    $result = $thisline;
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
      * Try to extract the first name in a specified field (from, to, cc)
      * In order to guess what is the format (the RFC support 3), it will
      * try different ways to get the name and email

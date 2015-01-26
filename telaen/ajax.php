@@ -33,25 +33,24 @@ if (isset($_POST['action'])) {
             $receiptMsg = $_POST['receipt_msg'];
 
             // init mailer
-            $mail = new PHPMailer_extra();
-            $mail->PluginDir = './inc/';
+            $mail = new PHPMailer();
             $mail->SetLanguage('en', 'langs/');
             $mail->CharSet = $TLN->charset;
             $mail->Hostname = getenv('SERVER_NAME');
-            $mail->Host = $smtp_server;
+            $mail->Host = $TLN->config['smtp_server'];
             $mail->WordWrap = 76;
             $mail->Priority = 3;
             $mail->SMTPDebug = false;
-            $mail->Mailer = $mailer_type;
-            if ($phpmailer_sendmail != "") {
-                $mail->Sendmail = $phpmailer_sendmail;
+            $mail->Mailer = $TLN->config['mailer_type'];
+            if ($TLN->config['phpmailer_sendmail'] != "") {
+                $mail->Sendmail = $TLN->config['phpmailer_sendmail'];
             }
-            if ($phpmailer_timeout != 0) {
-                $mail->Timeout = $phpmailer_timeout;
+            if ($TLN->config['phpmailer_timeout'] != 0) {
+                $mail->Timeout = $TLN->config['phpmailer_timeout'];
             }
 
             // for password authenticated servers
-            $mail->SMTPAuth = $use_password_for_smtp;
+            $mail->SMTPAuth = $TLN->config['use_password_for_smtp'];
             $mail->Username = $auth['user'];
             $mail->Password = $auth['pass'];
 

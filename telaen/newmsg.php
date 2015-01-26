@@ -15,12 +15,15 @@ require './inc/init.php';
 $smarty->assign('pageMetas', $pmetas);
 
 extract(Telaen::pull_from_array($_GET, array('nameto', 'mailto'), 'str'));
-extract(Telaen::pull_from_array($_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
-        'priority', 'body', 'is_html', 'textmode', 'sig', 'tipo', 'rtype', 'ix', ), 'str'));
+extract(
+    Telaen::pull_from_array(
+        $_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
+        'priority', 'body', 'is_html', 'textmode', 'sig', 'tipo', 'rtype', 'ix', ), 'str'
+    )
+);
 
 if (isset($tipo) && $tipo == 'send') {
     $mail = new PHPMailer();
-    $mail->PluginDir = './inc/';
 
     if ($TLN->config['phpmailer_sendmail'] != "") {
         $mail->Sendmail = $TLN->config['phpmailer_sendmail'];
@@ -35,9 +38,9 @@ if (isset($tipo) && $tipo == 'send') {
 
     // html head and foot to add, the editor can do it, but causes some problems with sign and footer
     $htmlHead = "
-<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
 <html>
-<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset={$lang['default_char_set']}\"></head>
+<head><meta http-equiv='Content-Type' content='text/html; charset={$lang['default_char_set']}'></head>
 <body>
 	";
 
@@ -171,12 +174,12 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             }
         }
     } else {
-        die("<script language=\"javascript\" type=\"text/javascript\">location = 'index.php?err=3';</script>");
+        die("<script language='javascript' type='text/javascript'>location = 'index.php?err=3';</script>");
     }
 
     $jssource = $commonJS;
     $jssource .= "
-	<script language=\"javascript\" type=\"text/javascript\">
+	<script language='javascript' type='text/javascript'>
 	//<![CDATA[
 	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
@@ -216,11 +219,11 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     $smarty->assign('requireReceipt', $rr);
 
     // hidden inputs ---- Note: these should be moved into template...
-    $forms = "<input type=\"hidden\" name=\"tipo\" value=\"edit\" />
-	<input type=\"hidden\" name=\"is_html\" value=\"$js_advanced\" />
-	<input type=\"hidden\" name=\"folder\" value=\"$folder\" />
-	<input type=\"hidden\" name=\"sig\" value=\"".htmlspecialchars($signature)."\" />
-	<input type=\"hidden\" name=\"textmode\" value=\"$textmode\" />
+    $forms = "<input type='hidden' name='tipo' value='edit' />
+	<input type='hidden' name='is_html' value='$js_advanced' />
+	<input type='hidden' name='folder' value='$folder' />
+	<input type='hidden' name='sig' value='".htmlspecialchars($signature)."' />
+	<input type='hidden' name='textmode' value='$textmode' />
 	";
     $smarty->assign('umForms', $forms);
 
@@ -228,13 +231,13 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 
     if ($show_advanced) {
         $jssource .= "
-	<script type=\"text/javascript\" src=\"inc/editors/tinymce/tinymce.gzip.js\"></script>
-	<script type=\"text/javascript\" src=\"inc/editors/tinymce/tiny_init.js\"></script>
+	<script type='text/javascript' src='inc/vendor/editors/tinymce/tinymce.gzip.js'></script>
+	<script type='text/javascript' src='inc/vendor/editors/tinymce/tiny_init.js'></script>
 		";
     }
 
     $jssource .= "
-	<script language=\"javascript\" type=\"text/javascript\">
+	<script language='javascript' type='text/javascript'>
 	//<![CDATA[
 	bIs_html = $js_advanced;
 	bsig_added = false;
@@ -362,7 +365,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	//]]>
 	</script>
 
-	<script type=\"text/javascript\">
+	<script type='text/javascript'>
 	//<![CDATA[
 	window.setInterval(function() {
 			new Ajax.Request('ajax.php', {
@@ -445,15 +448,15 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             $thismail = $ARTo[$i]['mail'];
 
             // avoid to add my address in the TO list
-                        if ($thismail != $auth['email'] && $thismail != $TLN->prefs['reply-to']) {
-                            if (isset($toreply)) {
-                                $toreply .= ", \"$name\" <$thismail>";
-                            } else {
-                                $toreply = "\"$name\" <$thismail>";
-                            }
-                        } else {
-                            $myToAdr = "\"$name\" <$thismail>";
-                        }
+            if ($thismail != $auth['email'] && $thismail != $TLN->prefs['reply-to']) {
+                if (isset($toreply)) {
+                    $toreply .= ", \"$name\" <$thismail>";
+                } else {
+                    $toreply = "\"$name\" <$thismail>";
+                }
+            } else {
+                $myToAdr = "\"$name\" <$thismail>";
+            }
         }
 
         // CC
@@ -474,28 +477,9 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
             }
         }
 
-        function clear_names($strMail)
-        {
-            global $TLN;
-            $strMail = $TLN->get_names($strMail);
-            for ($i = 0;$i<count($strMail);$i++) {
-                $thismail = $strMail[$i];
-                $thisline = ($thismail['mail'] != $thismail['name']) ? "\"".$thismail['name']."\""." <".$thismail['mail'].">" : $thismail['mail'];
-                if ($thismail['mail'] != "" && strpos($result, $thismail['mail']) === false) {
-                    if ($result != "") {
-                        $result .= ', '.$thisline;
-                    } else {
-                        $result = $thisline;
-                    }
-                }
-            }
-
-            return $result;
-        }
-
-        $allreply = clear_names($fromreply.', '.$toreply);
-        $ccreply = clear_names($ccreply);
-        $fromreply = clear_names($fromreply);
+        $allreply = $TLN->clear_names($fromreply.', '.$toreply);
+        $ccreply = $TLN->clear_names($ccreply);
+        $fromreply = $TLN->clear_names($fromreply);
 
         $msgsubject = $email['subject'];
 
@@ -552,8 +536,8 @@ $tmpbody";
         if ($show_advanced) {
             $body = "
 <br>
-<blockquote dir=\"ltr\" style=\"padding-right: 0px; padding-left: 5px; margin-left: 5px; border-left: #000000 2px solid; margin-right: 0px\">
-  <div style=\"font: 10pt arial\">
+<blockquote dir='ltr' style='padding-right: 0px; padding-left: 5px; margin-left: 5px; border-left: #000000 2px solid; margin-right: 0px'>
+  <div style='font: 10pt arial'>
   $body
   </div>
 </blockquote>
@@ -611,12 +595,12 @@ $tmpbody";
     $smarty->assign('umHaveSignature', $haveSig);
 
     $strto = (isset($nameto) && preg_match('|([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_])|i', $mailto)) ?
-    "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"to\" value=\"&quot;".htmlspecialchars(stripslashes($nameto))."&quot; <".htmlspecialchars(stripslashes($mailto)).">\" />
-	" : "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"to\" value=\"".htmlspecialchars(stripslashes($to))."\" />";
+    "<input class='textbox' style='width : 200px;' type='text' size='20' name='to' value='&quot;".htmlspecialchars(stripslashes($nameto))."&quot; <".htmlspecialchars(stripslashes($mailto)).">' />
+	" : "<input class='textbox' style='width : 200px;' type='text' size='20' name='to' value='".htmlspecialchars(stripslashes($to))."' />";
 
-    $strcc = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"cc\" value=\"".htmlspecialchars(stripslashes($cc))."\" />";
-    $strbcc = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"bcc\" value=\"".htmlspecialchars(stripslashes($bcc))."\" />";
-    $strsubject = "<input class=\"textbox\" style=\"width : 200px;\" type=\"text\" size=\"20\" name=\"subject\" value=\"".htmlspecialchars(stripslashes($subject))."\" />";
+    $strcc = "<input class='textbox' style='width : 200px;' type='text' size='20' name='cc' value='".htmlspecialchars(stripslashes($cc))."' />";
+    $strbcc = "<input class='textbox' style='width : 200px;' type='text' size='20' name='bcc' value='".htmlspecialchars(stripslashes($bcc))."' />";
+    $strsubject = "<input class='textbox' style='width : 200px;' type='text' size='20' name='subject' value='".htmlspecialchars(stripslashes($subject))."' />";
 
     if (isset($mbox['attachments']) && count($attachs = $mbox['attachments']) > 0) {
         $smarty->assign('umHaveAttachs', 1);

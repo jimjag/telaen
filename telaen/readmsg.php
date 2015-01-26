@@ -61,12 +61,12 @@ $body =    $email['body'];
 
 $redir_path = 'redir.php';    // why not just relative?? Now is relative (due to problems on https servers)!
 
-$body = preg_replace('|target=["]?[a-zA-Z_]+["]?|i', "target=\"blank\"", $body);
-$body = preg_replace('|href="http([s]?)://|i', "target=\"_blank\" href=\"$redir_path?http$1://", $body);
-$body = preg_replace('|href="mailto:|i', "target=\"_top\" href=\"newmsg.php?to=", $body);
+$body = preg_replace('|target=["\']?[a-zA-Z_]+["\']?|i', "target='blank'", $body);
+$body = preg_replace('|href="http([s]?)://|i', "target='_blank' href='$redir_path?http$1://", $body);
+$body = preg_replace('|href=["\']mailto:|i', "target='_top' href='newmsg.php?to=", $body);
 
 $auth['currentbody'] = $body;
-$body = "<iframe src=\"show_body.php?folder=".urlencode($folder)."&ix=$ix\" width=\"100%\" height=\"400\" frameborder=\"0\"></iframe>";
+$body = "<iframe src='show_body.php?folder=".urlencode($folder)."&ix=$ix' width='100%' height='400' frameborder='0'></iframe>";
 
 $smarty->assign('umMessageBody', $body);
 
@@ -116,7 +116,7 @@ $smarty->assign('umPageTitle', $email['subject']);
 
 $jssource = $commonJS;
 $jssource .= "
-<script type=\"text/javascript\">
+<script type='text/javascript'>
 //<![CDATA[
 function deletemsg() {
 	if(confirm('".preg_replace("/'/", "\\'", $lang['confirm_delete'])."'))
@@ -143,8 +143,8 @@ function openwin(targetUrl) { window.open(targetUrl); }
 
 //]]>
 </script>
-<script type=\"text/javascript\" src=\"./inc/js/mini_Ajax.js\"></script>
-<script type=\"text/javascript\">
+<script type='text/javascript' src='./inc/js/mini_Ajax.js'></script>
+<script type='text/javascript'>
 //<![CDATA[
 function sendReceipt(subj, msg) {
 	new Ajax.Request('ajax.php', {
@@ -157,18 +157,18 @@ function sendReceipt(subj, msg) {
 </script>
 ";
 
-$umDeleteForm = "<input type=\"hidden\" name=\"decision\" value=\"move\" />
-<input type=\"hidden\" name=\"folder\" value=\"".htmlspecialchars($folder)."\" />
-<input type=\"hidden\" name=\"pag\" value=\"$pag\" />
-<input type=\"hidden\" name=\"start_pos\" value=\"$ix\" />
-<input type=\"hidden\" name=\"end_pos\" value=\"".($ix+1)."\" />
-<input type=\"hidden\" name=\"msg_$ix\" value=\"X\" />
-<input type=\"hidden\" name=\"back\" value=\"true\" />";
+$umDeleteForm = "<input type='hidden' name='decision' value='move' />
+<input type='hidden' name='folder' value='".urlencode($folder)."' />
+<input type='hidden' name='pag' value='$pag' />
+<input type='hidden' name='start_pos' value='$ix' />
+<input type='hidden' name='end_pos' value='".($ix+1)."' />
+<input type='hidden' name='msg_$ix' value='X' />
+<input type='hidden' name='back' value='true' />";
 
-$umReplyForm = "<form name=\"msg\" action=\"newmsg.php\" method=\"post\">
-	<input type=\"hidden\" name=\"rtype\" value=\"reply\" />
-	<input type=\"hidden\" name=\"folder\" value=\"".htmlspecialchars($folder)."\" />
-	<input type=\"hidden\" name=\"ix\" value=\"$ix\" />
+$umReplyForm = "<form name='msg' action='newmsg.php' method='post'>
+	<input type='hidden' name='rtype' value='reply' />
+	<input type='hidden' name='folder' value='".urlencode($folder)."' />
+	<input type='hidden' name='ix' value='$ix' />
 </form>
 ";
 
@@ -204,12 +204,12 @@ if (count($anexos) > 0) {
 
         if (!$anexos[$i]['temp']) {
             if ($anexos[$i]['content-type'] == 'message/rfc822') {
-                $anexos[$i]['normlink'] = "<a href=\"javascript:openmessage('".join(",", $arAttachment)."')\">";
+                $anexos[$i]['normlink'] = "<a href='javascript:openmessage('".join(",", $arAttachment)."')'>";
             } else {
-                $anexos[$i]['normlink'] = "<a href=\"$link1\" target=\"_new\">";
+                $anexos[$i]['normlink'] = "<a href='$link1' target='_new'>";
             }
 
-            $anexos[$i]['downlink'] = "<a href=\"$link2\">";
+            $anexos[$i]['downlink'] = "<a href='$link2'>";
             $anexos[$i]['size'] = ceil($anexos[$i]['size']/1024);
             $anexos[$i]['type'] = $anexos[$i]['content-type'];
             $attachAr[] = $anexos[$i];

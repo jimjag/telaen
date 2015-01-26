@@ -97,7 +97,7 @@ $jsquota = ($exceeded) ? 'true' : 'false';
 
 $jssource = $commonJS;
 $jssource .= "
-<script type=\"text/javascript\">
+<script type='text/javascript'>
 //<![CDATA[
 
 no_quota = $jsquota;
@@ -266,7 +266,7 @@ if ($nummsg > 0) {
         } elseif ($pag == $i) {
             $navigation .= "[<b>$i</b>] ";
         } else {
-            $navigation .= "<a href=\"messages.php?folder=$folder&pag=$i\" class=\"navigation\">$i</a> ";
+            $navigation .= "<a href='messages.php?folder=$folder&pag=$i' class='navigation'>$i</a> ";
         }
     }
     if ($i < $totPages) {
@@ -289,7 +289,8 @@ foreach (scandir($TLN->userfolder) as $entry) {
         && $entry != '.'
         && substr($entry, 0, 1) != '_'
         && $entry != $folder
-        && ($TLN->mail_protocol == IMAP || ($entry != 'inbox')) ) {
+        && ($TLN->mail_protocol == IMAP || ($entry != 'inbox'))
+    ) {
         $entry = $TLN->fix_prefix($entry, 0);
         $display = extended_name($entry);
         $avalfolders[] = array('path' => $entry, 'display' => $display);
