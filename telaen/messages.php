@@ -259,7 +259,7 @@ if ($nummsg > 0) {
     } else {
         $navigation = '... ';
     }
-    $totPages = ceil($nummsg / $reg_pp;
+    $totPages = ceil($nummsg / $reg_pp);
     for ($i = $start; $i <= ($pag + 2); $i++) {
         if ($i > $totPages) {
             break;
