@@ -69,24 +69,17 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         if ($strSearch != "") {
             $strSearch = quotemeta($strSearch);
             $arSearch = explode(' ', $strSearch);
-            unset($strSearch);
-            for ($n = 0;$n<count($arSearch);$n++) {
-                if ($strSearch) {
-                    $strSearch .= "|(".$arSearch[$n].")";
-                } else {
-                    $strSearch .= "(".$arSearch[$n].")";
-                }
-            }
-        }
+            $strSearch = join(')(', $arSearch);
+         }
 
-        return '/'.$strSearch.'/i';
+        return '|('.$strSearch.')|i';
     }
 
     if (trim($srcBody) != "") {
         $get_body = 1;
     }
     $search_results = array();
-    $start = get_microtime();
+    $start = $TLN->get_microtime();
     $TLN->config['allow_html'] = false;
 
     if ($srcFrom != "") {
