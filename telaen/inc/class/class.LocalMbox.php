@@ -43,7 +43,7 @@ class LocalMbox extends SQLite3
         'id' => 'INT DEFAULT 0',
         'mnum' => 'INT DEFAULT 0', // message number
         'size' => 'INT DEFAULT 0',
-        'attach' => 'INT DEFAULT 0',
+        'attach' => 'INT DEFAULT 0', // Does it have attachments?
         'islocal' => 'INT DEFAULT 0', // Does it live on web server?
         'iscached' => 'INT DEFAULT 0', // Do we have a cached copy?
         'uid' => 'INT DEFAULT 0', // IMAP UID
@@ -807,18 +807,18 @@ class LocalMbox extends SQLite3
     /*********** Attachments methods ***********/
 
     /**
-     * Get list of all available attachments
+     * Get list of all available attachments associated with
+     * this particular email message
      * $this-attachments auto-populated with array
-     * @param string $folder
-     * @param string $uidl
+     * @param array $msg
      * @return array
      */
-    public function get_attachments($folder, $uidl)
+    public function get_attachments($msg)
     {
         $query = "SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;";
         $stmt = $this->prepare($query);
-        $stmt->bindValue(':folder', $folder);
-        $stmt->bindValue(':uidl', $uidl);
+        $stmt->bindValue(':folder', $msg['folder']);
+        $stmt->bindValue(':uidl', $msg['uidl']);
         $result = $stmt->execute($query);
         $this->attachments = [];
         if ($result) {
@@ -833,8 +833,16 @@ class LocalMbox extends SQLite3
         $stmt->close();
         return $this->attachments;
     }
-    public function add_attachment($folder, $msg)
+    public function add_attachment($msg, $attachment)
     {
+        $attachment['folder'] = $msg['folder'];
+        $attachment['uidl'] = $msg['uidl'];
+        $thelist = $this->create_uplist(array_keys($attachment), $this->aschema);
+        if ($thelist == null || !is_array($thelist)) {
+            return false;
+        }
+        $this->attachments[] = $attachment;
+        return $this->do_insert('attachs', $attachment, $thelist);
 
     }
 
