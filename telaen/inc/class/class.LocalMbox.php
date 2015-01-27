@@ -155,6 +155,39 @@ class LocalMbox extends SQLite3
         return $this->_system_folders;
     }
 
+    private function calc_folder_size($path)
+    {
+        $total_size = 0;
+        $path = rtrim($path, '/').'/';
+
+        foreach(scandir($path) as $f) {
+            if ($f != "." && $f != "..") {
+                $nfile = $path.$f;
+                if (is_dir($nfile)) {
+                    $size = $this->calc_folder_size($nfile);
+                    $total_size += $size;
+                }
+                else {
+                    $size = filesize($nfile);
+                    $total_size += $size;
+                }
+            }
+        }
+        return $total_size;
+    }
+
+    /**
+     * Return Current status and log entries (if any).
+     * Resets all.
+     * @return array
+     */
+    public function status()
+    {
+        $ret = [$this->_ok, $this->_log];
+        $this->_allok();
+        return $ret;
+    }
+
     /**
      * Create array of allowable entry/type from a baseline schema
      * @param mixed $fields
@@ -305,33 +338,8 @@ class LocalMbox extends SQLite3
         unset($this->_log);
         $this->_log = [];
     }
-    /**
-     * Get list of all available attachments
-     * $this-attachments auto-populated with array
-     * @param string $folder
-     * @param string $uidl
-     * @return array
-     */
-    public function get_attachments($folder, $uidl)
-    {
-        $query = "SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;";
-        $stmt = $this->prepare($query);
-        $stmt->bindValue(':folder', $folder);
-        $stmt->bindValue(':uidl', $uidl);
-        $result = $stmt->execute($query);
-        $this->attachments = [];
-        if ($result) {
-            while ($foo = $result->fetchArray(SQLITE3_ASSOC)) {
-                $this->attachments[] = $foo;
-            }
-        } else {
-            $this->_ok = false;
-            $this->_log[] = "query failed: $query";
-        }
-        $stmt->close();
-        return $this->attachments;
-    }
 
+    /*********** Folders methods ***********/
     /**
      * Get list of all available folders/emailboxes
      * $this-folders auto-populated with hash
@@ -502,6 +510,9 @@ class LocalMbox extends SQLite3
             return false;
         }
     }
+
+    /*********** Messages methods ***********/
+
     /**
      * Get list of all email message headers in folder/emailbox
      * $this->headers auto-populated with array
@@ -793,6 +804,35 @@ class LocalMbox extends SQLite3
         return $this->_ok;
     }
 
+    /*********** Attachments methods ***********/
+
+    /**
+     * Get list of all available attachments
+     * $this-attachments auto-populated with array
+     * @param string $folder
+     * @param string $uidl
+     * @return array
+     */
+    public function get_attachments($folder, $uidl)
+    {
+        $query = "SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;";
+        $stmt = $this->prepare($query);
+        $stmt->bindValue(':folder', $folder);
+        $stmt->bindValue(':uidl', $uidl);
+        $result = $stmt->execute($query);
+        $this->attachments = [];
+        if ($result) {
+            $i = 0;
+            while ($foo = $result->fetchArray(SQLITE3_ASSOC)) {
+                $this->attachments[] = $foo;
+            }
+        } else {
+            $this->_ok = false;
+            $this->_log[] = "query failed: $query";
+        }
+        $stmt->close();
+        return $this->attachments;
+    }
     public function add_attachment($folder, $msg)
     {
 
@@ -804,31 +844,4 @@ class LocalMbox extends SQLite3
 
     }
 
-    private function calc_folder_size($path)
-    {
-        $total_size = 0;
-        $path = rtrim($path, '/').'/';
-
-        foreach(scandir($path) as $f) {
-            if ($f != "." && $f != "..") {
-                $nfile = $path.$f;
-                if (is_dir($nfile)) {
-                    $size = $this->calc_folder_size($nfile);
-                    $total_size += $size;
-                }
-                else {
-                    $size = filesize($nfile);
-                    $total_size += $size;
-                }
-            }
-        }
-        return $total_size;
-    }
-
-    public function status()
-    {
-        $ret = [$this->_ok, $this->_log];
-        $this->_allok();
-        return $ret;
-    }
 }
