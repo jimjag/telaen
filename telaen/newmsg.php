@@ -49,8 +49,8 @@ $add_sig = $TLN->prefs['add_signature'];
 $addSignature = ($add_sig) ? 1 : 0;
 $smarty->assign('umAddSignature', $addSignature);
 
-    // return receipt
-    $rr = ($TLN->prefs['require_receipt']) ? true : false;
+// return receipt
+$rr = ($TLN->prefs['require_receipt']) ? true : false;
 $smarty->assign('requireReceipt', $rr);
 
 // hidden inputs ---- Note: these should be moved into template...
