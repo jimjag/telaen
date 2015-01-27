@@ -95,7 +95,7 @@ if (($start_pos >= $end_pos) && ($pag != 1)) {
 
 $jsquota = ($exceeded) ? 'true' : 'false';
 
-$jssource = $commonJS;
+eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
 <script type='text/javascript'>
 //<![CDATA[
@@ -108,12 +108,8 @@ function readmsg(ix,read) {
 	else
 		location = 'readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix='+ix+'';
 }
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag' }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function delemsg() { document.form1.submit() }
-function search() { location = 'search.php'; }
-function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function movemsg() {
 	if(no_quota)
 		alert(quota_msg);

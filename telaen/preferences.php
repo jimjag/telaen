@@ -14,16 +14,10 @@ require './inc/init.php';
 // assign metas
 $smarty->assign('pageMetas', $pmetas);
 
-$jssource = $commonJS;
+eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
-
-<script type=\"text/javascript\">
+<script type='text/javascript'>
 //<![CDATA[
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-function search() { location = 'search.php'; }
-function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-
 function dis() {
 	var f = $('prefs_form');
 	f.st_only_read.disabled = !f.save_trash.checked;
@@ -31,7 +25,6 @@ function dis() {
 		f.st_only_read.checked = f.save_trash.checked;
 	}
 }
-
 //]]>
 </script>
 ";

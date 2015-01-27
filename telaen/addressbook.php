@@ -24,15 +24,11 @@ if ($myfile != "") {
 }
 $TLN->array_qsort2ic($addressbook, 'name');
 
-$jssource = $commonJS;
+eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
 <script type=\"text/javascript\">
 //<![CDATA[
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
 function refreshlist() { location = 'addressbook.php' }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-function search() { location = 'search.php'; }
-function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 //]]>
 </script>
 ";

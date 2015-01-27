@@ -250,10 +250,18 @@ $pmetas = "
 	<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
 
 // Common js included system-wide
-$commonJS = "
-	<script type=\"text/javascript\" src=\"./inc/js/mini_Ajax.js\"></script>
-	<script type=\"text/javascript\" src=\"./inc/js/common.js\"></script>
-";
+$commonJS = <<<'EOD'
+	<script type='text/javascript' src='./inc/js/mini_Ajax.js'></script>
+	<script type='text/javascript' src='./inc/js/common.js'></script>
+	<script language='javascript' type='text/javascript'>
+	//<![CDATA[
+	function newmsg() { location = 'newmsg.php'; }
+	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'; }
+	function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true'; }
+	function search() { location = 'search.php?folder=".urlencode($folder)."'; }
+	//]]>
+	</script>
+EOD;
 
 // Include also folder list
 require_once './folder_list.php';

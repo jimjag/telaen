@@ -17,20 +17,17 @@ $smarty->assign('pageMetas', $pmetas);
 
 $jsquota = ($exceeded) ? 'true' : 'false';
 
-$jssource = $commonJS;
+eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
-<script type=\"text/javascript\">
+<script type='text/javascript'>
 //<![CDATA[
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 no_quota = $jsquota;
 quota_msg = '".preg_replace("/'/", "\\'", $lang['quota_exceeded'])."';
-function readmsg(ix,read,folder) {
+function readmsg(ix,folder) {
 	if(no_quota)
 		alert(quota_msg)
 	else
-		location = 'readmsg.php?folder='+folder+'&pag=$pag&ix='+ix+'';
+		location = 'readmsg.php?folder='+folder+'&ix='+ix+'';
 }
 //]]>
 </script>

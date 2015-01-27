@@ -114,7 +114,7 @@ if (count($ARCC) > 0) {
 
 $smarty->assign('umPageTitle', $email['subject']);
 
-$jssource = $commonJS;
+eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
 <script type='text/javascript'>
 //<![CDATA[
@@ -130,11 +130,7 @@ function block_addresses() { window.open('block_address.php?folder=".urlencode($
 
 function replyall() { with(document.msg) { rtype.value = 'replyall'; submit(); } }
 function forward() { with(document.msg) { rtype.value = 'forward'; submit(); } }
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
 function goback() { location = 'messages.php?folder=".urlencode($folder)."&pag=$pag'; }
-function search() { location = 'search.php'; }
-function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
 function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&attachment='+attach,'','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
@@ -143,7 +139,6 @@ function openwin(targetUrl) { window.open(targetUrl); }
 
 //]]>
 </script>
-<script type='text/javascript' src='./inc/js/mini_Ajax.js'></script>
 <script type='text/javascript'>
 //<![CDATA[
 function sendReceipt(subj, msg) {
@@ -168,7 +163,7 @@ $umDeleteForm = "<input type='hidden' name='decision' value='move' />
 $umReplyForm = "<form name='msg' action='newmsg.php' method='post'>
 	<input type='hidden' name='rtype' value='reply' />
 	<input type='hidden' name='folder' value='".urlencode($folder)."' />
-	<input type='hidden' name='ix' value='$ix' />
+	<input type='hidden' name='uidl' value='{$mail_info['uidl']}' />
 </form>
 ";
 

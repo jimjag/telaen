@@ -81,10 +81,6 @@ frm.submit();
 }
 }
 
-function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
-function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-function search() { location = 'search.php?folder=".urlencode($folder)."';}
 function addrpopup(where) {
 url = 'quick_address.php?where=' + where;
 mywin = window.open(url,'AddressBook','width=600,height=300,top=150,left=150');

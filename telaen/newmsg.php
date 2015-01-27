@@ -177,22 +177,11 @@ if ($todo == 'send') {
         die("<script language='javascript' type='text/javascript'>location = 'index.php?err=3';</script>");
     }
 
-    $jssource = $commonJS;
-    $jssource .= "
-	<script language='javascript' type='text/javascript'>
-	//<![CDATA[
-	function newmsg() { location = 'newmsg.php?pag=$pag&folder=".urlencode($folder)."'; }
-	function folderlist() { location = 'folders.php?folder=".urlencode($folder)."'}
-	function emptytrash() { location = 'folders.php?empty=trash&folder=".urlencode($folder)."&goback=true';}
-	function search() { location = 'search.php?folder=".urlencode($folder)."';}
-	//]]>
-	</script>
-	";
-
+    eval('$jssource = "' . $commonJS . '";');
     $smarty->assign('umJS', $jssource);
 
     $smarty->display("$themez/newmsg-result.tpl");
-} elseif ($todo == 'edit') {
+} else {
     // priority
     $priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority;
     $smarty->assign('umPriority', $priority_level);
@@ -218,7 +207,7 @@ if ($todo == 'send') {
     $smarty->assign('requireReceipt', $rr);
 
     // hidden inputs ---- Note: these should be moved into template...
-    $forms = "<input type='hidden' name='todo' value='edit' />
+    $forms = "<input type='hidden' name='todo' value='create' />
 	<input type='hidden' name='is_html' value='$js_advanced' />
 	<input type='hidden' name='folder' value='$folder' />
 	<input type='hidden' name='uidl' value='$uidl' />
@@ -227,7 +216,7 @@ if ($todo == 'send') {
 	";
     $smarty->assign('umForms', $forms);
 
-    $jssource = $commonJS;
+    eval('$jssource = "' . $commonJS . '";');
 
     if ($show_advanced) {
         $jssource .= "
@@ -499,6 +488,4 @@ $tmpbody";
     $smarty->assign('umAdvancedEditor', $umAdvEdit);
 
     $smarty->display("$themez/newmsg.tpl");
-} else {
-    $TLN->redirect_and_exit('messages.php?folder='.urlencode($folder).'&pag=1');
 }
