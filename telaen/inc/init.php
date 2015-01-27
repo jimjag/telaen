@@ -264,7 +264,7 @@ $commonJS = <<<'EOD'
 EOD;
 
 // Include also folder list
-require_once './folder_list.php';
+require_once './inc/folder_list.php';
 
 // Sort rules
 
