@@ -18,11 +18,13 @@ extract(Telaen::pull_from_array($_GET, array('nameto', 'mailto'), 'str'));
 extract(
     Telaen::pull_from_array(
         $_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
-        'priority', 'body', 'is_html', 'textmode', 'sig', 'tipo', 'rtype', 'ix', ), 'str'
+        'priority', 'body', 'is_html', 'textmode', 'sig', 'todo', 'rtype', 'uidl', ), 'str'
     )
 );
+// Recall $folder is always available via preinit.php
 
-if (isset($tipo) && $tipo == 'send') {
+$mbox = $TLN->tdb->get_message($uidl, $folder);
+if ($todo == 'send') {
     $mail = new PHPMailer();
 
     if ($TLN->config['phpmailer_sendmail'] != "") {
@@ -192,7 +194,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     $smarty->assign('umJS', $jssource);
 
     $smarty->display("$themez/newmsg-result.tpl");
-} else {
+} elseif ($todo == 'edit') {
     // priority
     $priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority;
     $smarty->assign('umPriority', $priority_level);
@@ -218,9 +220,10 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
     $smarty->assign('requireReceipt', $rr);
 
     // hidden inputs ---- Note: these should be moved into template...
-    $forms = "<input type='hidden' name='tipo' value='edit' />
+    $forms = "<input type='hidden' name='todo' value='edit' />
 	<input type='hidden' name='is_html' value='$js_advanced' />
 	<input type='hidden' name='folder' value='$folder' />
+	<input type='hidden' name='uidl' value='$uidl' />
 	<input type='hidden' name='sig' value='".htmlspecialchars($signature)."' />
 	<input type='hidden' name='textmode' value='$textmode' />
 	";
@@ -263,14 +266,14 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 	}
 
 	function doupload() {
-		document.composeForm.tipo.value = 'edit';
+		document.composeForm.todo.value = 'edit';
 		document.composeForm.submit();
 	}
 
 	function textmode() {
 		with(document.composeForm) {
 			textmode.value = 1;
-			tipo.value = 'edit';
+			todo.value = 'edit';
 			submit();
 		}
 	}
@@ -300,7 +303,7 @@ This Email is formatted in HTML. Your Email client appears to be incompatible.
 			alert(errmsg)
 
 		} else {
-			frm.tipo.value = 'send';
+			frm.todo.value = 'send';
 			frm.submit();
 		}
 	}
@@ -639,4 +642,6 @@ $tmpbody";
     $smarty->assign('umAdvancedEditor', $umAdvEdit);
 
     $smarty->display("$themez/newmsg.tpl");
+} else {
+    $TLN->redirect_and_exit('messages.php?folder='.urlencode($folder).'&pag=1');
 }
