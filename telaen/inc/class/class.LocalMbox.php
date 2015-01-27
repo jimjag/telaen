@@ -14,7 +14,7 @@ Telaen is a GPL'ed software developed by
  */
 class LocalMbox extends SQLite3
 {
-    private $active_folder = "";
+    private $current_folder = "";
     private $userfolder = "";
     private $db = null;
     private $force_new = false;
@@ -294,7 +294,8 @@ class LocalMbox extends SQLite3
         return hash('md5', $folder);
     }
 
-    static private function _get_folder_name($folder) {
+    static private function _get_folder_name($folder)
+    {
         return sprintf('folder_%s', self::getKey($folder));
     }
 
@@ -512,7 +513,7 @@ class LocalMbox extends SQLite3
      */
     public function get_messages($folder, $force = false, $sortby = "", $sortorder = "")
     {
-        if ($folder != $this->active_folder || $force) {
+        if ($folder != $this->current_folder || $force) {
             /* keep sorting info between calls */
             static $ssortby = "";
             static $ssortorder = "";
@@ -547,7 +548,7 @@ class LocalMbox extends SQLite3
                     $this->_indb[$foo['uidl']] = true;
                     $index++;
                 }
-                $this->active_folder = $folder;
+                $this->current_folder = $folder;
             } else {
                 $this->_ok = false;
                 $this->_log[] = "query failed: $query";
@@ -565,7 +566,7 @@ class LocalMbox extends SQLite3
      */
     public function count_messages($folder, $force = false)
     {
-        if ($folder != $this->active_folder || $force) {
+        if ($folder != $this->current_folder || $force) {
             $query = sprintf('SELECT COUNT(*) FROM %s;', self::_get_folder_name($folder));
             $result = $this->query($query);
             if ($result) {
@@ -614,6 +615,30 @@ class LocalMbox extends SQLite3
         }
         $this->_folder_need_sync[$msg['folder']] = true;
         return $this->do_update(self::_get_folder_name($msg['folder']), $msg, $thelist, ['uidl'=>$msg['uidl']]);
+    }
+
+    /**
+     * Return the message associated w/ an ID
+     * If folder is not active folder, reset as needed
+     * @param string $id ID of message, either UIDL or index
+     * @param string $folder Folder of message (or current folder if '')
+     * @param boolean $is_uidl Is ID UIDL (true) or index (false)
+     * @return array
+     */
+    public function get_message($id, $folder = '', $is_uidl = true)
+    {
+        if (!empty($folder)) {
+            $was = $this->current_folder;
+            $this->get_messages($folder);
+        }
+        if ($is_uidl) {
+            $id = $this->m_idx[$id];
+        }
+        $msg = $this->messages[$id];
+        if (!empty($folder)) {
+            $this->get_messages($was);
+        }
+        return $msg;
     }
 
     /**
@@ -735,7 +760,7 @@ class LocalMbox extends SQLite3
         }
         $this->_ok = true;
         $query = sprintf("DELETE FROM %s WHERE uidl=:uidl ;", self::_get_folder_name($msgs[0]['folder']));
-        $isactive = ($msgs[0]['folder'] == $this->active_folder ? true : false);
+        $isactive = ($msgs[0]['folder'] == $this->current_folder ? true : false);
         $stmt = $this->prepare($query);
         $idxs = [];
         foreach ($msgs as $msg) {
