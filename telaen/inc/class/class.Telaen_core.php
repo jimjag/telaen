@@ -235,16 +235,21 @@ class Telaen_core
     /**
      * Save content to file
      * @param  string $filename The filename to write to
-     * @param  string $content The content to write
+     * @param  mixed $content The content to write
      * @return boolean
      */
     public function save_file($filename, $content)
     {
         $tmpfile = fopen($filename, 'wb');
         if ($tmpfile) {
-            fwrite($tmpfile, $content);
+            if (is_resource($content)) {
+                rewind($content);
+                fwrite($tmpfile, stream_get_contents($content));
+                fclose($content);
+            } else {
+                fwrite($tmpfile, $content);
+            }
             fclose($tmpfile);
-            unset($content, $tmpfile);
             $this->status = STATUS_OK;
             return true;
         } else {

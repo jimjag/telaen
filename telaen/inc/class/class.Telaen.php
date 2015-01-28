@@ -1146,7 +1146,7 @@ class Telaen extends Telaen_core
                     $mail_info['headers']['content-type'])) ? 1 : 0;
 
                 if ($messages[$i]['localname'] == '') {
-                    $messages[$i]['localname'] = $this->_get_local_name($messages[$i]['uidl'], $boxname)[0];
+                    $messages[$i]['localname'] = $this->_get_local_fname($messages[$i]['uidl'], $boxname)[0];
                 }
                 $this->tdb->do_message($messages[$i]);
             }
@@ -1189,18 +1189,35 @@ class Telaen extends Telaen_core
         return $messages;
     }
 
-    protected function _get_local_name($message, $boxname)
+    protected function _get_local_fname($msg)
     {
-        if (is_array($message)) {
-            $fname = trim($message['uidl']);
-        } else {
-            $fname = trim($message);
+        $fname = trim($msg['uidl']);
+        if (empty($fname)) {
+            $fname = self::uniq_id();
         }
         if (!self::is_md5($fname)) {
             $fname = self::md5($fname);
         }
-        $fullpath = trim($this->userfolder."$boxname/".$fname[0].'/'.$fname.'.eml');
-        return [$fullpath, $fname];
+        return $fname.'.eml';
+    }
+
+    /**
+     * Get the full pathname for the message
+     * @param $msg
+     * @param mixed $boxname Foldername to use (default is msg's folder)
+     * @return string
+     */
+    public function get_local_fpath($msg, $boxname = null)
+    {
+        if ($boxname === null) {
+            $boxname = $msg['folder'];
+        }
+        if ($msg['version'] == 1) {
+            $fullpath = trim($this->userfolder.$boxname.'/'.$msg['localname']);
+        } else {
+            $fullpath = trim($this->userfolder.$boxname.'/'.$msg['localname'][0].'/'.$msg['localname']);
+        }
+        return $fullpath;
     }
 
     protected function _mail_list_boxes_imap($boxname = '')
@@ -1433,7 +1450,7 @@ class Telaen extends Telaen_core
         }
         $email = $this->fetch_structure($message);
         $mail_info = $this->formalize_headers($email['header']);
-        list($filename, $name) = $this->_get_local_name($mail_info, $boxname);
+        list($filename, $name) = $this->_get_local_fname($mail_info, $boxname);
         $dir = $dir.'/'.$name[0];
         if (!is_dir($dir)) {
             if (!@mkdir($dir, $this->dirperm)) {
