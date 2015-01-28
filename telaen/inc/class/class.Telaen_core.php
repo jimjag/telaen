@@ -89,7 +89,7 @@ class Telaen_core
      * @param  string $str
      * @return void
      */
-    public function debug_msg($str, $caller = "")
+    public function debug_msg($str, $caller = "", $line = 0)
     {
         if ($this->config['enable_debug']) {
             echo "<!-- $caller:\n";
@@ -98,7 +98,7 @@ class Telaen_core
             @flush();
         }
         if ($this->config['log_debug']) {
-            \trigger_error($str);
+            \trigger_error(sprintf('%s[%d]: %s', $caller, $line, self::safe_print($str)));
         }
     }
 
@@ -107,11 +107,11 @@ class Telaen_core
      * @param  string $str
      * @return void
      */
-    public function trigger_error($str, $caller = "")
+    public function trigger_error($str, $caller = "", $line = 0)
     {
-        $this->debug_msg($str, $caller);
+        $this->debug_msg($str, $caller, $line);
         if ($this->config['log_errors']) {
-            \trigger_error($str);
+            \trigger_error(sprintf('%s[%d]: %s', $caller, $line, self::safe_print($str)));
         }
     }
 
@@ -172,7 +172,7 @@ class Telaen_core
         }
         $fp = fopen($strfile, 'rb');
         if (!$fp) {
-            $this->trigger_error("cannot fopen $strfile", __FUNCTION__);
+            $this->trigger_error("cannot fopen $strfile", __FUNCTION__, __LINE__);
             $this->status = STATUS_NOK_FILE;
             return "";
         }
@@ -248,7 +248,7 @@ class Telaen_core
             $this->status = STATUS_OK;
             return true;
         } else {
-            $this->trigger_error("cannot fopen $filename", __FUNCTION__);
+            $this->trigger_error("cannot fopen $filename", __FUNCTION__, __LINE__);
             $this->status = STATUS_NOK_FILE;
             return false;
         }
@@ -1226,7 +1226,8 @@ class Telaen_core
     {
         $this->_content = [];
         $this->_process_message($msg['header'], $msg['body']);
-        self::add2me($this->_content, $msg['headers']);
+        $msg['body'] = ''; // Save some cycles
+        self::add2me($this->_content, $msg);
         $this->_content['body'] = $this->_msgbody;
         return $this->_content;
     }
@@ -1632,7 +1633,7 @@ ENDOFREDIRECT;
 
         $f = fopen($pref_file, 'w');
         if (!$f) {
-            $this->trigger_error("cannot fopen $pref_file", __FUNCTION__);
+            $this->trigger_error("cannot fopen $pref_file", __FUNCTION__, __LINE__);
             return;
         }
         fwrite($f, ~serialize($prefarray));

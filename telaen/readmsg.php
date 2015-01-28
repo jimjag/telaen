@@ -27,8 +27,8 @@ $arAttachment = array();
 if (!($msg['body'] = $TLN->mail_retr_msg($msg))) {
     $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
 }
-if (!$TLN->mail_set_flag($msg, '\\SEEN', '+')) {
-    $TLN->trigger_error('Could not set SEEN flag', I_AM_TELAEN);
+if (!$TLN->mail_set_flag($msg, $TLN->flags['seen'], '+')) {
+    $TLN->trigger_error('Could not set SEEN flag', I_AM_TELAEN, __LINE__);
 }
 $TLN->mail_disconnect();
 
@@ -149,7 +149,6 @@ function sendReceipt(subj, msg) {
 		parameters: {action: 'sendReceipt', recipient: '".$email["receipt-to"]."', receipt_subj: subj, receipt_msg: msg}
 	});
 }
-
 //]]>
 </script>
 ";

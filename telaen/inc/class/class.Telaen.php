@@ -226,12 +226,12 @@ class Telaen extends Telaen_core
         $cmd = trim($cmd).$this->CRLF;
         $output = (preg_match('/^(PASS|LOGIN)/', $cmd, $regs)) ? $regs[1]." ****" : $cmd;
         if (!$this->mail_connect()) {
-            $this->trigger_error("could not connect to server", __FUNCTION__);
+            $this->trigger_error("could not connect to server", __FUNCTION__, __LINE__);
             return false;
         }
         if (!$this->_authenticated && $opt['autolog']) {
             if (!$this->mail_auth()) {
-                $this->trigger_error("could not auto_login: $output", __FUNCTION__);
+                $this->trigger_error("could not auto_login: $output", __FUNCTION__, __LINE__);
                 return false;
             }
         }
@@ -283,7 +283,7 @@ class Telaen extends Telaen_core
                     return true;
                 }
             }
-            $this->trigger_error("Cannot connect to: $this->_serverurl", __FUNCTION__);
+            $this->trigger_error("Cannot connect to: $this->_serverurl", __FUNCTION__, __LINE__);
             return false;
         }
         return true;
@@ -313,14 +313,14 @@ class Telaen extends Telaen_core
     {
         if ($this->upgrade_tls) {
             if (empty($this->capabilities['STARTTLS'])) {
-                $this->trigger_error("Want STARTTLS but server doesn't support it.", __FUNCTION__);
+                $this->trigger_error("Want STARTTLS but server doesn't support it.", __FUNCTION__, __LINE__);
                 return false;
             }
             $this->mail_send_command('STARTTLS', ['autolog' => false]);
             if ($this->mail_ok_resp()) {
                 stream_socket_enable_crypto($this->_mail_connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             } else {
-                $this->trigger_error("STARTTLS failure", __FUNCTION__);
+                $this->trigger_error("STARTTLS failure", __FUNCTION__, __LINE__);
                 return false;
             }
         }
@@ -333,7 +333,7 @@ class Telaen extends Telaen_core
                 $this->mail_send_command($challenge_response, ['autolog' => false, 'addtag' => false]);
                 return $this->mail_ok_resp();
             } else {
-                $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Downgrading to LOGIN", __FUNCTION__);
+                $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Downgrading to LOGIN", __FUNCTION__, __LINE__);
             }
         }
         $this->mail_send_command('LOGIN '.$this->mail_user.' '.$this->mail_pass, ['autolog' => false]);
@@ -349,14 +349,14 @@ class Telaen extends Telaen_core
         $tokens = [];
         if ($this->upgrade_tls) {
             if (empty($this->capabilities['STLS'])) {
-                $this->trigger_error("Want STLS but server doesn't support it.", __FUNCTION__);
+                $this->trigger_error("Want STLS but server doesn't support it.", __FUNCTION__, __LINE__);
                 return false;
             }
             $this->mail_send_command('STLS', ['autolog' => false]);
             if ($this->mail_ok_resp()) {
                 stream_socket_enable_crypto($this->_mail_connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             } else {
-                $this->trigger_error("STLS failure", __FUNCTION__);
+                $this->trigger_error("STLS failure", __FUNCTION__, __LINE__);
                 return false;
             }
         }
@@ -369,7 +369,7 @@ class Telaen extends Telaen_core
                 $this->mail_send_command($challenge_response, ['autolog' => false]);
                 return $this->mail_ok_resp();
             } else {
-                $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Trying others.", __FUNCTION__);
+                $this->trigger_error("Tried CRAM-MD5 but got bad challenge. Trying others.", __FUNCTION__, __LINE__);
             }
         }
         if (!empty($this->capabilities['APOP']) && preg_match('/<.+@.+>/U', $this->_greeting, $tokens)) {
@@ -417,7 +417,7 @@ class Telaen extends Telaen_core
     {
         if (!file_exists($this->userfolder)) {
             if (!@mkdir($this->userfolder, $this->dirperm)) {
-                $this->trigger_error("mkdir error: $this->userfolder", __FUNCTION__);
+                $this->trigger_error("mkdir error: $this->userfolder", __FUNCTION__, __LINE__);
             }
         }
 
@@ -450,7 +450,7 @@ class Telaen extends Telaen_core
                 if (!$this->is_system_folder($current_folder)) {
                     if (!file_exists($this->userfolder.$current_folder)) {
                         if (!@mkdir($this->userfolder.$current_folder, $this->dirperm)) {
-                            $this->trigger_error("mkdir error: {$this->userfolder}{$current_folder}", __FUNCTION__);
+                            $this->trigger_error("mkdir error: {$this->userfolder}{$current_folder}", __FUNCTION__, __LINE__);
                         }
                     }
                 }
@@ -461,7 +461,7 @@ class Telaen extends Telaen_core
             $value = $this->fix_prefix($value, 1);
             if (!file_exists($this->userfolder.$value)) {
                 if (!@mkdir($this->userfolder.$value, $this->dirperm)) {
-                    $this->trigger_error("mkdir error: {$this->userfolder}{$value}", __FUNCTION__);
+                    $this->trigger_error("mkdir error: {$this->userfolder}{$value}", __FUNCTION__, __LINE__);
                 }
             }
         }
@@ -709,7 +709,7 @@ class Telaen extends Telaen_core
             if ($msg['uidl'] != $muidl) {
                 $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                     $msg['uidl'],
-                    $muidl), __FUNCTION__);
+                    $muidl), __FUNCTION__, __LINE__);
 
                 return false;
             }
@@ -810,7 +810,7 @@ class Telaen extends Telaen_core
                 if ($msg['uidl'] != $muidl) {
                     $this->trigger_error(sprintf("UIDL's differ: [%s/%s]",
                         $msg['uidl'],
-                        $muidl), __FUNCTION__);
+                        $muidl), __FUNCTION__, __LINE__);
 
                     return false;
                 }
@@ -1051,7 +1051,7 @@ class Telaen extends Telaen_core
                 $i++;
             }
             if (is_dir($fullpath)) {
-                $this->_walk_folder($boxname, $fullpath, $i);
+                $this->_walk_folder($boxname, $fullpath, $i, $version);
             }
         }
     }
@@ -1427,7 +1427,7 @@ class Telaen extends Telaen_core
         $dir = $this->userfolder.$boxname;
         if (!is_dir($dir)) {
             if (!@mkdir($dir, $this->dirperm)) {
-                $this->trigger_error("cannot mkdir $dir", __FUNCTION__);
+                $this->trigger_error("cannot mkdir $dir", __FUNCTION__, __LINE__);
                 return false;
             }
         }
@@ -1437,7 +1437,7 @@ class Telaen extends Telaen_core
         $dir = $dir.'/'.$name[0];
         if (!is_dir($dir)) {
             if (!@mkdir($dir, $this->dirperm)) {
-                $this->trigger_error("cannot mkdir $dir", __FUNCTION__);
+                $this->trigger_error("cannot mkdir $dir", __FUNCTION__, __LINE__);
                 return false;
             }
         }
@@ -1482,7 +1482,7 @@ class Telaen extends Telaen_core
     {
         $flagname = strtoupper($flagname);
         if (!in_array($flagname, $this->flags)) {
-            $this->trigger_error("unknown flag: $this->userfolder", __FUNCTION__);
+            $this->trigger_error("unknown flag: $this->userfolder", __FUNCTION__, __LINE__);
             return false;
         }
         if ($flagtype == '+' && strstr($msg['flags'], $flagname)) {
