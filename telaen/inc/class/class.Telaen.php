@@ -471,21 +471,16 @@ class Telaen extends Telaen_core
             if ($this->mail_nok_resp($buffer)) {
                 return false;
             }
-            if (preg_match('|\\{(.*)\\}|', $buffer, $regs)) {
-                $bytes = $regs[1];
-            }
 
             $buffer = $this->mail_read_response();
             $msgbody = '';
             while (!$this->mail_ok_resp($buffer)) {
                 if (!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i', $buffer)) {
-                    $msgbody .= $buffer;
+                    if ($buffer != ')') {
+                        $msgbody .= $buffer;
+                    }
                 }
                 $buffer = $this->mail_read_response();
-            }
-            $pos = strrpos($msgbody, ")");
-            if (!($pos === false)) {
-                $msgbody = substr($msgbody, 0, $pos);
             }
             $msgheader .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
 
@@ -572,7 +567,7 @@ class Telaen extends Telaen_core
         if ($msg['header'] != '') {
             return $msg['header'];
         }
-        $ret = $header = '';
+        $header = '';
         $this->mail_send_command("UID FETCH {$msg['uid']} (RFC822.HEADER)");
         $buffer = $this->mail_read_response();
 
@@ -590,13 +585,10 @@ class Telaen extends Telaen_core
             /* wait for closing ')' */
             } elseif ($tbuffer != ")" && $tbuffer != '') {
                 $header .= $buffer;
-            /*	the end of message header was reached */
-            } elseif ($tbuffer == ")") {
-                $ret = $header;
             }
             $buffer = $this->mail_read_response();
         }
-        return $ret;
+        return $header;
     }
 
     protected function _mail_retr_header_pop($msg)
@@ -1030,9 +1022,10 @@ class Telaen extends Telaen_core
                 $msg['id'] = $i + 1;
                 $msg['mnum'] = $i;
                 $msg['size'] = filesize($fullpath);
-                $msg['localname'] = $fullpath;
+                $msg['localname'] = $entry;
                 $msg['folder'] = $boxname;
                 $msg['islocal'] = true;
+                $msg['iscached'] = true;
                 $msg['version'] = $version;
                 $msg['header'] = $thisheader;
                 $mail_info = $this->parse_headers($thisheader);
@@ -1405,8 +1398,8 @@ class Telaen extends Telaen_core
         $msg = $this->parse_headers($email['header']);
         $msg['folder'] = $boxname;
         $msg['version'] = 1;
-        $msg['islocal'] = 0;
-        $msg['iscached'] = 1;
+        $msg['islocal'] = true;
+        $msg['iscached'] = true;
         $msg['flags'] = $flags;
         $this->_mail_get_uidl($msg);
         $msg['localname'] = $this->_create_local_fname($msg, $boxname);
