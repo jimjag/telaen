@@ -33,6 +33,7 @@ class Telaen_core
     public $mail_email = 'unknown@localhost';
     public $mail_protocol = POP3;
     public $mail_prefix = "";
+    public $CRLF           = "\r\n";
 
     public $sanitize = true;
     public $use_html = false;
@@ -166,24 +167,50 @@ class Telaen_core
      */
     protected function _get_headers_from_cache($strfile)
     {
-        if (!file_exists($strfile)) {
-            return;
+        if ($strfile == "" || !file_exists($strfile)) {
+            return '';
         }
-        $f = fopen($strfile, 'rb');
+        $fp = fopen($strfile, 'rb');
+        if (!$fp) {
+            $this->trigger_error("cannot fopen $strfile", __FUNCTION__);
+            $this->status = STATUS_NOK_FILE;
+            return "";
+        }
         $result = "";
-        while (!self::_feof($f)) {
-            $result .= preg_replace('/\r?\n/', "\r\n", fread($f, 4096));
+        while (!self::_feof($fp)) {
+            $result .= preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
             $pos = strpos($result, "\r\n\r\n");
             if (!($pos === false)) {
                 $result = substr($result, 0, $pos);
                 break;
             }
         }
-        fclose($f);
-        unset($f);
+        fclose($fp);
+        unset($fp);
         unset($pos);
         unset($strfile);
+        $this->status = STATUS_OK;
+        return $result;
+    }
 
+    /**
+     * Open a file and read the message body, as determined
+     * by the content after 2 blank lines (\r\n\r\n).
+     * @param string $strfile File to read from
+     * @return string
+     */
+    protected function _get_body_from_cache($strfile)
+    {
+        if ($strfile == "" || !file_exists($strfile)) {
+            return '';
+        }
+        $result = file_get_contents($strfile);
+        $result = preg_replace('|\r?\n|', "\r\n", $result);
+        $pos = strpos($result, "\r\n\r\n");
+        if (!($pos === false)) {
+            $result = substr($result, $pos+4);
+        }
+        $this->status = STATUS_OK;
         return $result;
     }
 
@@ -199,20 +226,8 @@ class Telaen_core
         if ($strfile == "" || !file_exists($strfile)) {
             return '';
         }
-        $fp = fopen($strfile, 'rb');
-        if (!$fp) {
-            $this->trigger_error("cannot fopen $strfile", __FUNCTION__);
-            $this->status = STATUS_NOK_FILE;
-            return "";
-        }
-        fseek($fp, 0, SEEK_END);
-        $size = ftell($fp);
-        rewind($fp);
-        $result = preg_replace('|\r?\n|', "\r\n", fread($fp, $size));
-        fclose($fp);
-        unset($fp);
-        unset($size);
-
+        $result = file_get_contents($strfile);
+        $result = preg_replace('|\r?\n|', "\r\n", $result);
         $this->status = STATUS_OK;
         return $result;
     }

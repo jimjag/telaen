@@ -11,7 +11,6 @@ require_once './inc/vendor/class.tnef.php';
 class Telaen extends Telaen_core
 {
     public $havespam       = false;
-    public $CRLF           = "\r\n";
     public $dirperm        = 0700;
     public $capabilities   = [];
 
@@ -478,7 +477,7 @@ class Telaen extends Telaen_core
         $msgheader = trim($msg['header']);
 
         if (file_exists($msg['localname'])) {
-            $msgcontent = $this->read_file($msg['localname']);
+            $msgbody = $this->_get_body_from_cache($msg['localname']);
         } else {
             $this->mail_send_command("UID FETCH {$msg['uid']} BODY[TEXT]");
             $buffer = $this->mail_read_response();
@@ -509,11 +508,9 @@ class Telaen extends Telaen_core
             $this->tdb->do_message($msg);
 
             $msgcontent = "$msgheader\r\n\r\n$msgbody";
-
             $this->save_file($msg['localname'], $msgcontent);
         }
-
-        return $msgcontent;
+        return $msgbody;
     }
 
     /**
@@ -524,7 +521,7 @@ class Telaen extends Telaen_core
     protected function _mail_retr_msg_pop(&$msg)
     {
         if (file_exists($msg['localname'])) {
-            $msgcontent = $this->read_file($msg['localname']);
+            $body = $this->_get_body_from_cache($msg['localname']);
         } elseif ($msg['folder'] == 'inbox') {
             $command = ($this->config['mail_use_top']) ? 'TOP '.$msg['mnum'].' '.$msg['size'] : 'RETR '.$msg['mnum'];
             $this->mail_send_command($command);
@@ -558,11 +555,10 @@ class Telaen extends Telaen_core
             $this->tdb->do_message($msg);
 
             $msgcontent = "$header\r\n\r\n$body";
-
             $this->save_file($msg['localname'], $msgcontent);
         }
 
-        return $msgcontent;
+        return $body;
     }
 
     /**

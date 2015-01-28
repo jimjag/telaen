@@ -102,11 +102,11 @@ $jssource .= "
 
 no_quota = $jsquota;
 quota_msg = '".preg_replace("|'|", "\\'", $lang['quota_exceeded'])."';
-function readmsg(ix,read) {
+function readmsg(uidl,ix,read) {
 	if(no_quota)
 		alert(quota_msg);
 	else
-		location = 'readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix='+ix+'';
+		location = 'readmsg.php?folder=".urlencode($folder)."&ix='+ix+'&uidl='+uidl+'';
 }
 function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag' }
 function delemsg() { document.form1.submit() }
@@ -170,7 +170,7 @@ if ($nummsg > 0) {
         $email = $TLN->get_names($headers[$i]['from'])[0]['mail'];
         $subject = $headers[$i]['subject'];
 
-        $readlink = "javascript:readmsg($i,!$headers[$i]['unread'])";
+        $readlink = "javascript:readmsg($headers[$i]['uidl'],$i,!$headers[$i]['unread'])";
         $composelink = "newmsg.php?folder=".urlencode($folder)."&nameto=".htmlspecialchars($from)."&mailto=".htmlspecialchars($email);
         $composelinksent = "newmsg.php?folder=".urlencode($folder)."&nameto=".htmlspecialchars($to)."&mailto=".htmlspecialchars($to);
 
@@ -193,7 +193,7 @@ if ($nummsg > 0) {
         }
 
         $msg_img = '&nbsp;<img src="'.$msg_img.'" width="14" height="14" border="0" alt="" />';
-        $checkbox = '<input type="checkbox" name="msg_'.$i.'" value="1" />';
+        $checkbox = '<input type="checkbox" name="msg_'.$headers[$i]['uidl'].'" value="1" />';
         $attachimg = ($headers[$i]['attach']) ? '&nbsp;<img src="images/attach.gif" border="0" />' : '';
 
         $date = $headers[$i]['date'];

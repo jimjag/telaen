@@ -12,20 +12,22 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-if (!isset($ix) || !isset($pag)) {
+$msgs = $TLN->tdb->get_messages($folder);
+if (!isset($ix) && !isset($uidl)) {
     $TLN->redirect_and_exit('index.php?err=3', true);
+} elseif (!isset($uidl)) {
+    $uidl = $msgs[$ix]['uidl'];
 }
-
-$mysess = $TLN->tdb->get_messages($folder);
-$mail_info = $mysess[$ix];
+$msg = $TLN->tdb->get_message($uidl, $folder);
+$ix = $msg['idx'];
 
 $is_attached = false;
 $arAttachment = array();
 
-if (!($result = $TLN->mail_retr_msg($mail_info))) {
-    $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&pag=$pag&refr=true");
+if (!($result = $TLN->mail_retr_msg($msg))) {
+    $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
 }
-if (!$TLN->mail_set_flag($mail_info, '\\SEEN', '+')) {
+if (!$TLN->mail_set_flag($msg, '\\SEEN', '+')) {
     $TLN->trigger_error('Could not set SEEN flag', I_AM_TELAEN);
 }
 $TLN->mail_disconnect();
@@ -37,27 +39,27 @@ $email = $TLN->Decode($result);
 
 if ($ix > 0) {
     $umHavePrevious = 1;
-    $umPreviousSubject = $mysess[($ix-1)]['subject'];
-    $umPreviousLink = 'readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=".($ix-1)."";
+    $umPreviousSubject = $msgs[($ix-1)]['subject'];
+    $umPreviousLink = 'readmsg.php?folder='.urlencode($folder)."&ix=".($ix-1)."";
 
     $smarty->assign('umHavePrevious', $umHavePrevious);
     $smarty->assign('umPreviousSubject', $umPreviousSubject);
     $smarty->assign('umPreviousLink', $umPreviousLink);
 }
 
-if ($ix < (count($mysess)-1)) {
+if ($ix < (count($msgs)-1)) {
     $umHaveNext = 1;
-    $umNextSubject = $mysess[($ix+1)]['subject'];
-    $umNextLink = 'readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=".($ix+1)."";
+    $umNextSubject = $msgs[($ix+1)]['subject'];
+    $umNextLink = 'readmsg.php?folder='.urlencode($folder)."&ix=".($ix+1)."";
     $smarty->assign('umHaveNext', $umHaveNext);
     $smarty->assign('umNextSubject', $umNextSubject);
     $smarty->assign('umNextLink', $umNextLink);
 }
 
 // message download link
-$smarty->assign('downloadLink', 'download.php?folder='.urlencode($folder).'&ix='.$ix);
+$smarty->assign('downloadLink', 'download.php?folder='.urlencode($folder).'&uidl='.$uidl);
 
-$body =    $email['body'];
+$body = $email['body'];
 
 $redir_path = 'redir.php';    // why not just relative?? Now is relative (due to problems on https servers)!
 
@@ -66,7 +68,7 @@ $body = preg_replace('|href="http([s]?)://|i', "target='_blank' href='$redir_pat
 $body = preg_replace('|href=["\']mailto:|i', "target='_top' href='newmsg.php?to=", $body);
 
 $auth['currentbody'] = $body;
-$body = "<iframe src='show_body.php?folder=".urlencode($folder)."&ix=$ix' width='100%' height='400' frameborder='0'></iframe>";
+$body = "<iframe src='show_body.php?folder=".urlencode($folder)."&uidl=$uidl' width='100%' height='400' frameborder='0'></iframe>";
 
 $smarty->assign('umMessageBody', $body);
 
@@ -163,7 +165,7 @@ $umDeleteForm = "<input type='hidden' name='decision' value='move' />
 $umReplyForm = "<form name='msg' action='newmsg.php' method='post'>
 	<input type='hidden' name='rtype' value='reply' />
 	<input type='hidden' name='folder' value='".urlencode($folder)."' />
-	<input type='hidden' name='uidl' value='{$mail_info['uidl']}' />
+	<input type='hidden' name='uidl' value='{$msg['uidl']}' />
 </form>
 ";
 
@@ -178,7 +180,7 @@ $anexos = $email['attachments'];
 $haveattachs = (count($anexos) > 0) ? 1 : 0;
 
 if (count($anexos) > 0) {
-    $root = &$mail_info['attachments'];
+    $root = &$msg['attachments'];
 
     foreach ($arAttachment as $item) {
         if (is_numeric($item)) {
@@ -187,7 +189,7 @@ if (count($anexos) > 0) {
     }
 
     $root = $email['attachments'];
-    $mbox['headers'][$folder][$ix] = $mail_info;
+    $mbox['headers'][$folder][$ix] = $msg;
 
     $nIndex = count($arAttachment);
     $attachAr = array();
