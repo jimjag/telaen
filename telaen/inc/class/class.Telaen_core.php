@@ -911,7 +911,7 @@ class Telaen_core
      */
     protected function _process_message($header, $body)
     {
-        $mail_info = $this->formalize_headers($header);
+        $mail_info = $this->parse_headers($header);
         $ctype = $mail_info['headers']['content-type'];
         $ctenc = $mail_info['headers']['content-transfer-encoding'];
 
@@ -1151,7 +1151,7 @@ class Telaen_core
      * @param  string $first  Names
      * @return array
      */
-    public function formalize_headers($header)
+    public function parse_headers($header)
     {
         $myarray = [];
         $headers = $this->_parse_headers($header);
@@ -1306,18 +1306,18 @@ class Telaen_core
      * @param mixed $email
      * @return array
      */
-    function build_msg($email) {
+    public function build_msg($email)
+    {
         $this->_content = [];
         $this->_msgbody = "";
-        $email = $this->fetch_structure($email);
-        $body = $email["body"];
-        $header = $email["header"];
-        $mail_info = $this->formalize_headers($header);
-        $this->_process_message($header,$body);
+        list($header, $body) = $this->fetch_structure($email);
+        $mail_info = $this->parse_headers($header);
+        $this->_process_message($header, $body);
         self::add2me($this->_content, $mail_info);
         $this->_content['body'] = $this->_msgbody;
         return $this->_content;
     }
+
     /**
      * Split an email by its boundary
      */
@@ -1337,10 +1337,10 @@ class Telaen_core
      */
     public function fetch_structure($email)
     {
-        $ARemail = [];
         $header = '';
         $body = '';
         if (is_resource($email)) {
+            rewind($email);
             while (!$this->_feof($email)) {
                 $line = preg_replace('|\r?\n|',"\r\n", fread($email,4096));
                 $pos = strpos($line,"\r\n\r\n");
@@ -1356,19 +1356,13 @@ class Telaen_core
                 $line = preg_replace('|\r?\n|',"\r\n", fread($email,4096));
                 $body .= $line;
             }
-            $ARemail['header'] = $header;
-            $ARemail['body'] = $body;
         } else {
             $separator = "\n\r\n";
             $header = trim(substr($email, 0, strpos($email, $separator)));
             $bodypos = strlen($header) + strlen($separator);
             $body = substr($email, $bodypos, strlen($email) - $bodypos);
-            $ARemail['header'] = $header;
-            $ARemail['body'] = $body;
-            unset($header);
-            unset($body);
         }
-        return $ARemail;
+        return [$header, $body];
     }
 
     /**

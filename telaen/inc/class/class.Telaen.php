@@ -494,8 +494,10 @@ class Telaen extends Telaen_core
             $msg['header'] = $msgheader;
             $this->tdb->do_message($msg);
 
-            $msgcontent = "$msgheader\r\n\r\n$msgbody";
-            $this->save_file($msg['localname'], $msgcontent);
+            $pts = fopen('php://temp', 'w+');
+            fwrite($pts, "$msgheader\r\n\r\n$msgbody");
+            $this->save_file($msg['localname'], $pts);
+            fclose($pts);
         }
         return $msgbody;
     }
@@ -518,15 +520,16 @@ class Telaen extends Telaen_core
             if ($this->mail_nok_resp($buffer)) {
                 return false;
             }
-            $msgcontent = '';
+            $pts = fopen('php://temp', 'w+');
             while (!self::_feof($this->_mail_connection)) {
                 $buffer = $this->mail_read_response();
                 if (chop($buffer) == '.') {
                     break;
                 }
-                $msgcontent .= $buffer;
+                fwrite($pts, $buffer);
             }
-            $email = $this->fetch_structure($msgcontent);
+            $email = $this->fetch_structure($pts);
+            fclose($pts);
             $header = $email['header'];
             $body = $email['body'];
 
@@ -541,10 +544,11 @@ class Telaen extends Telaen_core
             $msg['header'] = $header;
             $this->tdb->do_message($msg);
 
-            $msgcontent = "$header\r\n\r\n$body";
-            $this->save_file($msg['localname'], $msgcontent);
+            $pts = fopen('php://temp', 'w+');
+            fwrite($pts, "$header\r\n\r\n$body");
+            $this->save_file($msg['localname'], $pts);
+            fclose($pts);
         }
-
         return $body;
     }
 
@@ -904,7 +908,7 @@ class Telaen extends Telaen_core
                         $msg['folder'] = $boxname;
                         $msg['islocal'] = false;
                         $msg['uid'] = $uid;
-                        $mail_info = $this->formalize_headers($header);
+                        $mail_info = $this->parse_headers($header);
                         self::add2me($msg, $mail_info);
                         $this->tdb->do_message($msg);
                         $new++;
@@ -1031,7 +1035,7 @@ class Telaen extends Telaen_core
                 $msg['islocal'] = true;
                 $msg['version'] = $version;
                 $msg['header'] = $thisheader;
-                $mail_info = $this->formalize_headers($thisheader);
+                $mail_info = $this->parse_headers($thisheader);
                 self::add2me($msg, $mail_info);
                 $msg['uidl'] = $this->_mail_get_uidl($msg);
                 $this->tdb->do_message($msg);
@@ -1127,7 +1131,7 @@ class Telaen extends Telaen_core
                 if (empty($messages[$i]['header'])) {
                     $messages[$i]['header'] = $this->mail_retr_header($messages[$i]);
                 }
-                $mail_info = $this->formalize_headers($messages[$i]['header']);
+                $mail_info = $this->parse_headers($messages[$i]['header']);
                 self::add2me($messages[$i], $mail_info);
                 $messages[$i]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                     $mail_info['headers']['content-type'])) ? 1 : 0;
@@ -1384,7 +1388,7 @@ class Telaen extends Telaen_core
     }
 
     /**
-     * Save email message to specific emailbox
+     * Save raw email message to specific emailbox
      * @param  string  $boxname Emailbox name to save to
      * @param  string  $message Message to save
      * @param  string  $flags
@@ -1397,23 +1401,26 @@ class Telaen extends Telaen_core
                 return false;
             }
         }
-
-        $dir = $this->userfolder.$boxname;
         $email = $this->fetch_structure($message);
-        $mail_info = $this->formalize_headers($email['header']);
-        list($filename, $name) = $this->_create_local_fname($mail_info, $boxname);
-        $dir = $dir.'/'.$name[0];
-        if (!is_dir($dir)) {
-            if (!@mkdir($dir, $this->dirperm)) {
-                $this->trigger_error("cannot mkdir $dir", __FUNCTION__, __LINE__);
-                return false;
-            }
-        }
+        $msg = $this->parse_headers($email['header']);
+        $msg['folder'] = $boxname;
+        $msg['version'] = 1;
+        $msg['islocal'] = 0;
+        $msg['iscached'] = 1;
+        $msg['flags'] = $flags;
+        $this->_mail_get_uidl($msg);
+        $msg['localname'] = $this->_create_local_fname($msg, $boxname);
+        list($filename, $dir) = $this->get_pathname($msg);
+        $this->_mkdir($dir);
         if (!empty($flags)) {
-            $message = trim($email['header'])."\r\nX-UM-Flags: $flags\r\n\r\n".$email['body'];
+            $content = trim($email['header'])."\r\nX-UM-Flags: $flags\r\n\r\n".$email['body'];
+        } else {
+            $content = trim($email['header'])."\r\n\r\n".$email['body'];
         }
+        $msg['size'] = strlen($content);
         unset($email);
-        $this->save_file($filename, $message);
+        $this->save_file($filename, $content);
+        $this->tdb->new_message($msg, true);
 
         return true;
     }
@@ -1705,7 +1712,7 @@ class Telaen extends Telaen_core
                 $msg['uidl'] = self::md5(self::uniq_id());
                 return $msg['uidl'];
             }
-            $mail_info = $this->formalize_headers($header);
+            $mail_info = $this->parse_headers($header);
             self::add2me($msg, $mail_info);
             $msg['header'] = $header;
             $this->tdb->do_message($msg);

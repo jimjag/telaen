@@ -595,13 +595,22 @@ class LocalMbox extends SQLite3
     /**
      * Add new email message to folder
      * @param array $msg
+     * @param boolean $adj
      * @return boolean
      */
-    public function new_message($msg)
+    public function new_message($msg, $adj = false)
     {
         $thelist = $this->create_uplist(array_keys($msg), $this->mschema);
         if ($thelist == null || !is_array($thelist)) {
             return false;
+        }
+        if ($adj) {
+            $this->folders[$msg['folder']]['size'] += $msg['size'];
+            $this->folders[$msg['folder']]['count'] += 1;
+            if ($msg['unread']) {
+                $this->folders[$msg['folder']]['unread'] += 1;
+            }
+            $this->_folder_need_sync[$msg['folder']] = true;
         }
         return $this->do_insert(self::_get_folder_name($msg['folder']), $msg, $thelist);
     }
