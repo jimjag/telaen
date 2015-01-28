@@ -86,6 +86,29 @@ class Telaen_core
     }
 
     /**
+     *
+     */
+    static public function debug_print_struc($obj)
+    {
+        echo('<pre>');
+        print_r($obj);
+        echo('</pre>');
+    }
+    /**
+     * Remove unsafe chars with hex equiv
+     * @param string $str
+     * @return string
+     */
+    static public function safe_print($str)
+    {
+        return preg_replace_callback(
+            '|([^[:print:]])|',
+            function ($match) { return '\x'.dechex(ord($match[1])); },
+            $str
+        );
+    }
+
+    /**
      * Print out debugging info as HTML comments
      * @param  string $str
      * @return void
@@ -195,10 +218,12 @@ class Telaen_core
         }
         $result = "";
         while (!self::_feof($fp)) {
-            $result .= preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
-            $pos = strpos($result, "\r\n\r\n");
-            if (!($pos === false)) {
-                $result = substr($result, 0, $pos);
+            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
+            $pos = strpos($buffer, "\r\n\r\n");
+            if ($pos === false) {
+                $result .= $buffer;
+            } else {
+                $result .= substr($buffer, 0, $pos);
                 break;
             }
         }
@@ -214,21 +239,35 @@ class Telaen_core
      * Open a file and read the message body, as determined
      * by the content after 2 blank lines (\r\n\r\n).
      * @param string $strfile File to read from
-     * @return string
+     * @return resource
      */
     protected function _get_body_from_cache($strfile)
     {
         if ($strfile == "" || !file_exists($strfile)) {
             return '';
         }
-        $result = file_get_contents($strfile);
-        $result = preg_replace('|\r?\n|', "\r\n", $result);
-        $pos = strpos($result, "\r\n\r\n");
-        if (!($pos === false)) {
-            $result = substr($result, $pos+4);
+        $fp = fopen($strfile, 'rb');
+        if (!$fp) {
+            $this->trigger_error("cannot fopen $strfile", __FUNCTION__, __LINE__);
+            $this->status = STATUS_NOK_FILE;
+            return "";
+        }
+        $result = "";
+        $pts = fopen('php://temp', 'w+');
+        while (!self::_feof($fp)) {
+            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
+            $pos = strpos($buffer, "\r\n\r\n");
+            if ($pos !== false) {
+                fwrite($pts, substr($buffer, $pos+4));
+                break;
+            }
+        }
+        while (!self::_feof($fp)) {
+            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
+            fwrite($pts, $buffer);
         }
         $this->status = STATUS_OK;
-        return $result;
+        return $pts;
     }
 
     protected function _create_local_fname($msg)
@@ -911,6 +950,10 @@ class Telaen_core
      */
     protected function _process_message($header, $body)
     {
+        if (is_resource($body)) {
+            rewind($body);
+            $body = stream_get_contents($body);
+        }
         $mail_info = $this->parse_headers($header);
         $ctype = $mail_info['headers']['content-type'];
         $ctenc = $mail_info['headers']['content-transfer-encoding'];
@@ -1338,7 +1381,7 @@ class Telaen_core
     public function fetch_structure($email)
     {
         $header = '';
-        $body = '';
+        $body = fopen('php://temp', 'w+');
         if (is_resource($email)) {
             rewind($email);
             while (!$this->_feof($email)) {
@@ -1348,19 +1391,19 @@ class Telaen_core
                     $header .= $line;
                 } else {
                     $header .= substr($line, 0, $pos);
-                    $body = substr($line, $pos+4);
+                    fwrite($body, substr($line, $pos + 4));
                     break;
                 }
             }
             while (!$this->_feof($email)) {
                 $line = preg_replace('|\r?\n|',"\r\n", fread($email,4096));
-                $body .= $line;
+                fwrite($body, $line);
             }
         } else {
             $separator = "\n\r\n";
             $header = trim(substr($email, 0, strpos($email, $separator)));
             $bodypos = strlen($header) + strlen($separator);
-            $body = substr($email, $bodypos, strlen($email) - $bodypos);
+            fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
         }
         return [$header, $body];
     }
@@ -1786,30 +1829,6 @@ ENDOFREDIRECT;
     }
 
     /**
-     *
-     */
-    static public function debug_print_struc($obj)
-    {
-        echo('<pre>');
-        print_r($obj);
-        echo('</pre>');
-    }
-    /**
-     * Remove unsafe chars with hex equiv
-     * @param string $str
-     * @return string
-     */
-    static public function safe_print($str)
-    {
-        return preg_replace_callback(
-            '|([^[:print:]])|',
-            function ($match) { return '_x'.dechex(ord($match[1])); },
-            $str
-        );
-    }
-
-
-    /**
      * Force variable to a specific type
      * @param mixed $var Variable to cast
      * @param mixed $cast Type to cast $var to
@@ -1914,6 +1933,36 @@ ENDOFREDIRECT;
             return true;
         }
         return feof($handle);
+    }
+
+
+    /**
+     * Return the representation of $var (large chunk o' data)
+     * as either a large string or a resource (temp stream handle)
+     * @param mixed $body
+     * @param bool $ret_as_stream
+     * @return resource|string
+     */
+    static public function blob($var, $ret_as_stream = true)
+    {
+        if ($ret_as_stream) {
+            if (is_resource($var)) {
+                rewind($var);
+                return $var;
+            }
+            $pts = fopen('php://temp', 'w+');
+            if (!is_null($var)) {
+                fwrite($pts, $var);
+                rewind($pts);
+            }
+            return $pts;
+        } else {
+            if (is_resource($var)) {
+                rewind($var);
+                return stream_get_contents($var);
+            }
+            return strval($var);
+        }
     }
 
     /**

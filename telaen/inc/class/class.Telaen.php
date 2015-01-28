@@ -209,7 +209,7 @@ class Telaen extends Telaen_core
     {
         $buffer = @fgets($this->_mail_connection, 8192);
         $buffer = preg_replace('|\r?\n|', "\r\n", $buffer);
-        $this->debug_msg($buffer, __FUNCTION__);
+        $this->debug_msg($buffer, __FUNCTION__, __LINE__);
         return $buffer;
     }
 
@@ -238,7 +238,7 @@ class Telaen extends Telaen_core
             $cmd = $this->_get_sid(true).' '.$cmd;
             $output = $this->_get_sid().' '.$output;
         }
-        $this->debug_msg($output, __FUNCTION__);
+        $this->debug_msg($output, __FUNCTION__, __LINE__);
         return (boolean)fwrite($this->_mail_connection, $cmd);
 }
 
@@ -473,11 +473,11 @@ class Telaen extends Telaen_core
             }
 
             $buffer = $this->mail_read_response();
-            $msgbody = '';
+            $msgbody = fopen('php://temp', 'w+');
             while (!$this->mail_ok_resp($buffer)) {
                 if (!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i', $buffer)) {
                     if ($buffer != ')') {
-                        $msgbody .= $buffer;
+                        fwrite($msgbody, $buffer);
                     }
                 }
                 $buffer = $this->mail_read_response();
@@ -490,9 +490,11 @@ class Telaen extends Telaen_core
             $this->tdb->do_message($msg);
 
             $pts = fopen('php://temp', 'w+');
-            fwrite($pts, "$msgheader\r\n\r\n$msgbody");
+            rewind($msgbody);
+            fwrite($pts, "$msgheader\r\n\r\n".stream_get_contents($msgbody));
             $this->save_file($msg['localname'], $pts);
             fclose($pts);
+            rewind($msgbody);
         }
         return $msgbody;
     }
@@ -540,7 +542,7 @@ class Telaen extends Telaen_core
             $this->tdb->do_message($msg);
 
             $pts = fopen('php://temp', 'w+');
-            fwrite($pts, "$header\r\n\r\n$body");
+            fwrite($pts, "$header\r\n\r\n".stream_get_contents($body));
             $this->save_file($msg['localname'], $pts);
             fclose($pts);
         }
@@ -1802,7 +1804,7 @@ class Telaen extends Telaen_core
             list($ok, $log) = $this->tdb->status();
             if (!$ok) {
                 foreach ($log as $l) {
-                    $this->debug_msg($l, __FUNCTION__);
+                    $this->debug_msg($l, __FUNCTION__, __LINE__);
                 }
             }
         }
