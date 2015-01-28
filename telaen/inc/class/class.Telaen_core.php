@@ -35,6 +35,7 @@ class Telaen_core
     public $mail_prefix = "";
     public $CRLF           = "\r\n";
     public $dirperm        = 0700;
+    public $tstream_max = 4194304; // 4M
 
     public $sanitize = true;
     public $use_html = false;
@@ -252,8 +253,7 @@ class Telaen_core
             $this->status = STATUS_NOK_FILE;
             return "";
         }
-        $result = "";
-        $pts = fopen('php://temp', 'w+');
+        $pts = $this->tstream();
         while (!self::_feof($fp)) {
             $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
             $pos = strpos($buffer, "\r\n\r\n");
@@ -1381,7 +1381,7 @@ class Telaen_core
     public function fetch_structure($email)
     {
         $header = '';
-        $body = fopen('php://temp', 'w+');
+        $body = $this->tstream();
         if (is_resource($email)) {
             rewind($email);
             while (!$this->_feof($email)) {
@@ -1935,7 +1935,6 @@ ENDOFREDIRECT;
         return feof($handle);
     }
 
-
     /**
      * Return the representation of $var (large chunk o' data)
      * as either a large string or a resource (temp stream handle)
@@ -1943,14 +1942,14 @@ ENDOFREDIRECT;
      * @param bool $ret_as_stream
      * @return resource|string
      */
-    static public function blob($var, $ret_as_stream = true)
+    public function blob($var, $ret_as_stream = true)
     {
         if ($ret_as_stream) {
             if (is_resource($var)) {
                 rewind($var);
                 return $var;
             }
-            $pts = fopen('php://temp', 'w+');
+            $pts = $this->tstream();
             if (!is_null($var)) {
                 fwrite($pts, $var);
                 rewind($pts);
@@ -1963,6 +1962,14 @@ ENDOFREDIRECT;
             }
             return strval($var);
         }
+    }
+
+    /**
+     *
+     */
+    public function tstream()
+    {
+        return fopen("php://temp/maxmemory:{$this->tstream_max}", 'w+');
     }
 
     /**

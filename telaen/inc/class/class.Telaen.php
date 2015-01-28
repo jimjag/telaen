@@ -473,7 +473,7 @@ class Telaen extends Telaen_core
             }
 
             $buffer = $this->mail_read_response();
-            $msgbody = fopen('php://temp', 'w+');
+            $msgbody = $this->tstream();
             while (!$this->mail_ok_resp($buffer)) {
                 if (!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i', $buffer)) {
                     if ($buffer != ')') {
@@ -489,7 +489,7 @@ class Telaen extends Telaen_core
             $msg['header'] = $msgheader;
             $this->tdb->do_message($msg);
 
-            $pts = fopen('php://temp', 'w+');
+            $pts = $this->tstream();
             rewind($msgbody);
             fwrite($pts, "$msgheader\r\n\r\n".stream_get_contents($msgbody));
             $this->save_file($msg['localname'], $pts);
@@ -517,7 +517,7 @@ class Telaen extends Telaen_core
             if ($this->mail_nok_resp($buffer)) {
                 return false;
             }
-            $pts = fopen('php://temp', 'w+');
+            $pts = $this->tstream();
             while (!self::_feof($this->_mail_connection)) {
                 $buffer = $this->mail_read_response();
                 if (chop($buffer) == '.') {
@@ -541,7 +541,7 @@ class Telaen extends Telaen_core
             $msg['header'] = $header;
             $this->tdb->do_message($msg);
 
-            $pts = fopen('php://temp', 'w+');
+            $pts = $this->tstream();
             fwrite($pts, "$header\r\n\r\n".stream_get_contents($body));
             $this->save_file($msg['localname'], $pts);
             fclose($pts);
@@ -575,7 +575,7 @@ class Telaen extends Telaen_core
 
         /* if any problem, stop the procedure */
         if ($this->mail_nok_resp($buffer)) {
-            return $ret;
+            return $header;
         }
 
         /* the end mark is <sid> OK FETCH, we are waiting for it*/
