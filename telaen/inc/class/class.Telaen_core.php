@@ -34,6 +34,7 @@ class Telaen_core
     public $mail_protocol = POP3;
     public $mail_prefix = "";
     public $CRLF           = "\r\n";
+    public $dirperm        = 0700;
 
     public $sanitize = true;
     public $use_html = false;
@@ -161,6 +162,22 @@ class Telaen_core
     }
 
     /**
+     * Our mkdir wrapper
+     * @param string $dir Directory to create
+     * @param string $perm Permissions to use
+     * @return void
+     */
+    protected function _mkdir($dir, $perm = null)
+    {
+        if ($perm === null) $perm = $this->dirperm;
+        if (!is_dir($dir)) {
+            if (!@mkdir($dir, $this->dirperm)) {
+                $this->trigger_error("mkdir error: $this->userfolder", __FUNCTION__, __LINE__);
+            }
+        }
+    }
+
+    /**
      * Open a file and read it until a double line break
      * is reached.
      * Used to get the list of cached messages from cache
@@ -214,6 +231,37 @@ class Telaen_core
         return $result;
     }
 
+    protected function _create_local_fname($msg)
+    {
+        $fname = trim($msg['uidl']);
+        if (empty($fname)) {
+            $fname = self::uniq_id();
+        }
+        if (!self::is_md5($fname)) {
+            $fname = self::md5($fname);
+        }
+        return $fname.'.eml';
+    }
+
+    /**
+     * Get the full pathname for the message
+     * @param $msg
+     * @param mixed $boxname Foldername to use (default is msg's folder)
+     * @return array
+     */
+    public function get_pathname($msg, $boxname = null)
+    {
+        if ($boxname === null) {
+            $boxname = $msg['folder'];
+        }
+        if ($msg['version']) {
+            $dirpath = trim($this->userfolder.$boxname.'/'.$msg['localname'][0]);
+        } else {
+            $dirpath = trim($this->userfolder.$boxname);
+        }
+        return [$dirpath.'/'.$msg['localname'], $dirpath];
+    }
+
     /**
      * Open a file and read it fixing possible mistakes
      * on the line breaks. A single variable is returned
@@ -257,6 +305,21 @@ class Telaen_core
             $this->status = STATUS_NOK_FILE;
             return false;
         }
+    }
+
+    /**
+     * Save $msg content to file
+     * @param  array $msg The message associated w/ the content
+     * @param  mixed $content The content to write
+     * @return boolean
+     */
+    public function save_msg($msg, $content)
+    {
+        list($path, $dir) = $this->get_pathname($msg);
+        if ($msg['version']) {
+            $this->_mkdir($dir);
+        }
+        return $this->save_file($path, $content);
     }
 
     /**
@@ -355,7 +418,7 @@ class Telaen_core
     }
 
     /**
-     * Decode headers strings. Inverse of mime_encode_headers()
+     * parse_body headers strings. Inverse of mime_encode_headers()
      */
     protected function _decode_mime_string($subject)
     {
@@ -819,7 +882,7 @@ class Telaen_core
     }
 
     /**
-     * Decode Quoted-Printable strings
+     * parse_body Quoted-Printable strings
      */
     protected function _decode_qp($str)
     {
@@ -1223,13 +1286,14 @@ class Telaen_core
     }
 
     /**
-     * Main method called by script, start the decoding process
+     * Parse the body content of the message
      * @param  array $msg Email message
      * @return array
      */
-    public function Decode($msg)
+    public function parse_body($msg)
     {
         $this->_content = [];
+        $this->_msgbody = "";
         $this->_process_message($msg['header'], $msg['body']);
         $msg['body'] = ''; // Save some cycles
         self::add2me($this->_content, $msg);
@@ -1237,6 +1301,23 @@ class Telaen_core
         return $this->_content;
     }
 
+    /**
+     * Build a standard $msg[] from a complete Email message
+     * @param mixed $email
+     * @return array
+     */
+    function build_msg($email) {
+        $this->_content = [];
+        $this->_msgbody = "";
+        $email = $this->fetch_structure($email);
+        $body = $email["body"];
+        $header = $email["header"];
+        $mail_info = $this->formalize_headers($header);
+        $this->_process_message($header,$body);
+        self::add2me($this->_content, $mail_info);
+        $this->_content['body'] = $this->_msgbody;
+        return $this->_content;
+    }
     /**
      * Split an email by its boundary
      */
@@ -1251,21 +1332,42 @@ class Telaen_core
 
     /**
      * Split header and body into an array
-     * @param  string $email Email message
+     * @param  mixed $email Email message
      * @return array
      */
-    public function fetch_structure(&$email)
+    public function fetch_structure($email)
     {
         $ARemail = [];
-        $separator = "\n\r\n";
-        $header = trim(substr($email, 0, strpos($email, $separator)));
-        $bodypos = strlen($header)+strlen($separator);
-        $body = substr($email, $bodypos, strlen($email)-$bodypos);
-        $ARemail['header'] = $header;
-        $ARemail['body'] = $body;
-        unset($header);
-        unset($body);
-
+        $header = '';
+        $body = '';
+        if (is_resource($email)) {
+            while (!$this->_feof($email)) {
+                $line = preg_replace('|\r?\n|',"\r\n", fread($email,4096));
+                $pos = strpos($line,"\r\n\r\n");
+                if($pos === false) {
+                    $header .= $line;
+                } else {
+                    $header .= substr($line, 0, $pos);
+                    $body = substr($line, $pos+4);
+                    break;
+                }
+            }
+            while (!$this->_feof($email)) {
+                $line = preg_replace('|\r?\n|',"\r\n", fread($email,4096));
+                $body .= $line;
+            }
+            $ARemail['header'] = $header;
+            $ARemail['body'] = $body;
+        } else {
+            $separator = "\n\r\n";
+            $header = trim(substr($email, 0, strpos($email, $separator)));
+            $bodypos = strlen($header) + strlen($separator);
+            $body = substr($email, $bodypos, strlen($email) - $bodypos);
+            $ARemail['header'] = $header;
+            $ARemail['body'] = $body;
+            unset($header);
+            unset($body);
+        }
         return $ARemail;
     }
 
@@ -1312,7 +1414,7 @@ class Telaen_core
     }
 
     /**
-     * Decode UUEncoded attachments
+     * parse_body UUEncoded attachments
      */
     protected function _UUDecode($data)
     {

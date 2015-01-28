@@ -35,7 +35,7 @@ $TLN->mail_disconnect();
 // metas assigned to smarty
 $smarty->assign('pageMetas', $pmetas);
 
-$email = $TLN->Decode($msg);
+$email = $TLN->parse_body($msg);
 
 if ($ix > 0) {
     $umHavePrevious = 1;

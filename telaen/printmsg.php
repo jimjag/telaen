@@ -26,7 +26,7 @@ $email = $TLN->read_file($mail_info['localname']);
 $TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
 
-$email = $TLN->Decode($email);
+$email = $TLN->parse_body($email);
 $body = $email['body'];
 
 //cleanning bad tags to show

@@ -11,7 +11,6 @@ require_once './inc/vendor/class.tnef.php';
 class Telaen extends Telaen_core
 {
     public $havespam       = false;
-    public $dirperm        = 0700;
     public $capabilities   = [];
 
     protected $_current_folder = '';
@@ -415,11 +414,7 @@ class Telaen extends Telaen_core
      */
     public function prep_local_dirs()
     {
-        if (!file_exists($this->userfolder)) {
-            if (!@mkdir($this->userfolder, $this->dirperm)) {
-                $this->trigger_error("mkdir error: $this->userfolder", __FUNCTION__, __LINE__);
-            }
-        }
+        $this->_mkdir($this->userfolder);
 
         $boxes = $this->mail_list_boxes('*');
 
@@ -448,22 +443,14 @@ class Telaen extends Telaen_core
             for ($i = 0;$i<count($boxes);$i++) {
                 $current_folder = $this->fix_prefix($boxes[$i]['name'], 1);
                 if (!$this->is_system_folder($current_folder)) {
-                    if (!file_exists($this->userfolder.$current_folder)) {
-                        if (!@mkdir($this->userfolder.$current_folder, $this->dirperm)) {
-                            $this->trigger_error("mkdir error: {$this->userfolder}{$current_folder}", __FUNCTION__, __LINE__);
-                        }
-                    }
+                    $this->_mkdir($this->userfolder.$current_folder);
                 }
             }
         }
 
         foreach ($this->tdb->required_dirs() as $value) {
             $value = $this->fix_prefix($value, 1);
-            if (!file_exists($this->userfolder.$value)) {
-                if (!@mkdir($this->userfolder.$value, $this->dirperm)) {
-                    $this->trigger_error("mkdir error: {$this->userfolder}{$value}", __FUNCTION__, __LINE__);
-                }
-            }
+            $this->_mkdir($this->userfolder.$value);
         }
     }
 
@@ -1088,7 +1075,7 @@ class Telaen extends Telaen_core
             $this->tdb->upgrade_version($boxname, $this->_version);
             $datapath = $this->userfolder.$boxname;
             $i = 0;
-            $this->_walk_folder($boxname, $datapath, $i, 1);
+            $this->_walk_folder($boxname, $datapath, $i, 0);
         }
         /* choose the protocol and get list from server */
         if ($this->mail_protocol == IMAP) {
@@ -1146,7 +1133,8 @@ class Telaen extends Telaen_core
                     $mail_info['headers']['content-type'])) ? 1 : 0;
 
                 if ($messages[$i]['localname'] == '') {
-                    $messages[$i]['localname'] = $this->_get_local_fname($messages[$i]['uidl'], $boxname)[0];
+                    $messages[$i]['localname'] = $this->_create_local_fname($messages[$i]['uidl'], $boxname);
+                    $messages[$i]['version'] = 1;
                 }
                 $this->tdb->do_message($messages[$i]);
             }
@@ -1187,37 +1175,6 @@ class Telaen extends Telaen_core
             }
         }
         return $messages;
-    }
-
-    protected function _get_local_fname($msg)
-    {
-        $fname = trim($msg['uidl']);
-        if (empty($fname)) {
-            $fname = self::uniq_id();
-        }
-        if (!self::is_md5($fname)) {
-            $fname = self::md5($fname);
-        }
-        return $fname.'.eml';
-    }
-
-    /**
-     * Get the full pathname for the message
-     * @param $msg
-     * @param mixed $boxname Foldername to use (default is msg's folder)
-     * @return string
-     */
-    public function get_local_fpath($msg, $boxname = null)
-    {
-        if ($boxname === null) {
-            $boxname = $msg['folder'];
-        }
-        if ($msg['version'] == 1) {
-            $fullpath = trim($this->userfolder.$boxname.'/'.$msg['localname']);
-        } else {
-            $fullpath = trim($this->userfolder.$boxname.'/'.$msg['localname'][0].'/'.$msg['localname']);
-        }
-        return $fullpath;
     }
 
     protected function _mail_list_boxes_imap($boxname = '')
@@ -1442,15 +1399,9 @@ class Telaen extends Telaen_core
         }
 
         $dir = $this->userfolder.$boxname;
-        if (!is_dir($dir)) {
-            if (!@mkdir($dir, $this->dirperm)) {
-                $this->trigger_error("cannot mkdir $dir", __FUNCTION__, __LINE__);
-                return false;
-            }
-        }
         $email = $this->fetch_structure($message);
         $mail_info = $this->formalize_headers($email['header']);
-        list($filename, $name) = $this->_get_local_fname($mail_info, $boxname);
+        list($filename, $name) = $this->_create_local_fname($mail_info, $boxname);
         $dir = $dir.'/'.$name[0];
         if (!is_dir($dir)) {
             if (!@mkdir($dir, $this->dirperm)) {

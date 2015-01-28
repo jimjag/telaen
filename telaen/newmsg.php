@@ -109,7 +109,7 @@ if (isset($rtype)) {
     }
     $result = $TLN->read_file($filename);
     $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
-    $email = $TLN->Decode($result);
+    $email = $TLN->parse_body($result);
 
     $result = $TLN->fetch_structure($result);
 

@@ -437,7 +437,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
 
     /**
      * This function is executed automatically when a compiled or cached template file is included
-     * - Decode saved properties from compiled template and cache files
+     * - parse_body saved properties from compiled template and cache files
      * - Check if compiled or cache file is valid
      *
      * @param  array $properties special template properties

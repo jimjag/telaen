@@ -100,7 +100,7 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
             if ($get_body && file_exists($localname)) {
                 $thisfile = $TLN->read_file($localname);
-                $email = $TLN->Decode($thisfile);
+                $email = $TLN->parse_body($thisfile);
                 unset($thisfile);
             }
 
