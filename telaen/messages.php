@@ -102,7 +102,7 @@ $jssource .= "
 
 no_quota = $jsquota;
 quota_msg = '".preg_replace("|'|", "\\'", $lang['quota_exceeded'])."';
-function readmsg(uidl,ix,read) {
+function readmsg(uidl,ix) {
 	if(no_quota)
 		alert(quota_msg);
 	else
@@ -170,7 +170,7 @@ if ($nummsg > 0) {
         $email = $TLN->get_names($headers[$i]['from'])[0]['mail'];
         $subject = $headers[$i]['subject'];
 
-        $readlink = "javascript:readmsg({$headers[$i]['uidl']},$i,".!$headers[$i]['unread'].")";
+        $readlink = "javascript:readmsg({$headers[$i]['uidl']},$i)";
         $composelink = "newmsg.php?folder=".urlencode($folder)."&nameto=".htmlspecialchars($from)."&mailto=".htmlspecialchars($email);
         $composelinksent = "newmsg.php?folder=".urlencode($folder)."&nameto=".htmlspecialchars($to)."&mailto=".htmlspecialchars($to);
 
