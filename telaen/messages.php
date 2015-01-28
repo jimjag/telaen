@@ -170,7 +170,7 @@ if ($nummsg > 0) {
         $email = $TLN->get_names($headers[$i]['from'])[0]['mail'];
         $subject = $headers[$i]['subject'];
 
-        $readlink = "javascript:readmsg($headers[$i]['uidl'],$i,!$headers[$i]['unread'])";
+        $readlink = "javascript:readmsg({$headers[$i]['uidl']},$i,".!$headers[$i]['unread'].")";
         $composelink = "newmsg.php?folder=".urlencode($folder)."&nameto=".htmlspecialchars($from)."&mailto=".htmlspecialchars($email);
         $composelinksent = "newmsg.php?folder=".urlencode($folder)."&nameto=".htmlspecialchars($to)."&mailto=".htmlspecialchars($to);
 
