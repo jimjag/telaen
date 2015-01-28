@@ -1219,22 +1219,15 @@ class Telaen_core
 
     /**
      * Main method called by script, start the decoding process
-     * @param  string $email Email message
+     * @param  array $msg Email message
      * @return array
      */
-    public function Decode($email)
+    public function Decode($msg)
     {
         $this->_content = [];
-        $memail = $this->fetch_structure($email);
-        $this->_msgbody = "";
-        $body = $memail['body'];
-        $header = $memail['header'];
-        $mail_info = $this->formalize_headers($header);
-        $this->_process_message($header, $body);
-        self::add2me($this->_content, $mail_info);
-        $this->_content['header'] = $header;
+        $this->_process_message($msg['header'], $msg['body']);
+        self::add2me($this->_content, $msg['headers']);
         $this->_content['body'] = $this->_msgbody;
-
         return $this->_content;
     }
 

@@ -24,7 +24,7 @@ $ix = $msg['idx'];
 $is_attached = false;
 $arAttachment = array();
 
-if (!($result = $TLN->mail_retr_msg($msg))) {
+if (!($msg['body'] = $TLN->mail_retr_msg($msg))) {
     $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
 }
 if (!$TLN->mail_set_flag($msg, '\\SEEN', '+')) {
@@ -35,7 +35,7 @@ $TLN->mail_disconnect();
 // metas assigned to smarty
 $smarty->assign('pageMetas', $pmetas);
 
-$email = $TLN->Decode($result);
+$email = $TLN->Decode($msg);
 
 if ($ix > 0) {
     $umHavePrevious = 1;

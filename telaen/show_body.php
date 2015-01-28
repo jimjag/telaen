@@ -10,10 +10,11 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
 
-if (!isset($folder) || !isset($ix)) {
+if (!isset($folder) || !isset($uidl)) {
     die('Expected parameters');
 }
-$body = $auth['currentbody'];
+$msg = $TLN->tdb->get_message($uidl, $folder);
+$body = $TLN->mail_retr_msg($msg);
 //$meta_charset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$lang['default_char_set']."\">";
 echo($pmetas);
 //echo($meta_charset);
