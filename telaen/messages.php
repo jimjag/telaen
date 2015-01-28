@@ -253,7 +253,7 @@ if ($nummsg > 0) {
     if ($start < 1) {
         $start = 1;
     } else {
-        $navigation = '... ';
+        $navigation = ' ... ';
     }
     $totPages = ceil($nummsg / $reg_pp);
     for ($i = $start; $i <= ($pag + 2); $i++) {
@@ -266,12 +266,12 @@ if ($nummsg > 0) {
         }
     }
     if ($i < $totPages) {
-        $navigation .= ' ...';
+        $navigation .= ' ... ';
     }
 
     if ($end_pos < $nummsg) {
-        $smarty->assign('umNextLink', "messages.php?folder=".urlencode($folder)."&pag=".($pag+1)."");
-        $smarty->assign('umLastLink', "messages.php?folder=".urlencode($folder)."&pag=".$totPages."");
+        $smarty->assign('umNextLink', "messages.php?folder=".urlencode($folder)."&pag=".($pag+1));
+        $smarty->assign('umLastLink', "messages.php?folder=".urlencode($folder)."&pag=".$totPages);
     }
     $navigation .= " ($pag/".$totPages.")";
 }
