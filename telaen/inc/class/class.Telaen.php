@@ -459,7 +459,7 @@ class Telaen extends Telaen_core
      * @param array $msg Message to grab (REF)
      * @return string
      */
-    protected function _mail_retr_msg_imap(&$msg)
+    protected function _mail_retr_msg_imap($msg)
     {
         $msgheader = trim($msg['header']);
         list($path, $dir) = $this->get_pathname($msg);
@@ -500,7 +500,7 @@ class Telaen extends Telaen_core
      * @param array $msg Message to grab (REF)
      * @return string
      */
-    protected function _mail_retr_msg_pop(&$msg)
+    protected function _mail_retr_msg_pop($msg)
     {
         list($path, $dir) = $this->get_pathname($msg);
         if (file_exists($path)) {
@@ -545,16 +545,32 @@ class Telaen extends Telaen_core
     /**
      * Retrieve and return specific email message
      * @param  string  $msg   The message to obtain
-     * @param  boolean $check if it exists
      * @return string
      */
-    public function mail_retr_msg(&$msg)
+    public function mail_retr_msg($msg)
     {
         if ($this->mail_protocol == IMAP) {
             return $this->_mail_retr_msg_imap($msg);
         } else {
             return $this->_mail_retr_msg_pop($msg);
         }
+    }
+
+    /**
+     * Retrieve and return specific email message
+     * @param  string  $msg The message to obtain
+     * @return resource
+     */
+    public function mail_retr_body($msg)
+    {
+        if (!$msg['bparsed']) {
+            return null;
+            /*
+             * TODO: Do the whole read and parsing stuff
+             */
+        }
+        $path = $this->get_pathname($msg)[0].'.msg';
+        return fopen($path, 'r');
     }
 
     protected function _mail_retr_header_imap($msg)
