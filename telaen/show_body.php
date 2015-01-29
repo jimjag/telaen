@@ -15,7 +15,13 @@ if (!isset($folder) || !isset($uidl)) {
 }
 $msg = $TLN->tdb->get_message($uidl, $folder);
 $body = $TLN->mail_retr_msg($msg);
+
+//$body = preg_replace('|target=["\']?[a-zA-Z_]+["\']?|i', "target='blank'", $body);
+//$body = preg_replace('|href="http([s]?)://|i', "target='_blank' href='$redir_path?http$1://", $body);
+//$body = preg_replace('|href=["\']mailto:|i', "target='_top' href='newmsg.php?to=", $body);
+
+
 //$meta_charset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$lang['default_char_set']."\">";
 echo($pmetas);
 //echo($meta_charset);
-echo($body);
+echo(stream_get_contents($body));

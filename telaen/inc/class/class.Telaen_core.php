@@ -405,10 +405,12 @@ class Telaen_core
      */
     protected function _add_body($strbody)
     {
-        if ($this->_msgbody == "") {
-            $this->_msgbody = $strbody;
+        static $l = false;
+        if (!$l) {
+            fwrite($this->_msgbody, $strbody);
+            $l = true;
         } else {
-            $this->_msgbody .= "\r\n<br>\r\n<br>\r\n<hr>\r\n<br>\r\n$strbody";
+            fwrite($this->_msgbody, "\r\n<br>\r\n<br>\r\n<hr>\r\n<br>\r\n$strbody");
         }
     }
 
@@ -753,7 +755,7 @@ class Telaen_core
      * Compile a body for multipart/alternative format.
      * Guess the format we want and add it to the bod container
      */
-    protected function _build_add_alternative_body($ctype, $body)
+    protected function _build_add_alternative_body($msg, $ctype, $body)
     {
         // get the boundary
         $boundary = $this->_get_boundary($ctype);
@@ -801,9 +803,9 @@ class Telaen_core
         // if the subcontent is multipart go to multipart function
         if ($multipartSub) {
             unset($body);
-            $this->_build_add_complex_body($part['headers']['content-type'], $part['body']);
+            $this->_build_add_complex_body($msg, $part['headers']['content-type'], $part['body']);
         } else {
-            $body = $this->_compile_body($part['body'], $part['headers']['content-transfer-encoding'], $part['headers']['content-type']);
+            $body = $this->_convert_body($part['body'], $part['headers']['content-transfer-encoding'], $part['headers']['content-type']);
             if (!$this->config['allow_html'] && $part['type'] != 'text/plain') {
                 $body = $this->_html2text($body);
             }
@@ -819,7 +821,7 @@ class Telaen_core
      * 'complex' means multipart/signed|mixed|related|report and other
      * types that can be added in the future
      */
-    protected function _build_add_complex_body($ctype, $body)
+    protected function _build_add_complex_body($msg, $ctype, $body)
     {
         global $uidl, $folder;
 
@@ -869,27 +871,27 @@ class Telaen_core
             $is_download = (preg_match('|name=|', $headers['content-disposition'].$headers['content-type']) || $headers['content-id'] != "" || $rctype == 'message/rfc822');
 
             if ($rctype == 'multipart/alternative') {
-                $this->_build_add_alternative_body($ctype, $body);
+                $this->_build_add_alternative_body($msg, $ctype, $body);
             } elseif ($rctype == 'multipart/appledouble') {
                 /*
                  * Special case for mac with resource and data fork
                  */
-                $this->_build_add_complex_body($ctype, $body);
+                $this->_build_add_complex_body($msg, $ctype, $body);
             } elseif ($rctype == 'text/plain' && !$is_download) {
-                $body = $this->_compile_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
+                $body = $this->_convert_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
                 $this->_add_body($this->_return_text_body($body));
             } elseif ($rctype == 'text/html' &&    !$is_download) {
-                $body = $this->_compile_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
+                $body = $this->_convert_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
 
                 if (!$this->config['allow_html']) {
                     $body = $this->_return_text_body($this->_html2text($body));
                 }
                 $this->_add_body($body);
             } elseif ($rctype == 'application/ms-tnef') {
-                $body = $this->_compile_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
+                $body = $this->_convert_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
                 $this->_extract_tnef($body, $boundary, $i);
             } elseif ($is_download) {
-                $thisattach = $this->_build_attach($header, $body, $boundary, $i);
+                $thisattach = $this->_build_attach($msg, $header, $body, $boundary, $i);
                 $tree = array_merge((array) $this->current_level, [$thisattach['index']]);
                 $thisfile = 'download.php?folder='.urlencode($folder).'&uidl='.$uidl.'&attach='.join(',', $tree);
                 $filename = $thisattach['filename'];
@@ -897,16 +899,17 @@ class Telaen_core
 
                 if ($cid != "") {
                     $cid = "cid:$cid";
-                    $this->_msgbody = preg_replace('/'.preg_quote($cid, '/').'/i', $thisfile, $this->_msgbody);
+                    $b = $this->blob($this->_msgbody, false);
+                    fwrite($this->_msgbody, preg_replace('|'.preg_quote($cid, '|').'|i', $thisfile, $b));
                 } elseif ($this->displayimages) {
                     $ext = strtolower(substr($thisattach['name'], -4));
                     $allowed_ext = ['.gif','.jpg','.png','.bmp'];
                     if (in_array($ext, $allowed_ext)) {
-                        $this->_add_body("<img src=\"$thisfile\" alt=\"\">");
+                        $this->_add_body("<img src='$thisfile' alt=''>");
                     }
                 }
             } else {
-                $this->_process_message($header, $body);
+                $this->_process_message($msg, $header, $body);
             }
         }
     }
@@ -949,7 +952,7 @@ class Telaen_core
      * Guess the type of the part and call the appropriate
      * method
      */
-    protected function _process_message($header, $body)
+    protected function _process_message($msg, $header, $body)
     {
         $body = $this->blob($body, false);  // easiest for now
         $mail_info = $this->parse_headers($header);
@@ -970,7 +973,7 @@ class Telaen_core
 
         switch ($maintype) {
         case 'text':
-            $body = $this->_compile_body($body, $ctenc, $mail_info['headers']['content-type']);
+            $body = $this->_convert_body($body, $ctenc, $mail_info['headers']['content-type']);
             switch ($subtype) {
             case 'html':
                 if (!$this->config['allow_html']) {
@@ -992,17 +995,17 @@ class Telaen_core
 
             switch ($subtype) {
             case 'alternative':
-                $this->_build_add_alternative_body($ctype[1], $body);
+                $this->_build_add_alternative_body($msg, $ctype[1], $body);
                 break;
             case 'complex':
-                $this->_build_add_complex_body($type, $body);
+                $this->_build_add_complex_body($msg, $type, $body);
                 break;
             default:
-                $this->_build_attach($header, $body, "", 0);
+                $this->_build_attach($msg, $header, $body, "", 0);
             }
             break;
         default:
-            $this->_build_attach($header, $body, "", 0);
+            $this->_build_attach($msg, $header, $body, "", 0);
         }
     }
 
@@ -1010,7 +1013,7 @@ class Telaen_core
      * Compile the attachment, saving it to cache and
      * add it to the $attachments array if needed
      */
-    protected function _build_attach($header, $body, $boundary, $part)
+    protected function _build_attach($msg, $header, $body, $boundary, $part)
     {
         $headers = $this->_parse_headers($header);
         $cdisp = $headers['content-disposition'];
@@ -1053,7 +1056,7 @@ class Telaen_core
         // Note: added check for use it only for images, some clients adds id where not necessary
         $is_embed = ($main_type == 'image' && $headers['content-id'] != "") ? 1 : 0;
 
-        $body = $this->_compile_body($body, $tenc, $ctype);
+        $body = $this->_convert_body($body, $tenc, $ctype);
 
         if ($filename == "" && $main_type == 'message') {
             $attachheader = $this->fetch_structure($body);
@@ -1074,13 +1077,19 @@ class Telaen_core
         $temp_array['content-disposition'] = strtolower(trim($content_disposition));
         $temp_array['boundary'] = $boundary;
         $temp_array['part'] = $part;
-        $temp_array['filename'] = $this->userfolder.'_attachments/'.self::md5($temp_array['boundary']).'_'.$safefilename;
+        $temp_array['localname'] = self::md5($temp_array['boundary']).'_'.$safefilename;
         $temp_array['type'] = 'mime';
         $temp_array['index'] = $nIndex;
+        $temp_array['flat'] = $msg['flat'];
+        $temp_array['uidl'] = $msg['uidl'];
+        $temp_array['folder'] = $msg['folder'];
 
-        $this->save_file($temp_array['filename'], $body);
+        list($path, $dir) = $this->get_pathname($temp_array, '_attachments');
+        $this->_mkdir($dir);
+        $this->save_file($path, $body);
         unset($body);
         $this->_content['attachments'][$nIndex] = $temp_array;
+        $this->tdb->add_attachment($temp_array);
 
         return $temp_array;
     }
@@ -1088,7 +1097,7 @@ class Telaen_core
     /**
      * Compile a string following the encoded method
      */
-    protected function _compile_body($body, $enctype, $ctype)
+    protected function _convert_body($body, $enctype, $ctype)
     {
         $enctype = explode(' ', $enctype);
         $enctype = $enctype[0];
@@ -1335,30 +1344,23 @@ class Telaen_core
      */
     public function parse_body($msg)
     {
-        $this->_content = [];
-        $this->_msgbody = "";
-        $this->_process_message($msg['header'], $msg['body']);
-        $msg['body'] = ''; // Save some cycles
-        self::add2me($this->_content, $msg);
-        $this->_content['body'] = $this->_msgbody;
-        return $this->_content;
-    }
-
-    /**
-     * Build a standard $msg[] from a complete Email message
-     * @param mixed $email
-     * @return array
-     */
-    public function build_msg($email)
-    {
-        $this->_content = [];
-        $this->_msgbody = "";
-        list($header, $body) = $this->fetch_structure($email);
-        $mail_info = $this->parse_headers($header);
-        $this->_process_message($header, $body);
-        self::add2me($this->_content, $mail_info);
-        $this->_content['body'] = $this->_msgbody;
-        return $this->_content;
+        if (!$msg['bparsed']) {
+            $this->_content = [];
+            $this->_msgbody = $this->tstream();
+            foreach (['uidl', 'flat', 'folder'] as $k) {
+                $msgstub[$k] = $msg[$k];
+            }
+            $this->_process_message($msgstub, $msg['header'], $msg['body']);
+            $path = $this->get_pathname($msg)[0].'.msg';
+            if ($this->sanitize) {
+                $b = $this->blob($this->_msgbody, false);
+                rewind($this->_msgbody);
+                fwrite($this->_msgbody, $this->sanitizeHTML($b));
+            }
+            $this->save_file($path, $this->_msgbody);
+            $msg['bparsed'] = true;
+            $this->tdb->do_message($msg);
+        }
     }
 
     /**

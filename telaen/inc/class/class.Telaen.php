@@ -485,11 +485,6 @@ class Telaen extends Telaen_core
             }
             $msgheader .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
 
-            // Update globally
-            $msg['headers']['x-tln-uidl'] = $msg['uidl'];
-            $msg['header'] = $msgheader;
-            $this->tdb->do_message($msg);
-
             $pts = $this->tstream();
             rewind($msgbody);
             fwrite($pts, "$msgheader\r\n\r\n".stream_get_contents($msgbody));
@@ -537,11 +532,6 @@ class Telaen extends Telaen_core
             // header. Thus, it will always now be available on
             // the cached/local version.
             $header .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
-
-            // Update globally
-            $msg['headers']['x-tln-uidl'] = $msg['uidl'];
-            $msg['header'] = $header;
-            $this->tdb->do_message($msg);
 
             $pts = $this->tstream();
             fwrite($pts, "$header\r\n\r\n".stream_get_contents($body));

@@ -31,12 +31,16 @@ class LocalMbox extends SQLite3
         'dirname' => 'TEXT NOT NULL',
     );
     private $aschema = array(
+        'size' => 'INT DEFAULT 0',
+        'flat' => 'INT DEFAULT 0',
         'folder' => 'TEXT NOT NULL',
+        'content-type' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL',
         'localname' => 'TEXT DEFAULT ""',
         'name' => 'TEXT DEFAULT ""',
         'type' => 'TEXT DEFAULT ""',
-        'size' => 'INT DEFAULT 0',
+        'part' => 'TEXT DEFAULT ""',
+        'boundary' => 'TEXT DEFAULT ""',
     );
     private $mschema = array(
         'date' => 'INT DEFAULT 0',
@@ -49,6 +53,7 @@ class LocalMbox extends SQLite3
         'uid' => 'INT DEFAULT 0', // IMAP UID
         'flat' => 'INT DEFAULT 0',
         'unread' => 'INT DEFAULT 1',
+        'bparsed' => 'INT DEFAULT 0', // Has body been parsed (for attachements)
         'subject' => 'TEXT DEFAULT ""',
         'message-id' => 'TEXT DEFAULT ""',
         'folder' => 'TEXT NOT NULL',
@@ -843,10 +848,8 @@ class LocalMbox extends SQLite3
         $stmt->close();
         return $this->attachments;
     }
-    public function add_attachment($msg, $attachment)
+    public function add_attachment($attachment)
     {
-        $attachment['folder'] = $msg['folder'];
-        $attachment['uidl'] = $msg['uidl'];
         $thelist = $this->create_uplist(array_keys($attachment), $this->aschema);
         if ($thelist == null || !is_array($thelist)) {
             return false;
