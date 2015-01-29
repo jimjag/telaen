@@ -1938,18 +1938,19 @@ ENDOFREDIRECT;
     /**
      * Return the representation of $var (large chunk o' data)
      * as either a large string or a resource (temp stream handle)
-     * @param mixed $body
+     * @param mixed $var
      * @param bool $ret_as_stream
+     * @param mixed $mem
      * @return resource|string
      */
-    public function blob($var, $ret_as_stream = true)
+    public function blob($var, $ret_as_stream = true, $mem = null)
     {
         if ($ret_as_stream) {
             if (is_resource($var)) {
                 rewind($var);
                 return $var;
             }
-            $pts = $this->tstream();
+            $pts = $this->tstream($mem);
             if (!is_null($var)) {
                 fwrite($pts, $var);
                 rewind($pts);
@@ -1965,11 +1966,20 @@ ENDOFREDIRECT;
     }
 
     /**
-     *
+     * Create a PHP Temporary stream for large data blobs
+     * @param mixed $mem Memory size to allocate (0 == all memory)
+     * @return resource
      */
-    public function tstream()
+    public function tstream($mem = null)
     {
-        return fopen("php://temp/maxmemory:{$this->tstream_max}", 'w+');
+        if ($mem === null) {
+            $mem = $this->tstream_max;
+        }
+        if ($mem) {
+            return fopen("php://temp/maxmemory:{$mem}", 'w+');
+        } else {
+            return fopen("php://memory", 'w+');
+        }
     }
 
     /**
