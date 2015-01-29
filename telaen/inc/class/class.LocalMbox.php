@@ -47,7 +47,7 @@ class LocalMbox extends SQLite3
         'islocal' => 'INT DEFAULT 0', // Does it live on web server?
         'iscached' => 'INT DEFAULT 0', // Do we have a cached copy?
         'uid' => 'INT DEFAULT 0', // IMAP UID
-        'version' => 'INT DEFAULT 0',
+        'flat' => 'INT DEFAULT 0',
         'unread' => 'INT DEFAULT 1',
         'subject' => 'TEXT DEFAULT ""',
         'message-id' => 'TEXT DEFAULT ""',

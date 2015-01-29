@@ -1006,11 +1006,8 @@ class Telaen extends Telaen_core
         return $new;
     }
 
-    private function _walk_folder($boxname, $folder, &$i, $version = null)
+    private function _scan_folder($boxname, $folder, &$i, $flat = true)
     {
-        if ($version === null) {
-            $version = $this->_version;
-        }
         foreach (scandir($folder) as $entry) {
             if ($entry == '' || $entry == '.' || $entry == '..') {
                 continue;
@@ -1027,16 +1024,13 @@ class Telaen extends Telaen_core
                 $msg['folder'] = $boxname;
                 $msg['islocal'] = true;
                 $msg['iscached'] = true;
-                $msg['version'] = $version;
+                $msg['flat'] = $flat;
                 $msg['header'] = $thisheader;
                 $mail_info = $this->parse_headers($thisheader);
                 self::add2me($msg, $mail_info);
                 $msg['uidl'] = $this->_mail_get_uidl($msg);
                 $this->tdb->do_message($msg);
                 $i++;
-            }
-            if (is_dir($fullpath)) {
-                $this->_walk_folder($boxname, $fullpath, $i, $version);
             }
         }
     }
@@ -1073,7 +1067,7 @@ class Telaen extends Telaen_core
             $this->tdb->upgrade_version($boxname, $this->_version);
             $datapath = $this->userfolder.$boxname;
             $i = 0;
-            $this->_walk_folder($boxname, $datapath, $i, 0);
+            $this->_scan_folder($boxname, $datapath, $i, true);
         }
         /* choose the protocol and get list from server */
         if ($this->mail_protocol == IMAP) {
@@ -1132,7 +1126,7 @@ class Telaen extends Telaen_core
 
                 if ($messages[$i]['localname'] == '') {
                     $messages[$i]['localname'] = $this->_create_local_fname($messages[$i]['uidl'], $boxname);
-                    $messages[$i]['version'] = 1;
+                    $messages[$i]['flat'] = false;
                 }
                 $this->tdb->do_message($messages[$i]);
             }
@@ -1398,7 +1392,7 @@ class Telaen extends Telaen_core
         $email = $this->fetch_structure($message);
         $msg = $this->parse_headers($email['header']);
         $msg['folder'] = $boxname;
-        $msg['version'] = 1;
+        $msg['flat'] = false;
         $msg['islocal'] = true;
         $msg['iscached'] = true;
         $msg['flags'] = $flags;

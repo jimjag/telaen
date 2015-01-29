@@ -295,7 +295,7 @@ class Telaen_core
         if ($boxname === null) {
             $boxname = $msg['folder'];
         }
-        if ($msg['version']) {
+        if (!$msg['flat']) {
             $dirpath = trim($this->userfolder.$boxname.'/'.$msg['localname'][0]);
         } else {
             $dirpath = trim($this->userfolder.$boxname);
@@ -333,8 +333,7 @@ class Telaen_core
         if ($tmpfile) {
             if (is_resource($content)) {
                 rewind($content);
-                fwrite($tmpfile, stream_get_contents($content));
-                fclose($content);
+                stream_copy_to_stream($tmpfile, $content);
             } else {
                 fwrite($tmpfile, $content);
             }
@@ -357,7 +356,7 @@ class Telaen_core
     public function save_msg($msg, $content)
     {
         list($path, $dir) = $this->get_pathname($msg);
-        if ($msg['version']) {
+        if (!$msg['flat']) {
             $this->_mkdir($dir);
         }
         return $this->save_file($path, $content);
