@@ -321,6 +321,15 @@ class Telaen_core
         return $result;
     }
 
+    /* stream_copy_to_stream() is slow and takes gobs of mem */
+    protected function _s_xfer($from, $to, $mem = 4194304)
+    {
+        rewind($from);
+        while (!$this->_feof($from)) {
+            fwrite($to, fread($from, $mem));
+        }
+    }
+
     /**
      * Save content to file
      * @param  string $filename The filename to write to
@@ -332,8 +341,7 @@ class Telaen_core
         $tmpfile = fopen($filename, 'wb+');
         if ($tmpfile) {
             if (is_resource($content)) {
-                rewind($content);
-                stream_copy_to_stream($tmpfile, $content);
+                $this->_s_xfer($content, $tmpfile);
             } else {
                 fwrite($tmpfile, $content);
             }
