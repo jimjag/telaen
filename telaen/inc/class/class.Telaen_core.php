@@ -1983,10 +1983,14 @@ ENDOFREDIRECT;
             $mem = $this->tstream_max;
         }
         if ($mem) {
-            return fopen("php://temp/maxmemory:{$mem}", 'w+b');
+            $f = fopen("php://temp/maxmemory:{$mem}", 'w+b');
         } else {
-            return fopen("php://memory", 'w+');
+            $f = fopen("php://memory", 'w+');
         }
+        if ($f === null) {
+            $this->trigger_error("fopen failed", __FUNCTION__, __LINE__);
+        }
+        return $f;
     }
 
     /**
