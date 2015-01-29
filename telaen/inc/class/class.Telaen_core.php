@@ -1401,13 +1401,13 @@ class Telaen_core
                 fwrite($body, $line);
             }
             rewind($body);
-            return [$header, $body];
+            return ['header' => $header, 'body' => $body];
         }
         $separator = "\n\r\n";
         $header = trim(substr($email, 0, strpos($email, $separator)));
         $bodypos = strlen($header) + strlen($separator);
         if ($inisout) {
-            return [$header, substr($email, $bodypos, strlen($email) - $bodypos)];
+            return ['header' => $header, 'body' => substr($email, $bodypos, strlen($email) - $bodypos)];
         }
         // else stream
         fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
