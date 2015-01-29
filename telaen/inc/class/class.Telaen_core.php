@@ -329,7 +329,7 @@ class Telaen_core
      */
     public function save_file($filename, $content)
     {
-        $tmpfile = fopen($filename, 'wb');
+        $tmpfile = fopen($filename, 'wb+');
         if ($tmpfile) {
             if (is_resource($content)) {
                 rewind($content);

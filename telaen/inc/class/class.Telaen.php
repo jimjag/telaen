@@ -462,8 +462,7 @@ class Telaen extends Telaen_core
     protected function _mail_retr_msg_imap(&$msg)
     {
         $msgheader = trim($msg['header']);
-        $path = $this->get_pathname($msg)[0];
-
+        list($path, $dir) = $this->get_pathname($msg);
         if (file_exists($path)) {
             $msgbody = $this->_get_body_from_cache($path);
         } else {
@@ -488,6 +487,7 @@ class Telaen extends Telaen_core
             $pts = $this->tstream();
             rewind($msgbody);
             fwrite($pts, "$msgheader\r\n\r\n".stream_get_contents($msgbody));
+            $this->_mkdir($dir);
             $this->save_file($path, $pts);
             fclose($pts);
             rewind($msgbody);
@@ -502,7 +502,7 @@ class Telaen extends Telaen_core
      */
     protected function _mail_retr_msg_pop(&$msg)
     {
-        $path = $this->get_pathname($msg)[0];
+        list($path, $dir) = $this->get_pathname($msg);
         if (file_exists($path)) {
             $body = $this->_get_body_from_cache($path);
         } elseif ($msg['folder'] == 'inbox') {
@@ -535,6 +535,7 @@ class Telaen extends Telaen_core
 
             $pts = $this->tstream();
             fwrite($pts, "$header\r\n\r\n".stream_get_contents($body));
+            $this->_mkdir($dir);
             $this->save_file($path, $pts);
             fclose($pts);
         }
