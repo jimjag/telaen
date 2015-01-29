@@ -735,6 +735,7 @@ class LocalMbox extends SQLite3
             foreach ($this->m_delta as $foo) {
                 if (!isset($this->_indb[$foo[0]['uidl']])) {
                     $adds[] = $foo[0];
+                    $this->_indb[$foo[0]['uidl']] = true;
                 } else {
                     $ups[] = $foo;
                 }
