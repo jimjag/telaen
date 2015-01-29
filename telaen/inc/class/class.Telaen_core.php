@@ -153,6 +153,7 @@ class Telaen_core
     /**
      * Return a file-system safe filename
      * @param string $str
+     * @param boolean $delete
      * @return string
      */
     static public function fs_safe_file($str, $delete = false)
@@ -820,7 +821,7 @@ class Telaen_core
      */
     protected function _build_add_complex_body($ctype, $body)
     {
-        global $ix, $folder;
+        global $uidl, $folder;
 
         $Rtype = trim(substr($ctype, strpos($ctype, "type=")+5, strlen($ctype)));
 
@@ -890,7 +891,7 @@ class Telaen_core
             } elseif ($is_download) {
                 $thisattach = $this->_build_attach($header, $body, $boundary, $i);
                 $tree = array_merge((array) $this->current_level, [$thisattach['index']]);
-                $thisfile = 'download.php?folder='.urlencode($folder).'&ix='.$ix.'&attach='.join(',', $tree);
+                $thisfile = 'download.php?folder='.urlencode($folder).'&uidl='.$uidl.'&attach='.join(',', $tree);
                 $filename = $thisattach['filename'];
                 $cid = preg_replace('|<(.*)\\>|', "$1", $cid);
 
@@ -950,10 +951,7 @@ class Telaen_core
      */
     protected function _process_message($header, $body)
     {
-        if (is_resource($body)) {
-            rewind($body);
-            $body = stream_get_contents($body);
-        }
+        $body = $this->blob($body, false);  // easiest for now
         $mail_info = $this->parse_headers($header);
         $ctype = $mail_info['headers']['content-type'];
         $ctenc = $mail_info['headers']['content-transfer-encoding'];
@@ -1374,18 +1372,19 @@ class Telaen_core
     }
 
     /**
-     * Split header and body into an array
-     * @param  mixed $email Email message
+     * Split header and body into an array and return body as stream
+     * @param mixed $email Email message
+     * @param boolean $inisout If we are given a string, return a string
      * @return array
      */
-    public function fetch_structure($email)
+    public function fetch_structure($email, $inisout = true)
     {
         $header = '';
         $body = $this->tstream();
         if (is_resource($email)) {
             rewind($email);
             while (!$this->_feof($email)) {
-                $line = preg_replace('|\r?\n|',"\r\n", fread($email,4096));
+                $line = preg_replace('|\r?\n|',"\r\n", fread($email, 4096));
                 $pos = strpos($line,"\r\n\r\n");
                 if($pos === false) {
                     $header .= $line;
@@ -1396,14 +1395,20 @@ class Telaen_core
                 }
             }
             while (!$this->_feof($email)) {
-                $line = preg_replace('|\r?\n|',"\r\n", fread($email,4096));
+                $line = preg_replace('|\r?\n|',"\r\n", fread($email, 4096));
                 fwrite($body, $line);
             }
-        } else {
-            $separator = "\n\r\n";
-            $header = trim(substr($email, 0, strpos($email, $separator)));
-            $bodypos = strlen($header) + strlen($separator);
-            fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
+            return [$header, $body];
+        }
+        $separator = "\n\r\n";
+        $header = trim(substr($email, 0, strpos($email, $separator)));
+        $bodypos = strlen($header) + strlen($separator);
+        fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
+        if ($inisout) {
+            rewind($body);
+            $sbody = stream_get_contents($body);
+            fclose($body);
+            return [$header, $sbody];
         }
         return [$header, $body];
     }
@@ -1976,7 +1981,7 @@ ENDOFREDIRECT;
             $mem = $this->tstream_max;
         }
         if ($mem) {
-            return fopen("php://temp/maxmemory:{$mem}", 'w+');
+            return fopen("php://temp/maxmemory:{$mem}", 'w+b');
         } else {
             return fopen("php://memory", 'w+');
         }
