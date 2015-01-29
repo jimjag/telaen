@@ -66,7 +66,7 @@ class Telaen_core
     ];
 
     // internal
-    protected $_msgbody = "";
+    protected $_msgbody = null;
     protected $_content = [];
     private $_sid = 0;
     protected $_tnef = "";
@@ -897,7 +897,7 @@ class Telaen_core
                 $this->_add_body($body);
             } elseif ($rctype == 'application/ms-tnef') {
                 $body = $this->_convert_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
-                $this->_extract_tnef($body, $boundary, $i);
+                $this->_extract_tnef($msg, $body, $boundary, $i);
             } elseif ($is_download) {
                 $thisattach = $this->_build_attach($msg, $header, $body, $boundary, $i);
                 $tree = array_merge((array) $this->current_level, [$thisattach['index']]);
@@ -908,7 +908,7 @@ class Telaen_core
                 if ($cid != "") {
                     $cid = "cid:$cid";
                     $b = $this->blob($this->_msgbody, false);
-                    fwrite($this->_msgbody, preg_replace('|'.preg_quote($cid, '|').'|i', $thisfile, $b));
+                    $this->_msgbody = $this->blob(preg_replace('|'.preg_quote($cid, '|').'|i', $thisfile, $b));
                 } elseif ($this->displayimages) {
                     $ext = strtolower(substr($thisattach['name'], -4));
                     $allowed_ext = ['.gif','.jpg','.png','.bmp'];
@@ -1361,9 +1361,12 @@ class Telaen_core
             $this->_process_message($msgstub, $msg['header'], $msg['body']);
             $path = $this->get_pathname($msg)[0].'.msg';
             if ($this->sanitize) {
+                /*
+                 * Uggg... we need a big ol' string. Hopefully, what
+                 * remains is small enuff that we're ok
+                 */
                 $b = $this->blob($this->_msgbody, false);
-                rewind($this->_msgbody);
-                fwrite($this->_msgbody, $this->sanitizeHTML($b));
+                $this->_msgbody = $this->sanitizeHTML($b);
             }
             $this->save_file($path, $this->_msgbody);
             $msg['bparsed'] = true;
@@ -1523,7 +1526,7 @@ class Telaen_core
     /**
      * Extract all attachmentes contained in a MS-TNEF attachment
      */
-    protected function _extract_tnef(&$body, $boundary, $part)
+    protected function _extract_tnef($msg, &$body, $boundary, $part)
     {
         $tnefobj = $this->_tnef->Decode($body);
 
@@ -1538,11 +1541,19 @@ class Telaen_core
             $temp_array['part'] = $part;
             $temp_array['type'] = 'tnef';
             $temp_array['tnef'] = $i;
-            $temp_array['filename'] = $this->userfolder.'_attachments/'.self::md5($temp_array['boundary']).'_'.$temp_array['name'];
+            $safefilename = self::fs_safe_file($temp_array['name']);
+            $temp_array['localname'] = self::md5($temp_array['boundary']).'_'.$safefilename;
+            $temp_array['flat'] = $msg['flat'];
+            $temp_array['uidl'] = $msg['uidl'];
+            $temp_array['folder'] = $msg['folder'];
 
             $this->_content['attachments'][] = $temp_array;
+            list($path, $dir) = $this->get_pathname($temp_array, '_attachments');
+            $this->_mkdir($dir);
+            $this->save_file($path, $content);
+            $this->_content['attachments'][] = $temp_array;
+            $this->tdb->add_attachment($temp_array);
 
-            $this->save_file($temp_array['filename'], $content);
             unset($temp_array);
         }
     }
@@ -1993,9 +2004,9 @@ ENDOFREDIRECT;
             $mem = $this->tstream_max;
         }
         if ($mem) {
-            $f = fopen("php://temp/maxmemory:{$mem}", 'w+b');
+            $f = fopen("php://temp/maxmemory:{$mem}", 'wb+');
         } else {
-            $f = fopen("php://memory", 'w+');
+            $f = fopen("php://memory", 'wb+');
         }
         if ($f === null) {
             $this->trigger_error("fopen failed", __FUNCTION__, __LINE__);
