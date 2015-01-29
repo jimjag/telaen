@@ -184,6 +184,9 @@ if ($nummsg > 0) {
             $msg_img = './images/msg_read.gif';
         }
         $prior = $headers[$i]['headers']['priority'];
+        if ($prior == 0) {
+            $prior = 3;
+        }
         if ($prior > 3) {
             $img_prior = '&nbsp;<img src="images/prior_low.gif" width="5" height="11" border="0" alt="" />';
         } elseif ($prior < 3) {

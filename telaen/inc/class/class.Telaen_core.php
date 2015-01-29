@@ -1264,8 +1264,10 @@ class Telaen_core
         if (!empty($headers['message-id'])) {
             $headers['message-id'] = preg_replace('|<(.*)>|', "$1", trim($headers['message-id']));
         }
-        if (!empty($headers['x-priority']) && !empty($headers['priority'])) {
+        if (!empty($headers['x-priority']) && empty($headers['priority'])) {
             $headers['priority'] = $headers['x-priority'][0];
+        } elseif (empty($headers['priority'])) {
+            $headers['priority'] = 3;
         }
         if (!empty($headers['content-transfer-encoding'])) {
             $headers['content-transfer-encoding'] = str_replace('GM', '-', $headers['content-transfer-encoding']);
