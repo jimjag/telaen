@@ -18,10 +18,11 @@ $mail_info = $mbox['headers'][$folder][$ix];
 
 $smarty->assign('pageMetas', $pmetas);
 
-if (!file_exists($mail_info['localname'])) {
+$path = $TLN->get_pathname($mail_info)[0];
+if (!file_exists($path)) {
     die('File not found');
 }
-$email = $TLN->read_file($mail_info['localname']);
+$email = $TLN->read_file($path);
 
 $TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);

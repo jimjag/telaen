@@ -101,8 +101,7 @@ if (isset($rtype)) {
         }
         $TLN->mail_disconnect();
     }
-
-    $filename = $mail_info['localname'];
+    $filename = $TLN->get_pathname($mail_info)[0];
 
     if (!file_exists($filename)) {
         die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true';</script>");

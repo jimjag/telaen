@@ -126,8 +126,9 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     if (isset($mbox['attachments'])) {
         $attachs = $mbox['attachments'];
         for ($i = 0;$i<count($attachs);$i++) {
-            if (file_exists($attachs[$i]['localname'])) {
-                $mail->AddAttachment($attachs[$i]['localname'], $attachs[$i]['name'], 'base64', $attachs[$i]['type']);
+            $path = $TLN->get_pathname($attachs[$i])[0];
+            if (file_exists($path)) {
+                $mail->AddAttachment($path, $attachs[$i]['name'], 'base64', $attachs[$i]['type']);
             }
         }
     }
