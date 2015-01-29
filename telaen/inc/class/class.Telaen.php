@@ -1099,7 +1099,7 @@ class Telaen extends Telaen_core
          */
         for ($i = 0; $i < $mcount; $i++) {
             $workit = false;
-            if ((($j < $start) || ($j >= $end_pos)) && !empty($messages[$i]['headers'])) {
+            if ((($j < $start) || ($j >= $end_pos)) && !empty($messages[$i]['header'])) {
                 $workit = true;
             }
             if (($j >= $start) && ($j <= $end_pos)) {
