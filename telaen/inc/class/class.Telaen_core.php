@@ -1412,7 +1412,7 @@ class Telaen_core
         // else stream
         fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
         rewind($body);
-        return [$header, $body];
+        return ['header' => $header, 'body' => $body];
     }
 
     /**
