@@ -491,6 +491,8 @@ class Telaen extends Telaen_core
             $this->save_file($path, $pts);
             fclose($pts);
             rewind($msgbody);
+            $msg['iscached'] = true;
+            $this->tdb->do_message($msg);
         }
         return $msgbody;
     }
@@ -538,6 +540,8 @@ class Telaen extends Telaen_core
             $this->_mkdir($dir);
             $this->save_file($path, $pts);
             fclose($pts);
+            $msg['iscached'] = true;
+            $this->tdb->do_message($msg);
         }
         return $body;
     }
@@ -919,6 +923,7 @@ class Telaen extends Telaen_core
                     $counter++;
                 }
                 $buffer = $this->mail_read_response();
+                $this->unstale($boxname);
             }
         }
         return $new;
@@ -1010,6 +1015,7 @@ class Telaen extends Telaen_core
                 }
             }
         }
+        $this->unstale($boxname);
         return $new;
     }
 
@@ -1451,7 +1457,7 @@ class Telaen extends Telaen_core
         $flagname = strtoupper($flagname);
         $path = $this->get_pathname($msg)[0];
         if (!in_array($flagname, $this->flags)) {
-            $this->trigger_error("unknown flag: $this->userfolder", __FUNCTION__, __LINE__);
+            $this->trigger_error("unknown flag: $flagname", __FUNCTION__, __LINE__);
             return false;
         }
         if ($flagtype == '+' && strstr($msg['flags'], $flagname)) {
@@ -1614,7 +1620,7 @@ class Telaen extends Telaen_core
         $this->mail_send_command('cp01 CAPABILITY', ['autolog' => false, 'addtag' => false]);
         while (!self::_feof($this->_mail_connection)) {
             $buffer = trim($this->mail_read_response());
-            $a = preg_split("|\s+|", $buffer);
+            $a = preg_split('|\s+|', $buffer);
             if ($a[0] == 'cp01') {
                 break;
             }
