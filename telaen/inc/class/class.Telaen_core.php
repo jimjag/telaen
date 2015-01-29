@@ -268,6 +268,7 @@ class Telaen_core
             fwrite($pts, $buffer);
         }
         $this->status = STATUS_OK;
+        rewind($pts);
         return $pts;
     }
 
@@ -1398,6 +1399,7 @@ class Telaen_core
                 $line = preg_replace('|\r?\n|',"\r\n", fread($email, 4096));
                 fwrite($body, $line);
             }
+            rewind($body);
             return [$header, $body];
         }
         $separator = "\n\r\n";
@@ -1408,6 +1410,7 @@ class Telaen_core
         }
         // else stream
         fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
+        rewind($body);
         return [$header, $body];
     }
 
