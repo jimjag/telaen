@@ -1115,17 +1115,15 @@ class Telaen extends Telaen_core
              * headers for the message list. We also check for SPAM here
              * as well
              */
-            if (empty($messages[$i]['headers'])) {
-                if (empty($messages[$i]['header'])) {
-                    $messages[$i]['header'] = $this->mail_retr_header($messages[$i]);
-                }
+            if (empty($messages[$i]['header'])) {
+                $messages[$i]['header'] = $this->mail_retr_header($messages[$i]);
                 $mail_info = $this->parse_headers($messages[$i]['header']);
                 self::add2me($messages[$i], $mail_info);
                 $messages[$i]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
                     $mail_info['headers']['content-type'])) ? 1 : 0;
 
                 if ($messages[$i]['localname'] == '') {
-                    $messages[$i]['localname'] = $this->_create_local_fname($messages[$i]['uidl'], $boxname);
+                    $messages[$i]['localname'] = $this->_create_local_fname($messages[$i]);
                     $messages[$i]['flat'] = false;
                 }
                 $this->tdb->do_message($messages[$i]);
@@ -1397,7 +1395,7 @@ class Telaen extends Telaen_core
         $msg['iscached'] = true;
         $msg['flags'] = $flags;
         $this->_mail_get_uidl($msg);
-        $msg['localname'] = $this->_create_local_fname($msg, $boxname);
+        $msg['localname'] = $this->_create_local_fname($msg);
         list($filename, $dir) = $this->get_pathname($msg);
         $this->_mkdir($dir);
         if (!empty($flags)) {
