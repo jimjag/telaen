@@ -35,7 +35,7 @@ $TLN->mail_disconnect();
 // metas assigned to smarty
 $smarty->assign('pageMetas', $pmetas);
 
-$email = $TLN->parse_body($msg);
+$TLN->parse_body($msg);
 
 if ($ix > 0) {
     $umHavePrevious = 1;
@@ -68,7 +68,7 @@ if ($email['receipt-to']) {
     $smarty->assign('receiptRequired', true);
 }
 
-$ARFrom = $email['from'];
+$ARFrom = $msg['headers']['from'];
 $useremail = $auth['email'];
 
 // from
@@ -80,7 +80,7 @@ $ARFrom[0]['title'] = "$name <$thismail>";
 $smarty->assign('umFromList', $ARFrom);
 
 // To
-$ARTo = $email['to'];
+$ARTo = $msg['headers']['to'];
 
 for ($i = 0;$i<count($ARTo);$i++) {
     $name = $ARTo[$i]['name'];
@@ -92,7 +92,7 @@ for ($i = 0;$i<count($ARTo);$i++) {
 }
 
 // CC
-$ARCC = $email['cc'];
+$ARCC = $msg['headers']['cc'];
 if (count($ARCC) > 0) {
     $smarty->assign('umHaveCC', 1);
     for ($i = 0;$i<count($ARCC);$i++) {

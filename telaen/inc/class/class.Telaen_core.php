@@ -1348,7 +1348,7 @@ class Telaen_core
     /**
      * Parse the body content of the message
      * @param  array $msg Email message
-     * @return array
+     * @return void
      */
     public function parse_body($msg)
     {
