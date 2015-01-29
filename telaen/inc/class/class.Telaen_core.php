@@ -1403,13 +1403,11 @@ class Telaen_core
         $separator = "\n\r\n";
         $header = trim(substr($email, 0, strpos($email, $separator)));
         $bodypos = strlen($header) + strlen($separator);
-        fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
         if ($inisout) {
-            rewind($body);
-            $sbody = stream_get_contents($body);
-            fclose($body);
-            return [$header, $sbody];
+            return [$header, substr($email, $bodypos, strlen($email) - $bodypos)];
         }
+        // else stream
+        fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
         return [$header, $body];
     }
 
@@ -1944,13 +1942,13 @@ ENDOFREDIRECT;
      * Return the representation of $var (large chunk o' data)
      * as either a large string or a resource (temp stream handle)
      * @param mixed $var
-     * @param bool $ret_as_stream
+     * @param bool $stream
      * @param mixed $mem
      * @return resource|string
      */
-    public function blob($var, $ret_as_stream = true, $mem = null)
+    public function blob($var, $stream = true, $mem = null)
     {
-        if ($ret_as_stream) {
+        if ($stream) {
             if (is_resource($var)) {
                 rewind($var);
                 return $var;
