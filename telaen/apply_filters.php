@@ -7,7 +7,7 @@ if ($folder == 'inbox') {
     $require_update = false;
 
     $filename = $TLN->userdatafolder.'/filters.ucf';
-    $myfile = $TLN->read_file($filename);
+    $myfile = $TLN->readFile($filename);
     $filters = array();
 
     if ($myfile != "") {
@@ -65,7 +65,7 @@ if ($folder == 'inbox') {
                     switch ($filter['type']) {
                     case FL_TYPE_MOVE:
 
-                        $TLN->mail_move_msg($message, $filter['moveto']);
+                        $TLN->mailMoveMsg($message, $filter['moveto']);
                         unset($mbox['headers'][$folder]);
                         unset($mbox['headers'][$filter['moveto']]);
 
@@ -74,7 +74,7 @@ if ($folder == 'inbox') {
                         break;
                     case FL_TYPE_DELETE:
 
-                        $TLN->mail_delete_msg($message, $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
+                        $TLN->mailDeleteMsg($message, $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
                         unset($mbox['headers'][$folder]);
                         unset($mbox['headers']['trash']);
 
@@ -84,7 +84,7 @@ if ($folder == 'inbox') {
                     case FL_TYPE_MARK_READ:
 
                         if (!preg_match('|SEEN|i', $message['flags'])) {
-                            $TLN->mail_set_flag($message, 'SEEN', '+');
+                            $TLN->mailSetFlag($message, 'SEEN', '+');
                             $mbox['headers'][$folder][$index] = $message;
                         }
 

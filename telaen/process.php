@@ -13,13 +13,13 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-extract(Telaen::pull_from_array($_GET, array('decision'), 'str'));
-extract(Telaen::pull_from_array($_GET, array('refr', 'mlist'), true));
-extract(Telaen::pull_from_array($_POST, array('decision', 'aval_folders'), 'str'));
-extract(Telaen::pull_from_array($_POST, array('start_pos', 'end_pos'), 1));
-extract(Telaen::pull_from_array($_POST, array('back'), true));
+extract(Telaen::pullFromArray($_GET, array('decision'), 'str'));
+extract(Telaen::pullFromArray($_GET, array('refr', 'mlist'), true));
+extract(Telaen::pullFromArray($_POST, array('decision', 'aval_folders'), 'str'));
+extract(Telaen::pullFromArray($_POST, array('start_pos', 'end_pos'), 1));
+extract(Telaen::pullFromArray($_POST, array('back'), true));
 
-$headers = $tdb->get_messages($folder);
+$headers = $tdb->getMessages($folder);
 $messagecount = count($headers);
 
 if (!$messagecount
@@ -43,20 +43,20 @@ if (!$messagecount
             if (preg_match('|msg_(\d+)|', $key, $matches)) {
                 $i = intval($matches[1]);
                 if ($decision == 'delete') {
-                    $TLN->mail_delete_msg($headers[$i], $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
+                    $TLN->mailDeleteMsg($headers[$i], $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
                     $expunge = true;
                 } elseif ($decision == 'move') {
-                    $TLN->mail_move_msg($headers[$i], $aval_folders);
+                    $TLN->mailMoveMsg($headers[$i], $aval_folders);
                     $expunge = true;
                 } elseif ($decision == 'mark') {
-                    $TLN->mail_set_flag($headers[$i], $TLN->flags['seen'], '+');
+                    $TLN->mailSetFlag($headers[$i], $TLN->flags['seen'], '+');
                 } elseif ($decision == 'unmark') {
-                    $TLN->mail_set_flag($headers[$i], $TLN->flags['seen'], '-');
+                    $TLN->mailSetFlag($headers[$i], $TLN->flags['seen'], '-');
                 }
             }
         }
         if ($expunge) {
-            $TLN->mail_expunge();
+            $TLN->mailExpunge();
         }
 
         if ($back) {
@@ -64,19 +64,19 @@ if (!$messagecount
         }
     }
     if ($mlist) {
-        $TLN->mail_list_msgs($folder, $start_pos, $reg_pp);
+        $TLN->mailListMsgs($folder, $start_pos, $reg_pp);
         require './apply_filters.php';
     }
     if ($require_update) {
-        $TLN->mail_list_msgs($folder, $start_pos, $reg_pp);
+        $TLN->mailListMsgs($folder, $start_pos, $reg_pp);
     }
 
-    $TLN->mail_disconnect();
+    $TLN->mailDisconnect();
 }
 
-$auth['havespam'] = ($TLN->havespam || $tdb->count_messages('spam') > 0);
+$auth['havespam'] = ($TLN->havespam || $tdb->countMessages('spam') > 0);
 $AuthSession->Save($auth);
-$tdb->sync_messages();
+$tdb->syncMessages();
 
 /*
  * If they used a different version (ignoring patchlevel) then
@@ -96,15 +96,15 @@ if ($TLN->prefs['version'] != $TLN->appversion) {
 if ((!$same_version) ||
     ($TLN->config['check_first_login'] && !$TLN->prefs['first-login'])) {
     $TLN->prefs['first-login'] = 1;
-    $TLN->save_prefs($TLN->prefs);
-    $TLN->redirect_and_exit('preferences.php?folder='.urlencode($folder));
+    $TLN->savePrefs($TLN->prefs);
+    $TLN->redirectAndExit('preferences.php?folder='.urlencode($folder));
     exit;
 }
 if (isset($back_to)) {
     if (count($headers) > $back_to) {
-        $TLN->redirect_and_exit('readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=$back_to");
+        $TLN->redirectAndExit('readmsg.php?folder='.urlencode($folder)."&pag=$pag&ix=$back_to");
     }
 }
 
 $refreshurl = 'messages.php?folder='.urlencode($folder)."&pag=$pag";
-$TLN->redirect_and_exit("$refreshurl");
+$TLN->redirectAndExit("$refreshurl");

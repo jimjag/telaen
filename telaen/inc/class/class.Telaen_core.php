@@ -81,7 +81,7 @@ class Telaen_core
      * @param  boolean $force_new Force creation of DB file
      * @return void
      */
-    public function init_tdb($force_new = false)
+    public function initTdb($force_new = false)
     {
         $this->tdb = new LocalMbox($this->userfolder, $force_new);
     }
@@ -89,7 +89,7 @@ class Telaen_core
     /**
      *
      */
-    static public function debug_print_struc($obj)
+    static public function debugPrintStruct($obj)
     {
         echo('<pre>');
         print_r($obj);
@@ -100,7 +100,7 @@ class Telaen_core
      * @param string $str
      * @return string
      */
-    static public function safe_print($str)
+    static public function safePrint($str)
     {
         return preg_replace_callback(
             '|([^[:print:]])|',
@@ -114,16 +114,16 @@ class Telaen_core
      * @param  string $str
      * @return void
      */
-    public function debug_msg($str, $caller = "", $line = 0)
+    public function debugMsg($str, $caller = "", $line = 0)
     {
         if ($this->config['enable_debug']) {
             echo "<!-- $caller:\n";
-            echo preg_replace('|-->|', '__>', self::safe_print($str));
+            echo preg_replace('|-->|', '__>', self::safePrint($str));
             echo "\n-->\n";
             @flush();
         }
         if ($this->config['log_debug']) {
-            \trigger_error(sprintf('%s[%d]: %s', $caller, $line, self::safe_print($str)));
+            \trigger_error(sprintf('%s[%d]: %s', $caller, $line, self::safePrint($str)));
         }
     }
 
@@ -132,11 +132,11 @@ class Telaen_core
      * @param  string $str
      * @return void
      */
-    public function trigger_error($str, $caller = "", $line = 0)
+    public function triggerError($str, $caller = "", $line = 0)
     {
-        $this->debug_msg($str, $caller, $line);
+        $this->debugMsg($str, $caller, $line);
         if ($this->config['log_errors']) {
-            \trigger_error(sprintf('%s[%d]: %s', $caller, $line, self::safe_print($str)));
+            \trigger_error(sprintf('%s[%d]: %s', $caller, $line, self::safePrint($str)));
         }
     }
 
@@ -145,7 +145,7 @@ class Telaen_core
      * @param string $str
      * @return string
      */
-    static public function strip_nonhex($str)
+    static public function stripNonHex($str)
     {
         return preg_replace('|[^A-Fa-f0-9]+|', '', $str);
     }
@@ -156,7 +156,7 @@ class Telaen_core
      * @param boolean $delete
      * @return string
      */
-    static public function fs_safe_file($str, $delete = false)
+    static public function fsSafeFile($str, $delete = false)
     {
         $ret = preg_replace('|[.]{2,}|', ".", $str); // no dir
         return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $ret);
@@ -167,9 +167,9 @@ class Telaen_core
      * @param string $str
      * @return string
      */
-    static public function fs_safe_folder($str, $delete = true)
+    static public function fsSafeFolder($str, $delete = true)
     {
-        $ret = self::fs_safe_file($str);
+        $ret = self::fsSafeFile($str);
         return preg_replace('|[^A-Za-z0-9_-]|', ($delete ? '' : '_'), $ret);
     }
 
@@ -197,7 +197,7 @@ class Telaen_core
         if ($perm === null) $perm = $this->dirperm;
         if (!is_dir($dir)) {
             if (!@mkdir($dir, $this->dirperm)) {
-                $this->trigger_error("mkdir error: $this->userfolder", __FUNCTION__, __LINE__);
+                $this->triggerError("mkdir error: $this->userfolder", __FUNCTION__, __LINE__);
             }
         }
     }
@@ -207,14 +207,14 @@ class Telaen_core
      * is reached.
      * Used to get the list of cached messages from cache
      */
-    protected function _get_headers_from_cache($strfile)
+    protected function _getHeadersFromCache($strfile)
     {
         if ($strfile == "" || !file_exists($strfile)) {
             return '';
         }
         $fp = fopen($strfile, 'rb');
         if (!$fp) {
-            $this->trigger_error("cannot fopen $strfile", __FUNCTION__, __LINE__);
+            $this->triggerError("cannot fopen $strfile", __FUNCTION__, __LINE__);
             $this->status = STATUS_NOK_FILE;
             return "";
         }
@@ -243,14 +243,14 @@ class Telaen_core
      * @param string $strfile File to read from
      * @return resource
      */
-    protected function _get_body_from_cache($strfile)
+    protected function _getBodyFromCache($strfile)
     {
         if ($strfile == "" || !file_exists($strfile)) {
             return '';
         }
         $fp = fopen($strfile, 'rb');
         if (!$fp) {
-            $this->trigger_error("cannot fopen $strfile", __FUNCTION__, __LINE__);
+            $this->triggerError("cannot fopen $strfile", __FUNCTION__, __LINE__);
             $this->status = STATUS_NOK_FILE;
             return "";
         }
@@ -272,13 +272,13 @@ class Telaen_core
         return $pts;
     }
 
-    protected function _create_local_fname($msg)
+    protected function _createLocalFname($msg)
     {
         $fname = trim($msg['uidl']);
         if (empty($fname)) {
-            $fname = self::uniq_id();
+            $fname = self::uniqID();
         }
-        if (!self::is_md5($fname)) {
+        if (!self::isMD5($fname)) {
             $fname = self::md5($fname);
         }
         return $fname.'.eml';
@@ -290,7 +290,7 @@ class Telaen_core
      * @param mixed $boxname Foldername to use (default is msg's folder)
      * @return array
      */
-    public function get_pathname($msg, $boxname = null)
+    public function getPathName($msg, $boxname = null)
     {
         if ($boxname === null) {
             $boxname = $msg['folder'];
@@ -310,7 +310,7 @@ class Telaen_core
      * @return string
      */
 
-    public function read_file($strfile)
+    public function readFile($strfile)
     {
         if ($strfile == "" || !file_exists($strfile)) {
             return '';
@@ -322,7 +322,7 @@ class Telaen_core
     }
 
     /* stream_copy_to_stream() is slow and takes gobs of mem */
-    protected function _s_xfer($from, $to, $mem = 4194304)
+    protected function _sXfer($from, $to, $mem = 4194304)
     {
         rewind($from);
         while (!$this->_feof($from)) {
@@ -336,12 +336,12 @@ class Telaen_core
      * @param  mixed $content The content to write
      * @return boolean
      */
-    public function save_file($filename, $content)
+    public function saveFile($filename, $content)
     {
         $tmpfile = fopen($filename, 'wb+');
         if ($tmpfile) {
             if (is_resource($content)) {
-                $this->_s_xfer($content, $tmpfile);
+                $this->_sXfer($content, $tmpfile);
             } else {
                 fwrite($tmpfile, $content);
             }
@@ -349,7 +349,7 @@ class Telaen_core
             $this->status = STATUS_OK;
             return true;
         } else {
-            $this->trigger_error("cannot fopen $filename", __FUNCTION__, __LINE__);
+            $this->triggerError("cannot fopen $filename", __FUNCTION__, __LINE__);
             $this->status = STATUS_NOK_FILE;
             return false;
         }
@@ -361,19 +361,19 @@ class Telaen_core
      * @param  mixed $content The content to write
      * @return boolean
      */
-    public function save_msg($msg, $content)
+    public function saveMsg($msg, $content)
     {
-        list($path, $dir) = $this->get_pathname($msg);
+        list($path, $dir) = $this->getPathName($msg);
         if (!$msg['flat']) {
             $this->_mkdir($dir);
         }
-        return $this->save_file($path, $content);
+        return $this->saveFile($path, $content);
     }
 
     /**
      * Recursivelly remove files and directories
      */
-    protected function _RmdirR($location)
+    protected function _rmDirR($location)
     {
         if (substr($location, -1) != '/') {
             $location = $location.'/';
@@ -381,7 +381,7 @@ class Telaen_core
         $all = opendir($location);
         while ($file = readdir($all)) {
             if (is_dir($location.$file) && $file != '..' && $file != '.') {
-                $this->_RmdirR($location.$file);
+                $this->_rmDirR($location.$file);
                 unset($file);
             } elseif (!is_dir($location.$file)) {
                 unlink($location.$file);
@@ -398,7 +398,7 @@ class Telaen_core
      * @param string $string string to encode
      * @return string
      */
-    public function mime_encode_headers($string)
+    public function mimeEncodeHeaders($string)
     {
         if ($string == "") return '';
         if (!preg_match("/^([[:print:]]*)$/", $string))
@@ -411,7 +411,7 @@ class Telaen_core
      * Some malformed messages have more than one body.
      * Used to display inline attachments (images) too.
      */
-    protected function _add_body($strbody)
+    protected function _addBody($strbody)
     {
         static $l = false;
         if (!$l) {
@@ -429,7 +429,7 @@ class Telaen_core
      * @param string $to Charset to convert to
      * @return string
      */
-    static public function convert_charset($string, $from, $to)
+    static public function convertCharset($string, $from, $to)
     {
         return mb_convert_encoding($string, $to, $from);
     }
@@ -468,9 +468,9 @@ class Telaen_core
     }
 
     /**
-     * parse_body headers strings. Inverse of mime_encode_headers()
+     * parseBody headers strings. Inverse of mimeEncodeHeaders()
      */
-    protected function _decode_mime_string($subject)
+    protected function _decodeMimeString($subject)
     {
         $string = $subject;
         $newresult = "";
@@ -496,7 +496,7 @@ class Telaen_core
             }
 
             if ($charset != $this->charset) {
-                $mystring = self::convert_charset($mystring, $charset, $this->charset);
+                $mystring = self::convertCharset($mystring, $charset, $this->charset);
             }
 
             $newresult .= $mystring;
@@ -531,7 +531,7 @@ class Telaen_core
      *
      * Some headers are broken into multiples lines, prefixed with a TAB (\t)
      */
-    protected function _parse_headers($header)
+    protected function _parseHeaders($header)
     {
         $headers = explode("\r\n", $header);
         $decodedheaders = [];
@@ -573,7 +573,7 @@ class Telaen_core
      * @param string $strmail String to parse
      * @return array
      */
-    public function get_names($strmail)
+    public function getNames($strmail)
     {
         $ARfrom = [];
         $strmail = stripslashes(preg_replace('/(\t|\r|\n)/', "", $strmail));
@@ -641,7 +641,7 @@ class Telaen_core
                 if ($email == "") {
                     $email = $name;
                 }
-                $ARfrom[$i]['name'] = $this->_decode_mime_string($name);
+                $ARfrom[$i]['name'] = $this->_decodeMimeString($name);
                 $ARfrom[$i]['mail'] = $email;
                 unset($name);
                 unset($email);
@@ -657,10 +657,10 @@ class Telaen_core
      * @param $strMail
      * @return string
      */
-    public function clear_names($strMail)
+    public function clearNames($strMail)
     {
         $result = '';
-        $strMail = $this->get_names($strMail);
+        $strMail = $this->getNames($strMail);
         for ($i = 0;$i<count($strMail);$i++) {
             $thismail = $strMail[$i];
             $thisline = ($thismail['mail'] != $thismail['name']) ? "\"".$thismail['name']."\""." <".$thismail['mail'].">" : $thismail['mail'];
@@ -682,7 +682,7 @@ class Telaen_core
      * @param string $strmail
      * @return array
      */
-    public function get_first_of_names($strmail)
+    public function getFirstOfNames($strmail)
     {
         $ARfrom = [];
         $strmail = stripslashes(preg_replace('/(\t|\r|\n)/', "", $strmail));
@@ -747,7 +747,7 @@ class Telaen_core
             if ($email == "") {
                 $email = $name;
             }
-            $ARfrom[0]['name'] = $this->_decode_mime_string($name);
+            $ARfrom[0]['name'] = $this->_decodeMimeString($name);
             $ARfrom[0]['mail'] = $email;
 
             unset($name);
@@ -763,12 +763,12 @@ class Telaen_core
      * Compile a body for multipart/alternative format.
      * Guess the format we want and add it to the bod container
      */
-    protected function _build_add_alternative_body($msg, $ctype, $body)
+    protected function _buildAddAlternativeBody($msg, $ctype, $body)
     {
         // get the boundary
-        $boundary = $this->_get_boundary($ctype);
+        $boundary = $this->_getBoundary($ctype);
         // split the parts
-        $parts = $this->_split_parts($boundary, $body);
+        $parts = $this->_splitParts($boundary, $body);
 
         // not needed.. $thispart = ($this->config['allow_html'])?$parts[1]:$parts[0];
 
@@ -777,10 +777,10 @@ class Telaen_core
 
         // look at the better part we can display
         foreach ($parts as $index => $value) {
-            $email = $this->fetch_structure($value);
+            $email = $this->fetchStructure($value);
 
             $parts[$index] = $email;
-            $parts[$index]['headers'] = $headers = $this->_parse_headers($email['header']);
+            $parts[$index]['headers'] = $headers = $this->_parseHeaders($email['header']);
             unset($email);
             $ctype = explode(';', $headers['content-type']);
             $ctype = strtolower($ctype[0]);
@@ -811,16 +811,16 @@ class Telaen_core
         // if the subcontent is multipart go to multipart function
         if ($multipartSub) {
             unset($body);
-            $this->_build_add_complex_body($msg, $part['headers']['content-type'], $part['body']);
+            $this->_buildAddComplexBody($msg, $part['headers']['content-type'], $part['body']);
         } else {
-            $body = $this->_convert_body($part['body'], $part['headers']['content-transfer-encoding'], $part['headers']['content-type']);
+            $body = $this->_convertBody($part['body'], $part['headers']['content-transfer-encoding'], $part['headers']['content-type']);
             if (!$this->config['allow_html'] && $part['type'] != 'text/plain') {
-                $body = $this->_html2text($body);
+                $body = $this->_html2Text($body);
             }
             if (!$this->config['allow_html']) {
-                $body = $this->_return_text_body($body);
+                $body = $this->_returnTextBody($body);
             }
-            $this->_add_body($body);
+            $this->_addBody($body);
         }
     }
 
@@ -829,7 +829,7 @@ class Telaen_core
      * 'complex' means multipart/signed|mixed|related|report and other
      * types that can be added in the future
      */
-    protected function _build_add_complex_body($msg, $ctype, $body)
+    protected function _buildAddComplexBody($msg, $ctype, $body)
     {
         global $uidl, $folder;
 
@@ -842,14 +842,14 @@ class Telaen_core
             $Rtype = substr($Rtype, 1, strlen($Rtype)-2);
         }
 
-        $boundary = $this->_get_boundary($ctype);
-        $part = $this->_split_parts($boundary, $body);
+        $boundary = $this->_getBoundary($ctype);
+        $part = $this->_splitParts($boundary, $body);
 
         // only for debug
         //echo "<br>Boundary: ".$boundary." parts count: ".count($part);
 
         for ($i = 0;$i<count($part);$i++) {
-            $email = $this->fetch_structure($part[$i]);
+            $email = $this->fetchStructure($part[$i]);
 
             $header = $email['header'];
             $body = $email['body'];
@@ -857,7 +857,7 @@ class Telaen_core
             // free unused vars
             unset($email);
 
-            $headers = $this->_parse_headers($header);
+            $headers = $this->_parseHeaders($header);
             $ctype = $headers['content-type'];
 
             //echo "<br>Part: $i - ctype: $ctype";
@@ -879,27 +879,27 @@ class Telaen_core
             $is_download = (preg_match('|name=|', $headers['content-disposition'].$headers['content-type']) || $headers['content-id'] != "" || $rctype == 'message/rfc822');
 
             if ($rctype == 'multipart/alternative') {
-                $this->_build_add_alternative_body($msg, $ctype, $body);
+                $this->_buildAddAlternativeBody($msg, $ctype, $body);
             } elseif ($rctype == 'multipart/appledouble') {
                 /*
                  * Special case for mac with resource and data fork
                  */
-                $this->_build_add_complex_body($msg, $ctype, $body);
+                $this->_buildAddComplexBody($msg, $ctype, $body);
             } elseif ($rctype == 'text/plain' && !$is_download) {
-                $body = $this->_convert_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
-                $this->_add_body($this->_return_text_body($body));
+                $body = $this->_convertBody($body, $headers['content-transfer-encoding'], $headers['content-type']);
+                $this->_addBody($this->_returnTextBody($body));
             } elseif ($rctype == 'text/html' &&    !$is_download) {
-                $body = $this->_convert_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
+                $body = $this->_convertBody($body, $headers['content-transfer-encoding'], $headers['content-type']);
 
                 if (!$this->config['allow_html']) {
-                    $body = $this->_return_text_body($this->_html2text($body));
+                    $body = $this->_returnTextBody($this->_html2Text($body));
                 }
-                $this->_add_body($body);
+                $this->_addBody($body);
             } elseif ($rctype == 'application/ms-tnef') {
-                $body = $this->_convert_body($body, $headers['content-transfer-encoding'], $headers['content-type']);
-                $this->_extract_tnef($msg, $body, $boundary, $i);
+                $body = $this->_convertBody($body, $headers['content-transfer-encoding'], $headers['content-type']);
+                $this->_extractTnef($msg, $body, $boundary, $i);
             } elseif ($is_download) {
-                $thisattach = $this->_build_attach($msg, $header, $body, $boundary, $i);
+                $thisattach = $this->_buildAttach($msg, $header, $body, $boundary, $i);
                 $tree = array_merge((array) $this->current_level, [$thisattach['index']]);
                 $thisfile = 'download.php?folder='.urlencode($folder).'&uidl='.$uidl.'&attach='.join(',', $tree);
                 $filename = $thisattach['filename'];
@@ -913,11 +913,11 @@ class Telaen_core
                     $ext = strtolower(substr($thisattach['name'], -4));
                     $allowed_ext = ['.gif','.jpg','.png','.bmp'];
                     if (in_array($ext, $allowed_ext)) {
-                        $this->_add_body("<img src='$thisfile' alt=''>");
+                        $this->_addBody("<img src='$thisfile' alt=''>");
                     }
                 }
             } else {
-                $this->_process_message($msg, $header, $body);
+                $this->_processMessage($msg, $header, $body);
             }
         }
     }
@@ -925,17 +925,17 @@ class Telaen_core
     /**
      * Format a plain text string into a HTML formated string
      */
-    protected function _return_text_body($body)
+    protected function _returnTextBody($body)
     {
-        $body = preg_replace('/(\r\n|\n|\r|\n\r)/', "<br>$1", $this->_make_link_clickable(htmlspecialchars($body)));
+        $body = preg_replace('/(\r\n|\n|\r|\n\r)/', "<br>$1", $this->_makeLinkClickable(htmlspecialchars($body)));
 
         return "<font face=\"Courier New\" size=\"2\">$body</font>";
     }
 
     /**
-     * parse_body Quoted-Printable strings
+     * parseBody Quoted-Printable strings
      */
-    protected function _decode_qp($str)
+    protected function _decodeQp($str)
     {
         return quoted_printable_decode(preg_replace('|=\r?\n|', "", $str));
     }
@@ -943,7 +943,7 @@ class Telaen_core
     /**
      * Convert URL and Emails into clickable links
      */
-    protected function _make_link_clickable($str)
+    protected function _makeLinkClickable($str)
     {
         $str = preg_replace("!(\s)((f|ht)tps?://[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)!i", "$1<a class=autolink href=\"$2\" target=\"_blank\">$2</a>", $str); //http
         $str = preg_replace("|(\s)(www\.[a-z0-9~#%@\&:=?+/\.,_-]+[a-z0-9~#%@\&=?+/_.;-]+)|i", "$1<a class=autolink href=\"http://$2\" target=\"_blank\">$2</a>", $str); // www.
@@ -960,10 +960,10 @@ class Telaen_core
      * Guess the type of the part and call the appropriate
      * method
      */
-    protected function _process_message($msg, $header, $body)
+    protected function _processMessage($msg, $header, $body)
     {
         $body = $this->blob($body, false);  // easiest for now
-        $mail_info = $this->parse_headers($header);
+        $mail_info = $this->parseHeaders($header);
         $ctype = $mail_info['headers']['content-type'];
         $ctenc = $mail_info['headers']['content-transfer-encoding'];
 
@@ -981,20 +981,20 @@ class Telaen_core
 
         switch ($maintype) {
         case 'text':
-            $body = $this->_convert_body($body, $ctenc, $mail_info['headers']['content-type']);
+            $body = $this->_convertBody($body, $ctenc, $mail_info['headers']['content-type']);
             switch ($subtype) {
             case 'html':
                 if (!$this->config['allow_html']) {
-                    $body = $this->_return_text_body($this->_html2text($body));
+                    $body = $this->_returnTextBody($this->_html2Text($body));
                 }
                 $msgbody = $body;
                 break;
             default:
-                $this->_extract_uuencoded($body);
-                $msgbody = $this->_return_text_body($body);
+                $this->_extractUuencoded($body);
+                $msgbody = $this->_returnTextBody($body);
                 break;
             }
-            $this->_add_body($msgbody);
+            $this->_addBody($msgbody);
             break;
         case 'multipart':
             if (preg_match("/$subtype/", "signed,mixed,related,report,appledouble")) {
@@ -1003,17 +1003,17 @@ class Telaen_core
 
             switch ($subtype) {
             case 'alternative':
-                $this->_build_add_alternative_body($msg, $ctype[1], $body);
+                $this->_buildAddAlternativeBody($msg, $ctype[1], $body);
                 break;
             case 'complex':
-                $this->_build_add_complex_body($msg, $type, $body);
+                $this->_buildAddComplexBody($msg, $type, $body);
                 break;
             default:
-                $this->_build_attach($msg, $header, $body, "", 0);
+                $this->_buildAttach($msg, $header, $body, "", 0);
             }
             break;
         default:
-            $this->_build_attach($msg, $header, $body, "", 0);
+            $this->_buildAttach($msg, $header, $body, "", 0);
         }
     }
 
@@ -1021,9 +1021,9 @@ class Telaen_core
      * Compile the attachment, saving it to cache and
      * add it to the $attachments array if needed
      */
-    protected function _build_attach($msg, $header, $body, $boundary, $part)
+    protected function _buildAttach($msg, $header, $body, $boundary, $part)
     {
-        $headers = $this->_parse_headers($header);
+        $headers = $this->_parseHeaders($header);
         $cdisp = $headers['content-disposition'];
         $ctype = $headers['content-type'];
 
@@ -1064,19 +1064,19 @@ class Telaen_core
         // Note: added check for use it only for images, some clients adds id where not necessary
         $is_embed = ($main_type == 'image' && $headers['content-id'] != "") ? 1 : 0;
 
-        $body = $this->_convert_body($body, $tenc, $ctype);
+        $body = $this->_convertBody($body, $tenc, $ctype);
 
         if ($filename == "" && $main_type == 'message') {
-            $attachheader = $this->fetch_structure($body);
-            $attachheader = $this->_parse_headers($attachheader['header']);
+            $attachheader = $this->fetchStructure($body);
+            $attachheader = $this->_parseHeaders($attachheader['header']);
             $filename = $attachheader['subject'].'.eml';
             unset($attachheader);
         } elseif ($filename == "") {
-            $filename = self::uniq_id().'.tmp';
+            $filename = self::uniqID().'.tmp';
         }
 
-        $filename = preg_replace('|[.]{2,}|', ".", preg_replace("'(/|\\\\)+'", "_", trim($this->_decode_mime_string($filename))));
-        $safefilename = self::fs_safe_file($filename);
+        $filename = preg_replace('|[.]{2,}|', ".", preg_replace("'(/|\\\\)+'", "_", trim($this->_decodeMimeString($filename))));
+        $safefilename = self::fsSafeFile($filename);
         $nIndex = count($this->_content['attachments']);
         $temp_array['name'] = trim($filename);
         $temp_array['size'] = strlen($body);
@@ -1092,12 +1092,12 @@ class Telaen_core
         $temp_array['uidl'] = $msg['uidl'];
         $temp_array['folder'] = $msg['folder'];
 
-        list($path, $dir) = $this->get_pathname($temp_array, '_attachments');
+        list($path, $dir) = $this->getPathName($temp_array, '_attachments');
         $this->_mkdir($dir);
-        $this->save_file($path, $body);
+        $this->saveFile($path, $body);
         unset($body);
         $this->_content['attachments'][$nIndex] = $temp_array;
-        $this->tdb->add_attachment($temp_array);
+        $this->tdb->addAttachment($temp_array);
 
         return $temp_array;
     }
@@ -1105,21 +1105,21 @@ class Telaen_core
     /**
      * Compile a string following the encoded method
      */
-    protected function _convert_body($body, $enctype, $ctype)
+    protected function _convertBody($body, $enctype, $ctype)
     {
         $enctype = explode(' ', $enctype);
         $enctype = $enctype[0];
         if (strtolower($enctype) == 'base64') {
             $body = base64_decode($body);
         } elseif (strtolower($enctype) == 'quoted-printable') {
-            $body = $this->_decode_qp($body);
+            $body = $this->_decodeQp($body);
         }
 
         if (preg_match('|koi8|', $ctype)) {
             $body = convert_cyr_string($body, 'k', 'w');
         } elseif (preg_match('|charset ?= ?"?([a-z0-9-]+)"?|i', $ctype, $regs)) {
             if ($regs[1] != $this->charset) {
-                $body = self::convert_charset($body, $regs[1], $this->charset);
+                $body = self::convertCharset($body, $regs[1], $this->charset);
             }
         }
 
@@ -1136,7 +1136,7 @@ class Telaen_core
             if ($bound != "") {
                 $parts = $this->split_parts($bound,$body);
                 // split the especified part of mail, body and headers
-                $email = $this->fetch_structure($parts[$part]);
+                $email = $this->fetchStructure($parts[$part]);
                 $header = $email['header'];
                 $body = $email['body'];
                 unset($email);
@@ -1153,7 +1153,7 @@ class Telaen_core
     /**
      * Guess the attachment format and call the specific method
      */
-    protected function _save_attach($header, &$body, $filename, $type = 'mime', $tnef = '-1', $bound)
+    protected function _saveAttach($header, &$body, $filename, $type = 'mime', $tnef = '-1', $bound)
     {
         switch ($type) {
         case 'uue':
@@ -1163,7 +1163,7 @@ class Telaen_core
             $this->get_tnef($header, $body, $tnef, 0, $mode = 'save', $filename);
             break;
         default:
-            $this->_build_attach($header, $body, "", 0, $mode = 'save', 0, $filename);
+            $this->_buildAttach($header, $body, "", 0, $mode = 'save', 0, $filename);
         }
     }
 
@@ -1172,7 +1172,7 @@ class Telaen_core
      * @param  string  $val
      * @return boolean
      */
-    static public function is_md5($val)
+    static public function isMD5($val)
     {
         return preg_match('|^[A-Fa-f0-9]{32}$|', $val);
     }
@@ -1194,7 +1194,7 @@ class Telaen_core
      * @param string $prefix prefix to prepend
      * @return string
      */
-    static public function uniq_id($prefix = '') {
+    static public function uniqID($prefix = '') {
         return uniqid($prefix).(string)mt_rand();
     }
 
@@ -1209,18 +1209,18 @@ class Telaen_core
      * @param  string $first  Names
      * @return array
      */
-    public function parse_headers($header)
+    public function parseHeaders($header)
     {
         $myarray = [];
-        $headers = $this->_parse_headers($header);
+        $headers = $this->_parseHeaders($header);
 
         /*
          * First, create some message fields
          */
-        if (self::is_md5($headers['x-um-uidl'])) {
+        if (self::isMD5($headers['x-um-uidl'])) {
             $myarray['ouidl'] = $headers['x-um-uidl'];
         }
-        if (self::is_md5($headers['x-tln-uidl'])) {
+        if (self::isMD5($headers['x-tln-uidl'])) {
             $myarray['uidl'] = $headers['x-tln-uidl'];
         } elseif (!empty($myarray['ouidl'])) {
             $myarray['uidl'] = $myarray['ouidl'];
@@ -1268,14 +1268,14 @@ class Telaen_core
             $mydate = date('d M Y H:i');
             $mytimezone = $this->prefs['timezone'];
         }
-        $headers['date'] = $this->build_mime_date($mydate, $mytimezone);
+        $headers['date'] = $this->buildMimeDate($mydate, $mytimezone);
 
         /*
          * Now, clean up some headers[] values
          */
-        $headers['subject'] = $this->_decode_mime_string($headers['subject']);
+        $headers['subject'] = $this->_decodeMimeString($headers['subject']);
 
-        $receiptTo = $this->get_first_of_names($headers['disposition-notification-to']);
+        $receiptTo = $this->getFirstOfNames($headers['disposition-notification-to']);
         $headers['x-receipt-to'] = $receiptTo[0]['mail'];
 
         if (!empty($headers['message-id'])) {
@@ -1304,7 +1304,7 @@ class Telaen_core
      * Convert a TIMESTAMP value into a RFC-compliant date
      * Vola's note: I think it does exactly the opposite...
      */
-    public function build_mime_date($mydate, $timezone = '+0000', $server_timezone_offset='-0000')
+    public function buildMimeDate($mydate, $timezone = '+0000', $server_timezone_offset='-0000')
     {
         // check if $timezone is valid
         if (!preg_match('/((\\+|-)[0-9]{4})/', $timezone)) {
@@ -1350,7 +1350,7 @@ class Telaen_core
      * @param  array $msg Email message
      * @return void
      */
-    public function parse_body($msg)
+    public function parseBody($msg)
     {
         if (!$msg['bparsed']) {
             $this->_content = [];
@@ -1358,8 +1358,8 @@ class Telaen_core
             foreach (['uidl', 'flat', 'folder'] as $k) {
                 $msgstub[$k] = $msg[$k];
             }
-            $this->_process_message($msgstub, $msg['header'], $msg['body']);
-            $path = $this->get_pathname($msg)[0].'.msg';
+            $this->_processMessage($msgstub, $msg['header'], $msg['body']);
+            $path = $this->getPathName($msg)[0].'.msg';
             if ($this->sanitize) {
                 /*
                  * Uggg... we need a big ol' string. Hopefully, what
@@ -1368,16 +1368,16 @@ class Telaen_core
                 $b = $this->blob($this->_msgbody, false);
                 $this->_msgbody = $this->sanitizeHTML($b);
             }
-            $this->save_file($path, $this->_msgbody);
+            $this->saveFile($path, $this->_msgbody);
             $msg['bparsed'] = true;
-            $this->tdb->do_message($msg);
+            $this->tdb->doMessage($msg);
         }
     }
 
     /**
      * Split an email by its boundary
      */
-    protected function _split_parts($boundary, $body)
+    protected function _splitParts($boundary, $body)
     {
         $startpos = strpos($body, $boundary)+strlen($boundary)+2;
         $lenbody = strpos($body, "\r\n$boundary--") - $startpos;
@@ -1392,7 +1392,7 @@ class Telaen_core
      * @param boolean $inisout If we are given a string, return a string
      * @return array
      */
-    public function fetch_structure($email, $inisout = true)
+    public function fetchStructure($email, $inisout = true)
     {
         $header = '';
         $body = $this->tstream();
@@ -1431,7 +1431,7 @@ class Telaen_core
     /**
      * Guess the boundary from header
      */
-    protected function _get_boundary($ctype)
+    protected function _getBoundary($ctype)
     {
         if (preg_match('|boundary[ ]?=[ ]?["]?([^";]*)["]?.*$|iD', $ctype, $regs)) {     //preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
             //$boundary = preg_replace('/^\"(.*)\"$/', "$1", $regs[1])
@@ -1453,7 +1453,7 @@ class Telaen_core
     /**
      * Format a HTML message to be displayed as text if allow_html is off
      */
-    protected function _html2text($str)
+    protected function _html2Text($str)
     {
         return $this->_unhtmlentities(preg_replace(
                 array(    "'<(SCRIPT|STYLE)[^>]*?>.*?</(SCRIPT|STYLE)[^>]*?>'si",
@@ -1471,9 +1471,9 @@ class Telaen_core
     }
 
     /**
-     * parse_body UUEncoded attachments
+     * parseBody UUEncoded attachments
      */
-    protected function _UUDecode($data)
+    protected function _uuDecode($data)
     {
         $b64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/A';
         $uudchars = '`!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_ ';
@@ -1497,7 +1497,7 @@ class Telaen_core
     /**
      * Guess all UUEncoded in the body
      */
-    protected function _extract_uuencoded(&$body)
+    protected function _extractUuencoded(&$body)
     {
         $regex = "/(begin ([0-7]{3}) (.+))\r?\n(.+)\r?\nend/Us";
         preg_match_all($regex, $body, $matches);
@@ -1505,7 +1505,7 @@ class Telaen_core
             $boundary = $matches[1][$i];
             $fileperm = $matches[2][$i];
             $filename = $matches[3][$i];
-            $stream = $this->_UUDecode($matches[4][$i]);
+            $stream = $this->_uuDecode($matches[4][$i]);
 
             $temp_array['index'] = count($this->_content['attachments']);
             $temp_array['name'] = $filename;
@@ -1517,7 +1517,7 @@ class Telaen_core
             $temp_array['type'] = 'uue';
             $temp_array['filename'] = $this->userfolder.'_attachments/'.self::md5($temp_array['boundary']).'_'.$temp_array['name'];
             $this->_content['attachments'][] = $temp_array;
-            $this->save_file($temp_array['filename'], $stream);
+            $this->saveFile($temp_array['filename'], $stream);
             unset($temp_array);
         }
         $body = preg_replace($regex, "", $body);
@@ -1526,7 +1526,7 @@ class Telaen_core
     /**
      * Extract all attachmentes contained in a MS-TNEF attachment
      */
-    protected function _extract_tnef($msg, &$body, $boundary, $part)
+    protected function _extractTnef($msg, &$body, $boundary, $part)
     {
         $tnefobj = $this->_tnef->Decode($body);
 
@@ -1541,18 +1541,18 @@ class Telaen_core
             $temp_array['part'] = $part;
             $temp_array['type'] = 'tnef';
             $temp_array['tnef'] = $i;
-            $safefilename = self::fs_safe_file($temp_array['name']);
+            $safefilename = self::fsSafeFile($temp_array['name']);
             $temp_array['localname'] = self::md5($temp_array['boundary']).'_'.$safefilename;
             $temp_array['flat'] = $msg['flat'];
             $temp_array['uidl'] = $msg['uidl'];
             $temp_array['folder'] = $msg['folder'];
 
             $this->_content['attachments'][] = $temp_array;
-            list($path, $dir) = $this->get_pathname($temp_array, '_attachments');
+            list($path, $dir) = $this->getPathName($temp_array, '_attachments');
             $this->_mkdir($dir);
-            $this->save_file($path, $content);
+            $this->saveFile($path, $content);
             $this->_content['attachments'][] = $temp_array;
-            $this->tdb->add_attachment($temp_array);
+            $this->tdb->addAttachment($temp_array);
 
             unset($temp_array);
         }
@@ -1564,7 +1564,7 @@ class Telaen_core
      * @param  boolean $add    Add prefix?
      * @return string
      */
-    public function fix_prefix($folder, $add = false)
+    public function fixPrefix($folder, $add = false)
     {
         if ($this->mail_protocol == IMAP
             && !preg_match('|^inbox$|i', $folder)
@@ -1589,7 +1589,7 @@ class Telaen_core
      * @param  string $folder Directory to clean up
      * @return void
      */
-    static public function cleanup_dir($folder)
+    static public function cleanupDir($folder)
     {
         if (file_exists($folder) && is_dir($folder)) {
             foreach (scandir($folder) as $entry) {
@@ -1597,13 +1597,13 @@ class Telaen_core
                     if (is_file($folder.'/'.$entry))
                         unlink($folder.'/'.$entry);
                     elseif (is_dir($folder.'/'.$entry))
-                        self::cleanup_dir($folder.'/'.$entry);
+                        self::cleanupDir($folder.'/'.$entry);
                 }
             }
         }
     }
 
-    static public function get_microtime()
+    static public function getMicrotime()
     {
         $mtime = microtime();
         $mtime = explode(' ', $mtime);
@@ -1612,12 +1612,12 @@ class Telaen_core
         return ($mtime);
     }
 
-    static public function simpleoutput($p1)
+    static public function simpleOutput($p1)
     {
         printf($p1);
     }
 
-    static public function get_usage_graphic($used, $aval)
+    static public function getUsageGraphic($used, $aval)
     {
         if ($used >= $aval) {
             $redsize = 100;
@@ -1641,7 +1641,7 @@ class Telaen_core
      * Create TLS/SSL aware URL for server (eg: http://www.example.com/)
      * @return string
      */
-    static public function create_http_url()
+    static public function createHttpUrl()
     {
         $hurl = 'http';
         if ((strtolower($_SERVER['HTTPS']) == 'on') || ($_SERVER['SERVER_PORT'] == 443)) {
@@ -1660,11 +1660,11 @@ class Telaen_core
      * @param  boolean $add_scheme_host Whether we need http: part
      * @return string
      */
-    static public function create_abs_url($url, $add_scheme_host = true)
+    static public function createAbsUrl($url, $add_scheme_host = true)
     {
         $nurl = "";
         if ($add_scheme_host) {
-            $nurl .= self::create_http_url();
+            $nurl .= self::createHttpUrl();
         }
         $nurl .= rtrim(dirname($_SERVER['PHP_SELF']), '/\\').'/'.$url;
         $nurl = str_replace('\\', '/', $nurl);    // Windows path fix
@@ -1677,7 +1677,7 @@ class Telaen_core
      * @param boolean $killsession Destroy session data
      * @return void
      */
-    public function redirect_and_exit($location, $killsession = false)
+    public function redirectAndExit($location, $killsession = false)
     {
         // on error the session should be killed, on badlogin no, i want my selected theme/lang
         if ($killsession) {
@@ -1687,7 +1687,7 @@ class Telaen_core
         if ($this->config['redirects_are_relative']) {
             $url = $location;
         } else {
-            $url = self::create_abs_url($location);
+            $url = self::createAbsUrl($location);
         }
         if ($this->config['enable_debug']) {
             echo("<hr><br><strong><font color=red>Debug enabled:</font></strong> <br><br><h3><a href=\"$url\">Click here</a> to go to <a href=\"$url\">$url</a></h3><br><br><br><br>");
@@ -1717,7 +1717,7 @@ ENDOFREDIRECT;
     /**
      *
      */
-    static public function array_qsort2ic(&$array, $column = 0, $order = 'ASC')
+    static public function arrayQsort2ic(&$array, $column = 0, $order = 'ASC')
     {
         if (!is_array($array)) {
             return;
@@ -1730,7 +1730,7 @@ ENDOFREDIRECT;
      /**
      *
      */
-    static public function array_qsort2(&$array, $column = 0, $order = 'ASC')
+    static public function arrayQsort2(&$array, $column = 0, $order = 'ASC')
     {
         if (!is_array($array)) {
             return;
@@ -1743,7 +1743,7 @@ ENDOFREDIRECT;
     /**
      *
      */
-    static public function array_qsort2int(&$array, $column = 0, $order = 'ASC')
+    static public function arrayQsort2int(&$array, $column = 0, $order = 'ASC')
     {
         // The column value must be an int value
         if (!is_array($array)) {
@@ -1763,11 +1763,11 @@ ENDOFREDIRECT;
      * @param string $file Prefs filename
      * @return void
      */
-    public function load_prefs($user='unknown@example.com', $file = 'prefs.upf')
+    public function loadPrefs($user='unknown@example.com', $file = 'prefs.upf')
     {
         extract($this->config['default_preferences']);
 
-        $pref_file = $this->userdatafolder.'/'.self::fs_safe_file($file);
+        $pref_file = $this->userdatafolder.'/'.self::fsSafeFile($file);
 
         if (!file_exists($pref_file)) {
             foreach ($this->config['default_preferences'] as $key => $val) {
@@ -1799,13 +1799,13 @@ ENDOFREDIRECT;
      * @param string $file Prefs filename
      * @return void
      */
-    public function save_prefs($prefarray, $file = 'prefs.upf')
+    public function savePrefs($prefarray, $file = 'prefs.upf')
     {
-        $pref_file = $this->userdatafolder.'/'.self::fs_safe_file($file);
+        $pref_file = $this->userdatafolder.'/'.self::fsSafeFile($file);
 
         $f = fopen($pref_file, 'w');
         if (!$f) {
-            $this->trigger_error("cannot fopen $pref_file", __FUNCTION__, __LINE__);
+            $this->triggerError("cannot fopen $pref_file", __FUNCTION__, __LINE__);
             return;
         }
         fwrite($f, ~serialize($prefarray));
@@ -1818,9 +1818,9 @@ ENDOFREDIRECT;
      * @param boolean $merge Merge w/ existing stored config
      * @return array
      */
-    public function load_config($cfile='configv2', $merge=true)
+    public function loadConfig($cfile='configv2', $merge=true)
     {
-        $cfile = self::fs_safe_file($cfile);
+        $cfile = self::fsSafeFile($cfile);
         $config = [];
         @include_once './inc/config/'.$cfile.'-default.php';
         @include_once './inc/config/'.$cfile.'.php';
@@ -1833,7 +1833,7 @@ ENDOFREDIRECT;
      * @param string $strfile File to read headers from
      * @return string
      */
-    static public function get_headers_from_file($strfile)
+    static public function getHeadersFromCache($strfile)
     {
         if (!file_exists($strfile)) {
             return;
@@ -1872,7 +1872,7 @@ ENDOFREDIRECT;
             case 'double':
                 $var = (double) $var; break;
             case 'string':
-                $var = self::safe_print(trim((string) $var));
+                $var = self::safePrint(trim((string) $var));
                 break;
             case 'array':
                 $var = (array) $var; break;
@@ -1890,7 +1890,7 @@ ENDOFREDIRECT;
      * @param mixed $cast Type to cast ELement to
      * @return array
      */
-    static public function pull_from_array(&$whofrom, $my_vars = [], $cast = 'string')
+    static public function pullFromArray(&$whofrom, $my_vars = [], $cast = 'string')
     {
         $whoto = [];
         foreach ($my_vars as $to_pull) {
@@ -1949,7 +1949,7 @@ ENDOFREDIRECT;
     /**
      * Return sid value for IMAP
      */
-    protected function _get_sid($getnext = false)
+    protected function _getSid($getnext = false)
     {
         if ($getnext) $this->_sid++;
         return sprintf('a%03d', $this->_sid);
@@ -2009,7 +2009,7 @@ ENDOFREDIRECT;
             $f = fopen("php://memory", 'wb+');
         }
         if ($f === null) {
-            $this->trigger_error("fopen failed", __FUNCTION__, __LINE__);
+            $this->triggerError("fopen failed", __FUNCTION__, __LINE__);
         }
         return $f;
     }
@@ -2019,7 +2019,7 @@ ENDOFREDIRECT;
      * @param string $thread
      * @return array
      */
-    static public function parse_thread($thread)
+    static public function parseThread($thread)
     {
         $thread = preg_replace('|[^ ()[:alnum:]]|', '', $thread);
         $end = strlen($thread);

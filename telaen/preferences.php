@@ -33,7 +33,7 @@ $smarty->assign('umJS', $jssource);
 
 // load filters
 $filename = $TLN->userdatafolder.'/filters.ucf';
-$myfile = $TLN->read_file($filename);
+$myfile = $TLN->readFile($filename);
 $filters = array();
 
 if ($myfile != "") {
@@ -67,7 +67,7 @@ if (isset($_POST['action'])) {
         $myprefs['spamlevel'] = intval($_POST['spamlevel']);
         $myprefs['require_receipt'] = (boolean)$_POST['require_receipt'];
         $myprefs['version'] = $TLN->appversion;
-        $TLN->save_prefs($myprefs);
+        $TLN->savePrefs($myprefs);
         unset($myprefs);
 
         $smarty->assign('message', '1');
@@ -110,7 +110,7 @@ if (isset($_POST['action'])) {
 
         // save the file
         $content = base64_encode(serialize($filters));
-        $TLN->save_file($filename, $content);
+        $TLN->saveFile($filename, $content);
 
         $smarty->assign('message', '4');
 
@@ -136,7 +136,7 @@ if (isset($_POST['action'])) {
 
         // save the file
         $content = base64_encode(serialize($filters));
-        $TLN->save_file($filename, $content);
+        $TLN->saveFile($filename, $content);
 
         $smarty->assign('message', '5');
 
@@ -147,7 +147,7 @@ if (isset($_POST['action'])) {
 $smarty->assign('filterList', $filters);
 
 // load prefs
-$TLN->load_prefs();
+$TLN->loadPrefs();
 
 // name & reply to
 $smarty->assign('realName', $TLN->prefs['real-name']);

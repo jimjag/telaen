@@ -17,12 +17,12 @@ require './inc/init.php';
 $smarty->assign('pageMetas', $pmetas);
 
 $filename = $TLN->userdatafolder.'/addressbook.ucf';
-$myfile = $TLN->read_file($filename);
+$myfile = $TLN->readFile($filename);
 
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));
 }
-$TLN->array_qsort2ic($addressbook, 'name');
+$TLN->arrayQsort2ic($addressbook, 'name');
 
 eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
@@ -36,11 +36,11 @@ function refreshlist() { location = 'addressbook.php' }
 $smarty->assign('umJS', $jssource);
 $smarty->assign('umGoBack', 'addressbook.php');
 
-extract(Telaen::pull_from_array($_GET, array('opt'), 'str'));
-extract(Telaen::pull_from_array($_POST, array('name', 'email', 'street', 'city', 'state', 'work', 'phone',
+extract(Telaen::pullFromArray($_GET, array('opt'), 'str'));
+extract(Telaen::pullFromArray($_POST, array('name', 'email', 'street', 'city', 'state', 'work', 'phone',
     'cell', 'note', 'opt'), 'str'));
-extract(Telaen::pull_from_array($_GET, array('id'), 1));
-extract(Telaen::pull_from_array($_POST, array('id'), 1));
+extract(Telaen::pullFromArray($_GET, array('id'), 1));
+extract(Telaen::pullFromArray($_POST, array('id'), 1));
 
 switch ($opt) {
     // save an edited contact
@@ -56,7 +56,7 @@ switch ($opt) {
         $addressbook[$id]['cell'] = $cell;
         $addressbook[$id]['note'] = $note;
 
-        $TLN->save_file($filename, base64_encode(serialize($addressbook)));
+        $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 1);
         $templatename = 'address-results.tpl';
@@ -76,7 +76,7 @@ switch ($opt) {
         $addressbook[$id]['cell'] = $cell;
         $addressbook[$id]['note'] = $note;
 
-        $TLN->save_file($filename, base64_encode(serialize($addressbook)));
+        $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 2);
         $templatename = 'address-results.tpl';
@@ -91,7 +91,7 @@ switch ($opt) {
             $newaddr[] = $value;
         }
         $addressbook = $newaddr;
-        $TLN->save_file($filename, base64_encode(serialize($addressbook)));
+        $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 3);
         $templatename = 'address-results.tpl';
@@ -168,7 +168,7 @@ switch ($opt) {
         $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
 
         if (($start_pos >= $end_pos) && ($pag != 1)) {
-            $TLN->redirect_and_exit("addressbook.php?pag=".($pag-1)."");
+            $TLN->redirectAndExit("addressbook.php?pag=".($pag-1)."");
         }
 
         if ($nummsg > 0) {

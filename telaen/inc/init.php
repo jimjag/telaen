@@ -31,7 +31,7 @@ $TLN->AuthSession = $AuthSession;
 if ($auth['auth'] && isset($auth['config'])) {
     $TLN->config = $auth['config'];
 } else {
-    $TLN->load_config();
+    $TLN->loadConfig();
     $auth['config'] = $TLN->config;
 }
 
@@ -58,7 +58,7 @@ $initial_login = false;
 
 // Only process.php is allowed to be run with expired sessions (for login)
 if ((I_AM_TELAEN != 'process.php') && (!$auth['auth'])) {
-    $TLN->redirect_and_exit('index.php?err=4', true);
+    $TLN->redirectAndExit('index.php?err=4', true);
 }
 
 if (!isset($auth['start'])) {
@@ -99,7 +99,7 @@ if (!empty($f_pass)) {
      */
     switch (strtoupper($TLN->config['mail_server_type'])) {
         case 'DETECT':
-            if (!isset($f_email)) $TLN->redirect_and_exit('index.php');
+            if (!isset($f_email)) $TLN->redirectAndExit('index.php');
             $f_server = strtolower(getenv('HTTP_HOST'));
             $f_server = str_replace($TLN->config['mail_detect_remove'], "", $f_server);
             $f_server = $TLN->config['mail_detect_prefix'].$f_server;
@@ -117,7 +117,7 @@ if (!empty($f_pass)) {
             $f_prefix = $TLN->config['mail_detect_folder_prefix'];
             break;
         case 'ONE-FOR-EACH':
-            if (!isset($f_user)) $TLN->redirect_and_exit('index.php');
+            if (!isset($f_user)) $TLN->redirectAndExit('index.php');
             $domain = trim($TLN->config['mail_servers'][$six]['domain']);
             $f_email = $f_user.'@'.$domain;
             $f_server = $TLN->config['mail_servers'][$six]['server'];
@@ -132,7 +132,7 @@ if (!empty($f_pass)) {
             }
             break;
         case 'ONE-FOR-ALL':
-            if (!isset($f_email)) $TLN->redirect_and_exit('index.php');
+            if (!isset($f_email)) $TLN->redirectAndExit('index.php');
             if (preg_match('|(.*)@(.*)|', $f_email, $regs)) {
                 $f_user = trim($regs[1]);
                 $domain = trim($regs[2]);
@@ -158,10 +158,10 @@ if (!empty($f_pass)) {
     $TLN->mail_protocol = $auth['protocol'] = (strcasecmp($f_protocol, 'pop3') ? IMAP : POP3);
     $TLN->mail_prefix = $auth['folder_prefix'] = $f_prefix;
 
-    if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-    $TLN->mail_get_capa();
+    if (!$TLN->mailConnect()) $TLN->redirectAndExit('index.php?err=1', true);
+    $TLN->mailCapa();
     $auth['capabilities'] = $TLN->capabilities;
-    if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php');
+    if (!$TLN->mailAuth()) $TLN->redirectAndExit('index.php');
     $auth['auth'] = true;
     $initial_login = true;
 
@@ -192,9 +192,9 @@ if (!empty($f_pass)) {
     $quota_limit = $auth['quota_limit'];
 } elseif ($auth['auth']) {
     $AuthSession->Kill();
-    $TLN->redirect_and_exit('index.php?err=4');
+    $TLN->redirectAndExit('index.php?err=4');
 } else {
-    $TLN->redirect_and_exit('index.php');
+    $TLN->redirectAndExit('index.php');
 }
 
 /*
@@ -209,10 +209,10 @@ if (isset($TLN->config['dirperm']) && $TLN->config['dirperm'] != 0000) {
     $TLN->dirperm = $TLN->config['dirperm'];
 }
 
-$TLN->init_tdb(($TLN->mail_protocol == IMAP) && $TLN->prefs['keep_on_server'] && $initial_login);
+$TLN->initTdb(($TLN->mail_protocol == IMAP) && $TLN->prefs['keep_on_server'] && $initial_login);
 $tdb = &$TLN->tdb;
 $TLN->userdatafolder = $TLN->userfolder.$tdb->udatafolder;
-$TLN->load_prefs();
+$TLN->loadPrefs();
 
 $TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
@@ -222,8 +222,8 @@ $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts'
  * their exclusive email client
  */
 if (($TLN->mail_protocol == POP3) && $TLN->prefs['keep_on_server'] && $initial_login) {
-    $tdb->del_folder('inbox');
-    $tdb->new_folder('inbox');
+    $tdb->delFolder('inbox');
+    $tdb->newFolder('inbox');
 }
 $AuthSession->Save($auth);
 
@@ -296,15 +296,15 @@ if ($TLN->prefs['refresh_time'] < 5) {
     $need_save = true;
 }
 if (isset($need_save)) {
-    $TLN->save_prefs($TLN->prefs);
+    $TLN->savePrefs($TLN->prefs);
 }
 //
 if ($initial_login) {
-    $TLN->prep_local_dirs();
+    $TLN->prepLocalDirs();
     // In case not cleaned-up by logging out, do-so now
-    $TLN->cleanup_dirs($TLN->userfolder);
+    $TLN->cleanupDirs($TLN->userfolder);
 }
-$folders = $TLN->mail_list_boxes();
+$folders = $TLN->mailListBoxes();
 if (empty($folders[$folder])) {
-    $TLN->redirect_and_exit('logout.php');
+    $TLN->redirectAndExit('logout.php');
 }

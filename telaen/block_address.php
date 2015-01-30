@@ -12,11 +12,11 @@ require './inc/init.php';
 /* @var $TLN Telaen */
 
 if (!isset($ix) || !isset($folder)) {
-    $TLN->redirect_and_exit('index.php?err=3', true);
+    $TLN->redirectAndExit('index.php?err=3', true);
 }
 
 $filename = $TLN->userdatafolder.'/filters.ucf';
-$myfile = $TLN->read_file($filename);
+$myfile = $TLN->readFile($filename);
 $filters = array();
 
 if ($myfile != "") {
@@ -59,7 +59,7 @@ if (isset($fFilter)) {
                     );
     }
 
-    $TLN->save_file($filename, base64_encode(serialize($filters)));
+    $TLN->saveFile($filename, base64_encode(serialize($filters)));
 
     echo("
 	<script language=javascript>

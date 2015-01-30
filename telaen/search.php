@@ -11,7 +11,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-extract(Telaen::pull_from_array($_POST, array('srcFrom', 'srcSubject', 'srcBody'), 'str'));
+extract(Telaen::pullFromArray($_POST, array('srcFrom', 'srcSubject', 'srcBody'), 'str'));
 
 $smarty->assign('pageMetas', $pmetas);
 
@@ -45,19 +45,19 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
     for ($n = 0;$n<count($boxes);$n++) {
         $entry = $boxes[$n]['name'];
         if (!is_array($mbox['headers'][$entry])) {
-            if (!$TLN->mail_connected()) {
-                if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-                if (!$TLN->mail_auth()) $TLN->redirect_and_exit('index.php?err=0');
+            if (!$TLN->mailConnected()) {
+                if (!$TLN->mailConnect()) $TLN->redirectAndExit('index.php?err=1', true);
+                if (!$TLN->mailAuth()) $TLN->redirectAndExit('index.php?err=0');
             }
-            $retbox = $TLN->mail_list_msgs($entry);
+            $retbox = $TLN->mailListMsgs($entry);
             $mbox['headers'][$entry] = $retbox[0];
             $thisbox = $retbox[0];
         } else {
             $thisbox = $mbox['headers'][$entry];
         }
     }
-    if ($TLN->mail_connected()) {
-        $TLN->mail_disconnect();
+    if ($TLN->mailConnected()) {
+        $TLN->mailDisconnect();
         $UserMbox->Save($mbox);
     }
 
@@ -79,7 +79,7 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $get_body = 1;
     }
     $search_results = array();
-    $start = $TLN->get_microtime();
+    $start = $TLN->getMicrotime();
     $TLN->config['allow_html'] = false;
 
     if ($srcFrom != "") {
@@ -96,11 +96,11 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
         for ($z = 0;$z<count($messages);$z++) {
             $email = $messages[$z];
-            $localname = $TLN->get_pathname($email)[0];
+            $localname = $TLN->getPathName($email)[0];
 
             if ($get_body && file_exists($localname)) {
-                $thisfile = $TLN->read_file($localname);
-                $email = $TLN->parse_body($thisfile);
+                $thisfile = $TLN->readFile($localname);
+                $email = $TLN->parseBody($thisfile);
                 unset($thisfile);
             }
 

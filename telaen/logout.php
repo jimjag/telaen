@@ -11,7 +11,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-$TLN->cleanup_dirs($TLN->userfolder, 1);
+$TLN->cleanupDirs($TLN->userfolder, 1);
 
 $AuthSession->Kill();
-$TLN->redirect_and_exit('./index.php');
+$TLN->redirectAndExit('./index.php');

@@ -31,10 +31,10 @@ if (version_compare(PHP_VERSION, "5.4.0", "<")) {
  * vars used by just about all main entry points (see inc/init.php)
  */
 
-extract(Telaen::pull_from_array($_GET, ['pag', 'err', 'ix'], 1));
-extract(Telaen::pull_from_array($_GET, ['folder', 'sortby', 'sortorder', 'lng', 'tem', 'uidl'], 's'));
-extract(Telaen::pull_from_array($_POST, ['pag', 'six'], 1));
-extract(Telaen::pull_from_array($_POST, ['folder', 'f_email', 'f_user', 'f_pass', 'lng', 'tem', 'uidl'], 's'));
+extract(Telaen::pullFromArray($_GET, ['pag', 'err', 'ix'], 1));
+extract(Telaen::pullFromArray($_GET, ['folder', 'sortby', 'sortorder', 'lng', 'tem', 'uidl'], 's'));
+extract(Telaen::pullFromArray($_POST, ['pag', 'six'], 1));
+extract(Telaen::pullFromArray($_POST, ['folder', 'f_email', 'f_user', 'f_pass', 'lng', 'tem', 'uidl'], 's'));
 
 /*
  * Clean up user login info

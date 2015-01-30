@@ -14,16 +14,16 @@ require './inc/init.php';
 // assign metas
 $smarty->assign('pageMetas', $pmetas);
 
-extract(Telaen::pull_from_array($_GET, array('nameto', 'mailto'), 'str'));
+extract(Telaen::pullFromArray($_GET, array('nameto', 'mailto'), 'str'));
 extract(
-    Telaen::pull_from_array(
+    Telaen::pullFromArray(
         $_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
         'priority', 'body', 'is_html', 'textmode', 'sig', 'todo', 'rtype', 'uidl', ), 'str'
     )
 );
 // Recall $folder is always available via preinit.php
 
-$mbox = $TLN->tdb->get_message($uidl, $folder);
+$mbox = $TLN->tdb->getMessage($uidl, $folder);
 
 if ($todo == 'send') {
     require './inc/send.php';
@@ -85,32 +85,32 @@ if (isset($rtype)) {
 
     if (($rtype == 'forward' && !stristr($mail_info['flags'], '\\FORWARDED'))
         || ($rtype != 'forward' && !stristr($mail_info['flags'], '\\ANSWERED'))) {
-        if (!$TLN->mail_connect()) {
-            $TLN->redirect_and_exit('index.php?err=1', true);
+        if (!$TLN->mailConnect()) {
+            $TLN->redirectAndExit('index.php?err=1', true);
         }
-        if (!$TLN->mail_auth()) {
-            $TLN->redirect_and_exit('index.php?err=0');
+        if (!$TLN->mailAuth()) {
+            $TLN->redirectAndExit('index.php?err=0');
         }
-        if ($rtype != 'forward' && $TLN->mail_set_flag($mail_info, '\\ANSWERED', '+')) {
+        if ($rtype != 'forward' && $TLN->mailSetFlag($mail_info, '\\ANSWERED', '+')) {
             $mbox['headers'][$folder][$ix] = $mail_info;
             $UserMbox->Save($mbox);
         }
-        if ($rtype == 'forward' && $TLN->mail_set_flag($mail_info, '\\FORWARDED', '+')) {
+        if ($rtype == 'forward' && $TLN->mailSetFlag($mail_info, '\\FORWARDED', '+')) {
             $mbox['headers'][$folder][$ix] = $mail_info;
             $UserMbox->Save($mbox);
         }
-        $TLN->mail_disconnect();
+        $TLN->mailDisconnect();
     }
-    $filename = $TLN->get_pathname($mail_info)[0];
+    $filename = $TLN->getPathName($mail_info)[0];
 
     if (!file_exists($filename)) {
         die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true';</script>");
     }
-    $result = $TLN->read_file($filename);
+    $result = $TLN->readFile($filename);
     $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
-    $email = $TLN->parse_body($result);
+    $email = $TLN->parseBody($result);
 
-    $result = $TLN->fetch_structure($result);
+    $result = $TLN->fetchStructure($result);
 
     $tmpbody = $email['body'];
     $subject = $mail_info['subject'];
@@ -171,9 +171,9 @@ if (isset($rtype)) {
         }
     }
 
-    $allreply = $TLN->clear_names($fromreply.', '.$toreply);
-    $ccreply = $TLN->clear_names($ccreply);
-    $fromreply = $TLN->clear_names($fromreply);
+    $allreply = $TLN->clearNames($fromreply.', '.$toreply);
+    $ccreply = $TLN->clearNames($ccreply);
+    $fromreply = $TLN->clearNames($fromreply);
 
     $msgsubject = $email['subject'];
 

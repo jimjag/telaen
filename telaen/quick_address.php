@@ -11,15 +11,15 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-extract(Telaen::pull_from_array($_GET, array('where'), 'str'));
-extract(Telaen::pull_from_array($_POST, array('contacts'), 'str'));
+extract(Telaen::pullFromArray($_GET, array('where'), 'str'));
+extract(Telaen::pullFromArray($_POST, array('contacts'), 'str'));
 
 $filename = $TLN->userdatafolder.'/addressbook.ucf';
-$myfile = $TLN->read_file($filename);
+$myfile = $TLN->readFile($filename);
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));
 }
-$TLN->array_qsort2ic($addressbook, 'name');
+$TLN->arrayQsort2ic($addressbook, 'name');
 
 switch ($where) {
 case 'cc':

@@ -13,8 +13,8 @@ require './inc/init.php';
 
 $smarty->assign('pageMetas', $pmetas);
 
-extract(Telaen::pull_from_array($_GET, array('rem'), 'str'));
-extract(Telaen::pull_from_array($_FILES, array('userfile'), 'str'));
+extract(Telaen::pullFromArray($_GET, array('rem'), 'str'));
+extract(Telaen::pullFromArray($_FILES, array('userfile'), 'str'));
 
 if (isset($rem) && $rem != "") {
     $attchs = $mbox['attachments'];
@@ -50,7 +50,7 @@ if (isset($rem) && $rem != "") {
         $ind = count($mbox['attachments']);
     }
 
-    $filename = $TLN->userfolder.'_attachments/'.$TLN->md5($TLN->uniq_id("att_")).$userfile_name;
+    $filename = $TLN->userfolder.'_attachments/'.$TLN->md5($TLN->uniqID("att_")).$userfile_name;
 
     move_uploaded_file($userfile, $filename);
 

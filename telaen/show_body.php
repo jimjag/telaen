@@ -13,11 +13,11 @@ require './inc/init.php';
 if (!isset($folder) || !isset($uidl)) {
     die('Expected parameters');
 }
-$msg = $TLN->tdb->get_message($uidl, $folder);
+$msg = $TLN->tdb->getMessage($uidl, $folder);
 if (empty($msg)) {
     exit;
 }
-$body = $TLN->mail_retr_body($msg);
+$body = $TLN->mailRetrPbody($msg);
 
 //$body = preg_replace('|target=["\']?[a-zA-Z_]+["\']?|i', "target='blank'", $body);
 //$body = preg_replace('|href="http([s]?)://|i', "target='_blank' href='$redir_path?http$1://", $body);

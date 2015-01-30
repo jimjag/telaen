@@ -12,13 +12,13 @@ require './inc/init.php';
 /* @var $TLN Telaen */
 
 if (!isset($ix) || !isset($folder)) {
-    $TLN->redirect_and_exit('index.php?err=3', true);
+    $TLN->redirectAndExit('index.php?err=3', true);
 }
 
-extract(Telaen::pull_from_array($_POST, array('ckaval'), 1));
+extract(Telaen::pullFromArray($_POST, array('ckaval'), 1));
 
 $filename = $TLN->userdatafolder.'/addressbook.ucf';
-$myfile = $TLN->read_file($filename);
+$myfile = $TLN->readFile($filename);
 $addressbook = array();
 
 if ($myfile != "") {
@@ -78,7 +78,7 @@ if (isset($ckaval)) {
         $addressbook[$id]['email'] = $aval[$idchecked]['mail'];
     }
 
-    $TLN->save_file($filename, $addressbook);
+    $TLN->saveFile($filename, $addressbook);
 
     echo("
 	<script language=javascript>

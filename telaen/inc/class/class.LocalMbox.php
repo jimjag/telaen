@@ -104,15 +104,15 @@ class LocalMbox extends SQLite3
         $this->query('PRAGMA synchronous = 0;');
         $this->query('PRAGMA journal_mode = MEMORY;');
         if (!$exists || $force_new) {
-            $this->init_tables();
+            $this->initTables();
         }
-        $this->get_folders();
+        $this->getFolders();
         register_shutdown_function([$this, '__destruct']);
     }
 
     public function __destruct()
     {
-        $this->sync_messages();
+        $this->syncMessages();
         $this->close();
     }
 
@@ -120,23 +120,23 @@ class LocalMbox extends SQLite3
      * Create all required SQLite3 tables
      *
      */
-    public function init_tables()
+    public function initTables()
     {
         $this->_allok();
-        $table = $this->create_query('folders', $this->fschema);
+        $table = $this->_createQuery('folders', $this->fschema);
         if ($this->exec($table) == false) {
             $this->_ok = false;
             $this->_log[] = "bad exec: $table";
         }
 
-        $table = $this->create_query('attachs', $this->aschema);
+        $table = $this->_createQuery('attachs', $this->aschema);
         if ($this->exec($table) == false) {
             $this->_ok = false;
             $this->_log = "bad exec: $table";
         }
         $ok = $this->_ok;
         foreach($this->_system_folders as $foo) {
-            $this->new_folder(['name' => $foo, 'dirname' => $foo]);
+            $this->newFolder(['name' => $foo, 'dirname' => $foo]);
         }
         /*
          * We may have folders from previous installs. Check
@@ -146,7 +146,7 @@ class LocalMbox extends SQLite3
                 && $entry != '..'
                 && $entry != '.'
                 && !isset($this->folders[$entry])) {
-                $this->new_folder(['name' => $entry, 'dirname' => $entry]);
+                $this->newFolder(['name' => $entry, 'dirname' => $entry]);
             }
         }
         $this->_ok = $this->_ok && $ok;
@@ -157,11 +157,11 @@ class LocalMbox extends SQLite3
      * Return array of all required folders
      * @return array
      */
-    public function required_dirs() {
+    public function requiredDirs() {
         return $this->_system_folders;
     }
 
-    private function calc_folder_size($path)
+    private function calcFolderSize($path)
     {
         $total_size = 0;
         $path = rtrim($path, '/').'/';
@@ -170,7 +170,7 @@ class LocalMbox extends SQLite3
             if ($f != "." && $f != "..") {
                 $nfile = $path.$f;
                 if (is_dir($nfile)) {
-                    $size = $this->calc_folder_size($nfile);
+                    $size = $this->calcFolderSize($nfile);
                     $total_size += $size;
                 }
                 else {
@@ -200,7 +200,7 @@ class LocalMbox extends SQLite3
      * @param array $schema
      * @return array
      */
-    private function create_uplist($fields, $schema, $ignore=[])
+    private function _createUplist($fields, $schema, $ignore=[])
     {
         $tmp = [];
         $thelist = [];
@@ -240,7 +240,7 @@ class LocalMbox extends SQLite3
      * @param array $schema
      * @return string
      */
-    private function create_query($table, $schema)
+    private function _createQuery($table, $schema)
     {
         $query = sprintf('DROP TABLE IF EXISTS %s; CREATE TABLE %s (', $table, $table);
         foreach ($schema as $key => $val) {
@@ -257,7 +257,7 @@ class LocalMbox extends SQLite3
      * @param array $where the WHERE statement field and values (assume =)
      * @return SQLite3Result
      */
-    private function do_update($table, $data, $list, $where)
+    private function _doUpdate($table, $data, $list, $where)
     {
         $query = sprintf('UPDATE %s SET ', $table);
         $temp = [];
@@ -299,7 +299,7 @@ class LocalMbox extends SQLite3
      * @param array $list List of elements to insert
      * @return SQLite3Result
      */
-    private function do_insert($table, $data, $list)
+    private function _doInsert($table, $data, $list)
     {
         $query = sprintf('INSERT into %s ("', $table);
         $query .= implode('","',$list);
@@ -352,7 +352,7 @@ class LocalMbox extends SQLite3
      * This is quick so a SELECT is OK.
      * @return array (reference)
      */
-    public function &get_folders()
+    public function &getFolders()
     {
         $query = 'SELECT * FROM folders';
         $result = $this->query($query);
@@ -377,7 +377,7 @@ class LocalMbox extends SQLite3
      * @param string $string
      * @return array
      */
-    public function get_folder($name)
+    public function getFolder($name)
     {
         return $this->folders[$name];
     }
@@ -388,7 +388,7 @@ class LocalMbox extends SQLite3
      * @param boolean $calc_size
      * @return boolean
      */
-    public function new_folder($folder, $calc_size = false)
+    public function newFolder($folder, $calc_size = false)
     {
         $folder['system'] = in_array($folder['name'], $this->_system_folders);
         /*
@@ -401,7 +401,7 @@ class LocalMbox extends SQLite3
             $folder['dirname'] = self::getKey($folder['name']);
         }
         if ($calc_size && is_dir($this->userfolder.$folder['dirname'])) {
-            $folder['size'] = $this->calc_folder_size($this->userfolder.$folder['dirname']);
+            $folder['size'] = $this->calcFolderSize($this->userfolder.$folder['dirname']);
         }
         $table = self::_get_folder_name($folder['name']);
         $folder['table_name'] = $table;
@@ -413,20 +413,20 @@ class LocalMbox extends SQLite3
         /*
          * First create the new table for the new folder (to hold the messages)
          */
-        $query = $this->create_query($table, $this->mschema);
+        $query = $this->_createQuery($table, $this->mschema);
         if ($this->exec($query)) {
             /*
              * Now add it to the folders tables and array
              */
-            if ($this->do_insert('folders', $folder, array_keys($this->fschema))) {
+            if ($this->_doInsert('folders', $folder, array_keys($this->fschema))) {
                 $this->folders[$folder['name']] = $folder;
                 return true;
             } else {
-                $this->_log[] = "do_insert exec failed:";
+                $this->_log[] = "_doInsert exec failed:";
             }
         }
         $this->_ok = false;
-        $this->_log[] = "new_folder exec failed: $query";
+        $this->_log[] = "newFolder exec failed: $query";
         return false;
 
     }
@@ -436,7 +436,7 @@ class LocalMbox extends SQLite3
      * @param string $folder Folder name to rm from DB
      * @return boolean
      */
-    public function del_folder($folder)
+    public function delFolder($folder)
     {
         $query = 'DROP TABLE '.self::_get_folder_name($folder).' ;';
         if ($this->exec($query)) {
@@ -460,7 +460,7 @@ class LocalMbox extends SQLite3
      * @param string $field Name of field
      * @return boolean
      */
-    public function update_folder_field($folder, $field)
+    public function updateFolderField($folder, $field)
     {
         if (!isset($this->fschema[$field])) {
             $this->_ok = false;
@@ -490,7 +490,7 @@ class LocalMbox extends SQLite3
       * @param string $folder Folder name
       * @return boolean
       */
-     public function current_version($folder, $version)
+     public function currentVersion($folder, $version)
     {
         return ($this->folders[$folder]['version'] == $version);
     }
@@ -501,7 +501,7 @@ class LocalMbox extends SQLite3
      * @param int $version
      * @return boolean
      */
-    public function upgrade_version($folder, $version)
+    public function upgradeVersion($folder, $version)
     {
         $stmt = $this->prepare("UPDATE folders SET version=:version WHERE name=:name ;");
         $stmt->bindValue(':name', $folder);
@@ -528,7 +528,7 @@ class LocalMbox extends SQLite3
      * @param string $sortorder
      * @return array
      */
-    public function get_messages($folder, $force = false, $sortby = "", $sortorder = "")
+    public function getMessages($folder, $force = false, $sortby = "", $sortorder = "")
     {
         if ($folder != $this->current_folder || $force) {
             /* keep sorting info between calls */
@@ -540,7 +540,7 @@ class LocalMbox extends SQLite3
             if ($sortorder != $ssortorder) {
                 $ssortorder = $sortorder;
             }
-            $this->sync_messages();
+            $this->syncMessages();
             $query = sprintf('SELECT * FROM %s ', self::_get_folder_name($folder));
             if ($sortby && isset($this->mschema[$sortby])) {
                 $query .= "ORDER BY '$sortby' ";
@@ -581,7 +581,7 @@ class LocalMbox extends SQLite3
      * @param boolean $force TRUE to force a resync
      * @return array
      */
-    public function count_messages($folder, $force = false)
+    public function countMessages($folder, $force = false)
     {
         if ($folder != $this->current_folder || $force) {
             $query = sprintf('SELECT COUNT(*) FROM %s;', self::_get_folder_name($folder));
@@ -604,9 +604,9 @@ class LocalMbox extends SQLite3
      * @param boolean $adj
      * @return boolean
      */
-    public function new_message($msg, $adj = false)
+    public function newMessage($msg, $adj = false)
     {
-        $thelist = $this->create_uplist(array_keys($msg), $this->mschema);
+        $thelist = $this->_createUplist(array_keys($msg), $this->mschema);
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
@@ -618,7 +618,7 @@ class LocalMbox extends SQLite3
             }
             $this->_folder_need_sync[$msg['folder']] = true;
         }
-        return $this->do_insert(self::_get_folder_name($msg['folder']), $msg, $thelist);
+        return $this->_doInsert(self::_get_folder_name($msg['folder']), $msg, $thelist);
     }
 
     /**
@@ -633,14 +633,14 @@ class LocalMbox extends SQLite3
      *  NOTE: Since the list of updated fields may change, re-use of
      *        prepared statements is kind of impossible
      */
-    public function update_message($msg, $fields = "*")
+    public function updateMessage($msg, $fields = "*")
     {
-        $thelist = $this->create_uplist($fields, $this->mschema, ['uidl']);
+        $thelist = $this->_createUplist($fields, $this->mschema, ['uidl']);
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
         $this->_folder_need_sync[$msg['folder']] = true;
-        return $this->do_update(self::_get_folder_name($msg['folder']), $msg, $thelist, ['uidl'=>$msg['uidl']]);
+        return $this->_doUpdate(self::_get_folder_name($msg['folder']), $msg, $thelist, ['uidl'=>$msg['uidl']]);
     }
 
     /**
@@ -651,18 +651,18 @@ class LocalMbox extends SQLite3
      * @param boolean $is_uidl Is ID UIDL (true) or index (false)
      * @return array
      */
-    public function get_message($id, $folder = '', $is_uidl = true)
+    public function getMessage($id, $folder = '', $is_uidl = true)
     {
         if (!empty($folder)) {
             $was = $this->current_folder;
-            $this->get_messages($folder);
+            $this->getMessages($folder);
         }
         if ($is_uidl) {
             $id = $this->m_idx[$id];
         }
         $msg = $this->messages[$id];
         if (!empty($folder)) {
-            $this->get_messages($was);
+            $this->getMessages($was);
         }
         return $msg;
     }
@@ -672,7 +672,7 @@ class LocalMbox extends SQLite3
      * @param array $msg Message msg
      * @return boolean
      */
-    public function message_exists($msg)
+    public function messageExists($msg)
     {
         $uidl = $msg['uidl'];
         return (isset($this->m_idx[$uidl]) &&
@@ -683,7 +683,7 @@ class LocalMbox extends SQLite3
      * Add or update this->headers with the msg
      * @param array $msg Message msg
      */
-    public function do_message($msg)
+    public function doMessage($msg)
     {
         if (isset($this->m_idx[$msg['uidl']])) {
             /* This is an UPDATE */
@@ -731,7 +731,7 @@ class LocalMbox extends SQLite3
      *       message.
      * @return boolean
      */
-    public function sync_messages()
+    public function syncMessages()
     {
         $retval = true;
         $adds = [];
@@ -748,14 +748,14 @@ class LocalMbox extends SQLite3
             }
             if (count($adds) > 0) {
                 foreach ($adds as $add) {
-                    if (!$this->new_message($add)) {
+                    if (!$this->newMessage($add)) {
                         $retval = false;
                     }
                 }
             }
             if (count($ups) > 0) {
                 foreach ($ups as $foo) {
-                    if (!$this->update_message($foo[0], $foo[1])) {
+                    if (!$this->updateMessage($foo[0], $foo[1])) {
                         $retval = false;
                     }
                 }
@@ -765,7 +765,7 @@ class LocalMbox extends SQLite3
         }
         if (count($this->_folder_need_sync) > 0) {
             foreach ($this->_folder_need_sync as $name=>$v) {
-                $this->do_update('folders', $this->folders[$name],
+                $this->_doUpdate('folders', $this->folders[$name],
                     ['size', 'count', 'unread'], ['name' => $name]);
             }
             unset($this->_folder_need_sync);
@@ -780,7 +780,7 @@ class LocalMbox extends SQLite3
      * @param array $msgs
      * @return bool
      */
-    public function del_messages($msgs)
+    public function delMessages($msgs)
     {
         if (!is_array($msgs)) {
             $msgs = (array)$msgs;
@@ -829,7 +829,7 @@ class LocalMbox extends SQLite3
      * @param array $msg
      * @return array
      */
-    public function get_attachments($msg)
+    public function getAttachments($msg)
     {
         $query = "SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;";
         $stmt = $this->prepare($query);
@@ -849,19 +849,19 @@ class LocalMbox extends SQLite3
         $stmt->close();
         return $this->attachments;
     }
-    public function add_attachment($attachment)
+    public function addAttachment($attachment)
     {
-        $thelist = $this->create_uplist(array_keys($attachment), $this->aschema);
+        $thelist = $this->_createUplist(array_keys($attachment), $this->aschema);
         if ($thelist == null || !is_array($thelist)) {
             return false;
         }
         $this->attachments[] = $attachment;
-        return $this->do_insert('attachs', $attachment, $thelist);
+        return $this->_doInsert('attachs', $attachment, $thelist);
 
     }
 
 
-    public function del_attachment($folder, $msg)
+    public function delAttachment($folder, $msg)
     {
 
     }

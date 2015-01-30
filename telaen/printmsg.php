@@ -18,16 +18,16 @@ $mail_info = $mbox['headers'][$folder][$ix];
 
 $smarty->assign('pageMetas', $pmetas);
 
-$path = $TLN->get_pathname($mail_info)[0];
+$path = $TLN->getPathName($mail_info)[0];
 if (!file_exists($path)) {
     die('File not found');
 }
-$email = $TLN->read_file($path);
+$email = $TLN->readFile($path);
 
 $TLN->displayimages = $TLN->prefs['display_images'];
 $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
 
-$email = $TLN->parse_body($email);
+$email = $TLN->parseBody($email);
 $body = $email['body'];
 
 //cleanning bad tags to show
@@ -41,8 +41,8 @@ if (preg_match('|<[ ]*body[A-Z0-9._&?=:/"\' -]*bgcolor=["\']?([A-Z0-9#]+)["\']?[
 $smarty->assign('umBackColor', $backcolor);
 
 $body = preg_replace('|<body|i', '<telaen_body_not_alowed', $body);
-$body = preg_replace('/a:(link|visited|hover)/i', '.'.$TLN->uniq_id(), $body);
-$body = preg_replace('|(body)[ ]?\\{|i', '.'.$TLN->uniq_id(), $body);
+$body = preg_replace('/a:(link|visited|hover)/i', '.'.$TLN->uniqID(), $body);
+$body = preg_replace('|(body)[ ]?\\{|i', '.'.$TLN->uniqID(), $body);
 
 $smarty->assign('umMessageBody', $body);
 

@@ -52,7 +52,7 @@ $timeleft = ($TLN->prefs['refresh_time']-$elapsedtime);
 if ($timeleft > 0) {
     $refreshMeta = "	<meta http-equiv=\"Refresh\" content=\"".(ceil($timeleft)*60)."; url=$refreshurl\" />";
 } elseif ($TLN->prefs['refresh_time']) {
-    $TLN->redirect_and_exit("$refreshurl");
+    $TLN->redirectAndExit("$refreshurl");
 }
 */
 // Assign metas to smarty, no more bad echos output
@@ -60,7 +60,7 @@ if ($timeleft > 0) {
 
 /* load total size */
 $totalused = 0;
-$folders = &$tdb->get_folders();
+$folders = &$tdb->getFolders();
 foreach ($folders as $key => $val) {
     $totalused += $val['size'];
 }
@@ -69,7 +69,7 @@ $smarty->assign('umTotalUsed', ceil($totalused/1024));
 $quota_enabled = ($quota_limit) ? 1 : 0;
 $smarty->assign('umQuotaEnabled', $quota_enabled);
 $smarty->assign('umQuotaLimit', Telaen::bytes2bkmg($quota_limit));
-$usageGraph = Telaen::get_usage_graphic($totalused, $quota_limit);
+$usageGraph = Telaen::getUsageGraphic($totalused, $quota_limit);
 $smarty->assign('umUsageGraph', $usageGraph);
 
 $exceeded = (($quota_limit) && ($totalused >= $quota_limit));
@@ -81,8 +81,8 @@ $smarty->assign('umFromArrow', $fromname_arrow);
 $smarty->assign('umDateArrow', $date_arrow);
 $smarty->assign('umSizeArrow', $size_arrow);
 
-$tdb->get_messages($folder, true, $sortby, $sortorder);
-$headers = $TLN->mail_list_msgs($folder, $start_pos, $end_pos);
+$tdb->getMessages($folder, true, $sortby, $sortorder);
+$headers = $TLN->mailListMsgs($folder, $start_pos, $end_pos);
 $nummsg = $folders[$folder]['count'];
 $newmsgs = $folders[$folder]['unread'];
 $reg_pp = $TLN->prefs['rpp'];
@@ -90,7 +90,7 @@ $start_pos = ($pag-1)*$reg_pp;
 $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
 
 if (($start_pos >= $end_pos) && ($pag != 1)) {
-    $TLN->redirect_and_exit("messages.php?folder=$folder&pag=".($pag-1)."");
+    $TLN->redirectAndExit("messages.php?folder=$folder&pag=".($pag-1)."");
 }
 
 $jsquota = ($exceeded) ? 'true' : 'false';
@@ -165,9 +165,9 @@ printf($textout);
 
 if ($nummsg > 0) {
     for ($i = $start_pos;$i<$end_pos;$i++) {
-        $from = $TLN->get_names($headers[$i]['headers']['from'])[0]['name'];
-        $to = $TLN->get_names($headers[$i]['headers']['to'])[0]['name'];
-        $email = $TLN->get_names($headers[$i]['from'])[0]['mail'];
+        $from = $TLN->getNames($headers[$i]['headers']['from'])[0]['name'];
+        $to = $TLN->getNames($headers[$i]['headers']['to'])[0]['name'];
+        $email = $TLN->getNames($headers[$i]['from'])[0]['mail'];
         $subject = $headers[$i]['subject'];
 
         $readlink = "javascript:readmsg($i,'{$headers[$i]['uidl']}')";
@@ -290,7 +290,7 @@ foreach (scandir($TLN->userfolder) as $entry) {
         && $entry != $folder
         && ($TLN->mail_protocol == IMAP || ($entry != 'inbox'))
     ) {
-        $entry = $TLN->fix_prefix($entry, 0);
+        $entry = $TLN->fixPrefix($entry, 0);
         $display = extended_name($entry);
         $avalfolders[] = array('path' => $entry, 'display' => $display);
     }

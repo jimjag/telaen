@@ -12,30 +12,30 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-$msgs = $TLN->tdb->get_messages($folder);
+$msgs = $TLN->tdb->getMessages($folder);
 if (!isset($ix) && !isset($uidl)) {
-    $TLN->redirect_and_exit('index.php?err=3', true);
+    $TLN->redirectAndExit('index.php?err=3', true);
 } elseif (!isset($uidl)) {
     $uidl = $msgs[$ix]['uidl'];
 }
-$msg = $TLN->tdb->get_message($uidl, $folder);
+$msg = $TLN->tdb->getMessage($uidl, $folder);
 $ix = $msg['idx'];
 
 $is_attached = false;
 $arAttachment = array();
 
-if (!($msg['body'] = $TLN->mail_retr_msg($msg))) {
-    $TLN->redirect_and_exit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
+if (!($msg['body'] = $TLN->mailRetrMsg($msg))) {
+    $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
 }
-if (!$TLN->mail_set_flag($msg, $TLN->flags['seen'], '+')) {
-    $TLN->trigger_error('Could not set SEEN flag', I_AM_TELAEN, __LINE__);
+if (!$TLN->mailSetFlag($msg, $TLN->flags['seen'], '+')) {
+    $TLN->triggerError('Could not set SEEN flag', I_AM_TELAEN, __LINE__);
 }
-$TLN->mail_disconnect();
+$TLN->mailDisconnect();
 
 // metas assigned to smarty
 $smarty->assign('pageMetas', $pmetas);
 
-$TLN->parse_body($msg);
+$TLN->parseBody($msg);
 
 if ($ix > 0) {
     $umHavePrevious = 1;
@@ -207,7 +207,7 @@ if (count($anexos) > 0) {
 }
 
 $AuthSession->Save($auth);
-$tdb->sync_messages();
+$tdb->syncMessages();
 
 $avalfolders = array();
 foreach (scandir($TLN->userfolder) as $entry) {
@@ -217,7 +217,7 @@ foreach (scandir($TLN->userfolder) as $entry) {
         && substr($entry, 0, 1) != '_'
         && $entry != $folder
         && ($TLN->mail_protocol == IMAP || ($entry != 'inbox' && $entry != 'spam'))) {
-        $entry = $TLN->fix_prefix($entry, 0);
+        $entry = $TLN->fixPrefix($entry, 0);
         $display = extended_name($entry);
         $avalfolders[] = array('path' => $entry, 'display' => $display);
     }

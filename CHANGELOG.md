@@ -333,7 +333,7 @@ CHANGELOG:
  	Telaen. Changes to the newmsg.htm template file may be required
  	(depending on the template) to fully use this.
 
- * Now, whenever Telaen adds body content (eg: whenever we parse_body), we
+ * Now, whenever Telaen adds body content (eg: whenever we parseBody), we
  	choose to sanitize or not. This means that messages are sanitized
  	when printed or forwarded/replied to. Added a global variable,
  	$sanitize_html to control this ($allow_scripts also works, but is

@@ -10,10 +10,10 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require_once './inc/preinit.php';
 $TLN = new Telaen();
-$TLN->load_config();
+$TLN->loadConfig();
 require_once './inc/errorhandler.php';
 
-extract(Telaen::pull_from_array($_GET, array('f_email', 'f_user', 'lng', 'tem', 'six'), 's'));
+extract(Telaen::pullFromArray($_GET, array('f_email', 'f_user', 'lng', 'tem', 'six'), 's'));
 require_once './inc/user_tl.php';
 
 require_once $TLN->config['SMARTY_DIR'].'Smarty.class.php';

@@ -18,9 +18,9 @@ if ($TLN->config['phpmailer_timeout'] != 0) {
     $mail->Timeout = $TLN->config['phpmailer_timeout'];
 }
 
-$ARTo = $TLN->get_names(stripslashes($to));
-$ARCc = $TLN->get_names(stripslashes($cc));
-$ARBcc = $TLN->get_names(stripslashes($bcc));
+$ARTo = $TLN->getNames(stripslashes($to));
+$ARCc = $TLN->getNames(stripslashes($cc));
+$ARBcc = $TLN->getNames(stripslashes($bcc));
 
 // html head and foot to add, the editor can do it, but causes some problems with sign and footer
 $htmlHead = "
@@ -68,7 +68,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     $mail->Hostname = getenv('SERVER_NAME');
     $mail->From = ($TLN->config['allow_modified_from'] && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
     $mail->FromName = $mail->encodeHeader($TLN->prefs['real-name']);
-    $mail->AddReplyTo($TLN->prefs['reply-to'], $TLN->mime_encode_headers($TLN->prefs['real-name']));
+    $mail->AddReplyTo($TLN->prefs['reply-to'], $TLN->mimeEncodeHeaders($TLN->prefs['real-name']));
 
     $mail->Host = $TLN->config['smtp_server'];
     $mail->WordWrap = 76;
@@ -92,7 +92,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
             $name = $ARTo[$i]['name'];
             $email = $ARTo[$i]['mail'];
             if ($name != $email) {
-                $mail->AddAddress($email, $TLN->mime_encode_headers($name));
+                $mail->AddAddress($email, $TLN->mimeEncodeHeaders($name));
             } else {
                 $mail->AddAddress($email);
             }
@@ -104,7 +104,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
             $name = $ARCc[$i]['name'];
             $email = $ARCc[$i]['mail'];
             if ($name != $email) {
-                $mail->AddCC($email, $TLN->mime_encode_headers($name));
+                $mail->AddCC($email, $TLN->mimeEncodeHeaders($name));
             } else {
                 $mail->AddCC($email);
             }
@@ -116,7 +116,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
             $name = $ARBcc[$i]['name'];
             $email = $ARBcc[$i]['mail'];
             if ($name != $email) {
-                $mail->AddBCC($email, $TLN->mime_encode_headers($name));
+                $mail->AddBCC($email, $TLN->mimeEncodeHeaders($name));
             } else {
                 $mail->AddBCC($email);
             }
@@ -126,14 +126,14 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     if (isset($mbox['attachments'])) {
         $attachs = $mbox['attachments'];
         for ($i = 0;$i<count($attachs);$i++) {
-            $path = $TLN->get_pathname($attachs[$i])[0];
+            $path = $TLN->getPathName($attachs[$i])[0];
             if (file_exists($path)) {
                 $mail->AddAttachment($path, $attachs[$i]['name'], 'base64', $attachs[$i]['type']);
             }
         }
     }
 
-    $mail->Subject = $TLN->mime_encode_headers(stripslashes($subject));
+    $mail->Subject = $TLN->mimeEncodeHeaders(stripslashes($subject));
     $mail->Body = stripslashes($body);
     $mail->Mailer = $TLN->config['mailer_type'];
 
@@ -150,11 +150,11 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
         }
 
         if ($TLN->prefs['save_to_sent']) {
-            if (!$TLN->mail_connect()) $TLN->redirect_and_exit('index.php?err=1', true);
-            if (!$TLN->mail_auth(false)) $TLN->redirect_and_exit('index.php?err=0');
-            $TLN->mail_save_message('sent', $mail->getSentMIMEMessage(), '\\SEEN');
+            if (!$TLN->mailConnect()) $TLN->redirectAndExit('index.php?err=1', true);
+            if (!$TLN->mailAuth(false)) $TLN->redirectAndExit('index.php?err=0');
+            $TLN->mailSaveMessage('sent', $mail->getSentMIMEMessage(), '\\SEEN');
             unset($mbox['headers']['sent']);
-            $TLN->mail_disconnect();
+            $TLN->mailDisconnect();
             $UserMbox->Save($mbox);
         }
     }

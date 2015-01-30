@@ -16,7 +16,7 @@ require './inc/init.php';
 /* @var $TLN Telaen */
 
 if (!$auth['auth']) {
-   $TLN->redirect_and_exit('index.php?err=4', true);
+   $TLN->redirectAndExit('index.php?err=4', true);
 }
 
 // check for main parameters

@@ -6,10 +6,10 @@
 - Once moved to PHPMailer, mails sent thru UM aren't in RBL filters by 'malformed headers'
 - Moved to PHPMailer as mailer (without mods), since PHPMailer is stable, powerful and RFC-compliant
 - Some cleanup on attachments download
-- Fixed bug with special chars (ç specially)
+- Fixed bug with special chars (ï¿½ specially)
 - Per-server protocol/port configuration
 - Attachment decoding rewrote, now all attachments are decoded once and all new requests are get from the cached file
-- array_qsort2 rewrote, 80% of code reduction and no stack overflows
+- arrayQsort2 rewrote, 80% of code reduction and no stack overflows
 - Lot of fixes, better cache and line breaks handling 
 - Fixed bug with read/unread messages under POP3
 - Added support for folder prefix (eg. Courier folder style: INBOX.folder_name)
@@ -146,7 +146,7 @@
 - Added quota limit !! :)
 - Added custom date format (config.php)
 - Fixed bug when handling messages with no body
-- Cleanned the function "mime_encode_headers()", now works more fast
+- Cleanned the function "mimeEncodeHeaders()", now works more fast
 - Added configurable footer to sent mails
 - Added support for Virtual Domains (POP3 servers)
 - Removed $address_book_name from config.php
@@ -178,7 +178,7 @@
 - Changed the "_addressbook" folder to "_infos"
 - Added sort rules to folders list (static), now personal folders apears before system folders (inbox/sent/trash)
 - Added "sort" option when listing messages
-- Added array_qsort2() function, now headers are really sorted ;)
+- Added arrayQsort2() function, now headers are really sorted ;)
 - Added template for "headers.php" (look for $headers_window_template in config.php)
 - Descriptions of errors now are in variables
 - Changed filename "sair.php", now is "logout.php", there is one step for languagepack
