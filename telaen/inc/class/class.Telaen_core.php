@@ -34,9 +34,9 @@ class Telaen_core
     public $mail_email = 'unknown@localhost';
     public $mail_protocol = POP3;
     public $mail_prefix = "";
-    public $CRLF           = "\r\n";
-    public $dirperm        = 0700;
-    public $tstream_max = 4194304; // 4M
+    public $CRLF = "\r\n";
+    public $dirperm = 0700;
+    public $buffersz = 4194304; // 4M
 
     public $sanitize = true;
     public $use_html = false;
@@ -1390,6 +1390,7 @@ class Telaen_core
             $parser->ignore_syntax_errors = 1;
             $parser->track_lines = 0;
             $parser->use_part_file_names = 1;
+            $parser->$message_buffer_length = $this->buffersz;
             $p = [
                 'File' => $path = $this->getPathName($msg)[0],
                 'SkipBody' => 0,
@@ -2046,7 +2047,7 @@ ENDOFREDIRECT;
     public function tstream($mem = null)
     {
         if ($mem === null) {
-            $mem = $this->tstream_max;
+            $mem = $this->buffersz;
         }
         if ($mem) {
             $f = fopen("php://temp/maxmemory:{$mem}", 'wb+');
