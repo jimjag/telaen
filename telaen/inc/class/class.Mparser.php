@@ -35,6 +35,7 @@ define('MIME_ADDRESS_FIRST', 2);
 
 class Mparser
 {
+
     public $error = '';
     public $error_position = -1;
     public $mbox = 0;
@@ -98,9 +99,7 @@ class Mparser
 
     private function SetPHPError($error, &$php_error_message)
     {
-        if (IsSet($php_error_message)
-            && strlen($php_error_message)
-        ) {
+        if (IsSet($php_error_message) && strlen($php_error_message)) {
             $error .= ': ' . $php_error_message;
         }
 
@@ -142,7 +141,6 @@ class Mparser
             if (is_int($position = strpos($string, $separator[$character]))) {
                 $found = (IsSet($found) ? min($found, $position) : $position);
             }
-
         }
         if (IsSet($found)) {
             $this->next_token = substr($string, $found + 1);
@@ -161,16 +159,12 @@ class Mparser
         while (strlen($p)) {
             $parameter = trim(strtolower($this->Tokenize($p, '=')));
             $remaining = trim($this->Tokenize(''));
-            if (strlen($remaining)
-                && !strcmp($remaining[0], '"')
-                && (is_int($quote = strpos($remaining, '"', 1)))
-            ) {
+            if (strlen($remaining) && !strcmp($remaining[0], '"') && (is_int($quote = strpos($remaining, '"', 1)))) {
                 $value = substr($remaining, 1, $quote - 1);
                 $p = trim(substr($remaining, $quote + 1));
                 if (strlen($p) > 0 && !strcmp($p[0], ';')) {
                     $p = substr($p, 1);
                 }
-
             } else {
                 $value = trim($this->Tokenize($remaining, ';'));
                 $p = trim($this->Tokenize(''));
@@ -298,15 +292,15 @@ class Mparser
                 }
                 if (($break = strspn($this->buffer, $this->header_name_characters, $this->buffer_position) + $this->buffer_position) < strlen($this->buffer)) {
                     switch ($this->buffer[$break]) {
-                    case ':':
+                        case ':':
                             $next = $break + 1;
                             break;
-                    case ' ':
+                        case ' ':
                             if (substr($this->buffer, $this->buffer_position, $break - $this->buffer_position) === 'From') {
                                 $next = $break + 1;
                                 break;
                             }
-                    default:
+                        default:
                             if (!$this->SetPositionedWarning('message headers do not end with empty line', $this->buffer_position)) {
                                 return false;
                             }
@@ -401,9 +395,7 @@ class Mparser
                     if ($this->FindLineBreak($this->buffer_position, $break, $line_break)) {
                         $next = $line_break + strlen($break);
                         $following = $next + strlen($break);
-                        if ($following >= strlen($this->buffer)
-                            || !is_int($line = strpos($this->buffer, $break, $following))
-                        ) {
+                        if ($following >= strlen($this->buffer) || !is_int($line = strpos($this->buffer, $break, $following))) {
                             if (!$end) {
                                 $need_more_data = 1;
                                 break;
@@ -470,9 +462,7 @@ class Mparser
                         $this->buffer_position = strlen($this->buffer);
                         $need_more_data = !$end;
                         if (!$end_line) {
-                            if (is_int($line_break = strrpos($data, "\n"))
-                                || is_int($line_break = strrpos($data, "\r"))
-                            ) {
+                            if (is_int($line_break = strrpos($data, "\n")) || is_int($line_break = strrpos($data, "\r"))) {
                                 $line_break++;
                                 $this->buffer_position -= strlen($data) - $line_break;
                                 $data = substr($data, 0, $line_break);
@@ -493,7 +483,6 @@ class Mparser
                         } else {
                             $need_more_data = 1;
                         }
-
                     }
                 }
                 break;
@@ -532,10 +521,7 @@ class Mparser
             $parameter = trim(strtolower(strtok($values, '=')));
             $value = trim(strtok(';'));
             $l = strlen($value);
-            if ($l > 1
-                && !strcmp($value[0], '"')
-                && !strcmp($value[$l - 1], '"')
-            ) {
+            if ($l > 1 && !strcmp($value[0], '"') && !strcmp($value[$l - 1], '"')) {
                 $value = substr($value, 1, $l - 2);
             }
 
@@ -582,7 +568,7 @@ class Mparser
             case 'HeaderValue':
                 if ($this->decode_bodies) {
                     switch ($this->current_header) {
-                    case 'content-type:':
+                        case 'content-type:':
                             $boundary = $this->ParseParameters($part['Value'], $type, $parameters, 'boundary');
                             $this->headers['Type'] = $type;
                             if (!strcmp(strtok($type, '/'), 'multipart')) {
@@ -592,51 +578,44 @@ class Mparser
                                 } else {
                                     return ($this->SetPositionedError('multipart content-type header does not specify the boundary parameter', $part['Position']));
                                 }
-
                             }
                             break;
-                    case 'content-transfer-encoding:':
+                        case 'content-transfer-encoding:':
                             switch ($this->headers['Encoding'] = strtolower(trim($part['Value']))) {
-                        case 'quoted-printable':
+                                case 'quoted-printable':
                                     $this->headers['QuotedPrintable'] = 1;
                                     break;
-                        case '7 bit':
-                        case '8 bit':
+                                case '7 bit':
+                                case '8 bit':
                                     if (!$this->SetPositionedWarning('"' . $this->headers['Encoding'] . '" is an incorrect content transfer encoding type', $part['Position'])) {
                                         return false;
                                     }
 
-                        case '7bit':
-                        case '8bit':
-                        case 'binary':
+                                case '7bit':
+                                case '8bit':
+                                case 'binary':
                                     break;
-                        case 'base64':
+                                case 'base64':
                                     $this->headers['Base64'] = 1;
                                     break;
-                        default:
+                                default:
                                     if (!$this->SetPositionedWarning('decoding ' . $this->headers['Encoding'] . ' encoded bodies is not yet supported', $part['Position'])) {
                                         return false;
                                     }
-
                             }
                             break;
                     }
                 }
                 break;
             case 'BodyStart':
-                if ($this->decode_bodies
-                    && IsSet($this->headers['Multipart'])
-                ) {
+                if ($this->decode_bodies && IsSet($this->headers['Multipart'])) {
                     $this->body_parser_state = MIME_PARSER_BODY_START;
                     $this->body_buffer = '';
                     $this->body_buffer_position = 0;
                 }
                 break;
             case 'MessageEnd':
-                if ($this->decode_bodies
-                    && IsSet($this->headers['Multipart'])
-                    && $this->body_parser_state != MIME_PARSER_BODY_DONE
-                ) {
+                if ($this->decode_bodies && IsSet($this->headers['Multipart']) && $this->body_parser_state != MIME_PARSER_BODY_DONE) {
                     if ($this->body_parser_state != MIME_PARSER_BODY_DATA) {
                         return ($this->SetPositionedError('incomplete message body part', $part['Position']));
                     }
@@ -644,7 +623,6 @@ class Mparser
                     if (!$this->SetPositionedWarning('truncated message body part', $part['Position'])) {
                         return false;
                     }
-
                 }
                 break;
             case 'BodyData':
@@ -659,7 +637,7 @@ class Mparser
                     if (IsSet($this->headers['Multipart'])) {
                         $boundary = '--' . $this->headers['Boundary'];
                         switch ($this->body_parser_state) {
-                        case MIME_PARSER_BODY_START:
+                            case MIME_PARSER_BODY_START:
                                 for ($position = $this->body_buffer_position;;) {
                                     if (!$this->FindBodyLineBreak($position, $break, $line_break)) {
                                         return true;
@@ -685,9 +663,8 @@ class Mparser
                                     } else {
                                         $position = $next;
                                     }
-
                                 }
-                        case MIME_PARSER_BODY_DATA:
+                            case MIME_PARSER_BODY_DATA:
                                 for ($position = $this->body_buffer_position;;) {
                                     if (!$this->FindBodyLineBreak($position, $break, $line_break)) {
                                         if ($position > 0) {
@@ -698,7 +675,6 @@ class Mparser
                                             if (!$this->QueueBodyParts()) {
                                                 return false;
                                             }
-
                                         }
                                         $this->body_buffer = substr($this->body_buffer, $position);
                                         $this->body_buffer_position = 0;
@@ -760,9 +736,9 @@ class Mparser
                                     $position = $next;
                                 }
                                 break;
-                        case MIME_PARSER_BODY_DONE:
+                            case MIME_PARSER_BODY_DONE:
                                 return true;
-                        default:
+                            default:
                                 return ($this->SetPositionedError($this->state . ' is not a valid body parser state', $this->body_buffer_position));
                         }
                     } elseif (IsSet($this->headers['QuotedPrintable'])) {
@@ -774,11 +750,11 @@ class Mparser
                             }
                             $next = $equal + 1;
                             switch ($end - $equal) {
-                            case 1:
+                                case 1:
                                     $decoded .= substr($this->body_buffer, $position, $equal - $position);
                                     $position = $equal;
                                     break 2;
-                            case 2:
+                                case 2:
                                     $decoded .= substr($this->body_buffer, $position, $equal - $position);
                                     if (!strcmp($this->body_buffer[$next], "\n")) {
                                         $position = $end;
@@ -788,10 +764,7 @@ class Mparser
 
                                     break 2;
                             }
-                            if (!strcmp(substr($this->body_buffer, $next, 2), $break = "\r\n")
-                                || !strcmp($this->body_buffer[$next], $break = "\n")
-                                || !strcmp($this->body_buffer[$next], $break = "\r")
-                            ) {
+                            if (!strcmp(substr($this->body_buffer, $next, 2), $break = "\r\n") || !strcmp($this->body_buffer[$next], $break = "\n") || !strcmp($this->body_buffer[$next], $break = "\r")) {
                                 $decoded .= substr($this->body_buffer, $position, $equal - $position);
                                 $position = $next + strlen($break);
                                 continue;
@@ -879,35 +852,35 @@ class Mparser
                 case MIME_MESSAGE_START:
                     switch ($type) {
                         case 'MessageStart':
-                                $decoded = array(
-                                    'Headers' => array(),
-                                    'Parts' => array(),
-                                    'Position' => $this->message_position,
-                                );
-                                $end_of_message = 0;
-                                $state = MIME_MESSAGE_GET_HEADER_NAME;
-                                continue 3;
+                            $decoded = array(
+                                'Headers' => array(),
+                                'Parts' => array(),
+                                'Position' => $this->message_position,
+                            );
+                            $end_of_message = 0;
+                            $state = MIME_MESSAGE_GET_HEADER_NAME;
+                            continue 3;
                         case 'MessageEnd':
-                                return ($this->SetPositionedWarning('incorrectly ended body part', $part['Position']));
+                            return ($this->SetPositionedWarning('incorrectly ended body part', $part['Position']));
                     }
                     break;
 
                 case MIME_MESSAGE_GET_HEADER_NAME:
                     switch ($type) {
                         case 'HeaderName':
-                                $header = strtolower($part['Name']);
-                                $state = MIME_MESSAGE_GET_HEADER_VALUE;
-                                continue 3;
+                            $header = strtolower($part['Name']);
+                            $state = MIME_MESSAGE_GET_HEADER_VALUE;
+                            continue 3;
                         case 'BodyStart':
-                                $state = MIME_MESSAGE_GET_BODY;
-                                $part_number = 0;
-                                continue 3;
+                            $state = MIME_MESSAGE_GET_BODY;
+                            $part_number = 0;
+                            continue 3;
                     }
                     break;
 
                 case MIME_MESSAGE_GET_HEADER_VALUE:
                     switch ($type) {
-                    case 'HeaderValue':
+                        case 'HeaderValue':
                             $value = trim($part['Value']);
                             if (!IsSet($decoded['Headers'][$header])) {
                                 $h = 0;
@@ -919,11 +892,7 @@ class Mparser
                                 $h = count($decoded['Headers'][$header]);
                                 $decoded['Headers'][$header][] = $value;
                             }
-                            if (IsSet($part['Decoded'])
-                                && (count($part['Decoded']) > 1
-                                    || strcmp($part['Decoded'][0]['Encoding'], 'ASCII')
-                                    || strcmp($value, trim($part['Decoded'][0]['Value'])))
-                            ) {
+                            if (IsSet($part['Decoded']) && (count($part['Decoded']) > 1 || strcmp($part['Decoded'][0]['Encoding'], 'ASCII') || strcmp($value, trim($part['Decoded'][0]['Value'])))) {
                                 $p = $part['Decoded'];
                                 $p[0]['Value'] = ltrim($p[0]['Value']);
                                 $last = count($p) - 1;
@@ -931,22 +900,20 @@ class Mparser
                                 $decoded['DecodedHeaders'][$header][$h] = $p;
                             }
                             switch ($header) {
-                        case 'content-disposition:':
+                                case 'content-disposition:':
                                     $filename = 'filename';
                                     break;
-                        case 'content-type:':
+                                case 'content-type:':
                                     if (!IsSet($decoded['FileName'])) {
                                         $filename = 'name';
                                         break;
                                     }
-                        default:
+                                default:
                                     $filename = '';
                                     break;
                             }
                             if (strlen($filename)) {
-                                if (IsSet($decoded['DecodedHeaders'][$header][$h])
-                                    && count($decoded['DecodedHeaders'][$header][$h]) == 1
-                                ) {
+                                if (IsSet($decoded['DecodedHeaders'][$header][$h]) && count($decoded['DecodedHeaders'][$header][$h]) == 1) {
                                     $value = $decoded['DecodedHeaders'][$header][$h][0]['Value'];
                                     $encoding = $decoded['DecodedHeaders'][$header][$h][0]['Encoding'];
                                 } else {
@@ -956,28 +923,21 @@ class Mparser
                                 $this->ParseStructuredHeader($value, $type, $header_parameters, $character_sets, $languages);
                                 if (IsSet($header_parameters[$filename])) {
                                     $decoded['FileName'] = $header_parameters[$filename];
-                                    if (IsSet($character_sets[$filename])
-                                        && strlen($character_sets[$filename])
-                                    ) {
+                                    if (IsSet($character_sets[$filename]) && strlen($character_sets[$filename])) {
                                         $decoded['FileNameCharacterSet'] = $character_sets[$filename];
                                     }
 
-                                    if (IsSet($character_sets['language'])
-                                        && strlen($character_sets['language'])
-                                    ) {
+                                    if (IsSet($character_sets['language']) && strlen($character_sets['language'])) {
                                         $decoded['FileNameCharacterSet'] = $character_sets[$filename];
                                     }
 
-                                    if (!IsSet($decoded['FileNameCharacterSet'])
-                                        && strlen($encoding)
-                                    ) {
+                                    if (!IsSet($decoded['FileNameCharacterSet']) && strlen($encoding)) {
                                         $decoded['FileNameCharacterSet'] = $encoding;
                                     }
 
                                     if (!strcmp($header, 'content-disposition:')) {
                                         $decoded['FileDisposition'] = $type;
                                     }
-
                                 }
                             }
                             $state = MIME_MESSAGE_GET_HEADER_NAME;
@@ -987,15 +947,13 @@ class Mparser
 
                 case MIME_MESSAGE_GET_BODY:
                     switch ($type) {
-                    case 'BodyData':
+                        case 'BodyData':
                             if (IsSet($parameters['SaveBody'])) {
                                 if (!IsSet($decoded['BodyFile'])) {
                                     $directory_separator = (defined('DIRECTORY_SEPARATOR') ? DIRECTORY_SEPARATOR : '/');
-                                    $path = (strlen($parameters['SaveBody']) ? ($parameters['SaveBody'] . (strcmp($parameters['SaveBody'][strlen($parameters['SaveBody']) - 1], $directory_separator) ? $directory_separator : '')):'');
+                                    $path = (strlen($parameters['SaveBody']) ? ($parameters['SaveBody'] . (strcmp($parameters['SaveBody'][strlen($parameters['SaveBody']) - 1], $directory_separator) ? $directory_separator : '')) : '');
                                     $filename = strval($this->body_part_number);
-                                    if ($this->use_part_file_names
-                                        && !$this->GetPartFileName($decoded, $filename)
-                                    ) {
+                                    if ($this->use_part_file_names && !$this->GetPartFileName($decoded, $filename)) {
                                         return false;
                                     }
 
@@ -1023,17 +981,13 @@ class Mparser
                                     $decoded['BodyLength'] = 0;
                                     $this->body_part_number++;
                                 }
-                                if (strlen($part['Data'])
-                                    && !fwrite($this->body_file, $part['Data'])
-                                ) {
+                                if (strlen($part['Data']) && !fwrite($this->body_file, $part['Data'])) {
                                     $this->SetPHPError('could not save the message body part to file ' . $decoded['BodyFile'], $php_errormsg);
                                     fclose($this->body_file);
                                     @unlink($decoded['BodyFile']);
                                     return false;
                                 }
-                            } elseif (IsSet($parameters['SkipBody'])
-                                && $parameters['SkipBody']
-                            ) {
+                            } elseif (IsSet($parameters['SkipBody']) && $parameters['SkipBody']) {
                                 if (!IsSet($decoded['BodyPart'])) {
                                     $decoded['BodyPart'] = $this->body_part_number;
                                     $decoded['BodyLength'] = 0;
@@ -1051,7 +1005,7 @@ class Mparser
                             }
                             $decoded['BodyLength'] += strlen($part['Data']);
                             continue 3;
-                    case 'StartPart':
+                        case 'StartPart':
                             if (!$this->DecodeStream($parameters, $position + $part['Position'], $end_of_part, $decoded_part)) {
                                 return false;
                             }
@@ -1060,7 +1014,7 @@ class Mparser
                             $part_number++;
                             $state = MIME_MESSAGE_GET_BODY_PART;
                             continue 3;
-                    case 'MessageEnd':
+                        case 'MessageEnd':
                             if (IsSet($decoded['BodyFile'])) {
                                 fclose($this->body_file);
                             }
@@ -1071,7 +1025,7 @@ class Mparser
 
                 case MIME_MESSAGE_GET_BODY_PART:
                     switch ($type) {
-                    case 'EndPart':
+                        case 'EndPart':
                             $state = MIME_MESSAGE_GET_BODY;
                             continue 3;
                     }
@@ -1104,9 +1058,7 @@ class Mparser
         }
 
         $length = strlen($data);
-        if ($this->track_lines
-            && $length
-        ) {
+        if ($this->track_lines && $length) {
             $line = $this->last_line;
             $position = 0;
             if ($this->last_carriage_return) {
@@ -1149,17 +1101,11 @@ class Mparser
                 return false;
             }
 
-            if (IsSet($part)
-                && !$this->DecodePart($part)
-            ) {
+            if (IsSet($part) && !$this->DecodePart($part)) {
                 return false;
             }
-
-        } while (!$need_more_data
-            && $this->state != MIME_PARSER_END);
-        if ($end
-            && $this->state != MIME_PARSER_END
-        ) {
+        } while (!$need_more_data && $this->state != MIME_PARSER_END);
+        if ($end && $this->state != MIME_PARSER_END) {
             return ($this->SetError('reached a premature end of data'));
         }
 
@@ -1181,7 +1127,7 @@ class Mparser
             return ($this->SetPHPError('Could not open the file ' . $file, $php_errormsg));
         }
 
-        for ($end = 0;!$end;) {
+        for ($end = 0; !$end;) {
             if (!($data = @fread($stream, $this->message_buffer_length))) {
                 $this->SetPHPError('Could not read the file ' . $file, $php_errormsg);
                 fclose($stream);
@@ -1218,7 +1164,6 @@ class Mparser
             if (!($this->file = @fopen($parameters['File'], 'r'))) {
                 return ($this->SetPHPError('could not open the message file to decode ' . $parameters['File'], $php_errormsg));
             }
-
         } elseif (IsSet($parameters['Data'])) {
             $this->position = 0;
         } else {
@@ -1227,7 +1172,7 @@ class Mparser
 
         $this->warnings = $decoded = array();
         $this->ResetParserState();
-        for ($message = 0;($success = $this->DecodeStream($parameters, 0, $end_of_message, $decoded_message)) && !$end_of_message; $message++) {
+        for ($message = 0; ($success = $this->DecodeStream($parameters, 0, $end_of_message, $decoded_message)) && !$end_of_message; $message++) {
             $decoded[$message] = $decoded_message;
         }
         if (IsSet($parameters['File'])) {
@@ -1247,7 +1192,7 @@ class Mparser
                 return ($this->SetPHPError('could not open the message body file ' . $path, $php_errormsg));
             }
 
-            for ($body = '', $end = 0;!$end;) {
+            for ($body = '', $end = 0; !$end;) {
                 if (!($data = @fread($file, $this->message_buffer_length))) {
                     $this->SetPHPError('Could not open the message body file ' . $path, $php_errormsg);
                     //fclose($stream);
@@ -1297,10 +1242,9 @@ class Mparser
                     if (!$this->Analyze($message['Parts'][$p], $parts[$p])) {
                         return false;
                     }
-
                 }
                 switch ($sub_type) {
-                case 'alternative':
+                    case 'alternative':
                         $p = $lp;
                         $results = $parts[--$p];
                         for (--$p; $p >= 0; --$p) {
@@ -1309,7 +1253,7 @@ class Mparser
 
                         break;
 
-                case 'related':
+                    case 'related':
                         $results = $parts[0];
                         for ($p = 1; $p < $lp; ++$p) {
                             $results['Related'][] = $parts[$p];
@@ -1317,7 +1261,7 @@ class Mparser
 
                         break;
 
-                case 'mixed':
+                    case 'mixed':
                         $results = $parts[0];
                         for ($p = 1; $p < $lp; ++$p) {
                             $results['Attachments'][] = $parts[$p];
@@ -1325,10 +1269,10 @@ class Mparser
 
                         break;
 
-                case 'report':
+                    case 'report':
                         if (IsSet($parameters['report-type'])) {
                             switch ($parameters['report-type']) {
-                        case 'delivery-status':
+                                case 'delivery-status':
                                     for ($p = 1; $p < $lp; ++$p) {
                                         if (!strcmp($parts[$p]['Type'], $parameters['report-type'])) {
                                             $results = $parts[$p];
@@ -1344,7 +1288,7 @@ class Mparser
                                     }
 
                                     break;
-                        default:
+                                default:
                                     $this->SetError('the report type is ' . $parameters['report-type'] . ' is not yet supported');
                                     $results['Response'] = $this->error;
                                     $this->error = '';
@@ -1357,7 +1301,7 @@ class Mparser
 
                         break;
 
-                case 'signed':
+                    case 'signed':
                         if ($lp != 2) {
                             return ($this->SetError('this ' . $content_type . ' message does not have just 2 parts'));
                         }
@@ -1370,7 +1314,7 @@ class Mparser
                         $results['Signature'] = $parts[1];
                         break;
 
-                case 'appledouble':
+                    case 'appledouble':
                         if ($lp != 2) {
                             return ($this->SetError('this ' . $content_type . ' message does not have just 2 parts'));
                         }
@@ -1383,7 +1327,7 @@ class Mparser
                         $results['AppleFileHeader'] = $parts[0];
                         break;
 
-                case 'form-data':
+                    case 'form-data':
                         $results['Type'] = 'form-data';
                         $results['FormData'] = array();
                         for ($p = 0; $p < $lp; ++$p) {
@@ -1407,19 +1351,19 @@ class Mparser
                 break;
             case 'text':
                 switch ($sub_type) {
-                case 'plain':
+                    case 'plain':
                         $results['Type'] = 'text';
                         $results['Description'] = 'Text message';
                         break;
-                case 'html':
+                    case 'html':
                         $results['Type'] = 'html';
                         $results['Description'] = 'HTML message';
                         break;
-                case 'rtf':
+                    case 'rtf':
                         $results['Type'] = 'rtf';
                         $results['Description'] = 'Document in Rich Text Format';
                         break;
-                default:
+                    default:
                         $results['Type'] = $type;
                         $results['SubType'] = $sub_type;
                         $results['Description'] = 'Text file in the ' . strtoupper($sub_type) . ' format';
@@ -1443,73 +1387,70 @@ class Mparser
                 break;
             case 'application':
                 switch ($sub_type) {
-                case 'octet-stream':
-                case 'x-msdownload':
+                    case 'octet-stream':
+                    case 'x-msdownload':
                         $results['Type'] = 'binary';
                         $results['Description'] = 'Binary file';
                         break;
-                case 'pdf':
+                    case 'pdf':
                         $results['Type'] = $sub_type;
                         $results['Description'] = 'Document in PDF format';
                         break;
-                case 'postscript':
+                    case 'postscript':
                         $results['Type'] = $sub_type;
                         $results['Description'] = 'Document in Postscript format';
                         break;
-                case 'msword':
+                    case 'msword':
                         $results['Type'] = 'ms-word';
                         $results['Description'] = 'Word processing document in Microsoft Word format';
                         break;
-                case 'vnd.ms-powerpoint':
+                    case 'vnd.ms-powerpoint':
                         $results['Type'] = 'ms-powerpoint';
                         $results['Description'] = 'Presentation in Microsoft PowerPoint format';
                         break;
-                case 'vnd.ms-excel':
+                    case 'vnd.ms-excel':
                         $results['Type'] = 'ms-excel';
                         $results['Description'] = 'Spreadsheet in Microsoft Excel format';
                         break;
-                case 'x-compressed':
-                        if (!IsSet($parameters['name'])
-                            || !is_int($dot = strpos($parameters['name'], '.'))
-                            || strcmp($extension = strtolower(substr($parameters['name'], $dot + 1)), 'zip')
-                        ) {
+                    case 'x-compressed':
+                        if (!IsSet($parameters['name']) || !is_int($dot = strpos($parameters['name'], '.')) || strcmp($extension = strtolower(substr($parameters['name'], $dot + 1)), 'zip')) {
                             break;
                         }
 
-                case 'zip':
-                case 'x-zip':
-                case 'x-zip-compressed':
+                    case 'zip':
+                    case 'x-zip':
+                    case 'x-zip-compressed':
                         $results['Type'] = 'zip';
                         $results['Description'] = 'ZIP archive with compressed files';
                         break;
-                case 'ms-tnef':
+                    case 'ms-tnef':
                         $results['Type'] = $sub_type;
                         $results['Description'] = 'Microsoft Exchange data usually sent by Microsoft Outlook';
                         break;
-                case 'pgp-signature':
+                    case 'pgp-signature':
                         $results['Type'] = 'signature';
                         $results['SubType'] = $sub_type;
                         $results['Description'] = 'Message signature for PGP';
                         break;
-                case 'x-pkcs7-signature':
-                case 'pkcs7-signature':
+                    case 'x-pkcs7-signature':
+                    case 'pkcs7-signature':
                         $results['Type'] = 'signature';
                         $results['SubType'] = $sub_type;
                         $results['Description'] = 'PKCS message signature';
                         break;
-                case 'vnd.oasis.opendocument.text':
+                    case 'vnd.oasis.opendocument.text':
                         $results['Type'] = 'odf-writer';
                         $results['Description'] = 'Word processing document in ODF text format used by OpenOffice Writer';
                         break;
-                case 'applefile':
+                    case 'applefile':
                         $results['Type'] = 'applefile';
                         $results['Description'] = 'Apple file resource header';
                         break;
-                case 'rtf':
+                    case 'rtf':
                         $results['Type'] = $sub_type;
                         $results['Description'] = 'Document in Rich Text Format';
                         break;
-                case 'x-httpd-php':
+                    case 'x-httpd-php':
                         $results['Type'] = 'php';
                         $results['Description'] = 'PHP script';
                         break;
@@ -1518,7 +1459,7 @@ class Mparser
             case 'message':
                 $tolerate_unrecognized = 0;
                 switch ($sub_type) {
-                case 'delivery-status':
+                    case 'delivery-status':
                         $results['Type'] = $sub_type;
                         $results['Description'] = 'Notification of the status of delivery of a message';
                         if (!$this->ReadMessageBody($message, $body, 'Body')) {
@@ -1554,7 +1495,7 @@ class Mparser
                         }
                         $copy_body = 0;
                         break;
-                case 'rfc822':
+                    case 'rfc822':
                         $results['Type'] = 'message';
                         $results['Description'] = 'E-mail message';
                         break;
@@ -1579,27 +1520,19 @@ class Mparser
         }
 
         if (IsSet($message['Headers']['subject:'])) {
-            if (IsSet($message['DecodedHeaders']['subject:'])
-                && count($message['DecodedHeaders']['subject:']) == 1
-                && count($message['DecodedHeaders']['subject:'][0]) == 1
-            ) {
+            if (IsSet($message['DecodedHeaders']['subject:']) && count($message['DecodedHeaders']['subject:']) == 1 && count($message['DecodedHeaders']['subject:'][0]) == 1) {
                 $results['Subject'] = $message['DecodedHeaders']['subject:'][0][0]['Value'];
                 $results['SubjectEncoding'] = strtolower($message['DecodedHeaders']['subject:'][0][0]['Encoding']);
             } else {
                 $results['Subject'] = $message['Headers']['subject:'];
             }
-
         }
         if (IsSet($message['Headers']['date:'])) {
-            if (IsSet($message['DecodedHeaders']['date:'])
-                && count($message['DecodedHeaders']['date:']) == 1
-                && count($message['DecodedHeaders']['date:'][0]) == 1
-            ) {
+            if (IsSet($message['DecodedHeaders']['date:']) && count($message['DecodedHeaders']['date:']) == 1 && count($message['DecodedHeaders']['date:'][0]) == 1) {
                 $results['Date'] = $message['DecodedHeaders']['date:'][0][0]['Value'];
             } else {
                 $results['Date'] = $message['Headers']['date:'];
             }
-
         }
         if ($copy_body) {
             if (IsSet($message['Body'])) {
@@ -1621,14 +1554,12 @@ class Mparser
             if (IsSet($message['Headers']['content-id:'])) {
                 $content_id = trim($message['Headers']['content-id:']);
                 $l = strlen($content_id);
-                if (!strcmp($content_id[0], '<')
-                    && !strcmp($content_id[$l - 1], '>')
-                ) {
+                if (!strcmp($content_id[0], '<') && !strcmp($content_id[$l - 1], '>')) {
                     $results['ContentID'] = substr($content_id, 1, $l - 2);
                 }
-
             }
         }
         return true;
     }
+
 }
