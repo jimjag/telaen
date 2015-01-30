@@ -73,8 +73,8 @@ class LocalMbox extends SQLite3
     public $allfolders = []; // All folders/directors
     public $udatafolder = '_infos';
     public $m_delta = []; // Hash: key = message; value = array() of field changes
-    private $_system_folders = ['inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos'];
-    private $_invisible = ['_attachments', '_infos'];
+    private $_system_folders = ['inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos', '_tmp'];
+    private $_invisible = ['_attachments', '_infos', '_tmp'];
     private $_indb = []; /* Hash: key = uidl; value = is it in the DB? */
     private $_folder_need_sync = [];
     private $_ok = true;

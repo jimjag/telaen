@@ -10,6 +10,7 @@ Telaen is a GPL'ed software developed by
 
 require_once './inc/class/class.PHPMailer_extra.php';
 require_once './inc/class/class.LocalMbox.php';
+require_once './inc/class/class.Mparser.php';
 
 define('IMAP', 1);
 define('POP3', 2);
@@ -1350,7 +1351,7 @@ class Telaen_core
      * @param  array $msg Email message
      * @return void
      */
-    public function parseBody($msg)
+    public function parseBodyOld($msg)
     {
         if (!$msg['bparsed']) {
             $this->_content = [];
@@ -1359,6 +1360,50 @@ class Telaen_core
                 $msgstub[$k] = $msg[$k];
             }
             $this->_processMessage($msgstub, $msg['header'], $msg['body']);
+            $path = $this->getPathName($msg)[0].'.msg';
+            if ($this->sanitize) {
+                /*
+                 * Uggg... we need a big ol' string. Hopefully, what
+                 * remains is small enuff that we're ok
+                 */
+                $b = $this->blob($this->_msgbody, false);
+                $this->_msgbody = $this->sanitizeHTML($b);
+            }
+            $this->saveFile($path, $this->_msgbody);
+            $msg['bparsed'] = true;
+            $this->tdb->doMessage($msg);
+        }
+    }
+
+    /**
+     * Parse the body content of the message
+     * @param  array $msg Email message
+     * @return void
+     */
+    public function parseBody($msg)
+    {
+        if (!$msg['bparsed']) {
+            $parser = new Mparser();
+            $parser->decode_bodies = 1;
+            $parser->decode_headers = 0;
+            $parser->extract_addresses = 0;
+            $parser->ignore_syntax_errors = 1;
+            $parser->track_lines = 0;
+            $parser->use_part_file_names = 1;
+            $p = [
+                'File' => $path = $this->getPathName($msg)[0],
+                'SkipBody' => 0,
+                'SaveBody' => $this->userfolder.'_tmp',
+            ];
+            $decoded = [];
+            if (!$parser->Decode($p, $decoded)) {
+                $this->triggerError("Bad decoding of message[{$msg['folder']}:{$msg['uidl']}",
+                    __FUNCTION__, __LINE__);
+                return [];
+            }
+            $results = [];
+            $parser->Analyze($decoded[0], $results);
+            /* TODO MORE */
             $path = $this->getPathName($msg)[0].'.msg';
             if ($this->sanitize) {
                 /*
