@@ -43,7 +43,7 @@ class Telaen_core
     public $charset = 'UTF-8';
     public $userfolder = './';
     public $userdatafolder = './_infos';
-    public $temp_folder = './';
+    public $temp_folder = './_tmp';
     public $idle_timeout = 10;
     public $displayimages = false;
     public $save_temp_attachs = true;

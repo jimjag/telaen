@@ -1519,27 +1519,12 @@ class Mparser
             $results['Encoding'] = strtolower($parameters['charset']);
         }
 
-        if (IsSet($message['Headers']['subject:'])) {
-            if (IsSet($message['DecodedHeaders']['subject:']) && count($message['DecodedHeaders']['subject:']) == 1 && count($message['DecodedHeaders']['subject:'][0]) == 1) {
-                $results['Subject'] = $message['DecodedHeaders']['subject:'][0][0]['Value'];
-                $results['SubjectEncoding'] = strtolower($message['DecodedHeaders']['subject:'][0][0]['Encoding']);
-            } else {
-                $results['Subject'] = $message['Headers']['subject:'];
-            }
-        }
-        if (IsSet($message['Headers']['date:'])) {
-            if (IsSet($message['DecodedHeaders']['date:']) && count($message['DecodedHeaders']['date:']) == 1 && count($message['DecodedHeaders']['date:'][0]) == 1) {
-                $results['Date'] = $message['DecodedHeaders']['date:'][0][0]['Value'];
-            } else {
-                $results['Date'] = $message['Headers']['date:'];
-            }
-        }
         if ($copy_body) {
-            if (IsSet($message['Body'])) {
-                $results['Data'] = $message['Body'];
-            } elseif (IsSet($message['BodyFile'])) {
+            if (IsSet($message['BodyFile'])) {
                 $results['DataFile'] = $message['BodyFile'];
-            } elseif (IsSet($message['BodyLength'])) {
+            }
+
+            if (IsSet($message['BodyLength'])) {
                 $results['DataLength'] = $message['BodyLength'];
             }
 
