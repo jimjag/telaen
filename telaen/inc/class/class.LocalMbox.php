@@ -35,13 +35,12 @@ class LocalMbox extends SQLite3
         'flat' => 'INT DEFAULT 0',
         'cid' => 'TEXT DEFAULT ""',
         'folder' => 'TEXT NOT NULL',
-        'content-type' => 'TEXT NOT NULL',
+        'disposition' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL',
         'localname' => 'TEXT DEFAULT ""',
         'name' => 'TEXT DEFAULT ""',
         'type' => 'TEXT DEFAULT ""',
-        'part' => 'TEXT DEFAULT ""',
-        'boundary' => 'TEXT DEFAULT ""',
+        'subtype' => 'TEXT DEFAULT ""',
     );
     private $mschema = array(
         'date' => 'INT DEFAULT 0',

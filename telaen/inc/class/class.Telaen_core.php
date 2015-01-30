@@ -1411,10 +1411,10 @@ class Telaen_core
              * as a string.
              * TODO: Chunk this somehow
              */
-            $m = file_get_contents($a['DataFile']);
+            $data = file_get_contents($a['DataFile']);
             unlink($a['DataFile']);
             if (isset($a['Encoding']) && strcasecmp($a['Encoding'], $this->charset)) {
-                $m = self::convertCharset($m, $a['Encoding'], $this->charset);
+                $m = self::convertCharset($data, $a['Encoding'], $this->charset);
             }
             /*
              * Now scan thru CIDs ('Related')
@@ -1429,6 +1429,7 @@ class Telaen_core
                 $cids[$i]['cid'] = $b['ContentID'];
                 $cids[$i]['localname'] = self::uniqID().'_'.$safefilename;
                 $cids[$i]['type'] = $b['Type'];
+                $cids[$i]['subtype'] = $b['SubType'];
                 $cids[$i]['disposition'] = $b['FileDisposition'];
                 $cids[$i]['flat'] = $msg['flat'];
                 $cids[$i]['uidl'] = $msg['uidl'];
@@ -1451,6 +1452,7 @@ class Telaen_core
                 $attachments[$i]['size'] = intval($b['DataLength']);
                 $attachments[$i]['localname'] = self::uniqID().'_'.$safefilename;
                 $attachments[$i]['type'] = $b['Type'];
+                $attachments[$i]['subtype'] = $b['SubType'];
                 $attachments[$i]['disposition'] = $b['FileDisposition'];
                 $attachments[$i]['flat'] = $msg['flat'];
                 $attachments[$i]['uidl'] = $msg['uidl'];
@@ -1463,16 +1465,22 @@ class Telaen_core
             }
             if ($a['Type'] == 'html') {
                 if (!$this->config['allow_html']) {
-                    $m = $this->_html2Text($m);
+                    $data = $this->_html2Text($data);
                 } else {
                     if ($this->sanitize) {
-                        $m = $this->sanitizeHTML($m);
+                        $data = $this->sanitizeHTML($data);
+                    }
+                    foreach ($cids as $cid) {
+                        $rep = '${1}=${2}download.php?folder='.urlencode($cid['folder']).'&uidl='.$cid['uidl'].'&name='.urlencode($cid['name'].'${3}');
+                        $pat = '(...)\s*=\s*(.)cid:'.$cid['cid'].'(.)';
+                        $data = preg_replace('|'.preg_quote($pat, '|').'|i', $rep, $data);
                     }
                 }
             }
-            $this->saveFile($path, $m);
+            $this->saveFile($path, $data);
             $msg['bparsed'] = true;
-            return $this->tdb->doMessage($msg);
+            $this->tdb->doMessage($msg);
+            return true;
         }
     }
 
