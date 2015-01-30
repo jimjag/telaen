@@ -33,7 +33,7 @@ class LocalMbox extends SQLite3
     private $aschema = array(
         'size' => 'INT DEFAULT 0',
         'flat' => 'INT DEFAULT 0',
-        'temp' => 'INT DEFAULT 0',
+        'cid' => 'TEXT DEFAULT ""',
         'folder' => 'TEXT NOT NULL',
         'content-type' => 'TEXT NOT NULL',
         'uidl' => 'TEXT NOT NULL',

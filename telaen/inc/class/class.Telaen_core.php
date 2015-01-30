@@ -1378,7 +1378,7 @@ class Telaen_core
     /**
      * Parse the body content of the message
      * @param  array $msg Email message
-     * @return void
+     * @return boolean
      */
     public function parseBody($msg)
     {
@@ -1400,23 +1400,79 @@ class Telaen_core
             if (!$parser->Decode($p, $decoded)) {
                 $this->triggerError("Bad decoding of message[{$msg['folder']}:{$msg['uidl']}",
                     __FUNCTION__, __LINE__);
-                return [];
+                return false;
             }
-            $results = [];
-            $parser->Analyze($decoded[0], $results);
-            /* TODO MORE */
+            $a = [];
+            $parser->Analyze($decoded[0], $a);
             $path = $this->getPathName($msg)[0].'.msg';
-            if ($this->sanitize) {
-                /*
-                 * Uggg... we need a big ol' string. Hopefully, what
-                 * remains is small enuff that we're ok
-                 */
-                $b = $this->blob($this->_msgbody, false);
-                $this->_msgbody = $this->sanitizeHTML($b);
+            /*
+             * Uggg. when we are treating w/ the actual email
+             * message itself (txt or html) we need to do so
+             * as a string.
+             * TODO: Chunk this somehow
+             */
+            $m = file_get_contents($a['DataFile']);
+            unlink($a['DataFile']);
+            if (isset($a['Encoding']) && strcasecmp($a['Encoding'], $this->charset)) {
+                $m = self::convertCharset($m, $a['Encoding'], $this->charset);
             }
-            $this->saveFile($path, $this->_msgbody);
+            /*
+             * Now scan thru CIDs ('Related')
+             */
+            $cids = [];
+            $i = 0;
+            foreach ($a['Related'] as $b) {
+                $filename = trim(basename($b['FileName']));
+                $safefilename = self::fsSafeFile($filename);
+                $cids[$i]['name'] = $filename;
+                $cids[$i]['size'] = intval($b['DataLength']);
+                $cids[$i]['cid'] = $b['ContentID'];
+                $cids[$i]['localname'] = self::uniqID().'_'.$safefilename;
+                $cids[$i]['type'] = $b['Type'];
+                $cids[$i]['disposition'] = $b['FileDisposition'];
+                $cids[$i]['flat'] = $msg['flat'];
+                $cids[$i]['uidl'] = $msg['uidl'];
+                $cids[$i]['folder'] = $msg['folder'];
+                list($path, $dir) = $this->getPathName($cids, '_attachments');
+                $this->_mkdir($dir);
+                rename($b['DataFile'], $path);
+                $this->tdb->addAttachment($cids[$i]);
+                $i++;
+            }
+            /*
+             * Now scan thru Attachments ('Related')
+             */
+            $attachments = [];
+            $i = 0;
+            foreach ($a['Attachments'] as $b) {
+                $filename = trim(basename($b['FileName']));
+                $safefilename = self::fsSafeFile($filename);
+                $attachments[$i]['name'] = $filename;
+                $attachments[$i]['size'] = intval($b['DataLength']);
+                $attachments[$i]['localname'] = self::uniqID().'_'.$safefilename;
+                $attachments[$i]['type'] = $b['Type'];
+                $attachments[$i]['disposition'] = $b['FileDisposition'];
+                $attachments[$i]['flat'] = $msg['flat'];
+                $attachments[$i]['uidl'] = $msg['uidl'];
+                $attachments[$i]['folder'] = $msg['folder'];
+                list($path, $dir) = $this->getPathName($attachments, '_attachments');
+                $this->_mkdir($dir);
+                rename($b['DataFile'], $path);
+                $this->tdb->addAttachment($attachments[$i]);
+                $i++;
+            }
+            if ($a['Type'] == 'html') {
+                if (!$this->config['allow_html']) {
+                    $m = $this->_html2Text($m);
+                } else {
+                    if ($this->sanitize) {
+                        $m = $this->sanitizeHTML($m);
+                    }
+                }
+            }
+            $this->saveFile($path, $m);
             $msg['bparsed'] = true;
-            $this->tdb->doMessage($msg);
+            return $this->tdb->doMessage($msg);
         }
     }
 
