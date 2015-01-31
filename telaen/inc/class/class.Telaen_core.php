@@ -1385,12 +1385,12 @@ class Telaen_core
         if (!$msg['bparsed']) {
             $parser = new Mparser();
             $parser->decode_bodies = 1;
-            $parser->decode_headers = 0;
-            $parser->extract_addresses = 0;
+            //$parser->decode_headers = 0;
+            //$parser->extract_addresses = 0;
             $parser->ignore_syntax_errors = 1;
             $parser->track_lines = 0;
             $parser->use_part_file_names = 1;
-            $parser->$message_buffer_length = $this->buffersz;
+            $parser->message_buffer_length = $this->buffersz;
             $p = [
                 'File' => $path = $this->getPathName($msg)[0],
                 'SkipBody' => 0,

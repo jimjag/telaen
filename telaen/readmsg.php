@@ -68,7 +68,7 @@ if ($email['receipt-to']) {
     $smarty->assign('receiptRequired', true);
 }
 
-$ARFrom = $msg['headers']['from'];
+$ARFrom = $TLN->getNames($msg['headers']['from']);
 $useremail = $auth['email'];
 
 // from
@@ -80,7 +80,7 @@ $ARFrom[0]['title'] = "$name <$thismail>";
 $smarty->assign('umFromList', $ARFrom);
 
 // To
-$ARTo = $msg['headers']['to'];
+$ARTo = $TLN->getNames($msg['headers']['to']);
 
 for ($i = 0;$i<count($ARTo);$i++) {
     $name = $ARTo[$i]['name'];
@@ -105,7 +105,7 @@ if (count($ARCC) > 0) {
     $smarty->assign('umCCList', $ARCC);
 }
 
-$smarty->assign('umPageTitle', $email['subject']);
+$smarty->assign('umPageTitle', $msg['subject']);
 
 eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
@@ -125,7 +125,7 @@ function replyall() { with(document.msg) { rtype.value = 'replyall'; submit(); }
 function forward() { with(document.msg) { rtype.value = 'forward'; submit(); } }
 function goback() { location = 'messages.php?folder=".urlencode($folder)."&pag=$pag'; }
 function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
-function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&pag=$pag&ix=$ix&attachment='+attach,'','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
+function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&uidl=".$msg['uidl']."&name='+attach,'','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
 
 
@@ -137,7 +137,7 @@ function openwin(targetUrl) { window.open(targetUrl); }
 function sendReceipt(subj, msg) {
 	new Ajax.Request('ajax.php', {
 		method: 'post',
-		parameters: {action: 'sendReceipt', recipient: '".$email["receipt-to"]."', receipt_subj: subj, receipt_msg: msg}
+		parameters: {action: 'sendReceipt', recipient: '".$msg['headers']['x-receipt-to']."', receipt_subj: subj, receipt_msg: msg}
 	});
 }
 //]]>
@@ -163,64 +163,43 @@ $smarty->assign('umDeleteForm', $umDeleteForm);
 $smarty->assign('umReplyForm', $umReplyForm);
 $smarty->assign('umJS', $jssource);
 
-$smarty->assign('umSubject', $email['subject']);
-$smarty->assign('umDate', $email['date']);
+$smarty->assign('umSubject', $msg['subject']);
+$smarty->assign('umDate', $msg['date']);
 
-$anexos = $email['attachments'];
-$haveattachs = (count($anexos) > 0) ? 1 : 0;
+$anexos = $TLN->tdb->getAttachments($msg);
+$haveattachs = count($anexos);
 
-if (count($anexos) > 0) {
-    $root = &$msg['attachments'];
+if ($haveattachs) {
 
-    foreach ($arAttachment as $item) {
-        if (is_numeric($item)) {
-            $root = &$root[$item]['attachments'];
-        }
-    }
-
-    $root = $email['attachments'];
-    $mbox['headers'][$folder][$ix] = $msg;
-
-    $nIndex = count($arAttachment);
     $attachAr = array();
-
-    for ($i = 0;$i<count($anexos);$i++) {
-        $arAttachment[$nIndex] = $i;
-        $link1 = "download.php?folder=$folder&ix=$ix&attach=".join(',', $arAttachment)."";
+    for ($i = 0; $i < $haveattachs; $i++) {
+        $link1 = "download.php?folder=".urlencode($folder)."&uidl={$msg['uidl']}&name=".urlencode($anexos['name'])."";
         $link2 = "$link1&down=1";
 
-        if (!$anexos[$i]['temp']) {
-            if ($anexos[$i]['content-type'] == 'message/rfc822') {
-                $anexos[$i]['normlink'] = "<a href='javascript:openmessage('".join(",", $arAttachment)."')'>";
+        if ($anexos[$i]['disposition'] != 'inline') {
+            if ($attachAr[$i]['content-type'] == 'message/rfc822') {
+                $attachAr[$i]['normlink'] = "<a href='javascript:openmessage('".urlencode($anexos['name'])."')'>";
             } else {
-                $anexos[$i]['normlink'] = "<a href='$link1' target='_new'>";
+                $attachAr[$i]['normlink'] = "<a href='$link1' target='_new'>";
             }
 
-            $anexos[$i]['downlink'] = "<a href='$link2'>";
-            $anexos[$i]['size'] = ceil($anexos[$i]['size']/1024);
-            $anexos[$i]['type'] = $anexos[$i]['content-type'];
-            $attachAr[] = $anexos[$i];
+            $attachAr[$i]['downlink'] = "<a href='$link2'>";
+            $attachAr[$i]['size'] = $TLN->bytes2bkmg($anexos[$i]['size']);
+            $attachAr[$i]['type'] = $anexos[$i]['type'].'/'.$anexos[$i]['subtype'];
         }
     }
-    $smarty->assign('umHaveAttachments', (count($attachAr) > 0));
+    $smarty->assign('umHaveAttachments', $haveattachs);
     $smarty->assign('umAttachList', $attachAr);
 }
 
-$AuthSession->Save($auth);
-$tdb->syncMessages();
+//$AuthSession->Save($auth);
+//$tdb->syncMessages();
 
 $avalfolders = array();
-foreach (scandir($TLN->userfolder) as $entry) {
-    if (is_dir($TLN->userfolder.$entry)
-        && $entry != '..'
-        && $entry != '.'
-        && substr($entry, 0, 1) != '_'
-        && $entry != $folder
-        && ($TLN->mail_protocol == IMAP || ($entry != 'inbox' && $entry != 'spam'))) {
-        $entry = $TLN->fixPrefix($entry, 0);
-        $display = extended_name($entry);
-        $avalfolders[] = array('path' => $entry, 'display' => $display);
-    }
+foreach ($TLN->mailListBoxes() as $entry) {
+    $entry = $TLN->fixPrefix($entry, 0);
+    $display = extended_name($entry);
+    $avalfolders[] = array('path' => $entry, 'display' => $display);
 }
 $smarty->assign('umAvalFolders', $avalfolders);
 unset($TLN);
