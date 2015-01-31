@@ -909,6 +909,9 @@ class Telaen extends Telaen_core
                         $msg['mnum'] = intval($curmsg);
                         $msg['size'] = intval($size);
                         $msg['flags'] = strtoupper($flags);
+                        if (!preg_match('|'.$this->flags['seen'].'|', $msg['flags'])) {
+                            $msg['unread'] = true;
+                        }
                         $msg['folder'] = $boxname;
                         $msg['islocal'] = false;
                         $msg['uid'] = $uid;
@@ -992,6 +995,7 @@ class Telaen extends Telaen_core
                     $msg['size'] = intval($msgs[1]);
                     $msg['folder'] = $boxname;
                     $msg['islocal'] = false;
+                    $msg['unread'] = true;
                     /* If we have a UIDL, then use it, otherwise, we check later */
                     if (isset($uids[$mnum])) {
                         $msg['uidl'] = $uids[$mnum];

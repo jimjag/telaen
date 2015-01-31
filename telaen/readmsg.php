@@ -36,6 +36,8 @@ $TLN->mailDisconnect();
 $smarty->assign('pageMetas', $pmetas);
 
 $TLN->parseBody($msg);
+$msg['unread'] = false;
+$TLN->tdb->doMessage($msg);
 
 if ($ix > 0) {
     $umHavePrevious = 1;
