@@ -25,7 +25,7 @@ if ($TLN->isValidFname($delfolder)) {
     $TLN->mailDeleteBox($delfolder);
 }
 
-require './folder_list.php';
+// require './folder_list.php';
 
 if (isset($empty)) {
     $headers = $mbox['headers'][$empty];

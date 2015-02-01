@@ -198,7 +198,7 @@ if ($haveattachs) {
 //$tdb->syncMessages();
 
 $avalfolders = array();
-foreach ($TLN->mailListBoxes() as $entry) {
+foreach ($folders as $entry => $f) {
     $entry = $TLN->fixPrefix($entry, 0);
     $display = extended_name($entry);
     $avalfolders[] = array('path' => $entry, 'display' => $display);
