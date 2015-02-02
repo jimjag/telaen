@@ -37,18 +37,18 @@
           <tr>
             <td class="default" nowrap>{$umMessageList[i].checkbox}</td>
             <td class="default" nowrap>{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
-            <td class="default" nowrap><acronym title="{$umMessageList[i].subject|escape:"html"|default:$umLabel.no_subject_text}"> {if $umMessageList[i].read eq "false"}<b>{/if} <a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a> {if $umMessageList[i].read eq "false"}</b>{/if} </acronym></td>
+            <td class="default" nowrap><acronym title="{$umMessageList[i].subject|escape:"html"|default:$umLabel.no_subject_text}"> {if !$umMessageList[i].read}<b>{/if} <a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a> {if !$umMessageList[i].read}</b>{/if} </acronym></td>
             {if $umFolder eq "sent"}
-            <td class="default" nowrap><acronym title="{$umMessageList[i].to|escape:"html"|default:$umLabel.no_recipient_text}"> {if $umMessageList[i].read eq "false"}<b>{/if} <a href="{$umMessageList[i].composelinksent}">{$umMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$umLabel.no_recipient_text}</a> {if $umMessageList[i].read eq "false"}</b>{/if} </acronym></td>
+            <td class="default" nowrap><acronym title="{$umMessageList[i].to|escape:"html"|default:$umLabel.no_recipient_text}"> {if !$umMessageList[i].read}<b>{/if} <a href="{$umMessageList[i].composelinksent}">{$umMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$umLabel.no_recipient_text}</a> {if !$umMessageList[i].read}</b>{/if} </acronym></td>
             {else}
-            <td class="default" nowrap><acronym title="{$umMessageList[i].from|escape:"html"|default:$umLabel.no_recipient_text}"> {if $umMessageList[i].read eq "false"}<b>{/if} <a href="{$umMessageList[i].composelink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a> {if $umMessageList[i].read eq "false"}</b>{/if} </acronym></td>
+            <td class="default" nowrap><acronym title="{$umMessageList[i].from|escape:"html"|default:$umLabel.no_recipient_text}"> {if !$umMessageList[i].read}<b>{/if} <a href="{$umMessageList[i].composelink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a> {if !$umMessageList[i].read}</b>{/if} </acronym></td>
             {/if}
-            <td class="cent" nowrap> {if $umMessageList[i].read eq "false"}<b>{/if}
+            <td class="cent" nowrap> {if !$umMessageList[i].read}<b>{/if}
               {$umMessageList[i].date|date_format:$umLabel.date_format}
               {if $umMessageList[i].read eq "false"}</b>{/if} </td>
-            <td class="right" nowrap> {if $umMessageList[i].read eq "false"}<b>{/if}
+            <td class="right" nowrap> {if !$umMessageList[i].read}<b>{/if}
               {$umMessageList[i].size} &nbsp;
-              {if $umMessageList[i].read eq "false"}</b>{/if} </td>
+              {if !$umMessageList[i].read}</b>{/if} </td>
           </tr>
           {/section}
           <tr>

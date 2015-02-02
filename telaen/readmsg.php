@@ -195,7 +195,7 @@ if ($haveattachs) {
 }
 
 //$AuthSession->Save($auth);
-//$tdb->syncMessages();
+$TLN->$tdb->syncMessages();
 
 $avalfolders = array();
 foreach ($folders as $entry => $f) {

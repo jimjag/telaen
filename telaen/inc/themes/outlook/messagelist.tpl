@@ -141,25 +141,25 @@
                       <td onclick="{$umMessageList[i].readlink}" id="address_{$contador}"
 												onmouseover="address_{$contador}.className='messagelist_over';subject_{$contador}.className='messagelist_over';date_{$contador}.className='messagelist_over';size_{$contador}.className='messagelist_over';"
 												onmouseout="address_{$contador}.className='messagelist';subject_{$contador}.className='messagelist';date_{$contador}.className='messagelist';size_{$contador}.className='messagelist';"
-												class="messagelist"><acronym title="{$umMessageList[i].to|escape:"html"|default:$umLabel.no_recipient_text}"><a href="{$umMessageList[i].readlink}">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$umLabel.no_recipient_text}{if $umMessageList[i].read eq "false"}</b>{/if}</a></acronym></td>
+												class="messagelist"><acronym title="{$umMessageList[i].to|escape:"html"|default:$umLabel.no_recipient_text}"><a href="{$umMessageList[i].readlink}">{if !$umMessageList[i].read}<b>{/if}{$umMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$umLabel.no_recipient_text}{if $umMessageList[i].read eq "false"}</b>{/if}</a></acronym></td>
                       {else}
                       <td onclick="{$umMessageList[i].readlink}" id="address_{$contador}"
 												onmouseover="address_{$contador}.className='messagelist_over';subject_{$contador}.className='messagelist_over';date_{$contador}.className='messagelist_over';size_{$contador}.className='messagelist_over';"
 												onmouseout="address_{$contador}.className='messagelist';subject_{$contador}.className='messagelist';date_{$contador}.className='messagelist';size_{$contador}.className='messagelist';"
-												class="messagelist"><acronym title="{$umMessageList[i].from|escape:"html"|default:$umLabel.no_subject_text}"><a href="{$umMessageList[i].readlink}">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$umLabel.no_sender_text}{if $umMessageList[i].read eq "false"}</b>{/if}</a></acronym></td>
+												class="messagelist"><acronym title="{$umMessageList[i].from|escape:"html"|default:$umLabel.no_subject_text}"><a href="{$umMessageList[i].readlink}">{if !$umMessageList[i].read}<b>{/if}{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$umLabel.no_sender_text}{if $umMessageList[i].read eq "false"}</b>{/if}</a></acronym></td>
                       {/if}
                       <td onclick="{$umMessageList[i].readlink}" id="subject_{$contador}"
 												onmouseover="address_{$contador}.className='messagelist_over';subject_{$contador}.className='messagelist_over';date_{$contador}.className='messagelist_over';size_{$contador}.className='messagelist_over';"
 												onmouseout="address_{$contador}.className='messagelist';subject_{$contador}.className='messagelist';date_{$contador}.className='messagelist';size_{$contador}.className='messagelist';"
-												class="messagelist"><acronym title="{$umMessageList[i].subject|escape:"html"|default:$umLabel.no_subject_text}"><a href="{$umMessageList[i].readlink}">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}{if $umMessageList[i].read eq "false"}</b>{/if}</a></acronym></td>
+												class="messagelist"><acronym title="{$umMessageList[i].subject|escape:"html"|default:$umLabel.no_subject_text}"><a href="{$umMessageList[i].readlink}">{if !$umMessageList[i].read}<b>{/if}{$umMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}{if $umMessageList[i].read eq "false"}</b>{/if}</a></acronym></td>
                       <td onclick="{$umMessageList[i].readlink}" id="date_{$contador}"
 												onmouseover="address_{$contador}.className='messagelist_over';subject_{$contador}.className='messagelist_over';date_{$contador}.className='messagelist_over';size_{$contador}.className='messagelist_over';"
 												onmouseout="address_{$contador}.className='messagelist';subject_{$contador}.className='messagelist';date_{$contador}.className='messagelist';size_{$contador}.className='messagelist';"
-												class="messagelist">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].date|date_format:$umLabel.date_format}{if $umMessageList[i].read eq "false"}</b>{/if}</td>
+												class="messagelist">{if $umMessageList[i].read eq "false"}<b>{/if}{$umMessageList[i].date|date_format:$umLabel.date_format}{if !$umMessageList[i].read}</b>{/if}</td>
                       <td align="right" onclick="{$umMessageList[i].readlink}" id="size_{$contador}"
 												onmouseover="address_{$contador}.className='messagelist_over';subject_{$contador}.className='messagelist_over';date_{$contador}.className='messagelist_over';size_{$contador}.className='messagelist_over';"
 												onmouseout="address_{$contador}.className='messagelist';subject_{$contador}.className='messagelist';date_{$contador}.className='messagelist';size_{$contador}.className='messagelist';"
-												class="messagelist">{if $umMessageList[i].read eq "false"}<b>{/if}{$i}{$umMessageList[i].size}&nbsp;{if $umMessageList[i].read eq "false"}</b>{/if}</td>
+												class="messagelist">{if $umMessageList[i].read eq "false"}<b>{/if}{$i}{$umMessageList[i].size}&nbsp;{if !$umMessageList[i].read}</b>{/if}</td>
                     </tr>
                     {/section}
                     {if $umNumMessages eq 0}
