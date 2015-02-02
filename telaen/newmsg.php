@@ -21,9 +21,6 @@ extract(
         'priority', 'body', 'is_html', 'textmode', 'sig', 'todo', 'rtype', 'uidl', ), 'str'
     )
 );
-// Recall $folder is always available via preinit.php
-
-$mbox = $TLN->tdb->getMessage($uidl, $folder);
 
 if ($todo == 'send') {
     require './inc/send.php';
@@ -75,48 +72,35 @@ if ($show_advanced) {
 require './inc/js/newmsg_js.php';
 $smarty->assign('umJS', $jssource);
 
-if (!isset($body)) {
-    $body = null;
-}
-$body = stripslashes($body);
-
+$body = ''; // we are crafting from scratch. Ignore any params
+$msg = $TLN->tdb->getMessage($uidl, $folder);
 if (isset($rtype)) {
-    $mail_info = $mbox['headers'][$folder][$ix];
+    // Hmmm passed a bogus uidl and/or folder val? bail.
+    if (empty($msg)) {
+        $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&pag={$pag}&refr=true");
+    }
 
-    if (($rtype == 'forward' && !stristr($mail_info['flags'], '\\FORWARDED'))
-        || ($rtype != 'forward' && !stristr($mail_info['flags'], '\\ANSWERED'))) {
-        if (!$TLN->mailConnect()) {
-            $TLN->redirectAndExit('index.php?err=1', true);
-        }
-        if (!$TLN->mailAuth()) {
-            $TLN->redirectAndExit('index.php?err=0');
-        }
-        if ($rtype != 'forward' && $TLN->mailSetFlag($mail_info, '\\ANSWERED', '+')) {
-            $mbox['headers'][$folder][$ix] = $mail_info;
-            $UserMbox->Save($mbox);
-        }
-        if ($rtype == 'forward' && $TLN->mailSetFlag($mail_info, '\\FORWARDED', '+')) {
-            $mbox['headers'][$folder][$ix] = $mail_info;
-            $UserMbox->Save($mbox);
-        }
-        $TLN->mailDisconnect();
+    switch ($rtype) {
+        case 'forward':
+            $TLN->mailSetFlag($mail_info, $this->flags['forwarded'], '+');
+            break;
+        case 'reply':
+        case 'replyall':
+            $TLN->mailSetFlag($mail_info, $this->flags['answered'], '+');
+            break;
+        default:
+            $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&pag={$pag}&refr=true");
+            break;
     }
     $filename = $TLN->getPathName($mail_info)[0];
 
     if (!file_exists($filename)) {
-        die("<script>location = 'messages.php?err=2&folder=".urlencode($folder)."&pag=$pag&refr=true';</script>");
+        $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&pag={$pag}&refr=true");
     }
-    $result = $TLN->readFile($filename);
-    $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts']);
-    $email = $TLN->parseBody($result);
-
-    $result = $TLN->fetchStructure($result);
-
-    $tmpbody = $email['body'];
-    $subject = $mail_info['subject'];
-
-    $ARReplyTo = $email['reply-to'];
-    $ARFrom = $email['from'];
+    $tmpbody = stream_get_contents($TLN->mailRetrPbody($msg));
+    $subject = $msg['subject'];
+    $ARReplyTo = $TLN->getNames($msg['headers']['reply-to']);
+    $ARFrom = $TLN->getNames($msg['headers']['from']);
     $useremail = $auth['email'];
 
     // From
@@ -136,7 +120,7 @@ if (isset($rtype)) {
     $myCCAdr = "";
 
     // To
-    $ARTo = $email['to'];
+    $ARTo = $TLN->getNames($msg['headers']['to']);
     for ($i = 0;$i<count($ARTo);$i++) {
         $name = $ARTo[$i]['name'];
         $thismail = $ARTo[$i]['mail'];
@@ -154,7 +138,7 @@ if (isset($rtype)) {
     }
 
     // CC
-    $ARCC = $email['cc'];
+    $ARCC = $msg['headers']['cc'];
     for ($i = 0;$i<count($ARCC);$i++) {
         $name = $ARCC[$i]['name'];
         $thismail = $ARCC[$i]['mail'];
@@ -257,33 +241,15 @@ $body
         if (!preg_match("/^{$lang['forward_prefix']}/i", trim($subject))) {
             $subject = "{$lang['forward_prefix']} $subject";
         }
-        if (count($email['attachments']) > 0) {
-            for ($i = 0; $i < count($email['attachments']); $i++) {
-                $current = $email['attachments'][$i];
-                $ind = count($mbox['attachments']);
-                $mbox['attachments'][$ind]['localname'] = $current['filename'];
-                $mbox['attachments'][$ind]['name'] = $current['name'];
-                $mbox['attachments'][$ind]['type'] = $current['content-type'];
-                $mbox['attachments'][$ind]['size'] = $current['size'];
-            }
-            $UserMbox->Save($mbox);
-        }
         break;
     }
-    if ($add_sig && !empty($signature)) {
-        if ($show_advanced) {
-            $body = "<br><br>----<br>$signature<br><br>$body";
-        } else {
-            $body = "\r\n\r\n----\r\n$signature\r\n\r\n$body";
-        }
-    }
-} elseif ($add_sig && !empty($signature) && empty($body)) {
-    if ($show_advanced) {
-        $body = "<br><br>----<br>$signature<br><br>$body";
-    } else {
-        $body = "\r\n\r\n----\r\n$signature\r\n\r\n$body";
-    }
 }
+if ($show_advanced) {
+    $body = "<br><br>----<br>$signature<br><br>$body";
+} else {
+    $body = "\r\n\r\n----\r\n$signature\r\n\r\n$body";
+}
+
 
 $haveSig = empty($signature) ? 0 : 1;
 $smarty->assign('umHaveSignature', $haveSig);
@@ -296,16 +262,17 @@ $strcc = "<input class='textbox' style='width : 200px;' type='text' size='20' na
 $strbcc = "<input class='textbox' style='width : 200px;' type='text' size='20' name='bcc' value='".htmlspecialchars(stripslashes($bcc))."' />";
 $strsubject = "<input class='textbox' style='width : 200px;' type='text' size='20' name='subject' value='".htmlspecialchars(stripslashes($subject))."' />";
 
-if (isset($mbox['attachments']) && count($attachs = $mbox['attachments']) > 0) {
+$attachs = $TLN->tdb->getAttachments($msg);
+$num = count($attachs);
+if ($num > 0) {
     $smarty->assign('umHaveAttachs', 1);
     $attachlist = array();
-    for ($i = 0;$i<count($attachs);$i++) {
-        $index = count($attachlist);
+    for ($i = 0; $i < $num; $i++) {
 
-        $attachlist[$index]['name'] = $attachs[$i]['name'];
-        $attachlist[$index]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
-        $attachlist[$index]['type'] = $attachs[$i]['type'];
-        $attachlist[$index]['link'] = "javascript:upwin($i)";
+        $attachlist[$i]['name'] = $attachs[$i]['name'];
+        $attachlist[$i]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
+        $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
+        $attachlist[$i]['link'] = "javascript:upwin($i)";
     }
     $smarty->assign('umAttachList', $attachlist);
 }
@@ -315,7 +282,7 @@ if (!$show_advanced) {
 }
 
 if (!isset($txtarea)) {
-    $txtarea = null;
+    $txtarea = '';
 }
 /*
  * Force the below to 0. We do not want to
