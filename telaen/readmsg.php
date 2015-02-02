@@ -126,7 +126,7 @@ function block_addresses() { window.open('block_address.php?folder=".urlencode($
 function replyall() { with(document.msg) { rtype.value = 'replyall'; submit(); } }
 function forward() { with(document.msg) { rtype.value = 'forward'; submit(); } }
 function goback() { location = 'messages.php?folder=".urlencode($folder)."&pag=$pag'; }
-function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&ix=$ix','PrintView','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
+function printit() { window.open('printmsg.php?folder=".urlencode($folder)."&uidl={$msg['uidl']}','PrintView','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openmessage(attach) { window.open('readmsg.php?folder=".urlencode($folder)."&uidl=".$msg['uidl']."&name='+attach,'','resizable=1,top=10,left=10,width=700,height=500,scrollbars=1,status=0'); }
 function openwin(targetUrl) { window.open(targetUrl); }
 
