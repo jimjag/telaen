@@ -562,7 +562,7 @@ class Telaen extends Telaen_core
 
     /**
      * Retrieve and return specific email message
-     * @param  string  $msg The message to obtain
+     * @param  array  $msg The message to obtain
      * @return resource
      */
     public function mailRetrPbody($msg)
@@ -1428,6 +1428,16 @@ class Telaen extends Telaen_core
         return true;
     }
 
+    /**
+     * See if Flag is is
+     * @param array $msg Message to check
+     * @param string $flag Flag to look for
+     * @return boolean
+     */
+    public function isFlagSet($msg, $flag) {
+        return stristr($msg['flags'], $flag);
+    }
+
     private function _mailSetFlagImap(&$msg, $flagname, $flagtype = '+')
     {
         if ($this->_current_folder != $msg['folder']) {
@@ -1464,10 +1474,10 @@ class Telaen extends Telaen_core
             $this->triggerError("unknown flag: $flagname", __FUNCTION__, __LINE__);
             return false;
         }
-        if ($flagtype == '+' && strstr($msg['flags'], $flagname)) {
+        if ($flagtype == '+' && $this->isFlagSet($msg, $flagname)) {
             return true;
         }
-        if ($flagtype == '-' && !strstr($msg['flags'], $flagname)) {
+        if ($flagtype == '-' && !$this->isFlagSet($msg, $flagname)) {
             return true;
         }
 
