@@ -33,7 +33,7 @@ $htmlHead = "
 $htmlFoot = "
 </body>
 </html>";
-
+$msg = $TLN->tdb->getMessage($uidl, $folder);
 // build the email
 if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     // set lang for error messages, english for now
@@ -65,7 +65,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     }
 
     $mail->CharSet = $TLN->charset;
-    $mail->Hostname = getenv('SERVER_NAME');
+    $mail->Hostname = $TLN->getServerName();
     $mail->From = ($TLN->config['allow_modified_from'] && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
     $mail->FromName = $mail->encodeHeader($TLN->prefs['real-name']);
     $mail->AddReplyTo($TLN->prefs['reply-to'], $TLN->mimeEncodeHeaders($TLN->prefs['real-name']));
@@ -80,6 +80,16 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
 
     // add an header for keep a track of client IP
     $mail->AddCustomHeader('X-Originating-IP: '.getenv('REMOTE_ADDR'));
+    // Now keep threading info intact (or create as needed)
+    $mail->MessageID = "<{$TLN->uniqID('beef')}@{$mail->Hostname}>";
+    if (!empty($msg) && $msg['message-id'] != '') {
+        if ($msg['headers']['references'] != '') {
+            $mail->AddCustomHeader('References: '.$msg['headers']['references'].$msg['message-id']);
+        } elseif ($msg['headers']['in-reply-to'] != '') {
+            $mail->AddCustomHeader('References: '.$msg['headers']['in-reply-to'].$msg['message-id']);
+        }
+        $mail->AddCustomHeader('In-Reply-To: '.$msg['message-id']);
+    }
 
     // add return-receipt if required
     if (isset($requireReceipt)) {
@@ -143,19 +153,11 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     } else {
         $smarty->assign('umMailSent', true);
 
-        if (isset($mbox['attachments'])) {
-            unset($mbox['attachments']);
-            reset($mbox);
-            $UserMbox->Save($mbox);
-        }
-
         if ($TLN->prefs['save_to_sent']) {
             if (!$TLN->mailConnect()) $TLN->redirectAndExit('index.php?err=1', true);
             if (!$TLN->mailAuth(false)) $TLN->redirectAndExit('index.php?err=0');
             $TLN->mailSaveMessage('sent', $mail->getSentMIMEMessage(), '\\SEEN');
-            unset($mbox['headers']['sent']);
             $TLN->mailDisconnect();
-            $UserMbox->Save($mbox);
         }
     }
 } else {

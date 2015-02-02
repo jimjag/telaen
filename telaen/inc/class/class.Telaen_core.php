@@ -1722,6 +1722,23 @@ class Telaen_core
         return ($mtime);
     }
 
+    /**
+     * Best guess on server name
+     * @return string
+     */
+    static public function getServerName()
+    {
+        if (isset($_SERVER) && !empty($_SERVER['SERVER_NAME'])) {
+            return $_SERVER['SERVER_NAME'];
+        } elseif (function_exists('gethostname') && gethostbyname() != false) {
+            return gethostbyname();
+        } elseif (php_uname('n') != false) {
+            return php_uname('n');
+        } else {
+            return 'localhost@localdomain';
+        }
+    }
+
     static public function simpleOutput($p1)
     {
         printf($p1);
