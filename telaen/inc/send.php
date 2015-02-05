@@ -52,8 +52,8 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     }
 
     // if using the advanced editor
-    if ($is_html == 'true') {
-        $mail->IsHTML(1);
+    if ($is_html != 'false') {
+        $mail->isHTML(true);
         if (!empty($TLN->config['footer'])) {
             $body .= preg_replace('|(\r?\n)|', "<br>$1", $TLN->config['footer']);
         }
