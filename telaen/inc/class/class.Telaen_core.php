@@ -470,10 +470,10 @@ class Telaen_core
         $newresult = "";
 
         if (($pos = strpos($string, "=?")) === false) {
-            return $string;
+            self::convertCharset($string, $this->charset, $this->charset);
         }
 
-        while (!($pos === false)) {
+        while ($pos !== false) {
             $newresult .= substr($string, 0, $pos);
             $string = substr($string, $pos+2, strlen($string));
             $intpos = strpos($string, "?");
@@ -495,11 +495,13 @@ class Telaen_core
 
             $newresult .= $mystring;
             $pos = strpos($string, "=?");
+            /*
             unset($intpos);
             unset($endpos);
             unset($charset);
             unset($enctype);
             unset($mystring);
+            */
         }
         $result = $newresult.$string;
         unset($mystring);
