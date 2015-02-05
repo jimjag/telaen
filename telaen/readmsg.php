@@ -120,9 +120,9 @@ function deletemsg() {
 }
 function reply() { document.msg.submit(); }
 function movemsg() { document.move.submit(); }
-function headers() { mywin = window.open('headers.php?folder=".urlencode($folder)."&ix=$ix','Headers','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes,resizable=yes'); }
-function catch_addresses() { window.open('catch.php?folder=".urlencode($folder)."&ix=$ix','Catch','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
-function block_addresses() { window.open('block_address.php?folder=".urlencode($folder)."&ix=$ix','Block','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
+function headers() { mywin = window.open('headers.php?folder=".urlencode($folder)."&uidl=$uidl','Headers','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes,resizable=yes'); }
+function catch_addresses() { window.open('catch.php?folder=".urlencode($folder)."&uidl=$uidl','Catch','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
+function block_addresses() { window.open('block_address.php?folder=".urlencode($folder)."&uidl=$uidl','Block','width=550, top=100, left=100, height=320,directories=no,toolbar=no,status=no,scrollbars=yes'); }
 
 function replyall() { with(document.msg) { rtype.value = 'replyall'; submit(); } }
 function forward() { with(document.msg) { rtype.value = 'forward'; submit(); } }
