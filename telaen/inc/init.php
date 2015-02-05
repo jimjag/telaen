@@ -251,7 +251,8 @@ $pmetas = "
 
 // Common js included system-wide
 $commonJS = <<<'EOD'
-	<script type='text/javascript' src='./inc/js/mini_Ajax.js'></script>
+	<script type='text/javascript' src='./inc/js/jquery-1.11.2.min.js'></script>
+	<script type='text/javascript' src='./inc/js/jquery.form.min.js'></script>
 	<script type='text/javascript' src='./inc/js/common.js'></script>
 	<script language='javascript' type='text/javascript'>
 	//<![CDATA[

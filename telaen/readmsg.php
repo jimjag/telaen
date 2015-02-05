@@ -137,9 +137,10 @@ function openwin(targetUrl) { window.open(targetUrl); }
 <script type='text/javascript'>
 //<![CDATA[
 function sendReceipt(subj, msg) {
-	new Ajax.Request('ajax.php', {
-		method: 'post',
-		parameters: {action: 'sendReceipt', recipient: '".$msg['headers']['x-receipt-to']."', receipt_subj: subj, receipt_msg: msg}
+	$.ajax({
+	    url: 'ajax.php',
+		method: 'POST',
+		data: {action: 'sendReceipt', recipient: '".$msg['headers']['x-receipt-to']."', receipt_subj: subj, receipt_msg: msg}
 	});
 }
 //]]>

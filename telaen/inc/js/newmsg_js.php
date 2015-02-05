@@ -139,9 +139,10 @@ error_msg[error_msg.length] = strEmail;
 <script type='text/javascript'>
 //<![CDATA[
 window.setInterval(function() {
-new Ajax.Request('ajax.php', {
-	method: 'post',
-	parameters: {action: 'pingSession'}
+$.ajax({
+    url: 'ajax.php',
+	type: 'POST',
+	data: {action: 'pingSession'}
 });
 }, 60000);
 //]]>
