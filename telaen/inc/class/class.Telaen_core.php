@@ -816,7 +816,7 @@ class Telaen_core
         } else {
             $body = $this->_convertBody($part['body'], $part['headers']['content-transfer-encoding'], $part['headers']['content-type']);
             if (!$this->config['allow_html'] && $part['type'] != 'text/plain') {
-                $body = $this->_html2Text($body);
+                $body = $this->html2Text($body);
             }
             if (!$this->config['allow_html']) {
                 $body = $this->_returnTextBody($body);
@@ -893,7 +893,7 @@ class Telaen_core
                 $body = $this->_convertBody($body, $headers['content-transfer-encoding'], $headers['content-type']);
 
                 if (!$this->config['allow_html']) {
-                    $body = $this->_returnTextBody($this->_html2Text($body));
+                    $body = $this->_returnTextBody($this->html2Text($body));
                 }
                 $this->_addBody($body);
             } elseif ($rctype == 'application/ms-tnef') {
@@ -986,7 +986,7 @@ class Telaen_core
             switch ($subtype) {
             case 'html':
                 if (!$this->config['allow_html']) {
-                    $body = $this->_returnTextBody($this->_html2Text($body));
+                    $body = $this->_returnTextBody($this->html2Text($body));
                 }
                 $msgbody = $body;
                 break;
@@ -1467,7 +1467,7 @@ class Telaen_core
             }
             if ($a['Type'] == 'html') {
                 if (!$this->config['allow_html']) {
-                    $data = $this->_html2Text($data);
+                    $data = $this->html2Text($data);
                 } else {
                     if ($this->sanitize) {
                         $data = $this->sanitizeHTML($data);
@@ -1564,8 +1564,10 @@ class Telaen_core
 
     /**
      * Format a HTML message to be displayed as text if allow_html is off
+     * @param string $str Message to convert
+     * @return string
      */
-    protected function _html2Text($str)
+    static public function html2Text($str)
     {
         require_once 'inc/vendor/Html2Text.php';
         $converter = new Html2Text\Html2Text($str);
