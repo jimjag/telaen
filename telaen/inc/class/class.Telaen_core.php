@@ -85,6 +85,18 @@ class Telaen_core
     }
 
     /**
+     * Echo out string or stream
+     * @param mixed $s What to print/echo
+     */
+    static public function myEcho($s) {
+        if (is_resource($s)) {
+            echo(stream_get_contents($s));
+        } else {
+            echo($s);
+        }
+    }
+
+    /**
      *
      */
     static public function debugPrintStruct($obj)
@@ -1068,17 +1080,13 @@ class Telaen_core
                 $i++;
             }
             if ($a['Type'] == 'html') {
-                if (!$this->config['allow_html']) {
-                    $data = $this->html2Text($data);
-                } else {
-                    if ($this->sanitize) {
-                        $data = $this->sanitizeHTML($data);
-                    }
-                    foreach ($cids as $cid) {
-                        $rep = '${1}=${2}download.php?folder='.urlencode($cid['folder']).'&uidl='.$cid['uidl'].'&name='.urlencode($cid['name'].'${3}');
-                        $pat = '(...)\s*=\s*(.)cid:'.$cid['cid'].'(.)';
-                        $data = preg_replace('|'.preg_quote($pat, '|').'|i', $rep, $data);
-                    }
+                if ($this->sanitize) {
+                    $data = $this->sanitizeHTML($data);
+                }
+                foreach ($cids as $cid) {
+                    $rep = '${1}=${2}download.php?folder='.urlencode($cid['folder']).'&uidl='.$cid['uidl'].'&name='.urlencode($cid['name'].'${3}');
+                    $pat = '(...)\s*=\s*(.)cid:'.$cid['cid'].'(.)';
+                    $data = preg_replace('|'.preg_quote($pat, '|').'|i', $rep, $data);
                 }
             }
             $this->saveFile($path, $data);

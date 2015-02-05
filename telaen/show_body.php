@@ -18,6 +18,9 @@ if (empty($msg)) {
     exit;
 }
 $body = $TLN->mailRetrPbody($msg);
+if (!$TLN->config['allow_html']) {
+    $body = $TLN->html2Text($body);
+}
 
 //$body = preg_replace('|target=["\']?[a-zA-Z_]+["\']?|i', "target='blank'", $body);
 //$body = preg_replace('|href="http([s]?)://|i', "target='_blank' href='$redir_path?http$1://", $body);
@@ -27,4 +30,4 @@ $body = $TLN->mailRetrPbody($msg);
 //$meta_charset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$lang['default_char_set']."\">";
 echo($pmetas);
 //echo($meta_charset);
-echo(stream_get_contents($body));
+$TLN->myEcho($body);
