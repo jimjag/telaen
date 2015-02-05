@@ -35,7 +35,7 @@ if (isset($_POST['action'])) {
             // init mailer
             $mail = new PHPMailer();
             $mail->SetLanguage('en', 'langs/');
-            $mail->CharSet = $TLN->charset;
+            $mail->CharSet = $TLN->ucharset;
             $mail->Hostname = getenv('SERVER_NAME');
             $mail->Host = $TLN->config['smtp_server'];
             $mail->WordWrap = 76;

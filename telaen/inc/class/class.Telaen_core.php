@@ -40,7 +40,7 @@ class Telaen_core
 
     public $sanitize = true;
     public $use_html = false;
-    public $charset = 'UTF-8';
+    public $ucharset = 'UTF-8';
     public $userfolder = './';
     public $userdatafolder = './_infos';
     public $temp_folder = './_tmp';
@@ -71,6 +71,7 @@ class Telaen_core
     protected $_mail_connection = null;
     protected $_authenticated = false;
     protected $_uidvalidity = "";
+    protected $charset = 'UTF-8';
 
     /*******************/
 
@@ -412,7 +413,7 @@ class Telaen_core
     {
         if ($string == "") return '';
         if (!preg_match("/^([[:print:]]*)$/", $string))
-            $string = "=?".$this->charset."?Q?".str_replace("+", "_", str_replace("%", "=", urlencode($string)))."?=";
+            $string = "=?".$this->ucharset."?Q?".str_replace("+", "_", str_replace("%", "=", urlencode($string)))."?=";
         return $string;
     }
 
@@ -470,7 +471,7 @@ class Telaen_core
         $newresult = "";
 
         if (($pos = strpos($string, "=?")) === false) {
-            self::convertCharset($string, $this->charset, $this->charset);
+            self::convertCharset($string, $this->ucharset, $this->charset);
         }
 
         while ($pos !== false) {
@@ -805,8 +806,8 @@ class Telaen_core
         if (preg_match('|koi8|', $ctype)) {
             $body = convert_cyr_string($body, 'k', 'w');
         } elseif (preg_match('|charset ?= ?"?([a-z0-9-]+)"?|i', $ctype, $regs)) {
-            if ($regs[1] != $this->charset) {
-                $body = self::convertCharset($body, $regs[1], $this->charset);
+            if ($regs[1] != $this->ucharset) {
+                $body = self::convertCharset($body, $regs[1], $this->ucharset);
             }
         }
 
@@ -1032,7 +1033,7 @@ class Telaen_core
             $data = file_get_contents($a['DataFile']);
             unlink($a['DataFile']);
             if (isset($a['Encoding']) && strcasecmp($a['Encoding'], $this->charset)) {
-                $m = self::convertCharset($data, $a['Encoding'], $this->charset);
+                $data = self::convertCharset($data, $a['Encoding'], $this->charset);
             }
             /*
              * Now scan thru CIDs ('Related')

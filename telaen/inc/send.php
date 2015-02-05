@@ -64,7 +64,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
         $body .= $TLN->config['footer'];
     }
 
-    $mail->CharSet = $TLN->charset;
+    $mail->CharSet = $TLN->ucharset;
     $mail->Hostname = $TLN->getServerName();
     $mail->From = ($TLN->config['allow_modified_from'] && !empty($TLN->prefs['reply-to'])) ? $TLN->prefs['reply-to'] : $auth['email'];
     $mail->FromName = $mail->encodeHeader($TLN->prefs['real-name']);

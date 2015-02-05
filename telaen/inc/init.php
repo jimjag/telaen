@@ -232,7 +232,7 @@ $mycal = $mymo->monthAsDiv();
 $smarty->assign('umCalendar', $mycal);
 $smarty->assign('umSystemNews', $TLN->config['systemNews']);
 
-$TLN->charset = $lang['default_char_set'];
+$TLN->ucharset = $lang['default_char_set'];
 
 /*
 Don't remove the following lines, or you will have problems with browser's cache
