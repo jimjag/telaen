@@ -420,11 +420,11 @@ class Telaen_core
     /**
      * This function will convert any string between charsets.
      * @param string $string String to convert
-     * @param string $from Charset to convert from
      * @param string $to Charset to convert to
+     * @param string $from Charset to convert from
      * @return string
      */
-    static public function convertCharset($string, $from, $to)
+    static public function convertCharset($string, $to, $from = 'UTF-8')
     {
         return mb_convert_encoding($string, $to, $from);
     }
@@ -471,7 +471,7 @@ class Telaen_core
         $newresult = "";
 
         if (($pos = strpos($string, "=?")) === false) {
-            self::convertCharset($string, $this->ucharset, $this->charset);
+            self::convertCharset($string, $this->charset, $this->ucharset);
         }
 
         while ($pos !== false) {
@@ -491,7 +491,7 @@ class Telaen_core
             }
 
             if ($charset != $this->charset) {
-                $mystring = self::convertCharset($mystring, $charset, $this->charset);
+                $mystring = self::convertCharset($mystring, $this->charset, $charset);
             }
 
             $newresult .= $mystring;
@@ -807,7 +807,7 @@ class Telaen_core
             $body = convert_cyr_string($body, 'k', 'w');
         } elseif (preg_match('|charset ?= ?"?([a-z0-9-]+)"?|i', $ctype, $regs)) {
             if ($regs[1] != $this->ucharset) {
-                $body = self::convertCharset($body, $regs[1], $this->ucharset);
+                $body = self::convertCharset($body, $this->ucharset, $regs[1]);
             }
         }
 
@@ -1033,7 +1033,7 @@ class Telaen_core
             $data = file_get_contents($a['DataFile']);
             unlink($a['DataFile']);
             if (isset($a['Encoding']) && strcasecmp($a['Encoding'], $this->charset)) {
-                $data = self::convertCharset($data, $a['Encoding'], $this->charset);
+                $data = self::convertCharset($data, $this->charset, $a['Encoding']);
             }
             /*
              * Now scan thru CIDs ('Related')

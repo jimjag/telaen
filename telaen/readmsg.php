@@ -108,7 +108,7 @@ if (count($ARCC) > 0) {
     $smarty->assign('umCCList', $ARCC);
 }
 
-$smarty->assign('umPageTitle', $msg['subject']);
+$smarty->assign('umPageTitle', $this->convertCharset($msg['subject'], $TLN->ucharset));
 
 eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
