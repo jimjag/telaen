@@ -926,7 +926,7 @@ class Telaen_core
         $headers['x-receipt-to'] = $receiptTo[0]['mail'];
 
         if (!empty($headers['message-id'])) {
-            $headers['message-id'] = preg_replace('|<(.*)>|', "$1", trim($headers['message-id']));
+            $headers['message-id'] = trim(preg_replace('|<(.*)>|', "$1", trim($headers['message-id'])));
         }
         if (!empty($headers['x-priority']) && empty($headers['priority'])) {
             $headers['priority'] = $headers['x-priority'][0];

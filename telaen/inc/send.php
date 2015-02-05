@@ -81,14 +81,15 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     // add an header for keep a track of client IP
     $mail->AddCustomHeader('X-Originating-IP: '.getenv('REMOTE_ADDR'));
     // Now keep threading info intact (or create as needed)
-    $mail->MessageID = "<{$TLN->uniqID('beef')}@{$mail->Hostname}>";
-    if (!empty($msg) && $msg['message-id'] != '') {
+    $mail->MessageID = "<{$TLN->uniqID('tln.')}@{$mail->Hostname}>";
+    $mid = '<'.$msg['message-id'].'>';
+    if (!empty($msg) && $mid != '<>') {
         if ($msg['headers']['references'] != '') {
-            $mail->AddCustomHeader('References: '.$msg['headers']['references'].$msg['message-id']);
+            $mail->AddCustomHeader('References: '.$msg['headers']['references'].$mid);
         } elseif ($msg['headers']['in-reply-to'] != '') {
-            $mail->AddCustomHeader('References: '.$msg['headers']['in-reply-to'].$msg['message-id']);
+            $mail->AddCustomHeader('References: '.$msg['headers']['in-reply-to'].$mid);
         }
-        $mail->AddCustomHeader('In-Reply-To: '.$msg['message-id']);
+        $mail->AddCustomHeader('In-Reply-To: '.$mid);
     }
 
     // add return-receipt if required
