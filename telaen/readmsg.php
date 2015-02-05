@@ -38,6 +38,7 @@ $smarty->assign('pageMetas', $pmetas);
 $TLN->parseBody($msg);
 $msg['unread'] = false;
 $TLN->tdb->doMessage($msg);
+$TLN->tdb->syncMessages();
 
 if ($ix > 0) {
     $umHavePrevious = 1;
