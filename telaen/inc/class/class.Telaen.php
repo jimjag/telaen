@@ -567,14 +567,12 @@ class Telaen extends Telaen_core
      */
     public function mailRetrPbody($msg)
     {
-        if (!$msg['bparsed']) {
-            return null;
-            /*
-             * TODO: Do the whole read and parsing stuff
-             */
-        }
         $path = $this->getPathName($msg)[0].'.msg';
-        return fopen($path, 'r');
+        $handle = @fopen($path, 'r');
+        if ($handle !== null) {
+            return $handle;
+        }
+        return $this->blob('message not parsed');
     }
 
     protected function _mailRetrHeaderImap($msg)
