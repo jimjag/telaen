@@ -1565,19 +1565,9 @@ class Telaen_core
      */
     protected function _html2Text($str)
     {
-        return $this->_unhtmlentities(preg_replace(
-                array(    "'<(SCRIPT|STYLE)[^>]*?>.*?</(SCRIPT|STYLE)[^>]*?>'si",
-                        "'(\r|\n)'",
-                        "'<BR[^>]*?>'i",
-                        "'<P[^>]*?>'i",
-                        "'<\/?\w+[^>]*>'e",
-                        ),
-                array(    "",
-                        "",
-                        "\r\n",
-                        "\r\n\r\n",
-                        "", ),
-                $str));
+        require_once 'inc/vendor/Html2Text.php';
+        $converter = new Html2Text\Html2Text($str);
+        return $converter->getText();
     }
 
     /**
