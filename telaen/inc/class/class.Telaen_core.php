@@ -1408,7 +1408,9 @@ class Telaen_core
             /*
              * Uggg. when we are treating w/ the actual email
              * message itself (txt or html) we need to do so
-             * as a string.
+             * as a string. Hopefully, this is OK since the
+             * actual message is small where it's the attachments
+             * et.al. which are the sizable bits (we hope!)
              * TODO: Chunk this somehow
              */
             $data = file_get_contents($a['DataFile']);
@@ -1720,8 +1722,8 @@ class Telaen_core
     {
         if (isset($_SERVER) && !empty($_SERVER['SERVER_NAME'])) {
             return $_SERVER['SERVER_NAME'];
-        } elseif (function_exists('gethostname') && gethostbyname() != false) {
-            return gethostbyname();
+        } elseif (function_exists('gethostname') && gethostname() != false) {
+            return gethostname();
         } elseif (php_uname('n') != false) {
             return php_uname('n');
         } else {
