@@ -44,7 +44,7 @@ if (isset($err)) $err = abs($err);
 if (isset($ix)) $ix = abs($ix);
 if (isset($lng)) $lng = trim($lng);
 if (isset($tem)) $tem = trim($tem);
-if (isset($uidl)) $tem = trim($uidl);
+if (isset($uidl)) $uidl = trim($uidl);
 if (isset($six)) $six = abs($six);
 if (isset($folder))
     $folder = urldecode($folder);
