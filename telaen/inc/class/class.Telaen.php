@@ -572,6 +572,7 @@ class Telaen extends Telaen_core
         if ($handle !== null) {
             return $handle;
         }
+        $this->triggerError("Cannot fopen path: $path", __FUNCTION__, __LINE__);
         return $this->blob('message not parsed');
     }
 
