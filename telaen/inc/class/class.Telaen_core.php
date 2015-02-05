@@ -67,10 +67,7 @@ class Telaen_core
     ];
 
     // internal
-    protected $_msgbody = null;
-    protected $_content = [];
     private $_sid = 0;
-    protected $_tnef = "";
     protected $_mail_connection = null;
     protected $_authenticated = false;
     protected $_uidvalidity = "";
@@ -405,22 +402,6 @@ class Telaen_core
         if (!preg_match("/^([[:print:]]*)$/", $string))
             $string = "=?".$this->charset."?Q?".str_replace("+", "_", str_replace("%", "=", urlencode($string)))."?=";
         return $string;
-    }
-
-    /**
-     * Add a body, to a container.
-     * Some malformed messages have more than one body.
-     * Used to display inline attachments (images) too.
-     */
-    protected function _addBody($strbody)
-    {
-        static $l = false;
-        if (!$l) {
-            fwrite($this->_msgbody, $strbody);
-            $l = true;
-        } else {
-            fwrite($this->_msgbody, "\r\n<br>\r\n<br>\r\n<hr>\r\n<br>\r\n$strbody");
-        }
     }
 
     /**
@@ -761,169 +742,6 @@ class Telaen_core
     }
 
     /**
-     * Compile a body for multipart/alternative format.
-     * Guess the format we want and add it to the bod container
-     */
-    protected function _buildAddAlternativeBody($msg, $ctype, $body)
-    {
-        // get the boundary
-        $boundary = $this->_getBoundary($ctype);
-        // split the parts
-        $parts = $this->_splitParts($boundary, $body);
-
-        // not needed.. $thispart = ($this->config['allow_html'])?$parts[1]:$parts[0];
-
-        // multipart flag
-        $multipartSub = false;
-
-        // look at the better part we can display
-        foreach ($parts as $index => $value) {
-            $email = $this->fetchStructure($value);
-
-            $parts[$index] = $email;
-            $parts[$index]['headers'] = $headers = $this->_parseHeaders($email['header']);
-            unset($email);
-            $ctype = explode(';', $headers['content-type']);
-            $ctype = strtolower($ctype[0]);
-            $parts[$index]['type'] = $ctype;
-
-            // in this case the alternative is not html or text but multipart/*
-            if (preg_match('!^multipart/(mixed|signed|related|report)!i', $ctype)) {
-                $part = $parts[$index];
-                $multipartSub = true;
-                break;
-            // if html enabled use it
-            } elseif ($this->config['allow_html'] && $ctype == 'text/html') {
-                $part = $parts[$index];
-                break;
-            // else use the text part
-            } elseif (!$this->config['allow_html'] && $ctype == 'text/plain') {
-                $part = $parts[$index];
-                break;
-            }
-        }
-
-        // no recognizable content, use first part, usually text only
-        if (empty($part)) {
-            $part = $parts[0];
-        }
-        unset($parts);
-
-        // if the subcontent is multipart go to multipart function
-        if ($multipartSub) {
-            unset($body);
-            $this->_buildAddComplexBody($msg, $part['headers']['content-type'], $part['body']);
-        } else {
-            $body = $this->_convertBody($part['body'], $part['headers']['content-transfer-encoding'], $part['headers']['content-type']);
-            if (!$this->config['allow_html'] && $part['type'] != 'text/plain') {
-                $body = $this->html2Text($body);
-            }
-            if (!$this->config['allow_html']) {
-                $body = $this->_returnTextBody($body);
-            }
-            $this->_addBody($body);
-        }
-    }
-
-    /**
-     *  Recursively compile the parts of multipart/* emails.
-     * 'complex' means multipart/signed|mixed|related|report and other
-     * types that can be added in the future
-     */
-    protected function _buildAddComplexBody($msg, $ctype, $body)
-    {
-        global $uidl, $folder;
-
-        $Rtype = trim(substr($ctype, strpos($ctype, "type=")+5, strlen($ctype)));
-
-        if (strpos($Rtype, ";") != 0) {
-            $Rtype = substr($Rtype, 0, strpos($Rtype, ";"));
-        }
-        if (substr($Rtype, 0, 1) == "\"" && substr($Rtype, -1) == "\"") {
-            $Rtype = substr($Rtype, 1, strlen($Rtype)-2);
-        }
-
-        $boundary = $this->_getBoundary($ctype);
-        $part = $this->_splitParts($boundary, $body);
-
-        // only for debug
-        //echo "<br>Boundary: ".$boundary." parts count: ".count($part);
-
-        for ($i = 0;$i<count($part);$i++) {
-            $email = $this->fetchStructure($part[$i]);
-
-            $header = $email['header'];
-            $body = $email['body'];
-
-            // free unused vars
-            unset($email);
-
-            $headers = $this->_parseHeaders($header);
-            $ctype = $headers['content-type'];
-
-            //echo "<br>Part: $i - ctype: $ctype";
-
-            /*
-             * Special case for mac with resource and data fork
-             * Ignore apple data parts.
-             */
-            if (preg_match('|application/applefile|i', $ctype)) {
-                continue;
-            }
-
-            $cid = $headers['content-id'];
-
-            $Actype = explode(';', $headers['content-type']);
-            $types = explode('/', $Actype[0]);
-            $rctype = strtolower($Actype[0]);
-
-            $is_download = (preg_match('|name=|', $headers['content-disposition'].$headers['content-type']) || $headers['content-id'] != "" || $rctype == 'message/rfc822');
-
-            if ($rctype == 'multipart/alternative') {
-                $this->_buildAddAlternativeBody($msg, $ctype, $body);
-            } elseif ($rctype == 'multipart/appledouble') {
-                /*
-                 * Special case for mac with resource and data fork
-                 */
-                $this->_buildAddComplexBody($msg, $ctype, $body);
-            } elseif ($rctype == 'text/plain' && !$is_download) {
-                $body = $this->_convertBody($body, $headers['content-transfer-encoding'], $headers['content-type']);
-                $this->_addBody($this->_returnTextBody($body));
-            } elseif ($rctype == 'text/html' &&    !$is_download) {
-                $body = $this->_convertBody($body, $headers['content-transfer-encoding'], $headers['content-type']);
-
-                if (!$this->config['allow_html']) {
-                    $body = $this->_returnTextBody($this->html2Text($body));
-                }
-                $this->_addBody($body);
-            } elseif ($rctype == 'application/ms-tnef') {
-                $body = $this->_convertBody($body, $headers['content-transfer-encoding'], $headers['content-type']);
-                $this->_extractTnef($msg, $body, $boundary, $i);
-            } elseif ($is_download) {
-                $thisattach = $this->_buildAttach($msg, $header, $body, $boundary, $i);
-                $tree = array_merge((array) $this->current_level, [$thisattach['index']]);
-                $thisfile = 'download.php?folder='.urlencode($folder).'&uidl='.$uidl.'&attach='.join(',', $tree);
-                $filename = $thisattach['filename'];
-                $cid = preg_replace('|<(.*)\\>|', "$1", $cid);
-
-                if ($cid != "") {
-                    $cid = "cid:$cid";
-                    $b = $this->blob($this->_msgbody, false);
-                    $this->_msgbody = $this->blob(preg_replace('|'.preg_quote($cid, '|').'|i', $thisfile, $b));
-                } elseif ($this->displayimages) {
-                    $ext = strtolower(substr($thisattach['name'], -4));
-                    $allowed_ext = ['.gif','.jpg','.png','.bmp'];
-                    if (in_array($ext, $allowed_ext)) {
-                        $this->_addBody("<img src='$thisfile' alt=''>");
-                    }
-                }
-            } else {
-                $this->_processMessage($msg, $header, $body);
-            }
-        }
-    }
-
-    /**
      * Format a plain text string into a HTML formated string
      */
     protected function _returnTextBody($body)
@@ -958,152 +776,6 @@ class Telaen_core
     }
 
     /**
-     * Guess the type of the part and call the appropriate
-     * method
-     */
-    protected function _processMessage($msg, $header, $body)
-    {
-        $body = $this->blob($body, false);  // easiest for now
-        $mail_info = $this->parseHeaders($header);
-        $ctype = $mail_info['headers']['content-type'];
-        $ctenc = $mail_info['headers']['content-transfer-encoding'];
-
-        if ($ctype == "") {
-            $ctype = 'text/plain';
-        }
-
-        $type = $ctype;
-
-        $ctype = explode(';', $ctype);
-        $types = explode('/', $ctype[0]);
-
-        $maintype = trim(strtolower($types[0]));
-        $subtype = trim(strtolower($types[1]));
-
-        switch ($maintype) {
-        case 'text':
-            $body = $this->_convertBody($body, $ctenc, $mail_info['headers']['content-type']);
-            switch ($subtype) {
-            case 'html':
-                if (!$this->config['allow_html']) {
-                    $body = $this->_returnTextBody($this->html2Text($body));
-                }
-                $msgbody = $body;
-                break;
-            default:
-                $this->_extractUuencoded($body);
-                $msgbody = $this->_returnTextBody($body);
-                break;
-            }
-            $this->_addBody($msgbody);
-            break;
-        case 'multipart':
-            if (preg_match("/$subtype/", "signed,mixed,related,report,appledouble")) {
-                $subtype = 'complex';
-            }
-
-            switch ($subtype) {
-            case 'alternative':
-                $this->_buildAddAlternativeBody($msg, $ctype[1], $body);
-                break;
-            case 'complex':
-                $this->_buildAddComplexBody($msg, $type, $body);
-                break;
-            default:
-                $this->_buildAttach($msg, $header, $body, "", 0);
-            }
-            break;
-        default:
-            $this->_buildAttach($msg, $header, $body, "", 0);
-        }
-    }
-
-    /**
-     * Compile the attachment, saving it to cache and
-     * add it to the $attachments array if needed
-     */
-    protected function _buildAttach($msg, $header, $body, $boundary, $part)
-    {
-        $headers = $this->_parseHeaders($header);
-        $cdisp = $headers['content-disposition'];
-        $ctype = $headers['content-type'];
-
-        // for debug
-        //echo "<br>CDisp: ". $cdisp." - CType: ".$ctype;
-
-        // try to extract filename from content-disposition
-        preg_match('|filename ?= ?"(.+)"|i', $cdisp, $matches);
-        $filename = trim($matches[1]);
-
-        // if the first not work, same regex without duoblequote
-        if (!$filename) {
-            preg_match('|filename ?= ?(.+)|i', $cdisp, $matches);
-            $filename = trim($matches[1]);
-        }
-
-        // try to extract from content-type
-        if (!$filename) {
-            preg_match('|name ?= ?"(.+)"|i', $ctype, $matches);
-            $filename = trim($matches[1]);
-        }
-
-        $tenc = $headers['content-transfer-encoding'];
-
-        // extract content-disposition	(ex 'attachment')
-        preg_match('|[a-z0-9]+|i', $cdisp, $matches);
-        $content_disposition = $matches[0];
-
-        // extract content-type		(ex 'text/plain' or 'application/vnd.ms-excel' note the DOT)
-        preg_match('|[a-z0-9/\.-]+|i', $ctype, $matches);
-        $content_type = $matches[0];
-
-        $tmp = explode('/', $content_type);
-        $main_type = $tmp[0];
-        $sub_type = $tmp[1];
-
-        // This set determine if an attachement is embedded (like some images) so there no download link
-        // Note: added check for use it only for images, some clients adds id where not necessary
-        $is_embed = ($main_type == 'image' && $headers['content-id'] != "") ? 1 : 0;
-
-        $body = $this->_convertBody($body, $tenc, $ctype);
-
-        if ($filename == "" && $main_type == 'message') {
-            $attachheader = $this->fetchStructure($body);
-            $attachheader = $this->_parseHeaders($attachheader['header']);
-            $filename = $attachheader['subject'].'.eml';
-            unset($attachheader);
-        } elseif ($filename == "") {
-            $filename = self::uniqID().'.tmp';
-        }
-
-        $filename = preg_replace('|[.]{2,}|', ".", preg_replace("'(/|\\\\)+'", "_", trim($this->_decodeMimeString($filename))));
-        $safefilename = self::fsSafeFile($filename);
-        $nIndex = count($this->_content['attachments']);
-        $temp_array['name'] = trim($filename);
-        $temp_array['size'] = strlen($body);
-        $temp_array['temp'] = $is_embed;
-        $temp_array['content-type'] = strtolower(trim($content_type));
-        $temp_array['content-disposition'] = strtolower(trim($content_disposition));
-        $temp_array['boundary'] = $boundary;
-        $temp_array['part'] = $part;
-        $temp_array['localname'] = self::md5($temp_array['boundary']).'_'.$safefilename;
-        $temp_array['type'] = 'mime';
-        $temp_array['index'] = $nIndex;
-        $temp_array['flat'] = $msg['flat'];
-        $temp_array['uidl'] = $msg['uidl'];
-        $temp_array['folder'] = $msg['folder'];
-
-        list($path, $dir) = $this->getPathName($temp_array, '_attachments');
-        $this->_mkdir($dir);
-        $this->saveFile($path, $body);
-        unset($body);
-        $this->_content['attachments'][$nIndex] = $temp_array;
-        $this->tdb->addAttachment($temp_array);
-
-        return $temp_array;
-    }
-
-    /**
      * Compile a string following the encoded method
      */
     protected function _convertBody($body, $enctype, $ctype)
@@ -1125,47 +797,6 @@ class Telaen_core
         }
 
         return $body;
-    }
-
-    /**
-    TODO: Remove this function
-
-    protected function download_attach($header,&$body,$bound="",$part=0,$down=1,$type,$tnef) {
-        if ($type == 'uue') {
-            $this->get_uuencoded($body,$bound,$down,'down');
-        }else {
-            if ($bound != "") {
-                $parts = $this->split_parts($bound,$body);
-                // split the especified part of mail, body and headers
-                $email = $this->fetchStructure($parts[$part]);
-                $header = $email['header'];
-                $body = $email['body'];
-                unset($email);
-            }
-            if($type == 'tnef' && is_numeric($tnef))
-                $this->get_tnef($header,$body,$tnef,$down,'down');
-            else
-                $this->build_attach($header,$body,"",0,$mode='down',$down);
-        }
-    }
-
-    */
-
-    /**
-     * Guess the attachment format and call the specific method
-     */
-    protected function _saveAttach($header, &$body, $filename, $type = 'mime', $tnef = '-1', $bound)
-    {
-        switch ($type) {
-        case 'uue':
-            $this->get_uuencoded($body, $bound, 0, 'save', $filename);
-            break;
-        case 'tnef':
-            $this->get_tnef($header, $body, $tnef, 0, $mode = 'save', $filename);
-            break;
-        default:
-            $this->_buildAttach($header, $body, "", 0, $mode = 'save', 0, $filename);
-        }
     }
 
     /**
@@ -1349,35 +980,6 @@ class Telaen_core
     /**
      * Parse the body content of the message
      * @param  array $msg Email message
-     * @return void
-     */
-    public function parseBodyOld($msg)
-    {
-        if (!$msg['bparsed']) {
-            $this->_content = [];
-            $this->_msgbody = $this->tstream();
-            foreach (['uidl', 'flat', 'folder'] as $k) {
-                $msgstub[$k] = $msg[$k];
-            }
-            $this->_processMessage($msgstub, $msg['header'], $msg['body']);
-            $path = $this->getPathName($msg)[0].'.msg';
-            if ($this->sanitize) {
-                /*
-                 * Uggg... we need a big ol' string. Hopefully, what
-                 * remains is small enuff that we're ok
-                 */
-                $b = $this->blob($this->_msgbody, false);
-                $this->_msgbody = $this->sanitizeHTML($b);
-            }
-            $this->saveFile($path, $this->_msgbody);
-            $msg['bparsed'] = true;
-            $this->tdb->doMessage($msg);
-        }
-    }
-
-    /**
-     * Parse the body content of the message
-     * @param  array $msg Email message
      * @return boolean
      */
     public function parseBody($msg)
@@ -1487,18 +1089,6 @@ class Telaen_core
     }
 
     /**
-     * Split an email by its boundary
-     */
-    protected function _splitParts($boundary, $body)
-    {
-        $startpos = strpos($body, $boundary)+strlen($boundary)+2;
-        $lenbody = strpos($body, "\r\n$boundary--") - $startpos;
-        $body = substr($body, $startpos, $lenbody);
-
-        return explode($boundary."\r\n", $body);
-    }
-
-    /**
      * Split header and body into an array and return body as stream
      * @param mixed $email Email message
      * @param boolean $inisout If we are given a string, return a string
@@ -1538,17 +1128,6 @@ class Telaen_core
         fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
         rewind($body);
         return ['header' => $header, 'body' => $body];
-    }
-
-    /**
-     * Guess the boundary from header
-     */
-    protected function _getBoundary($ctype)
-    {
-        if (preg_match('|boundary[ ]?=[ ]?["]?([^";]*)["]?.*$|iD', $ctype, $regs)) {     //preg_match('/boundary[ ]?=[ ]?(["]?.*)/i',$ctype,$regs)) {
-            //$boundary = preg_replace('/^\"(.*)\"$/', "$1", $regs[1])
-            return trim("--$regs[1]");
-        }
     }
 
     /**
@@ -1596,70 +1175,6 @@ class Telaen_core
         }
 
         return base64_decode($encode);
-    }
-
-    /**
-     * Guess all UUEncoded in the body
-     */
-    protected function _extractUuencoded(&$body)
-    {
-        $regex = "/(begin ([0-7]{3}) (.+))\r?\n(.+)\r?\nend/Us";
-        preg_match_all($regex, $body, $matches);
-        for ($i = 0; $i < count($matches[3]); $i++) {
-            $boundary = $matches[1][$i];
-            $fileperm = $matches[2][$i];
-            $filename = $matches[3][$i];
-            $stream = $this->_uuDecode($matches[4][$i]);
-
-            $temp_array['index'] = count($this->_content['attachments']);
-            $temp_array['name'] = $filename;
-            $temp_array['size'] = strlen($stream);
-            $temp_array['content-type'] = 'application/unknown';
-            $temp_array['content-disposition'] = 'attachment';
-            $temp_array['boundary'] = $boundary;
-            $temp_array['part'] = 0;
-            $temp_array['type'] = 'uue';
-            $temp_array['filename'] = $this->userfolder.'_attachments/'.self::md5($temp_array['boundary']).'_'.$temp_array['name'];
-            $this->_content['attachments'][] = $temp_array;
-            $this->saveFile($temp_array['filename'], $stream);
-            unset($temp_array);
-        }
-        $body = preg_replace($regex, "", $body);
-    }
-
-    /**
-     * Extract all attachmentes contained in a MS-TNEF attachment
-     */
-    protected function _extractTnef($msg, &$body, $boundary, $part)
-    {
-        $tnefobj = $this->_tnef->Decode($body);
-
-        for ($i = 0;$i<count($tnefobj);$i++) {
-            $content = $tnefobj[$i]['stream'];
-            $temp_array['index'] = count($this->_content['attachments']);
-            $temp_array['name'] = $tnefobj[$i]['name'];
-            $temp_array['size'] = $tnefobj[$i]['size'];
-            $temp_array['content-type'] = $tnefobj[$i]['type0'].'/'.$tnefobj[$i]['type1'];
-            $temp_array['content-disposition'] = 'attachment';
-            $temp_array['boundary'] = $boundary;
-            $temp_array['part'] = $part;
-            $temp_array['type'] = 'tnef';
-            $temp_array['tnef'] = $i;
-            $safefilename = self::fsSafeFile($temp_array['name']);
-            $temp_array['localname'] = self::md5($temp_array['boundary']).'_'.$safefilename;
-            $temp_array['flat'] = $msg['flat'];
-            $temp_array['uidl'] = $msg['uidl'];
-            $temp_array['folder'] = $msg['folder'];
-
-            $this->_content['attachments'][] = $temp_array;
-            list($path, $dir) = $this->getPathName($temp_array, '_attachments');
-            $this->_mkdir($dir);
-            $this->saveFile($path, $content);
-            $this->_content['attachments'][] = $temp_array;
-            $this->tdb->addAttachment($temp_array);
-
-            unset($temp_array);
-        }
     }
 
     /**
