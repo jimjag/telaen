@@ -660,7 +660,7 @@ class LocalMbox extends SQLite3
             $id = $this->m_idx[$id];
         }
         $msg = $this->messages[$id];
-        if (!empty($folder)) {
+        if (!empty($folder) && !(empty($was))) {
             $this->getMessages($was);
         }
         return $msg;
