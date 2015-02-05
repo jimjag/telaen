@@ -11,7 +11,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-if (!isset($ix) || !isset($folder)) {
+if (!isset($uidl) || !isset($folder)) {
     $TLN->redirectAndExit('index.php?err=3', true);
 }
 
@@ -25,49 +25,21 @@ if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));
 }
 
-function valid_email($thismail)
-{
-    $valid_regex = '/^[-a-z0-9_{|}~!#$+]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)+$/iD';
-    if (!preg_match($valid_regex, $thismail)) {
-        return 0;
-    }
-    global $addressbook,$f_email;
-    for ($i = 0;$i<count($addressbook);$i++) {
-        if (trim($addressbook[$i]['email']) == trim($thismail)) {
-            return 0;
-        }
-    }
-    if (trim($f_email) == trim($thismail)) {
-        return 0;
-    }
+$msg = $TLN->tdb->getMessage($uidl, $folder);
+$emails = [];
+$from = $TLN->getNames($msg['headers']['from']);
+$to = $TLN->getNames($msg['headers']['to']);
+$cc = $TLN->getNames($msg['headers']['cc']);
 
-    return 1;
-}
+$emails = array_merge($from, $to, $cc);
 
-$mail_info = $mbox['headers'][$folder][$ix];
-
-$emails = array();
-$from = $mail_info['from'];
-$to = $mail_info['to'];
-$cc = $mail_info['cc'];
-
-for ($i = 0;$i<count($from);$i++) {
-    $emails[] = $from[$i];
-}
-for ($i = 0;$i<count($to);$i++) {
-    $emails[] = $to[$i];
-}
-for ($i = 0;$i<count($cc);$i++) {
-    $emails[] = $cc[$i];
-}
-
-$aval = array();
+$aval = [];
 for ($i = 0;$i<count($emails);$i++) {
-    if (valid_email($emails[$i]['mail'])) {
+    if (PHPMailer::validateAddress($emails[$i]['mail'])) {
         $aval[] = $emails[$i];
     }
 }
-
+$aval = array_unique($aval);
 $aval_count = count($aval);
 
 if (isset($ckaval)) {
@@ -88,7 +60,7 @@ if (isset($ckaval)) {
     exit;
 } else {
     $smarty->assign('umFolder', $folder);
-    $smarty->assign('umIx', $ix);
+    $smarty->assign('umIx', $uidl);
     $smarty->assign('umAvailableAddresses', $aval_count);
 
     if ($aval_count > 0) {
