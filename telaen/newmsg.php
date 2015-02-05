@@ -82,17 +82,17 @@ if (isset($rtype)) {
 
     switch ($rtype) {
         case 'forward':
-            $TLN->mailSetFlag($mail_info, $this->flags['forwarded'], '+');
+            $TLN->mailSetFlag($msg, $TLN->flags['forwarded'], '+');
             break;
         case 'reply':
         case 'replyall':
-            $TLN->mailSetFlag($mail_info, $this->flags['answered'], '+');
+            $TLN->mailSetFlag($msg, $TLN->flags['answered'], '+');
             break;
         default:
             $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&pag={$pag}&refr=true");
             break;
     }
-    $filename = $TLN->getPathName($mail_info)[0];
+    $filename = $TLN->getPathName($msg)[0];
 
     if (!file_exists($filename)) {
         $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&pag={$pag}&refr=true");
@@ -159,7 +159,7 @@ if (isset($rtype)) {
     $ccreply = $TLN->clearNames($ccreply);
     $fromreply = $TLN->clearNames($fromreply);
 
-    $msgsubject = $email['subject'];
+    $msgsubject = $msg['subject'];
 
     $fromreply_quote = $fromreply;
     $toreply_quote = $toreply;
@@ -207,7 +207,7 @@ if (isset($rtype)) {
 
     $body .= "$linebreak
 {$lang['reply_subject_hea']} ".$msgsubject_quote."$linebreak
-{$lang['reply_date_hea']} ".@strftime($lang['date_format'], $email['date'])."$linebreak
+{$lang['reply_date_hea']} ".@strftime($lang['date_format'], $msg['date'])."$linebreak
 $linebreak
 $tmpbody";
 
