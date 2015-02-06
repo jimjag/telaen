@@ -66,7 +66,7 @@
           </tr>
           {/if}
           <tr>
-            <td class="cent" colspan="2"><a target="_blank" href="http://www.telaen.com" >Powered by Telaen Webmail!</a></td>
+            <td class="cent" colspan="2"><a target="_blank" href="http://jimjag.github.io/telaen/" >Powered by Telaen Webmail!</a></td>
           </tr>
         </form>
       </table></td>
