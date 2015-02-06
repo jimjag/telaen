@@ -451,14 +451,14 @@ $config['dirperm'] = 0700;
 */
 
 $config['allow_user_change_theme'] = true; //allow users select theme
-$config['default_theme'] = 'jagumail'; //key of theme, starting with zero
+$config['default_theme'] = 'default'; //key of theme, starting with zero
 $config['allow_user_change_language'] = true; //allow users select language
 $config['default_language'] = 'en_US'; //key of language
 
 // Themes
 $config['themes'] = array(
-    'jagumail' => 'jaguMail',
     'default' => 'Telaen Default',
+    'jagumail' => 'jaguMail',
     'hungi.mozilla' => 'Hungi Mozilla',
     'outlook' => 'MS Outlook',
 );
