@@ -1,3 +1,0 @@
-<!-- calendar template -->
-
-{$umCalendar} 
