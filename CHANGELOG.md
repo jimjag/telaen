@@ -5,7 +5,7 @@ First of all: Telaen would be nowhere without the effort of many beta
 
 Telaen was originally based on Uebimiau.
 
-LICENSE: Telaen is released under the GPL.
+LICENSE: Telaen is released under the GPLv2.
 
 
 CHANGELOG:
@@ -13,71 +13,56 @@ CHANGELOG:
 
 2.0.0-dev
 
+ * Vcard support
+ * Use better HTML sanitizer: *htmLawed*
+ * Use better HTML->Txt converter: *Html2Text*
+ * More robust MIME Message parsing
  * Drop support for PHP 5.3 and older
-
  * Email message cache no longer stored in Session data
-
  * Explicit error handler
-
  * Communication w/ IMAP and POP3 servers now uses PHP streams
-
  * 3rd party dependencies now located in ./vendor directory for
    future Composer compatibility
-
- * Updated PHPMailer (5.2.9), iCalcreator (2.20.2), tinymce (4.1.6),
-   Smarty (3.1.21)
+ * Updated *PHPMailer* (5.2.9), *iCalcreator* (2.20.2), *tinymce* (4.1.6),
+   *Smarty* (3.1.21)
 
 1.3.2
 
  * [New] Performance enhancements : avoid array copying
-
  * [Fix] Prevent direct access to libs even if not using web-server ACLs
  	(security)
-
- * [New] Update to tiny_mce 3.5.8
-
- * [New] Update to Smarty 2.6.27
-
- * [Fix] Correct bug w/ PHPMailer 5 compatibility
+ * [New] Update to *tiny_mce* 3.5.8
+ * [New] Update to *Smarty* 2.6.27
+ * [Fix] Correct bug w/ *PHPMailer* 5 compatibility
 
 1.3.1
 
- * [Fix] Sanitize f_email and redir url
+ * [Fix] Sanitize `f_email` and `redir` url
 
 1.3.0
 
- * [New] Support for PHPMailer 5.2.1.
-
+ * [New] Support for *PHPMailer* 5.2.1.
  * [New] Now includes an embedded appointment/event Calendar using the
  	iCal format under the hood.
-
  * [New] Ability to display a System-wide "news" banner via
  	inc/news/news.system.php
-
  * [New] Major speed improvements when handling the POP3 Inbox. Even
  	though it's not recommended to store all your Email in the POP3
  	Inbox, lots of people do which slowed down Telaen.
-
  * [Fix] No longer extracts vars willy-nilly from $_GET, $_POST, or
  	$_FILES.
-
- * [Misc] Moved all class.*.php files to ./inc/class/. and all config.*
- 	files to ./inc/config/. This means that upgrading may involve
+ * [Misc] Moved all `class.\*.php` files to `./inc/class/`. and all `config.\*`
+ 	files to `./inc/config/`. This means that upgrading may involve
  	moving and/or deleting older stale versions of files.
-
- * [New] Upgraded to latest TinyMce.
+ * [New] Upgraded to latest *TinyMce*.
 
 1.2.1
 
- * [New] New Forwarded status flag and icon added.
-
- * [New] Since ereg* is deprecated, all regexes now use the preg_*
+ * [New] New **Forwarded** status flag and icon added.
+ * [New] Since `ereg\*` is deprecated, all regexes now use the `preg_\*`
  	family.
-
- * [New] Smarty upgraded to 2.6.26
-
- * [New] PHPMailer upgraded to 2.0.3
-
+ * [New] *Smarty* upgraded to 2.6.26
+ * [New] *PHPMailer* upgraded to 2.0.3
  * [Fix] Users cannot create folder that have the same names as system
  	folders
 
@@ -88,52 +73,36 @@ CHANGELOG:
 1.2.0-RC1
 
  * [New] Updated Thai translation
-
  * [Fix] Sorting by To in Sent Messages now works.
-
  * [Fix] HTML Emails now have plain-text component, so that SpamAssassin
  	doesn't score them too badly.
-
  * [Fix] Fixed bug on IMAP when using prefix
 
 1.2.0-beta1
 
  * [New] Removed support for versions of PHP < 4.1.0
-
  * [New] Smarty upgraded to 2.6.18.
-
  * [New] Quota handling can now be set per user or per domain (or any
  	combination) via the new $quota_limits config variable.
-
  * [New] Uses POP3 UIDL for better message tracking. If server does not
  	provide a UIDL, we create our own.
-
  * [New] Email filters
-
  * [New] Ajax function: session is mantained alive in the compose page,
  	allowing writing long email without lose work.
-
  * [New] Login page now alerts when you kicked out on a session expire.
-
  * [Fix] Fixed regression with forward/reply of email with embedded
  	images. downloads.php causes logout on recipient if uses telaen.
-
  * [Fix] Various performance improvements
-
  * [Fix] IMAP bug: extra text added on saved sent message cause wrong
  	date/time display
-
  * [Fix] Hide attachments links only if they are embedded images. Some
  	clients (like pine) set Content-Id on all attachment types.
 
-1.1.3
+``1.1.3
 
  * [New] Added Malay translation
-
  * [New] Updates to some languages
-
  * [New] Included Outlook theme into package
-
  * [Fix] Solved bug with imap when move or delete multiple message only
  	one was moved or deleted.
 
@@ -141,35 +110,28 @@ CHANGELOG:
 
  * [Fix] Added check for on CAPA detection, avoid hangs when command is
  	not supported.
-
  * [Fix] Removed target->new on attach download (not open), causes blank
  	window remains open on IE.
-
  * [New] de lang up-to-date
 
 1.1.3-rc1:
 
  * [Fix] check_install.php(.txt) now correctly checks memory_limit
  	value.
-
  * [New] Now automatically detects if the POP3 server supports
  	PIPELINING, APOP, ATOP and UIDL. Can be overruled (enable or
  	disable) from config.php.
-
  * [Fix] Email parsing enhancement, now can parse correctly
  	multipart/alternative emails with multipart/mixed nested content.
  	This emails are usually generate form Apple Mail Clients Also
  	attachments types with dots (like application/vnd.ms-exel) are
  	detected correctly.
-
  * [New] Little usability issue, error/badlogin pages are merged with
  	login page, the errors are simply displayed in a box.  This also
  	removes unuseful/redudant code. To use this feature, themes need to
  	update their login.htm file (look at default/login.htm for
  	guidance).
-
  * [New] TinyMce updated to version 2.0.9
-
  * [New] New feauture: Button for download the entire message
 
 
@@ -178,34 +140,21 @@ CHANGELOG:
  * [New] Moved to subversion. This allowed us to rearrange the default
  	layout more easily and move the bundled Smarty package from
  	underneath the telaen path.
-
  * [New] Provide notice that the ./smarty/ directory should be moved
  	someplace outside of the web-space. Done by renaming the directory.
-
  * [New] Updated Smarty to 2.6.16 Updated tinyMce to 2.0.8
-
  * [New] Added korean language.
-
  * [Fix] Fixed error when using TOP retrieve mode, the msg[size]
  	contained an EOF that caused a bad response on the next command.
  	Also improved the move function, the message is deleted only if the
  	copy is done on filesystem.
-
- * [New] Added APOP login support. To enable, add
-
-    $mail_use_apop = yes;
-
- to your config.php file.
-
+ * [New] Added APOP login support. To enable, add `$mail_use_apop = yes;` to your config.php file.
  * [Fix] Better header parsing, support multi-line headers avoid wrong
  	content-type detect.
-
  * [Fix] Bug on attachment filename, sometimes the name ends with ';'
  	when receving emails from Hotmail accounts.
-
  * [Fix] Use the configured port on ONE-FOR-ALL mode, not depending from
  	protocol.
-
  * [Fix] Use relative path on redir.php links, avoid problems on https
  	servers.
 
@@ -218,72 +167,56 @@ CHANGELOG:
 1.1.1-rc2:
 
  * Fixed problem where messages disappear on refresh with zero quota.
-
  * Little fixes on themes.
 
 1.1.1-rc1:
 
  * Added sort for personal folders on folders list and fixed a bug can
  	cause duplicate entries in the list.
-
  * Fixed problem with missing header info when using IMAP. Also
  	addresses possible "double showing" of SPAM email both Inbox and
  	Spam folder.
-
  * Solved issue when attached images with upcase or capitalized
  	extension (like .JPG or .Gif) are not displayed inline
-
  * Added check for exclude user address in reply-all
-
  * Added ability to require a return-receipt on a new message
-
  * Improved signature/footer attach and multiple quotes on HTML messages
-
  * umask value and default directory permission bitmask now configurable
  	via the config.php file. Useful for some environs that need a more
  	"open" permission setup. NOTE: this requires people upgrading from
  	1.1.0 or earlier to modify their config.security.php file! Look at
  	the config.security.php.default file for these variable settings.
-
  * Templates improvements: - now header.htm contains also the <head>
  	section of html - meta tags output in <head> instead of a bad echo
  	- menu.htm template used instead of nav_menu.htm - webmail title
  	configurable in config.php - little restyling on quick address
  	window (mozilla style) - added a different header for popups
-
  * New check on quick address window, avoid to add an address multiple
  	times.
 
 1.1.0:
 
  * Updated Smarty to version 2.6.14
-
  * Added $phpmailer_sendmail and $phpmailer_timeout to
  	config.php.default to allow admin to easily override PHPMailer's
  	default sendmail path and SMTP timeout
-
  * Changed attachment window size to something large enough to be
  	readable, but not too large.
 
 1.1.0-rc2:
 
  * Updated TinyMCE to latest rev.
-
  * Fixed bug on email time calc.
-
  * Adjusted titles alignment an other little improvements on themes.
 
 1.1.0-rc1:
 
  * Fix bug where selected messages disappear from list on mark/unmark
  	read functions with 20 or more messages.
-
  * Fix bug where auto-deleting SPAM could affect other messages in the
  	INBOX.
-
  * Fix nasty bug where CC addresses were not being delivered if using
  	the 'mail' Mailer (PHPMailer bug).
-
  * Templates improvement, now we have a page header and footer included
  	in all pages (actually not for login and pop-ups). This allow a
  	faster style personalization.
@@ -295,12 +228,9 @@ CHANGELOG:
  	folder autopopulation. For example, a user can specify a
  	sensitivity of 2 (very sensitive), and all messages that have a
  	X-Spam-Level of 2 or more will get auto-moved to the SPAM folder.
-
  * Bundled themes converted to be xhtml1.0 compliant.
-
  * Force magic_quotes_runtime to be disabled, since it conflicts with
  	Smarty.
-
  * Fix issue with message lists when quotas are not used.
 
  * Provide ways to work around some issues with Redirects. We can now
@@ -309,7 +239,6 @@ CHANGELOG:
  	$redirects_use_meta). Also, we can select whether the URLs used for
  	redirects are absolute (as required by HTTP) or relative (see
  	$redirects_are_relative).
-
  * New feature: mark as read/unread on message list
 
 1.1.0-beta1:
@@ -318,34 +247,25 @@ CHANGELOG:
  	that $_SERVER['HTTPS'] is non-empty, we check explicitly for it
  	being set to 'on'. The official PHP docs are misleading (wrong)
  	here.
-
  * Add in extra/check_install.php.txt which performs some simple tests
  	of your installation and setup.
-
  * No longer require short_open_tag.
-
  * Some under-the-hood code improvements.
-
  * Remove the SPAM folder from the list of "folders that stuff can be
  	moved to by the user."
-
  * The Advanced HTML Editor is now TinyMCE, which is bundled with
  	Telaen. Changes to the newmsg.htm template file may be required
  	(depending on the template) to fully use this.
-
  * Now, whenever Telaen adds body content (eg: whenever we parseBody), we
  	choose to sanitize or not. This means that messages are sanitized
  	when printed or forwarded/replied to. Added a global variable,
  	$sanitize_html to control this ($allow_scripts also works, but is
  	being depreciated since it doesn't reflect what we're really
  	concerned about).
-
  * Fixed bug where show_body was not using the correct charset (since it
  	was removed by HTMLFilter).
-
  * Removed old krufty session code to use native PHP session()
  	capability.
-
  * Removed the tid/lid/sid stuff from the URL. Stored in user sessions,
  	as it should be.
 
@@ -357,37 +277,27 @@ CHANGELOG:
 
  * Fix the default theme to use a draft Telaen logo instead of the old
  	Uebimiau one.
-
  * The preferences page is now shown whenever the previously used
  	version and the present version differ by either the Major or Minor
  	version number. For example, moving from 1.0.0 to 1.0.1 will not
  	make it happen, but going from 1.0.4 to 1.1.0 will. This therefore
  	sets the assumption of what the "API" is :)
-
  * HTML Emails are now filtered through HTMLFilter, to protect against
  	XSS attacks.
-
  * We no longer get that weird '1' on the upper left of the message list
  	page.
-
  * Add in a method to adjust for server timezone offsets, if we can't
  	figure out the real offset.
-
  * Use output buffering within process.php to prevent breakage with
  	redirects.
-
  * Force exit after all redirects.
-
  * All redirects are now HTTP/1.1 compliant (ie: the use absolute URLs).
-
  * Some HTML cleanups for the default theme.
 
 1.0.0-RC1:
 
  * Fix calculation of timezones.
-
  * Rename of class files and other notices from Uebimiau to Telaen.
-
  * Enable marking READ messages as either READ or UNREAD upon logout.
  	The default is UNREAD. This allows users who check their mail with
  	other Email clients to see those messages as "new" and unread.
