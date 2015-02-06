@@ -29,37 +29,39 @@ if (empty($msg)) {
 }
 
 // check if we are downloading an attachment or the entire message
-if (isset($_GET['attach'])) {
-    $att = $_GET['attach'];
-    $downAll = false;
-} else {
-    $downAll = true;
-}
+extract(Telaen::pullFromArray($_GET, array('name', 'down'), 'str'));
 
-if ($downAll) {
+if (!isset($name)) {
     $sourceFile = $TLN->getPathName($msg)[0];
     $size = filesize($sourceFile);
     $disposition = 'attachment';
     $type = 'message/rfc822';
     $dlfname = trim($msg['subject']).'.eml';
 } else {
-    $arAttachment = explode(',', $att);
-    $attach = $mail_info;
-    foreach ($arAttachment as $item) {
-        if (is_numeric($item)) {
-            $attach = &$attach['attachments'][intval($item)];
+    $attach = $TLN->tdb->getAttachments($msg);
+    $cattachs = count($attach);
+    $name = urldecode($name);
+    $i = 0;
+    for ($i = 0; $i < $cattachs; $i++) {
+        if ($attach[$i]['name'] == $name) {
+            break;
         }
     }
+    if ($i >= $cattachs) {
+        // Couldn't find it, or no attachments at all
+        $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
+    }
 
-    $sourceFile = $attach['filename'];
-    if (preg_match('|\\.\\.|', $sourceFile) || !file_exists($sourceFile)) {
-        die();
+    $sourceFile = $TLN->getPathName($attach[$i], '_attachments')[0];
+    if (!file_exists($sourceFile)) {
+        $TLN->triggerError("Couldn't find attachment for {$folder}:{$uidl} at: $sourcefile");
+        $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
     }
 
     $size = filesize($sourceFile);
-    $disposition = (!$_GET['down']) ? 'inline' : 'attachment';
-    $type = (!preg_match('|[a-z0-9\-]+/[a-z0-9\-]+|i', $attach['content-type'])) ? 'application/octet-stream' : $attach['content-type'];
-    $dlfname = $attach['name'];
+    $disposition = (!$down) ? 'inline' : 'attachment';
+    $type = $attach[$i]['type'].'/'.$attach[$i]['subtype'];
+    $dlfname = $name;
 }
 
 header('Pragma: public');

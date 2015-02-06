@@ -24,7 +24,7 @@ $ix = $msg['idx'];
 $is_attached = false;
 $arAttachment = array();
 
-if (!($msg['body'] = $TLN->mailRetrMsg($msg))) {
+if (!($msg['body'] = $TLN->mailRetrMsg($msg, false))) {
     $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
 }
 if (!$TLN->mailSetFlag($msg, $TLN->flags['seen'], '+')) {
