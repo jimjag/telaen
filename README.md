@@ -103,4 +103,4 @@ the user UI.
 
 ## Changelog
 
-See CHANGELOG.md
+See [CHANGELOG.md](https://github.com/jimjag/telaen/blob/master/CHANGELOG.md)
