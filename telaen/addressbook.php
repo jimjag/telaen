@@ -17,7 +17,7 @@ require './inc/init.php';
 $smarty->assign('pageMetas', $pmetas);
 
 $filename = $TLN->userdatafolder.'/addressbook.ucf';
-$myfile = $TLN->readFile($filename);
+$myfile = $TLN->blob($TLN->readFile($filename, false), false);
 
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));

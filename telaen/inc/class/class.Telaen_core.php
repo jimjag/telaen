@@ -316,20 +316,28 @@ class Telaen_core
 
     /**
      * Open a file and read it fixing possible mistakes
-     * on the line breaks. A single variable is returned
-     * @param string $strfile File to read from
-     * @return string
+     * on the line breaks if desired. A single variable is returned
+     * @param string $path File to read from
+     * @param boolean $raw Read w/o changes/fixes for line breaks
+     * @return Mixed
      */
 
-    public function readFile($strfile)
+    public function readFile($path, $raw = true)
     {
-        if ($strfile == "" || !file_exists($strfile)) {
+        if ($path == "" || !file_exists($path)) {
             return '';
         }
-        $result = file_get_contents($strfile);
-        $result = preg_replace('|\r?\n|', "\r\n", $result);
         $this->status = STATUS_OK;
-        return $result;
+        if ($raw) {
+            $handle = @fopen($path, 'r');
+            if ($handle !== null) {
+                return $handle;
+            }
+            $this->triggerError("Cannot fopen $path", __FUNCTION__, __LINE__);
+            return $this->blob('error reading file');
+        }
+        $result = file_get_contents($path);
+        return preg_replace('|\r?\n|', "\r\n", $result);
     }
 
     /* stream_copy_to_stream() is slow and takes gobs of mem */

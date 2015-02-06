@@ -237,9 +237,8 @@ $TLN->ucharset = $lang['default_char_set'];
 /*
 Don't remove the following lines, or you will have problems with browser's cache
 */
-@Header('Expires: Wed, 11 Nov 1998 11:11:11 GMT');
-@Header('Cache-Control: no-cache');
-@Header('Cache-Control: must-revalidate');
+//@Header('Expires: Wed, 11 Nov 1998 11:11:11 GMT');
+@Header('Cache-Control: private, no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
 @Header('Pragma: no-cache');
 
 // No cache metas

@@ -18,19 +18,14 @@ require './inc/init.php';
 if (!$auth['auth']) {
    $TLN->redirectAndExit('index.php?err=4', true);
 }
-
-// check for main parameters
-if (!isset($_GET['folder']) || !isset($_GET['ix'])) {
-    die();
+if (!isset($uidl) || !isset($folder)) {
+    $TLN->redirectAndExit('index.php?err=3', true);
 }
 
-$folder = $_GET['folder'];
-$ix = $_GET['ix'];
-
 // ensure we have email infos
-$mail_info = $mbox['headers'][$folder][$ix];
-if (!is_array($mail_info)) {
-    die();
+$msg = $TLN->tdb->getMessage($uidl, $folder);
+if (empty($msg)) {
+    $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
 }
 
 // check if we are downloading an attachment or the entire message
@@ -42,15 +37,11 @@ if (isset($_GET['attach'])) {
 }
 
 if ($downAll) {
-    $sourceFile = $mail_info['localname'];
-    if (preg_match('|\\.\\.|', $sourceFile) || !file_exists($sourceFile)) {
-        die();
-    }
-
+    $sourceFile = $TLN->getPathName($msg)[0];
     $size = filesize($sourceFile);
     $disposition = 'attachment';
     $type = 'message/rfc822';
-    $dlfname = trim($mail_info['subject']).'.eml';
+    $dlfname = trim($msg['subject']).'.eml';
 } else {
     $arAttachment = explode(',', $att);
     $attach = $mail_info;

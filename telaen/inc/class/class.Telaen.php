@@ -459,42 +459,50 @@ class Telaen extends Telaen_core
      * @param array $msg Message to grab (REF)
      * @return string
      */
-    protected function _mailRetrMsgImap($msg)
+    protected function _mailRetrMsgImap($msg, $with_headers = true)
     {
         $msgheader = trim($msg['header']);
         list($path, $dir) = $this->getPathName($msg);
         if (file_exists($path)) {
-            $msgbody = $this->_getBodyFromCache($path);
-        } else {
-            $this->mailSendCommand("UID FETCH {$msg['uid']} BODY[TEXT]");
-            $buffer = $this->mailReadResponse();
-            if ($this->mailNokResp($buffer)) {
-                return false;
+            if ($with_headers) {
+                return $this->readFile($path, true);
+            } else {
+                return $this->_getBodyFromCache($path);
             }
-
-            $buffer = $this->mailReadResponse();
-            $msgbody = $this->tstream();
-            while (!$this->mailOkResp($buffer)) {
-                if (!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i', $buffer)) {
-                    if ($buffer != ')') {
-                        fwrite($msgbody, $buffer);
-                    }
-                }
-                $buffer = $this->mailReadResponse();
-            }
-            $msgheader .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
-
-            $pts = $this->tstream();
-            rewind($msgbody);
-            fwrite($pts, "$msgheader\r\n\r\n".stream_get_contents($msgbody));
-            $this->_mkdir($dir);
-            $this->saveFile($path, $pts);
-            fclose($pts);
-            rewind($msgbody);
-            $msg['iscached'] = true;
-            $this->tdb->doMessage($msg);
         }
-        return $msgbody;
+        $this->mailSendCommand("UID FETCH {$msg['uid']} BODY[TEXT]");
+        $buffer = $this->mailReadResponse();
+        if ($this->mailNokResp($buffer)) {
+            return false;
+        }
+
+        $buffer = $this->mailReadResponse();
+        $msgbody = $this->tstream();
+        while (!$this->mailOkResp($buffer)) {
+            if (!preg_match('|[ ]?\\*[ ]?[0-9]+[ ]?FETCH|i', $buffer)) {
+                if ($buffer != ')') {
+                    fwrite($msgbody, $buffer);
+                }
+            }
+            $buffer = $this->mailReadResponse();
+        }
+        $msgheader .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
+
+        $pts = $this->tstream();
+        rewind($msgbody);
+        fwrite($pts, "$msgheader\r\n\r\n".stream_get_contents($msgbody));
+        $this->_mkdir($dir);
+        $this->saveFile($path, $pts);
+        rewind($pts);
+        rewind($msgbody);
+        $msg['iscached'] = true;
+        $this->tdb->doMessage($msg);
+        if ($with_headers) {
+            return $pts;
+        } else {
+            fclose($pts);
+            return $msgbody;
+        }
     }
 
     /**
@@ -502,61 +510,69 @@ class Telaen extends Telaen_core
      * @param array $msg Message to grab (REF)
      * @return string
      */
-    protected function _mailRetrMsgPop($msg)
+    protected function _mailRetrMsgPop($msg, $with_headers = true)
     {
         list($path, $dir) = $this->getPathName($msg);
         if (file_exists($path)) {
-            $body = $this->_getBodyFromCache($path);
-        } elseif ($msg['folder'] == 'inbox') {
-            $command = ($this->config['mail_use_top']) ? 'TOP '.$msg['mnum'].' '.$msg['size'] : 'RETR '.$msg['mnum'];
-            $this->mailSendCommand($command);
-
-            $buffer = $this->mailReadResponse();
-
-            if ($this->mailNokResp($buffer)) {
-                return false;
+            if ($with_headers) {
+                return $this->readFile($path, true);
+            } else {
+                return $this->_getBodyFromCache($path);
             }
-            $pts = $this->tstream();
-            while (!self::_feof($this->_mail_connection)) {
-                $buffer = $this->mailReadResponse();
-                if (chop($buffer) == '.') {
-                    break;
-                }
-                fwrite($pts, $buffer);
-            }
-            $email = $this->fetchStructure($pts);
-            fclose($pts);
-            $header = $email['header'];
-            $body = $email['body'];
-
-            // Since we are pulling this message for the first
-            // time from the server, we need to add in our UIDL
-            // header. Thus, it will always now be available on
-            // the cached/local version.
-            $header .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
-
-            $pts = $this->tstream();
-            fwrite($pts, "$header\r\n\r\n".stream_get_contents($body));
-            $this->_mkdir($dir);
-            $this->saveFile($path, $pts);
-            fclose($pts);
-            $msg['iscached'] = true;
-            $this->tdb->doMessage($msg);
         }
-        return $body;
+        $command = ($this->config['mail_use_top']) ? 'TOP '.$msg['mnum'].' '.$msg['size'] : 'RETR '.$msg['mnum'];
+        $this->mailSendCommand($command);
+
+        $buffer = $this->mailReadResponse();
+
+        if ($this->mailNokResp($buffer)) {
+            return false;
+        }
+        $pts = $this->tstream();
+        while (!self::_feof($this->_mail_connection)) {
+            $buffer = $this->mailReadResponse();
+            if (chop($buffer) == '.') {
+                break;
+            }
+            fwrite($pts, $buffer);
+        }
+        $email = $this->fetchStructure($pts);
+        fclose($pts);
+        $header = $email['header'];
+        $body = $email['body'];
+
+        // Since we are pulling this message for the first
+        // time from the server, we need to add in our UIDL
+        // header. Thus, it will always now be available on
+        // the cached/local version.
+        $header .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
+
+        $pts = $this->tstream();
+        fwrite($pts, "$header\r\n\r\n".stream_get_contents($body));
+        $this->_mkdir($dir);
+        $this->saveFile($path, $pts);
+        rewind($pts);
+        rewind($body);
+        $msg['iscached'] = true;
+        $this->tdb->doMessage($msg);
+        if ($with_headers) {
+            return $pts;
+        } else {
+            return $body;
+        }
     }
 
     /**
      * Retrieve and return specific email message
-     * @param  string  $msg   The message to obtain
-     * @return string
+     * @param  array  $msg   The message to obtain
+     * @return mixed
      */
-    public function mailRetrMsg($msg)
+    public function mailRetrMsg($msg, $with_headers = true)
     {
         if ($this->mail_protocol == IMAP) {
-            return $this->_mailRetrMsgImap($msg);
+            return $this->_mailRetrMsgImap($msg, $with_headers);
         } else {
-            return $this->_mailRetrMsgPop($msg);
+            return $this->_mailRetrMsgPop($msg, $with_headers);
         }
     }
 

@@ -33,7 +33,7 @@ $smarty->assign('umJS', $jssource);
 
 // load filters
 $filename = $TLN->userdatafolder.'/filters.ucf';
-$myfile = $TLN->readFile($filename);
+$myfile = $this->blob($TLN->readFile($filename, false), false);
 $filters = array();
 
 if ($myfile != "") {

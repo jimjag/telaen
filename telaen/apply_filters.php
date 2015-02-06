@@ -7,7 +7,7 @@ if ($folder == 'inbox') {
     $require_update = false;
 
     $filename = $TLN->userdatafolder.'/filters.ucf';
-    $myfile = $TLN->readFile($filename);
+    $myfile = $TLN->blob($TLN->readFile($filename, false), false);
     $filters = array();
 
     if ($myfile != "") {

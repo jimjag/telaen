@@ -15,7 +15,7 @@ extract(Telaen::pullFromArray($_GET, array('where'), 'str'));
 extract(Telaen::pullFromArray($_POST, array('contacts'), 'str'));
 
 $filename = $TLN->userdatafolder.'/addressbook.ucf';
-$myfile = $TLN->readFile($filename);
+$myfile = $TLN->blob($TLN->readFile($filename, false), false);
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));
 }
