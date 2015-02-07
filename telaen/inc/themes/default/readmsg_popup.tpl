@@ -51,7 +51,7 @@
             <td class="headers">&nbsp;<b>{$umLabel.attch_type_hea}</b></td>
             {section name=i loop=$umAttachList}
           <tr bgcolor=white>
-            <td class="default">&nbsp;{$umAttachList[i].normlink}{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> &nbsp;&nbsp;&nbsp;&nbsp;{$umAttachList[i].downlink}<img src="./images/download.gif" width="12" height="12" border="0" alt=""></a></td>
+            <td class="default">&nbsp;{$umAttachList[i].normlink}{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> &nbsp;&nbsp;&nbsp;&nbsp;{$umAttachList[i].downlink}<img src="inc/themes/default/images/download.gif" width="12" height="12" border="0" alt=""></a></td>
             <td class="right">{$umAttachList[i].size}Kb &nbsp;</td>
             <td class="default">&nbsp;{$umAttachList[i].type}</td>
             {/section}

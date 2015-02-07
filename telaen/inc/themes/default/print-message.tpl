@@ -61,7 +61,7 @@ function printIt() {
               <td class="headers">&nbsp;<b>{$umLabel.attch_type_hea}</b></td>
               {section name=i loop=$umAttachList}
             <tr bgcolor=white>
-              <td class="default">&nbsp;<a href="{$umAttachList[i].normlink}" target=_blank>{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> <a href="{$umAttachList[i].downlink}" target=_blank><img src="./images/download.gif" width="12" height="12" border="0" alt=""></a></td>
+              <td class="default">&nbsp;<a href="{$umAttachList[i].normlink}" target=_blank>{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> <a href="{$umAttachList[i].downlink}" target=_blank><img src="inc/themes/default/images/download.gif" width="12" height="12" border="0" alt=""></a></td>
               <td class="right">{$umAttachList[i].size} &nbsp;</td>
               <td class="default">&nbsp;{$umAttachList[i].type}</td>
               {/section}

@@ -2,7 +2,7 @@
 
 <body>
 <div id="popup">
-  <div id="logo"> <img src="images/telaen_logo.jpg" width="310" height="73" alt="logo"> </div>
+  <div id="logo"> <img src="inc/themes/default/images/telaen_logo.jpg" width="310" height="73" alt="logo"> </div>
   <form name="form1" action="catch.php" method="post">
     <input type="hidden" name="ix" value="{$umIx}">
     <input type="hidden" name="folder" value="{$umFolder|escape:"html"}">

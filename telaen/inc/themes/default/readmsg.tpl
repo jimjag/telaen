@@ -24,7 +24,7 @@
       <tr bgcolor=white>
         <td width="20%" height="18" class="headerright">{$umLabel.from_hea} &nbsp;</td>
         <td class="default"> {section name=i loop=$umFromList}
-          &nbsp;<a href="{$umFromList[i].link}" title="{$umFromList[i].title|escape:"html"}">{$umFromList[i].name|default:#no_sender_text#|escape:"html"}</a> {/section}&nbsp; <a href="javascript:block_addresses()">{* not fully functional <img src="./images/cross.gif" width="15" height="13" border="0" alt="{$umLabel.block_address}"></a>&nbsp; *}<a href="javascript:catch_addresses()"><img src="./images/bookmark_it.gif" width="15" height="12" border="0" alt="{$umLabel.catch_address}"></a></td>
+          &nbsp;<a href="{$umFromList[i].link}" title="{$umFromList[i].title|escape:"html"}">{$umFromList[i].name|default:#no_sender_text#|escape:"html"}</a> {/section}&nbsp; <a href="javascript:block_addresses()">{* not fully functional <img src="inc/themes/default/images/cross.gif" width="15" height="13" border="0" alt="{$umLabel.block_address}"></a>&nbsp; *}<a href="javascript:catch_addresses()"><img src="inc/themes/default/images/bookmark_it.gif" width="15" height="12" border="0" alt="{$umLabel.catch_address}"></a></td>
       </tr>
       <tr bgcolor=white>
         <td height="18" class="headerright">{$umLabel.to_hea} &nbsp;</td>
@@ -55,7 +55,7 @@
             <td class="headers">&nbsp;<b>{$umLabel.attch_type_hea}</b></td>
             {section name=i loop=$umAttachList}
           <tr bgcolor=white>
-            <td class="default">&nbsp;{$umAttachList[i].normlink}{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> &nbsp;&nbsp;&nbsp;&nbsp;{$umAttachList[i].downlink}<img src="./images/download.gif" width="12" height="12" border="0" alt=""></a></td>
+            <td class="default">&nbsp;{$umAttachList[i].normlink}{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> &nbsp;&nbsp;&nbsp;&nbsp;{$umAttachList[i].downlink}<img src="inc/themes/default/images/download.gif" width="12" height="12" border="0" alt=""></a></td>
             <td class="right">{$umAttachList[i].size} &nbsp;</td>
             <td class="default">&nbsp;{$umAttachList[i].type}</td>
             {/section}

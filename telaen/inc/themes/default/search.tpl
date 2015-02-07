@@ -29,7 +29,7 @@
           <td colspan="5">&nbsp;</td>
           {if $umDoSearch}
         <tr>
-          <td width="35"  class="headers"><img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
+          <td width="35"  class="headers"><img src="inc/themes/default/images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="inc/themes/default/images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="inc/themes/default/images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
           <td width="200" class="headers">.: <b>{$umLabel.sch_subject_hea}</b> :.</td>
           <td width="160" class="headers">.: <b>{$umLabel.sch_from_hea}</b> :.</td>
           <td width="90" class="headers">.: <b>{$umLabel.sch_date_hea}</b> :.</td>

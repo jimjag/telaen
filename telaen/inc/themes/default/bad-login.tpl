@@ -13,7 +13,7 @@
 <br>
 <table width="500" border="0" cellspacing="0" cellpadding="2" align="center">
   <tr>
-    <td><img src="images/telaen-logo2.jpg" width="500" height="118" border=0 alt="Telaen Webmail"></td>
+    <td><img src="inc/themes/default/images/telaen-logo2.jpg" width="500" height="118" border=0 alt="Telaen Webmail"></td>
   </tr>
   <tr>
     <td bgcolor=white><table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">

@@ -23,7 +23,7 @@
           {/if}
           <tr>
             <td width="5"  class="headers"><input type=checkbox name=chkall onclick="sel()"></td>
-            <td width="34"  class="headers"><img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
+            <td width="34"  class="headers"><img src="inc/themes/default/images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="inc/themes/default/images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="inc/themes/default/images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
             <td width="225" class="headers">.: <b><a class="menu" href="javascript:sortby('subject')">{$umLabel.subject_hea}{$umSubjectArrow}</a></b> :.</td>
             {if $umFolder eq "sent"}
             <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('toname')">{$umLabel.to_hea}{$umToArrow}</a></b> :.</td>

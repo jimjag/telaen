@@ -2,7 +2,7 @@
 
 <body>
 <div id="popup">
-  <div id="logo"> <img src="images/telaen_logo.jpg" width="310" height="73" alt="logo"> </div>
+  <div id="logo"> <img src="inc/themes/default/images/telaen_logo.jpg" width="310" height="73" alt="logo"> </div>
   {literal} 
   <script type="text/javascript">
 

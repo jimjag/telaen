@@ -7,15 +7,15 @@
         {include file=$newsTemplate} </td>
       <td bgcolor="white" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="0">
           <tr bgcolor=white>
-            <td width="26%" height="18" class="headerright">{$umLabel.to_hea} &nbsp;<a href="javascript:addrpopup('to')"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+            <td width="26%" height="18" class="headerright">{$umLabel.to_hea} &nbsp;<a href="javascript:addrpopup('to')"><img src="inc/themes/default/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
             <td class="default">&nbsp;{$umTo}</td>
           </tr>
           <tr bgcolor=white>
-            <td height="18" class="headerright">{$umLabel.cc_hea} &nbsp;<a href="javascript:addrpopup('cc')"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+            <td height="18" class="headerright">{$umLabel.cc_hea} &nbsp;<a href="javascript:addrpopup('cc')"><img src="inc/themes/default/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
             <td class="default">&nbsp;{$umCc}</td>
           </tr>
           <tr bgcolor=white>
-            <td height="18" class="headerright">{$umLabel.bcc_hea} &nbsp;<a href="javascript:addrpopup('bcc')"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+            <td height="18" class="headerright">{$umLabel.bcc_hea} &nbsp;<a href="javascript:addrpopup('bcc')"><img src="inc/themes/default/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
             <td class="default">&nbsp;{$umBcc}</td>
           </tr>
           <tr bgcolor=white>
