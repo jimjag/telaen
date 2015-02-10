@@ -22,8 +22,8 @@ $myfile = $TLN->blob($TLN->readFile($filename, false), false);
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));
 }
-if (!isset($addressbook['Using_vCard'])) {
-    $newbook['Using_vCard'] = true;
+if (isset($addressbook[0]['name'])) {
+    // Old format of addressbook. xfer to vCard format
     foreach ($addressbook as $a) {
         $v = new vCard();
         $v->fn($a['name']);
@@ -32,7 +32,15 @@ if (!isset($addressbook['Using_vCard'])) {
         $v->tel($a['cell'], 'cell', 'voice');
         $v->x_work($a['work']);
         $v->note($a['note']);
-        $v->adr($a['pobox'], $a['extended'], $a['street'], $a['city'], $a['state'], $a['pcode'], $a['country']);
+        $v->adr("", 'pref', 'home');
+        $v->adr($a['pobox'], 'pobox');
+        $v->adr($a['extended'], 'extendedaddress');
+        $v->adr($a['street'], 'streetaddress');
+        $v->adr($a['city'], 'locality');
+        $v->adr($a['state'], 'region');
+        $v->adr($a['pcode'], 'postalcode');
+        $v->adr($a['country'], 'country');
+        $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
         $newbook[$a['name']] = strval($v);
         unset($v);
     }
@@ -61,16 +69,24 @@ switch ($opt) {
     // save an edited contact
 
     case 'save':
-        $addressbook[$id]['name'] = $name;
-        $addressbook[$id]['email'] = $email;
-        $addressbook[$id]['street'] = $street;
-        $addressbook[$id]['city'] = $city;
-        $addressbook[$id]['state'] = $state;
-        $addressbook[$id]['work'] = $work;
-        $addressbook[$id]['phone'] = $phone;
-        $addressbook[$id]['cell'] = $cell;
-        $addressbook[$id]['note'] = $note;
+        $v = new vCard(false, $addressbook[$id]);
+        $v->fn($name);
+        $v->email($email, 'internet', 'pref');
+        $v->adr("", 'pref', 'home');
+        $v->adr($pobox, 'pobox');
+        $v->adr($extended, 'extendedaddress');
+        $v->adr($street, 'streetaddress');
+        $v->adr($city, 'locality');
+        $v->adr($state, 'region');
+        $v->adr($pcode, 'postalcode');
+        $v->adr($country, 'country');
+        $v->x_work($work);
+        $v->tel($phone, 'pref', 'voice');
+        $v->tel($cell, 'cell', 'voice');
+        $v->note($note);
+        $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
 
+        $addressbook[$id] = strval($v);
         $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 1);
@@ -80,17 +96,24 @@ switch ($opt) {
 
     // add a new contact
     case 'add':
-        $id = count($addressbook);
-        $addressbook[$id]['name'] = $name;
-        $addressbook[$id]['email'] = $email;
-        $addressbook[$id]['street'] = $street;
-        $addressbook[$id]['city'] = $city;
-        $addressbook[$id]['state'] = $state;
-        $addressbook[$id]['work'] = $work;
-        $addressbook[$id]['phone'] = $phone;
-        $addressbook[$id]['cell'] = $cell;
-        $addressbook[$id]['note'] = $note;
+        $v = new vCard();
+        $v->fn($name);
+        $v->email($email, 'internet', 'pref');
+        $v->adr("", 'pref', 'home');
+        $v->adr($pobox, 'pobox');
+        $v->adr($extended, 'extendedaddress');
+        $v->adr($street, 'streetaddress');
+        $v->adr($city, 'locality');
+        $v->adr($state, 'region');
+        $v->adr($pcode, 'postalcode');
+        $v->adr($country, 'country');
+        $v->x_work($work);
+        $v->tel($phone, 'pref', 'voice');
+        $v->tel($cell, 'cell', 'voice');
+        $v->note($note);
+        $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
 
+        $addressbook[$name] = strval($v);
         $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 2);
@@ -101,11 +124,6 @@ switch ($opt) {
     //delete an existing contact
     case 'dele':
         unset($addressbook[$id]);
-        $newaddr = array();
-        while (list($l, $value) = each($addressbook)) {
-            $newaddr[] = $value;
-        }
-        $addressbook = $newaddr;
         $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
         $smarty->assign('umOpt', 3);
@@ -115,7 +133,7 @@ switch ($opt) {
 
     // show the form to edit
     case 'edit':
-
+        $v = new vCard(false, $addressbook[$id]);
         $smarty->assign('umAddrName', $addressbook[$id]['name']);
         $smarty->assign('umAddrEmail', $addressbook[$id]['email']);
         $smarty->assign('umAddrStreet', $addressbook[$id]['street']);
@@ -133,7 +151,7 @@ switch ($opt) {
 
     // display the details for an especified contact
     case 'display':
-
+        $v = new vCard(false, $addressbook[$id]);
         $smarty->assign('umAddrName', $addressbook[$id]['name']);
         $smarty->assign('umAddrEmail', $addressbook[$id]['email']);
         $smarty->assign('umAddrStreet', $addressbook[$id]['street']);
