@@ -72,7 +72,7 @@ switch ($opt) {
         $v = new vCard(false, $addressbook[$id]);
         $v->fn($name);
         $v->email($email, 'internet', 'pref');
-        $v->adr("", 'pref', 'home');
+        $v->adr('adr', 'pref', 'home');
         $v->adr($pobox, 'pobox');
         $v->adr($extended, 'extendedaddress');
         $v->adr($street, 'streetaddress');
@@ -99,7 +99,7 @@ switch ($opt) {
         $v = new vCard();
         $v->fn($name);
         $v->email($email, 'internet', 'pref');
-        $v->adr("", 'pref', 'home');
+        $v->adr('adr', 'pref', 'home');
         $v->adr($pobox, 'pobox');
         $v->adr($extended, 'extendedaddress');
         $v->adr($street, 'streetaddress');
@@ -134,15 +134,28 @@ switch ($opt) {
     // show the form to edit
     case 'edit':
         $v = new vCard(false, $addressbook[$id]);
-        $smarty->assign('umAddrName', $addressbook[$id]['name']);
-        $smarty->assign('umAddrEmail', $addressbook[$id]['email']);
-        $smarty->assign('umAddrStreet', $addressbook[$id]['street']);
-        $smarty->assign('umAddrCity', $addressbook[$id]['city']);
-        $smarty->assign('umAddrState', $addressbook[$id]['state']);
-        $smarty->assign('umAddrWork', $addressbook[$id]['work']);
-        $smarty->assign('umAddrPhone', $addressbook[$id]['phone']);
-        $smarty->assign('umAddrCell', $addressbook[$id]['cell']);
-        $smarty->assign('umAddrNote', $addressbook[$id]['note']);
+        foreach ($v->tel as $p) {
+            if (in_array('cell', $p['type'])) {
+                $cell = $p['value'];
+            }
+            if (in_array('voice', $p['type'])) {
+                $phone = $p['value'];
+            }
+        }
+        $smarty->assign('umAddrName', $v->fn[0]);
+        $smarty->assign('umAddrEmail', $v->email[0]['value']);
+        $smarty->assign('umAddrPObox', $v->adr[0]['pobox']);
+        $smarty->assign('umAddrExtended', $v->adr[0]['extendedaddress']);
+        $smarty->assign('umAddrStreet', $v->adr[0]['streetaddress']);
+        $smarty->assign('umAddrCity', $v->adr[0]['locality']);
+        $smarty->assign('umAddrState', $v->adr[0]['region']);
+        $smarty->assign('umAddrPCode', $v->adr[0]['postalcode']);
+        $smarty->assign('umAddrCountry', $v->adr[0]['country']);
+        $smarty->assign('umAddrWork', $v->x_work[0]);
+        $smarty->assign('umAddrPhone', $phone);
+        $smarty->assign('umAddrCell', $cell);
+        $smarty->assign('umAddrNote', $v->note[0]);
+
         $smarty->assign('umOpt', 'save');
         $smarty->assign('umAddrID', $id);
         $templatename = 'address-form.tpl';
@@ -152,15 +165,27 @@ switch ($opt) {
     // display the details for an especified contact
     case 'display':
         $v = new vCard(false, $addressbook[$id]);
-        $smarty->assign('umAddrName', $addressbook[$id]['name']);
-        $smarty->assign('umAddrEmail', $addressbook[$id]['email']);
-        $smarty->assign('umAddrStreet', $addressbook[$id]['street']);
-        $smarty->assign('umAddrCity', $addressbook[$id]['city']);
-        $smarty->assign('umAddrState', $addressbook[$id]['state']);
-        $smarty->assign('umAddrWork', $addressbook[$id]['work']);
-        $smarty->assign('umAddrPhone', $addressbook[$id]['phone']);
-        $smarty->assign('umAddrCell', $addressbook[$id]['cell']);
-        $smarty->assign('umAddrNote', $addressbook[$id]['note']);
+        foreach ($v->tel as $p) {
+            if (in_array('cell', $p['type'])) {
+                $cell = $p['value'];
+            }
+            if (in_array('voice', $p['type'])) {
+                $phone = $p['value'];
+            }
+        }
+        $smarty->assign('umAddrName', $v->fn[0]);
+        $smarty->assign('umAddrEmail', $v->email[0]['value']);
+        $smarty->assign('umAddrPObox', $v->adr[0]['pobox']);
+        $smarty->assign('umAddrExtended', $v->adr[0]['extendedaddress']);
+        $smarty->assign('umAddrStreet', $v->adr[0]['streetaddress']);
+        $smarty->assign('umAddrCity', $v->adr[0]['locality']);
+        $smarty->assign('umAddrState', $v->adr[0]['region']);
+        $smarty->assign('umAddrPCode', $v->adr[0]['postalcode']);
+        $smarty->assign('umAddrCountry', $v->adr[0]['country']);
+        $smarty->assign('umAddrWork', $v->x_work[0]);
+        $smarty->assign('umAddrPhone', $phone);
+        $smarty->assign('umAddrCell', $cell);
+        $smarty->assign('umAddrNote', $v->note[0]);
 
         $smarty->assign('umAddrID', $id);
         $templatename = 'address-display.tpl';
