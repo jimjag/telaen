@@ -22,7 +22,23 @@ $myfile = $TLN->blob($TLN->readFile($filename, false), false);
 if ($myfile != "") {
     $addressbook = unserialize(base64_decode($myfile));
 }
-$TLN->arrayQsort2ic($addressbook, 'name');
+if (!isset($addressbook['Using_vCard'])) {
+    $newbook['Using_vCard'] = true;
+    foreach ($addressbook as $a) {
+        $v = new vCard();
+        $v->fn($a['name']);
+        $v->email($a['email'], 'internet', 'pref');
+        $v->tel($a['phone'], 'pref', 'voice');
+        $v->tel($a['cell'], 'cell', 'voice');
+        $v->x_work($a['work']);
+        $v->note($a['note']);
+        $v->adr($a['pobox'], $a['extended'], $a['street'], $a['city'], $a['state'], $a['pcode'], $a['country']);
+        $newbook[$a['name']] = strval($v);
+        unset($v);
+    }
+    $addressbook = $newbook;
+}
+ksort($addressbook);
 
 eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
@@ -36,12 +52,11 @@ function refreshlist() { location = 'addressbook.php' }
 $smarty->assign('umJS', $jssource);
 $smarty->assign('umGoBack', 'addressbook.php');
 
-extract(Telaen::pullFromArray($_GET, array('opt'), 'str'));
-extract(Telaen::pullFromArray($_POST, array('name', 'email', 'street', 'city', 'state', 'work', 'phone',
-    'cell', 'note', 'opt'), 'str'));
-extract(Telaen::pullFromArray($_GET, array('id'), 1));
-extract(Telaen::pullFromArray($_POST, array('id'), 1));
+extract(Telaen::pullFromArray($_GET, array('opt', 'id'), 'str'));
+extract(Telaen::pullFromArray($_POST, array('name', 'email', 'street', 'city', 'state', 'country', 'work', 'phone',
+    'cell', 'note', 'fax', 'opt', 'id'), 'str'));
 
+$id = urldecode($id);
 switch ($opt) {
     // save an edited contact
 
@@ -157,12 +172,7 @@ switch ($opt) {
 
         $smarty->assign('umNew', 'addressbook.php?opt=new');
 
-        $addresslist = array();
         $nummsg = count($addressbook);
-        if (!isset($pag) || !is_numeric(trim($pag))) {
-            $pag = 1;
-        }
-
         $reg_pp = $TLN->prefs['rpp'];
         $start_pos = ($pag-1)*$reg_pp;
         $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
@@ -195,16 +205,19 @@ switch ($opt) {
 
         $smarty->assign('umNavBar', $navigation);
 
+        $addresslist = [];
+        $i = 0;
+        foreach ($addressbook as $k => $a) {
+            $k = urlencode($k);
+            $v = new vCard(false, $a);
+            $addresslist[$i]['viewlink'] = "addressbook.php?opt=display&id=$k";
+            $addresslist[$i]['composelink'] = "newmsg.php?nameto=".urlencode($v->fn)."&mailto=".urlencode($v->email[0]['value'])."";
+            $addresslist[$i]['editlink'] = "addressbook.php?opt=edit&id=$k";
+            $addresslist[$i]['dellink'] = "addressbook.php?opt=dele&id=$k";
 
-        for ($i = $start_pos; $i < $end_pos; $i++) {
-            $ind = count($addresslist);
-            $addresslist[$ind]['viewlink'] = "addressbook.php?opt=display&id=$i";
-            $addresslist[$ind]['composelink'] = "newmsg.php?nameto=".htmlspecialchars($addressbook[$i]['name'])."&mailto=".htmlspecialchars($addressbook[$i]['email'])."";
-            $addresslist[$ind]['editlink'] = "addressbook.php?opt=edit&id=$i";
-            $addresslist[$ind]['dellink'] = "addressbook.php?opt=dele&id=$i";
-
-            $addresslist[$ind]['name'] = $addressbook[$i]['name'];
-            $addresslist[$ind]['email'] = $addressbook[$i]['email'];
+            $addresslist[$i]['name'] = $v->fn;
+            $addresslist[$i]['email'] = $v->email[0]['value'];
+            $i++;
         }
         $templatename = 'address-list.tpl';
         $smarty->assign('umAddressList', $addresslist);

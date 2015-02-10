@@ -15,12 +15,14 @@ require './inc/init.php';
 $smarty->assign('pageMetas', $pmetas);
 
 extract(Telaen::pullFromArray($_GET, array('nameto', 'mailto'), 'str'));
-extract(
-    Telaen::pullFromArray(
-        $_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
-        'priority', 'body', 'is_html', 'textmode', 'sig', 'todo', 'rtype', 'uidl', ), 'str'
-    )
-);
+if (isset($nameto)) {
+    $nameto = urldecode($nameto);
+}
+if (isset($mailto)) {
+    $mailto = urldecode($mailto);
+}
+extract(Telaen::pullFromArray($_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
+        'priority', 'body', 'is_html', 'textmode', 'sig', 'todo', 'rtype', 'uidl', ), 'str'));
 
 if ($todo == 'send') {
     require './inc/send.php';
@@ -29,7 +31,6 @@ if ($todo == 'send') {
 // priority
 $priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority;
 $smarty->assign('umPriority', $priority_level);
-
 // adv editor
 if (!isset($textmode)) {
     $textmode = null;
