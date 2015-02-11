@@ -88,6 +88,8 @@ possible. The below external dependencies are bundled for convenience:
 - TinyMCE
 - PHPMailer
 - iCalCreator
+- vCard-parser (https://github.com/jimjag/vCard-parser fork)
+- Html2Text.php
 
 Telaen is designed to work with both the bundled as well as the system-provided
 versions of these tools.

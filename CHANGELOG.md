@@ -13,7 +13,7 @@ CHANGELOG:
 
 2.0.0-dev
 
- * Vcard support
+ * Vcard support via https://github.com/jimjag/vCard-parser
  * Use better HTML sanitizer: *htmLawed*
  * Use better HTML->Txt converter: *Html2Text*
  * More robust MIME Message parsing
