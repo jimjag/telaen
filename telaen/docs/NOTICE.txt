@@ -137,3 +137,11 @@ Html2Text.php
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  */
+
+/*
+ * class.Mparser.php
+ *   Orig impl: <copyright>Copyright � (C) Manuel Lemos 2006 - 2008</copyright>
+ *   Modifications for Telaen: Jim Jagielski <jimjag@gmail.com>
+ *   License: BSD 2-Clause: http://opensource.org/licenses/BSD-2-Clause
+ *
+ */
