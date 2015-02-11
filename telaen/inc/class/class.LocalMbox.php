@@ -14,10 +14,25 @@ Telaen is a GPL'ed software developed by
  */
 class LocalMbox extends SQLite3
 {
+    /**
+     * @var string Current Emailbox/folder
+     */
     private $current_folder = "";
+    /**
+     * @var string user's folder
+     */
     private $userfolder = "";
+    /**
+     * @var string path to DB
+     */
     private $db = null;
+    /**
+     * @var bool Force creation of all tables, even if they already exist
+     */
     private $force_new = false;
+    /**
+     * @var array Schema of 'folders' table
+     */
     private $fschema = array(
         'name' => 'TEXT NOT NULL',
         'system' => 'INT NOT NULL', // Is it a system folder?
@@ -30,6 +45,9 @@ class LocalMbox extends SQLite3
         'table_name' => 'TEXT DEFAULT ""',
         'dirname' => 'TEXT NOT NULL',
     );
+    /**
+     * @var array Schema of 'attachs' table
+     */
     private $aschema = array(
         'size' => 'INT DEFAULT 0',
         'flat' => 'INT DEFAULT 0',
@@ -42,6 +60,9 @@ class LocalMbox extends SQLite3
         'type' => 'TEXT DEFAULT ""',
         'subtype' => 'TEXT DEFAULT ""',
     );
+    /**
+     * @var array Schema of message data for each folder
+     */
     private $mschema = array(
         'date' => 'INT DEFAULT 0',
         'id' => 'INT DEFAULT 0',
@@ -65,20 +86,60 @@ class LocalMbox extends SQLite3
         'headers' => 'TEXT DEFAULT "a:0:{}"', // NOTE: array of headers
     );
 
-    public $folders = [];  // Hash: All Email boxes/folders; key = name
+    /**
+     * @var array Hash: All Email boxes/folders; key = name
+     */
+    public $folders = [];
+    /**
+     * @var array List of all attachments per message
+     */
     public $attachments = [];
-    public $messages = []; // List: All messages from the current email folder;
-    public $m_idx = []; // Hash: key = uidl; value = index to this->messages
-    public $allfolders = []; // All folders/directors
+    /**
+     * @var array List: All messages from the current email folder;
+     */
+    public $messages = [];
+    /**
+     * @var array Hash: key = uidl; value = index to this->messages
+     */
+    public $m_idx = [];
+    /**
+     * @var array List of all folders/directories
+     */
+    public $allfolders = [];
+    /**
+     * @var string Directory name of the users' "info data" folder
+     */
     public $udatafolder = '_infos';
-    public $m_delta = []; // Hash: key = message; value = array() of field changes
+    /**
+     * @var array Hash: key = message; value = array() of field changes
+     */
+    public $m_delta = [];
+    /**
+     * @var array List of all folders/directories we need
+     */
     private $_system_folders = ['inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos', '_tmp'];
+    /**
+     * @var array List of folders/directors hidden from the user
+     */
     private $_invisible = ['_attachments', '_infos', '_tmp'];
-    private $_indb = []; /* Hash: key = uidl; value = is it in the DB? */
+    /**
+     * @var array Hash: key = uidl; value = is it in the DB?
+     */
+    private $_indb = [];
+    /**
+     * @var array List of folders that have been changed and need to be synced
+     */
     private $_folder_need_sync = [];
+    /**
+     * @var bool Status
+     */
     private $_ok = true;
+    /**
+     * @var array Log entries
+     */
     private $_log = [];
-    /*
+    /**
+     * @var array List
      * Some message elements are arrays, that need to be serialize when storing and
      * unserialize when read. Thankfully, all these are unique field names and
      * so we don't need to check that we are updating/inserting messages, specifically,
@@ -815,7 +876,7 @@ class LocalMbox extends SQLite3
             }
         }
         $stmt->close();
-        $this->$_folder_need_sync = true;
+        $this->_folder_need_sync[$msgs[0]['folder']] = true;
         return $this->_ok;
     }
 

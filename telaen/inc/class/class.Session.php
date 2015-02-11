@@ -20,6 +20,7 @@ class Session
 
     /**
      * Session creator
+     * @param string Session ID string
      */
     public function __construct($sid)
     {
@@ -29,7 +30,7 @@ class Session
 
     /**
      * Load PHP Session data
-     * @param  string $index key of Session superglobal
+     * @param  string $id key of Session superglobal
      * @return string
      */
     public function &Load($id = 'default')

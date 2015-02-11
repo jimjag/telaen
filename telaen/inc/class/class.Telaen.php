@@ -10,16 +10,45 @@ require_once './inc/vendor/class.tnef.php';
  */
 class Telaen extends Telaen_core
 {
+    /**
+     * @var bool Does user have SPAM?
+     */
     public $havespam       = false;
+    /**
+     * @var array Hash of IMAP/POP3 server capabilities
+     */
     public $capabilities   = [];
-
+    /**
+     * @var string Current emailbox/folder in user
+     */
     protected $_current_folder = '';
+    /**
+     * @var array Regex to check for for SPAM message in Subject line
+     */
     protected $_spamregex      = ["^\*\*\*\*\*SPAM\*\*\*\*\*", "^\*\*\*\*\*VIRUS\*\*\*\*\*"];
+    /**
+     * @var string Email server URL / socket definition
+     */
     protected $_serverurl      = '';
+    /**
+     * @var int Response number
+     */
     protected $_respnum        = 0;
+    /**
+     * @var string Response string
+     */
     protected $_respstr        = '';
+    /**
+     * @var int Telaen DB format number
+     */
     protected $_version        = 2;
-    protected $_greeting       = '';        // Internally used for store initial IMAP/POP3 greeting message
+    /**
+     * @var string Stored Email server greeting string
+     */
+    protected $_greeting       = '';
+    /**
+     * @var int Time snap
+     */
     protected $_now = 0;
 
     const RESP_OK =   0;

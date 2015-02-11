@@ -25,37 +25,125 @@ define('STATUS_NOK_FILE', 2);
  */
 class Telaen_core
 {
+    /**
+     * @var string Email server
+     */
     public $mail_server = 'localhost';
+    /**
+     * @var int Port numder
+     */
     public $mail_port = 110;
+    /**
+     * @var bool Connect to port via TLS
+     */
     public $use_tls = false;
+    /**
+     * @var bool Allow upgrading to secure connection
+     */
     public $upgrade_tls = false;
+    /**
+     * @var string Email user name
+     */
     public $mail_user = 'unknown';
+    /**
+     * @var string Email user's password
+     */
     public $mail_pass = "";
+    /**
+     * @var string Email address
+     */
     public $mail_email = 'unknown@localhost';
+    /**
+     * @var int Protocol to use for checking/accessing Email server
+     */
     public $mail_protocol = POP3;
+    /**
+     * @var string IMAP Prefix char
+     */
     public $mail_prefix = "";
+    /**
+     * @var string EOL string
+     */
     public $CRLF = "\r\n";
+    /**
+     * @var int Default directory permissions
+     */
     public $dirperm = 0700;
+    /**
+     * @var int Default buffer size and temp stream size
+     */
     public $buffersz = 4194304; // 4M
-
+    /**
+     * @var bool Sanitize HTML via filter
+     */
     public $sanitize = true;
-    public $use_html = false;
+    /**
+     * @var bool Use HTML Email editor
+     */
+    public $use_html = true;
+    /**
+     * @var string User's charset
+     */
     public $ucharset = 'UTF-8';
+    /**
+     * @var string User's folder (must be secure location!)
+     */
     public $userfolder = './';
+    /**
+     * @var string Directory name of their _info
+     */
     public $userdatafolder = './_infos';
+    /**
+     * @var string Temporary scratch space
+     */
     public $temp_folder = './_tmp';
+    /**
+     * @var int Timeout in seconds
+     */
     public $idle_timeout = 10;
-    public $displayimages = false;
+    /**
+     * @var bool Show images in HTML messages
+     */
+    public $displayimages = true;
+    /**
+     * @var bool On attachments, save temp files
+     */
     public $save_temp_attachs = true;
+    /**
+     * @var array
+     */
     public $current_level = [];
+    /**
+     * @var array Hash of config entries
+     */
     public $config = [];
+    /**
+     * @var array Hash of user prefs
+     */
     public $prefs = [];
+    /**
+     * @var string Version number
+     */
     public $appversion = "2.0.0.dev";
+    /**
+     * @var string Display name of webapp
+     */
     public $appname = 'Telaen Webmail';
-    /* @var $tdb LocalMbox */
+    /**
+     * @var LocalMbox Cache
+     */
     public $tdb = null;
+    /**
+     * @var string
+     */
     public $AuthSession = "";
+    /**
+     * @var int Current status
+     */
     public $status = STATUS_OK;
+    /**
+     * @var array Hash of IMAP/POP3 message flags
+     */
     public $flags = [
         'seen' =>' \\SEEN',
         'deleted' => '\\DELETED',
@@ -67,10 +155,25 @@ class Telaen_core
     ];
 
     // internal
+    /**
+     * @var int IMAP message ID
+     */
     private $_sid = 0;
+    /**
+     * @var resource Handle to mail socket
+     */
     protected $_mail_connection = null;
+    /**
+     * @var bool Is user authenticated
+     */
     protected $_authenticated = false;
+    /**
+     * @var string UIDVALIDITY of IMAP server
+     */
     protected $_uidvalidity = "";
+    /**
+     * @var string Our default, internal charset
+     */
     protected $charset = 'UTF-8';
 
     /*******************/
