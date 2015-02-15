@@ -18,7 +18,7 @@ copyright, or worse, to put your name at the place.
 <br>
 <table width="95%" border="0" cellspacing="1" cellpadding="0" align="center" bgcolor="#999999" class="normal">
 	<tr bgcolor="#EAEAEA">
-		<td>{$umHeaders}</td>
+		<td>{$smHeaders}</td>
 	</tr>
 </table>
 <br>

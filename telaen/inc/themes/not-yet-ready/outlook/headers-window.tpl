@@ -15,7 +15,7 @@
         <tr>
           <td><table class='window_inner' width="100%" cellspacing="0" cellpadding="2">
               <tr>
-                <td><font class=xx-normal>{$umHeaders}</font></td>
+                <td><font class=xx-normal>{$smHeaders}</font></td>
               </tr>
             </table></td>
         </tr>

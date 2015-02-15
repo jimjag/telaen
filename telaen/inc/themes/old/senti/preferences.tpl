@@ -123,7 +123,7 @@
 					<td class=default>{$umSignature}</td>
 				</tr>
 				<tr>
-					<td class=default colspan=2><input type=checkbox name=f_add_sig value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{$smLabel.prf_auto_add_sign}</acronym> </td>
+					<td class=default colspan=2><input type=checkbox name=f_add_sig value="1"{$smAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{$smLabel.prf_auto_add_sign}</acronym> </td>
 				</tr>
 				<tr>
 					<td></td>

@@ -13,10 +13,10 @@
 
 </head>
 
-{if $umAdvancedEditor eq 1}
+{if $smAdvancedEditor eq 1}
 	<div id="hiddenCompose" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
 	<form name="hiddencomposeForm">
-	<textarea name="hiddencomposeFormTextArea">{$umBody|escape:"html"}</textarea>
+	<textarea name="hiddencomposeFormTextArea">{$smBody|escape:"html"}</textarea>
 	</form>
 	</div>
 {/if}
@@ -25,7 +25,7 @@
 <body><br><br>
 <table width="760" height="400" border="0" cellpadding="0" cellspacing="0" align="center">
 		<form name=composeForm method=post action="newmsg.php" onSubmit="return false;">
-		{$umForms}
+		{$smForms}
 	<tr valign="bottom">
 		<td height="61">
 			<img src="inc/themes/senti/images/mail_01.gif" width="18" height="61" alt=""></td>
@@ -63,15 +63,15 @@
 			<table width="100%" border=0 cellspacing=0 cellpadding=5 >
 				<tr bgcolor=white>
 					<td width="26%" height="18" class="headerright">{$smLabel.to_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
-					<td class="default">&nbsp;{$umTo}</td>
+					<td class="default">&nbsp;{$smTo}</td>
 				</tr>	
 				<tr bgcolor=white>
 					<td height="18" class="headerright">{$smLabel.cc_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
-					<td class="default">&nbsp;{$umCc}</td>
+					<td class="default">&nbsp;{$smCc}</td>
 				</tr>	
 				<tr bgcolor=white>
 					<td height="18" class="headerright">{$smLabel.bcc_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
-					<td class="default">&nbsp;{$umBcc}</td>
+					<td class="default">&nbsp;{$smBcc}</td>
 				</tr>	
 
 				<tr bgcolor=white>
@@ -82,7 +82,7 @@
 				<tr>
 					<td height="18" class="headerright">{$smLabel.attach_hea}</td>
 					<TD>	<table height="100%" width="100%" border=0 cellspacing=0 cellpadding=0>
-							{if $umHaveAttachs eq 1}
+							{if $smHaveAttachs eq 1}
 								<tr width="100%" height="50%">
 									<td width="50%" class="header">{$smLabel.attch_name_hea}</td>
 									<td width="10%" class="header">{$smLabel.attch_size} &nbsp;</td>
@@ -114,22 +114,22 @@
 				<tr>
 					<td class="default">&nbsp;</td>
 					<td class="default">
-					{if $umAdvancedEditor eq 1}
+					{if $smAdvancedEditor eq 1}
 						{include file="senti/advanced-editor.tpl"}
 						<div id="hiddenCompose2" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
-							<textarea cols=50 rows=15 name=body>{$umBody|escape:"html"}</textarea>
+							<textarea cols=50 rows=15 name=body>{$smBody|escape:"html"}</textarea>
 						</div>
 					{else}
-						<textarea cols=50 rows=15 name=body>{$umBody|escape:"html"}</textarea>
+						<textarea cols=50 rows=15 name=body>{$smBody|escape:"html"}</textarea>
 					{/if}
 
 					</td>
 				</tr>
 
-				{if !$umAddSignature && $umHaveSignature}
+				{if !$smAddSignature && $smHaveSignature}
 				<tr>
 					<td  class="headerright">{$smLabel.add_signature} &nbsp;</td>
-					<td class="default"><input type=checkbox name=cksig onClick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
+					<td class="default"><input type=checkbox name=cksig onClick="return addsig()"{if $smAddSignature eq 1} checked disabled{/if}></td>
 				</tr>
 				{/if}
 
@@ -137,9 +137,9 @@
 					<td  class="headerright">{$smLabel.priority_text} &nbsp;</td>
 					<td class="default">
 						<select name="priority">
-							<option value="1"{if $umPriority eq 1} selected{/if}>{$smLabel.priority_high}
-							<option value="3"{if $umPriority eq 3} selected{/if}>{$smLabel.priority_normal}
-							<option value="5"{if $umPriority eq 5} selected{/if}>{$smLabel.priority_low}
+							<option value="1"{if $smPriority eq 1} selected{/if}>{$smLabel.priority_high}
+							<option value="3"{if $smPriority eq 3} selected{/if}>{$smLabel.priority_normal}
+							<option value="5"{if $smPriority eq 5} selected{/if}>{$smLabel.priority_low}
 						</select>
 					</td>
 				</tr>

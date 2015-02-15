@@ -68,9 +68,9 @@ if (isset($fFilter)) {
 	");
     exit;
 } else {
-    $smarty->assign('umFolder', $folder);
-    $smarty->assign('umIx', $ix);
-    $smarty->assign('umAvailableAddresses', count($emails));
+    $smarty->assign('smFolder', $folder);
+    $smarty->assign('smIx', $ix);
+    $smarty->assign('smAvailableAddresses', count($emails));
 
     $smarty->assign('smAddressList', $emails);
 

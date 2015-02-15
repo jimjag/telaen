@@ -26,7 +26,7 @@
 										<tr><td align="left" class="title">.: <b>{$smLabel.bdl_title}</b> :.</td>
 										<tr><td align="left" class="default"><br>
 										{$smLabel.bdl_msg}<br><br>
-										<i>{$umServerResponse}</i></td>
+										<i>{$smServerResponse}</i></td>
 										<tr><td align="right"><br><br>										
 											<a href="./index.php?tid={$umTid}&lid={$umLid}" class="menu">{$smLabel.bdl_back}</a><br><br>
 										</td>

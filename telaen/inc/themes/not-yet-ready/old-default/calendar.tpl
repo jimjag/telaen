@@ -1,3 +1,3 @@
 <!-- calendar template -->
 
-{$umCalendar} 
+{$smCalendar}

@@ -19,7 +19,7 @@ copyright, or worse, to put your name at the place.
 <br>
 <table width="95%" border="0" cellspacing="1" cellpadding="0" align="center" bgcolor="#2D3443" class="normal">
 	<tr bgcolor="#BFC6D3">
-		<td>{$umHeaders}</td>
+		<td>{$smHeaders}</td>
 	</tr>
 </table>
 <br>

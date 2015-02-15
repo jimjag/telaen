@@ -37,31 +37,31 @@ copyright, or worse, to put your name at the place.
 		<tr>
 			<td colspan="2" height="20">&nbsp;</td>
 		</tr>
-		{if $umServerType neq "ONE-FOR-EACH"}
+		{if $smServerType neq "ONE-FOR-EACH"}
 		<tr>
 			<td align="right"><b>{$smLabel.lng_user_email}</b> :&nbsp;</td>
-			<td><input type="text" name="f_email" value="{$umEmail}" class="normal" style="width:140px;"></td>
+			<td><input type="text" name="f_email" value="{$smEmail}" class="normal" style="width:140px;"></td>
 		<tr>
 		{else}
 		<tr>
 			<td align="right"><b>{$smLabel.lng_user_name}</b> :&nbsp;</td>
-			<td><input type="text" name="f_user" value="{$umUser}" class="normal" style="width:80px;">{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
+			<td><input type="text" name="f_user" value="{$smUser}" class="normal" style="width:80px;">{if $smAvailableServers neq 0} <b>{$smServer}</b>{/if}</td>
 		</tr>
 		{/if}
 		<tr>
 			<td align="right"><b>{$smLabel.lng_user_pwd}</b> :&nbsp;</td>
 			<td><input type="password" name="f_pass" class="normal" style="width:80px;"></td>
 		</tr>
-		{if $umAllowSelectLanguage}
+		{if $smAllowSelectLanguage}
 		<tr>
 			<td align="right"><b>{$smLabel.lng_language}</b> :&nbsp;</td>
-			<td>{$umLanguages}</td>
+			<td>{$smLanguages}</td>
 		</tr>
 		{/if}
-		{if $umAllowSelectTheme}
+		{if $smAllowSelectTheme}
 		<tr>
 			<td align="right"><b>{$smLabel.lng_theme}</b> :&nbsp;</td>
-			<td>{$umThemes}</td>
+			<td>{$smThemes}</td>
 		{/if}
 		<tr>
 			<td align="center" colspan="2">&nbsp;</td>

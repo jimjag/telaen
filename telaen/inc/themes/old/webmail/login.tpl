@@ -23,23 +23,23 @@
 			<form name="form1" action="process.php" method=post>
 				<tr><td align="center" colspan="2"><br>.: <b>{$smLabel.lgn_welcome_msg}</b> :.<br></td></tr>
 				<tr><td>&nbsp;</td></tr>
-				{if $umServerType neq "ONE-FOR-EACH"}
+				{if $smServerType neq "ONE-FOR-EACH"}
 				<tr><td align="left" width="40%"><b>{$smLabel.lng_user_email}</b> :</td>
-				<td><input name="f_email" type="text" class="normal" value="{$umEmail}" style="width:140px;"></td></tr>
+				<td><input name="f_email" type="text" class="normal" value="{$smEmail}" style="width:140px;"></td></tr>
 				{else}
 				<tr><td align="left" width="40%"><b>{$smLabel.lng_user_name}</b> :</td>
-				<td><input name="f_user" type="text" class="normal" value="{$umUser}" style="width:80px;">
-                    {if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td></tr>
+				<td><input name="f_user" type="text" class="normal" value="{$smUser}" style="width:80px;">
+                    {if $smAvailableServers neq 0} <b>{$smServer}</b>{/if}</td></tr>
 				{/if}
 				<tr><td align="left" width="40%"><b>{$smLabel.lng_user_pwd}</b> :</td>
 				<td><input type="password" name="f_pass" class="normal"></td></tr>
-				{if $umAllowSelectLanguage}
+				{if $smAllowSelectLanguage}
 				<tr><td align="left" width="40%"><b>{$smLabel.lng_language}</b> :</td>
-				<td>{$umLanguages}</td></tr>
+				<td>{$smLanguages}</td></tr>
 				{/if}
-				{if $umAllowSelectTheme}
+				{if $smAllowSelectTheme}
 				<tr><td align="left"><b>{$smLabel.lng_theme}</b> :</td>
-				<td>{$umThemes}</td></tr>
+				<td>{$smThemes}</td></tr>
 				{/if}
 				<tr><td>&nbsp;</td></tr>
 				<tr><td class="left"></td>

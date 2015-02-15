@@ -23,7 +23,7 @@
           <td align=right class="cent"><br>
             {$smLabel.bdl_msg}<br>
             <br>
-            {$umServerResponse} <br>
+            {$smServerResponse} <br>
             <br>
             <a href="./index.php"><b><i>{$smLabel.bdl_back}</i></b></a><br>
             <br></td>

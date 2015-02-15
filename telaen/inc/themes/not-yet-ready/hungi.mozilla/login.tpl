@@ -22,33 +22,33 @@
           </tr>
           {/if}
 
-          {if $umServerType neq "ONE-FOR-EACH"}
+          {if $smServerType neq "ONE-FOR-EACH"}
           <tr>
             <td align="right" class="right2" width="40%"><b>{$smLabel.lng_user_email}</b>: &nbsp;</td>
-            <td class="default2"><input id="user" type="text" size="10" name="f_email" value="{$umEmail}" class="textbox" style="width:140px;" tabindex="1" /></td>
+            <td class="default2"><input id="user" type="text" size="10" name="f_email" value="{$smEmail}" class="textbox" style="width:140px;" tabindex="1" /></td>
           </tr>
           {else}
           <tr>
             <td align="right" class="right2" width="40%"><b>{$smLabel.lng_user_name}</b>: &nbsp;</td>
-            <td class="default2"><input id="user" type="text" size="5" name="f_user" value="{$umUser}" class="textbox" style="width:80px;" tabindex="1" />
-              {if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
+            <td class="default2"><input id="user" type="text" size="5" name="f_user" value="{$smUser}" class="textbox" style="width:80px;" tabindex="1" />
+              {if $smAvailableServers neq 0} <b>{$smServer}</b>{/if}</td>
           </tr>
           {/if}
           <tr>
             <td align="right" class="right2"><b>{$smLabel.lng_user_pwd}</b>: &nbsp;</td>
             <td class="default2"><input type="password" size="5" name="f_pass" value="" class="textbox" style="width:80px;" tabindex="2" /></td>
           </tr>
-          {if $umAllowSelectLanguage}
+          {if $smAllowSelectLanguage}
           <tr>
             <td align="right" class="right2"><b>{$smLabel.lng_language}</b>: &nbsp;</td>
-            <td class="default2">{$umLanguages}</td>
+            <td class="default2">{$smLanguages}</td>
           </tr>
           {/if}
 
-          {if $umAllowSelectTheme}
+          {if $smAllowSelectTheme}
           <tr>
             <td align="right" class="right2"><b>{$smLabel.lng_theme}</b>: &nbsp;</td>
-            <td class="default2">{$umThemes}</td>
+            <td class="default2">{$smThemes}</td>
           </tr>
           {/if}
           <tr>

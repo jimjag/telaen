@@ -262,7 +262,7 @@
                         <td width="420">{$umSignature}</td>
                       </tr>
                       <tr> 
-                        <td colspan="2"><input type="checkbox" name="f_add_sig" value="1"{$umAddSignature}> 
+                        <td colspan="2"><input type="checkbox" name="f_add_sig" value="1"{$smAddSignature}>
                           <acronym style="cursor: hand;" onClick="f_add_sig.click()">{$smLabel.prf_auto_add_sign}</acronym></td>
                       </tr>
                       <tr>

@@ -59,9 +59,9 @@ if (isset($ckaval)) {
 	");
     exit;
 } else {
-    $smarty->assign('umFolder', $folder);
-    $smarty->assign('umIx', $uidl);
-    $smarty->assign('umAvailableAddresses', $aval_count);
+    $smarty->assign('smFolder', $folder);
+    $smarty->assign('smIx', $uidl);
+    $smarty->assign('smAvailableAddresses', $aval_count);
 
     if ($aval_count > 0) {
         for ($i = 0;$i<$aval_count;$i++) {

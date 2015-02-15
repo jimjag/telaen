@@ -229,8 +229,8 @@ $AuthSession->Save($auth);
 
 $mymo = new MyMonth($TLN->userdatafolder);
 $mycal = $mymo->monthAsDiv();
-$smarty->assign('umCalendar', $mycal);
-$smarty->assign('umSystemNews', $TLN->config['systemNews']);
+$smarty->assign('smCalendar', $mycal);
+$smarty->assign('smSystemNews', $TLN->config['systemNews']);
 
 $TLN->ucharset = $lang['default_char_set'];
 

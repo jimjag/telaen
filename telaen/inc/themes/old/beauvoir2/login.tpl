@@ -30,22 +30,22 @@ copyright, or worse, to put your name at the place.
 			<form name="form1" action="process.php" method=post>
 				<tr><td align="center" colspan="2"><br>.: <b>{$smLabel.lgn_welcome_msg}</b> :.<br></td></tr>
 				<tr><td>&nbsp;</td></tr>
-				{if $umServerType neq "ONE-FOR-EACH"}
+				{if $smServerType neq "ONE-FOR-EACH"}
 				<tr><td align="left" width="40%"><b>{$smLabel.lng_user_email}</b> :</td>
-				<td><input type="text" name="f_email" value="{$umEmail}" class="normal" style="width: 140px; border: 1 solid #7F9DB9;"></td></tr>
+				<td><input type="text" name="f_email" value="{$smEmail}" class="normal" style="width: 140px; border: 1 solid #7F9DB9;"></td></tr>
 				{else}
 				<tr><td align="left" width="40%"><b>{$smLabel.lng_user_name}</b> :</td>
-				<td><input type="text" name="f_user" value="{$umUser}" class="normal" style="width: 80px; border: 1 solid #7F9DB9">{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td></tr>
+				<td><input type="text" name="f_user" value="{$smUser}" class="normal" style="width: 80px; border: 1 solid #7F9DB9">{if $smAvailableServers neq 0} <b>{$smServer}</b>{/if}</td></tr>
 				{/if}
 				<tr><td align="left" width="40%"><b>{$smLabel.lng_user_pwd}</b> :</td>
 				<td><input type="password" name="f_pass" class="normal" style="width: 80px; border: 1 solid #7F9DB9"></td></tr>
-				{if $umAllowSelectLanguage}
+				{if $smAllowSelectLanguage}
 				<tr><td align="left" width="40%"><b>{$smLabel.lng_language}</b> :</td>
-				<td>{$umLanguages}</td></tr>
+				<td>{$smLanguages}</td></tr>
 				{/if}
-				{if $umAllowSelectTheme}
+				{if $smAllowSelectTheme}
 				<tr><td align="left"><b>{$smLabel.lng_theme}</b> :</td>
-				<td>{$umThemes}</td></tr>
+				<td>{$smThemes}</td></tr>
 				{/if}
 				<tr><td>&nbsp;</td></tr>
 				<tr><td class="left"></td>

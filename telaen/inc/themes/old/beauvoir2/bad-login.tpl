@@ -29,7 +29,7 @@ copyright, or worse, to put your name at the place.
 				<tr><td align="center"><br><font color="red">.: <b>{$smLabel.bdl_title}</b> :.</font><br></td></tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr><td align="center">{$smLabel.bdl_msg}<br><br>
-				{$umServerResponse}</td></tr>
+				{$smServerResponse}</td></tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr><td align="center">> <a href="./index.php?tid={$umTid}&lid={$umLid}" class="lien">{$smLabel.bdl_back}</a> <</td></tr>
 				<tr><td>&nbsp;</td></tr>

@@ -8,8 +8,8 @@
     <td bgcolor="#EEE5DE"><ul class="menuFldList">
 
       <!-- sys folders --> 
-      {section name=sysFolder loop=$umSystemFolders}
-      <li class="menuFldItem"><a class="menu" href="{$umSystemFolders[sysFolder].link}">{$umSystemFolders[sysFolder].name}</a></li>
+      {section name=sysFolder loop=$smSystemFolders}
+      <li class="menuFldItem"><a class="menu" href="{$smSystemFolders[sysFolder].link}">{$smSystemFolders[sysFolder].name}</a></li>
       {/section} 
 
       <!-- personal folders --> 

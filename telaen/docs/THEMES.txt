@@ -4,7 +4,7 @@ recommend that you update your themes to fold in the new
 capability.
 
 For example, since Telaen is now SPAM aware, the 'messagelist.tpl'
-template now has access to a Smarty variable 'umHaveSpam'
+template now has access to a Smarty variable 'smHaveSpam'
 which prints out whether the user has SPAM (and it has
 been moved into their SPAM folder), using the 'have_spam'
 contant from the langs/ file selected. There are

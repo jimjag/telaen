@@ -8,10 +8,10 @@
 </script>
 {$smJS}
 </head>
-{if $umAdvancedEditor eq 1}
+{if $smAdvancedEditor eq 1}
 	<div id="hiddenCompose" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
 	<form name="hiddencomposeForm">
-	<textarea cols=76 rows=10 name="hiddencomposeFormTextArea">{$umBody|escape:"html"}</textarea>
+	<textarea cols=76 rows=10 name="hiddencomposeFormTextArea">{$smBody|escape:"html"}</textarea>
 	</form>
 	</div>
 {/if}
@@ -49,14 +49,14 @@
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" background="inc/themes/aleborgXP/images/menu_back.gif">
   <form name=composeForm method=post action="newmsg.php" onSubmit="return false;">
-    {$umForms} 
+    {$smForms}
     <tr> 
       <td height="16" class="default"> 
         <table width="500" border="0" cellspacing="0" cellpadding="0">
           <tr> 
             <td width="160">&nbsp;{$smLabel.to_hea} &nbsp;</td>
             <td width="20"><a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$smLabel.address_tip}"></a></td>
-            <td>{$umTo}</td>
+            <td>{$smTo}</td>
           </tr>
         </table>
       </td>
@@ -70,7 +70,7 @@
           <tr> 
             <td width="160">&nbsp;{$smLabel.cc_hea} &nbsp;</td>
             <td width="20"><a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$smLabel.address_tip}"></a></td>
-            <td>{$umCc}</td>
+            <td>{$smCc}</td>
           </tr>
         </table>
       </td>
@@ -84,7 +84,7 @@
           <tr> 
             <td width="160">&nbsp;{$smLabel.bcc_hea} &nbsp;</td>
             <td width="20"><a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$smLabel.address_tip}"></a></td>
-            <td>{$umBcc}</td>
+            <td>{$smBcc}</td>
           </tr>
         </table>
       </td>
@@ -114,9 +114,9 @@
             <td width="20">&nbsp;</td>
             <td>
               <select name="priority" class="textbox" style="width : 200px;">
-                <option value="1"{if $umPriority eq 1} selected{/if}>{$smLabel.priority_high}
-                <option value="3"{if $umPriority eq 3} selected{/if}>{$smLabel.priority_normal}
-                <option value="5"{if $umPriority eq 5} selected{/if}>{$smLabel.priority_low}
+                <option value="1"{if $smPriority eq 1} selected{/if}>{$smLabel.priority_high}
+                <option value="3"{if $smPriority eq 3} selected{/if}>{$smLabel.priority_normal}
+                <option value="5"{if $smPriority eq 5} selected{/if}>{$smLabel.priority_low}
               </select>
             </td>
           </tr>
@@ -126,7 +126,7 @@
     <tr> 
       <td height="2" background="inc/themes/aleborgXP/images/list_up.gif"><img src="inc/themes/aleborgXP/images/list_up.gif" width="5" height="2"></td>
     </tr>
-{if !$umAddSignature && $umHaveSignature}
+{if !$smAddSignature && $smHaveSignature}
     <tr> 
       <td height="16" class="default">
         <table width="500" border="0" cellspacing="0" cellpadding="0">
@@ -134,7 +134,7 @@
             <td width="160">&nbsp;{$smLabel.add_signature}</td>
             <td width="20">&nbsp;</td>
             <td>
-              <input type="checkbox" name="cksig" onClick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}>
+              <input type="checkbox" name="cksig" onClick="return addsig()"{if $smAddSignature eq 1} checked disabled{/if}>
             </td>
           </tr>
         </table>
@@ -173,7 +173,7 @@
 </table>
 
 			<table width="620" border=0 cellspacing=1 cellpadding=0>
-                {if $umHaveAttachs eq 1} 
+                {if $smHaveAttachs eq 1}
                 {section name=i loop=$smAttachList}
                 <tr> 
                   <td width="300" class="default"> &nbsp;{$smAttachList[i].name|escape:"html"}</td>
@@ -192,12 +192,12 @@
       <td height="3" background="inc/themes/aleborgXP/images/list_down.gif"><img src="inc/themes/aleborgXP/images/list_down.gif" width="5" height="3"></td>
     </tr>
     <tr> 
-      <td bgcolor="#FFFFFF">{if $umAdvancedEditor eq 1} {include file="uebimiau/advanced-editor.tpl"} 
+      <td bgcolor="#FFFFFF">{if $smAdvancedEditor eq 1} {include file="uebimiau/advanced-editor.tpl"}
         <div id="hiddenCompose2" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	
-          <textarea cols=76 rows=10 name=body>{$umBody|escape:"html"}</textarea>
+          <textarea cols=76 rows=10 name=body>{$smBody|escape:"html"}</textarea>
         </div>
         {else} 
-        <textarea cols=76 rows=10 name=body>{$umBody|escape:"html"}</textarea>
+        <textarea cols=76 rows=10 name=body>{$smBody|escape:"html"}</textarea>
         {/if}</td>
     </tr>
     <tr>

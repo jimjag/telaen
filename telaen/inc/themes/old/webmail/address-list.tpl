@@ -55,7 +55,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="5">&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}" class="lien">{$smLabel.previous_text}</a> &nbsp;{/if}{$umNavBar}{if $smNextLink}&nbsp;<a href="{$smNextLink}" class="lien">{$smLabel.next_text}</a>{/if}</td>
+					<td colspan="5">&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}" class="lien">{$smLabel.previous_text}</a> &nbsp;{/if}{$smNavBar}{if $smNextLink}&nbsp;<a href="{$smNextLink}" class="lien">{$smLabel.next_text}</a>{/if}</td>
 				</tr>
 				<tr>
 					<td colspan="5">&nbsp;</td>

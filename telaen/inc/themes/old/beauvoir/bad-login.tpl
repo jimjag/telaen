@@ -33,7 +33,7 @@ copyright, or worse, to put your name at the place.
 	<tr bgcolor="#F5F4F4">
 		<td	align="center">
 		<br>
-		{$smLabel.bdl_msg}<br>{$umServerResponse}<br>
+		{$smLabel.bdl_msg}<br>{$smServerResponse}<br>
 		<br>
 		> <a href="./index.php?tid={$umTid}&lid={$umLid}">{$smLabel.bdl_back}</a> <<br>
 		<br>

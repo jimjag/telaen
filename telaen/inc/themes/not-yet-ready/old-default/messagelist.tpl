@@ -5,40 +5,40 @@
       {include file=$calendarTemplate}
       {include file=$newsTemplate} </td>
     <td valign="top"><table cellspacing="1" cellpadding="1" width="100%" border="0" bgcolor="White">
-        {if $umNumMessages gt 0}
+        {if $smNumMessages gt 0}
           <tr>
 
         <form name="form1" action="process.php" method="post">
-          {$umForms}
+          {$smForms}
           <td colspan="7" class="default">&nbsp;&nbsp;
-            {$umWelcomeMessage2}
-            {if $umHaveSpam eq "TRUE"}
+            {$smWelcomeMessage2}
+            {if $smHaveSpam eq "TRUE"}
             - <a href="process.php?folder=spam" class="spam"><i>{$smLabel.have_spam}</i></a> {/if} </td>
             </tr>
 
-          {if $umErrorMessage neq ""}
+          {if $smErrorMessage neq ""}
           <tr>
-            <td colspan="7" class="default"><font color=red><b> &nbsp;&nbsp;{$umErrorMessage}</b></font></td>
+            <td colspan="7" class="default"><font color=red><b> &nbsp;&nbsp;{$smErrorMessage}</b></font></td>
           </tr>
           {/if}
           <tr>
             <td width="5"  class="headers"><input type=checkbox name=chkall onclick="sel()"></td>
             <td width="34"  class="headers"><img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt=""></td>
             <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('subject')">{$smLabel.subject_hea}{$smSubjectArrow}</a></b> :.</td>
-            {if $umFolder eq "sent"}
-            <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('toname')">{$smLabel.to_hea}{$umToArrow}</a></b> :.</td>
+            {if $smFolder eq "sent"}
+            <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('toname')">{$smLabel.to_hea}{$smToArrow}</a></b> :.</td>
             {else}
-            <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('fromname')">{$smLabel.from_hea}{$umFromArrow}</a></b> :.</td>
+            <td width="210" class="headers">.: <b><a class="menu" href="javascript:sortby('fromname')">{$smLabel.from_hea}{$smFromArrow}</a></b> :.</td>
             {/if}
             <td width="90" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{$smLabel.date_hea}{$smDateArrow}</a></b> :.</td>
-            <td width="70" class="headers">.: <b><a class="menu" href="javascript:sortby('size')">{$smLabel.size_hea}{$umSizeArrow}</a></b> :.</td>
+            <td width="70" class="headers">.: <b><a class="menu" href="javascript:sortby('size')">{$smLabel.size_hea}{$smSizeArrow}</a></b> :.</td>
           </tr>
           {section name=i loop=$smMessageList}
           <tr>
             <td class="default" nowrap>{$smMessageList[i].checkbox}</td>
             <td class="default" nowrap>{$smMessageList[i].priorimg}{$smMessageList[i].attachimg}{$smMessageList[i].statusimg}</td>
             <td class="default" nowrap><acronym title="{$smMessageList[i].subject|escape:"html"|default:$smLabel.no_subject_text}"> {if !$smMessageList[i].read}<b>{/if} <a href="{$smMessageList[i].readlink}">{$smMessageList[i].subject|truncate:30:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a> {if !$smMessageList[i].read}</b>{/if} </acronym></td>
-            {if $umFolder eq "sent"}
+            {if $smFolder eq "sent"}
             <td class="default" nowrap><acronym title="{$smMessageList[i].to|escape:"html"|default:$smLabel.no_recipient_text}"> {if !$smMessageList[i].read}<b>{/if} <a href="{$smMessageList[i].composelinksent}">{$smMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$smLabel.no_recipient_text}</a> {if !$smMessageList[i].read}</b>{/if} </acronym></td>
             {else}
             <td class="default" nowrap><acronym title="{$smMessageList[i].from|escape:"html"|default:$smLabel.no_recipient_text}"> {if !$smMessageList[i].read}<b>{/if} <a href="{$smMessageList[i].composelink}">{$smMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a> {if !$smMessageList[i].read}</b>{/if} </acronym></td>
@@ -62,12 +62,12 @@
               </select></td>
           </tr>
           <tr>
-            <td colspan="7" class="default">&nbsp;{$smLabel.pages_text}:&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}" class="navigation">{$smLabel.previous_text}</a> &nbsp;{/if}{$umNavBar}{if $smNextLink} &nbsp;<a href="{$smNextLink}" class="navigation">{$smLabel.next_text}</a>{/if}</td>
+            <td colspan="7" class="default">&nbsp;{$smLabel.pages_text}:&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}" class="navigation">{$smLabel.previous_text}</a> &nbsp;{/if}{$smNavBar}{if $smNextLink} &nbsp;<a href="{$smNextLink}" class="navigation">{$smLabel.next_text}</a>{/if}</td>
           </tr>
           {else}
           <tr>
             <td colspan="7" class="cent"><br>
-              &nbsp;&nbsp;{$smLabel.no_messages} <b>{$umBoxName|escape:"html"}</b><br>
+              &nbsp;&nbsp;{$smLabel.no_messages} <b>{$smBoxName|escape:"html"}</b><br>
               <br></td>
           </tr>
           {/if}

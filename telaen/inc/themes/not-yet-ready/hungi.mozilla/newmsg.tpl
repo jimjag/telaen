@@ -2,27 +2,27 @@
 
 {include file=$menuTemplate refresh="false"}
 <form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
-  {$umForms}
+  {$smForms}
   <table cellspacing="0" cellpadding="0" border="0" align="center"  bgcolor="#DDE3EB" width="100%">
     <tr>
       <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#DDE3EB">
           <tr bgcolor="#DDE3EB">
             <td width="26%" height="24" class="headerright">{$smLabel.to_hea} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->" /></a>&nbsp;</td>
-            <td class="default">&nbsp;{$umTo}</td>
+            <td class="default">&nbsp;{$smTo}</td>
           </tr>
           <tr>
             <td class="separator" colspan="2"></td>
           </tr>
           <tr bgcolor="#DDE3EB">
             <td height="24" class="headerright">{$smLabel.cc_hea} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" alt="<!--%address_tip%-->" /></a>&nbsp;</td>
-            <td class="default">&nbsp;{$umCc}</td>
+            <td class="default">&nbsp;{$smCc}</td>
           </tr>
           <tr>
             <td class="separator" colspan="2"></td>
           </tr>
           <tr bgcolor="#DDE3EB">
             <td height="24" class="headerright">{$smLabel.bcc_hea} &nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" alt="<!--%address_tip%-->" /></a>&nbsp;</td>
-            <td class="default">&nbsp;{$umBcc}</td>
+            <td class="default">&nbsp;{$smBcc}</td>
           </tr>
           <tr>
             <td class="separator" colspan="2"></td>
@@ -37,7 +37,7 @@
           <tr bgcolor="#DDE3EB">
             <td height="18" class="headerright">{$smLabel.attach_hea} &nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                {if $umHaveAttachs eq 1}
+                {if $smHaveAttachs eq 1}
                 <tr>
                   <td width="40%" class="headersLeft">&nbsp;.: <b>{$smLabel.attch_name_hea}</b> :. </td>
                   <td width="15%" class="headers">.: <b>{$smLabel.attch_size}</b> :.</td>
@@ -74,7 +74,7 @@
           </tr>
           <tr>
             <td class="headerright">&nbsp;</td>
-            <td class="default"><textarea cols="100" rows="20" name="body">{$umBody|escape:"html"}</textarea></td>
+            <td class="default"><textarea cols="100" rows="20" name="body">{$smBody|escape:"html"}</textarea></td>
           </tr>
           <tr>
             <td class="separator" colspan="2"></td>
@@ -83,13 +83,13 @@
             <td class="headerright">{$smLabel.require_receipt}  &nbsp;</td>
             <td class="default"><input type="checkbox" value="true" name="requireReceipt"{if $requireReceipt eq true} checked="checked"{/if}/></td>
           </tr>
-          {if !$umAddSignature && $umHaveSignature}
+          {if !$smAddSignature && $smHaveSignature}
           <tr>
             <td class="separator" colspan="2"></td>
           </tr>
           <tr>
             <td class="headerright">{$smLabel.add_signature} &nbsp;</td>
-            <td class="default"><input type="checkbox" name="cksig" onclick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
+            <td class="default"><input type="checkbox" name="cksig" onclick="return addsig()"{if $smAddSignature eq 1} checked disabled{/if}></td>
           </tr>
           {/if}
           <tr>
@@ -98,9 +98,9 @@
           <tr>
             <td class="headerright">{$smLabel.priority_text} &nbsp;</td>
             <td class="default"><select name="priority">
-                <option value="1"{if $umPriority eq 1} selected="selected"{/if}>{$smLabel.priority_high}</option>
-                <option value="3"{if $umPriority eq 3} selected="selected"{/if}>{$smLabel.priority_normal}</option>
-                <option value="5"{if $umPriority eq 5} selected="selected"{/if}>{$smLabel.priority_low}</option>
+                <option value="1"{if $smPriority eq 1} selected="selected"{/if}>{$smLabel.priority_high}</option>
+                <option value="3"{if $smPriority eq 3} selected="selected"{/if}>{$smLabel.priority_normal}</option>
+                <option value="5"{if $smPriority eq 5} selected="selected"{/if}>{$smLabel.priority_low}</option>
               </select></td>
           </tr>
           <tr>

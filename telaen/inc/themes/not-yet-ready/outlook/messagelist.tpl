@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<title>{if $webmailTitle}{$webmailTitle} - {/if}{$umBoxName} - {$smUserEmail}</title>
+<title>{if $webmailTitle}{$webmailTitle} - {/if}{$smBoxName} - {$smUserEmail}</title>
 <link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 {$pageMetas}
@@ -11,12 +11,12 @@
 
 <body>
 <form name=form1 action=process.php method=post>
-  {$umForms}
+  {$smForms}
   <table width='100%'>
-    {if $umNumMessages gt 0}
-    {if $umErrorMessage neq ""}
+    {if $smNumMessages gt 0}
+    {if $smErrorMessage neq ""}
     <tr>
-      <td colspan="7" class="default"><font color=red><b> &nbsp;&nbsp;{$umErrorMessage}</b></font></td>
+      <td colspan="7" class="default"><font color=red><b> &nbsp;&nbsp;{$smErrorMessage}</b></font></td>
     </tr>
     {/if}
     {/if}
@@ -26,7 +26,7 @@
     <td><table width='100%' cellpadding='0' cellspacing='0'>
         <tr>
           <td class="window_title"><img src='inc/themes/outlook/images/icon_outlook.gif'></td>
-          <td width='100%' class="window_title">&nbsp;{$umBoxName} - {$smUserEmail}</td>
+          <td width='100%' class="window_title">&nbsp;{$smBoxName} - {$smUserEmail}</td>
           <td class='window_title_X'><a href='javascript:goend()'><img border='0' src='inc/themes/outlook/images/X.png'></a></td>
         </tr>
       </table>
@@ -76,7 +76,7 @@
         <tr>
           <td valign=top colspan=3><table width='100%' cellpadding='0' cellspacing='0'>
               <tr>
-                <td onmouseover="this.className='seccion_title_over'" onmouseout="this.className='seccion_title_out'" onmouseup="this.className='seccion_title_out'" onmousedown="this.className='seccion_title_down'" onclick="javascript:folderlist()" class='seccion_title_out'>&nbsp;<img src="inc/themes/outlook/images/icon_folder_other.gif">&nbsp;<nobr>{$umBoxName}<img src="inc/themes/outlook/images/arrow_down.gif" border='0'></nobr></td>
+                <td onmouseover="this.className='seccion_title_over'" onmouseout="this.className='seccion_title_out'" onmouseup="this.className='seccion_title_out'" onmousedown="this.className='seccion_title_down'" onclick="javascript:folderlist()" class='seccion_title_out'>&nbsp;<img src="inc/themes/outlook/images/icon_folder_other.gif">&nbsp;<nobr>{$smBoxName}<img src="inc/themes/outlook/images/arrow_down.gif" border='0'></nobr></td>
                 <td class='seccion_title' align='right'><font class='xx-normal' color='#FFFFFF'>{$smLabel.move_selected_mnu}
                   <select name="aval_folders">
 
@@ -120,14 +120,14 @@
                       <td width="10px" align="center" class="headers" onmousedown="javascript:sel()"><nobr>&nbsp;<img src="inc/themes/outlook/images/icon_checkbox.gif">&nbsp;</nobr></td>
                       <td width="10px" align="center" class="headers"><img src="inc/themes/outlook/images/icon_high_priority.gif"></td>
                       <td width="10px" align="center" class="headers"><img src="inc/themes/outlook/images/icon_attachment_clip.gif"></td>
-                      {if $umFolder eq "sent"}
-                      <td colspan=2 onclick="javascript:sortby('toname')" class="headers">{$smLabel.to_hea}{$umToArrow}</td>
+                      {if $smFolder eq "sent"}
+                      <td colspan=2 onclick="javascript:sortby('toname')" class="headers">{$smLabel.to_hea}{$smToArrow}</td>
                       {else}
-                      <td colspan=2 onclick="javascript:sortby('fromname')" class="headers">{$smLabel.from_hea}{$umFromArrow}</td>
+                      <td colspan=2 onclick="javascript:sortby('fromname')" class="headers">{$smLabel.from_hea}{$smFromArrow}</td>
                       {/if}
                       <td onclick="javascript:sortby('subject')" class="headers">{$smLabel.subject_hea}{$smSubjectArrow}</td>
                       <td onclick="javascript:sortby('date')" width="100" class="headers">{$smLabel.date_hea}{$smDateArrow}</td>
-                      <td onclick="javascript:sortby('size')" width="60" class="headers">{$smLabel.size_hea}{$umSizeArrow}</td>
+                      <td onclick="javascript:sortby('size')" width="60" class="headers">{$smLabel.size_hea}{$smSizeArrow}</td>
                     </tr>
                     {counter start=0 print=false}
                     {section name=i loop=$smMessageList}
@@ -137,7 +137,7 @@
                       <td align="center" class="messagelist">{$smMessageList[i].priorimg}</td>
                       <td align="center" class="messagelist">{$smMessageList[i].attachimg}</td>
                       <td width="10px" align="center" class="messagelist"><nobr>{$smMessageList[i].statusimg}</nobr></td>
-                      {if $umFolder eq "sent"}
+                      {if $smFolder eq "sent"}
                       <td onclick="{$smMessageList[i].readlink}" id="address_{$contador}"
 												onmouseover="address_{$contador}.className='messagelist_over';subject_{$contador}.className='messagelist_over';date_{$contador}.className='messagelist_over';size_{$contador}.className='messagelist_over';"
 												onmouseout="address_{$contador}.className='messagelist';subject_{$contador}.className='messagelist';date_{$contador}.className='messagelist';size_{$contador}.className='messagelist';"
@@ -162,13 +162,13 @@
 												class="messagelist">{if $smMessageList[i].read eq "false"}<b>{/if}{$i}{$smMessageList[i].size}&nbsp;{if !$smMessageList[i].read}</b>{/if}</td>
                     </tr>
                     {/section}
-                    {if $umNumMessages eq 0}
+                    {if $smNumMessages eq 0}
                     <tr>
                       <td class="messagelist" colspan=7 align='center'><br>
                         <br>
                         <br>
                         <br>
-                        {$smLabel.no_messages} {$umBoxName|escape:"html"}<br>
+                        {$smLabel.no_messages} {$smBoxName|escape:"html"}<br>
                         <br>
                         <br>
                         <br>
@@ -217,10 +217,10 @@
   </tr>
 </form>
 <tr>
-  <td class='info_bar'> {if $umNumMessages gt 0}
-    {$umWelcomeMessage2}
+  <td class='info_bar'> {if $smNumMessages gt 0}
+    {$smWelcomeMessage2}
     {else}
-    {$smLabel.no_messages} {$umBoxName|escape:"html"}
+    {$smLabel.no_messages} {$smBoxName|escape:"html"}
     {/if}
 
     {if $smQuotaEnabled eq 1}
@@ -228,7 +228,7 @@
     {/if} 
 
     <!-- spam alert --> 
-    {if $umHaveSpam eq "TRUE"} <span style="color:red"><i>{$smLabel.have_spam}</i></span> {/if} </td>
+    {if $smHaveSpam eq "TRUE"} <span style="color:red"><i>{$smLabel.have_spam}</i></span> {/if} </td>
 </tr>
 </table>
 </body>

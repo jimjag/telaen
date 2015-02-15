@@ -149,10 +149,10 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     $mail->Mailer = $TLN->config['mailer_type'];
 
     if (($mail->Send()) === false) {
-        $smarty->assign('umMailSent', false);
-        $smarty->assign('umErrorMessage', $mail->ErrorInfo);
+        $smarty->assign('smMailSent', false);
+        $smarty->assign('smErrorMessage', $mail->ErrorInfo);
     } else {
-        $smarty->assign('umMailSent', true);
+        $smarty->assign('smMailSent', true);
 
         if ($TLN->prefs['save_to_sent']) {
             if (!$TLN->mailConnect()) $TLN->redirectAndExit('index.php?err=1', true);

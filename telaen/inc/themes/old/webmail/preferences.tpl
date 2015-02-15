@@ -104,7 +104,7 @@
 							<td>{$umSignature}</td>
 						</tr>
 						<tr bgcolor="#E1E4EB">
-							<td colspan="2"><input type="checkbox" name="f_add_sig" value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{$smLabel.prf_auto_add_sign}</acronym> </td>
+							<td colspan="2"><input type="checkbox" name="f_add_sig" value="1"{$smAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{$smLabel.prf_auto_add_sign}</acronym> </td>
 						</tr>
 						<tr bgcolor="#E1E4EB">
 							<td></td>

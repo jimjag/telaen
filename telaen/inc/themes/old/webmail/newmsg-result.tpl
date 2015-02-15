@@ -37,13 +37,13 @@
 			<tr>
 				<td height="20"></td>
 			</tr>
-			{if $umMailSent}
+			{if $smMailSent}
 			<tr align="center">
 				<td>{$smLabel.result_success}<br><br>> <a href="messages.php?sid={$umSid}&tid={$umTid}&lid={$umLid}" class="lien">{$smLabel.nav_continue}</a> <</td>
 			</tr>
 			{else}
 			<tr>
-				<td align="center">{$smLabel.result_error}<br><br><font class="error">{$umErrorMessage}</font><br><br>> <a href="javascript:history.go(-1)" class="lien">{$smLabel.nav_back}</a> <</td>
+				<td align="center">{$smLabel.result_error}<br><br><font class="error">{$smErrorMessage}</font><br><br>> <a href="javascript:history.go(-1)" class="lien">{$smLabel.nav_back}</a> <</td>
 			</tr>
 			{/if}
 			<tr>

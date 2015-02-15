@@ -20,14 +20,14 @@ copyright, or worse, to put your name at the place.
 <form name="form1" action="catch.php" method="POST">
 	<input type="hidden" name="sid" value="{$umSid}">
 	<input type="hidden" name="lid" value="{$umLid}">
-	<input type="hidden" name="ix" value="{$umIx}">
-	<input type="hidden" name="folder" value="{$umFolder|escape:"html"}">
+	<input type="hidden" name="ix" value="{$smIx}">
+	<input type="hidden" name="folder" value="{$smFolder|escape:"html"}">
 <br><br>
 <table width="500" border="0" cellspacing="1" cellpadding="0" class="normal" align="center" bgcolor="#999999">
 	<tr>
 		<td height="30" width="100%" colspan="2" align="center" valign="middle"><b>{$smLabel.ctc_information}</b></td>
 	</tr>
-	{if $umAvailableAddresses gt 0 }
+	{if $smAvailableAddresses gt 0 }
 	<tr bgcolor="#EAEAEA">
 		<td width="60%" align="center" valign="middle"><b>{$smLabel.ctc_name}</b></td>
 		<td align="center" valign="middle"><b>{$smLabel.ctc_email}</b></td>

@@ -30,7 +30,7 @@ if ($todo == 'send') {
 }
 // priority
 $priority_level = (!isset($priority) || empty($priority)) ? 3 : $priority;
-$smarty->assign('umPriority', $priority_level);
+$smarty->assign('smPriority', $priority_level);
 // adv editor
 if (!isset($textmode)) {
     $textmode = null;
@@ -45,7 +45,7 @@ if ($show_advanced) {
 
 $add_sig = $TLN->prefs['add_signature'];
 $addSignature = ($add_sig) ? 1 : 0;
-$smarty->assign('umAddSignature', $addSignature);
+$smarty->assign('smAddSignature', $addSignature);
 
 // return receipt
 $rr = ($TLN->prefs['require_receipt']) ? true : false;
@@ -59,7 +59,7 @@ $forms = "<input type='hidden' name='todo' value='create' />
 <input type='hidden' name='sig' value='".htmlspecialchars($signature)."' />
 <input type='hidden' name='textmode' value='$textmode' />
 ";
-$smarty->assign('umForms', $forms);
+$smarty->assign('smForms', $forms);
 
 eval('$jssource = "' . $commonJS . '";');
 
@@ -253,7 +253,7 @@ if ($show_advanced) {
 
 
 $haveSig = empty($signature) ? 0 : 1;
-$smarty->assign('umHaveSignature', $haveSig);
+$smarty->assign('smHaveSignature', $haveSig);
 
 $strto = (isset($nameto) && preg_match('|([-a-z0-9_$+.]+@[-a-z0-9_.]+[-a-z0-9_])|i', $mailto)) ?
 "<input class='textbox' style='width : 200px;' type='text' size='20' name='to' value='&quot;".htmlspecialchars(stripslashes($nameto))."&quot; <".htmlspecialchars(stripslashes($mailto)).">' />
@@ -266,7 +266,7 @@ $strsubject = "<input class='textbox' style='width : 200px;' type='text' size='2
 $attachs = $TLN->tdb->getAttachments($msg);
 $num = count($attachs);
 if ($num > 0) {
-    $smarty->assign('umHaveAttachs', 1);
+    $smarty->assign('smHaveAttachs', 1);
     $attachlist = array();
     for ($i = 0; $i < $num; $i++) {
 
@@ -291,14 +291,14 @@ if (!isset($txtarea)) {
  * HTML Email.
  */
 // $umAdvEdit = ($show_advanced) ? 1 : 0 ;
-$umAdvEdit = 0;
+$advEdit = 0;
 
-$smarty->assign('umBody', $body);
-$smarty->assign('umTo', $strto);
-$smarty->assign('umCc', $strcc);
-$smarty->assign('umBcc', $strbcc);
+$smarty->assign('smBody', $body);
+$smarty->assign('smTo', $strto);
+$smarty->assign('smCc', $strcc);
+$smarty->assign('smBcc', $strbcc);
 $smarty->assign('smSubject', $strsubject);
-$smarty->assign('umTextEditor', $txtarea);
-$smarty->assign('umAdvancedEditor', $umAdvEdit);
+$smarty->assign('smTextEditor', $txtarea);
+$smarty->assign('smAdvancedEditor', $advEdit);
 
 $smarty->display("$themez/newmsg.tpl");

@@ -82,7 +82,7 @@ $jssource = "
 
 //$smarty->debugging = true;
 $mail_server_type = strtoupper($TLN->config['mail_server_type']);
-$smarty->assign('umServerType', $mail_server_type);
+$smarty->assign('smServerType', $mail_server_type);
 
 switch ($mail_server_type) {
     case 'ONE-FOR-ALL':
@@ -90,7 +90,7 @@ switch ($mail_server_type) {
         break;
     case 'ONE-FOR-EACH':
         $aval_servers = count($TLN->config['mail_servers']);
-        $smarty->assign('umAvailableServers', $aval_servers);
+        $smarty->assign('smAvailableServers', $aval_servers);
         if (!$aval_servers) {
             die("You must set at least one server in \$mail_servers, please review your configv2.php");
         }
@@ -104,15 +104,15 @@ switch ($mail_server_type) {
             }
             $strServers .= "</select>\r";
         }
-        $smarty->assign('umServer', $strServers);
+        $smarty->assign('smServer', $strServers);
         break;
     default:
         die("Bad mail_server_type: {$mail_server_type}");
 }
 
-$smarty->assign('umEmail', $f_email);
-$smarty->assign('umUser', $f_user);
-$smarty->assign('umPass', $f_pass);
+$smarty->assign('smEmail', $f_email);
+$smarty->assign('smUser', $f_user);
+$smarty->assign('smPass', $f_pass);
 $smarty->assign('smJS', $jssource);
 
 if (count($TLN->config['languages']) == 0) {
@@ -123,7 +123,7 @@ if (count($TLN->config['themes']) == 0) {
     die('You must provide at least one theme');
 }
 
-$smarty->assign('umAllowSelectLanguage', $TLN->config['allow_user_change_language']);
+$smarty->assign('smAllowSelectLanguage', $TLN->config['allow_user_change_language']);
 printf($textout);
 
 if ($TLN->config['allow_user_change_language']) {
@@ -134,10 +134,10 @@ if ($TLN->config['allow_user_change_language']) {
         $langsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
     $langsel .= "</select>\r";
-    $smarty->assign("umLanguages", $langsel);
+    $smarty->assign("smLanguages", $langsel);
 }
 
-$smarty->assign('umAllowSelectTheme', $TLN->config['allow_user_change_theme']);
+$smarty->assign('smAllowSelectTheme', $TLN->config['allow_user_change_theme']);
 
 if ($TLN->config['allow_user_change_theme']) {
     $themsel = "<select name=\"tem\" onchange=\"selectLanguage()\">\r";
@@ -146,7 +146,7 @@ if ($TLN->config['allow_user_change_theme']) {
         $themsel .= "<option value=\"$key\" $selected>".$val."</option> \r";
     }
     $themsel .= "</select>\r";
-    $smarty->assign('umThemes', $themsel);
+    $smarty->assign('smThemes', $themsel);
 }
 
 $smarty->display("$themez/login.tpl");

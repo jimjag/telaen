@@ -28,7 +28,7 @@
   <tr>
     <td colspan="4" class="default">&nbsp;&nbsp;<span class="menu"><b>{$smLabel.pages_text}:</b></span> {if $smPreviousLink}<!--<a href="{$smFirstLink}" class="navigation">&laquo; {$smLabel.first_text}</a>&nbsp; -->
       <a href="{$smPreviousLink}" class="navigation">&laquo; {$smLabel.previous_text}</a>&nbsp;{/if}
-      {$umNavBar}
+      {$smNavBar}
       {if $smNextLink}&nbsp;<a href="{$smNextLink}" class="navigation">{$smLabel.next_text} &raquo;</a>
       <!--&nbsp;<a href="{$smLastLink}" class="navigation">{$smLabel.last_text} &raquo;</a>-->{/if} </td>
   </tr>

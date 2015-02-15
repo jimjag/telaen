@@ -18,7 +18,7 @@
 		<base target=\'_parent\'>
 		{counter start=0 skip=1 print=false}
 		{section name=i loop=$smFolderList}
-		{$umFoldersList}
+		{$smFoldersList}
 		{counter print=false assign=contador}
 
 		<tr><td>
@@ -141,7 +141,7 @@
                     </tr>
                     {counter start=0 skip=1 print=false}
                     {section name=i loop=$smFolderList}
-                    {$umFoldersList}
+                    {$smFoldersList}
                     {counter print=false assign=contador}
                     <tr> {strip}
                       <td width=25px align=center class="messagelist"> {if $smFolderList[i].entry eq "inbox"}<img src="inc/themes/outlook/images/icon_folder_inbox.gif"> {elseif $smFolderList[i].entry eq "sent"}<img src="inc/themes/outlook/images/icon_folder_sent.gif"> {elseif $smFolderList[i].entry eq "trash"}<img src="inc/themes/outlook/images/icon_folder_trash.gif"> {elseif $smFolderList[i].entry eq "spam"}<img src="inc/themes/outlook/images/icon_folder_spam.gif"> {else}<img src="inc/themes/outlook/images/icon_folder_other.gif"> {/if}</td>

@@ -30,5 +30,5 @@ foreach ($mfolders as $entry) {
 $TLN->arrayQsort2ic($system, 'systemname');
 $TLN->arrayQsort2ic($personal, 'name');
 
-$smarty->assign('umSystemFolders', $system);
+$smarty->assign('smSystemFolders', $system);
 $smarty->assign('smPersonalFolders', $personal);

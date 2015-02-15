@@ -27,7 +27,7 @@ copyright, or worse, to put your name at the place.
 <table width="750" border="0" cellspacing="1" cellpadding="0" class="normal" align="center" bgcolor="#999999">
 	<tr>
 		<form name="composeForm" method="post" action="newmsg.php" onSubmit="return false;">
-		{$umForms}
+		{$smForms}
 		<td valign="middle">
 			<table cellspacing="0" cellpadding="0" width="100%" border="0" class="normal" >
 				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$smLabel.messages_mnu}</a></td>
@@ -48,13 +48,13 @@ copyright, or worse, to put your name at the place.
 			<tr>
 				<td height="20">&nbsp;</td>
 			</tr>
-			{if $umMailSent}
+			{if $smMailSent}
 				<tr align="center">
 					<td>{$smLabel.result_success}<br><br>> <a href="messages.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{$smLabel.nav_continue}</a> <</td>
 				</tr>
 			{else}
 				<tr>
-					<td align="center">{$smLabel.result_error}<br><br><font class="error">{$umErrorMessage}</font><br><br>> <a href="javascript:history.go(-1)">{$smLabel.nav_back}</a> <</td>
+					<td align="center">{$smLabel.result_error}<br><br><font class="error">{$smErrorMessage}</font><br><br>> <a href="javascript:history.go(-1)">{$smLabel.nav_back}</a> <</td>
 				</tr>
 			{/if}
 			<tr>

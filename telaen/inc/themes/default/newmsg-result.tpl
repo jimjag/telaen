@@ -5,7 +5,7 @@
       {include file=$calendarTemplate}			
       {include file=$newsTemplate} </td>
     <td valign=center bgcolor=white><table width="100%" border="0" cellspacing="1" cellpadding="0">
-        {if $umMailSent}
+        {if $smMailSent}
         <tr>
           <td class=cent> {$smLabel.result_success}<br>
             <br>
@@ -15,7 +15,7 @@
         <tr>
           <td class=cent> {$smLabel.result_error}<br>
             <br>
-            <font color=red>{$umErrorMessage}</font><br>
+            <font color=red>{$smErrorMessage}</font><br>
             <br>
             <a href="javascript:history.go(-1)">{$smLabel.nav_back}</a></td>
         </tr>

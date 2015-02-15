@@ -4,7 +4,7 @@
 <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#DDE3EB" width="100%">
   <tr>
     <td valign="middle" bgcolor="white"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-        {if $umMailSent}
+        {if $smMailSent}
         <tr>
           <td class="cent"> {$smLabel.result_success}<br />
             <br />
@@ -22,7 +22,7 @@
         <tr>
           <td class="cent"> {$smLabel.result_error}<br />
             <br />
-            <font color="red">{$umErrorMessage}</font><br />
+            <font color="red">{$smErrorMessage}</font><br />
             <br />
             <center>
               <table class="buttonTable" cellspacing="0" >

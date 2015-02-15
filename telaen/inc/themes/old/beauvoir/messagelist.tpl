@@ -1,5 +1,5 @@
 {config_load file=$umLanguageFile section="MessageList"}
-{um_welcome_message messages=$umNumMessages unread=$umNumUnread boxname=$umBoxName var="umWelcomeMessage"}
+{um_welcome_message messages=$smNumMessages unread=$smNumUnread boxname=$smBoxName var="umWelcomeMessage"}
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
@@ -45,33 +45,33 @@ copyright, or worse, to put your name at the place.
 	<tr>
 		<td valign="top">
 			<table cellspacing="1" cellpadding="0" width="100%" border="0" class="normal" bgcolor="#F5F4F4">
-			{if $umNumMessages gt 0}
-				<tr><form name="form1" action="process.php" method="post">{$umForms}
+			{if $smNumMessages gt 0}
+				<tr><form name="form1" action="process.php" method="post">{$smForms}
 					<td colspan="7" height="30">&nbsp;{$umWelcomeMessage}</td>
 				</tr>
-				{if $umErrorMessage neq ""}
+				{if $smErrorMessage neq ""}
 				<tr>
-					<td colspan="7" height="30"><font class="error"><b>&nbsp;{$umErrorMessage}</b></font></td>
+					<td colspan="7" height="30"><font class="error"><b>&nbsp;{$smErrorMessage}</b></font></td>
 				</tr>
 				{/if}
 				<tr>
 				    <td width="5" bgcolor="#ACB6D1" align="center" valign="middle"><input type="checkbox" name="chkall" onclick="sel()"></td>
 				    <td width="35" bgcolor="#ACB6D1" align="center" valign="middle"><img src="./images/prior_high.gif" width="5" height="11" border="0" alt="Priority" align="absmiddle">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="attach" align="absmiddle">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt="read" align="absmiddle"></td>
 				    <td width="320" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('subject')" class="lien">{$smLabel.subject_hea}{$smSubjectArrow}</a></b> :.</td>
-					{if $umFolder eq "sent"}
-			    	<td width="220" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('toname')" class="lien">{$smLabel.to_hea}{$umToArrow}</a></b> :.</td>
+					{if $smFolder eq "sent"}
+			    	<td width="220" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('toname')" class="lien">{$smLabel.to_hea}{$smToArrow}</a></b> :.</td>
 					{else}
-				    <td width="220" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('fromname')" class="lien">{$smLabel.from_hea}{$umFromArrow}</a></b> :.</td>
+				    <td width="220" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('fromname')" class="lien">{$smLabel.from_hea}{$smFromArrow}</a></b> :.</td>
 					{/if}
 				    <td width="100" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('date')" class="lien">{$smLabel.date_hea}{$smDateArrow}</a></b> :.</td>
-				    <td width="70" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('size')" class="lien">{$smLabel.size_hea}{$umSizeArrow}</a></b> :.</td>
+				    <td width="70" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('size')" class="lien">{$smLabel.size_hea}{$smSizeArrow}</a></b> :.</td>
 				</tr>
 				{section name=i loop=$smMessageList}
 				<tr bgcolor="#EAEAEA" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');">
 					<td align="center" valign="middle">{$smMessageList[i].checkbox}</td>
 					<td align="center" valign="middle">{$smMessageList[i].priorimg}{$smMessageList[i].attachimg}{$smMessageList[i].statusimg}</td>
 					<td align="left" valign="middle">&nbsp;<acronym title="{$smMessageList[i].subject|escape:"html"|default:$smLabel.no_subject_text}">{if $smMessageList[i].read eq "false"}<b>{/if}<a href="{$smMessageList[i].readlink}">{$smMessageList[i].subject|truncate:50:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a>{if $smMessageList[i].read eq "false"}</b>{/if}</acronym></td>
-					{if $umFolder eq "sent"}
+					{if $smFolder eq "sent"}
 					<td align="left" valign="middle">&nbsp;<acronym title="{$smMessageList[i].to|escape:"html"|default:$smLabel.no_recipient_text}"><a href="{$smMessageList[i].composelinksent}">{$smMessageList[i].to|truncate:40:"...":true|escape:"html"|default:$smLabel.no_recipient_text}</a></acronym></td>
 					{else}
 					<td align="left" valign="middle">&nbsp;<acronym title="{$smMessageList[i].from|escape:"html"|default:$smLabel.no_recipient_text}"><a href="{$smMessageList[i].composelink}">{$smMessageList[i].from|truncate:40:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a></acronym></td>
@@ -84,11 +84,11 @@ copyright, or worse, to put your name at the place.
 					<td colspan="7" height="30" valign="middle">&nbsp;<a href="javascript:delemsg()"><img src="./themes/beauvoir/delete.gif" border="0" width="15" height="15" alt="{$smLabel.delete_selected_mnu}" align="absmiddle"> {$smLabel.delete_selected_mnu}</a> | <a href="javascript:movemsg()"><img src="./themes/beauvoir/move.gif" border="0" width="15" height="15" alt="{$smLabel.move_selected_mnu}" align="absmiddle"> {$smLabel.move_selected_mnu}</a> <select name="aval_folders">{section name=i loop=$smAvalFolders}<option value="{$smAvalFolders[i].path|escape:"html"}">{$smAvalFolders[i].display|escape:"html"}{/section}</select></td>
 				</tr>
 				<tr>
-					<td colspan="7" height="30" valign="middle">&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}">{$smLabel.previous_text}</a> &nbsp;{/if}{$umNavBar}{if $smNextLink} &nbsp;<a href="{$smNextLink}">{$smLabel.next_text}</a>{/if}</td>
+					<td colspan="7" height="30" valign="middle">&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}">{$smLabel.previous_text}</a> &nbsp;{/if}{$smNavBar}{if $smNextLink} &nbsp;<a href="{$smNextLink}">{$smLabel.next_text}</a>{/if}</td>
 				</tr>
 			{else}		
 				<tr>
-					<td colspan="7" height="30" valign="middle"><br>&nbsp;{$smLabel.no_messages} <b>{$umBoxName|escape:"html"}</b>.<br><br></td>
+					<td colspan="7" height="30" valign="middle"><br>&nbsp;{$smLabel.no_messages} <b>{$smBoxName|escape:"html"}</b>.<br><br></td>
 				</tr>
 			{/if}
 			</form>

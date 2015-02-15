@@ -1,13 +1,13 @@
 <!-- news template -->
 
-{if $umSystemNews}
+{if $smSystemNews}
 <div id="news">
   <table class="banner">
     <tr>
       <th>System News:</th>
     </tr>
     <tr>
-      <td>{$umSystemNews}</td>
+      <td>{$smSystemNews}</td>
     </tr>
   </table>
 </div>

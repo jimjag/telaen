@@ -24,7 +24,7 @@
         </tr>
         {/section}
         <tr>
-          <td colspan="3" align="center" class="default">&nbsp;{$smLabel.pages_text}:&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}" class="navigation">{$smLabel.previous_text}</a> &nbsp;{/if}{$umNavBar}{if $smNextLink} &nbsp;<a href="{$smNextLink}" class="navigation">{$smLabel.next_text}</a>{/if}</td>
+          <td colspan="3" align="center" class="default">&nbsp;{$smLabel.pages_text}:&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}" class="navigation">{$smLabel.previous_text}</a> &nbsp;{/if}{$smNavBar}{if $smNextLink} &nbsp;<a href="{$smNextLink}" class="navigation">{$smLabel.next_text}</a>{/if}</td>
         </tr>
         <tr>
           <td colspan="3" align="center"><br>

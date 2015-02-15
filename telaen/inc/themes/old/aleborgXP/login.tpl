@@ -35,11 +35,11 @@ Visit www.cyber.nu
                       <td colspan="2" height="20"></td>
                     </tr>
                     <form name="form1" action="process.php" method=post>
-                      {if $umServerType neq "ONE-FOR-EACH"} 
+                      {if $smServerType neq "ONE-FOR-EACH"}
                       <tr> 
                         <td>{$smLabel.lng_user_email}:&nbsp;</td>
                         <td>
-                          <input type="text" name="f_email" value="{$umEmail}">
+                          <input type="text" name="f_email" value="{$smEmail}">
                         </td>
                       </tr>
                       <tr> 
@@ -49,8 +49,8 @@ Visit www.cyber.nu
                       <tr> 
                         <td>{$smLabel.lng_user_name}:&nbsp;</td>
                         <td>
-                          <input type="text" name="f_user" value="{$umUser}">
-                          {if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
+                          <input type="text" name="f_user" value="{$smUser}">
+                          {if $smAvailableServers neq 0} <b>{$smServer}</b>{/if}</td>
                       </tr>
                       <tr> 
                         <td colspan="2" height="3"></td>
@@ -65,18 +65,18 @@ Visit www.cyber.nu
                       <tr> 
                         <td colspan="2" height="3"></td>
                       </tr>
-                      {if $umAllowSelectLanguage} 
+                      {if $smAllowSelectLanguage}
                       <tr> 
                         <td>{$smLabel.lng_language}:</td>
-                        <td>{$umLanguages}</td>
+                        <td>{$smLanguages}</td>
                       </tr>
                       <tr> 
                         <td colspan="2" height="5"></td>
                       </tr>
-                      {/if} {if $umAllowSelectTheme} 
+                      {/if} {if $smAllowSelectTheme}
                       <tr> 
                         <td>{$smLabel.lng_theme}:</td>
-                        <td>{$umThemes}</td>
+                        <td>{$smThemes}</td>
                       </tr>
                       <tr> 
                         <td colspan="2" height="15"></td>

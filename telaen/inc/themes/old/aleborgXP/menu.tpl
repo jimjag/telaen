@@ -1,5 +1,5 @@
 {config_load file=$umLanguageFile section="MessageList"}
-{um_welcome_message messages=$umNumMessages unread=$umNumUnread boxname=$umBoxName var="umWelcomeMessage"}
+{um_welcome_message messages=$smNumMessages unread=$smNumUnread boxname=$smBoxName var="umWelcomeMessage"}
 <html>
 <head>
 <title>UebiMiau - {$smLabel.messages_to} {$smUserEmail}</title>

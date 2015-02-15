@@ -246,7 +246,7 @@ switch ($opt) {
             $navigation .= " ($pag/".$totPages.")";
         }
 
-        $smarty->assign('umNavBar', $navigation);
+        $smarty->assign('smNavBar', $navigation);
 
         $addresslist = [];
         $i = 0;

@@ -13,8 +13,8 @@
 <form name=form1 action="catch.php" method=POST>
 	<input type=hidden name=sid value="{$umSid}">
 	<input type=hidden name=lid value="{$umLid}">
-	<input type=hidden name=ix value="{$umIx}">
-	<input type=hidden name=folder value="{$umFolder|escape:"html"}">
+	<input type=hidden name=ix value="{$smIx}">
+	<input type=hidden name=folder value="{$smFolder|escape:"html"}">
 <table width="500" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td class=default  width="100%" colspan=2 align=center>
@@ -22,7 +22,7 @@
 		</td>
 	</tr>
 
-	{if $umAvailableAddresses gt 0 }
+	{if $smAvailableAddresses gt 0 }
 		<tr>
 			<td class=headers width="60%"><b>{$smLabel.ctc_name}</b></td>
 			<td class=headers><b>{$smLabel.ctc_email}</b></td>

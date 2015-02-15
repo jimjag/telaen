@@ -14,7 +14,7 @@
     <td align=center valign=center><table class='window_outer' width='300' cellspacing="0" cellpadding="0">
         <tr>
           <td><table class='window_inner' width="100%" cellspacing="0" cellpadding="2">
-              {if $umMailSent}
+              {if $smMailSent}
               <tr>
                 <td class='window_title' colspan=2>&nbsp;{$smLabel.compose_mnu}</td>
               </tr>
@@ -40,7 +40,7 @@
                         <td><table width="100%" cellspacing="0" cellpadding="10" align="center">
                           <tr>
                             <td valign='top' width="50" align="center"><img src="inc/themes/outlook/images/msg_error.gif"></td>
-                            <td valign='top'><font class=xx-normal> {$umErrorMessage} </font></td>
+                            <td valign='top'><font class=xx-normal> {$smErrorMessage} </font></td>
                           </tr>
                           <tr>
                             <td align=center colspan=2>

@@ -16,10 +16,10 @@ Thank you to let the copyright in place on the login page and in all sources of 
 This skin is the work of an author, thank you to respect it and not to remove the
 copyright, or worse, to put your name at the place.
 -->
-{if $umAdvancedEditor eq 1}
+{if $smAdvancedEditor eq 1}
 	<div id="hiddenCompose" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
 	<form name="hiddencomposeForm">
-	<textarea name="hiddencomposeFormTextArea">{$umBody|escape:"html"}</textarea>
+	<textarea name="hiddencomposeFormTextArea">{$smBody|escape:"html"}</textarea>
 	</form>
 	</div>
 {/if}
@@ -35,7 +35,7 @@ copyright, or worse, to put your name at the place.
 <table width="750" border="0" cellspacing="1" cellpadding="0" class="normal" align="center" bgcolor="#999999">
 	<tr>
 		<form name="composeForm" method="post" action="newmsg.php" onSubmit="return false;">
-		{$umForms}
+		{$smForms}
 		<td valign="middle">
 			<table cellspacing="0" cellpadding="0" width="100%" border="0" class="normal" >
 				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$smLabel.messages_mnu}</a></td>
@@ -58,15 +58,15 @@ copyright, or worse, to put your name at the place.
 				</tr>	
 				<tr>
 					<td align="right" width="30%">{$smLabel.to_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
-					<td>{$umTo}</td>
+					<td>{$smTo}</td>
 				</tr>	
 				<tr>
 					<td align="right">{$smLabel.cc_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
-					<td>{$umCc}</td>
+					<td>{$smCc}</td>
 				</tr>	
 				<tr>
 					<td align="right">{$smLabel.bcc_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
-					<td>{$umBcc}</td>
+					<td>{$smBcc}</td>
 				</tr>	
 				<tr>
 					<td align="right">{$smLabel.subject_hea}&nbsp;</td>
@@ -76,7 +76,7 @@ copyright, or worse, to put your name at the place.
 					<td align="right">{$smLabel.attach_hea}&nbsp;</td>
 					<td align="left">
 						<table cellspacing="1" cellpadding="0" width="445" border="0" class="normal" bgcolor="#999999">
-						{if $umHaveAttachs eq 1}
+						{if $smHaveAttachs eq 1}
 							<tr bgcolor="#ACB6D1">
 								<td width="45%">{$smLabel.attch_name_hea}</td>
 								<td width="15%">{$smLabel.attch_size}</td>
@@ -107,29 +107,29 @@ copyright, or worse, to put your name at the place.
 				<tr>
 					<td>&nbsp;</td>
 					<td>
-					{if $umAdvancedEditor eq 1}
+					{if $smAdvancedEditor eq 1}
 						{include file="beauvoir/advanced-editor.tpl"}
 						<div id="hiddenCompose2" style="position: absolute; left: 3; top: -100; visibility: hidden; z-index: 3">	      
-							<textarea rows="15" name="body" class="normal" style="width: 445px">{$umBody|escape:"html"}</textarea>
+							<textarea rows="15" name="body" class="normal" style="width: 445px">{$smBody|escape:"html"}</textarea>
 						</div>
 					{else}
-						<textarea rows="15" name="body" class="normal" style="width: 445px">{$umBody|escape:"html"}</textarea>
+						<textarea rows="15" name="body" class="normal" style="width: 445px">{$smBody|escape:"html"}</textarea>
 					{/if}
 					</td>
 				</tr>
-				{if !$umAddSignature && $umHaveSignature}
+				{if !$smAddSignature && $smHaveSignature}
 				<tr>
 					<td align="right">{$smLabel.add_signature} :&nbsp;</td>
-					<td><input type="checkbox" name="cksig" onClick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
+					<td><input type="checkbox" name="cksig" onClick="return addsig()"{if $smAddSignature eq 1} checked disabled{/if}></td>
 				</tr>
 				{/if}
 				<tr>
 					<td align="right">{$smLabel.priority_text} :&nbsp;</td>
 					<td>
 						<select name="priority">
-							<option value="1"{if $umPriority eq 1} selected{/if}>{$smLabel.priority_high}
-							<option value="3"{if $umPriority eq 3} selected{/if}>{$smLabel.priority_normal}
-							<option value="5"{if $umPriority eq 5} selected{/if}>{$smLabel.priority_low}
+							<option value="1"{if $smPriority eq 1} selected{/if}>{$smLabel.priority_high}
+							<option value="3"{if $smPriority eq 3} selected{/if}>{$smLabel.priority_normal}
+							<option value="5"{if $smPriority eq 5} selected{/if}>{$smLabel.priority_low}
 						</select>
 					</td>
 				</tr>

@@ -22,16 +22,16 @@
 						<tr>		
 							<td colspan="3" class="mainLoginTable">
 								<table border="0" width="450" cellspacing="5" cellpadding="5" align="center">
-												{if $umServerType neq "ONE-FOR-EACH"}
+												{if $smServerType neq "ONE-FOR-EACH"}
 												<tr>
 													<td><img src="inc/themes/senti/images/user.gif" alt="username"></td>
-													<td><input type=text size=20 name="f_email" value="{$umEmail}"></td>
+													<td><input type=text size=20 name="f_email" value="{$smEmail}"></td>
 												</tr>
 												{else}
 												<tr>
 														<td valign="top"><img src="inc/themes/senti/images/user.gif" alt="username"></td>
-														<td><input type=text name="f_user" value="{$umUser}"></td>
-														<td>{if $umAvailableServers neq 0} <font color="#DDDCDC">{$umServer}</font>{/if}</td>
+														<td><input type=text name="f_user" value="{$smUser}"></td>
+														<td>{if $smAvailableServers neq 0} <font color="#DDDCDC">{$smServer}</font>{/if}</td>
 												</tr>
 												{/if}
 												<tr>
@@ -40,12 +40,12 @@
 													<td><input type="image" src="inc/themes/senti/images/login.gif" value="Submit" alt="Submit"></td>
 												</tr>
 
-												{if $umAllowSelectLanguage}
-												<tr><td align=right class="right"><b>{$smLabel.lng_language}</b>: &nbsp;</td><td class="default">{$umLanguages}</td><td></td></tr>
+												{if $smAllowSelectLanguage}
+												<tr><td align=right class="right"><b>{$smLabel.lng_language}</b>: &nbsp;</td><td class="default">{$smLanguages}</td><td></td></tr>
 												{/if}
 
-												{if $umAllowSelectTheme}
-												<tr><td align=right class="right"><b>{$smLabel.lng_theme}</b>: &nbsp;</td><td class="default">{$umThemes}</td><td></td>
+												{if $smAllowSelectTheme}
+												<tr><td align=right class="right"><b>{$smLabel.lng_theme}</b>: &nbsp;</td><td class="default">{$smThemes}</td><td></td>
 												</tr>
 												{/if}
 

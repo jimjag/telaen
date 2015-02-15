@@ -1,5 +1,5 @@
 <html><body bgcolor="#FFFFFF" text="#000000" link="#0000FF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="MM_preloadImages('inc/themes/aleborgXP/images/refresh_down.gif','inc/themes/aleborgXP/images/refresh_over.gif','inc/themes/aleborgXP/images/newmsg_down.gif','inc/themes/aleborgXP/images/newmsg_over.gif','inc/themes/aleborgXP/images/search_down.gif','inc/themes/aleborgXP/images/search_over.gif','inc/themes/aleborgXP/images/folders_down.gif','inc/themes/aleborgXP/images/folders_over.gif','inc/themes/aleborgXP/images/options_down.gif','inc/themes/aleborgXP/images/options_over.gif','inc/themes/aleborgXP/images/trash_down.gif','inc/themes/aleborgXP/images/trash_over.gif','inc/themes/aleborgXP/images/addressbook_down.gif','inc/themes/aleborgXP/images/addressbook_over.gif','inc/themes/aleborgXP/images/logout_down.gif','inc/themes/aleborgXP/images/logout_over.gif','inc/themes/aleborgXP/images/inbox_down.gif','inc/themes/aleborgXP/images/inbox_over.gif','inc/themes/aleborgXP/images/previous_down.gif','inc/themes/aleborgXP/images/previous_over.gif','inc/themes/aleborgXP/images/next_down.gif','inc/themes/aleborgXP/images/next_over.gif')">{config_load file=$umLanguageFile section="MessageList"}
-{um_welcome_message messages=$umNumMessages unread=$umNumUnread boxname=$umBoxName var="umWelcomeMessage"}
+{um_welcome_message messages=$smNumMessages unread=$smNumUnread boxname=$smBoxName var="umWelcomeMessage"}
 
 <head>
 <title>UebiMiau - {$smLabel.messages_to} {$smUserEmail}</title>
@@ -42,11 +42,11 @@
   </tr>
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" background="inc/themes/aleborgXP/images/menu_back.gif">
-  {if $umNumMessages gt 0} 
+  {if $smNumMessages gt 0}
   <form name="form1" action="process.php" method="post">
-    {$umForms} 
+    {$smForms}
     <tr> 
-      <td height="16" class="default">&nbsp;<img src="inc/themes/aleborgXP/images/pages.gif" align="absmiddle">&nbsp;{$umNavBar}</td>
+      <td height="16" class="default">&nbsp;<img src="inc/themes/aleborgXP/images/pages.gif" align="absmiddle">&nbsp;{$smNavBar}</td>
     </tr>
     <tr> 
       <td height="2" background="inc/themes/aleborgXP/images/list_up.gif"><img src="inc/themes/aleborgXP/images/list_up.gif" width="5" height="2"></td>
@@ -57,9 +57,9 @@
     <tr> 
       <td height="2" background="inc/themes/aleborgXP/images/list_up.gif"><img src="inc/themes/aleborgXP/images/list_up.gif" width="5" height="2"></td>
     </tr>
-    {if $umErrorMessage neq ""} 
+    {if $smErrorMessage neq ""}
     <tr> 
-      <td height="16" class="default">&nbsp;<img src="inc/themes/aleborgXP/images/index.gif" align="absmiddle">&nbsp;<font color=red><b>{$umErrorMessage}</b></font></td>
+      <td height="16" class="default">&nbsp;<img src="inc/themes/aleborgXP/images/index.gif" align="absmiddle">&nbsp;<font color=red><b>{$smErrorMessage}</b></font></td>
     </tr>
     <tr> 
       <td height="2" background="inc/themes/aleborgXP/images/list_up.gif"><img src="inc/themes/aleborgXP/images/list_up.gif" width="5" height="2"></td>
@@ -67,7 +67,7 @@
     {/if} {else} 
     <tr> 
       <td height="16" class="default">&nbsp;<img src="inc/themes/aleborgXP/images/index.gif" align="absmiddle">&nbsp;{$smLabel.no_messages}
-        <b>{$umBoxName|escape:"html"}</b></td>
+        <b>{$smBoxName|escape:"html"}</b></td>
     </tr>
     <tr> 
       <td height="2" background="inc/themes/aleborgXP/images/list_up.gif"><img src="inc/themes/aleborgXP/images/list_up.gif" width="5" height="2"></td>
@@ -112,13 +112,13 @@
                       </tr>
                     </table>
                   </td>
-                  {if $umFolder eq "sent"} 
+                  {if $smFolder eq "sent"}
                   <td background="inc/themes/aleborgXP/images/back_list.gif" class="defaultC" nowrap align="left"> 
-                    <div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a class="menu" href="javascript:sortby('toname')">{$smLabel.to_hea}{$umToArrow}</a></b></div>
+                    <div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a class="menu" href="javascript:sortby('toname')">{$smLabel.to_hea}{$smToArrow}</a></b></div>
                   </td>
                   {else} 
                   <td background="inc/themes/aleborgXP/images/back_list.gif" class="defaultC" nowrap align="left"> 
-                    <div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a class="menu" href="javascript:sortby('fromname')">{$smLabel.from_hea}{$umFromArrow}</a></b></div>
+                    <div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a class="menu" href="javascript:sortby('fromname')">{$smLabel.from_hea}{$smFromArrow}</a></b></div>
                   </td>
                   {/if} 
                   <td background="inc/themes/aleborgXP/images/back_list.gif" class="defaultC" nowrap align="left"> 
@@ -128,7 +128,7 @@
                     <div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a class="menu" href="javascript:sortby('date')">{$smLabel.date_hea}{$smDateArrow}</a></b></div>
                   </td>
                   <td background="inc/themes/aleborgXP/images/back_list.gif" class="defaultC" align="right" nowrap> 
-                    <div align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a class="menu" href="javascript:sortby('size')">{$smLabel.size_hea}{$umSizeArrow}</a></b>
+                    <div align="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a class="menu" href="javascript:sortby('size')">{$smLabel.size_hea}{$smSizeArrow}</a></b>
                     </div>
                   </td>
                 </tr>
@@ -146,7 +146,7 @@
                   </td>
                   <td class="defaultC">{$smMessageList[i].attachimg}</td>
                   <td class="defaultC">{$smMessageList[i].statusimg}</td>
-                  {if $umFolder eq "sent"} 
+                  {if $smFolder eq "sent"}
                   <td class="default" nowrap>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<acronym title="{$smMessageList[i].to|escape:"html"|default:$smLabel.no_recipient_text}">{if
                     $smMessageList[i].read eq "false"}<b>{/if}<a href="{$smMessageList[i].readlink}">{$smMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a>{if
                     $smMessageList[i].read eq "false"}</b>{/if}</acronym></td>

@@ -12,7 +12,7 @@
 <body bgcolor="#778899" text="#000000" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-		<td bgcolor=white><font face="Courier New" size=2>{$umHeaders}</font></td>
+		<td bgcolor=white><font face="Courier New" size=2>{$smHeaders}</font></td>
 </table>
 </body>
 </html>

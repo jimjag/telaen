@@ -3,14 +3,14 @@
 <body>
 <div id="popup">
   <form name="form1" action="catch.php" method="post">
-    <input type="hidden" name="ix" value="{$umIx}" />
-    <input type="hidden" name="folder" value="{$umFolder|escape:"html"}" />
+    <input type="hidden" name="ix" value="{$smIx}" />
+    <input type="hidden" name="folder" value="{$smFolder|escape:"html"}" />
     <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
       <tr>
         <td class="default" width="100%" colspan="2" align="center"><b>{$smLabel.ctc_information}</b><br />
           <br /></td>
       </tr>
-      {if $umAvailableAddresses gt 0 }
+      {if $smAvailableAddresses gt 0 }
       <tr>
         <td class="headersLeft" width="50%">&nbsp;.: <b>{$smLabel.ctc_name}</b> :.</td>
         <td class="headersLeft">.: <b>{$smLabel.ctc_email}</b> :.</td>

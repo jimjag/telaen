@@ -40,9 +40,9 @@
                         {#attch_add_new#|truncate:13:"...":true}</font></acronym></td>
                       <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off';" onmousedown="this.className='toolbar_button_down'" onclick="setVisible('priority_window',true)"><acronym title="{$smLabel.priority_text}"><img src="inc/themes/outlook/images/icon_priority.gif"><font class='xx-normal'><br>
                         {#priority_text#|truncate:13:"...":true}</font></acronym></td>
-                      {if !$umAddSignature && $umHaveSignature}
+                      {if !$smAddSignature && $smHaveSignature}
                       <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onClick="document.composeForm.cksig.click();"><acronym title="{$smLabel.add_signature}">{if $umAddSignature eq 1}<img src="inc/themes/outlook/images/icon_sign_off.gif">{else}<img src="inc/themes/outlook/images/icon_sign.gif">{/if}<font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onClick="document.composeForm.cksig.click();"><acronym title="{$smLabel.add_signature}">{if $smAddSignature eq 1}<img src="inc/themes/outlook/images/icon_sign_off.gif">{else}<img src="inc/themes/outlook/images/icon_sign.gif">{/if}<font class='xx-normal'><br>
                         {#add_signature#|truncate:13:"...":true}</font></acronym></td>
                       {/if} </tr>
                   </table></td>
@@ -88,20 +88,20 @@
   </tr>
     <form name="composeForm" id="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
 
-  {$umForms}
+  {$smForms}
   <tr>
     <td><table width="100%" border=0 cellspacing=3 cellpadding=0 >
         <tr>
           <td width='100'><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" border="0" alt="{$smLabel.address_tip}"></a>&nbsp;{$smLabel.to_hea}</font></td>
-          <td width='*'>{$umTo}</td>
+          <td width='*'>{$smTo}</td>
         </tr>
         <tr>
           <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$smLabel.address_tip}"></a>&nbsp;{$smLabel.cc_hea}</font></td>
-          <td>{$umCc}</td>
+          <td>{$smCc}</td>
         </tr>
         <tr>
           <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$smLabel.address_tip}"></a>&nbsp;{$smLabel.bcc_hea}</font></td>
-          <td>{$umBcc}</td>
+          <td>{$smBcc}</td>
         </tr>
         <tr>
           <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;{$smLabel.subject_hea}</font></td>
@@ -111,7 +111,7 @@
           <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;{$smLabel.attach_hea}</font></td>
           <td class='newmsg_attachments_outer'><table width='100%' height='100%' cellpadding='0' cellspacing='0'>
               <tr>
-                <td class='newmsg_attachments_inner'> {if $umHaveAttachs eq 1}
+                <td class='newmsg_attachments_inner'> {if $smHaveAttachs eq 1}
                   {section name=i loop=$smAttachList}
                   {$smAttachList[i].name|escape:"html"} ({$smAttachList[i].size}Kb) [<a href="{$smAttachList[i].link}">{$smLabel.attch_dele_hea}</a>]
                   {/section}
@@ -124,7 +124,7 @@
       </table></td>
   </tr>
   <tr>
-    <td class="editor"><textarea cols="100" rows="15" name="body">{$umBody|escape:"html"}</textarea></td>
+    <td class="editor"><textarea cols="100" rows="15" name="body">{$smBody|escape:"html"}</textarea></td>
   </tr>
   <tr>
     <td><input type="checkbox" value="true" name="requireReceipt"{if $requireReceipt eq true} checked="checked"{/if}>
@@ -139,14 +139,14 @@
 <div id="priority_window" class="priority_outer" onmouseover="setVisible('priority_window',true);" onmouseout="setVisible('priority_window',false);" onclick="setVisible('priority_window',false);">
   <div class="priority_inner">
     <select name="priority" size="3" class="priority">
-      <option value="1"{if $umPriority eq 1} selected{/if}>{$smLabel.priority_high}
-      <option value="3"{if $umPriority eq 3} selected{/if}>{$smLabel.priority_normal}
-      <option value="5"{if $umPriority eq 5} selected{/if}>{$smLabel.priority_low}
+      <option value="1"{if $smPriority eq 1} selected{/if}>{$smLabel.priority_high}
+      <option value="3"{if $smPriority eq 3} selected{/if}>{$smLabel.priority_normal}
+      <option value="5"{if $smPriority eq 5} selected{/if}>{$smLabel.priority_low}
     </select>
   </div>
 </div>
 <!-- CHECKBOX HIDDEN FOR SIGNATURE TO WORK -->
-<input style="visibility:hidden" type="checkbox" name="cksig" onclick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}>
+<input style="visibility:hidden" type="checkbox" name="cksig" onclick="return addsig()"{if $smAddSignature eq 1} checked disabled{/if}>
 </form>
 </body>
 </html>

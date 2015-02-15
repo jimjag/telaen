@@ -13,7 +13,7 @@ require './inc/init.php';
 
 $is_inbox_or_spam = ($folder == 'inbox' || $folder == 'spam');
 
-$smarty->assign('umUser', $f_user);
+$smarty->assign('smUser', $f_user);
 $refreshurl = 'process.php?folder='.urlencode($folder)."&pag=$pag&refr=true";
 
 $arrow = ($sortorder == 'ASC') ? 'images/arrow_up.gif' : 'images/arrow_down.gif';
@@ -75,11 +75,11 @@ $smarty->assign('smUsageGraph', $usageGraph);
 $exceeded = (($quota_limit) && ($totalused >= $quota_limit));
 
 // sorting arrays..
-$smarty->assign('umAttachArrow', $attach_arrow);
+$smarty->assign('smAttachArrow', $attach_arrow);
 $smarty->assign('smSubjectArrow', $subject_arrow);
-$smarty->assign('umFromArrow', $fromname_arrow);
+$smarty->assign('smFromArrow', $fromname_arrow);
 $smarty->assign('smDateArrow', $date_arrow);
-$smarty->assign('umSizeArrow', $size_arrow);
+$smarty->assign('smSizeArrow', $size_arrow);
 
 $tdb->getMessages($folder, true, $sortby, $sortorder);
 $headers = $TLN->mailListMsgs($folder, $start_pos, $end_pos);
@@ -145,7 +145,7 @@ function sortby(col) {
 ";
 
 if (isset($msg)) {
-    $smarty->assign('umErrorMessage', $msg);
+    $smarty->assign('smErrorMessage', $msg);
 }
 
 $forms = "<input type='hidden' name='decision' value='delete' />
@@ -155,9 +155,9 @@ $forms = "<input type='hidden' name='decision' value='delete' />
 <input type='hidden' name='end_pos' value='".$end_pos."' />";
 
 $smarty->assign('smJS', $jssource);
-$smarty->assign('umForms', $forms);
+$smarty->assign('smForms', $forms);
 $smarty->assign('smUserEmail', $auth['email']);
-$smarty->assign('umFolder', $folder);
+$smarty->assign('smFolder', $folder);
 
 $messagelist = array();
 $index = 0;
@@ -218,13 +218,13 @@ if ($nummsg > 0) {
         $index++;
     }
 }
-$smarty->assign('umNumMessages', $nummsg);
-$smarty->assign('umNumUnread', $newmsgs);
+$smarty->assign('smNumMessages', $nummsg);
+$smarty->assign('smNumUnread', $newmsgs);
 $smarty->assign('smMessageList', $messagelist);
 
 $display = extended_name($folder);
 
-$smarty->assign('umBoxName', $display);
+$smarty->assign('smBoxName', $display);
 
 // Ugg. This should be it's own lang[] entry
 $wlcmessage = $lang['msg_you_have']." <b>$nummsg</b> ";
@@ -242,7 +242,7 @@ if ($newmsgs == 0) {
 }
 $wlcmessage .= $lang['msg_in_the_folder']." <b><i>$display</i></b>";
 
-$smarty->assign('umWelcomeMessage2', $wlcmessage);
+$smarty->assign('smWelcomeMessage2', $wlcmessage);
 
 // Page navigation
 $navigation = '';
@@ -279,7 +279,7 @@ if ($nummsg > 0) {
     $navigation .= " ($pag/".$totPages.")";
 }
 
-$smarty->assign('umNavBar', $navigation);
+$smarty->assign('smNavBar', $navigation);
 
 $avalfolders = array();
 foreach (scandir($TLN->userfolder) as $entry) {
@@ -298,6 +298,6 @@ foreach (scandir($TLN->userfolder) as $entry) {
 
 unset($TLN);
 
-$smarty->assign('umHaveSpam', $auth['havespam']);
+$smarty->assign('smHaveSpam', $auth['havespam']);
 $smarty->assign('smAvalFolders', $avalfolders);
 $smarty->display("$themez/messagelist.tpl");

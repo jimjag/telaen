@@ -14,8 +14,8 @@
 <form name=form1 action="block_address.php" method=POST>
 	<input type=hidden name=sid value="{$umSid}">
 	<input type=hidden name=lid value="{$umLid}">
-	<input type=hidden name=ix value="{$umIx}">
-	<input type=hidden name=folder value="{$umFolder|escape:"html"}">
+	<input type=hidden name=ix value="{$smIx}">
+	<input type=hidden name=folder value="{$smFolder|escape:"html"}">
 
 <table width="500" border="0" cellspacing="0" cellpadding="0">
 
@@ -25,7 +25,7 @@
 		</td>
 	</tr>
 
-	{if $umAvailableAddresses gt 0 }
+	{if $smAvailableAddresses gt 0 }
 		<tr>
 			<td class=headers><b>{$smLabel.blk_email}</b></td>
 		</tr>
