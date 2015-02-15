@@ -5,7 +5,7 @@
 
 <html>
 <head>
-	<title>UebiMiau - {$umPageTitle|escape:"html"}</title>
+	<title>UebiMiau - {$smCCList|escape:"html"}</title>
 </head>
 <link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 <body bgcolor="#FFFFFF" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">

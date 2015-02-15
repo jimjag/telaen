@@ -3,12 +3,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umLabel.adr_title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$smLabel.adr_title}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 <script language="JavaScript" src="inc/themes/beauvoir/webmail.js" type="text/javascript"></script>
 </head>
-{$umJS}
+{$smJS}
 <!--
 Skinned by Arnaud BEAUVOIR -  - 
 
@@ -28,15 +28,15 @@ copyright, or worse, to put your name at the place.
 	<tr>
 		<td valign="middle">
 			<table cellspacing="0" cellpadding="0" width="100%" border="0" class="normal" >
-				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$umLabel.messages_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:newmsg()"><img src="inc/themes/beauvoir/write.gif" border="0" width="31" height="31"><br>{$umLabel.compose_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84"><font class="inactive"><img src="inc/themes/beauvoir/refresh.gif" border="0" width="31" height="31"><br>{$umLabel.refresh_mnu}</font></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:folderlist()"><img src="inc/themes/beauvoir/folder.gif" border="0" width="31" height="31"><br>{$umLabel.folders_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:search()"><img src="inc/themes/beauvoir/search.gif" border="0" width="31" height="31"><br>{$umLabel.search_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:addresses()"><img src="inc/themes/beauvoir/contact.gif" border="0" width="31" height="31"><br>{$umLabel.address_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:emptytrash()"><img src="inc/themes/beauvoir/trash.gif" border="0" width="31" height="31"><br>{$umLabel.empty_trash_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:prefs()"><img src="inc/themes/beauvoir/prefs.gif" border="0" width="31" height="31"><br>{$umLabel.prefs_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goend()"><img src="inc/themes/beauvoir/logout.gif" border="0" width="31" height="31"><br>{$umLabel.logoff_mnu}</a></td></tr>
+				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$smLabel.messages_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:newmsg()"><img src="inc/themes/beauvoir/write.gif" border="0" width="31" height="31"><br>{$smLabel.compose_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84"><font class="inactive"><img src="inc/themes/beauvoir/refresh.gif" border="0" width="31" height="31"><br>{$smLabel.refresh_mnu}</font></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:folderlist()"><img src="inc/themes/beauvoir/folder.gif" border="0" width="31" height="31"><br>{$smLabel.folders_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:search()"><img src="inc/themes/beauvoir/search.gif" border="0" width="31" height="31"><br>{$smLabel.search_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:addresses()"><img src="inc/themes/beauvoir/contact.gif" border="0" width="31" height="31"><br>{$smLabel.address_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:emptytrash()"><img src="inc/themes/beauvoir/trash.gif" border="0" width="31" height="31"><br>{$smLabel.empty_trash_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:prefs()"><img src="inc/themes/beauvoir/prefs.gif" border="0" width="31" height="31"><br>{$smLabel.prefs_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goend()"><img src="inc/themes/beauvoir/logout.gif" border="0" width="31" height="31"><br>{$smLabel.logoff_mnu}</a></td></tr>
 			</table>		
 		</td>
 	</tr>
@@ -48,13 +48,13 @@ copyright, or worse, to put your name at the place.
 				</tr>
 				<tr><td>
 					<table cellspacing="1" cellpadding="0" width="350" border="0" class="normal" bgcolor="#EAEAEA" align="center">
-						<tr><td size="20%">{$umLabel.adr_name} :</td><td>{$umAddrName|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_email} :</td><td>{$umAddrEmail|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_street} :</td><td>{$umAddrStreet|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_city} :</td><td>{$umAddrCity|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_state} :</td><td>{$umAddrState|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_work} :</td><td>{$umAddrWork|escape:"html"}</td></tr>
-						<tr><td colspan="2" align="center"><input type="button" value="{$umLabel.adr_back}" class="normal" onClick="location = '{$umGoBack}'"></td></tr>
+						<tr><td size="20%">{$smLabel.adr_name} :</td><td>{$smAddrName|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_email} :</td><td>{$smAddrEmail|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_street} :</td><td>{$smAddrStreet|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_city} :</td><td>{$smAddrCity|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_state} :</td><td>{$smAddrState|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_work} :</td><td>{$smAddrWork|escape:"html"}</td></tr>
+						<tr><td colspan="2" align="center"><input type="button" value="{$smLabel.adr_back}" class="normal" onClick="location = '{$smGoBack}'"></td></tr>
 					</table>
 				</td></tr>
 				<tr>

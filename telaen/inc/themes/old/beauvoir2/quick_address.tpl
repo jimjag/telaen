@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>UebiMiau Webmail - {$umLabel.qad_title} - Skin by Beauvoir.net</title>
+<title>UebiMiau Webmail - {$smLabel.qad_title} - Skin by Beauvoir.net</title>
 <link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 </head>
 <!--
@@ -48,7 +48,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -60,7 +60,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -92,11 +92,11 @@ function ns_clean() {
 <table cellspacing="1" cellpadding="0" width="100%" border="0" class="normal" bgcolor="#BFC6D3">
 	<form name="form1">
 	<tr>
-		<td width="50%" align="center" valign="middle">{$umContacts}<br><br><input type="button" class="button" value="&nbsp;OK&nbsp;" onClick="AddAndExit()"></td>
+		<td width="50%" align="center" valign="middle">{$smContacts}<br><br><input type="button" class="button" value="&nbsp;OK&nbsp;" onClick="AddAndExit()"></td>
 		<td valign="top" width="225">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
-					<td colspan="2"><b>{$umLabel.qad_to}</b></td>
+					<td colspan="2"><b>{$smLabel.qad_to}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="middle">
@@ -111,7 +111,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><b>{$umLabel.qad_cc}</b></td>
+					<td colspan="2"><b>{$smLabel.qad_cc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="middle">
@@ -126,7 +126,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><b>{$umLabel.qad_bcc}</b></td>
+					<td colspan="2"><b>{$smLabel.qad_bcc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign="middle">

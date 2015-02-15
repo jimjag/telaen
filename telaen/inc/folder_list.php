@@ -31,4 +31,4 @@ $TLN->arrayQsort2ic($system, 'systemname');
 $TLN->arrayQsort2ic($personal, 'name');
 
 $smarty->assign('umSystemFolders', $system);
-$smarty->assign('umPersonalFolders', $personal);
+$smarty->assign('smPersonalFolders', $personal);

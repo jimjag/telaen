@@ -3,11 +3,11 @@
 
 <html>
 <head>
-	<title>UebiMiau - {$umLabel.adr_title} - Skin by Beauvoir.net</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>UebiMiau - {$smLabel.adr_title} - Skin by Beauvoir.net</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 	<link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 	<script language="JavaScript" src="inc/themes/beauvoir2/webmail.js" type="text/javascript"></script>
-	{$umJS}
+	{$smJS}
 </head>
 
 <!--
@@ -29,28 +29,28 @@ copyright, or worse, to put your name at the place.
 		<td background="inc/themes/beauvoir2/images/ligne-fond.gif">
 			<table cellspacing="0" cellpadding="0" width="99.7%" border="0" class="normal" align="center">
 				<tr>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goinbox()"><img src="inc/themes/beauvoir2/images/inbox.gif" border="0"><br>{$umLabel.messages_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:newmsg()"><img src="inc/themes/beauvoir2/images/newmsg.gif" border="0"><br>{$umLabel.compose_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:refreshlist()"><img src="inc/themes/beauvoir2/images/refresh.gif" border="0"><br>{$umLabel.refresh_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:folderlist()"><img src="inc/themes/beauvoir2/images/folder.gif" border="0"><br>{$umLabel.folders_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:search()"><img src="inc/themes/beauvoir2/images/search.gif" border="0"><br>{$umLabel.search_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:addresses()"><img src="inc/themes/beauvoir2/images/addresses.gif" border="0"><br>{$umLabel.address_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:emptytrash()"><img src="inc/themes/beauvoir2/images/trash.gif" border="0"><br>{$umLabel.empty_trash_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:prefs()"><img src="inc/themes/beauvoir2/images/prefs.gif" border="0"><br>{$umLabel.prefs_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goend()"><img src="inc/themes/beauvoir2/images/logout.gif" border="0"><br>{$umLabel.logoff_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goinbox()"><img src="inc/themes/beauvoir2/images/inbox.gif" border="0"><br>{$smLabel.messages_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:newmsg()"><img src="inc/themes/beauvoir2/images/newmsg.gif" border="0"><br>{$smLabel.compose_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:refreshlist()"><img src="inc/themes/beauvoir2/images/refresh.gif" border="0"><br>{$smLabel.refresh_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:folderlist()"><img src="inc/themes/beauvoir2/images/folder.gif" border="0"><br>{$smLabel.folders_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:search()"><img src="inc/themes/beauvoir2/images/search.gif" border="0"><br>{$smLabel.search_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:addresses()"><img src="inc/themes/beauvoir2/images/addresses.gif" border="0"><br>{$smLabel.address_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:emptytrash()"><img src="inc/themes/beauvoir2/images/trash.gif" border="0"><br>{$smLabel.empty_trash_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:prefs()"><img src="inc/themes/beauvoir2/images/prefs.gif" border="0"><br>{$smLabel.prefs_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goend()"><img src="inc/themes/beauvoir2/images/logout.gif" border="0"><br>{$smLabel.logoff_mnu}</a></td>
 				</tr>
 			</table>
 			<table width="99.7%" border="0" cellspacing="0" cellpadding="0" class="normal" align="center">
 				<tr><td>&nbsp;</td></tr>
 				<tr><td>
 					<table cellspacing="0" cellpadding="0" width="350" border="0" class="normal" bgcolor="#BFC6D3" align="center">
-						<tr><td size="20%">{$umLabel.adr_name} :</td><td>{$umAddrName|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_email} :</td><td>{$umAddrEmail|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_street} :</td><td>{$umAddrStreet|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_city} :</td><td>{$umAddrCity|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_state} :</td><td>{$umAddrState|escape:"html"}</td></tr>
-						<tr><td>{$umLabel.adr_work} :</td><td>{$umAddrWork|escape:"html"}</td></tr>
-						<tr><td colspan="2" align="center"><input type="button" value="{$umLabel.adr_back}" class="button" onClick="location = '{$umGoBack}'"></td></tr>
+						<tr><td size="20%">{$smLabel.adr_name} :</td><td>{$smAddrName|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_email} :</td><td>{$smAddrEmail|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_street} :</td><td>{$smAddrStreet|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_city} :</td><td>{$smAddrCity|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_state} :</td><td>{$smAddrState|escape:"html"}</td></tr>
+						<tr><td>{$smLabel.adr_work} :</td><td>{$smAddrWork|escape:"html"}</td></tr>
+						<tr><td colspan="2" align="center"><input type="button" value="{$smLabel.adr_back}" class="button" onClick="location = '{$smGoBack}'"></td></tr>
 					</table>
 				</td></tr>
 				<tr>

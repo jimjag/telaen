@@ -1,4 +1,4 @@
-{include file=$popupHeaderTemplate  pageTitle=$umLabel.qad_title}
+{include file=$popupHeaderTemplate  pageTitle=$smLabel.qad_title}
 
 <body>
 <div id="popup">
@@ -37,7 +37,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -54,7 +54,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -87,12 +87,12 @@ function ns_clean() {
   <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
     <form name="form1">
       <tr>
-        <td width="50%" valign=top> {$umContacts} <br>
+        <td width="50%" valign=top> {$smContacts} <br>
           <br>
           <input type=button value=" &nbsp;OK &nbsp;" onClick="AddAndExit()" class=button></td>
         <td valign=top width="50%"><table width="100%" border="0" cellspacing="1" cellpadding="0">
             <tr>
-              <td colspan=2 class="headers"><b>{$umLabel.qad_to}</b></td>
+              <td colspan=2 class="headers"><b>{$smLabel.qad_to}</b></td>
             </tr>
             <tr>
               <td width="8%" valign=top class=default><input type="button" value="&gt;&gt;" class="button" onClick="Add('to')">
@@ -105,7 +105,7 @@ function ns_clean() {
                 </select></td>
             </tr>
             <tr>
-              <td colspan=2 class="headers"><b>{$umLabel.qad_cc}</b></td>
+              <td colspan=2 class="headers"><b>{$smLabel.qad_cc}</b></td>
             </tr>
             <tr>
               <td width="5%" valign=top class=default><input type="button" value="&gt;&gt;" class="button" onClick="Add('cc')">
@@ -118,7 +118,7 @@ function ns_clean() {
                 </select></td>
             </tr>
             <tr>
-              <td colspan="2" class="headers"><b>{$umLabel.qad_bcc}</b></td>
+              <td colspan="2" class="headers"><b>{$smLabel.qad_bcc}</b></td>
             </tr>
             <tr>
               <td width="5%" valign="top" class="default"><input type="button" value="&gt;&gt;" class="button" onClick="Add('bcc')">

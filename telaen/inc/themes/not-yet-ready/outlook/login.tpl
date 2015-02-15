@@ -3,9 +3,9 @@
 <head>
 <title>{if $webmailTitle}{$webmailTitle} - {/if}{#lgn_title#|escape:"html"}</title>
 <link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 </head>
-{$umJS}
+{$smJS}
 
 <body ONLOAD="javascript:document.getElementById('form1').{if $umServerType neq "ONE-FOR-EACH"}f_email{else}u_email{/if}.focus();">
 <table width=100% height=100%>
@@ -15,7 +15,7 @@
         <td><table class='window_inner' width="100%" height="100%" cellspacing="0" cellpadding="2" align="center">
             <form name="form1" id="form1" action="process.php" method=post>
               <tr>
-                <td class='window_title' colspan=2>&nbsp;{$umLabel.lgn_welcome_msg}</td>
+                <td class='window_title' colspan=2>&nbsp;{$smLabel.lgn_welcome_msg}</td>
               </tr>
               {if $error eq "true"}
               <tr>
@@ -23,15 +23,15 @@
                     <tr>
                       <td height="10" style="background-color:#ffffe1;"><img src="inc/themes/outlook/images/icon_warning.gif"></td>
                       <td height="10" style="padding:2;background-color:#ffffe1;font-family: tahoma,verdana,sans;font-weight: normal ;font-size: 11px;color: #000000;"><nobr> {if $errorCode eq "0"}
-                        {$umLabel.err_login_msg}: {$umLabel.error_login}
+                        {$smLabel.err_login_msg}: {$smLabel.error_login}
                         {elseif $errorCode eq "1"}
-                        {$umLabel.err_system_msg}: {$umLabel.error_connect}
+                        {$smLabel.err_system_msg}: {$smLabel.error_connect}
                         {elseif $errorCode eq "2"}		
-                        {$umLabel.err_system_msg}: {$umLabel.error_retrieving}
+                        {$smLabel.err_system_msg}: {$smLabel.error_retrieving}
                         {elseif $errorCode eq "4"}
-                        {$umLabel.err_login_msg}: {$umLabel.error_session_expired}	
+                        {$smLabel.err_login_msg}: {$smLabel.error_session_expired}
                         {else}
-                        {$umLabel.err_system_msg}: {$umLabel.error_other}
+                        {$smLabel.err_system_msg}: {$smLabel.error_other}
                         {/if} </nobr></td>
                     </tr>
                   </table></td>
@@ -42,33 +42,33 @@
               </tr>
               {if $umServerType neq "ONE-FOR-EACH"}
               <tr>
-                <td class='label'>{$umLabel.lng_user_email}: &nbsp;</td>
+                <td class='label'>{$smLabel.lng_user_email}: &nbsp;</td>
                 <td><input type=text size=10 name="f_email" id="f_email" value="{$umEmail}" class="textbox" style="width:150px;"></td>
                 {else}
               <tr>
-                <td class='label'>{$umLabel.lng_user_name}: &nbsp;</td>
+                <td class='label'>{$smLabel.lng_user_name}: &nbsp;</td>
                 <td><input type=text size=5 name="f_user" id="f_user" value="{$umUser}" class="textbox" style="width:100px;">
                   {if $umAvailableServers neq 0} <font class="xx-normal">{$umServer}&nbsp;&nbsp;</font>{/if}</td>
                 {/if}
               <tr>
-                <td class='label'>{$umLabel.lng_user_pwd}: &nbsp;</td>
+                <td class='label'>{$smLabel.lng_user_pwd}: &nbsp;</td>
                 <td><input type=password size=5 name="f_pass" value="" class="textbox" style="width:150px;"></td>
                 {if $umAllowSelectLanguage}
               <tr>
-                <td class='label'>{$umLabel.lng_language}: &nbsp;</td>
+                <td class='label'>{$smLabel.lng_language}: &nbsp;</td>
                 <td class='default'>{$umLanguages}</td>
                 {/if}
 
                 {if $umAllowSelectTheme}
               <tr>
-                <td class='label'>{$umLabel.lng_theme}: &nbsp;</td>
+                <td class='label'>{$smLabel.lng_theme}: &nbsp;</td>
                 <td>{$umThemes}</td>
                 {/if}
               <tr>
                 <td colspan="2"><hr width='100%'></td>
               </tr>
               <tr>
-                <td colspan="2" align="center"><input type="submit" name="submit" value="{$umLabel.lng_login_btn}" class="button"></td>
+                <td colspan="2" align="center"><input type="submit" name="submit" value="{$smLabel.lng_login_btn}" class="button"></td>
               <tr>
                 <td colspan="2" width="300px" height="15px"></td>
               </tr>

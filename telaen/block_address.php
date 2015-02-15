@@ -72,7 +72,7 @@ if (isset($fFilter)) {
     $smarty->assign('umIx', $ix);
     $smarty->assign('umAvailableAddresses', count($emails));
 
-    $smarty->assign('umAddressList', $emails);
+    $smarty->assign('smAddressList', $emails);
 
     $smarty->display("$themez/block-address.tpl");
 }

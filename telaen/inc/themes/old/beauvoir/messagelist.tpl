@@ -4,11 +4,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umLabel.messages_to} {$umUserEmail}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$smLabel.messages_to} {$smUserEmail}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 <script language="JavaScript" src="inc/themes/beauvoir/webmail.js" type="text/javascript"></script>
-{$umJS}
+{$smJS}
 </head>
 <!--
 Skinned by Arnaud BEAUVOIR -  - 
@@ -30,15 +30,15 @@ copyright, or worse, to put your name at the place.
 		<td valign="middle">
 			{*{include file=$umMenuTemplate}*}
 			<table cellspacing="0" cellpadding="0" width="100%" border="0" class="normal" >
-				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$umLabel.messages_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:newmsg()"><img src="inc/themes/beauvoir/write.gif" border="0" width="31" height="31"><br>{$umLabel.compose_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:refreshlist()"><img src="inc/themes/beauvoir/refresh.gif" border="0" width="31" height="31"><br>{$umLabel.refresh_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:folderlist()"><img src="inc/themes/beauvoir/folder.gif" border="0" width="31" height="31"><br>{$umLabel.folders_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:search()"><img src="inc/themes/beauvoir/search.gif" border="0" width="31" height="31"><br>{$umLabel.search_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:addresses()"><img src="inc/themes/beauvoir/contact.gif" border="0" width="31" height="31"><br>{$umLabel.address_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:emptytrash()"><img src="inc/themes/beauvoir/trash.gif" border="0" width="31" height="31"><br>{$umLabel.empty_trash_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:prefs()"><img src="inc/themes/beauvoir/prefs.gif" border="0" width="31" height="31"><br>{$umLabel.prefs_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goend()"><img src="inc/themes/beauvoir/logout.gif" border="0" width="31" height="31"><br>{$umLabel.logoff_mnu}</a></td></tr>
+				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$smLabel.messages_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:newmsg()"><img src="inc/themes/beauvoir/write.gif" border="0" width="31" height="31"><br>{$smLabel.compose_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:refreshlist()"><img src="inc/themes/beauvoir/refresh.gif" border="0" width="31" height="31"><br>{$smLabel.refresh_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:folderlist()"><img src="inc/themes/beauvoir/folder.gif" border="0" width="31" height="31"><br>{$smLabel.folders_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:search()"><img src="inc/themes/beauvoir/search.gif" border="0" width="31" height="31"><br>{$smLabel.search_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:addresses()"><img src="inc/themes/beauvoir/contact.gif" border="0" width="31" height="31"><br>{$smLabel.address_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:emptytrash()"><img src="inc/themes/beauvoir/trash.gif" border="0" width="31" height="31"><br>{$smLabel.empty_trash_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:prefs()"><img src="inc/themes/beauvoir/prefs.gif" border="0" width="31" height="31"><br>{$smLabel.prefs_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goend()"><img src="inc/themes/beauvoir/logout.gif" border="0" width="31" height="31"><br>{$smLabel.logoff_mnu}</a></td></tr>
 			</table>		
 		</td>
 	</tr>
@@ -57,44 +57,44 @@ copyright, or worse, to put your name at the place.
 				<tr>
 				    <td width="5" bgcolor="#ACB6D1" align="center" valign="middle"><input type="checkbox" name="chkall" onclick="sel()"></td>
 				    <td width="35" bgcolor="#ACB6D1" align="center" valign="middle"><img src="./images/prior_high.gif" width="5" height="11" border="0" alt="Priority" align="absmiddle">&nbsp;<img src="images/attach.gif" border="0" width="6" height="14" alt="attach" align="absmiddle">&nbsp;<img src="images/msg_read.gif" border="0" width="14" height="14" alt="read" align="absmiddle"></td>
-				    <td width="320" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('subject')" class="lien">{$umLabel.subject_hea}{$umSubjectArrow}</a></b> :.</td>
+				    <td width="320" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('subject')" class="lien">{$smLabel.subject_hea}{$smSubjectArrow}</a></b> :.</td>
 					{if $umFolder eq "sent"}
-			    	<td width="220" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('toname')" class="lien">{$umLabel.to_hea}{$umToArrow}</a></b> :.</td>
+			    	<td width="220" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('toname')" class="lien">{$smLabel.to_hea}{$umToArrow}</a></b> :.</td>
 					{else}
-				    <td width="220" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('fromname')" class="lien">{$umLabel.from_hea}{$umFromArrow}</a></b> :.</td>
+				    <td width="220" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('fromname')" class="lien">{$smLabel.from_hea}{$umFromArrow}</a></b> :.</td>
 					{/if}
-				    <td width="100" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('date')" class="lien">{$umLabel.date_hea}{$umDateArrow}</a></b> :.</td>
-				    <td width="70" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('size')" class="lien">{$umLabel.size_hea}{$umSizeArrow}</a></b> :.</td>
+				    <td width="100" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('date')" class="lien">{$smLabel.date_hea}{$smDateArrow}</a></b> :.</td>
+				    <td width="70" bgcolor="#ACB6D1" align="center" valign="middle">.: <b><a href="javascript:sortby('size')" class="lien">{$smLabel.size_hea}{$umSizeArrow}</a></b> :.</td>
 				</tr>
-				{section name=i loop=$umMessageList}
+				{section name=i loop=$smMessageList}
 				<tr bgcolor="#EAEAEA" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');">
-					<td align="center" valign="middle">{$umMessageList[i].checkbox}</td>
-					<td align="center" valign="middle">{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
-					<td align="left" valign="middle">&nbsp;<acronym title="{$umMessageList[i].subject|escape:"html"|default:$umLabel.no_subject_text}">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:50:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</acronym></td>
+					<td align="center" valign="middle">{$smMessageList[i].checkbox}</td>
+					<td align="center" valign="middle">{$smMessageList[i].priorimg}{$smMessageList[i].attachimg}{$smMessageList[i].statusimg}</td>
+					<td align="left" valign="middle">&nbsp;<acronym title="{$smMessageList[i].subject|escape:"html"|default:$smLabel.no_subject_text}">{if $smMessageList[i].read eq "false"}<b>{/if}<a href="{$smMessageList[i].readlink}">{$smMessageList[i].subject|truncate:50:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a>{if $smMessageList[i].read eq "false"}</b>{/if}</acronym></td>
 					{if $umFolder eq "sent"}
-					<td align="left" valign="middle">&nbsp;<acronym title="{$umMessageList[i].to|escape:"html"|default:$umLabel.no_recipient_text}"><a href="{$umMessageList[i].composelinksent}">{$umMessageList[i].to|truncate:40:"...":true|escape:"html"|default:$umLabel.no_recipient_text}</a></acronym></td>
+					<td align="left" valign="middle">&nbsp;<acronym title="{$smMessageList[i].to|escape:"html"|default:$smLabel.no_recipient_text}"><a href="{$smMessageList[i].composelinksent}">{$smMessageList[i].to|truncate:40:"...":true|escape:"html"|default:$smLabel.no_recipient_text}</a></acronym></td>
 					{else}
-					<td align="left" valign="middle">&nbsp;<acronym title="{$umMessageList[i].from|escape:"html"|default:$umLabel.no_recipient_text}"><a href="{$umMessageList[i].composelink}">{$umMessageList[i].from|truncate:40:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a></acronym></td>
+					<td align="left" valign="middle">&nbsp;<acronym title="{$smMessageList[i].from|escape:"html"|default:$smLabel.no_recipient_text}"><a href="{$smMessageList[i].composelink}">{$smMessageList[i].from|truncate:40:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a></acronym></td>
 					{/if}
-					<td align="center" valign="middle">{$umMessageList[i].date|date_format:$umLabel.date_format}</td>
-					<td align="right" valign="middle">{$umMessageList[i].size} Kb&nbsp;</td>
+					<td align="center" valign="middle">{$smMessageList[i].date|date_format:$smLabel.date_format}</td>
+					<td align="right" valign="middle">{$smMessageList[i].size} Kb&nbsp;</td>
 				</tr>
 				{/section}
 				<tr>
-					<td colspan="7" height="30" valign="middle">&nbsp;<a href="javascript:delemsg()"><img src="./themes/beauvoir/delete.gif" border="0" width="15" height="15" alt="{$umLabel.delete_selected_mnu}" align="absmiddle"> {$umLabel.delete_selected_mnu}</a> | <a href="javascript:movemsg()"><img src="./themes/beauvoir/move.gif" border="0" width="15" height="15" alt="{$umLabel.move_selected_mnu}" align="absmiddle"> {$umLabel.move_selected_mnu}</a> <select name="aval_folders">{section name=i loop=$umAvalFolders}<option value="{$umAvalFolders[i].path|escape:"html"}">{$umAvalFolders[i].display|escape:"html"}{/section}</select></td>
+					<td colspan="7" height="30" valign="middle">&nbsp;<a href="javascript:delemsg()"><img src="./themes/beauvoir/delete.gif" border="0" width="15" height="15" alt="{$smLabel.delete_selected_mnu}" align="absmiddle"> {$smLabel.delete_selected_mnu}</a> | <a href="javascript:movemsg()"><img src="./themes/beauvoir/move.gif" border="0" width="15" height="15" alt="{$smLabel.move_selected_mnu}" align="absmiddle"> {$smLabel.move_selected_mnu}</a> <select name="aval_folders">{section name=i loop=$smAvalFolders}<option value="{$smAvalFolders[i].path|escape:"html"}">{$smAvalFolders[i].display|escape:"html"}{/section}</select></td>
 				</tr>
 				<tr>
-					<td colspan="7" height="30" valign="middle">&nbsp;{if $umPreviousLink}<a href="{$umPreviousLink}">{$umLabel.previous_text}</a> &nbsp;{/if}{$umNavBar}{if $umNextLink} &nbsp;<a href="{$umNextLink}">{$umLabel.next_text}</a>{/if}</td>
+					<td colspan="7" height="30" valign="middle">&nbsp;{if $smPreviousLink}<a href="{$smPreviousLink}">{$smLabel.previous_text}</a> &nbsp;{/if}{$umNavBar}{if $smNextLink} &nbsp;<a href="{$smNextLink}">{$smLabel.next_text}</a>{/if}</td>
 				</tr>
 			{else}		
 				<tr>
-					<td colspan="7" height="30" valign="middle"><br>&nbsp;{$umLabel.no_messages} <b>{$umBoxName|escape:"html"}</b>.<br><br></td>
+					<td colspan="7" height="30" valign="middle"><br>&nbsp;{$smLabel.no_messages} <b>{$umBoxName|escape:"html"}</b>.<br><br></td>
 				</tr>
 			{/if}
 			</form>
-			{if $umQuotaEnabled eq 1}
+			{if $smQuotaEnabled eq 1}
 			<tr>
-				<td colspan="7" height="30" valign="middle" align="center">{$umLabel.quota_usage_info} : <b>{$umTotalUsed}</b> Kb {$umLabel.quota_usage_used} {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b> Kb {$umLabel.quota_usage_avail}<br> {$umUsageGraph}</td>
+				<td colspan="7" height="30" valign="middle" align="center">{$smLabel.quota_usage_info} : <b>{$smTotalUsed}</b> Kb {$smLabel.quota_usage_used} {$smLabel.quota_usage_of} <b>{$smQuotaLimit}</b> Kb {$smLabel.quota_usage_avail}<br> {$smUsageGraph}</td>
 			</tr>
 			{/if}
 		</table>

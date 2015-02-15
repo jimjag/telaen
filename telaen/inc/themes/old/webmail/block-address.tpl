@@ -3,9 +3,9 @@
 
 <html>
 <head>
-	<title>UebiMiau Webmail - {$umLabel.blk_title}</title>
+	<title>UebiMiau Webmail - {$smLabel.blk_title}</title>
 	<link rel="stylesheet" href="inc/themes/webmail/css.css" type="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 </head>
 <body>
 <form name="form1" action="block_address.php" method="POST">
@@ -16,26 +16,26 @@
 <br><br>
 <table width="500" border="0" cellspacing="1" cellpadding="0" class="normal" align="center" bgcolor="#2D3443">
 	<tr bgcolor="#78879C">
-		<td height="30" width="100%" align="center" valign="middle"><b>{$umLabel.blk_information}</b></td>
+		<td height="30" width="100%" align="center" valign="middle"><b>{$smLabel.blk_information}</b></td>
 	</tr>
 	{if $umAvailableAddresses gt 0 }
 	<tr bgcolor="#BFC6D3">
-		<td width="100%" align="center" valign="middle"><b>{$umLabel.blk_email}</b></td>
+		<td width="100%" align="center" valign="middle"><b>{$smLabel.blk_email}</b></td>
 	</tr>
-	{section name=i loop=$umAddressList}
+	{section name=i loop=$smAddressList}
 	<tr bgcolor="#BFC6D3">
-		<td valign="middle"><input type="checkbox" name="fFilter[]" checked value="{$umAddressList[i].index}">{$umAddressList[i].mail}</td>
+		<td valign="middle"><input type="checkbox" name="fFilter[]" checked value="{$smAddressList[i].index}">{$smAddressList[i].mail}</td>
 	</tr>
 	{/section}
 	<tr bgcolor="#BFC6D3">
-		<td align="center" valign="middle"><br><input type="submit" name="submit" class="button" value="{$umLabel.blk_save}"><br><br></td>
+		<td align="center" valign="middle"><br><input type="submit" name="submit" class="button" value="{$smLabel.blk_save}"><br><br></td>
 	</tr>
 	{else}
 	<tr bgcolor="#BFC6D3">
-		<td align="center" valign="middle">{$umLabel.blk_no_address}</td>
+		<td align="center" valign="middle">{$smLabel.blk_no_address}</td>
 	</tr>
 	<tr bgcolor="#BFC6D3">
-		<td align="center" valign="middle">> <a href="javascript:self.close()" class="lien">{$umLabel.blk_close}</a> <</td>
+		<td align="center" valign="middle">> <a href="javascript:self.close()" class="lien">{$smLabel.blk_close}</a> <</td>
 	</tr>
 	{/if}
 </table>

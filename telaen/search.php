@@ -33,11 +33,11 @@ function readmsg(ix,folder) {
 </script>
 ";
 
-$smarty->assign('umJS', $jssource);
+$smarty->assign('smJS', $jssource);
 
-$smarty->assign('umInputFrom', $srcFrom);
-$smarty->assign('umInputSubject', $srcSubject);
-$smarty->assign('umInputBody', $srcBody);
+$smarty->assign('smInputFrom', $srcFrom);
+$smarty->assign('smInputSubject', $srcSubject);
+$smarty->assign('smInputBody', $srcBody);
 
 if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
     $boxes = $mbox['folders'];
@@ -187,10 +187,10 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $messagelist[$index]['folder'] = $headers[$i]['folder'];
         $messagelist[$index]['foldername'] = $boxname;
     }
-    $smarty->assign('umMessageList', $messagelist);
+    $smarty->assign('smMessageList', $messagelist);
     unset($headers);
-    $smarty->assign('umDoSearch', 1);
+    $smarty->assign('smDoSearch', 1);
 } else {
-    $smarty->assign('umDoSearch', 0);
+    $smarty->assign('smDoSearch', 0);
 }
 $smarty->display("$themez/search.tpl");

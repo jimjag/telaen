@@ -41,5 +41,5 @@ for ($i = 0;$i<count($addressbook);$i++) {
 }
 $listbox .= '</select>';
 
-$smarty->assign('umContacts', $listbox);
+$smarty->assign('smContacts', $listbox);
 $smarty->display("$themez/quick_address.tpl");

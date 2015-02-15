@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.compose_mnu}</title>
+<title>{if $webmailTitle}{$webmailTitle} - {/if}{$smLabel.compose_mnu}</title>
 <link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 {$pageMetas}
 <script src="inc/themes/outlook/webmail.js" type="text/javascript"></script>
-{$umJS}
+{$smJS}
 </head>
 
 <body>
@@ -15,7 +15,7 @@
     <td><table width='100%' cellpadding='0' cellspacing='0'>
         <tr>
           <td class="window_title"><img src='inc/themes/outlook/images/icon_outlook_newmsg.gif'></td>
-          <td width='100%' class="window_title">&nbsp;{$umLabel.compose_mnu}</td>
+          <td width='100%' class="window_title">&nbsp;{$smLabel.compose_mnu}</td>
           <td class='window_title_X'><a href='javascript:goinbox()'><img border='0' src='inc/themes/outlook/images/X.png'></a></td>
         </tr>
       </table>
@@ -32,17 +32,17 @@
                 <td class='toolbar_inner'><table width='0' cellpadding='0' cellspacing='0'>
                     <tr>
                       <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_handler.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="enviar()"><acronym title="{$umLabel.send_text}"><img src="inc/themes/outlook/images/icon_send.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onclick="enviar()"><acronym title="{$smLabel.send_text}"><img src="inc/themes/outlook/images/icon_send.gif"><font class='xx-normal'><br>
                         {#send_text#|truncate:13:"...":true}</font></acronym></td>
                       <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
                       <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'"
-										onclick="document.getElementById('midlayer').className='showmodal';"><acronym title="{$umLabel.attch_add_new}"><img src="inc/themes/outlook/images/icon_attachment.gif"><font class='xx-normal'><br>
+										onclick="document.getElementById('midlayer').className='showmodal';"><acronym title="{$smLabel.attch_add_new}"><img src="inc/themes/outlook/images/icon_attachment.gif"><font class='xx-normal'><br>
                         {#attch_add_new#|truncate:13:"...":true}</font></acronym></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off';" onmousedown="this.className='toolbar_button_down'" onclick="setVisible('priority_window',true)"><acronym title="{$umLabel.priority_text}"><img src="inc/themes/outlook/images/icon_priority.gif"><font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off';" onmousedown="this.className='toolbar_button_down'" onclick="setVisible('priority_window',true)"><acronym title="{$smLabel.priority_text}"><img src="inc/themes/outlook/images/icon_priority.gif"><font class='xx-normal'><br>
                         {#priority_text#|truncate:13:"...":true}</font></acronym></td>
                       {if !$umAddSignature && $umHaveSignature}
                       <td class="toolbar_splitter"><img src='inc/themes/outlook/images/bar_splitter.gif'></td>
-                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onClick="document.composeForm.cksig.click();"><acronym title="{$umLabel.add_signature}">{if $umAddSignature eq 1}<img src="inc/themes/outlook/images/icon_sign_off.gif">{else}<img src="inc/themes/outlook/images/icon_sign.gif">{/if}<font class='xx-normal'><br>
+                      <td class="toolbar_button_off" onmouseover="this.className='toolbar_button_on'" onmouseout="this.className='toolbar_button_off'" onmousedown="this.className='toolbar_button_down'" onmouseup="this.className='toolbar_button_on'" onClick="document.composeForm.cksig.click();"><acronym title="{$smLabel.add_signature}">{if $umAddSignature eq 1}<img src="inc/themes/outlook/images/icon_sign_off.gif">{else}<img src="inc/themes/outlook/images/icon_sign.gif">{/if}<font class='xx-normal'><br>
                         {#add_signature#|truncate:13:"...":true}</font></acronym></td>
                       {/if} </tr>
                   </table></td>
@@ -70,7 +70,7 @@
 	border-left-width: 0px;
 	border-right-width: 0px;
 	border-bottom-color: #808080;
-	"><font class="xx-normal">&nbsp;&nbsp;&nbsp;{$umLabel.up_title}</font></td>
+	"><font class="xx-normal">&nbsp;&nbsp;&nbsp;{$smLabel.up_title}</font></td>
               <td style="
 	padding:5;
 	border-style: solid;
@@ -80,7 +80,7 @@
 	border-right-width: 0px;
 	border-bottom-color: #808080;
 	"><input class=file type=file name=userfile size=35>
-                <input type=submit value="&nbsp;&nbsp;&nbsp;{$umLabel.attch_add_new}&nbsp;&nbsp;&nbsp;" name=submit class=button></td>
+                <input type=submit value="&nbsp;&nbsp;&nbsp;{$smLabel.attch_add_new}&nbsp;&nbsp;&nbsp;" name=submit class=button></td>
             </tr>
           </form>
         </table>
@@ -92,31 +92,31 @@
   <tr>
     <td><table width="100%" border=0 cellspacing=3 cellpadding=0 >
         <tr>
-          <td width='100'><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" border="0" alt="{$umLabel.address_tip}"></a>&nbsp;{$umLabel.to_hea}</font></td>
+          <td width='100'><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" border="0" alt="{$smLabel.address_tip}"></a>&nbsp;{$smLabel.to_hea}</font></td>
           <td width='*'>{$umTo}</td>
         </tr>
         <tr>
-          <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$umLabel.address_tip}"></a>&nbsp;{$umLabel.cc_hea}</font></td>
+          <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$smLabel.address_tip}"></a>&nbsp;{$smLabel.cc_hea}</font></td>
           <td>{$umCc}</td>
         </tr>
         <tr>
-          <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$umLabel.address_tip}"></a>&nbsp;{$umLabel.bcc_hea}</font></td>
+          <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;<a href="javascript:addrpopup()"><img src="images/bookmark_it.gif" width="15" height="12" border="0" alt="{$smLabel.address_tip}"></a>&nbsp;{$smLabel.bcc_hea}</font></td>
           <td>{$umBcc}</td>
         </tr>
         <tr>
-          <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;{$umLabel.subject_hea}</font></td>
-          <td>{$umSubject}</td>
+          <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;{$smLabel.subject_hea}</font></td>
+          <td>{$smSubject}</td>
         </tr>
         <tr>
-          <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;{$umLabel.attach_hea}</font></td>
+          <td><font class='xx-normal'>&nbsp;&nbsp;&nbsp;{$smLabel.attach_hea}</font></td>
           <td class='newmsg_attachments_outer'><table width='100%' height='100%' cellpadding='0' cellspacing='0'>
               <tr>
                 <td class='newmsg_attachments_inner'> {if $umHaveAttachs eq 1}
-                  {section name=i loop=$umAttachList}
-                  {$umAttachList[i].name|escape:"html"} ({$umAttachList[i].size}Kb) [<a href="{$umAttachList[i].link}">{$umLabel.attch_dele_hea}</a>]
+                  {section name=i loop=$smAttachList}
+                  {$smAttachList[i].name|escape:"html"} ({$smAttachList[i].size}Kb) [<a href="{$smAttachList[i].link}">{$smLabel.attch_dele_hea}</a>]
                   {/section}
                   {else}
-                  {$umLabel.attch_no_hea}
+                  {$smLabel.attch_no_hea}
                   {/if} </td>
               </tr>
             </table></td>
@@ -128,7 +128,7 @@
   </tr>
   <tr>
     <td><input type="checkbox" value="true" name="requireReceipt"{if $requireReceipt eq true} checked="checked"{/if}>
-      <FONT CLASS="xx-normal">&nbsp;&nbsp;{$umLabel.require_receipt}</FONT></td>
+      <FONT CLASS="xx-normal">&nbsp;&nbsp;{$smLabel.require_receipt}</FONT></td>
   </tr>
   <tr>
     <td class='info_bar'>&nbsp;</td>
@@ -139,9 +139,9 @@
 <div id="priority_window" class="priority_outer" onmouseover="setVisible('priority_window',true);" onmouseout="setVisible('priority_window',false);" onclick="setVisible('priority_window',false);">
   <div class="priority_inner">
     <select name="priority" size="3" class="priority">
-      <option value="1"{if $umPriority eq 1} selected{/if}>{$umLabel.priority_high}
-      <option value="3"{if $umPriority eq 3} selected{/if}>{$umLabel.priority_normal}
-      <option value="5"{if $umPriority eq 5} selected{/if}>{$umLabel.priority_low}
+      <option value="1"{if $umPriority eq 1} selected{/if}>{$smLabel.priority_high}
+      <option value="3"{if $umPriority eq 3} selected{/if}>{$smLabel.priority_normal}
+      <option value="5"{if $umPriority eq 5} selected{/if}>{$smLabel.priority_low}
     </select>
   </div>
 </div>

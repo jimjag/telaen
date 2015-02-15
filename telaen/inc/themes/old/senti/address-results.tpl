@@ -2,11 +2,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>sentiMail - {$umLabel.adr_title}</title>
+	<title>sentiMail - {$smLabel.adr_title}</title>
 
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-{$umJS}
+{$smJS}
 </head>
 
 <body><br><br>
@@ -49,11 +49,11 @@
 				<table width="100%" height="100%" border="0" cellspacing="1" cellpadding="0">
 					<tr>
 						<td class=default9 align=center><br>
-						{if $umOpt eq 1}{$umLabel.addr_saved}
-						{elseif $umOpt eq 2}{$umLabel.addr_added}
-						{elseif $umOpt eq 3}{$umLabel.addr_deleted}
+						{if $smOpt eq 1}{$smLabel.addr_saved}
+						{elseif $smOpt eq 2}{$smLabel.addr_added}
+						{elseif $smOpt eq 3}{$smLabel.addr_deleted}
 						{/if}
-						<br><br><a href="{$umGoBack}">{$umLabel.adr_back}</a></td>
+						<br><br><a href="{$smGoBack}">{$smLabel.adr_back}</a></td>
 					</tr>
 				</table>
 		</td><td width="17"><img src="inc/themes/senti/images/rightside.gif" width="17" height="100%">

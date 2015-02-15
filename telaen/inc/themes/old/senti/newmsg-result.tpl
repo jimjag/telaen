@@ -5,9 +5,9 @@
 <head>
 	<title>sentiMail - Result</title>
 
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-{$umJS}
+{$smJS}
 </head>
 
 <body><br><br>
@@ -50,16 +50,16 @@
 			{if $umMailSent}
 				<tr>
 					<td class=cent>
-						{$umLabel.result_success}<br><br>
-						<a href="messages.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{$umLabel.nav_continue}</a>
+						{$smLabel.result_success}<br><br>
+						<a href="messages.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{$smLabel.nav_continue}</a>
 					</td>
 				</tr>
 			{else}
 				<tr>
 					<td class=cent>
-						{$umLabel.result_error}<br><br>
+						{$smLabel.result_error}<br><br>
 						<font color=red>{$umErrorMessage}</font><br><br>
-						<a href="javascript:history.go(-1)">{$umLabel.nav_back}</a>
+						<a href="javascript:history.go(-1)">{$smLabel.nav_back}</a>
 					</td>
 				</tr>
 			{/if}

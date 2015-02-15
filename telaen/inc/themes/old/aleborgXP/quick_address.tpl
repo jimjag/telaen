@@ -1,5 +1,5 @@
 {config_load file=$umLanguageFile section="QuickAddress"}
-<title>UebiMiau - {$umLabel.qad_title}</title>
+<title>UebiMiau - {$smLabel.qad_title}</title>
 <link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 <body bgcolor="#FFFFFF" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
 {literal}
@@ -36,7 +36,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -48,7 +48,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -82,7 +82,7 @@ function ns_clean() {
 	<form name=form1>
 	<tr>
 		<td width="225" valign=top>
-			{$umContacts}
+			{$smContacts}
 			<br><br>
 			<input type=button value=" &nbsp;OK &nbsp;" onClick="AddAndExit()" class=button>
 		</td>
@@ -90,7 +90,7 @@ function ns_clean() {
 		<td valign=top width="225">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
-					<td colspan=2 class="headers"><b>{$umLabel.qad_to}</b></td>
+					<td colspan=2 class="headers"><b>{$smLabel.qad_to}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign=top class=default>
@@ -105,7 +105,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 class="headers"><b>{$umLabel.qad_cc}</b></td>
+					<td colspan=2 class="headers"><b>{$smLabel.qad_cc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign=top class=default>
@@ -120,7 +120,7 @@ function ns_clean() {
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 class="headers"><b>{$umLabel.qad_bcc}</b></td>
+					<td colspan=2 class="headers"><b>{$smLabel.qad_bcc}</b></td>
 				</tr>
 				<tr>
 					<td width="5%" valign=top class=default>

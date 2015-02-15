@@ -3,8 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umLabel.up_title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$smLabel.up_title}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 </head>
 <!--
@@ -18,8 +18,8 @@ copyright, or worse, to put your name at the place.
 <br>
 <table width="95%" border="0" cellspacing="1" cellpadding="0" align="center" class="normal" bgcolor="#999999">
 <form enctype="multipart/form-data" action="upload.php?sid={$umSid}&lid={$umLid}&tid={$umTid}" method="POST">
-<tr bgcolor="#ACB6D1"><td align="center"><b>{$umLabel.up_information_text}</b></td></tr>
-<tr bgcolor="#EAEAEA"><td align="center"><input type="file" name="userfile" size="22" style="width: 220px;"><br><input type="submit" value="{$umLabel.up_button_text}" name="submit"></td></tr>
+<tr bgcolor="#ACB6D1"><td align="center"><b>{$smLabel.up_information_text}</b></td></tr>
+<tr bgcolor="#EAEAEA"><td align="center"><input type="file" name="userfile" size="22" style="width: 220px;"><br><input type="submit" value="{$smLabel.up_button_text}" name="submit"></td></tr>
 </form>
 </table>
 </body>

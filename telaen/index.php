@@ -28,7 +28,7 @@ if (!is_dir($smarty_compile_dir)) {
     mkdir($smarty_compile_dir, (isset($TLN->config['dirperm']) ? $TLN->config['dirperm'] : "0755"));
 }
 
-$smarty->assign('umLabel', $lang);
+$smarty->assign('smLabel', $lang);
 
 // Assign also the webmail title to smarty, check for empty title before
 if (!isset($TLN->config['webmail_title'])) {
@@ -113,7 +113,7 @@ switch ($mail_server_type) {
 $smarty->assign('umEmail', $f_email);
 $smarty->assign('umUser', $f_user);
 $smarty->assign('umPass', $f_pass);
-$smarty->assign('umJS', $jssource);
+$smarty->assign('smJS', $jssource);
 
 if (count($TLN->config['languages']) == 0) {
     die('You must provide at least one language');

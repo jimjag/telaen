@@ -1,6 +1,6 @@
-<title>{if $webmailTitle}{$webmailTitle} - {/if}{$umLabel.qad_title}</title>
+<title>{if $webmailTitle}{$webmailTitle} - {/if}{$smLabel.qad_title}</title>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 {$pageMetas}
 <link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 {literal}
@@ -37,7 +37,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -49,7 +49,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -85,15 +85,15 @@ function ns_clean() {
     <form name=form1>
 
   <tr>
-    <td width="225" valign=top><font class='xx-normal'><b>{$umLabel.qad_select_address}</b><br>
-      </font> {$umContacts} </td>
+    <td width="225" valign=top><font class='xx-normal'><b>{$smLabel.qad_select_address}</b><br>
+      </font> {$smContacts} </td>
     <td valign=top width="225"><table width="" cellpadding=0 cellspacing=0>
         <tr>
           <td width="5%" valign=top class=default><font class='xx-normal'>&nbsp;<br>
             </font>
             <input type="button" value="-&gt;" class="button" onClick="Add('to')">
             <br></td>
-          <td><font class='xx-normal'><b>{$umLabel.qad_to}</b><br>
+          <td><font class='xx-normal'><b>{$smLabel.qad_to}</b><br>
             </font>
             <select name="to" size="3" style="width: 200px;" onDblClick="Dele('to')">
               <option value="">
@@ -104,7 +104,7 @@ function ns_clean() {
             </font>
             <input type="button" value="-&gt;" class="button" onClick="Add('cc')">
             <br></td>
-          <td valign=top ><font class='xx-normal'><b>{$umLabel.qad_cc}</b></font><br>
+          <td valign=top ><font class='xx-normal'><b>{$smLabel.qad_cc}</b></font><br>
             <select name=cc size=3 style="width: 200px;" onDblClick="Dele('cc')">
               <option value="">
             </select></td>
@@ -114,7 +114,7 @@ function ns_clean() {
             </font>
             <input type="button" value="-&gt;" class="button" onClick="Add('bcc')">
             <br></td>
-          <td valign=top><font class='xx-normal'><b>{$umLabel.qad_bcc}</b></font><br>
+          <td valign=top><font class='xx-normal'><b>{$smLabel.qad_bcc}</b></font><br>
             <select name=bcc size=3 style="width: 200px;" onDblClick="Dele('bcc')">
               <option value="">
             </select></td>

@@ -1,4 +1,4 @@
-{include file=$headerTemplate pageTitle=#messages_to#|cat:" "|cat:$umUserEmail}
+{include file=$headerTemplate pageTitle=#messages_to#|cat:" "|cat:$smUserEmail}
 
 {include file=$menuTemplate}
 <table cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#DDE3EB" width="100%">
@@ -11,7 +11,7 @@
             <td colspan="7" class="default">&nbsp;&nbsp;
               {$umWelcomeMessage2}
               {if $umHaveSpam eq "TRUE"}
-              - <a href="process.php?folder=spam" class="spam"><i>{$umLabel.have_spam}</i></a> {/if} </td>
+              - <a href="process.php?folder=spam" class="spam"><i>{$smLabel.have_spam}</i></a> {/if} </td>
           </tr>
           {if $umErrorMessage neq ""}
           <tr>
@@ -22,62 +22,62 @@
             <td width="20" class="headers"><input type="checkbox" name="chkall" onclick="sel()" /></td>
             <td width="34" class="headersLeft"><img src="./images/prior_high.gif" alt="" />&nbsp;<img src="images/attach.gif" alt="" />&nbsp;<img src="images/msg_read.gif" alt="" /></td>
             {if $umFolder eq "sent"}
-            <td width="180" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('toname')">{$umLabel.to_hea}{$umToArrow}</a></b> :.</td>
+            <td width="180" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('toname')">{$smLabel.to_hea}{$umToArrow}</a></b> :.</td>
             {else}
-            <td width="180" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('fromname')">{$umLabel.from_hea}{$umFromArrow}</a></b> :.</td>
+            <td width="180" class="headersLeft">.: <b><a class="menu" href="javascript:sortby('fromname')">{$smLabel.from_hea}{$umFromArrow}</a></b> :.</td>
             {/if}
-            <td class="headersLeft">.: <b><a class="menu" href="javascript:sortby('subject')">{$umLabel.subject_hea}{$umSubjectArrow}</a></b> :.</td>
-            <td width="140" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{$umLabel.date_hea}{$umDateArrow}</a></b> :.</td>
-            <td width="120" class="headersRight">.: <b><a class="menu" href="javascript:sortby('size')">{$umLabel.size_hea}{$umSizeArrow}</a></b> :.&nbsp;</td>
+            <td class="headersLeft">.: <b><a class="menu" href="javascript:sortby('subject')">{$smLabel.subject_hea}{$smSubjectArrow}</a></b> :.</td>
+            <td width="140" class="headers">.: <b><a class="menu" href="javascript:sortby('date')">{$smLabel.date_hea}{$smDateArrow}</a></b> :.</td>
+            <td width="120" class="headersRight">.: <b><a class="menu" href="javascript:sortby('size')">{$smLabel.size_hea}{$umSizeArrow}</a></b> :.&nbsp;</td>
           </tr>
-          {section name=i loop=$umMessageList}
+          {section name=i loop=$smMessageList}
           <tr>
-            <td class="cent">{$umMessageList[i].checkbox}</td>
-            <td class="default">{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
+            <td class="cent">{$smMessageList[i].checkbox}</td>
+            <td class="default">{$smMessageList[i].priorimg}{$smMessageList[i].attachimg}{$smMessageList[i].statusimg}</td>
             {if $umFolder eq "sent"}
-            <td class="default"><acronym title="{$umMessageList[i].to|escape:"html"|default:$umLabel.no_recipient_text}">{if !$umMessageList[i].read}<b>{/if}<a href="{$umMessageList[i].composelinksent}">{$umMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a>{if !$umMessageList[i].read}</b>{/if}</acronym></td>
+            <td class="default"><acronym title="{$smMessageList[i].to|escape:"html"|default:$smLabel.no_recipient_text}">{if !$smMessageList[i].read}<b>{/if}<a href="{$smMessageList[i].composelinksent}">{$smMessageList[i].to|truncate:30:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a>{if !$smMessageList[i].read}</b>{/if}</acronym></td>
             {else}
-            <td class="default"><acronym title="{$umMessageList[i].from|escape:"html"|default:$umLabel.no_recipient_text}">{if !$umMessageList[i].read}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a>{if !$umMessageList[i].read}</b>{/if}</acronym></td>
+            <td class="default"><acronym title="{$smMessageList[i].from|escape:"html"|default:$smLabel.no_recipient_text}">{if !$smMessageList[i].read}<b>{/if}<a href="{$smMessageList[i].readlink}">{$smMessageList[i].from|truncate:30:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a>{if !$smMessageList[i].read}</b>{/if}</acronym></td>
             {/if}
-            <td class="default"><acronym title="{$umMessageList[i].subject|escape:"html"|default:$umLabel.no_subject_text}">{if !$umMessageList[i].read}<b>{/if}<a href="{$umMessageList[i].readlink}">{$umMessageList[i].subject|truncate:40:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a>{if !$umMessageList[i].read}</b>{/if}</acronym></td>
-            <td class="cent">{if !$umMessageList[i].read}<b>{/if}{$umMessageList[i].date|date_format:$umLabel.date_format}{if $umMessageList[i].read eq "false"}</b>{/if}</td>
-            <td class="right">{if !$umMessageList[i].read}<b>{/if}{$umMessageList[i].size} &nbsp;{if !$umMessageList[i].read}</b>{/if}</td>
+            <td class="default"><acronym title="{$smMessageList[i].subject|escape:"html"|default:$smLabel.no_subject_text}">{if !$smMessageList[i].read}<b>{/if}<a href="{$smMessageList[i].readlink}">{$smMessageList[i].subject|truncate:40:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a>{if !$smMessageList[i].read}</b>{/if}</acronym></td>
+            <td class="cent">{if !$smMessageList[i].read}<b>{/if}{$smMessageList[i].date|date_format:$smLabel.date_format}{if $smMessageList[i].read eq "false"}</b>{/if}</td>
+            <td class="right">{if !$smMessageList[i].read}<b>{/if}{$smMessageList[i].size} &nbsp;{if !$smMessageList[i].read}</b>{/if}</td>
           </tr>
           <tr>
             <td colspan="7" class="separator"></td>
           </tr>
           {/section}
           <tr>
-            <td colspan="7" class="default"><img src="./themes/hungi.mozilla/images/arrowblue.gif" alt="" />&nbsp; <a class="menu" href="javascript:markmsg()">{$umLabel.mark_selected_mnu}</a> :: <a class="menu" href="javascript:unmarkmsg()">{$umLabel.unmark_selected_mnu}</a> :: <a class="menu" href="javascript:delemsg()">{$umLabel.delete_selected_mnu}</a> :: <a class="menu" href="javascript:movemsg()">{$umLabel.move_selected_mnu}</a>
+            <td colspan="7" class="default"><img src="./themes/hungi.mozilla/images/arrowblue.gif" alt="" />&nbsp; <a class="menu" href="javascript:markmsg()">{$smLabel.mark_selected_mnu}</a> :: <a class="menu" href="javascript:unmarkmsg()">{$smLabel.unmark_selected_mnu}</a> :: <a class="menu" href="javascript:delemsg()">{$smLabel.delete_selected_mnu}</a> :: <a class="menu" href="javascript:movemsg()">{$smLabel.move_selected_mnu}</a>
               <select name="aval_folders">
 
-					{section name=i loop=$umAvalFolders}
+					{section name=i loop=$smAvalFolders}
 
-                <option value="{$umAvalFolders[i].path|escape:"html"}">{$umAvalFolders[i].display|escape:"html"}</option>
+                <option value="{$smAvalFolders[i].path|escape:"html"}">{$smAvalFolders[i].display|escape:"html"}</option>
 
 					{/section}
 
               </select></td>
           </tr>
           <tr>
-            <td colspan="7" class="default">&nbsp;&nbsp;<span class="menu"><b>{$umLabel.pages_text}:</b></span> {if $umPreviousLink}<!--<a href="{$umFirstLink}" class="navigation">&laquo; {$umLabel.first_text}</a>&nbsp; --> 
-              <a href="{$umPreviousLink}" class="navigation">&laquo; {$umLabel.previous_text}</a>&nbsp;{/if}
+            <td colspan="7" class="default">&nbsp;&nbsp;<span class="menu"><b>{$smLabel.pages_text}:</b></span> {if $smPreviousLink}<!--<a href="{$smFirstLink}" class="navigation">&laquo; {$smLabel.first_text}</a>&nbsp; -->
+              <a href="{$smPreviousLink}" class="navigation">&laquo; {$smLabel.previous_text}</a>&nbsp;{/if}
               {$umNavBar}
-              {if $umNextLink}&nbsp;<a href="{$umNextLink}" class="navigation">{$umLabel.next_text} &raquo;</a> 
-              <!--&nbsp;<a href="{$umLastLink}" class="navigation">{$umLabel.last_text} &raquo;</a>-->{/if} </td>
+              {if $smNextLink}&nbsp;<a href="{$smNextLink}" class="navigation">{$smLabel.next_text} &raquo;</a>
+              <!--&nbsp;<a href="{$smLastLink}" class="navigation">{$smLabel.last_text} &raquo;</a>-->{/if} </td>
           </tr>
           {else}
           <tr>
             <td colspan="7" class="cent"><br/>
-              &nbsp;&nbsp;{$umLabel.no_messages} <b>{$umBoxName|escape:"html"}</b><br/>
+              &nbsp;&nbsp;{$smLabel.no_messages} <b>{$umBoxName|escape:"html"}</b><br/>
               <br/></td>
           </tr>
           {/if}
 
-          {if $umQuotaEnabled eq 1}
+          {if $smQuotaEnabled eq 1}
           <tr>
-            <td class="usage" colspan="7">{$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b> {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b> {$umLabel.quota_usage_avail}<br/>
-              {$umUsageGraph}</td>
+            <td class="usage" colspan="7">{$smLabel.quota_usage_info}: {$smLabel.quota_usage_used} <b>{$smTotalUsed}</b> {$smLabel.quota_usage_of} <b>{$smQuotaLimit}</b> {$smLabel.quota_usage_avail}<br/>
+              {$smUsageGraph}</td>
           </tr>
           {/if}
         </table>

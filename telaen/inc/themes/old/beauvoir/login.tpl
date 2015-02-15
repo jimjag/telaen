@@ -3,11 +3,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {#lgn_title#|escape:"html"}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 </head>
-{$umJS}
+{$smJS}
 <!--
 Skinned by Arnaud BEAUVOIR -  - 
 
@@ -28,7 +28,7 @@ copyright, or worse, to put your name at the place.
 	<tr>
 		<td align="left" bgcolor="#EAEAEA" height="30">
 		<form name="form1" action="process.php" method="post">
-		<font class="titre">&nbsp;<b>{$umLabel.lgn_welcome_msg}</b></font>
+		<font class="titre">&nbsp;<b>{$smLabel.lgn_welcome_msg}</b></font>
 		</td>
 	</tr>
 	<tr bgcolor="#F5F4F4">
@@ -39,35 +39,35 @@ copyright, or worse, to put your name at the place.
 		</tr>
 		{if $umServerType neq "ONE-FOR-EACH"}
 		<tr>
-			<td align="right"><b>{$umLabel.lng_user_email}</b> :&nbsp;</td>
+			<td align="right"><b>{$smLabel.lng_user_email}</b> :&nbsp;</td>
 			<td><input type="text" name="f_email" value="{$umEmail}" class="normal" style="width:140px;"></td>
 		<tr>
 		{else}
 		<tr>
-			<td align="right"><b>{$umLabel.lng_user_name}</b> :&nbsp;</td>
+			<td align="right"><b>{$smLabel.lng_user_name}</b> :&nbsp;</td>
 			<td><input type="text" name="f_user" value="{$umUser}" class="normal" style="width:80px;">{if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
 		</tr>
 		{/if}
 		<tr>
-			<td align="right"><b>{$umLabel.lng_user_pwd}</b> :&nbsp;</td>
+			<td align="right"><b>{$smLabel.lng_user_pwd}</b> :&nbsp;</td>
 			<td><input type="password" name="f_pass" class="normal" style="width:80px;"></td>
 		</tr>
 		{if $umAllowSelectLanguage}
 		<tr>
-			<td align="right"><b>{$umLabel.lng_language}</b> :&nbsp;</td>
+			<td align="right"><b>{$smLabel.lng_language}</b> :&nbsp;</td>
 			<td>{$umLanguages}</td>
 		</tr>
 		{/if}
 		{if $umAllowSelectTheme}
 		<tr>
-			<td align="right"><b>{$umLabel.lng_theme}</b> :&nbsp;</td>
+			<td align="right"><b>{$smLabel.lng_theme}</b> :&nbsp;</td>
 			<td>{$umThemes}</td>
 		{/if}
 		<tr>
 			<td align="center" colspan="2">&nbsp;</td>
 		</tr>
 		<tr>
-			<td align="center" colspan="2"><input type="submit" class="normal" name="submit" value="{$umLabel.lng_login_btn}"></td>
+			<td align="center" colspan="2"><input type="submit" class="normal" name="submit" value="{$smLabel.lng_login_btn}"></td>
 		</tr>
 		<tr>
 			<td colspan="2" height="20">&nbsp;</td>

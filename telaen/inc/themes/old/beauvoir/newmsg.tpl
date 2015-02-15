@@ -3,11 +3,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 <script language="JavaScript" src="inc/themes/beauvoir/webmail.js" type="text/javascript"></script>
-{$umJS}
+{$smJS}
 </head>
 <!--
 Skinned by Arnaud BEAUVOIR -  - 
@@ -38,15 +38,15 @@ copyright, or worse, to put your name at the place.
 		{$umForms}
 		<td valign="middle">
 			<table cellspacing="0" cellpadding="0" width="100%" border="0" class="normal" >
-				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$umLabel.messages_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84"><img src="inc/themes/beauvoir/write.gif" border="0" width="31" height="31"><br><font class="inactive">{$umLabel.compose_mnu}</font></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84"><img src="inc/themes/beauvoir/refresh.gif" border="0" width="31" height="31"><br><font class="inactive">{$umLabel.refresh_mnu}</font></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:folderlist()"><img src="inc/themes/beauvoir/folder.gif" border="0" width="31" height="31"><br>{$umLabel.folders_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:search()"><img src="inc/themes/beauvoir/search.gif" border="0" width="31" height="31"><br>{$umLabel.search_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:addresses()"><img src="inc/themes/beauvoir/contact.gif" border="0" width="31" height="31"><br>{$umLabel.address_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:emptytrash()"><img src="inc/themes/beauvoir/trash.gif" border="0" width="31" height="31"><br>{$umLabel.empty_trash_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:prefs()"><img src="inc/themes/beauvoir/prefs.gif" border="0" width="31" height="31"><br>{$umLabel.prefs_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goend()"><img src="inc/themes/beauvoir/logout.gif" border="0" width="31" height="31"><br>{$umLabel.logoff_mnu}</a></td></tr>
+				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$smLabel.messages_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84"><img src="inc/themes/beauvoir/write.gif" border="0" width="31" height="31"><br><font class="inactive">{$smLabel.compose_mnu}</font></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84"><img src="inc/themes/beauvoir/refresh.gif" border="0" width="31" height="31"><br><font class="inactive">{$smLabel.refresh_mnu}</font></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:folderlist()"><img src="inc/themes/beauvoir/folder.gif" border="0" width="31" height="31"><br>{$smLabel.folders_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:search()"><img src="inc/themes/beauvoir/search.gif" border="0" width="31" height="31"><br>{$smLabel.search_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:addresses()"><img src="inc/themes/beauvoir/contact.gif" border="0" width="31" height="31"><br>{$smLabel.address_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:emptytrash()"><img src="inc/themes/beauvoir/trash.gif" border="0" width="31" height="31"><br>{$smLabel.empty_trash_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:prefs()"><img src="inc/themes/beauvoir/prefs.gif" border="0" width="31" height="31"><br>{$smLabel.prefs_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goend()"><img src="inc/themes/beauvoir/logout.gif" border="0" width="31" height="31"><br>{$smLabel.logoff_mnu}</a></td></tr>
 			</table>		
 		</td>
 	</tr>
@@ -57,49 +57,49 @@ copyright, or worse, to put your name at the place.
 					<td colspan="2" height="20">&nbsp;</td>
 				</tr>	
 				<tr>
-					<td align="right" width="30%">{$umLabel.to_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
+					<td align="right" width="30%">{$smLabel.to_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
 					<td>{$umTo}</td>
 				</tr>	
 				<tr>
-					<td align="right">{$umLabel.cc_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
+					<td align="right">{$smLabel.cc_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
 					<td>{$umCc}</td>
 				</tr>	
 				<tr>
-					<td align="right">{$umLabel.bcc_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
+					<td align="right">{$smLabel.bcc_hea}&nbsp;<a href="javascript:addrpopup()"><img src="./themes/beauvoir/catch.gif" width="15" height="15" border="0" alt="<!--%address_tip%-->" align="absmiddle"></a>&nbsp;</td>
 					<td>{$umBcc}</td>
 				</tr>	
 				<tr>
-					<td align="right">{$umLabel.subject_hea}&nbsp;</td>
-					<td>{$umSubject}</td>
+					<td align="right">{$smLabel.subject_hea}&nbsp;</td>
+					<td>{$smSubject}</td>
 				</tr>	
 				<tr>
-					<td align="right">{$umLabel.attach_hea}&nbsp;</td>
+					<td align="right">{$smLabel.attach_hea}&nbsp;</td>
 					<td align="left">
 						<table cellspacing="1" cellpadding="0" width="445" border="0" class="normal" bgcolor="#999999">
 						{if $umHaveAttachs eq 1}
 							<tr bgcolor="#ACB6D1">
-								<td width="45%">{$umLabel.attch_name_hea}</td>
-								<td width="15%">{$umLabel.attch_size}</td>
-								<td width="30%">{$umLabel.attch_type_hea}</td>
-								<td width="10%">{$umLabel.attch_dele_hea}</td>
+								<td width="45%">{$smLabel.attch_name_hea}</td>
+								<td width="15%">{$smLabel.attch_size}</td>
+								<td width="30%">{$smLabel.attch_type_hea}</td>
+								<td width="10%">{$smLabel.attch_dele_hea}</td>
 							</tr>
-						{section name=i loop=$umAttachList}
+						{section name=i loop=$smAttachList}
 							<tr bgcolor="#EAEAEA">
-								<td width="50%">{$umAttachList[i].name|escape:"html"}</td>
-								<td width="10%">{$umAttachList[i].size} Kb</td>
-								<td width="30%">{$umAttachList[i].type|truncate:23:"...":true}</td>
-								<td width="10%" align="center"><a href="{$umAttachList[i].link}">OK</a></td>
+								<td width="50%">{$smAttachList[i].name|escape:"html"}</td>
+								<td width="10%">{$smAttachList[i].size} Kb</td>
+								<td width="30%">{$smAttachList[i].type|truncate:23:"...":true}</td>
+								<td width="10%" align="center"><a href="{$smAttachList[i].link}">OK</a></td>
 							</tr>
 						{/section}
 						{else}							
 							<tr bgcolor="#EAEAEA">
-								<td width="100%" colspan="3">{$umLabel.attch_no_hea}</td>
+								<td width="100%" colspan="3">{$smLabel.attch_no_hea}</td>
 							</tr>
 						{/if}
 						</table>
 						<table cellspacing="1" cellpadding="0" width="445" border="0" class="normal" bgcolor="#EAEAEA">
 							<tr>
-								<td><a href="javascript:upwin()">{$umLabel.attch_add_new}</a></td>
+								<td><a href="javascript:upwin()">{$smLabel.attch_add_new}</a></td>
 							</tr>
 						</table>
 					</td>
@@ -119,23 +119,23 @@ copyright, or worse, to put your name at the place.
 				</tr>
 				{if !$umAddSignature && $umHaveSignature}
 				<tr>
-					<td align="right">{$umLabel.add_signature} :&nbsp;</td>
+					<td align="right">{$smLabel.add_signature} :&nbsp;</td>
 					<td><input type="checkbox" name="cksig" onClick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
 				</tr>
 				{/if}
 				<tr>
-					<td align="right">{$umLabel.priority_text} :&nbsp;</td>
+					<td align="right">{$smLabel.priority_text} :&nbsp;</td>
 					<td>
 						<select name="priority">
-							<option value="1"{if $umPriority eq 1} selected{/if}>{$umLabel.priority_high}
-							<option value="3"{if $umPriority eq 3} selected{/if}>{$umLabel.priority_normal}
-							<option value="5"{if $umPriority eq 5} selected{/if}>{$umLabel.priority_low}
+							<option value="1"{if $umPriority eq 1} selected{/if}>{$smLabel.priority_high}
+							<option value="3"{if $umPriority eq 3} selected{/if}>{$smLabel.priority_normal}
+							<option value="5"{if $umPriority eq 5} selected{/if}>{$smLabel.priority_low}
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td height="30">&nbsp;</td>
-					<td><input type="button" class="normal" name="bt_enviar" value="{$umLabel.send_text}" onClick=enviar()></td>
+					<td><input type="button" class="normal" name="bt_enviar" value="{$smLabel.send_text}" onClick=enviar()></td>
 				</tr>
 				<tr>
 					<td colspan="2" height="20">&nbsp;</td>

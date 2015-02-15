@@ -3,8 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umLabel.ctc_title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$smLabel.ctc_title}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 </head>
 
@@ -25,28 +25,28 @@ copyright, or worse, to put your name at the place.
 <br><br>
 <table width="500" border="0" cellspacing="1" cellpadding="0" class="normal" align="center" bgcolor="#999999">
 	<tr>
-		<td height="30" width="100%" colspan="2" align="center" valign="middle"><b>{$umLabel.ctc_information}</b></td>
+		<td height="30" width="100%" colspan="2" align="center" valign="middle"><b>{$smLabel.ctc_information}</b></td>
 	</tr>
 	{if $umAvailableAddresses gt 0 }
 	<tr bgcolor="#EAEAEA">
-		<td width="60%" align="center" valign="middle"><b>{$umLabel.ctc_name}</b></td>
-		<td align="center" valign="middle"><b>{$umLabel.ctc_email}</b></td>
+		<td width="60%" align="center" valign="middle"><b>{$smLabel.ctc_name}</b></td>
+		<td align="center" valign="middle"><b>{$smLabel.ctc_email}</b></td>
 	</tr>
-	{section name=i loop=$umAddressList}
+	{section name=i loop=$smAddressList}
 	<tr bgcolor="#EAEAEA">
-		<td valign="middle"><input type="checkbox" name="ckaval[]" checked value="{$umAddressList[i].index}">{$umAddressList[i].name|truncate:30:"...":true|escape:"html"}</td>
-		<td align="center" valign="middle">{$umAddressList[i].mail}</td>
+		<td valign="middle"><input type="checkbox" name="ckaval[]" checked value="{$smAddressList[i].index}">{$smAddressList[i].name|truncate:30:"...":true|escape:"html"}</td>
+		<td align="center" valign="middle">{$smAddressList[i].mail}</td>
 	</tr>
 	{/section}
 	<tr bgcolor="#EAEAEA">
-		<td align="center" valign="middle" colspan="2"><br><input type="submit" name="submit" class="normal" value="{$umLabel.ctc_save}"><br><br></td>
+		<td align="center" valign="middle" colspan="2"><br><input type="submit" name="submit" class="normal" value="{$smLabel.ctc_save}"><br><br></td>
 	</tr>
 	{else}
 	<tr bgcolor="#EAEAEA">
-		<td align="center" valign="middle" colspan="2">{$umLabel.ctc_no_address}</td>
+		<td align="center" valign="middle" colspan="2">{$smLabel.ctc_no_address}</td>
 	</tr>
 	<tr bgcolor="#EAEAEA">
-		<td align="center" valign="middle" colspan="2">> <a href="javascript:self.close()">{$umLabel.ctc_close}</a> <</td>
+		<td align="center" valign="middle" colspan="2">> <a href="javascript:self.close()">{$smLabel.ctc_close}</a> <</td>
 	</tr>
 	{/if}
 	<tr>

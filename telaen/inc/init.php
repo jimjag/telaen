@@ -83,7 +83,7 @@ $smarty->assign('popupHeaderTemplate', $popup_header_template);
 // For debug in smarty
 //$smarty->debugging = true;
 
-$smarty->assign('umLabel', $lang);
+$smarty->assign('smLabel', $lang);
 
 // setlocale(LC_ALL, $languages[$lid]['locale']);
 

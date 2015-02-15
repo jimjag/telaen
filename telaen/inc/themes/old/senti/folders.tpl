@@ -4,10 +4,10 @@
 
 <html>
 <head>
-	<title>sentiMail - {$umLabel.folders_to} {$umUserEmail}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>sentiMail - {$smLabel.folders_to} {$smUserEmail}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-{$umJS}
+{$smJS}
 </head>
 
 <body><br><br>
@@ -48,39 +48,39 @@
 	<td width="18"><img src="inc/themes/senti/images/leftside.gif" width="18" height="100%"></td>	<td colspan="13" valign="top" bgcolor="#dddcdc"><br />
 					<table cellspacing=0 cellpadding=0 height="100%" width="100%" border=0>
 					<tr>
-					    <td width="30%" class="headers">.: {$umLabel.fld_name_hea} :.</td>
-					    <td width="20%" class="headers">.: {$umLabel.fld_messages_hea} :.</td>
-					    <td width="15%" class="headers">.: {$umLabel.fld_size_hea} :.</td>
-					    <td width="15%" class="headers">.: {$umLabel.fld_empty_hea} :.</td>
-					    <td width="20%" class="headers">.: {$umLabel.fld_delete_hea} :.</td>
+					    <td width="30%" class="headers">.: {$smLabel.fld_name_hea} :.</td>
+					    <td width="20%" class="headers">.: {$smLabel.fld_messages_hea} :.</td>
+					    <td width="15%" class="headers">.: {$smLabel.fld_size_hea} :.</td>
+					    <td width="15%" class="headers">.: {$smLabel.fld_empty_hea} :.</td>
+					    <td width="20%" class="headers">.: {$smLabel.fld_delete_hea} :.</td>
 					</tr>
 
-					{section name=i loop=$umFolderList}
+					{section name=i loop=$smFolderList}
 						<tr>
-							<td class="default"><a href="{$umFolderList[i].chlink}"><img src="inc/themes/senti/images/folder.gif"  alt="" border="0">&nbsp;&nbsp;&nbsp;{$umFolderList[i].name|escape:"html"}</a></td>
-							<td class="cent">{$umFolderList[i].msgs}</td>
-							<td class="right">{$umFolderList[i].boxsize}Kb &nbsp;</td>
-							<td class="cent"><a href="{$umFolderList[i].emptylink}">OK</a></td>
-							<td class="cent">{$umFolderList[i].del}</td>
+							<td class="default"><a href="{$smFolderList[i].chlink}"><img src="inc/themes/senti/images/folder.gif"  alt="" border="0">&nbsp;&nbsp;&nbsp;{$smFolderList[i].name|escape:"html"}</a></td>
+							<td class="cent">{$smFolderList[i].msgs}</td>
+							<td class="right">{$smFolderList[i].boxsize}Kb &nbsp;</td>
+							<td class="cent"><a href="{$smFolderList[i].emptylink}">OK</a></td>
+							<td class="cent">{$smFolderList[i].del}</td>
 						</tr>
 					{/section}
 
 					<tr>
 						<td class="default">&nbsp;</td>
-						<td class="right"><b>{$umLabel.fld_total}</b> &nbsp;</td>
-						<td class="right"><b>{$umTotalUsed}</b>Kb &nbsp;</td>
+						<td class="right"><b>{$smLabel.fld_total}</b> &nbsp;</td>
+						<td class="right"><b>{$smTotalUsed}</b>Kb &nbsp;</td>
 						<td class="cent">&nbsp;</td>
 						<td class="cent">&nbsp;</td>
 					</tr>
 					<tr>
 						<td colspan="5" align="left"><a class="menu" href="javascript:emptytrash()">
-							<img src="inc/themes/senti/images/trash.gif" alt="" border="0">&nbsp;&nbsp;{$umLabel.empty_trash_mnu}</a>
+							<img src="inc/themes/senti/images/trash.gif" alt="" border="0">&nbsp;&nbsp;{$smLabel.empty_trash_mnu}</a>
 						</td>
 					</tr>
 
-					{if $umQuotaEnabled eq 1}
+					{if $smQuotaEnabled eq 1}
 					<tr>
-						<td class="default" colspan=5><br><br>&nbsp; {$umLabel.quota_usage_info}: {$umLabel.quota_usage_used} <b>{$umTotalUsed}</b>Kb {$umLabel.quota_usage_of} <b>{$umQuotaLimit}</b>Kb {$umLabel.quota_usage_avail}&nbsp;&nbsp;&nbsp; {$umUsageGraph}</td>
+						<td class="default" colspan=5><br><br>&nbsp; {$smLabel.quota_usage_info}: {$smLabel.quota_usage_used} <b>{$smTotalUsed}</b>Kb {$smLabel.quota_usage_of} <b>{$smQuotaLimit}</b>Kb {$smLabel.quota_usage_avail}&nbsp;&nbsp;&nbsp; {$smUsageGraph}</td>
 					</tr>
 					{/if}
 					<tr>
@@ -90,7 +90,7 @@
 						<input type=hidden name=tid value="{$umTid}">
 						<td class="default" colspan="5">
 						<br>
-							<input type=Text name=newfolder value="" class="textbox"> &nbsp;<input type=button value="{$umLabel.fld_make_new}" class=button onClick="create()">
+							<input type=Text name=newfolder value="" class="textbox"> &nbsp;<input type=button value="{$smLabel.fld_make_new}" class=button onClick="create()">
 						</td></form>
 					</tr>
 				</table>

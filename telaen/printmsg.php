@@ -34,17 +34,17 @@ $body = $email['body'];
 if (preg_match('|<[ ]*body.*background[ ]*=[ ]*["\']?([A-Za-z0-9._&?=:/{}%+-]+)["\']?.*>|i', $body, $regs)) {
     $backimg =    " background=\"".$regs[1]."\"";
 }
-$smarty->assign('umBackImg', $backimg);
+$smarty->assign('smBackImg', $backimg);
 if (preg_match('|<[ ]*body[A-Z0-9._&?=:/"\' -]*bgcolor=["\']?([A-Z0-9#]+)["\']?[A-Z0-9._&?=:/"\' -]*>|i', $body, $regs)) {
     $backcolor = " bgcolor=\"".$regs[1]."\"";
 }
-$smarty->assign('umBackColor', $backcolor);
+$smarty->assign('smBackColor', $backcolor);
 
 $body = preg_replace('|<body|i', '<telaen_body_not_alowed', $body);
 $body = preg_replace('/a:(link|visited|hover)/i', '.'.$TLN->uniqID(), $body);
 $body = preg_replace('|(body)[ ]?\\{|i', '.'.$TLN->uniqID(), $body);
 
-$smarty->assign('umMessageBody', $body);
+$smarty->assign('smMessageBody', $body);
 
 $ARFrom = $email['from'];
 $useremail = $auth['email'];
@@ -54,7 +54,7 @@ $thismail = $ARFrom[0]['mail'];
 $ARFrom[0]['link'] = 'newmsg.php?nameto='.urlencode($name)."&mailto=$thismail";
 $ARRom[0]['title'] = "$name <$thismail>";
 
-$smarty->assign('umFromList', $ARFrom);
+$smarty->assign('smFromList', $ARFrom);
 
 // To
 $ARTo = $email['to'];
@@ -65,13 +65,13 @@ for ($i = 0;$i<count($ARTo);$i++) {
     $link = 'newmsg.php?nameto='.urlencode($name)."&mailto=$thismail";
     $ARTo[$i]['link'] = $link;
     $ARTo[$i]['title'] = "$name <$thismail>";
-    $smarty->assign('umTOList', $ARTo);
+    $smarty->assign('smTOList', $ARTo);
 }
 
 // CC
 $ARCC = $email['cc'];
 if (count($ARCC) > 0) {
-    $smarty->assign('umHaveCC', 1);
+    $smarty->assign('smHaveCC', 1);
     for ($i = 0;$i<count($ARCC);$i++) {
         $name = $ARCC[$i]['name'];
         $thismail = $ARCC[$i]['mail'];
@@ -79,18 +79,18 @@ if (count($ARCC) > 0) {
         $ARCC[$i]['link'] = $link;
         $ARCC[$i]['title'] = "$name <$thismail>";
     }
-    $smarty->assign('umCCList', $ARCC);
+    $smarty->assign('smCCList', $ARCC);
 }
 
-$smarty->assign('umPageTitle', $email['subject']);
+$smarty->assign('smCCList', $email['subject']);
 
-$smarty->assign('umSubject', $email['subject']);
-$smarty->assign('umDate', $email['date']);
+$smarty->assign('smSubject', $email['subject']);
+$smarty->assign('smDate', $email['date']);
 
 $anexos = $email['attachments'];
 
 $haveattachs = (count($anexos) > 0) ? 1 : 0;
-$smarty->assign('umHaveAttachments', $haveattachs);
+$smarty->assign('smHaveAttachments', $haveattachs);
 
 if (count($anexos) > 0) {
     for ($i = 0;$i<count($anexos);$i++) {
@@ -102,7 +102,7 @@ if (count($anexos) > 0) {
         $anexos[$i]['size'] = Telaen::bytes2bkmg($anexos[$i]['size']);
         $anexos[$i]['type'] = trim($anexos[$i]['content-type']);
     }
-    $smarty->assign('umAttachList', $anexos);
+    $smarty->assign('smAttachList', $anexos);
 }
 
 unset($TLN);

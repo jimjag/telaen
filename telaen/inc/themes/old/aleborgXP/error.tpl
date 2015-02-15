@@ -4,12 +4,12 @@
 
 <html>
 <head>
-	<title>UebiMiau - {$umLabel.err_title}</title>
+	<title>UebiMiau - {$smLabel.err_title}</title>
 	<link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
-{$umJS}
+{$smJS}
 
 <body bgcolor="#FFFFFF" text="#000000" link="#000000" vlink="#FFFFFF" alink="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -28,15 +28,15 @@
   <tr> 
     <td bgcolor=white> <table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">
         <tr>
-          <td align=right class="title"><font color=red size=3><b>{$umLabel.err_title}</b></font></td>
+          <td align=right class="title"><font color=red size=3><b>{$smLabel.err_title}</b></font></td>
         </tr>
         <tr>
           <td align=right class="cent"><br>
-            {$umLabel.err_msg}<br>
-            <br> <small>{$umLabel.err_system_msg} {if $umErrorCode eq "1"}{$umLabel.error_connect} 
-            {elseif $umErrorCode eq "2"}{$umLabel.error_retrieving} {else}{$umLabel.error_other}{/if} 
+            {$smLabel.err_msg}<br>
+            <br> <small>{$smLabel.err_system_msg} {if $umErrorCode eq "1"}{$smLabel.error_connect}
+            {elseif $umErrorCode eq "2"}{$smLabel.error_retrieving} {else}{$smLabel.error_other}{/if}
             </small><br>
-            <br> <a href="logout.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{$umLabel.err_exit}</a><br>
+            <br> <a href="logout.php?sid={$umSid}&tid={$umTid}&lid={$umLid}">{$smLabel.err_exit}</a><br>
             <br> </td>
         </tr>
       </table></td>

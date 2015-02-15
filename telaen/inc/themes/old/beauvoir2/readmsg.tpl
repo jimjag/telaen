@@ -2,8 +2,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>UebiMiau Webmail - {$umPageTitle|escape:"html"} - Skin by Beauvoir.net</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>UebiMiau Webmail - {$smCCList|escape:"html"} - Skin by Beauvoir.net</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 	<link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 	<script language="JavaScript" src="inc/themes/beauvoir2/webmail.js" type="text/javascript"></script>
 </head>
@@ -16,7 +16,7 @@ This skin is the work of an author, thank you to respect it and not to remove th
 copyright, or worse, to put your name at the place.
 -->
 
-{$umJS}
+{$smJS}
 <body>
 <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 <tr><td valign="middle" align="center">
@@ -29,74 +29,74 @@ copyright, or worse, to put your name at the place.
 			{*{include file=$umMenuTemplate}*}
 			<table cellspacing="0" cellpadding="0" width="99.7%" border="0" class="normal" align="center">
 				<tr>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goinbox()"><img src="inc/themes/beauvoir2/images/inbox.gif" border="0"><br>{$umLabel.messages_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:newmsg()"><img src="inc/themes/beauvoir2/images/newmsg.gif" border="0"><br>{$umLabel.compose_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83"><img src="inc/themes/beauvoir2/images/refresh.gif" border="0"><br>{$umLabel.refresh_mnu}</td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:folderlist()"><img src="inc/themes/beauvoir2/images/folder.gif" border="0"><br>{$umLabel.folders_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:search()"><img src="inc/themes/beauvoir2/images/search.gif" border="0"><br>{$umLabel.search_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:addresses()"><img src="inc/themes/beauvoir2/images/addresses.gif" border="0"><br>{$umLabel.address_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:emptytrash()"><img src="inc/themes/beauvoir2/images/trash.gif" border="0"><br>{$umLabel.empty_trash_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:prefs()"><img src="inc/themes/beauvoir2/images/prefs.gif" border="0"><br>{$umLabel.prefs_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goend()"><img src="inc/themes/beauvoir2/images/logout.gif" border="0"><br>{$umLabel.logoff_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goinbox()"><img src="inc/themes/beauvoir2/images/inbox.gif" border="0"><br>{$smLabel.messages_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:newmsg()"><img src="inc/themes/beauvoir2/images/newmsg.gif" border="0"><br>{$smLabel.compose_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83"><img src="inc/themes/beauvoir2/images/refresh.gif" border="0"><br>{$smLabel.refresh_mnu}</td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:folderlist()"><img src="inc/themes/beauvoir2/images/folder.gif" border="0"><br>{$smLabel.folders_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:search()"><img src="inc/themes/beauvoir2/images/search.gif" border="0"><br>{$smLabel.search_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:addresses()"><img src="inc/themes/beauvoir2/images/addresses.gif" border="0"><br>{$smLabel.address_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:emptytrash()"><img src="inc/themes/beauvoir2/images/trash.gif" border="0"><br>{$smLabel.empty_trash_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:prefs()"><img src="inc/themes/beauvoir2/images/prefs.gif" border="0"><br>{$smLabel.prefs_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goend()"><img src="inc/themes/beauvoir2/images/logout.gif" border="0"><br>{$smLabel.logoff_mnu}</a></td>
 				</tr>
 			</table>
 			<table width="99.7%" border="0" cellspacing="0" cellpadding="0" class="normal" align="center">
-			{$umReplyForm}			
+			{$smReplyForm}
 			<tr>
 				<td colspan="2" align="center" valign="middle" height="30">
-					{if $umHavePrevious eq 1}
-					<a class="lien" href="{$umPreviousLink}" title="{$umPreviousSubject}">{$umLabel.previous_mnu}</a> |
+					{if $smHavePrevious eq 1}
+					<a class="lien" href="{$smPreviousLink}" title="{$smPreviousSubject}">{$smLabel.previous_mnu}</a> |
 					{/if}
-					{if $umHaveNext eq 1}
-					<a class="lien" href="{$umNextLink}" title="{$umNextSubject}">{$umLabel.next_mnu}</a> |
+					{if $smHaveNext eq 1}
+					<a class="lien" href="{$smNextLink}" title="{$smNextSubject}">{$smLabel.next_mnu}</a> |
 					{/if}
-					<a class="lien" href="javascript:goback()">{$umLabel.back_mnu}</a> |
-					<a class="lien" href="javascript:reply()">{$umLabel.reply_mnu}</a> |
-					<a class="lien" href="javascript:replyall()">{$umLabel.reply_all_mnu}</a> |
-					<a class="lien" href="javascript:forward()">{$umLabel.forward_mnu}</a> |
-					<a class="lien" href="javascript:printit()">{$umLabel.print_mnu}</a> |
-					<a class="lien" href="javascript:headers()">{$umLabel.headers_mnu}</a>
+					<a class="lien" href="javascript:goback()">{$smLabel.back_mnu}</a> |
+					<a class="lien" href="javascript:reply()">{$smLabel.reply_mnu}</a> |
+					<a class="lien" href="javascript:replyall()">{$smLabel.reply_all_mnu}</a> |
+					<a class="lien" href="javascript:forward()">{$smLabel.forward_mnu}</a> |
+					<a class="lien" href="javascript:printit()">{$smLabel.print_mnu}</a> |
+					<a class="lien" href="javascript:headers()">{$smLabel.headers_mnu}</a>
 				</td>
 			</tr>
 			<tr bgcolor="#BFC6D3">
 				<td height="5" colspan="2"></td>
 			</tr>
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{$umLabel.from_hea}</td>
-				<td>&nbsp;{section name=i loop=$umFromList}<a href="{$umFromList[i].link}" title="{$umFromList[i].title|escape:"html"}" class="lien">{$umFromList[i].name|default:#no_sender_text#|escape:"html"}</a>{/section}&nbsp;<a href="javascript:block_addresses()">{* not fully functional <img src="./themes/beauvoir2/images/cross.gif" border="0" alt="{$umLabel.block_address}" align="absmiddle"></a>&nbsp;*}<a href="javascript:catch_addresses()"><img src="./themes/beauvoir2/images/bookmark_it.gif" border="0" alt="{$umLabel.catch_address}" align="absmiddle"></a></td>
+				<td width="15%" align="left" height="20">&nbsp;{$smLabel.from_hea}</td>
+				<td>&nbsp;{section name=i loop=$smFromList}<a href="{$smFromList[i].link}" title="{$smFromList[i].title|escape:"html"}" class="lien">{$smFromList[i].name|default:#no_sender_text#|escape:"html"}</a>{/section}&nbsp;<a href="javascript:block_addresses()">{* not fully functional <img src="./themes/beauvoir2/images/cross.gif" border="0" alt="{$smLabel.block_address}" align="absmiddle"></a>&nbsp;*}<a href="javascript:catch_addresses()"><img src="./themes/beauvoir2/images/bookmark_it.gif" border="0" alt="{$smLabel.catch_address}" align="absmiddle"></a></td>
 			</tr>
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{$umLabel.to_hea}</td>
-				<td>&nbsp;{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}<a href="{$umTOList[i].link}" title="{$umTOList[i].title|escape:"html"}" class="lien">{$umTOList[i].name|escape:"html"}</a>{assign var="firstto" value="no"}{sectionelse}&nbsp;{$umLabel.no_recipient_text}{/section}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$smLabel.to_hea}</td>
+				<td>&nbsp;{section name=i loop=$smTOList}{if $firstto eq "no"};{/if}<a href="{$smTOList[i].link}" title="{$smTOList[i].title|escape:"html"}" class="lien">{$smTOList[i].name|escape:"html"}</a>{assign var="firstto" value="no"}{sectionelse}&nbsp;{$smLabel.no_recipient_text}{/section}</td>
 			</tr>	
-			{if $umHaveCC}
+			{if $smHaveCC}
 			<tr bgcolor="#BFC6D3">
-				<td  width="15%" align="left" height="20">&nbsp;{$umLabel.cc_hea}</td>
-				<td>&nbsp;{section name=i loop=$umCCList}{if $firstcc eq "no"};{/if}<a href="{$umCCList[i].link}" title="{$umCCList[i].title|escape:"html"}" class="lien">{$umCCList[i].name|escape:"html"}</a>{assign var="firstcc" value="no"}{/section}</td>
+				<td  width="15%" align="left" height="20">&nbsp;{$smLabel.cc_hea}</td>
+				<td>&nbsp;{section name=i loop=$smCCList}{if $firstcc eq "no"};{/if}<a href="{$smCCList[i].link}" title="{$smCCList[i].title|escape:"html"}" class="lien">{$smCCList[i].name|escape:"html"}</a>{assign var="firstcc" value="no"}{/section}</td>
 			</tr>	
 			{/if}
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{$umLabel.subject_hea}</td>
-				<td>&nbsp;{$umSubject|default:#no_subject_text#|truncate:100:"...":true|escape:"html"}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$smLabel.subject_hea}</td>
+				<td>&nbsp;{$smSubject|default:#no_subject_text#|truncate:100:"...":true|escape:"html"}</td>
 			</tr>	
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{$umLabel.date_hea}</td>
-				<td>&nbsp;{$umDate|date_format:$umLabel.date_format}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$smLabel.date_hea}</td>
+				<td>&nbsp;{$smDate|date_format:$smLabel.date_format}</td>
 			</tr>	
-			{if $umHaveAttachments}
+			{if $smHaveAttachments}
 			<tr bgcolor="#BFC6D3">
-				<td width="15%" align="left" height="20">&nbsp;{$umLabel.attach_hea}</td>
+				<td width="15%" align="left" height="20">&nbsp;{$smLabel.attach_hea}</td>
 				<td><table width="99.4%" border="0" cellspacing="1" cellpadding="0" bgcolor="#2D3443" class="normal">
 						<tr bgcolor="#BFC6D3">
-							<td width="60%">&nbsp;<b>{$umLabel.attch_name_hea}</b> ({$umLabel.attch_force_hea})</td>
-							<td>&nbsp;<b>{$umLabel.attch_size_hea}</b></td>
-							<td>&nbsp;<b>{$umLabel.attch_type_hea}</b></td>
+							<td width="60%">&nbsp;<b>{$smLabel.attch_name_hea}</b> ({$smLabel.attch_force_hea})</td>
+							<td>&nbsp;<b>{$smLabel.attch_size_hea}</b></td>
+							<td>&nbsp;<b>{$smLabel.attch_type_hea}</b></td>
 						</tr>
-						{section name=i loop=$umAttachList}
+						{section name=i loop=$smAttachList}
 						<tr bgcolor="#FFFFFF">
-							<td>&nbsp;{$umAttachList[i].normlink}{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> {$umAttachList[i].downlink}<img src="./images/download.gif" border="0" align="absmiddle"></a></td>
-							<td>&nbsp;{$umAttachList[i].size} Kb &nbsp;</td>
-							<td>&nbsp;{$umAttachList[i].type}</td>
+							<td>&nbsp;{$smAttachList[i].normlink}{$smAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> {$smAttachList[i].downlink}<img src="./images/download.gif" border="0" align="absmiddle"></a></td>
+							<td>&nbsp;{$smAttachList[i].size} Kb &nbsp;</td>
+							<td>&nbsp;{$smAttachList[i].type}</td>
 						</tr>
 						{/section}
 					</table>
@@ -110,17 +110,17 @@ copyright, or worse, to put your name at the place.
 				<td colspan="2">
 					<table width="100%" border="0" cellspacing="1" cellpadding="0" class="normal">
 						<tr bgcolor="#FFFFFF">
-							<td width="60%"{$umBackImg}{$umBackColor}>{$umMessageBody}</td>
+							<td width="60%"{$smBackImg}{$smBackColor}>{$smMessageBody}</td>
 						</tr>
 					</table>
 				</td>
 			</tr>
 			<tr>
 				<form name="move" action="process.php" method="POST">
-				{$umDeleteForm}
+				{$smDeleteForm}
 				<td colspan="2" align="center" valign="middle" height="30">
-					<a class="lien" href="javascript:deletemsg()"><img src="./themes/beauvoir2/images/cross.gif" border="0" align="bottom">&nbsp;{$umLabel.delete_mnu}</a> |
-					<a class="lien" href="javascript:movemsg()"><img src="./themes/beauvoir2/images/move.gif" border="0" align="bottom">&nbsp;{$umLabel.move_mnu}</a>&nbsp;<select name="aval_folders">{section name=i loop=$umAvalFolders}<option value="{$umAvalFolders[i].path|escape:"html"}">{$umAvalFolders[i].display|escape:"html"}{/section}</select>
+					<a class="lien" href="javascript:deletemsg()"><img src="./themes/beauvoir2/images/cross.gif" border="0" align="bottom">&nbsp;{$smLabel.delete_mnu}</a> |
+					<a class="lien" href="javascript:movemsg()"><img src="./themes/beauvoir2/images/move.gif" border="0" align="bottom">&nbsp;{$smLabel.move_mnu}</a>&nbsp;<select name="aval_folders">{section name=i loop=$smAvalFolders}<option value="{$smAvalFolders[i].path|escape:"html"}">{$smAvalFolders[i].display|escape:"html"}{/section}</select>
 				</td>
 				</form>
 			</tr>

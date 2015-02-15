@@ -3,8 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umPageTitle|escape:"html"}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$smCCList|escape:"html"}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 </head>
 <!--

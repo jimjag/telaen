@@ -71,7 +71,7 @@ if ($show_advanced) {
 }
 
 require './inc/js/newmsg_js.php';
-$smarty->assign('umJS', $jssource);
+$smarty->assign('smJS', $jssource);
 
 $body = ''; // we are crafting from scratch. Ignore any params
 $msg = $TLN->tdb->getMessage($uidl, $folder);
@@ -275,7 +275,7 @@ if ($num > 0) {
         $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
         $attachlist[$i]['link'] = "javascript:upwin($i)";
     }
-    $smarty->assign('umAttachList', $attachlist);
+    $smarty->assign('smAttachList', $attachlist);
 }
 
 if (!$show_advanced) {
@@ -297,7 +297,7 @@ $smarty->assign('umBody', $body);
 $smarty->assign('umTo', $strto);
 $smarty->assign('umCc', $strcc);
 $smarty->assign('umBcc', $strbcc);
-$smarty->assign('umSubject', $strsubject);
+$smarty->assign('smSubject', $strsubject);
 $smarty->assign('umTextEditor', $txtarea);
 $smarty->assign('umAdvancedEditor', $umAdvEdit);
 

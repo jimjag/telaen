@@ -1,4 +1,4 @@
-{include file=$popupHeaderTemplate pageTitle=$umLabel.up_title}
+{include file=$popupHeaderTemplate pageTitle=$smLabel.up_title}
 
 <body>
 <div id="popup">
@@ -6,7 +6,7 @@
     <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
       <tr>
         <td><img src="inc/themes/hungi.mozilla/images/header-bg-left.gif" border="0"></td>
-        <td height="22" width="100%" class="headers"><b>{$umLabel.up_information_text}</b></td>
+        <td height="22" width="100%" class="headers"><b>{$smLabel.up_information_text}</b></td>
         <td><img src="inc/themes/hungi.mozilla/images/header-bg-right.gif" border="0"></td>
       </tr>
       <tr>
@@ -20,7 +20,7 @@
             <table class="buttonTable" cellspacing="0" cellpadding="0">
               <tr>
                 <td valign="middle" class="buttonLeft">&nbsp;</td>
-                <td valign="middle" class="buttonMiddle"><input type="button" value="{$umLabel.up_button_text}" class="button" onClick="javascript:document.form1.submit()" /></td>
+                <td valign="middle" class="buttonMiddle"><input type="button" value="{$smLabel.up_button_text}" class="button" onClick="javascript:document.form1.submit()" /></td>
                 <td valign="middle" class="buttonRight">&nbsp;</td>
               </tr>
             </table>

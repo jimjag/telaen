@@ -1,7 +1,7 @@
 
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-{$umJS}
+{$smJS}
 </head>
 
 <body><br><br>

@@ -2,10 +2,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>sentiMail - {$umLabel.adr_title}</title>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>sentiMail - {$smLabel.adr_title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-{$umJS}
+{$smJS}
 </head>
 
 <body><br><br>
@@ -48,17 +48,17 @@
 						<table height="100%" width="100%" border="0" cellspacing="1" cellpadding="0" align="left">
                         <form name=form1 method=post action=addressbook.php>
                                                 <input type=hidden name=sid value="{$umSid}">
-                                                <input type=hidden name=id value="{$umAddrID}">
+                                                <input type=hidden name=id value="{$smAddrID}">
                                                 <input type=hidden name=lid value="{$umLid}">
                                                 <input type=hidden name=tid value="{$umTid}">
-                                                <input type=hidden name=opt value="{$umOpt}">
-							<tr><td class="default">{$umLabel.adr_name} &nbsp;<input align="left" size="40" type=text name="name" value="{$umAddrName|escape:"html"}" class="textbox"></td></tr>
-							<tr><td class="default">{$umLabel.adr_email} &nbsp;<input size="40" type=text name="email" value="{$umAddrEmail|escape:"html"}" class="textbox"></td></tr>
-							<tr><td class="default">{$umLabel.adr_street} &nbsp;<input size="40" type=text name="street" value="{$umAddrStreet|escape:"html"}" class="textbox"></td></tr>
-							<tr><td class="default">{$umLabel.adr_city} &nbsp;<input size="40" type=text name="city" value="{$umAddrCity|escape:"html"}" class="textbox"></td></tr>
-							<tr><td class="default">{$umLabel.adr_state} &nbsp;<input size="3" type=text name="state" value="{$umAddrState|escape:"html"}" class="textbox" maxlength=2></td></tr>
-							<tr><td class="default">{$umLabel.adr_work} &nbsp;<input size="40" type=text name="work" value="{$umAddrWork|escape:"html"}" class="textbox"></td></tr>
-							<tr><td height="18" class="default" align="center"><input type=submit value="{$umLabel.adr_save}" class=button> &nbsp;<input type=button value="{$umLabel.adr_back}" class=button onClick="location = '{$umGoBack}'"></td></tr>
+                                                <input type=hidden name=opt value="{$smOpt}">
+							<tr><td class="default">{$smLabel.adr_name} &nbsp;<input align="left" size="40" type=text name="name" value="{$smAddrName|escape:"html"}" class="textbox"></td></tr>
+							<tr><td class="default">{$smLabel.adr_email} &nbsp;<input size="40" type=text name="email" value="{$smAddrEmail|escape:"html"}" class="textbox"></td></tr>
+							<tr><td class="default">{$smLabel.adr_street} &nbsp;<input size="40" type=text name="street" value="{$smAddrStreet|escape:"html"}" class="textbox"></td></tr>
+							<tr><td class="default">{$smLabel.adr_city} &nbsp;<input size="40" type=text name="city" value="{$smAddrCity|escape:"html"}" class="textbox"></td></tr>
+							<tr><td class="default">{$smLabel.adr_state} &nbsp;<input size="3" type=text name="state" value="{$smAddrState|escape:"html"}" class="textbox" maxlength=2></td></tr>
+							<tr><td class="default">{$smLabel.adr_work} &nbsp;<input size="40" type=text name="work" value="{$smAddrWork|escape:"html"}" class="textbox"></td></tr>
+							<tr><td height="18" class="default" align="center"><input type=submit value="{$smLabel.adr_save}" class=button> &nbsp;<input type=button value="{$smLabel.adr_back}" class=button onClick="location = '{$smGoBack}'"></td></tr>
 </form>
 						</table>
 		</td><td width="17"><img src="inc/themes/senti/images/rightside.gif" width="17" height="100%"></td>

@@ -15,6 +15,6 @@ if (!isset($folder) || !isset($uidl)) {
     die('Expected parameters');
 }
 $msg = $TLN->tdb->getMessage($uidl, $folder);
-$smarty->assign('umPageTitle', $msg['subject']);
+$smarty->assign('smCCList', $msg['subject']);
 $smarty->assign('umHeaders', preg_replace('/\t/', '&nbsp;&nbsp;&nbsp;&nbsp;', nl2br(htmlspecialchars($msg['header']))));
 $smarty->display("$themez/headers-window.tpl");

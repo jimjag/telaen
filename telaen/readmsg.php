@@ -41,22 +41,22 @@ $TLN->tdb->doMessage($msg);
 $TLN->tdb->syncMessages();
 
 if ($ix > 0) {
-    $umHavePrevious = 1;
-    $umPreviousSubject = $msgs[($ix-1)]['subject'];
-    $umPreviousLink = 'readmsg.php?folder='.urlencode($folder)."&ix=".($ix-1)."";
+    $smHavePrevious = 1;
+    $smPreviousSubject = $msgs[($ix-1)]['subject'];
+    $smPreviousLink = 'readmsg.php?folder='.urlencode($folder)."&ix=".($ix-1)."";
 
-    $smarty->assign('umHavePrevious', $umHavePrevious);
-    $smarty->assign('umPreviousSubject', $umPreviousSubject);
-    $smarty->assign('umPreviousLink', $umPreviousLink);
+    $smarty->assign('smHavePrevious', $smHavePrevious);
+    $smarty->assign('smPreviousSubject', $smPreviousSubject);
+    $smarty->assign('smPreviousLink', $smPreviousLink);
 }
 
 if ($ix < (count($msgs)-1)) {
-    $umHaveNext = 1;
-    $umNextSubject = $msgs[($ix+1)]['subject'];
-    $umNextLink = 'readmsg.php?folder='.urlencode($folder)."&ix=".($ix+1)."";
-    $smarty->assign('umHaveNext', $umHaveNext);
-    $smarty->assign('umNextSubject', $umNextSubject);
-    $smarty->assign('umNextLink', $umNextLink);
+    $smHaveNext = 1;
+    $smNextSubject = $msgs[($ix+1)]['subject'];
+    $smNextLink = 'readmsg.php?folder='.urlencode($folder)."&ix=".($ix+1)."";
+    $smarty->assign('smHaveNext', $smHaveNext);
+    $smarty->assign('smNextSubject', $smNextSubject);
+    $smarty->assign('smNextLink', $smNextLink);
 }
 
 // message download link
@@ -64,7 +64,7 @@ $smarty->assign('downloadLink', 'download.php?folder='.urlencode($folder).'&uidl
 $redir_path = 'redir.php';    // why not just relative?? Now is relative (due to problems on https servers)!
 
 $body = "<iframe src='show_body.php?folder=".urlencode($folder)."&uidl=$uidl' width='100%' height='400' frameborder='0'></iframe>";
-$smarty->assign('umMessageBody', $body);
+$smarty->assign('smMessageBody', $body);
 
 // look if the msg needs a receipt
 if ($email['receipt-to']) {
@@ -80,7 +80,7 @@ $thismail = $ARFrom[0]['mail'];
 $ARFrom[0]['link'] = 'newmsg.php?nameto='.urlencode($name)."&mailto=$thismail";
 $ARFrom[0]['title'] = "$name <$thismail>";
 
-$smarty->assign('umFromList', $ARFrom);
+$smarty->assign('smFromList', $ARFrom);
 
 // To
 $ARTo = $TLN->getNames($msg['headers']['to']);
@@ -91,13 +91,13 @@ for ($i = 0;$i<count($ARTo);$i++) {
     $link = 'newmsg.php?nameto='.urlencode($name)."&mailto=$thismail";
     $ARTo[$i]['link'] = $link;
     $ARTo[$i]['title'] = "$name <$thismail>";
-    $smarty->assign('umTOList', $ARTo);
+    $smarty->assign('smTOList', $ARTo);
 }
 
 // CC
 $ARCC = $msg['headers']['cc'];
 if (count($ARCC) > 0) {
-    $smarty->assign('umHaveCC', 1);
+    $smarty->assign('smHaveCC', 1);
     for ($i = 0;$i<count($ARCC);$i++) {
         $name = $ARCC[$i]['name'];
         $thismail = $ARCC[$i]['mail'];
@@ -105,10 +105,10 @@ if (count($ARCC) > 0) {
         $ARCC[$i]['link'] = $link;
         $ARCC[$i]['title'] = "$name <$thismail>";
     }
-    $smarty->assign('umCCList', $ARCC);
+    $smarty->assign('smCCList', $ARCC);
 }
 
-$smarty->assign('umPageTitle', $this->convertCharset($msg['subject'], $TLN->ucharset));
+$smarty->assign('smCCList', $this->convertCharset($msg['subject'], $TLN->ucharset));
 
 eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
@@ -148,7 +148,7 @@ function sendReceipt(subj, msg) {
 </script>
 ";
 
-$umDeleteForm = "<input type='hidden' name='decision' value='move' />
+$smDeleteForm = "<input type='hidden' name='decision' value='move' />
 <input type='hidden' name='folder' value='".urlencode($folder)."' />
 <input type='hidden' name='pag' value='$pag' />
 <input type='hidden' name='start_pos' value='$ix' />
@@ -156,19 +156,19 @@ $umDeleteForm = "<input type='hidden' name='decision' value='move' />
 <input type='hidden' name='msg_$ix' value='X' />
 <input type='hidden' name='back' value='true' />";
 
-$umReplyForm = "<form name='msg' action='newmsg.php' method='post'>
+$smReplyForm = "<form name='msg' action='newmsg.php' method='post'>
 	<input type='hidden' name='rtype' value='reply' />
 	<input type='hidden' name='folder' value='".urlencode($folder)."' />
 	<input type='hidden' name='uidl' value='{$msg['uidl']}' />
 </form>
 ";
 
-$smarty->assign('umDeleteForm', $umDeleteForm);
-$smarty->assign('umReplyForm', $umReplyForm);
-$smarty->assign('umJS', $jssource);
+$smarty->assign('smDeleteForm', $smDeleteForm);
+$smarty->assign('smReplyForm', $smReplyForm);
+$smarty->assign('smJS', $jssource);
 
-$smarty->assign('umSubject', $msg['subject']);
-$smarty->assign('umDate', $msg['date']);
+$smarty->assign('smSubject', $msg['subject']);
+$smarty->assign('smDate', $msg['date']);
 
 $anexos = $TLN->tdb->getAttachments($msg);
 $haveattachs = count($anexos);
@@ -192,8 +192,8 @@ if ($haveattachs) {
             $attachAr[$i]['type'] = $anexos[$i]['type'].'/'.$anexos[$i]['subtype'];
         }
     }
-    $smarty->assign('umHaveAttachments', $haveattachs);
-    $smarty->assign('umAttachList', $attachAr);
+    $smarty->assign('smHaveAttachments', $haveattachs);
+    $smarty->assign('smAttachList', $attachAr);
 }
 
 //$AuthSession->Save($auth);
@@ -205,7 +205,7 @@ foreach ($folders as $entry => $f) {
     $display = extended_name($entry);
     $avalfolders[] = array('path' => $entry, 'display' => $display);
 }
-$smarty->assign('umAvalFolders', $avalfolders);
+$smarty->assign('smAvalFolders', $avalfolders);
 unset($TLN);
 
 if ($is_attached) {

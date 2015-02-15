@@ -5,9 +5,9 @@
 
 <html>
 <head>
-	<title>sentiMail - {$umLabel.bdl_title}</title>
+	<title>sentiMail - {$smLabel.bdl_title}</title>
 	<link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 </head>
 	<body><!-- Form name used to be "form1" this has been changed for w3c compliancy--><br><br><br><br><br><br>
 	<form action="process.php" method="post">		
@@ -23,12 +23,12 @@
 						<tr>		
 							<td colspan="3" class="mainLoginTable">
 									<table width="100%" border="0" cellspacing="1" cellpadding="1" align="left">
-										<tr><td align="left" class="title">.: <b>{$umLabel.bdl_title}</b> :.</td>
+										<tr><td align="left" class="title">.: <b>{$smLabel.bdl_title}</b> :.</td>
 										<tr><td align="left" class="default"><br>
-										{$umLabel.bdl_msg}<br><br>
+										{$smLabel.bdl_msg}<br><br>
 										<i>{$umServerResponse}</i></td>
 										<tr><td align="right"><br><br>										
-											<a href="./index.php?tid={$umTid}&lid={$umLid}" class="menu">{$umLabel.bdl_back}</a><br><br>
+											<a href="./index.php?tid={$umTid}&lid={$umLid}" class="menu">{$smLabel.bdl_back}</a><br><br>
 										</td>
 									</table>
 							</td>

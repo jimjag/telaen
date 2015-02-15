@@ -4,7 +4,7 @@
 <html>
 <head>
 	<title>sentiMail - {#lgn_title#|escape:"html"}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 	<link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
 
 </head>
@@ -41,11 +41,11 @@
 												</tr>
 
 												{if $umAllowSelectLanguage}
-												<tr><td align=right class="right"><b>{$umLabel.lng_language}</b>: &nbsp;</td><td class="default">{$umLanguages}</td><td></td></tr>
+												<tr><td align=right class="right"><b>{$smLabel.lng_language}</b>: &nbsp;</td><td class="default">{$umLanguages}</td><td></td></tr>
 												{/if}
 
 												{if $umAllowSelectTheme}
-												<tr><td align=right class="right"><b>{$umLabel.lng_theme}</b>: &nbsp;</td><td class="default">{$umThemes}</td><td></td>
+												<tr><td align=right class="right"><b>{$smLabel.lng_theme}</b>: &nbsp;</td><td class="default">{$umThemes}</td><td></td>
 												</tr>
 												{/if}
 

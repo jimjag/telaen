@@ -2,11 +2,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>sentiMail - {$umLabel.adr_title}</title>
+	<title>sentiMail - {$smLabel.adr_title}</title>
 
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-{$umJS}
+{$smJS}
 </head>
 
 <body><br><br>
@@ -46,13 +46,13 @@
 	<tr><td width="18"><img src="inc/themes/senti/images/leftside.gif" width="18" height="100%"></td>
 		<td colspan="13" valign="top">
 			<table height="100%" width="100%" border="0" cellspacing="1" cellpadding="0">
-				<tr height="18"><td class="headers">{$umLabel.adr_name} &nbsp;</td><td class="default"> &nbsp;{$umAddrName|escape:"html"}</td></tr>
-				<tr><td class="headers">{$umLabel.adr_email} &nbsp;</td><td class=default> &nbsp;{$umAddrEmail|escape:"html"}</td></tr>
-				<tr><td class="headers">{$umLabel.adr_street} &nbsp;</td><td class=default> &nbsp;{$umAddrStreet|escape:"html"}</td></tr>
-				<tr><td class="headers">{$umLabel.adr_city} &nbsp;</td><td class=default> &nbsp;{$umAddrCity|escape:"html"}</td></tr>
-				<tr><td class="headers">{$umLabel.adr_state} &nbsp;</td><td class=default> &nbsp;{$umAddrState|escape:"html"}</td></tr>
-				<tr><td class="headers">{$umLabel.adr_work} &nbsp;</td><td class=default> &nbsp;{$umAddrWork|escape:"html"}</td></tr>
-				<tr><td class="default" colspan=2 align=center><br><a href="{$umGoBack}">{$umLabel.adr_back}</a></td></tr>
+				<tr height="18"><td class="headers">{$smLabel.adr_name} &nbsp;</td><td class="default"> &nbsp;{$smAddrName|escape:"html"}</td></tr>
+				<tr><td class="headers">{$smLabel.adr_email} &nbsp;</td><td class=default> &nbsp;{$smAddrEmail|escape:"html"}</td></tr>
+				<tr><td class="headers">{$smLabel.adr_street} &nbsp;</td><td class=default> &nbsp;{$smAddrStreet|escape:"html"}</td></tr>
+				<tr><td class="headers">{$smLabel.adr_city} &nbsp;</td><td class=default> &nbsp;{$smAddrCity|escape:"html"}</td></tr>
+				<tr><td class="headers">{$smLabel.adr_state} &nbsp;</td><td class=default> &nbsp;{$smAddrState|escape:"html"}</td></tr>
+				<tr><td class="headers">{$smLabel.adr_work} &nbsp;</td><td class=default> &nbsp;{$smAddrWork|escape:"html"}</td></tr>
+				<tr><td class="default" colspan=2 align=center><br><a href="{$smGoBack}">{$smLabel.adr_back}</a></td></tr>
 			</table>
 		</td><td width="17"><img src="inc/themes/senti/images/rightside.gif" width="17" height="100%"></td>
 	</tr>

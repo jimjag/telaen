@@ -2,11 +2,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-    <title>sentiMail - {$umLabel.adr_title}</title>
+    <title>sentiMail - {$smLabel.adr_title}</title>
 
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 <link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-{$umJS}
+{$smJS}
 </head>
 
 <body><br><br>
@@ -48,22 +48,22 @@
 												<table height="100%" width="100%" border="0" cellspacing="1" cellpadding="0">
 
                                 <tr height="18">
-                                        <td width="40%" class="headers" height="18">{$umLabel.adr_name_hea}</td>
-                                        <td width="40%" class="headers" height="18">{$umLabel.adr_email_hea}</td>
-                                        <td width="10%" class="headers" height="18">{$umLabel.adr_edit_hea}</td>
-                                        <td width="10%" class="headers" height="18">{$umLabel.adr_dele_hea}</td>
+                                        <td width="40%" class="headers" height="18">{$smLabel.adr_name_hea}</td>
+                                        <td width="40%" class="headers" height="18">{$smLabel.adr_email_hea}</td>
+                                        <td width="10%" class="headers" height="18">{$smLabel.adr_edit_hea}</td>
+                                        <td width="10%" class="headers" height="18">{$smLabel.adr_dele_hea}</td>
                                 </tr>
-<tr height="18">{section name=i loop=$umAddressList}                            
-                                        <td class="default" align="center" height="18"> &nbsp;<a class="menu" href="{$umAddressList[i].viewlink}">{$umAddressList[i].name}</a></td>
-                                        <td class="default" align="center" height="18"> &nbsp;<a class="menu" href="{$umAddressList[i].composelink}">{$umAddressList[i].email}</a></td>
-                                        <td class="default" align="center" height="18"> &nbsp;<a class="menu" href="{$umAddressList[i].editlink}">OK</a></td>
+<tr height="18">{section name=i loop=$smAddressList}
+                                        <td class="default" align="center" height="18"> &nbsp;<a class="menu" href="{$smAddressList[i].viewlink}">{$smAddressList[i].name}</a></td>
+                                        <td class="default" align="center" height="18"> &nbsp;<a class="menu" href="{$smAddressList[i].composelink}">{$smAddressList[i].email}</a></td>
+                                        <td class="default" align="center" height="18"> &nbsp;<a class="menu" href="{$smAddressList[i].editlink}">OK</a></td>
 <!---
-                                        <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].exportlink}">OK</a></td>
+                                        <td class="default"> &nbsp;<a class="menu" href="{$smAddressList[i].exportlink}">OK</a></td>
 --->
-                                        <td class="default"> &nbsp;<a class="menu" href="{$umAddressList[i].dellink}">OK</a></td>
+                                        <td class="default"> &nbsp;<a class="menu" href="{$smAddressList[i].dellink}">OK</a></td>
                                 </tr>
                                 {/section}
-                                <tr><td class="default" colspan=4 align=center><form><input type=button value="{$umLabel.adr_new_entry}" class=button onClick="location = '{$umNew}'"></form></td></tr>
+                                <tr><td class="default" colspan=4 align=center><form><input type=button value="{$smLabel.adr_new_entry}" class=button onClick="location = '{$smNew}'"></form></td></tr>
                         </table>
 
 		</td><td width="17"><img src="inc/themes/senti/images/rightside.gif" width="17" height="100%"></td>

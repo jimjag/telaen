@@ -2,10 +2,10 @@
 
 <html>
 <head>
-<title>{if $webmailTitle}{$webmailTitle} - {/if}{$umPageTitle|escape:"html"}</title>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+<title>{if $webmailTitle}{$webmailTitle} - {/if}{$smCCList|escape:"html"}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 {$pageMetas}
-        {$umJS}
+        {$smJS}
 </head>
 <link rel="stylesheet" href="inc/themes/outlook/webmail.css" type="text/css">
 <body>

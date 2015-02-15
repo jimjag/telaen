@@ -13,34 +13,34 @@
       {/section} 
 
       <!-- personal folders --> 
-      {section name=persFolder loop=$umPersonalFolders}
-      <li class="menuFldItem"><a class="menu" href="{$umPersonalFolders[persFolder].link}">{$umPersonalFolders[persFolder].name}</a></li>
+      {section name=persFolder loop=$smPersonalFolders}
+      <li class="menuFldItem"><a class="menu" href="{$smPersonalFolders[persFolder].link}">{$smPersonalFolders[persFolder].name}</a></li>
       {/section} </td>
   </tr>
   <tr>
-    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="newmsg();"><a class="menu" href="javascript:newmsg()">{$umLabel.compose_mnu}</a></td>
+    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="newmsg();"><a class="menu" href="javascript:newmsg()">{$smLabel.compose_mnu}</a></td>
   </tr>
   {if $refresh neq "false"}
   <tr>
-    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="refreshlist();"><a class="menu" href="javascript:refreshlist()">{$umLabel.refresh_mnu}</a></td>
+    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="refreshlist();"><a class="menu" href="javascript:refreshlist()">{$smLabel.refresh_mnu}</a></td>
   </tr>
   {/if}
   <tr>
-    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="folderlist();"><a class="menu" href="javascript:folderlist()">{$umLabel.folders_mnu}</a></td>
+    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="folderlist();"><a class="menu" href="javascript:folderlist()">{$smLabel.folders_mnu}</a></td>
   </tr>
   <tr>
-    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="search();"><a class="menu" href="javascript:search()">{$umLabel.search_mnu}</a></td>
+    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="search();"><a class="menu" href="javascript:search()">{$smLabel.search_mnu}</a></td>
   </tr>
   <tr>
-    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="addresses();"><a class="menu" href="javascript:addresses()">{$umLabel.address_mnu}</a></td>
+    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="addresses();"><a class="menu" href="javascript:addresses()">{$smLabel.address_mnu}</a></td>
   </tr>
   <tr>
-    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="emptytrash();"><a class="menu" href="javascript:emptytrash()">{$umLabel.empty_trash_mnu}</a></td>
+    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="emptytrash();"><a class="menu" href="javascript:emptytrash()">{$smLabel.empty_trash_mnu}</a></td>
   </tr>
   <tr>
-    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="prefs();"><a class="menu" href="javascript:prefs()">{$umLabel.prefs_mnu}</a></td>
+    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="prefs();"><a class="menu" href="javascript:prefs()">{$smLabel.prefs_mnu}</a></td>
   </tr>
   <tr>
-    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="goend();"><a class="menu" href="javascript:goend()">{$umLabel.logoff_mnu}</a></td>
+    <td bgcolor="#EEE5DE" onmouseover="mOvr(this,'#D1D7ED');" onmouseout="mOut(this,'#EEE5DE');" onclick="goend();"><a class="menu" href="javascript:goend()">{$smLabel.logoff_mnu}</a></td>
   </tr>
 </table>

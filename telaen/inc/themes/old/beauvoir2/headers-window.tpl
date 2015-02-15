@@ -3,8 +3,8 @@
 
 <html>
 <head>
-	<title>UebiMiau Webmail - {$umPageTitle|escape:"html"} - Skin by Beauvoir.net</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>UebiMiau Webmail - {$smCCList|escape:"html"} - Skin by Beauvoir.net</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 	<link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 </head>
 <!--

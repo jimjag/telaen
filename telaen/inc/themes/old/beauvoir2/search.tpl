@@ -2,11 +2,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>UebiMiau Webmail - {$umLabel.messages_to} {$umUserEmail} - Skin by Beauvoir.net</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>UebiMiau Webmail - {$smLabel.messages_to} {$smUserEmail} - Skin by Beauvoir.net</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 	<link rel="stylesheet" href="inc/themes/beauvoir2/webmail.css" type="text/css">
 	<script language="JavaScript" src="inc/themes/beauvoir2/webmail.js" type="text/javascript"></script>
-	{$umJS}
+	{$smJS}
 </head>
 
 <!--
@@ -28,21 +28,21 @@ copyright, or worse, to put your name at the place.
 		<td background="inc/themes/beauvoir2/images/ligne-fond.gif">
 			<table cellspacing="0" cellpadding="0" width="99.7%" border="0" class="normal" align="center">
 				<tr>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goinbox()"><img src="inc/themes/beauvoir2/images/inbox.gif" border="0"><br>{$umLabel.messages_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:newmsg()"><img src="inc/themes/beauvoir2/images/newmsg.gif" border="0"><br>{$umLabel.compose_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83"><img src="inc/themes/beauvoir2/images/refresh.gif" border="0"><br>{$umLabel.refresh_mnu}</td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:folderlist()"><img src="inc/themes/beauvoir2/images/folder.gif" border="0"><br>{$umLabel.folders_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83"><img src="inc/themes/beauvoir2/images/search.gif" border="0"><br>{$umLabel.search_mnu}</td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:addresses()"><img src="inc/themes/beauvoir2/images/addresses.gif" border="0"><br>{$umLabel.address_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:emptytrash()"><img src="inc/themes/beauvoir2/images/trash.gif" border="0"><br>{$umLabel.empty_trash_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:prefs()"><img src="inc/themes/beauvoir2/images/prefs.gif" border="0"><br>{$umLabel.prefs_mnu}</a></td>
-					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goend()"><img src="inc/themes/beauvoir2/images/logout.gif" border="0"><br>{$umLabel.logoff_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goinbox()"><img src="inc/themes/beauvoir2/images/inbox.gif" border="0"><br>{$smLabel.messages_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:newmsg()"><img src="inc/themes/beauvoir2/images/newmsg.gif" border="0"><br>{$smLabel.compose_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83"><img src="inc/themes/beauvoir2/images/refresh.gif" border="0"><br>{$smLabel.refresh_mnu}</td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:folderlist()"><img src="inc/themes/beauvoir2/images/folder.gif" border="0"><br>{$smLabel.folders_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83"><img src="inc/themes/beauvoir2/images/search.gif" border="0"><br>{$smLabel.search_mnu}</td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:addresses()"><img src="inc/themes/beauvoir2/images/addresses.gif" border="0"><br>{$smLabel.address_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:emptytrash()"><img src="inc/themes/beauvoir2/images/trash.gif" border="0"><br>{$smLabel.empty_trash_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:prefs()"><img src="inc/themes/beauvoir2/images/prefs.gif" border="0"><br>{$smLabel.prefs_mnu}</a></td>
+					<td align="center" valign="middle" bgcolor="#BFC6D3" height="50" width="83" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#BFC6D3');" onclick="mClk(this);"><a class="lien" href="javascript:goend()"><img src="inc/themes/beauvoir2/images/logout.gif" border="0"><br>{$smLabel.logoff_mnu}</a></td>
 				</tr>
 			</table>
 			<table width="99.7%" border="0" cellspacing="0" cellpadding="0" class="normal" align="center">
 				<tr><td colspan="5">&nbsp;</td></tr>
 			<tr>
-				<td align="center" colspan="5" height="30">{$umLabel.sch_information_text}</td>
+				<td align="center" colspan="5" height="30">{$smLabel.sch_information_text}</td>
 			<tr>
 			<tr>
 				<td colspan="5">&nbsp;</td>
@@ -54,17 +54,17 @@ copyright, or worse, to put your name at the place.
 				<td colspan="5" align="center">
 					<table cellspacing="1" cellpadding="0" width="450" border="0" class="normal" bgcolor="#BFC6D3" align="center">
 						<tr>
-							<td width="40%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$umLabel.sch_from_hea}:</td>
-							<td><input type="text" class="normal" name="srcFrom" value="{$umInputFrom|escape:"html"}" size="40" maxlength="40" style="border: 1 solid #7F9DB9;"></td>
+							<td width="40%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$smLabel.sch_from_hea}:</td>
+							<td><input type="text" class="normal" name="srcFrom" value="{$smInputFrom|escape:"html"}" size="40" maxlength="40" style="border: 1 solid #7F9DB9;"></td>
 						<tr>
-							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$umLabel.sch_subject_hea}:</td>
-							<td><input type="text" class="normal" name="srcSubject" value="{$umInputSubject|escape:"html"}" size="40" maxlength="40" style="border: 1 solid #7F9DB9;"></td>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$smLabel.sch_subject_hea}:</td>
+							<td><input type="text" class="normal" name="srcSubject" value="{$smInputSubject|escape:"html"}" size="40" maxlength="40" style="border: 1 solid #7F9DB9;"></td>
 						<tr>
-							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$umLabel.sch_body_hea}:</td>
-							<td><input type="text" class="normal" name="srcBody" value="{$umInputBody|escape:"html"}" size="40" maxlength="40" style="border: 1 solid #7F9DB9;"></td>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$smLabel.sch_body_hea}:</td>
+							<td><input type="text" class="normal" name="srcBody" value="{$smInputBody|escape:"html"}" size="40" maxlength="40" style="border: 1 solid #7F9DB9;"></td>
 						<tr>
 							<td>&nbsp;</td>
-							<td><input type="submit" value="{$umLabel.sch_button_text}" class="button"><br></td>
+							<td><input type="submit" value="{$smLabel.sch_button_text}" class="button"><br></td>
 					</table>			
 				</td>
 				</form>
@@ -72,25 +72,25 @@ copyright, or worse, to put your name at the place.
 			<tr>
 				<td colspan="5">&nbsp;</td>
 			</tr>
-			{if $umDoSearch}
+			{if $smDoSearch}
 			<tr>
 			    <td width="40" height="20" bgcolor="#78879C" align="center" valign="middle"><img src="./images/prior_high.gif" width="5" height="11" border="0" align="absmiddle">&nbsp;<img src="./images/attach.gif" border="0" width="6" height="14" align="absmiddle">&nbsp;<img src="./images/msg_read.gif" border="0" width="14" height="14" align="absmiddle"></td>
-			   	<td width="180" bgcolor="#78879C" align="center" valign="middle">.: <b>{$umLabel.sch_from_hea}</b> :.</td>
-			    <td width="280" bgcolor="#78879C" align="center" valign="middle">.: <b>{$umLabel.sch_subject_hea}</b> :.</td>
-			    <td width="100" bgcolor="#78879C" align="center" valign="middle">.: <b>{$umLabel.sch_date_hea}</b> :.</td>
-			    <td width="147" bgcolor="#78879C" align="center" valign="middle">.: <b>{$umLabel.sch_folder_hea}</b> :.</td>
+			   	<td width="180" bgcolor="#78879C" align="center" valign="middle">.: <b>{$smLabel.sch_from_hea}</b> :.</td>
+			    <td width="280" bgcolor="#78879C" align="center" valign="middle">.: <b>{$smLabel.sch_subject_hea}</b> :.</td>
+			    <td width="100" bgcolor="#78879C" align="center" valign="middle">.: <b>{$smLabel.sch_date_hea}</b> :.</td>
+			    <td width="147" bgcolor="#78879C" align="center" valign="middle">.: <b>{$smLabel.sch_folder_hea}</b> :.</td>
 			</tr>
-			{section name=i loop=$umMessageList}
+			{section name=i loop=$smMessageList}
 			<tr bgcolor="#E1E4EB" onmouseover="mOvr(this,'#ACB4C5');" onmouseout="mOut(this,'#E1E4EB');">
-				<td align="center" height="20" valign="middle">{$umMessageList[i].priorimg}{$umMessageList[i].attachimg}{$umMessageList[i].statusimg}</td>
-				<td valign="middle"><a href="{$umMessageList[i].composelink}" class="lien">{$umMessageList[i].from|truncate:40:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a></td>
-				<td valign="middle">{if $umMessageList[i].read eq "false"}<b>{/if}<a href="{$umMessageList[i].readlink}" class="lien">{$umMessageList[i].subject|truncate:50:"...":true|escape:"html"|default:$umLabel.no_subject_text}</a>{if $umMessageList[i].read eq "false"}</b>{/if}</td>
-				<td align="center" valign="middle">{$umMessageList[i].date|date_format:$umLabel.date_format}</td>
-				<td align="center" valign="middle"><a href="{$umMessageList[i].folderlink}" class="lien">{$umMessageList[i].foldername|escape:"html"}</a></td>
+				<td align="center" height="20" valign="middle">{$smMessageList[i].priorimg}{$smMessageList[i].attachimg}{$smMessageList[i].statusimg}</td>
+				<td valign="middle"><a href="{$smMessageList[i].composelink}" class="lien">{$smMessageList[i].from|truncate:40:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a></td>
+				<td valign="middle">{if $smMessageList[i].read eq "false"}<b>{/if}<a href="{$smMessageList[i].readlink}" class="lien">{$smMessageList[i].subject|truncate:50:"...":true|escape:"html"|default:$smLabel.no_subject_text}</a>{if $smMessageList[i].read eq "false"}</b>{/if}</td>
+				<td align="center" valign="middle">{$smMessageList[i].date|date_format:$smLabel.date_format}</td>
+				<td align="center" valign="middle"><a href="{$smMessageList[i].folderlink}" class="lien">{$smMessageList[i].foldername|escape:"html"}</a></td>
 			</tr>
 			{sectionelse}
 			<tr>
-			    <td width="100%" align="center" valign="center" bgcolor="#E1E4EB" colspan="5"><br>{$umLabel.sch_no_results}<br><br></td>
+			    <td width="100%" align="center" valign="center" bgcolor="#E1E4EB" colspan="5"><br>{$smLabel.sch_no_results}<br><br></td>
 			</tr>
 			{/section}
 			{/if}

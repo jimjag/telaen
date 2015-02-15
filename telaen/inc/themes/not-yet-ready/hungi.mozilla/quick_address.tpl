@@ -1,4 +1,4 @@
-{include file=$popupHeaderTemplate pageTitle=$umLabel.qad_title}
+{include file=$popupHeaderTemplate pageTitle=$smLabel.qad_title}
 
 <body>
 <div id="popup"> {literal} 
@@ -35,7 +35,7 @@ function Add(sTipo) {
 	orig = frm.contacts;
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -52,7 +52,7 @@ function Dele(sTipo) {
 	orig = eval("frm."+sTipo)
 	if(orig.selectedIndex == -1) {
 {/literal}
-		alert("{$umLabel.qad_select_address}");
+		alert("{$smLabel.qad_select_address}");
 {literal}
 		return
 	}
@@ -87,17 +87,17 @@ function ns_clean() {
       <tr>
         <td width="50%" class="default" valign="top" align="center"><table width="100%" cellspacing="0" cellpadding="0">
             <tr>
-              <td class="usage"><span style="font-size:14px; color:#000066;">{$umLabel.address_mnu}</span></td>
+              <td class="usage"><span style="font-size:14px; color:#000066;">{$smLabel.address_mnu}</span></td>
             </tr>
             <tr>
               <td align="center"><br />
-                {$umContacts} 
+                {$smContacts}
                 <script type="text/javascript">form1.contacts.style='width:200px';</script></td>
             </tr>
           </table></td>
         <td valign="top" width="50%"><table width="100%" border="0" cellspacing="1" cellpadding="0">
             <tr>
-              <td colspan="2" height="22" class="headers"><b>{$umLabel.qad_to}</b></td>
+              <td colspan="2" height="22" class="headers"><b>{$smLabel.qad_to}</b></td>
             </tr>
             <tr>
               <td width="5%" valign="top" class="default"><input class="button50" type="button" onClick="Add('to')" value="&gt;&gt;" style="margin-bottom:2px">
@@ -108,7 +108,7 @@ function ns_clean() {
                 </select></td>
             </tr>
             <tr>
-              <td height="22" colspan="2" class="headers"><b>{$umLabel.qad_cc}</b></td>
+              <td height="22" colspan="2" class="headers"><b>{$smLabel.qad_cc}</b></td>
             </tr>
             <tr>
               <td width="5%" valign="top" class="default"><input class="button50" type="button" onClick="Add('cc')"  value="&gt;&gt;" style="margin-bottom:2px">
@@ -120,7 +120,7 @@ function ns_clean() {
                 </select></td>
             </tr>
             <tr>
-              <td colspan="2" height="22"  class="headers"><b>{$umLabel.qad_bcc}</b></td>
+              <td colspan="2" height="22"  class="headers"><b>{$smLabel.qad_bcc}</b></td>
             </tr>
             <tr>
               <td width="5%" valign="top" class="default"><input class="button50" type="button" onClick="Add('bcc')" value="&gt;&gt;" style="margin-bottom:2px">
@@ -138,7 +138,7 @@ function ns_clean() {
           <table class="buttonTable" cellspacing="0" >
             <tr>
               <td valign="middle" class="buttonLeft">&nbsp;</td>
-              <td valign="middle" class="buttonMiddle"><input type="button" name="submit" value="{$umLabel.nav_back}" class="button" onClick="AddAndExit()"/></td>
+              <td valign="middle" class="buttonMiddle"><input type="button" name="submit" value="{$smLabel.nav_back}" class="button" onClick="AddAndExit()"/></td>
               <td valign="middle" class="buttonRight">&nbsp;</td>
             </tr>
           </table>

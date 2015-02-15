@@ -9,45 +9,45 @@
       <form name="form1" action="process.php" method="post">
         <table class="login_bg" width="100%" cellspacing="0" cellpadding="1" align="center">
           <tr>
-            <td height="22" align="right" class="headers" colspan="2">.: <b>{$umLabel.lgn_welcome_msg}</b> :.</td>
+            <td height="22" align="right" class="headers" colspan="2">.: <b>{$smLabel.lgn_welcome_msg}</b> :.</td>
           </tr>
           {if $error eq "true"}
           <tr>
-            <td align="center" colspan="2"><div id="errorBox"> {if $errorCode eq "0"} <b>{$umLabel.err_login_msg}:</b> {$umLabel.error_login}
-                {elseif $errorCode eq "1"} <b>{$umLabel.err_system_msg}:</b> {$umLabel.error_connect}
-                {elseif $errorCode eq "2"} <b>{$umLabel.err_system_msg}:</b> {$umLabel.error_retrieving}
-                {elseif $errorCode eq "4"} <b>{$umLabel.err_login_msg}:</b> {$umLabel.error_session_expired}
-                {else} <b>{$umLabel.err_system_msg}:</b> {$umLabel.error_other}
+            <td align="center" colspan="2"><div id="errorBox"> {if $errorCode eq "0"} <b>{$smLabel.err_login_msg}:</b> {$smLabel.error_login}
+                {elseif $errorCode eq "1"} <b>{$smLabel.err_system_msg}:</b> {$smLabel.error_connect}
+                {elseif $errorCode eq "2"} <b>{$smLabel.err_system_msg}:</b> {$smLabel.error_retrieving}
+                {elseif $errorCode eq "4"} <b>{$smLabel.err_login_msg}:</b> {$smLabel.error_session_expired}
+                {else} <b>{$smLabel.err_system_msg}:</b> {$smLabel.error_other}
                 {/if} </div></td>
           </tr>
           {/if}
 
           {if $umServerType neq "ONE-FOR-EACH"}
           <tr>
-            <td align="right" class="right2" width="40%"><b>{$umLabel.lng_user_email}</b>: &nbsp;</td>
+            <td align="right" class="right2" width="40%"><b>{$smLabel.lng_user_email}</b>: &nbsp;</td>
             <td class="default2"><input id="user" type="text" size="10" name="f_email" value="{$umEmail}" class="textbox" style="width:140px;" tabindex="1" /></td>
           </tr>
           {else}
           <tr>
-            <td align="right" class="right2" width="40%"><b>{$umLabel.lng_user_name}</b>: &nbsp;</td>
+            <td align="right" class="right2" width="40%"><b>{$smLabel.lng_user_name}</b>: &nbsp;</td>
             <td class="default2"><input id="user" type="text" size="5" name="f_user" value="{$umUser}" class="textbox" style="width:80px;" tabindex="1" />
               {if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
           </tr>
           {/if}
           <tr>
-            <td align="right" class="right2"><b>{$umLabel.lng_user_pwd}</b>: &nbsp;</td>
+            <td align="right" class="right2"><b>{$smLabel.lng_user_pwd}</b>: &nbsp;</td>
             <td class="default2"><input type="password" size="5" name="f_pass" value="" class="textbox" style="width:80px;" tabindex="2" /></td>
           </tr>
           {if $umAllowSelectLanguage}
           <tr>
-            <td align="right" class="right2"><b>{$umLabel.lng_language}</b>: &nbsp;</td>
+            <td align="right" class="right2"><b>{$smLabel.lng_language}</b>: &nbsp;</td>
             <td class="default2">{$umLanguages}</td>
           </tr>
           {/if}
 
           {if $umAllowSelectTheme}
           <tr>
-            <td align="right" class="right2"><b>{$umLabel.lng_theme}</b>: &nbsp;</td>
+            <td align="right" class="right2"><b>{$smLabel.lng_theme}</b>: &nbsp;</td>
             <td class="default2">{$umThemes}</td>
           </tr>
           {/if}
@@ -56,7 +56,7 @@
                 <table class="buttonTable" cellspacing="0" >
                   <tr>
                     <td valign="middle" class="buttonLeft">&nbsp;</td>
-                    <td valign="middle" class="buttonMiddle"><input type="submit" name="submit" value="{$umLabel.lng_login_btn}" class="button" /></td>
+                    <td valign="middle" class="buttonMiddle"><input type="submit" name="submit" value="{$smLabel.lng_login_btn}" class="button" /></td>
                     <td valign="middle" class="buttonRight">&nbsp;</td>
                   </tr>
                 </table>

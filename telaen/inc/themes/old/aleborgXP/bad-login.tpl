@@ -4,10 +4,10 @@
 
 <html>
 <head>
-	<title>UebiMiau - {$umLabel.bdl_title}</title>
+	<title>UebiMiau - {$smLabel.bdl_title}</title>
 <link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 </head>
-{$umJS}
+{$smJS}
 <body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -18,7 +18,7 @@
             <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr> 
 
-                <td background="inc/themes/aleborgXP/images/login/up_back.gif" class="white"><font color=#FFFFFF size=3><b>{$umLabel.bdl_title}</b></font></td>
+                <td background="inc/themes/aleborgXP/images/login/up_back.gif" class="white"><font color=#FFFFFF size=3><b>{$smLabel.bdl_title}</b></font></td>
                   <td width="31"><img src="inc/themes/aleborgXP/images/login/right_up_corner.gif" width="31" height="29"></td>
                 </tr>
               </table></td>
@@ -33,8 +33,8 @@
                       <td bgcolor=white> <table width="100%" border="0" cellspacing="1" cellpadding="1" align="center">
                           <tr> 
                             <td align=right class="cent"><br>
-                              {$umLabel.bdl_msg}<br> <br>
-                              <a href="./index.php?tid={$umTid}&lid={$umLid}"><strong>{$umLabel.bdl_back}</strong></a><br> 
+                              {$smLabel.bdl_msg}<br> <br>
+                              <a href="./index.php?tid={$umTid}&lid={$umLid}"><strong>{$smLabel.bdl_back}</strong></a><br>
                               <br> </td>
                           </tr>
                         </table></td>

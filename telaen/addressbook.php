@@ -57,8 +57,8 @@ function refreshlist() { location = 'addressbook.php' }
 </script>
 ";
 
-$smarty->assign('umJS', $jssource);
-$smarty->assign('umGoBack', 'addressbook.php');
+$smarty->assign('smJS', $jssource);
+$smarty->assign('smGoBack', 'addressbook.php');
 
 extract(Telaen::pullFromArray($_GET, array('opt', 'id'), 'str'));
 extract(Telaen::pullFromArray($_POST, array('name', 'email', 'street', 'city', 'state', 'country', 'work', 'phone',
@@ -89,7 +89,7 @@ switch ($opt) {
         $addressbook[$id] = strval($v);
         $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
-        $smarty->assign('umOpt', 1);
+        $smarty->assign('smOpt', 1);
         $templatename = 'address-results.tpl';
 
         break;
@@ -116,7 +116,7 @@ switch ($opt) {
         $addressbook[$name] = strval($v);
         $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
-        $smarty->assign('umOpt', 2);
+        $smarty->assign('smOpt', 2);
         $templatename = 'address-results.tpl';
 
         break;
@@ -126,7 +126,7 @@ switch ($opt) {
         unset($addressbook[$id]);
         $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
 
-        $smarty->assign('umOpt', 3);
+        $smarty->assign('smOpt', 3);
         $templatename = 'address-results.tpl';
 
         break;
@@ -142,22 +142,22 @@ switch ($opt) {
                 $phone = $p['value'];
             }
         }
-        $smarty->assign('umAddrName', $v->fn[0]);
-        $smarty->assign('umAddrEmail', $v->email[0]['value']);
-        $smarty->assign('umAddrPObox', $v->adr[0]['pobox']);
-        $smarty->assign('umAddrExtended', $v->adr[0]['extendedaddress']);
-        $smarty->assign('umAddrStreet', $v->adr[0]['streetaddress']);
-        $smarty->assign('umAddrCity', $v->adr[0]['locality']);
-        $smarty->assign('umAddrState', $v->adr[0]['region']);
-        $smarty->assign('umAddrPCode', $v->adr[0]['postalcode']);
-        $smarty->assign('umAddrCountry', $v->adr[0]['country']);
-        $smarty->assign('umAddrWork', $v->x_work[0]);
-        $smarty->assign('umAddrPhone', $phone);
-        $smarty->assign('umAddrCell', $cell);
-        $smarty->assign('umAddrNote', $v->note[0]);
+        $smarty->assign('smAddrName', $v->fn[0]);
+        $smarty->assign('smAddrEmail', $v->email[0]['value']);
+        $smarty->assign('smAddrPObox', $v->adr[0]['pobox']);
+        $smarty->assign('smAddrExtended', $v->adr[0]['extendedaddress']);
+        $smarty->assign('smAddrStreet', $v->adr[0]['streetaddress']);
+        $smarty->assign('smAddrCity', $v->adr[0]['locality']);
+        $smarty->assign('smAddrState', $v->adr[0]['region']);
+        $smarty->assign('smAddrPCode', $v->adr[0]['postalcode']);
+        $smarty->assign('smAddrCountry', $v->adr[0]['country']);
+        $smarty->assign('smAddrWork', $v->x_work[0]);
+        $smarty->assign('smAddrPhone', $phone);
+        $smarty->assign('smAddrCell', $cell);
+        $smarty->assign('smAddrNote', $v->note[0]);
 
-        $smarty->assign('umOpt', 'save');
-        $smarty->assign('umAddrID', $id);
+        $smarty->assign('smOpt', 'save');
+        $smarty->assign('smAddrID', $id);
         $templatename = 'address-form.tpl';
 
         break;
@@ -173,21 +173,21 @@ switch ($opt) {
                 $phone = $p['value'];
             }
         }
-        $smarty->assign('umAddrName', $v->fn[0]);
-        $smarty->assign('umAddrEmail', $v->email[0]['value']);
-        $smarty->assign('umAddrPObox', $v->adr[0]['pobox']);
-        $smarty->assign('umAddrExtended', $v->adr[0]['extendedaddress']);
-        $smarty->assign('umAddrStreet', $v->adr[0]['streetaddress']);
-        $smarty->assign('umAddrCity', $v->adr[0]['locality']);
-        $smarty->assign('umAddrState', $v->adr[0]['region']);
-        $smarty->assign('umAddrPCode', $v->adr[0]['postalcode']);
-        $smarty->assign('umAddrCountry', $v->adr[0]['country']);
-        $smarty->assign('umAddrWork', $v->x_work[0]);
-        $smarty->assign('umAddrPhone', $phone);
-        $smarty->assign('umAddrCell', $cell);
-        $smarty->assign('umAddrNote', $v->note[0]);
+        $smarty->assign('smAddrName', $v->fn[0]);
+        $smarty->assign('smAddrEmail', $v->email[0]['value']);
+        $smarty->assign('smAddrPObox', $v->adr[0]['pobox']);
+        $smarty->assign('smAddrExtended', $v->adr[0]['extendedaddress']);
+        $smarty->assign('smAddrStreet', $v->adr[0]['streetaddress']);
+        $smarty->assign('smAddrCity', $v->adr[0]['locality']);
+        $smarty->assign('smAddrState', $v->adr[0]['region']);
+        $smarty->assign('smAddrPCode', $v->adr[0]['postalcode']);
+        $smarty->assign('smAddrCountry', $v->adr[0]['country']);
+        $smarty->assign('smAddrWork', $v->x_work[0]);
+        $smarty->assign('smAddrPhone', $phone);
+        $smarty->assign('smAddrCell', $cell);
+        $smarty->assign('smAddrNote', $v->note[0]);
 
-        $smarty->assign('umAddrID', $id);
+        $smarty->assign('smAddrID', $id);
         $templatename = 'address-display.tpl';
 
         break;
@@ -197,8 +197,8 @@ switch ($opt) {
 
         $templatename = 'address-form.tpl';
 
-        $smarty->assign('umOpt', 'add');
-        $smarty->assign('umAddrID', 'N');
+        $smarty->assign('smOpt', 'add');
+        $smarty->assign('smAddrID', 'N');
 
         break;
 
@@ -213,7 +213,7 @@ switch ($opt) {
 
     default:
 
-        $smarty->assign('umNew', 'addressbook.php?opt=new');
+        $smarty->assign('smNew', 'addressbook.php?opt=new');
 
         $nummsg = count($addressbook);
         $reg_pp = $TLN->prefs['rpp'];
@@ -226,8 +226,8 @@ switch ($opt) {
 
         if ($nummsg > 0) {
             if ($pag > 1) {
-                $smarty->assign('umFirstLink', "addressbook.php?pag=1");
-                $smarty->assign('umPreviousLink', "addressbook.php?pag=".($pag-1)."");
+                $smarty->assign('smFirstLink', "addressbook.php?pag=1");
+                $smarty->assign('smPreviousLink', "addressbook.php?pag=".($pag-1)."");
             }
 
             for ($i = 1;$i <= ceil($nummsg / $reg_pp);$i++) {
@@ -240,8 +240,8 @@ switch ($opt) {
 
             $totPages = ceil($nummsg / $reg_pp);
             if ($end_pos < $nummsg) {
-                $smarty->assign('umNextLink', "addressbook.php?pag=".($pag+1)."");
-                $smarty->assign('umLastLink', "addressbook.php?&pag=".$totPages."");
+                $smarty->assign('smNextLink', "addressbook.php?pag=".($pag+1)."");
+                $smarty->assign('smLastLink', "addressbook.php?&pag=".$totPages."");
             }
             $navigation .= " ($pag/".$totPages.")";
         }
@@ -263,7 +263,7 @@ switch ($opt) {
             $i++;
         }
         $templatename = 'address-list.tpl';
-        $smarty->assign('umAddressList', $addresslist);
+        $smarty->assign('smAddressList', $addresslist);
 }
 
 $smarty->display("$themez/$templatename");

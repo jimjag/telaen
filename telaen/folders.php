@@ -56,8 +56,8 @@ function create() { frm = document.forms[0]; frm.submit(); }
 </script>
 ";
 
-$smarty->assign('umJS', $jssource);
-$smarty->assign('umUserEmail', $auth['email']);
+$smarty->assign('smJS', $jssource);
+$smarty->assign('smUserEmail', $auth['email']);
 
 $TLN->refreshFolders();
 $boxes = $TLN->mailListBoxes();
@@ -113,19 +113,19 @@ unset($AuthSession, $TLN);
 Telaen::arrayQsort2ic($system, 'name');
 Telaen::arrayQsort2ic($personal, 'name');
 
-$umFolderList = array_merge((array) $system, (array) $personal);
+$smFolderList = array_merge((array) $system, (array) $personal);
 
-$smarty->assign('umFolderList', $umFolderList);
+$smarty->assign('smFolderList', $smFolderList);
 
-$smarty->assign('umPersonal', $personal);
-$smarty->assign('umTotalUsed', Telaen::bytes2bkmg($totalused));
+$smarty->assign('smPersonal', $personal);
+$smarty->assign('smTotalUsed', Telaen::bytes2bkmg($totalused));
 $quota_enabled = ($quota_limit) ? 1 : 0;
-$smarty->assign('umQuotaEnabled', $quota_enabled);
-$smarty->assign('umQuotaLimit', Telaen::bytes2bkmg($quota_limit));
+$smarty->assign('smQuotaEnabled', $quota_enabled);
+$smarty->assign('smQuotaLimit', Telaen::bytes2bkmg($quota_limit));
 $usageGraph = Telaen::getUsageGraphic($totalused, $quota_limit);
-$smarty->assign('umUsageGraph', $usageGraph);
+$smarty->assign('smUsageGraph', $usageGraph);
 $noquota = ($totalused > $quota_limit) ? 1 : 0;
-$smarty->assign('umNoQuota', $noquota);
+$smarty->assign('smNoQuota', $noquota);
 
 $smarty->assign('pageMetas', $pmetas);
 

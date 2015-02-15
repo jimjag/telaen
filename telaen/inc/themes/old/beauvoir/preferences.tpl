@@ -3,11 +3,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umLabel.prf_title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$smLabel.prf_title}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 <script language="JavaScript" src="inc/themes/beauvoir/webmail.js" type="text/javascript"></script>
-{$umJS}
+{$smJS}
 </head>
 <!--
 Skinned by Arnaud BEAUVOIR -  - 
@@ -28,15 +28,15 @@ copyright, or worse, to put your name at the place.
 	<tr>
 		<td valign="middle">
 			<table cellspacing="0" cellpadding="0" width="100%" border="0" class="normal" >
-				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$umLabel.messages_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:newmsg()"><img src="inc/themes/beauvoir/write.gif" border="0" width="31" height="31"><br>{$umLabel.compose_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84"><font class="inactive"><img src="inc/themes/beauvoir/refresh.gif" border="0" width="31" height="31"><br>{$umLabel.refresh_mnu}</font></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:folderlist()"><img src="inc/themes/beauvoir/folder.gif" border="0" width="31" height="31"><br>{$umLabel.folders_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:search()"><img src="inc/themes/beauvoir/search.gif" border="0" width="31" height="31"><br>{$umLabel.search_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:addresses()"><img src="inc/themes/beauvoir/contact.gif" border="0" width="31" height="31"><br>{$umLabel.address_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:emptytrash()"><img src="inc/themes/beauvoir/trash.gif" border="0" width="31" height="31"><br>{$umLabel.empty_trash_mnu}</a></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83"><font class="inactive"><img src="inc/themes/beauvoir/prefs.gif" border="0" width="31" height="31"><br>{$umLabel.prefs_mnu}</font></td>
-				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goend()"><img src="inc/themes/beauvoir/logout.gif" border="0" width="31" height="31"><br>{$umLabel.logoff_mnu}</a></td></tr>
+				<tr><td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goinbox()"><img src="inc/themes/beauvoir/inbox.gif" border="0" width="31" height="31"><br>{$smLabel.messages_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:newmsg()"><img src="inc/themes/beauvoir/write.gif" border="0" width="31" height="31"><br>{$smLabel.compose_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="84"><font class="inactive"><img src="inc/themes/beauvoir/refresh.gif" border="0" width="31" height="31"><br>{$smLabel.refresh_mnu}</font></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:folderlist()"><img src="inc/themes/beauvoir/folder.gif" border="0" width="31" height="31"><br>{$smLabel.folders_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:search()"><img src="inc/themes/beauvoir/search.gif" border="0" width="31" height="31"><br>{$smLabel.search_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:addresses()"><img src="inc/themes/beauvoir/contact.gif" border="0" width="31" height="31"><br>{$smLabel.address_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:emptytrash()"><img src="inc/themes/beauvoir/trash.gif" border="0" width="31" height="31"><br>{$smLabel.empty_trash_mnu}</a></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83"><font class="inactive"><img src="inc/themes/beauvoir/prefs.gif" border="0" width="31" height="31"><br>{$smLabel.prefs_mnu}</font></td>
+				<td align="center" valign="middle" bgcolor="#EAEAEA" height="70" width="83" onmouseover="mOvr(this,'#ACB6D1');" onmouseout="mOut(this,'#EAEAEA');" onclick="mClk(this);"><a href="javascript:goend()"><img src="inc/themes/beauvoir/logout.gif" border="0" width="31" height="31"><br>{$smLabel.logoff_mnu}</a></td></tr>
 			</table>		
 		</td>
 	</tr>
@@ -47,74 +47,74 @@ copyright, or worse, to put your name at the place.
 				<input type="hidden" name="lid" value="{$umLid}">
 				<input type="hidden" name="tid" value="{$umTid}">
 				<tr>
-					<td align="center" colspan="2" height="30"><b>{$umLabel.prf_general_title} :</b></td>
+					<td align="center" colspan="2" height="30"><b>{$smLabel.prf_general_title} :</b></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td size="50%">&nbsp;{$umLabel.prf_name}</td>
+					<td size="50%">&nbsp;{$smLabel.prf_name}</td>
 					<td><input type="text" class="normal" style="width : 335px" name="f_real_name" value="{$umRealName|escape:"html"}"></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td>&nbsp;{$umLabel.prf_reply_to}</td>
+					<td>&nbsp;{$smLabel.prf_reply_to}</td>
 					<td><input type="text" class="normal" style="width : 335px" name="f_reply_to" size="30" value="{$umReplyTo|escape:"html"}" class="textbox"></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td>&nbsp;{$umLabel.prf_time_zone}</td>
+					<td>&nbsp;{$smLabel.prf_time_zone}</td>
 					<td>{$umTimezoneSelect}</td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td>&nbsp;{$umLabel.prf_default_editor_mode}</td>
+					<td>&nbsp;{$smLabel.prf_default_editor_mode}</td>
 					<td>
 					<select name="f_editor_mode">
-						<option value="text"{if $umEditorMode eq "text"} selected{/if}>{$umLabel.prf_default_editor_mode_text}
-						<option value="html"{if $umEditorMode eq "html"} selected{/if}>{$umLabel.prf_default_editor_mode_html}
+						<option value="text"{if $umEditorMode eq "text"} selected{/if}>{$smLabel.prf_default_editor_mode_text}
+						<option value="html"{if $umEditorMode eq "html"} selected{/if}>{$smLabel.prf_default_editor_mode_html}
 					</select>
 					</td>
 				</tr>
 				<tr>
-					<td align="center" colspan="2" height="30"><b>{$umLabel.prf_trash_title} :</b></td>
+					<td align="center" colspan="2" height="30"><b>{$smLabel.prf_trash_title} :</b></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td colspan="2"><input type="checkbox" name="f_save_trash" onClick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" OnClick="f_save_trash.click()">{$umLabel.prf_save_to_trash} "<b>{$umLabel.trash_extended}</b>"</acronym></td>
+					<td colspan="2"><input type="checkbox" name="f_save_trash" onClick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" OnClick="f_save_trash.click()">{$smLabel.prf_save_to_trash} "<b>{$smLabel.trash_extended}</b>"</acronym></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td colspan="2"><input type="checkbox" name="f_st_only_read" onClick="return checkDis()" value="1"{$umSaveTrashOnlyRead}><acronym style="cursor: hand;" OnClick="f_st_only_read.click()">{$umLabel.prf_save_only_read} "<b>{$umLabel.trash_extended}</b>"</acronym></td>
+					<td colspan="2"><input type="checkbox" name="f_st_only_read" onClick="return checkDis()" value="1"{$umSaveTrashOnlyRead}><acronym style="cursor: hand;" OnClick="f_st_only_read.click()">{$smLabel.prf_save_only_read} "<b>{$smLabel.trash_extended}</b>"</acronym></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td colspan="2"><input type="checkbox" name="f_empty_on_exit" value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" OnClick="f_empty_on_exit.click()">{$umLabel.prf_empty_on_exit}</acronym></td>
+					<td colspan="2"><input type="checkbox" name="f_empty_on_exit" value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" OnClick="f_empty_on_exit.click()">{$smLabel.prf_empty_on_exit}</acronym></td>
 				</tr>
 				<tr>
-					<td align="center" colspan="2" height="30"><b>{$umLabel.prf_sent_title} :</b></td>
+					<td align="center" colspan="2" height="30"><b>{$smLabel.prf_sent_title} :</b></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td colspan=2><input type=checkbox name=f_save_sent value="1"{$umSaveSent}><acronym style="cursor: hand;" OnClick="f_save_sent.click()">{$umLabel.prf_save_sent} "<b>{$umLabel.sent_extended}</b>"</acronym></td>
+					<td colspan=2><input type=checkbox name=f_save_sent value="1"{$umSaveSent}><acronym style="cursor: hand;" OnClick="f_save_sent.click()">{$smLabel.prf_save_sent} "<b>{$smLabel.sent_extended}</b>"</acronym></td>
 				</tr>
 				<tr>
-					<td align="center" colspan="2" height="30"><b>{$umLabel.prf_messages_title} :</b></td>
+					<td align="center" colspan="2" height="30"><b>{$smLabel.prf_messages_title} :</b></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td>&nbsp;{$umLabel.prf_page_limit}</td>
+					<td>&nbsp;{$smLabel.prf_page_limit}</td>
 					<td>{$umRecordsPerPage}</td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td>&nbsp;{$umLabel.prf_time_to_refesh}</td>
+					<td>&nbsp;{$smLabel.prf_time_to_refesh}</td>
 					<td>{$umTimeToRefresh}</td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td colspan="2"><input type="checkbox" name="f_display_images" value="1"{$umDisplayImages}><acronym style="cursor: hand;" OnClick="f_display_images.click()">{$umLabel.prf_display_images}</acronym></td>
+					<td colspan="2"><input type="checkbox" name="f_display_images" value="1"{$umDisplayImages}><acronym style="cursor: hand;" OnClick="f_display_images.click()">{$smLabel.prf_display_images}</acronym></td>
 				</tr>
 				<tr>
-					<td align="center" colspan="2" height="30"><b>{$umLabel.prf_signature_title} :</b></td>
+					<td align="center" colspan="2" height="30"><b>{$smLabel.prf_signature_title} :</b></td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td valign="top">&nbsp;{$umLabel.prf_signature}</td>
+					<td valign="top">&nbsp;{$smLabel.prf_signature}</td>
 					<td>{$umSignature}</td>
 				</tr>
 				<tr bgcolor="#EAEAEA">
-					<td colspan="2"><input type="checkbox" name="f_add_sig" value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{$umLabel.prf_auto_add_sign}</acronym> </td>
+					<td colspan="2"><input type="checkbox" name="f_add_sig" value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{$smLabel.prf_auto_add_sign}</acronym> </td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><br><input type="submit" value="{$umLabel.prf_save_button}" class="normal"><br><br></td>
+					<td><br><input type="submit" value="{$smLabel.prf_save_button}" class="normal"><br><br></td>
 				</tr>
 				</form>
 			</table>

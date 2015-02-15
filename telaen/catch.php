@@ -67,7 +67,7 @@ if (isset($ckaval)) {
         for ($i = 0;$i<$aval_count;$i++) {
             $aval[$i]['index'] = $i;
         }
-        $smarty->assign('umAddressList', $aval);
+        $smarty->assign('smAddressList', $aval);
     }
     $smarty->display("$themez/catch-address.tpl");
 }

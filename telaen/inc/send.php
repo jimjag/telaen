@@ -166,6 +166,6 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
 }
 
 eval('$jssource = "' . $commonJS . '";');
-$smarty->assign('umJS', $jssource);
+$smarty->assign('smJS', $jssource);
 
 $smarty->display("$themez/newmsg-result.tpl");

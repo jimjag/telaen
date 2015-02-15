@@ -9,7 +9,7 @@ Visit www.cyber.nu
 <meta charset="utf-8" />
 <link rel="stylesheet" href="inc/themes/aleborgXP/webmail.css" type="text/css">
 </head>
-{$umJS}
+{$smJS}
 
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -19,7 +19,7 @@ Visit www.cyber.nu
             <td width="8"><img src="inc/themes/aleborgXP/images/login/left_up_corner.gif" width="8" height="29"></td>
             <td> <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr> 
-                  <td background="inc/themes/aleborgXP/images/login/up_back.gif" class="white"><b>{$umLabel.lgn_welcome_msg}</b></td>
+                  <td background="inc/themes/aleborgXP/images/login/up_back.gif" class="white"><b>{$smLabel.lgn_welcome_msg}</b></td>
 
                 <td width="31"><a href="javascript:;" onClick="self.close();"><img src="inc/themes/aleborgXP/images/login/right_up_corner.gif" width="31" height="29" border="0"></a></td>
                 </tr>
@@ -37,7 +37,7 @@ Visit www.cyber.nu
                     <form name="form1" action="process.php" method=post>
                       {if $umServerType neq "ONE-FOR-EACH"} 
                       <tr> 
-                        <td>{$umLabel.lng_user_email}:&nbsp;</td>
+                        <td>{$smLabel.lng_user_email}:&nbsp;</td>
                         <td>
                           <input type="text" name="f_email" value="{$umEmail}">
                         </td>
@@ -47,7 +47,7 @@ Visit www.cyber.nu
                       </tr>
                       {else} 
                       <tr> 
-                        <td>{$umLabel.lng_user_name}:&nbsp;</td>
+                        <td>{$smLabel.lng_user_name}:&nbsp;</td>
                         <td>
                           <input type="text" name="f_user" value="{$umUser}">
                           {if $umAvailableServers neq 0} <b>{$umServer}</b>{/if}</td>
@@ -57,7 +57,7 @@ Visit www.cyber.nu
                       </tr>
                       {/if} 
                       <tr> 
-                        <td>{$umLabel.lng_user_pwd}:</td>
+                        <td>{$smLabel.lng_user_pwd}:</td>
                         <td>
                           <input type="password" name="f_pass">
                         </td>
@@ -67,7 +67,7 @@ Visit www.cyber.nu
                       </tr>
                       {if $umAllowSelectLanguage} 
                       <tr> 
-                        <td>{$umLabel.lng_language}:</td>
+                        <td>{$smLabel.lng_language}:</td>
                         <td>{$umLanguages}</td>
                       </tr>
                       <tr> 
@@ -75,7 +75,7 @@ Visit www.cyber.nu
                       </tr>
                       {/if} {if $umAllowSelectTheme} 
                       <tr> 
-                        <td>{$umLabel.lng_theme}:</td>
+                        <td>{$smLabel.lng_theme}:</td>
                         <td>{$umThemes}</td>
                       </tr>
                       <tr> 
@@ -84,7 +84,7 @@ Visit www.cyber.nu
                       {/if} 
                       <tr> 
                         <td></td>
-                        <td> <input type="submit" name="submit" value="{$umLabel.lng_login_btn}"> 
+                        <td> <input type="submit" name="submit" value="{$smLabel.lng_login_btn}">
                         </td>
                       </tr>
                       <tr> 

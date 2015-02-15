@@ -6,10 +6,10 @@
 <head>
 	<title>sentiMail - Write Email</title>
 	<link rel="stylesheet" href="inc/themes/senti/webmail.css" type="text/css">
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 	<script language="JavaScript" src="inc/themes/senti/webmail.js" type="text/javascript"></script>
 
-{$umJS}
+{$smJS}
 
 </head>
 
@@ -62,51 +62,51 @@
 		<td colspan="13" bgcolor="#dddcdc"><br /><br />
 			<table width="100%" border=0 cellspacing=0 cellpadding=5 >
 				<tr bgcolor=white>
-					<td width="26%" height="18" class="headerright">{$umLabel.to_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+					<td width="26%" height="18" class="headerright">{$smLabel.to_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
 					<td class="default">&nbsp;{$umTo}</td>
 				</tr>	
 				<tr bgcolor=white>
-					<td height="18" class="headerright">{$umLabel.cc_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+					<td height="18" class="headerright">{$smLabel.cc_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
 					<td class="default">&nbsp;{$umCc}</td>
 				</tr>	
 				<tr bgcolor=white>
-					<td height="18" class="headerright">{$umLabel.bcc_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
+					<td height="18" class="headerright">{$smLabel.bcc_hea} &nbsp;<a href="javascript:addrpopup()"><img src="inc/themes/senti/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
 					<td class="default">&nbsp;{$umBcc}</td>
 				</tr>	
 
 				<tr bgcolor=white>
-					<td height="18" class="headerright">{$umLabel.subject_hea} &nbsp;</td>
-					<td class="default">&nbsp;{$umSubject}</td>
+					<td height="18" class="headerright">{$smLabel.subject_hea} &nbsp;</td>
+					<td class="default">&nbsp;{$smSubject}</td>
 				</tr>	
 
 				<tr>
-					<td height="18" class="headerright">{$umLabel.attach_hea}</td>
+					<td height="18" class="headerright">{$smLabel.attach_hea}</td>
 					<TD>	<table height="100%" width="100%" border=0 cellspacing=0 cellpadding=0>
 							{if $umHaveAttachs eq 1}
 								<tr width="100%" height="50%">
-									<td width="50%" class="header">{$umLabel.attch_name_hea}</td>
-									<td width="10%" class="header">{$umLabel.attch_size} &nbsp;</td>
-									<td width="30%" class="header">{$umLabel.attch_type_hea}</td>
-									<td width="10%" class="header">{$umLabel.attch_dele_hea}</td>
+									<td width="50%" class="header">{$smLabel.attch_name_hea}</td>
+									<td width="10%" class="header">{$smLabel.attch_size} &nbsp;</td>
+									<td width="30%" class="header">{$smLabel.attch_type_hea}</td>
+									<td width="10%" class="header">{$smLabel.attch_dele_hea}</td>
 								</tr>
 
-								{section name=i loop=$umAttachList}
+								{section name=i loop=$smAttachList}
 									<tr width="100%" height="50%">
-										<td width="50%" class="default"> &nbsp;{$umAttachList[i].name|escape:"html"}</td>
-										<td width="10%" class="default">{$umAttachList[i].size}Kb&nbsp;</td>
-										<td width="30%" class="default"> &nbsp;{$umAttachList[i].type|truncate:23:"...":true}</td>
-										<td width="10%" class="default"> &nbsp;<a href="{$umAttachList[i].link}">OK</a></td>
+										<td width="50%" class="default"> &nbsp;{$smAttachList[i].name|escape:"html"}</td>
+										<td width="10%" class="default">{$smAttachList[i].size}Kb&nbsp;</td>
+										<td width="30%" class="default"> &nbsp;{$smAttachList[i].type|truncate:23:"...":true}</td>
+										<td width="10%" class="default"> &nbsp;<a href="{$smAttachList[i].link}">OK</a></td>
 									</tr>
 								{/section}
 							{else}							
 								<tr>
-									<td width="100%" class="header" colspan=3> &nbsp;{$umLabel.attch_no_hea}</td>
+									<td width="100%" class="header" colspan=3> &nbsp;{$smLabel.attch_no_hea}</td>
 								</tr>
 							{/if}
 						</table>
 						<table width="100%" border=0 cellspacing=1 cellpadding=0>
 							<tr>
-								<td width="100%" class="default">&nbsp;<a href="javascript:upwin()" class="navigation"><img src="inc/themes/senti/images/attach.gif"  alt="" border="0">&nbsp;&nbsp;{$umLabel.attch_add_new}</a></td>
+								<td width="100%" class="default">&nbsp;<a href="javascript:upwin()" class="navigation"><img src="inc/themes/senti/images/attach.gif"  alt="" border="0">&nbsp;&nbsp;{$smLabel.attch_add_new}</a></td>
 							</tr>
 						</table>
 					</TD>
@@ -128,25 +128,25 @@
 
 				{if !$umAddSignature && $umHaveSignature}
 				<tr>
-					<td  class="headerright">{$umLabel.add_signature} &nbsp;</td>
+					<td  class="headerright">{$smLabel.add_signature} &nbsp;</td>
 					<td class="default"><input type=checkbox name=cksig onClick="return addsig()"{if $umAddSignature eq 1} checked disabled{/if}></td>
 				</tr>
 				{/if}
 
 				<tr>
-					<td  class="headerright">{$umLabel.priority_text} &nbsp;</td>
+					<td  class="headerright">{$smLabel.priority_text} &nbsp;</td>
 					<td class="default">
 						<select name="priority">
-							<option value="1"{if $umPriority eq 1} selected{/if}>{$umLabel.priority_high}
-							<option value="3"{if $umPriority eq 3} selected{/if}>{$umLabel.priority_normal}
-							<option value="5"{if $umPriority eq 5} selected{/if}>{$umLabel.priority_low}
+							<option value="1"{if $umPriority eq 1} selected{/if}>{$smLabel.priority_high}
+							<option value="3"{if $umPriority eq 3} selected{/if}>{$smLabel.priority_normal}
+							<option value="5"{if $umPriority eq 5} selected{/if}>{$smLabel.priority_low}
 						</select>
 					</td>
 				</tr>
 
 				<tr>
 					<td class="default">&nbsp;</td>
-					<td class="default"><input type=button name=bt_enviar value="{$umLabel.send_text}" onClick=enviar() class=button></td>
+					<td class="default"><input type=button name=bt_enviar value="{$smLabel.send_text}" onClick=enviar() class=button></td>
 				</tr>	
 			</table>
 		</td>

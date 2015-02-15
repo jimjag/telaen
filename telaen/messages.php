@@ -65,20 +65,20 @@ foreach ($folders as $key => $val) {
     $totalused += $val['size'];
 }
 
-$smarty->assign('umTotalUsed', ceil($totalused/1024));
+$smarty->assign('smTotalUsed', ceil($totalused/1024));
 $quota_enabled = ($quota_limit) ? 1 : 0;
-$smarty->assign('umQuotaEnabled', $quota_enabled);
-$smarty->assign('umQuotaLimit', Telaen::bytes2bkmg($quota_limit));
+$smarty->assign('smQuotaEnabled', $quota_enabled);
+$smarty->assign('smQuotaLimit', Telaen::bytes2bkmg($quota_limit));
 $usageGraph = Telaen::getUsageGraphic($totalused, $quota_limit);
-$smarty->assign('umUsageGraph', $usageGraph);
+$smarty->assign('smUsageGraph', $usageGraph);
 
 $exceeded = (($quota_limit) && ($totalused >= $quota_limit));
 
 // sorting arrays..
 $smarty->assign('umAttachArrow', $attach_arrow);
-$smarty->assign('umSubjectArrow', $subject_arrow);
+$smarty->assign('smSubjectArrow', $subject_arrow);
 $smarty->assign('umFromArrow', $fromname_arrow);
-$smarty->assign('umDateArrow', $date_arrow);
+$smarty->assign('smDateArrow', $date_arrow);
 $smarty->assign('umSizeArrow', $size_arrow);
 
 $tdb->getMessages($folder, true, $sortby, $sortorder);
@@ -154,9 +154,9 @@ $forms = "<input type='hidden' name='decision' value='delete' />
 <input type='hidden' name='start_pos' value='".$start_pos."' />
 <input type='hidden' name='end_pos' value='".$end_pos."' />";
 
-$smarty->assign('umJS', $jssource);
+$smarty->assign('smJS', $jssource);
 $smarty->assign('umForms', $forms);
-$smarty->assign('umUserEmail', $auth['email']);
+$smarty->assign('smUserEmail', $auth['email']);
 $smarty->assign('umFolder', $folder);
 
 $messagelist = array();
@@ -220,7 +220,7 @@ if ($nummsg > 0) {
 }
 $smarty->assign('umNumMessages', $nummsg);
 $smarty->assign('umNumUnread', $newmsgs);
-$smarty->assign('umMessageList', $messagelist);
+$smarty->assign('smMessageList', $messagelist);
 
 $display = extended_name($folder);
 
@@ -248,8 +248,8 @@ $smarty->assign('umWelcomeMessage2', $wlcmessage);
 $navigation = '';
 if ($nummsg > 0) {
     if ($pag > 1) {
-        $smarty->assign('umFirstLink', "messages.php?folder=".urlencode($folder)."&pag=1");
-        $smarty->assign('umPreviousLink', "messages.php?folder=".urlencode($folder)."&pag=".($pag-1)."");
+        $smarty->assign('smFirstLink', "messages.php?folder=".urlencode($folder)."&pag=1");
+        $smarty->assign('smPreviousLink', "messages.php?folder=".urlencode($folder)."&pag=".($pag-1)."");
     }
 
     $start = $pag - 2;
@@ -273,8 +273,8 @@ if ($nummsg > 0) {
     }
 
     if ($end_pos < $nummsg) {
-        $smarty->assign('umNextLink', "messages.php?folder=".urlencode($folder)."&pag=".($pag+1));
-        $smarty->assign('umLastLink', "messages.php?folder=".urlencode($folder)."&pag=".$totPages);
+        $smarty->assign('smNextLink', "messages.php?folder=".urlencode($folder)."&pag=".($pag+1));
+        $smarty->assign('smLastLink', "messages.php?folder=".urlencode($folder)."&pag=".$totPages);
     }
     $navigation .= " ($pag/".$totPages.")";
 }
@@ -299,5 +299,5 @@ foreach (scandir($TLN->userfolder) as $entry) {
 unset($TLN);
 
 $smarty->assign('umHaveSpam', $auth['havespam']);
-$smarty->assign('umAvalFolders', $avalfolders);
+$smarty->assign('smAvalFolders', $avalfolders);
 $smarty->display("$themez/messagelist.tpl");

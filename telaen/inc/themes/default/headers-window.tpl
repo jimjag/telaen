@@ -1,4 +1,4 @@
-{include file=$popupHeaderTemplate pageTitle=$umPageTitle|escape:"html"}
+{include file=$popupHeaderTemplate pageTitle=$smCCList|escape:"html"}
 
 <body>
 <div id="popup">

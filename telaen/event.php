@@ -60,17 +60,17 @@ $jssource .= <<<EOT
 EOT;
 
 $smarty->assign('pageMetas', $pmetas);
-$smarty->assign('umJS', $jssource);
+$smarty->assign('smJS', $jssource);
 
 if ($actionDone) {
-    $smarty->assign('umShowEventForm', 'NO');
+    $smarty->assign('smShowEventForm', 'NO');
 } else {
     $event[] = $newevent;    // tack on new event at bottom of list
     $timestamp = mktime(0, 0, 0, $month, 1, 2010);
     $mdate = ':: &nbsp;&nbsp; '.date('M', $timestamp)." $day, $year &nbsp;&nbsp; ::<br/>";
-    $smarty->assign('umEvent', $event);
-    $smarty->assign('umShowEventForm', 'YES');
-    $smarty->assign('umEventHeader', $mdate);
+    $smarty->assign('smEvent', $event);
+    $smarty->assign('smShowEventForm', 'YES');
+    $smarty->assign('smEventHeader', $mdate);
     $smarty->assign('mins', array('00', '05', 10, 15, 20, 25, 30, 35, 40, 45, 50, 55));
     $smarty->assign('hours', array('00', '01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23));
     $smarty->assign('dhours', array('12 am', '1 am', '2 am', '3 am', '4 am', '5 am', '6 am', '7 am', '8 am', '9 am', '10 am', '11 am',
@@ -79,5 +79,5 @@ if ($actionDone) {
 unset($events);
 
 $smarty->assign('webmailTitle', $TLN->config['webmail_title']);
-$smarty->assign('umPageTitle', $TLN->config['webmail_title']);
+$smarty->assign('smCCList', $TLN->config['webmail_title']);
 $smarty->display("$themez/event.tpl");

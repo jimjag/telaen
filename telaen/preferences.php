@@ -29,7 +29,7 @@ function dis() {
 </script>
 ";
 
-$smarty->assign('umJS', $jssource);
+$smarty->assign('smJS', $jssource);
 
 // load filters
 $filename = $TLN->userdatafolder.'/filters.ucf';

@@ -5,8 +5,8 @@
 
 <html>
 <head>
-	<title>sentiMail - {$umPageTitle|escape:"html"}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>sentiMail - {$smCCList|escape:"html"}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 </head>
 <link rel="stylesheet" href="inc/themes/default/webmail.css" type="text/css">
 <body bgcolor="#778899" text="#000000" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">

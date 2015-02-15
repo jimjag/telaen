@@ -3,11 +3,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
-<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$umLabel.bdl_title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
+<title>UebiMiau Webmail &copy 2003 - Skin by Beauvoir.net - {$smLabel.bdl_title}</title>
 <link rel="stylesheet" href="inc/themes/beauvoir/webmail.css" type="text/css">
 </head>
-{$umJS}
+{$smJS}
 <!--
 Skinned by Arnaud BEAUVOIR -  - 
 
@@ -27,15 +27,15 @@ copyright, or worse, to put your name at the place.
 <table width="750" border="0" cellspacing="1" cellpadding="0" class="normal" align="center" bgcolor="#999999">
 	<tr>
 		<td align="left" bgcolor="#EAEAEA" height="30">
-		<font class="error">&nbsp;<b>{$umLabel.bdl_title}</b></font>
+		<font class="error">&nbsp;<b>{$smLabel.bdl_title}</b></font>
 		</td>
 	</tr>
 	<tr bgcolor="#F5F4F4">
 		<td	align="center">
 		<br>
-		{$umLabel.bdl_msg}<br>{$umServerResponse}<br>
+		{$smLabel.bdl_msg}<br>{$umServerResponse}<br>
 		<br>
-		> <a href="./index.php?tid={$umTid}&lid={$umLid}">{$umLabel.bdl_back}</a> <<br>
+		> <a href="./index.php?tid={$umTid}&lid={$umLid}">{$smLabel.bdl_back}</a> <<br>
 		<br>
 		</td>
 	</tr>

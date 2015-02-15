@@ -3,14 +3,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>UebiMiau - {$umPageTitle|escape:"html"}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>UebiMiau - {$smCCList|escape:"html"}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 </head>
 <link rel="stylesheet" href="inc/themes/default/webmail.css" type="text/css">
 
 <script language="JavaScript" src="inc/themes/default/webmail.js" type="text/javascript"></script>
 
-{$umJS}
+{$smJS}
 
 <body bgcolor="#778899" text="#FFFFFF" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
 
@@ -29,52 +29,52 @@
 						<table width="100%" border=0 cellspacing=1 cellpadding=0>
 
 							<tr bgcolor=white>
-								<td width="20%" height="18" class="headerright">{$umLabel.from_hea} &nbsp;</td>
+								<td width="20%" height="18" class="headerright">{$smLabel.from_hea} &nbsp;</td>
 								<td class="default">
-								{section name=i loop=$umFromList}
-								 &nbsp;{$umFromList[i].name|default:#no_sender_text#|escape:"html"}
+								{section name=i loop=$smFromList}
+								 &nbsp;{$smFromList[i].name|default:#no_sender_text#|escape:"html"}
 								{/section}
 								</td>
 							</tr>
 							<tr bgcolor=white>
-								<td height="18" class="headerright">{$umLabel.to_hea} &nbsp;</td>
+								<td height="18" class="headerright">{$smLabel.to_hea} &nbsp;</td>
 								<td class="default">
-								{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}&nbsp;{$umTOList[i].name|escape:"html"}{assign var="firstto" value="no"}{sectionelse}&nbsp;{$umLabel.no_recipient_text}{/section}
+								{section name=i loop=$smTOList}{if $firstto eq "no"};{/if}&nbsp;{$smTOList[i].name|escape:"html"}{assign var="firstto" value="no"}{sectionelse}&nbsp;{$smLabel.no_recipient_text}{/section}
 								</td>
 							</tr>	
 
-							{if $umHaveCC}
+							{if $smHaveCC}
 								<tr bgcolor=white>
-									<td height="18" class="headerright">{$umLabel.cc_hea} &nbsp;</td>
+									<td height="18" class="headerright">{$smLabel.cc_hea} &nbsp;</td>
 									<td class="default">
-									{section name=i loop=$umCCList}{if $firstcc eq "no"};{/if}&nbsp;{$umCCList[i].name|escape:"html"}{assign var="firstcc" value="no"}{/section}
+									{section name=i loop=$smCCList}{if $firstcc eq "no"};{/if}&nbsp;{$smCCList[i].name|escape:"html"}{assign var="firstcc" value="no"}{/section}
 									</td>
 								</tr>	
 							{/if}
 
 							<tr bgcolor=white>
-								<td height="18" class="headerright">{$umLabel.subject_hea} &nbsp;</td>
-								<td class="default"> &nbsp;{$umSubject|default:#no_subject_text#|truncate:100:"...":true|escape:"html"}</td>
+								<td height="18" class="headerright">{$smLabel.subject_hea} &nbsp;</td>
+								<td class="default"> &nbsp;{$smSubject|default:#no_subject_text#|truncate:100:"...":true|escape:"html"}</td>
 							</tr>	
 							<tr bgcolor=white>
-								<td height="18" class="headerright">{$umLabel.date_hea} &nbsp;</td>
-								<td class="default"> &nbsp;{$umDate|date_format:$umLabel.date_format}</td>
+								<td height="18" class="headerright">{$smLabel.date_hea} &nbsp;</td>
+								<td class="default"> &nbsp;{$smDate|date_format:$smLabel.date_format}</td>
 							</tr>	
-							{if $umHaveAttachments}
+							{if $smHaveAttachments}
 								<tr bgcolor=silver>
-									<td class="headerright">{$umLabel.attach_hea} &nbsp;</td>
+									<td class="headerright">{$smLabel.attach_hea} &nbsp;</td>
 									<td>
 										<table width="100%" border=0 cellspacing=1 cellpadding=0>
 											<tr bgcolor="#f1f1f1">
-												<td class="headers" width="60%"> &nbsp;<b>{$umLabel.attch_name_hea}</b> ({$umLabel.attch_force_hea})</td>
-												<td class="headers"> &nbsp;<b>{$umLabel.attch_size_hea}</b></td>
-												<td class="headers"> &nbsp;<b>{$umLabel.attch_type_hea}</b></td>
+												<td class="headers" width="60%"> &nbsp;<b>{$smLabel.attch_name_hea}</b> ({$smLabel.attch_force_hea})</td>
+												<td class="headers"> &nbsp;<b>{$smLabel.attch_size_hea}</b></td>
+												<td class="headers"> &nbsp;<b>{$smLabel.attch_type_hea}</b></td>
 
-												{section name=i loop=$umAttachList}
+												{section name=i loop=$smAttachList}
 												<tr bgcolor=white>
-													<td class="default"> &nbsp;{$umAttachList[i].normlink}{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> {$umAttachList[i].downlink}<img src="./images/download.gif" width="12" height="12" border="0" alt=""></a></td>
-													<td class="right">{$umAttachList[i].size}Kb &nbsp;</td>
-													<td class="default"> &nbsp;{$umAttachList[i].type}</td>
+													<td class="default"> &nbsp;{$smAttachList[i].normlink}{$smAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> {$smAttachList[i].downlink}<img src="./images/download.gif" width="12" height="12" border="0" alt=""></a></td>
+													<td class="right">{$smAttachList[i].size}Kb &nbsp;</td>
+													<td class="default"> &nbsp;{$smAttachList[i].type}</td>
 												{/section}
 
 											</td>
@@ -86,7 +86,7 @@
 								<td colspan=2 class="default">
 									<table width="100%" border=0 cellspacing=1 cellpadding=0>
 										<tr bgcolor=white>
-											<td width="60%"{$umBackImg}{$umBackColor}><font color=black>{$umMessageBody}</font></td>
+											<td width="60%"{$smBackImg}{$smBackColor}><font color=black>{$smMessageBody}</font></td>
 										</tr>
 									</table>
 								</td>

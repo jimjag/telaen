@@ -3,8 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-	<title>UebiMiau Webmail - {$umLabel.bdl_title}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset={$umLabel.default_char_set}">
+	<title>UebiMiau Webmail - {$smLabel.bdl_title}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={$smLabel.default_char_set}">
 	<link rel="stylesheet" href="inc/themes/webmail/css.css" type="text/css">
 </head>
 <body>
@@ -17,12 +17,12 @@
 	<tr>
 		<td background="inc/themes/webmail/images/ligne-fond.gif">
 			<table width="450" border="0" cellspacing="1" cellpadding="1" align="center">
-				<tr><td align="center"><br><font color="red">.: <b>{$umLabel.bdl_title}</b> :.</font><br></td></tr>
+				<tr><td align="center"><br><font color="red">.: <b>{$smLabel.bdl_title}</b> :.</font><br></td></tr>
 				<tr><td>&nbsp;</td></tr>
-				<tr><td align="center">{$umLabel.bdl_msg}<br><br>
+				<tr><td align="center">{$smLabel.bdl_msg}<br><br>
 				{$umServerResponse}</td></tr>
 				<tr><td>&nbsp;</td></tr>
-				<tr><td align="center">> <a href="./index.php?tid={$umTid}&lid={$umLid}" class="lien">{$umLabel.bdl_back}</a> <</td></tr>
+				<tr><td align="center">> <a href="./index.php?tid={$umTid}&lid={$umLid}" class="lien">{$smLabel.bdl_back}</a> <</td></tr>
 				<tr><td>&nbsp;</td></tr>
 			</table>
 		</td>
