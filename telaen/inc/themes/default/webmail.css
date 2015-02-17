@@ -342,3 +342,29 @@ td.headerright {
 	text-align:left;
 	font-size : 8pt;
 }
+
+/** progress bar */
+
+#progressbox {
+	border: 1px solid #CAF2FF;
+	padding: 1px;
+	position:relative;
+	width:400px;
+	border-radius: 3px;
+	margin: 10px;
+	display:none;
+	text-align:left;
+}
+#progressbar {
+	height:20px;
+	border-radius: 3px;
+	background-color: #CAF2FF;
+	width:1%;
+}
+#statustxt {
+	top:3px;
+	left:50%;
+	position:absolute;
+	display:inline-block;
+	color: #FFFFFF;
+}

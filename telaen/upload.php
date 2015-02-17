@@ -67,6 +67,4 @@ if (isset($rem) && $rem != "") {
 		setTimeout('self.close()',500);\n
 	</script>\n
 	");
-} else {
-    $smarty->display("$themez/upload-attach.tpl");
 }
