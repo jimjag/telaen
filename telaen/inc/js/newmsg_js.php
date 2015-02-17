@@ -11,7 +11,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 /* This is MOSTLY javascript... :) */
 
-$jssource = "
+$jssource .= "
 <script language='javascript' type='text/javascript'>
 //<![CDATA[
 bIs_html = $js_advanced;
