@@ -168,9 +168,9 @@ $(document).ready(function() {
 //function after succesful file upload (when server response)
 function afterSuccess()
 {
-    $('#submit_att').show(); //hide submit button
-    $('#loading-img').hide(); //hide submit button
-    $('#progressbox').delay( 1000 ).fadeOut(); //hide progress bar
+    $('#submit_att').show();
+    $('#loading-img').hide();
+    $('#progressbox').delay( 1000 ).fadeOut();
 
 }
 
@@ -217,15 +217,15 @@ function beforeSubmit(){
             return false
         }
 
-        $('#submit_att').hide(); //hide submit button
-        $('#loading-img').show(); //hide submit button
+        $('#submit_att').hide();
+        $('#loading-img').show();
         $('#output').html('');
     }
     else
     {
         //Output error to older unsupported browsers that doesn't support HTML5 File API
         //$('#output').html('Please upgrade your browser, because your current browser lacks some new features we need!');
-        return true;
+        return false;
     }
 }
 
@@ -234,11 +234,11 @@ function OnProgress(event, position, total, percentComplete)
 {
     //Progress bar
     $('#progressbox').show();
-    $('#progressbar').width(percentComplete + '%') //update progressbar percent complete
-    $('#statustxt').html(percentComplete + '%'); //update status text
+    $('#progressbar').width(percentComplete + '%');
+    $('#statustxt').html(percentComplete + '%');
     if(percentComplete>50)
         {
-            $('#statustxt').css('color','#000'); //change status text to white after 50%
+            $('#statustxt').css('color','#000');
         }
 }
 

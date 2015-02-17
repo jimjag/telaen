@@ -5,25 +5,24 @@
         {include file=$calendarTemplate}
         {include file=$newsTemplate} </td>
       <td bgcolor="white" valign="top">
-        <div id="popup"> <br>
+        <form enctype="multipart/form-data" action="upload.php" method="post" id="addatt">
+          {$smForms}
           <table width="100%" border="0" cellspacing="0" cellpadding="2" align="center">
-            <form enctype="multipart/form-data" action="upload.php" method="post" id="addatt">
-              <tr>
-                <td width="26%" height="18" class="headerright">{$smLabel.up_information_text}</td>
-                <td class="default" align="center"><input type="file" name="userfile"  size="33"></td>
-                <td class="default" align="center"><input type="submit" value="{$smLabel.up_button_text}" id="submit_att" class="button"></td>
-              </tr>
-              <tr>
-                <td><img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/></td>
-                <td><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td>
-                <td><div id="output"></div></td>
-             </tr>
-            </form>
+            <tr>
+              <td width="26%" height="18" class="headerright">{$smLabel.up_information_text}</td>
+              <td class="default" align="center"><input type="file" name="userfile"  size="33"></td>
+              <td class="default" align="center"><input type="submit" value="{$smLabel.up_button_text}" id="submit_att" class="button"></td>
+            </tr>
+            <tr>
+              <td><img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/></td>
+              <td><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td>
+              <td><div id="output"></div></td>
+           </tr>
           </table>
-        </div>
-        <table width="100%" border="0" cellspacing="1" cellpadding="0">
-          <form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
-        {$smForms}
+        </form>
+        <form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
+         <table width="100%" border="0" cellspacing="1" cellpadding="0">
+         {$smForms}
           <tr bgcolor=white>
             <td width="26%" height="18" class="headerright">{$smLabel.to_hea} &nbsp;<a href="javascript:addrpopup('to')"><img src="inc/themes/default/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
             <td class="default">&nbsp;{$smTo}</td>
@@ -96,8 +95,8 @@
             <td class="default">&nbsp;</td>
             <td class="default"><input type=button name=bt_enviar value="{$smLabel.send_text}" onclick="enviar()" class="button"></td>
           </tr>
+         </table>
         </form>
-        </table>
       </td>
     </tr>
   </table>
