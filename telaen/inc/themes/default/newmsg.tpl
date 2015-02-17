@@ -10,7 +10,7 @@
           <table width="100%" border="0" cellspacing="0" cellpadding="2" align="center">
             <tr>
               <td width="26%" height="18" class="headerright">{$smLabel.up_information_text}</td>
-              <td class="default" align="center"><input type="file" name="userfile"  size="33"></td>
+              <td class="default" align="center"><input type="file" id="userfile" name="userfile"  size="33"></td>
               <td class="default" align="center"><input type="submit" value="{$smLabel.up_button_text}" id="submit_att" class="button"></td>
             </tr>
             <tr>
