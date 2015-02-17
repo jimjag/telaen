@@ -1,11 +1,31 @@
 {include file=$headerTemplate pageTitle=$smLabel.newmsg_title}
-<form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
   <table width="100%" border="0" cellspacing="0" cellpadding="2" align="center" bgcolor="white">
-    <tr> {$smForms}
+    <tr>
       <td valign="top" width="20%"> {include file=$menuTemplate refresh="false"}
         {include file=$calendarTemplate}
         {include file=$newsTemplate} </td>
-      <td bgcolor="white" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+      <td bgcolor="white" valign="top">
+        <div id="popup"> <br>
+          <table width="300" border="0" cellspacing="0" cellpadding="2" align="center">
+            <form enctype="multipart/form-data" action="upload.php" method="post" id="addatt">
+              <tr>
+                <td class="headers"><b>{$smLabel.up_information_text}</b></td>
+              </tr>
+              <tr>
+                <td class="default" align="left"><input type="file" name="userfile"  size="22" style="width: 300;"></td>
+              </tr>
+              <tr>
+                <td class="default" align="center"><input type="submit" value="{$smLabel.up_button_text}" id="submit_att" class="button"></td>
+              </tr>
+              <tr><td><img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/></td></tr>
+             <tr><td><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td></tr>
+             <tr><td><div id="output"></div></td></tr>
+            </form>
+          </table>
+        </div>
+        <table width="100%" border="0" cellspacing="1" cellpadding="0">
+          <form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
+        {$smForms}
           <tr bgcolor=white>
             <td width="26%" height="18" class="headerright">{$smLabel.to_hea} &nbsp;<a href="javascript:addrpopup('to')"><img src="inc/themes/default/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
             <td class="default">&nbsp;{$smTo}</td>
@@ -78,8 +98,9 @@
             <td class="default">&nbsp;</td>
             <td class="default"><input type=button name=bt_enviar value="{$smLabel.send_text}" onclick="enviar()" class="button"></td>
           </tr>
-        </table></td>
+        </form>
+        </table>
+      </td>
     </tr>
   </table>
-</form>
 {include file=$footerTemplate}
