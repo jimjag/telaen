@@ -6,20 +6,18 @@
         {include file=$newsTemplate} </td>
       <td bgcolor="white" valign="top">
         <div id="popup"> <br>
-          <table width="300" border="0" cellspacing="0" cellpadding="2" align="center">
+          <table width="100%" border="0" cellspacing="0" cellpadding="2" align="center">
             <form enctype="multipart/form-data" action="upload.php" method="post" id="addatt">
               <tr>
-                <td class="headers"><b>{$smLabel.up_information_text}</b></td>
-              </tr>
-              <tr>
-                <td class="default" align="left"><input type="file" name="userfile"  size="22" style="width: 300;"></td>
-              </tr>
-              <tr>
+                <td width="26%" height="18" class="headerright">{$smLabel.up_information_text}</td>
+                <td class="default" align="center"><input type="file" name="userfile"  size="33"></td>
                 <td class="default" align="center"><input type="submit" value="{$smLabel.up_button_text}" id="submit_att" class="button"></td>
               </tr>
-              <tr><td><img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/></td></tr>
-             <tr><td><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td></tr>
-             <tr><td><div id="output"></div></td></tr>
+              <tr>
+                <td><img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/></td>
+                <td><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td>
+                <td><div id="output"></div></td>
+             </tr>
             </form>
           </table>
         </div>
@@ -62,7 +60,7 @@
                 {/section}
                 {else}
                 <tr>
-                  <td width="100%" class="headers" colspan=3>&nbsp;{$smLabel.attch_no_hea}</td>
+                  <td width="100%" class="headers">&nbsp;{$smLabel.attch_no_hea}</td>
                 </tr>
                 {/if}
               </table>
