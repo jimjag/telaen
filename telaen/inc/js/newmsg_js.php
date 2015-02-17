@@ -11,7 +11,7 @@ defined('I_AM_TELAEN') or die('Direct access not permitted');
 
 /* This is MOSTLY javascript... :) */
 
-$jssource <<< EOS
+$jssource = "
 <script language='javascript' type='text/javascript'>
 //<![CDATA[
 bIs_html = $js_advanced;
@@ -148,7 +148,7 @@ $.ajax({
 //]]>
 </script>
 
-<script type="text/javascript">
+<script type='text/javascript'>
 $(document).ready(function() {
     var options = {
             target:   '#output',   // target element(s) to be updated with server response
@@ -182,7 +182,7 @@ function beforeSubmit(){
 
         if( !$('#userfile').val()) //check empty input filed
         {
-            $("#output").html("Are you kidding me?");
+            $('#output').html('Are you kidding me?');
             return false
         }
 
@@ -206,25 +206,25 @@ function beforeSubmit(){
             case 'video/mp4':
                 break;
             default:
-                $("#output").html("<b>"+ftype+"</b> Unsupported file type!");
+                $('#output').html('<b>'+ftype+'</b> Unsupported file type!');
                 return false
         }
 
         //Allowed file size is less than 5 MB (1048576)
         if(fsize>5242880)
         {
-            $("#output").html("<b>"+bytesToSize(fsize) +"</b> Too big file! <br />File is too big, it should be less than 5 MB.");
+            $('#output').html('<b>'+bytesToSize(fsize) +'</b> Too big file! <br />File is too big, it should be less than 5 MB.');
             return false
         }
 
         $('#submit_att').hide(); //hide submit button
         $('#loading-img').show(); //hide submit button
-        $("#output").html("");
+        $('#output').html('');
     }
     else
     {
         //Output error to older unsupported browsers that doesn't support HTML5 File API
-        //$("#output").html("Please upgrade your browser, because your current browser lacks some new features we need!");
+        //$('#output').html('Please upgrade your browser, because your current browser lacks some new features we need!');
         return true;
     }
 }
@@ -254,4 +254,4 @@ function bytesToSize(bytes) {
 
 </script>
 
-EOS;
+";
