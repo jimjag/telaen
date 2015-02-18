@@ -108,7 +108,7 @@ if (count($ARCC) > 0) {
     $smarty->assign('smCCList', $ARCC);
 }
 
-$smarty->assign('smCCList', $this->convertCharset($msg['subject'], $TLN->ucharset));
+$smarty->assign('smCCList', $TLN->convertCharset($msg['subject'], $TLN->ucharset));
 
 eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
