@@ -70,9 +70,13 @@ class Telaen_core
      */
     public $dirperm = 0700;
     /**
-     * @var int Default buffer size and temp stream size
+     * @var int Default temp stream size
      */
-    public $buffersz = 4194304; // 4M
+    public $ts_buffersz = 4194304; // 4M
+    /**
+     * @var int Default buffer size
+     */
+    public $buffersz = 8192; // 8K
     /**
      * @var bool Sanitize HTML via filter
      */
@@ -334,7 +338,7 @@ class Telaen_core
         }
         $result = "";
         while (!self::_feof($fp)) {
-            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
+            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, $this->buffersz));
             $pos = strpos($buffer, "\r\n\r\n");
             if ($pos === false) {
                 $result .= $buffer;
@@ -370,7 +374,7 @@ class Telaen_core
         }
         $pts = $this->tstream();
         while (!self::_feof($fp)) {
-            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
+            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, $this->buffersz));
             $pos = strpos($buffer, "\r\n\r\n");
             if ($pos !== false) {
                 fwrite($pts, substr($buffer, $pos+4));
@@ -378,7 +382,7 @@ class Telaen_core
             }
         }
         while (!self::_feof($fp)) {
-            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, 4096));
+            $buffer = preg_replace('/\r?\n/', "\r\n", fread($fp, $this->buffersz));
             fwrite($pts, $buffer);
         }
         $this->status = STATUS_OK;
@@ -444,8 +448,11 @@ class Telaen_core
     }
 
     /* stream_copy_to_stream() is slow and takes gobs of mem */
-    protected function _sXfer($from, $to, $mem = 4194304)
+    protected function _sXfer($from, $to, $mem = null)
     {
+        if ($mem === null) {
+            $mem = $this->ts_buffersz/2;
+        }
         rewind($from);
         while (!$this->_feof($from)) {
             fwrite($to, fread($from, $mem));
@@ -1119,7 +1126,7 @@ class Telaen_core
             $parser->ignore_syntax_errors = 1;
             $parser->track_lines = 0;
             $parser->use_part_file_names = 1;
-            $parser->message_buffer_length = $this->buffersz;
+            $parser->message_buffer_length = $this->ts_buffersz/2;
             $p = [
                 'File' => $path,
                 'SkipBody' => 0,
@@ -1226,7 +1233,7 @@ class Telaen_core
         if (is_resource($email)) {
             rewind($email);
             while (!$this->_feof($email)) {
-                $line = preg_replace('|\r?\n|',"\r\n", fread($email, 4096));
+                $line = preg_replace('|\r?\n|',"\r\n", fread($email, $this->buffersz));
                 $pos = strpos($line,"\r\n\r\n");
                 if($pos === false) {
                     $header .= $line;
@@ -1237,7 +1244,7 @@ class Telaen_core
                 }
             }
             while (!$this->_feof($email)) {
-                $line = preg_replace('|\r?\n|',"\r\n", fread($email, 4096));
+                $line = preg_replace('|\r?\n|',"\r\n", fread($email, $this->buffersz));
                 fwrite($body, $line);
             }
             rewind($body);
@@ -1762,7 +1769,7 @@ ENDOFREDIRECT;
     public function tstream($mem = null)
     {
         if ($mem === null) {
-            $mem = $this->buffersz;
+            $mem = $this->ts_buffersz;
         }
         if ($mem) {
             $f = fopen("php://temp/maxmemory:{$mem}", 'wb+');
