@@ -1132,7 +1132,7 @@ class Telaen_core
             }
             $a = [];
             $parser->Analyze($decoded[0], $a);
-            $path = $this->getPathName($msg)[0].'.msg';
+            $path .= '.msg';
             /*
              * Uggg. when we are treating w/ the actual email
              * message itself (txt or html) we need to do so
@@ -1164,9 +1164,9 @@ class Telaen_core
                 $cids[$i]['flat'] = $msg['flat'];
                 $cids[$i]['uidl'] = $msg['uidl'];
                 $cids[$i]['folder'] = $msg['folder'];
-                list($path, $dir) = $this->getPathName($cids[$i], '_attachments');
-                $this->_mkdir($dir);
-                rename($b['DataFile'], $path);
+                list($apath, $adir) = $this->getPathName($cids[$i], '_attachments');
+                $this->_mkdir($adir);
+                rename($b['DataFile'], $apath);
                 $this->tdb->addAttachment($cids[$i]);
                 $i++;
             }
@@ -1187,13 +1187,13 @@ class Telaen_core
                 $attachments[$i]['flat'] = $msg['flat'];
                 $attachments[$i]['uidl'] = $msg['uidl'];
                 $attachments[$i]['folder'] = $msg['folder'];
-                list($path, $dir) = $this->getPathName($attachments[$i], '_attachments');
-                $this->_mkdir($dir);
-                rename($b['DataFile'], $path);
+                list($apath, $adir) = $this->getPathName($attachments[$i], '_attachments');
+                $this->_mkdir($adir);
+                rename($b['DataFile'], $apath);
                 $this->tdb->addAttachment($attachments[$i]);
                 $i++;
             }
-            if ($a['Type'] == 'html') {
+            if ($a['Type'] == 'text' && $a['SubType'] == 'html') {
                 if ($this->sanitize) {
                     $data = $this->sanitizeHTML($data);
                 }
