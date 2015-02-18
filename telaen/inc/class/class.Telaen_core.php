@@ -1164,7 +1164,7 @@ class Telaen_core
                 $cids[$i]['flat'] = $msg['flat'];
                 $cids[$i]['uidl'] = $msg['uidl'];
                 $cids[$i]['folder'] = $msg['folder'];
-                list($path, $dir) = $this->getPathName($cids, '_attachments');
+                list($path, $dir) = $this->getPathName($cids[$i], '_attachments');
                 $this->_mkdir($dir);
                 rename($b['DataFile'], $path);
                 $this->tdb->addAttachment($cids[$i]);
@@ -1187,7 +1187,7 @@ class Telaen_core
                 $attachments[$i]['flat'] = $msg['flat'];
                 $attachments[$i]['uidl'] = $msg['uidl'];
                 $attachments[$i]['folder'] = $msg['folder'];
-                list($path, $dir) = $this->getPathName($attachments, '_attachments');
+                list($path, $dir) = $this->getPathName($attachments[$i], '_attachments');
                 $this->_mkdir($dir);
                 rename($b['DataFile'], $path);
                 $this->tdb->addAttachment($attachments[$i]);
