@@ -1576,7 +1576,10 @@ class Telaen extends Telaen_core
             $this->tdb->m_delta[] = [$msg, ['header', 'flags']];
 
             $pts = $this->tstream();
-            fwrite($pts, "$header\r\n\r\n$body");
+            rewind($body);
+            fwrite($pts, "$header\r\n\r\n");
+            $this->_sXfer($body, $pts);
+
             $this->saveFile($path, $pts);
             fclose($pts);
         }
