@@ -1505,6 +1505,9 @@ class Mparser
                 $tolerate_unrecognized = 0;
                 break;
         }
+        /* Use normal */
+        $results['Type'] = $type;
+        $results['SubType'] = $sub_type;
         if (!IsSet($results['Type'])) {
             if (IsSet($this->custom_mime_types[$content_type])) {
                 $results['Type'] = $this->custom_mime_types[$content_type]['Type'];
