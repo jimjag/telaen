@@ -519,7 +519,8 @@ class Telaen extends Telaen_core
 
         $pts = $this->tstream();
         rewind($msgbody);
-        fwrite($pts, "$msgheader\r\n\r\n".stream_get_contents($msgbody));
+        fwrite($pts, "$msgheader\r\n\r\n");
+        $this->_sXfer($msgbody, $pts);
         $this->_mkdir($dir);
         $this->saveFile($path, $pts);
         rewind($pts);
@@ -577,7 +578,9 @@ class Telaen extends Telaen_core
         $header .= "\r\nX-TLN-UIDL: ".$msg['uidl'];
 
         $pts = $this->tstream();
-        fwrite($pts, "$header\r\n\r\n".stream_get_contents($body));
+        rewind($body);
+        fwrite($pts, "$header\r\n\r\n");
+        $this->_sXfer($body, $pts);
         $this->_mkdir($dir);
         $this->saveFile($path, $pts);
         rewind($pts);
