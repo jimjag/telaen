@@ -518,9 +518,10 @@ class LocalMbox extends SQLite3
      * Update misc field in folders
      * @param string $folder Folder name
      * @param string $field Name of field
+     * @param string $val Option value to set it to (otherwise use current field)
      * @return boolean
      */
-    public function updateFolderField($folder, $field)
+    public function updateFolderField($folder, $field, $val = null)
     {
         if (!isset($this->fschema[$field])) {
             $this->_ok = false;
@@ -531,6 +532,9 @@ class LocalMbox extends SQLite3
             $this->_ok = false;
             $this->_log[] = "bad folder name: $folder";
             return false;
+        }
+        if ($val !== null) {
+            $this->folders[$folder][$field] = $val;
         }
         $stmt = $this->prepare("UPDATE folders SET \"$field\"=:val WHERE name=:name ;");
         $stmt->bindValue(':name', $folder);

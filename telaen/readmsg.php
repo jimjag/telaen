@@ -24,19 +24,19 @@ $ix = $msg['idx'];
 $is_attached = false;
 $arAttachment = array();
 
-if (!($msg['body'] = $TLN->mailRetrMsg($msg, false))) {
+if (!($TLN->mailRetrMsg($msg, false))) {
     $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
 }
-if (!$TLN->mailSetFlag($msg, $TLN->flags['seen'], '+')) {
-    $TLN->triggerError('Could not set SEEN flag', I_AM_TELAEN, __LINE__);
-}
-$TLN->mailDisconnect();
 
-// metas assigned to smarty
-$smarty->assign('pageMetas', $pmetas);
+if ($msg['unread']) {
+    if (!$TLN->mailSetFlag($msg, $TLN->flags['seen'], '+')) {
+        $TLN->triggerError('Could not set SEEN flag', I_AM_TELAEN, __LINE__);
+    }
+    $msg['unread'] = false;
+    $TLN->tdb->updateFolderField($folder, 'unread', $folders[$folder]['unread'] - 1);
+}
 
 $TLN->parseBody($msg);
-$msg['unread'] = false;
 $TLN->tdb->doMessage($msg);
 $TLN->tdb->syncMessages();
 
@@ -59,7 +59,8 @@ if ($ix < (count($msgs)-1)) {
     $smarty->assign('smNextLink', $smNextLink);
 }
 
-// message download link
+// message download JS and links
+$smarty->assign('pageMetas', $pmetas);
 $smarty->assign('downloadLink', 'download.php?folder='.urlencode($folder).'&uidl='.$uidl);
 $redir_path = 'redir.php';    // why not just relative?? Now is relative (due to problems on https servers)!
 

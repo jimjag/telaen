@@ -1111,6 +1111,7 @@ class Telaen_core
     public function parseBody($msg)
     {
         if (!$msg['bparsed']) {
+            $path = $this->getPathName($msg)[0];
             $parser = new Mparser();
             $parser->decode_bodies = 1;
             //$parser->decode_headers = 0;
@@ -1120,7 +1121,7 @@ class Telaen_core
             $parser->use_part_file_names = 1;
             $parser->message_buffer_length = $this->buffersz;
             $p = [
-                'File' => $path = $this->getPathName($msg)[0],
+                'File' => $path,
                 'SkipBody' => 0,
                 'SaveBody' => $this->userfolder.'_tmp',
             ];
@@ -1166,6 +1167,7 @@ class Telaen_core
                 $cids[$i]['folder'] = $msg['folder'];
                 list($apath, $adir) = $this->getPathName($cids[$i], '_attachments');
                 $this->_mkdir($adir);
+                $this->debugMsg("Moving CID: {$b['DataFile']} -> {$apath}");
                 rename($b['DataFile'], $apath);
                 $this->tdb->addAttachment($cids[$i]);
                 $i++;
@@ -1189,6 +1191,7 @@ class Telaen_core
                 $attachments[$i]['folder'] = $msg['folder'];
                 list($apath, $adir) = $this->getPathName($attachments[$i], '_attachments');
                 $this->_mkdir($adir);
+                $this->debugMsg("Moving ATT: {$b['DataFile']} -> {$apath}");
                 rename($b['DataFile'], $apath);
                 $this->tdb->addAttachment($attachments[$i]);
                 $i++;
