@@ -1724,9 +1724,9 @@ ENDOFREDIRECT;
     /**
      * Return the representation of $var (large chunk o' data)
      * as either a large string or a resource (temp stream handle)
-     * @param mixed $var
-     * @param bool $stream
-     * @param mixed $mem
+     * @param mixed $var Var to get representation of
+     * @param bool $stream Return as a stream?
+     * @param mixed $mem Buffer size
      * @return resource|string
      */
     public function blob($var, $stream = true, $mem = null)
