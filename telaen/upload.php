@@ -39,7 +39,7 @@ if (isset($rem) && $rem != "") {
     //if(file_exists($userfile['tmp_name'])) {
 
 
-    $userfile_name = $userfile['name'];
+    $userfile_name = Telaen::fsSafeFile($userfile['name']);
     $userfile_type = $userfile['type'];
     $userfile_size = $userfile['size'];
     $userfile = $userfile['tmp_name'];
@@ -50,7 +50,7 @@ if (isset($rem) && $rem != "") {
         $ind = count($mbox['attachments']);
     }
 
-    $filename = $TLN->userfolder.'_attachments/'.$TLN->md5($TLN->uniqID("att_")).$userfile_name;
+    $filename = $TLN->userfolder.'_tmp/'.$TLN->uniqID().'_'.$userfile_name;
 
     move_uploaded_file($userfile, $filename);
 

@@ -8,6 +8,7 @@
         <form enctype="multipart/form-data" action="upload.php" method="post" id="addatt">
           {$smForms}
           <table width="100%" border="0" cellspacing="0" cellpadding="2" align="center">
+            <tr><td colspan=3 class="headers">{$smLabel.attch_add_new}</td></tr>
             <tr>
               <td width="26%" height="18" class="headerright">{$smLabel.up_information_text}</td>
               <td class="default" align="center"><input type="file" id="userfile" name="userfile"  size="33"></td>
@@ -63,11 +64,7 @@
                 </tr>
                 {/if}
               </table>
-              <table width="100%" border=0 cellspacing=1 cellpadding=0>
-                <tr>
-                  <td width="100%" class="default">&nbsp;<a href="javascript:upwin()" class="navigation">{$smLabel.attch_add_new}</a></td>
-                </tr>
-              </table></td>
+            </td>
           </tr>
           <tr>
             <td class="default">&nbsp;</td>
