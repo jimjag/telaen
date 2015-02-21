@@ -746,17 +746,20 @@ class LocalMbox extends SQLite3
     /**
      * Add or update this->headers with the msg
      * @param array $msg Message msg
+     * @param array $keys List of fields to update (empty if we want to figure it out)
      */
-    public function doMessage($msg)
+    public function doMessage($msg, $keys = [])
     {
         if (isset($this->m_idx[$msg['uidl']])) {
             /* This is an UPDATE */
             $idx = $this->m_idx[$msg['uidl']];
-            $keys = [];
-            foreach ($msg as $k=>$v) {
-                if (($v !== null) && ($this->messages[$idx][$k] != $v) && ($k != 'uidl')) {
-                    $keys[] = $k;
-                    $this->messages[$idx][$k] = $v;
+            if (empty($keys)) {
+                /* compare w/ local static copy and see what needs updating */
+                foreach ($msg as $k => $v) {
+                    if (($this->messages[$idx][$k] != $v) && ($k != 'uidl')) {
+                        $keys[] = $k;
+                        $this->messages[$idx][$k] = $v;
+                    }
                 }
             }
             if (count($keys) > 0) {
@@ -895,7 +898,7 @@ class LocalMbox extends SQLite3
      */
     public function getAttachments($msg)
     {
-        $query = "SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;";
+        $query = 'SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;';
         $stmt = $this->prepare($query);
         $stmt->bindValue(':folder', $msg['folder']);
         $stmt->bindValue(':uidl', $msg['uidl']);

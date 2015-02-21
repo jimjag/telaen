@@ -526,7 +526,7 @@ class Telaen extends Telaen_core
         rewind($pts);
         rewind($msgbody);
         $msg['iscached'] = true;
-        $this->tdb->doMessage($msg);
+        $this->tdb->doMessage($msg, ['iscached']);
         if ($with_headers) {
             return $pts;
         } else {
@@ -586,7 +586,7 @@ class Telaen extends Telaen_core
         rewind($pts);
         rewind($body);
         $msg['iscached'] = true;
-        $this->tdb->doMessage($msg);
+        $this->tdb->doMessage($msg, ['iscached']);
         if ($with_headers) {
             return $pts;
         } else {

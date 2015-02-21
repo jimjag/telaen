@@ -1118,7 +1118,7 @@ class Telaen_core
      * @param  array $msg Email message
      * @return boolean
      */
-    public function parseBody($msg)
+    public function parseBody(&$msg)
     {
         if (!$msg['bparsed']) {
             $path = $this->getPathName($msg)[0];
@@ -1218,9 +1218,9 @@ class Telaen_core
             }
             $this->saveFile($path, $data);
             $msg['bparsed'] = true;
-            $this->tdb->doMessage($msg);
-            return true;
+            $this->tdb->doMessage($msg, ['bparsed']);
         }
+        return true;
     }
 
     /**

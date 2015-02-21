@@ -37,7 +37,6 @@ if ($msg['unread']) {
 }
 
 $TLN->parseBody($msg);
-$TLN->tdb->doMessage($msg);
 $TLN->tdb->syncMessages();
 
 if ($ix > 0) {
