@@ -913,6 +913,7 @@ class LocalMbox extends SQLite3
         $stmt->close();
         return $this->attachments;
     }
+
     public function addAttachment($attachment)
     {
         $thelist = $this->_createUplist(array_keys($attachment), $this->aschema);
@@ -923,7 +924,6 @@ class LocalMbox extends SQLite3
         return $this->_doInsert('attachs', $attachment, $thelist);
 
     }
-
 
     public function delAttachment($folder, $msg)
     {

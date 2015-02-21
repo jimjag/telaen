@@ -263,19 +263,14 @@ $strcc = "<input class='textbox' style='width : 200px;' type='text' size='20' na
 $strbcc = "<input class='textbox' style='width : 200px;' type='text' size='20' name='bcc' value='".htmlspecialchars(stripslashes($bcc))."' />";
 $strsubject = "<input class='textbox' style='width : 200px;' type='text' size='20' name='subject' value='".htmlspecialchars(stripslashes($subject))."' />";
 
+$attachlist = [];
 $attachs = $TLN->tdb->getAttachments($msg);
 $num = count($attachs);
-if ($num > 0) {
-    $smarty->assign('smHaveAttachs', 1);
-    $attachlist = array();
-    for ($i = 0; $i < $num; $i++) {
-
-        $attachlist[$i]['name'] = $attachs[$i]['name'];
-        $attachlist[$i]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
-        $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
-        $attachlist[$i]['link'] = "javascript:upwin($i)";
-    }
-    $smarty->assign('smAttachList', $attachlist);
+for ($i = 0; $i < $num; $i++) {
+    $attachlist[$i]['name'] = $attachs[$i]['name'];
+    $attachlist[$i]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
+    $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
+    $attachlist[$i]['link'] = "javascript:upwin($i)";
 }
 
 if (!$show_advanced) {
@@ -300,5 +295,6 @@ $smarty->assign('smBcc', $strbcc);
 $smarty->assign('smSubject', $strsubject);
 $smarty->assign('smTextEditor', $txtarea);
 $smarty->assign('smAdvancedEditor', $advEdit);
+$smarty->assign('smAttachList', $attachlist);
 
 $smarty->display("$themez/newmsg.tpl");
