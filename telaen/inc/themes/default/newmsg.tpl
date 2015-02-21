@@ -24,6 +24,14 @@
         <form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
          <table width="100%" border="0" cellspacing="1" cellpadding="0">
          {$smForms}
+          <tr>
+            <td  class="headerright">{$smLabel.priority_text} &nbsp;</td>
+            <td class="default" align='center'><select name="priority">
+                <option value="1"{if $smPriority eq 1} selected{/if}>{$smLabel.priority_high}
+                <option value="3"{if $smPriority eq 3} selected{/if}>{$smLabel.priority_normal}
+                <option value="5"{if $smPriority eq 5} selected{/if}>{$smLabel.priority_low}
+              </select></td>
+          </tr>
           <tr bgcolor=white>
             <td width="26%" height="18" class="headerright">{$smLabel.to_hea} &nbsp;<a href="javascript:addrpopup('to')"><img src="inc/themes/default/images/bookmark_it.gif" width="15" height="12" border="0" alt="<!--%address_tip%-->"></a> &nbsp;</td>
             <td class="default">&nbsp;{$smTo}</td>
@@ -68,7 +76,7 @@
           </tr>
           <tr>
             <td class="default">&nbsp;</td>
-            <td class="default"><textarea cols="80" rows="24" id="body" name="body">{$smBody|escape:"html"}</textarea></td>
+            <td class="default"><textarea cols="80" rows="32" id="body" name="body">{$smBody|escape:"html"}</textarea></td>
           </tr>
           <tr>
             <td class="headerright">{$smLabel.require_receipt}  &nbsp;</td>
@@ -80,14 +88,6 @@
             <td class="default"><input type="checkbox" name="cksig" onclick="return addsig()"{if $smAddSignature eq 1} checked disabled{/if}></td>
           </tr>
           {/if}
-          <tr>
-            <td  class="headerright">{$smLabel.priority_text} &nbsp;</td>
-            <td class="default"><select name="priority">
-                <option value="1"{if $smPriority eq 1} selected{/if}>{$smLabel.priority_high}
-                <option value="3"{if $smPriority eq 3} selected{/if}>{$smLabel.priority_normal}
-                <option value="5"{if $smPriority eq 5} selected{/if}>{$smLabel.priority_low}
-              </select></td>
-          </tr>
           <tr>
             <td class="default">&nbsp;</td>
             <td class="default"><input type=button name=bt_enviar value="{$smLabel.send_text}" onclick="enviar()" class="button"></td>

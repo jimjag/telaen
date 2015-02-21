@@ -34,37 +34,26 @@ if (isset($rem) && $rem != "") {
 		setTimeout('self.close()',500);\n
 	</script>\n
 	");
-} elseif (isset($userfile)
-    && ((!is_array($userfile) && is_uploaded_file($userfile)) || is_uploaded_file($userfile['tmp_name']))) {
-    //if(file_exists($userfile['tmp_name'])) {
+} elseif (isset($userfile) && is_uploaded_file($userfile['tmp_name'])) {
 
-
-    $userfile_name = Telaen::fsSafeFile($userfile['name']);
-    $userfile_type = $userfile['type'];
-    $userfile_size = $userfile['size'];
-    $userfile = $userfile['tmp_name'];
-
-    if (!is_array($mbox['attachments'])) {
-        $ind = 0;
-    } else {
-        $ind = count($mbox['attachments']);
+    $safefilename = Telaen::fsSafeFile($userfile['name']);
+    $type = 'application';
+    $subtype = 'octet-stream';
+    if (preg_match('|(.+)/(.+)|', $userfile['type'], $m)) {
+        $type = $m[1];
+        $subtype = $m[2];
     }
 
-    $filename = $TLN->userfolder.'_tmp/'.$TLN->uniqID().'_'.$userfile_name;
-
-    move_uploaded_file($userfile, $filename);
-
-    $mbox['attachments'][$ind]['localname'] = $filename;
-    $mbox['attachments'][$ind]['name'] = $userfile_name;
-    $mbox['attachments'][$ind]['type'] = $userfile_type;
-    $mbox['attachments'][$ind]['size'] = $userfile_size;
-
-    $UserMbox->Save($mbox);
-
-    echo("
-	<script language=javascript>\n
-		if(window.opener) window.opener.doupload();\n
-		setTimeout('self.close()',500);\n
-	</script>\n
-	");
+    $upload['name'] = $userfile['name'];
+    $upload['size'] = $userfile['size'];
+    $upload['localname'] = Telaen::uniqID('u_').$safefilename;
+    $upload['type'] = $type;
+    $upload['subtype'] = $subtype;
+    $upload['flat'] = 1;
+    $upload['uidl'] = 'tmp';
+    $upload['folder'] = 'tmp';
+    $filename = $TLN->userfolder.'_tmp/'.$upload['localname'];
+    $this->debugMsg("Adding upload attachment: {$userfile['tmp_name']} -> {$filename}");
+    move_uploaded_file($userfile['tmp_name'], $filename);
+    $this->tdb->addAttachment($upload);
 }
