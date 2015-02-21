@@ -872,7 +872,7 @@ class LocalMbox extends SQLite3
             if (!isset($idxs[$idx])) {
                 $idxs[$idx] = $idx;
                 $stmt->bindValue(':uidl', $msg['uidl']);
-                if (!$stmt->execute($query)) {
+                if (!$stmt->execute()) {
                     $this->_ok = false;
                     $this->_log[] = "exec failed: $query";
                 } else {
