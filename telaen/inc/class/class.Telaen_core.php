@@ -276,8 +276,11 @@ class Telaen_core
      */
     static public function fsSafeFile($str, $delete = false)
     {
-        $ret = preg_replace('|[.]{2,}|', ".", $str); // no dir
-        return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $ret);
+        $str = htmlentities($str, ENT_QUOTES, 'UTF-8');
+        $str = preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', $str);
+        $str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
+        $str = preg_replace('|[.]{2,}|', ".", $str); // no dir
+        return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $str);
     }
 
     /**
