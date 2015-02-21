@@ -53,7 +53,7 @@ class LocalMbox extends SQLite3
         'flat' => 'INT DEFAULT 0',
         'cid' => 'TEXT DEFAULT ""',
         'folder' => 'TEXT NOT NULL',
-        'disposition' => 'TEXT NOT NULL',
+        'disposition' => 'TEXT DEFAULT ""',
         'uidl' => 'TEXT NOT NULL',
         'localname' => 'TEXT DEFAULT ""',
         'name' => 'TEXT DEFAULT ""',
