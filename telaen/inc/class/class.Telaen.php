@@ -488,7 +488,7 @@ class Telaen extends Telaen_core
      * @param array $msg Message to grab (REF)
      * @return string
      */
-    protected function _mailRetrMsgImap($msg, $with_headers = true)
+    protected function _mailRetrMsgImap(&$msg, $with_headers = true)
     {
         $msgheader = trim($msg['header']);
         list($path, $dir) = $this->getPathName($msg);
@@ -540,7 +540,7 @@ class Telaen extends Telaen_core
      * @param array $msg Message to grab (REF)
      * @return string
      */
-    protected function _mailRetrMsgPop($msg, $with_headers = true)
+    protected function _mailRetrMsgPop(&$msg, $with_headers = true)
     {
         list($path, $dir) = $this->getPathName($msg);
         if (file_exists($path)) {
@@ -599,7 +599,7 @@ class Telaen extends Telaen_core
      * @param  array  $msg   The message to obtain
      * @return mixed
      */
-    public function mailRetrMsg($msg, $with_headers = true)
+    public function mailRetrMsg(&$msg, $with_headers = true)
     {
         if ($this->mail_protocol == IMAP) {
             return $this->_mailRetrMsgImap($msg, $with_headers);
@@ -1046,12 +1046,12 @@ class Telaen extends Telaen_core
                     /* If we have a UIDL, then use it, otherwise, we check later */
                     if (isset($uids[$mnum])) {
                         $msg['uidl'] = $uids[$mnum];
+                        if (!$this->tdb->messageExists($msg)) {
+                            $this->tdb->doMessage($msg);
+                            $new++;
+                        }
                     } else {
                         $nouids[] = $msg;
-                    }
-                    if (!$this->tdb->messageExists($msg)) {
-                        $this->tdb->doMessage($msg);
-                        $new++;
                     }
                     unset($msg);
                     $msg = [];
