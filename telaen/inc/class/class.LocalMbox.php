@@ -761,6 +761,10 @@ class LocalMbox extends SQLite3
                         $this->messages[$idx][$k] = $v;
                     }
                 }
+            } else {
+                foreach ($keys as $k) {
+                    $this->messages[$idx][$k] = $msg[$k];
+                }
             }
             if (count($keys) > 0) {
                 $this->m_delta[] = [$this->messages[$idx], $keys];
@@ -898,10 +902,10 @@ class LocalMbox extends SQLite3
      */
     public function getAttachments($msg)
     {
-        $query = 'SELECT * FROM attachs WHERE folder=:folder AND uidl=:uidl ;';
+        $query = 'SELECT * FROM attachs WHERE folder=:f AND uidl=:u ;';
         $stmt = $this->prepare($query);
-        $stmt->bindValue(':folder', $msg['folder']);
-        $stmt->bindValue(':uidl', $msg['uidl']);
+        $stmt->bindValue(':f', $msg['folder']);
+        $stmt->bindValue(':u', $msg['uidl']);
         $result = $stmt->execute($query);
         $this->attachments = [];
         if ($result) {
