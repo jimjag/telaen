@@ -34,6 +34,7 @@ if ($msg['unread']) {
     }
     $msg['unread'] = false;
     $TLN->tdb->updateFolderField($folder, 'unread', $folders[$folder]['unread'] - 1);
+    $TLN->tdb->doMessage($msg, ['unread']);
 }
 
 $TLN->parseBody($msg);
