@@ -756,7 +756,7 @@ class LocalMbox extends SQLite3
             if (empty($keys)) {
                 /* compare w/ local static copy and see what needs updating */
                 foreach ($msg as $k => $v) {
-                    if (($this->messages[$idx][$k] != $v) && ($k != 'uidl')) {
+                    if (($v !== null) && ($this->messages[$idx][$k] != $v) && ($k != 'uidl')) {
                         $keys[] = $k;
                         $this->messages[$idx][$k] = $v;
                     }
