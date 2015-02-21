@@ -908,11 +908,9 @@ class LocalMbox extends SQLite3
      */
     public function getAttachments($msg)
     {
-        $query = 'SELECT * FROM attachs WHERE folder=? AND uidl=? ;';
-        $stmt = $this->prepare($query);
-        $stmt->bindValue(1, $msg['folder']);
-        $stmt->bindValue(2, $msg['uidl']);
-        $result = $stmt->execute($query);
+        $query = sprintf("SELECT * FROM attachs WHERE folder='%s' AND uidl='%s';",
+            $msg['folder'], $msg['uidl']);
+        $result = $this->query($query);
         $this->attachments = [];
         if ($result) {
             $i = 0;
@@ -923,7 +921,6 @@ class LocalMbox extends SQLite3
             $this->_ok = false;
             $this->_log[] = "query failed: $query";
         }
-        $stmt->close();
         return $this->attachments;
     }
 
