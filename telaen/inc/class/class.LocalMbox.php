@@ -113,7 +113,7 @@ class LocalMbox extends SQLite3
     /**
      * @var array Hash: key = message; value = array() of field changes
      */
-    public $m_delta = [];
+    private $m_delta = [];
     /**
      * @var array List of all folders/directories we need
      */

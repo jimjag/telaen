@@ -1573,7 +1573,7 @@ class Telaen extends Telaen_core
 
             $msg['header'] = $header;
             $msg['flags'] = $flags;
-            $this->tdb->m_delta[] = [$msg, ['header', 'flags']];
+            $this->tdb->doMessage($msg, ['header', 'flags']);
 
             $pts = $this->tstream();
             rewind($body);
