@@ -51,27 +51,25 @@
           <tr bgcolor=white>
             <td height="18" class="headerright">{$smLabel.attach_hea} &nbsp;</td>
             <td><table width="100%" border=0 cellspacing=1 cellpadding=0>
-                {if $smHaveAttachs eq 1}
-                <tr>
+                 <tr>
                   <td width="45%" class="headers">{$smLabel.attch_name_hea}</td>
                   <td width="15%" class="headerright">{$smLabel.attch_size} &nbsp;</td>
                   <td width="30%" class="headers">{$smLabel.attch_type_hea}</td>
                   <td width="10%" class="headers">{$smLabel.attch_dele_hea}</td>
-                </tr>
+                 </tr>
+                </table>
+               <div id="nm_attachs">
+                <table width="100%" border=0 cellspacing=1 cellpadding=0>
                 {section name=i loop=$smAttachList}
-                <tr>
+                 <tr>
                   <td width="50%" class="default">&nbsp;{$smAttachList[i].name|escape:"html"}</td>
                   <td width="10%" class="right">{$smAttachList[i].size} &nbsp;</td>
                   <td width="30%" class="default">&nbsp;{$smAttachList[i].type|truncate:23:"...":true}</td>
                   <td width="10%" class="default">&nbsp;<a href="{$smAttachList[i].link}">OK</a></td>
-                </tr>
+                 </tr>
                 {/section}
-                {else}
-                <tr>
-                  <td width="100%" class="headers">&nbsp;{$smLabel.attch_no_hea}</td>
-                </tr>
-                {/if}
-              </table>
+                </table>
+               </div>
             </td>
           </tr>
           <tr>

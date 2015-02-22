@@ -271,6 +271,9 @@ for ($i = 0; $i < $num; $i++) {
     $attachlist[$i]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
     $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
     $attachlist[$i]['link'] = "javascript:upwin($i)";
+    $from = $TLN->getPathName($attachs[$i], '_attachments')[0];
+    $to = $TLN->userfolder.'_tmp/u_'.$attachs[$i]['localname'];
+    symlink($from, $to);
 }
 
 if (!$show_advanced) {
