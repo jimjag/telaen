@@ -93,7 +93,7 @@ if (isset($rtype)) {
             $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&pag={$pag}&refr=true");
             break;
     }
-    $filename = $TLN->getPathName($msg)[0];
+    $filename = $TLN->getPath($msg)[0];
 
     if (!file_exists($filename)) {
         $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&pag={$pag}&refr=true");

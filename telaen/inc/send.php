@@ -134,13 +134,13 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
         }
     }
 
-        $attachs = $TLN->tdb->getAttachments(['uidl' => '_upload', 'folder' => '_upload']);
-        for ($i = 0;$i<count($attachs);$i++) {
-            $path = $TLN->getPathName($attachs[$i])[0];
-            if (file_exists($path)) {
-                $mail->AddAttachment($path, $attachs[$i]['name'], 'base64', $attachs[$i]['type']);
-            }
+    $attachs = $TLN->tdb->getAttachments(['uidl' => '_upload', 'folder' => '_upload']);
+    for ($i = 0;$i<count($attachs);$i++) {
+        $path = $TLN->getPath($attachs[$i])[0];
+        if (file_exists($path)) {
+            $mail->AddAttachment($path, $attachs[$i]['name'], 'base64', $attachs[$i]['type']);
         }
+    }
 
     $mail->Subject = $TLN->mimeEncodeHeaders(stripslashes($subject));
     $mail->Body = stripslashes($body);

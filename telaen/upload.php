@@ -21,9 +21,9 @@ if (isset($rem) && $rem != "") {
     $attch = $TLN->tdb->getAttachments(['uidl' => '_upload', 'folder' => '_upload']);
     foreach ($attch as $a) {
         if ($a['name'] == $rem) {
-            $TLN->tdb->delAttachment($rem, ['uidl' => '_upload', 'folder' => '_upload']);
+            $TLN->tdb->delAttachment($rem, $a);
             if (substr($a['localname'], 0, 3) == 'u__') {
-                @unlink($TLN->getPathName($a, '_upload')[0]);
+                @unlink($TLN->getPath($a)[0]);
             }
             break;
         }
@@ -46,7 +46,7 @@ if (isset($rem) && $rem != "") {
     $upload['flat'] = 1;
     $upload['uidl'] = '_upload';
     $upload['folder'] = '_upload';
-    $filename = $TLN->getPathName($upload, '_upload')[0];
+    $filename = $TLN->getPath($upload)[0];
     $TLN->debugMsg("Adding upload attachment: {$userfile['tmp_name']} -> {$filename}");
     move_uploaded_file($userfile['tmp_name'], $filename);
     $TLN->tdb->addAttachment($upload);

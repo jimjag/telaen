@@ -96,7 +96,7 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
 
         for ($z = 0;$z<count($messages);$z++) {
             $email = $messages[$z];
-            $localname = $TLN->getPathName($email)[0];
+            $localname = $TLN->getPath($email)[0];
 
             if ($get_body && file_exists($localname)) {
                 $thisfile = $TLN->readFile($localname);

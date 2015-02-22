@@ -406,12 +406,12 @@ class Telaen_core
     }
 
     /**
-     * Get the full pathname for the message
+     * Get the full path for the message
      * @param $msg
      * @param mixed $boxname Foldername to use (default is msg's folder)
      * @return array
      */
-    public function getPathName($msg, $boxname = null)
+    public function getPath($msg, $boxname = null)
     {
         if ($boxname === null) {
             $boxname = $msg['folder'];
@@ -495,7 +495,7 @@ class Telaen_core
      */
     public function saveMsg($msg, $content)
     {
-        list($path, $dir) = $this->getPathName($msg);
+        list($path, $dir) = $this->getPath($msg);
         if (!$msg['flat']) {
             $this->_mkdir($dir);
         }
@@ -1121,7 +1121,7 @@ class Telaen_core
     public function parseBody(&$msg)
     {
         if (!$msg['bparsed']) {
-            $path = $this->getPathName($msg)[0];
+            $path = $this->getPath($msg)[0];
             $parser = new Mparser();
             $parser->decode_bodies = 1;
             //$parser->decode_headers = 0;
@@ -1175,7 +1175,7 @@ class Telaen_core
                 $cids[$i]['flat'] = $msg['flat'];
                 $cids[$i]['uidl'] = $msg['uidl'];
                 $cids[$i]['folder'] = $msg['folder'];
-                list($apath, $adir) = $this->getPathName($cids[$i], '_attachments');
+                list($apath, $adir) = $this->getPath($cids[$i], '_attachments');
                 $this->_mkdir($adir);
                 $this->debugMsg("Moving CID: {$b['DataFile']} -> {$apath}");
                 rename($b['DataFile'], $apath);
@@ -1199,7 +1199,7 @@ class Telaen_core
                 $attachments[$i]['flat'] = $msg['flat'];
                 $attachments[$i]['uidl'] = $msg['uidl'];
                 $attachments[$i]['folder'] = $msg['folder'];
-                list($apath, $adir) = $this->getPathName($attachments[$i], '_attachments');
+                list($apath, $adir) = $this->getPath($attachments[$i], '_attachments');
                 $this->_mkdir($adir);
                 $this->debugMsg("Moving ATT: {$b['DataFile']} -> {$apath}");
                 rename($b['DataFile'], $apath);

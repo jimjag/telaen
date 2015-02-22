@@ -18,7 +18,7 @@ $mail_info = $mbox['headers'][$folder][$ix];
 
 $smarty->assign('pageMetas', $pmetas);
 
-$path = $TLN->getPathName($mail_info)[0];
+$path = $TLN->getPath($mail_info)[0];
 if (!file_exists($path)) {
     die('File not found');
 }

@@ -491,7 +491,7 @@ class Telaen extends Telaen_core
     protected function _mailRetrMsgImap(&$msg, $with_headers = true)
     {
         $msgheader = trim($msg['header']);
-        list($path, $dir) = $this->getPathName($msg);
+        list($path, $dir) = $this->getPath($msg);
         if (file_exists($path)) {
             if ($with_headers) {
                 return $this->readFile($path, true);
@@ -542,7 +542,7 @@ class Telaen extends Telaen_core
      */
     protected function _mailRetrMsgPop(&$msg, $with_headers = true)
     {
-        list($path, $dir) = $this->getPathName($msg);
+        list($path, $dir) = $this->getPath($msg);
         if (file_exists($path)) {
             if ($with_headers) {
                 return $this->readFile($path, true);
@@ -615,7 +615,7 @@ class Telaen extends Telaen_core
      */
     public function mailRetrPbody($msg)
     {
-        $path = $this->getPathName($msg)[0].'.msg';
+        $path = $this->getPath($msg)[0].'.msg';
         $handle = @fopen($path, 'r');
         if ($handle !== null) {
             return $handle;
@@ -728,9 +728,9 @@ class Telaen extends Telaen_core
             if ($this->mailNokResp($buffer)) {
                 return false;
             }
-            $opath = $this->getPathName($msg)[0];
+            $opath = $this->getPath($msg)[0];
             if (file_exists($opath)) {
-                list($npath, $dir) = $this->getPathName($msg, 'trash');
+                list($npath, $dir) = $this->getPath($msg, 'trash');
                 $this->_mkdir($dir); // Just in case
                 copy($opath, $npath);
                 unlink($opath);
@@ -747,7 +747,7 @@ class Telaen extends Telaen_core
 
         /* now we are working with POP3 */
         /* check the message id to make sure that the messages still in the server */
-        $opath = $this->getPathName($msg)[0];
+        $opath = $this->getPath($msg)[0];
         if ($msg['folder'] == 'inbox' && !$msg['islocal']) {
             /* compare the old and the new message uidl, if different, stop*/
             $muidl = $this->_mailGetUidl($msg['mnum']);
@@ -776,7 +776,7 @@ class Telaen extends Telaen_core
             && $msg['folder'] != 'trash'
             && (!$save_only_read || ($save_only_read && $read))) {
             if (file_exists($opath)) {
-                list($npath, $dir) = $this->getPathName($msg, 'trash');
+                list($npath, $dir) = $this->getPath($msg, 'trash');
                 $this->_mkdir($dir); // Just in case
                 copy($opath, $npath);
                 unlink($opath);
@@ -829,9 +829,9 @@ class Telaen extends Telaen_core
             if ($this->mailNokResp()) {
                 return false;
             }
-            $opath = $this->getPathName($msg)[0];
+            $opath = $this->getPath($msg)[0];
             if (file_exists($opath)) {
-                list($npath, $dir) = $this->getPathName($msg, $tofolder);
+                list($npath, $dir) = $this->getPath($msg, $tofolder);
                 $this->_mkdir($dir); // Just in case
                 copy($opath, $npath);
                 unlink($opath);
@@ -866,9 +866,9 @@ class Telaen extends Telaen_core
                 }
             }
             // ensure that the original file exists
-            $opath = $this->getPathName($msg)[0];
+            $opath = $this->getPath($msg)[0];
             if (file_exists($opath)) {
-                list($npath, $dir) = $this->getPathName($msg, $tofolder);
+                list($npath, $dir) = $this->getPath($msg, $tofolder);
                 copy($opath, $npath);
                 // ensure that the copy exist
                 if (file_exists($npath)) {
@@ -1460,7 +1460,7 @@ class Telaen extends Telaen_core
         $msg['flags'] = $flags;
         $this->_mailGetUidl($msg);
         $msg['localname'] = $this->_createLocalFname($msg);
-        list($filename, $dir) = $this->getPathName($msg);
+        list($filename, $dir) = $this->getPath($msg);
         $this->_mkdir($dir);
         if (!empty($flags)) {
             $content = trim($email['header'])."\r\nX-UM-Flags: $flags\r\n\r\n".$this->blob($email['body'], false);
@@ -1516,7 +1516,7 @@ class Telaen extends Telaen_core
     public function mailSetFlag(&$msg, $flagname, $flagtype = '+')
     {
         $flagname = strtoupper($flagname);
-        $path = $this->getPathName($msg)[0];
+        $path = $this->getPath($msg)[0];
         if (!in_array($flagname, $this->flags)) {
             $this->triggerError("unknown flag: $flagname", __FUNCTION__, __LINE__);
             return false;

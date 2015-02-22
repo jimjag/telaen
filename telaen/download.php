@@ -32,7 +32,7 @@ if (empty($msg)) {
 extract(Telaen::pullFromArray($_GET, array('name', 'down'), 'str'));
 
 if (!isset($name)) {
-    $sourceFile = $TLN->getPathName($msg)[0];
+    $sourceFile = $TLN->getPath($msg)[0];
     $size = filesize($sourceFile);
     $disposition = 'attachment';
     $type = 'message/rfc822';
@@ -52,7 +52,7 @@ if (!isset($name)) {
         $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
     }
 
-    $sourceFile = $TLN->getPathName($attach[$i], '_attachments')[0];
+    $sourceFile = $TLN->getPath($attach[$i], '_attachments')[0];
     if (!file_exists($sourceFile)) {
         $TLN->triggerError("Couldn't find attachment for {$folder}:{$uidl} at: $sourcefile");
         $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&refr=true");
