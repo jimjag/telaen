@@ -155,7 +155,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
         if ($TLN->prefs['save_to_sent']) {
             if (!$TLN->mailConnect()) $TLN->redirectAndExit('index.php?err=1', true);
             if (!$TLN->mailAuth(false)) $TLN->redirectAndExit('index.php?err=0');
-            $TLN->mailSaveMessage('sent', $mail->getSentMIMEMessage(), '\\SEEN');
+            $TLN->mailSaveMessage('sent', $mail->getSentMIMEMessage());
             $TLN->mailDisconnect();
         }
     }
