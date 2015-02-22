@@ -22,7 +22,7 @@
           </table>
           <table width="100%" border=0 cellspacing=1 cellpadding=0>
            <tr>
-            <td class="headerright" colspan="4">{$smLabel.attach_hea}</td>
+            <td class="headers" colspan="4">{$smLabel.attach_hea}</td>
            </tr>
            <tr>
             <td width="45%" class="headers">{$smLabel.attch_name_hea}</td>
