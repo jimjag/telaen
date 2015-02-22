@@ -13,8 +13,8 @@ require './inc/init.php';
 
 $smarty->assign('pageMetas', $pmetas);
 
-extract(Telaen::pullFromArray($_GET, array('rem'), 'str'));
-extract(Telaen::pullFromArray($_FILES, array('userfile'), 'str'));
+extract(Telaen::pullFromArray($_POST, array('rem'), 'str'));
+$userfile = $_FILES['userfile'];
 
 if (isset($rem) && $rem != "") {
     $rem = urldecode($rem);
@@ -28,7 +28,7 @@ if (isset($rem) && $rem != "") {
             break;
         }
     }
-} elseif (isset($userfile) && is_uploaded_file($userfile['tmp_name'])) {
+} elseif (isset($userfile) && is_array($userfile) && $userfile['tmp_name'])) {
 
     $safefilename = Telaen::fsSafeFile($userfile['name']);
     $type = 'application';
