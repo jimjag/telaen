@@ -955,7 +955,7 @@ class LocalMbox extends SQLite3
         $query = 'DELETE FROM attachs WHERE folder=:folder AND uidl=:uidl AND name=:name;';
         $stmt = $this->prepare($query);
         $stmt->bindValue(':uidl', $msg['uidl']);
-        $stmt->bindValue(':uidl', $msg['folder']);
+        $stmt->bindValue(':folder', $msg['folder']);
         $stmt->bindValue(':name', $name);
         if (!$stmt->execute()) {
             $this->_ok = false;

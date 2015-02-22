@@ -23,7 +23,7 @@ if (isset($rem) && $rem != "") {
         if ($a['name'] == $rem) {
             $TLN->tdb->delAttachment($rem, ['uidl' => 'tmp', 'folder' => 'tmp']);
             if (substr($a['localname'], 0, 3) == 'u__') {
-                @unlink($TLN->userfolder . '_tmp/' . $a['localname']);
+                @unlink($TLN->userfolder . '_tmp/'.$a['localname']);
             }
             break;
         }
