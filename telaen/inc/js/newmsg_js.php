@@ -213,7 +213,7 @@ function beforeSubmit(){
         //Allowed file size is less than 5 MB (1048576)
         if(fsize>5242880)
         {
-            $('#output').html('<b>'+bytesToSize(fsize) +'</b> File is too big, it should be less than 5 MB.');
+            $('#output').html('<b>'+bytes2bkmg(fsize) +'</b> File is too big, it should be less than 5 MB.');
             return false
         }
 
@@ -242,10 +242,10 @@ function OnProgress(event, position, total, percentComplete)
         }
 }
 
-//function to format bites bit.ly/19yoIPO
-function bytesToSize(bytes) {
-   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-   if (bytes == 0) return '0 Bytes';
+//function to format bytes bit.ly/19yoIPO
+function bytes2bkmg(bytes) {
+   var sizes = ['b', 'k', 'M', 'G', 'T'];
+   if (bytes == 0) return '0b';
    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
