@@ -1171,7 +1171,7 @@ class Telaen_core
                 $cids[$i]['localname'] = self::uniqID().'_'.$safefilename;
                 $cids[$i]['type'] = $b['Type'];
                 $cids[$i]['subtype'] = $b['SubType'];
-                $cids[$i]['disposition'] = $b['FileDisposition'];
+                $cids[$i]['disposition'] = 'inline';
                 $cids[$i]['flat'] = $msg['flat'];
                 $cids[$i]['uidl'] = $msg['uidl'];
                 $cids[$i]['folder'] = $msg['folder'];
@@ -1195,7 +1195,7 @@ class Telaen_core
                 $attachments[$i]['localname'] = self::uniqID().'_'.$safefilename;
                 $attachments[$i]['type'] = $b['Type'];
                 $attachments[$i]['subtype'] = $b['SubType'];
-                $attachments[$i]['disposition'] = $b['FileDisposition'];
+                $attachments[$i]['disposition'] = 'attachment';
                 $attachments[$i]['flat'] = $msg['flat'];
                 $attachments[$i]['uidl'] = $msg['uidl'];
                 $attachments[$i]['folder'] = $msg['folder'];

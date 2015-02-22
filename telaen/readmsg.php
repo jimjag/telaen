@@ -173,7 +173,6 @@ $smarty->assign('smDate', $msg['date']);
 
 $anexos = $TLN->tdb->getAttachments($msg);
 $haveattachs = count($anexos);
-
 if ($haveattachs) {
     $attachAr = [];
     for ($i = 0; $i < $haveattachs; $i++) {
