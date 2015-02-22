@@ -199,6 +199,8 @@ class Telaen extends Telaen_core
                 } else {
                     $resp = self::RESP_NOK;
                 }
+            } else {
+                $resp = self::RESP_NOK;
             }
         }
         $this->_respnum = $resp;
