@@ -22,7 +22,9 @@ if (isset($rem) && $rem != "") {
     foreach ($attch as $a) {
         if ($a['name'] == $rem) {
             $TLN->tdb->delAttachment($rem, ['uidl' => '_upload', 'folder' => '_upload']);
-            @unlink($TLN->userfolder . '_upload/'.$a['localname']);
+            if (substr($a['localname'], 0, 3) == 'u__') {
+                @unlink($TLN->getPathName($a, '_upload')[0]);
+            }
             break;
         }
     }
@@ -38,13 +40,13 @@ if (isset($rem) && $rem != "") {
 
     $upload['name'] = $userfile['name'];
     $upload['size'] = $userfile['size'];
-    $upload['localname'] = Telaen::uniqID().'_'.$safefilename;
+    $upload['localname'] = Telaen::uniqID('u__').$safefilename;
     $upload['type'] = $type;
     $upload['subtype'] = $subtype;
     $upload['flat'] = 1;
     $upload['uidl'] = '_upload';
     $upload['folder'] = '_upload';
-    $filename = $TLN->userfolder.'_upload/'.$upload['localname'];
+    $filename = $TLN->getPathName($upload, '_upload')[0];
     $TLN->debugMsg("Adding upload attachment: {$userfile['tmp_name']} -> {$filename}");
     move_uploaded_file($userfile['tmp_name'], $filename);
     $TLN->tdb->addAttachment($upload);
