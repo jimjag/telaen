@@ -35,7 +35,7 @@
            <table width="100%" border=0 cellspacing=1 cellpadding=0>
             {section name=i loop=$smAttachList}
             <tr>
-             <td width="50%" class="default">&nbsp;{$smAttachList[i].name|escape:"html"}</td>
+             <td width="50%" class="default">&nbsp;{$smAttachList[i].name}</td>
              <td width="10%" class="right">{$smAttachList[i].size} &nbsp;</td>
              <td width="30%" class="default">&nbsp;{$smAttachList[i].type|truncate:23:"...":true}</td>
              <td width="10%" class="default">&nbsp;<a href="{$smAttachList[i].link}">OK</a></td>

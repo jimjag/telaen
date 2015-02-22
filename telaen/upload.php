@@ -17,23 +17,17 @@ extract(Telaen::pullFromArray($_GET, array('rem'), 'str'));
 extract(Telaen::pullFromArray($_FILES, array('userfile'), 'str'));
 
 if (isset($rem) && $rem != "") {
-    $attchs = $mbox['attachments'];
-    @unlink($attchs[$rem]['localname']);
-    unset($attchs[$rem]);
-    $c = 0;
-    $newlist = array();
-    while (list($key, $value) =  each($attchs)) {
-        $newlist[$c] = $value;
-        $c++;
+    $rem = urldecode($rem);
+    $attch = $TLN->tdb->getAttachments(['uidl' => 'tmp', 'folder' => 'tmp']);
+    foreach ($attch as $a) {
+        if ($a['name'] == $rem) {
+            $TLN->tdb->delAttachment($rem, ['uidl' => 'tmp', 'folder' => 'tmp']);
+            if (substr($a['localname'], 0, 3) == 'u__') {
+                @unlink($TLN->userfolder . '_tmp/' . $a['localname']);
+            }
+            break;
+        }
     }
-    $mbox['attachments'] = $newlist;
-    $UserMbox->Save($mbox);
-    echo("
-	<script language=javascript>\n
-		if(window.opener) window.opener.doupload();\n
-		setTimeout('self.close()',500);\n
-	</script>\n
-	");
 } elseif (isset($userfile) && is_uploaded_file($userfile['tmp_name'])) {
 
     $safefilename = Telaen::fsSafeFile($userfile['name']);
@@ -46,7 +40,7 @@ if (isset($rem) && $rem != "") {
 
     $upload['name'] = $userfile['name'];
     $upload['size'] = $userfile['size'];
-    $upload['localname'] = Telaen::uniqID('u_').$safefilename;
+    $upload['localname'] = Telaen::uniqID('u__').$safefilename;
     $upload['type'] = $type;
     $upload['subtype'] = $subtype;
     $upload['flat'] = 1;
@@ -56,4 +50,16 @@ if (isset($rem) && $rem != "") {
     $this->debugMsg("Adding upload attachment: {$userfile['tmp_name']} -> {$filename}");
     move_uploaded_file($userfile['tmp_name'], $filename);
     $this->tdb->addAttachment($upload);
+}
+
+$attch = $TLN->tdb->getAttachments(['uidl' => 'tmp', 'folder' => 'tmp']);
+foreach ($attch as $a) {
+    echo "
+    <tr>
+     <td width=\"50%\" class=\"default\">".urlencode(['name'])."</td>
+     <td width=\"10%\" class=\"right\">".Telaen::bytes2bkmg($a['size'])."</td>
+     <td width=\"30%\" class=\"default\">".$a['type'].'/'.$a['subtype']."</td>
+     <td width=\"10%\" class=\"default\"><a href=\"javascript:delatt(".urlencode($a['name']).")\">OK</a></td>
+     </tr>
+";
 }

@@ -31,13 +31,6 @@ bsig_added = true;
 return true;
 }
 
-function upwin(rem) {
-mywin = 'upload.php';
-if (rem != null) mywin += '?rem='+rem+'';
-else mywin += '';
-window.open(mywin,'Upload','width=400,height=120,scrollbars=0,menubar=0,status=0');
-}
-
 function doupload() {
 document.composeForm.todo.value = 'edit';
 document.composeForm.submit();
@@ -151,9 +144,9 @@ $.ajax({
 <script type='text/javascript'>
 $(document).ready(function() {
     var options = {
-            target:   '#output',   // target element(s) to be updated with server response
-            beforeSubmit:  beforeSubmit,  // pre-submit callback
-            success:       afterSuccess,  // post-submit callback
+            target: 'nm_attachs',   // target element(s) to be updated with server response
+            beforeSubmit: beforeSubmit,  // pre-submit callback
+            success: afterSuccess,  // post-submit callback
             uploadProgress: OnProgress, //upload progress callback
             resetForm: true        // reset the form after successful submit
         };
@@ -165,11 +158,12 @@ $(document).ready(function() {
         });
 
     //function after succesful file upload (when server response)
-    function afterSuccess()
+    function afterSuccess(data)
     {
         $('#submit_att').show();
         $('#loading-img').hide();
         $('#progressbox').delay( 1000 ).fadeOut();
+        $('#nm_attachs').html(data);
     }
 
     //function to check file size before uploading.
@@ -242,6 +236,14 @@ $(document).ready(function() {
        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
        return Math.round(bytes / Math.pow(1024, i), 2) + sizes[i];
     }
+
+    function delatt(rem) {
+        $.post('upload.php', {rem: rem}, function(data) {
+            $('#nm_attachs').html(data);
+        });
+        return false;
+    }
+
 
 });
 
