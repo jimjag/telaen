@@ -229,7 +229,7 @@ class Telaen extends Telaen_core
     {
         if ($string == null) $string = $this->mailReadResponse();
         $resp = $this->_mailParseResp($string);
-        return ($resp < self::RESP_OK);
+        return ($resp != self::RESP_OK);
     }
 
     /*
