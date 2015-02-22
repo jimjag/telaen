@@ -185,7 +185,7 @@ if ($haveattachs) {
             } else {
                 $attachAr[$i]['normlink'] = "<a href='$link1' target='_new'>";
             }
-
+            $attachAr[$i]['downlink'] = $anexos[$i]['name'];
             $attachAr[$i]['downlink'] = "<a href='$link2'>";
             $attachAr[$i]['size'] = $TLN->bytes2bkmg($anexos[$i]['size']);
             $attachAr[$i]['type'] = $anexos[$i]['type'].'/'.$anexos[$i]['subtype'];
