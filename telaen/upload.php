@@ -28,7 +28,7 @@ if (isset($rem) && $rem != "") {
             break;
         }
     }
-} elseif (isset($userfile) && is_array($userfile) && $userfile['tmp_name'])) {
+} elseif (isset($userfile) && is_array($userfile) && $userfile['tmp_name']) {
 
     $safefilename = Telaen::fsSafeFile($userfile['name']);
     $type = 'application';
