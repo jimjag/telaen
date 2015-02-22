@@ -651,7 +651,7 @@ class Telaen_core
      */
     protected function _parseHeaders($header)
     {
-        $headers = explode("\r\n", $header);
+        $headers = explode("\n", $header);
         $decodedheaders = [];
         $lasthead = "";
         for ($i = 0;$i<count($headers);$i++) {
@@ -1253,14 +1253,15 @@ class Telaen_core
             rewind($body);
             return ['header' => $header, 'body' => $body];
         }
-        $separator = "\n\r\n";
-        $header = trim(substr($email, 0, strpos($email, $separator)));
-        $bodypos = strlen($header) + strlen($separator);
+        $separator = "\r\n\r\n";
+        $delim = strpos($email, $separator);
+        $header = trim(substr($email, 0, $delim));
+        $bodypos = $delim + strlen($separator);
         if ($inisout) {
-            return ['header' => $header, 'body' => substr($email, $bodypos, strlen($email) - $bodypos)];
+            return ['header' => $header, 'body' => substr($email, $bodypos)];
         }
         // else stream
-        fwrite($body, substr($email, $bodypos, strlen($email) - $bodypos));
+        fwrite($body, substr($email, $bodypos));
         rewind($body);
         return ['header' => $header, 'body' => $body];
     }

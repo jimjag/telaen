@@ -750,7 +750,7 @@ class Telaen extends Telaen_core
         $opath = $this->getPath($msg)[0];
         if ($msg['folder'] == 'inbox' && !$msg['islocal']) {
             /* compare the old and the new message uidl, if different, stop*/
-            $muidl = $this->_mailGetUidl($msg['mnum']);
+            $muidl = $this->_mailGetUidl($msg);
             if ($msg['uidl'] != $muidl) {
                 $this->triggerError(sprintf("UIDL's differ: [%s/%s]",
                     $msg['uidl'],
