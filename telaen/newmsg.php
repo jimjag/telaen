@@ -263,20 +263,22 @@ $strcc = "<input class='textbox' style='width : 200px;' type='text' size='20' na
 $strbcc = "<input class='textbox' style='width : 200px;' type='text' size='20' name='bcc' value='".htmlspecialchars(stripslashes($bcc))."' />";
 $strsubject = "<input class='textbox' style='width : 200px;' type='text' size='20' name='subject' value='".htmlspecialchars(stripslashes($subject))."' />";
 
-$attachlist = [];
-/* We use the special tmp/tmp attachments for to-include attachments; clear it */
-$TLN->tdb->delAttachments(['uidl' => 'tmp', 'folder' => 'tmp']);
+/* We use the special _upload/_upload attachments for to-include attachments; clear it */
+$TLN->tdb->delAttachments(['uidl' => '_upload', 'folder' => '_upload']);
+Telaen::cleanupDir($TLN->userfolder.'_upload/');
+
 /* Now get list of all attachments from this reply-to message */
 $attachs = $TLN->tdb->getAttachments($msg);
 $num = count($attachs);
+$attachlist = [];
 for ($i = 0; $i < $num; $i++) {
     $attachlist[$i]['name'] = urlencode($attachs[$i]['name']);
     $attachlist[$i]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
     $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
     $attachlist[$i]['link'] = "javascript:delatt('".urlencode($attachs[$i]['name'])."')";
     /* Now prep all attachments as to-include attachments */
-    $attachs[$i]['uidl'] = 'tmp';
-    $attachs[$i]['folder'] = 'tmp';
+    $attachs[$i]['uidl'] = '_upload';
+    $attachs[$i]['folder'] = '_upload';
     $TLN->tdb->addAttachment($attachs[$i]);
 }
 
