@@ -20,6 +20,29 @@
               <td><div id="output"></div></td>
            </tr>
           </table>
+          <table width="100%" border=0 cellspacing=1 cellpadding=0>
+           <tr>
+            <td class="headerright" colspan="4">{$smLabel.attach_hea}</td>
+           </tr>
+           <tr>
+            <td width="45%" class="headers">{$smLabel.attch_name_hea}</td>
+            <td width="15%" class="headerright">{$smLabel.attch_size} &nbsp;</td>
+            <td width="30%" class="headers">{$smLabel.attch_type_hea}</td>
+            <td width="10%" class="headers">{$smLabel.attch_dele_hea}</td>
+           </tr>
+          </table>
+          <div id="nm_attachs">
+           <table width="100%" border=0 cellspacing=1 cellpadding=0>
+            {section name=i loop=$smAttachList}
+            <tr>
+             <td width="50%" class="default">&nbsp;{$smAttachList[i].name|escape:"html"}</td>
+             <td width="10%" class="right">{$smAttachList[i].size} &nbsp;</td>
+             <td width="30%" class="default">&nbsp;{$smAttachList[i].type|truncate:23:"...":true}</td>
+             <td width="10%" class="default">&nbsp;<a href="{$smAttachList[i].link}">OK</a></td>
+             </tr>
+            {/section}
+           </table>
+         </div>
         </form>
         <form name="composeForm" method="post" action="newmsg.php" onsubmit="return false;">
          <table width="100%" border="0" cellspacing="1" cellpadding="0">
@@ -47,30 +70,6 @@
           <tr bgcolor=white>
             <td height="18" class="headerright">{$smLabel.subject_hea} &nbsp;</td>
             <td class="default">&nbsp;{$smSubject}</td>
-          </tr>
-          <tr bgcolor=white>
-            <td height="18" class="headerright">{$smLabel.attach_hea} &nbsp;</td>
-            <td><table width="100%" border=0 cellspacing=1 cellpadding=0>
-                 <tr>
-                  <td width="45%" class="headers">{$smLabel.attch_name_hea}</td>
-                  <td width="15%" class="headerright">{$smLabel.attch_size} &nbsp;</td>
-                  <td width="30%" class="headers">{$smLabel.attch_type_hea}</td>
-                  <td width="10%" class="headers">{$smLabel.attch_dele_hea}</td>
-                 </tr>
-                </table>
-               <div id="nm_attachs">
-                <table width="100%" border=0 cellspacing=1 cellpadding=0>
-                {section name=i loop=$smAttachList}
-                 <tr>
-                  <td width="50%" class="default">&nbsp;{$smAttachList[i].name|escape:"html"}</td>
-                  <td width="10%" class="right">{$smAttachList[i].size} &nbsp;</td>
-                  <td width="30%" class="default">&nbsp;{$smAttachList[i].type|truncate:23:"...":true}</td>
-                  <td width="10%" class="default">&nbsp;<a href="{$smAttachList[i].link}">OK</a></td>
-                 </tr>
-                {/section}
-                </table>
-               </div>
-            </td>
           </tr>
           <tr>
             <td class="default">&nbsp;</td>
