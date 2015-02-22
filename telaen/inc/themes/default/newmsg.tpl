@@ -15,8 +15,8 @@
               <td class="default" align="center"><input type="submit" value="{$smLabel.up_button_text}" id="submit_att" class="button"></td>
             </tr>
             <tr>
-              <td><img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/></td>
-              <td><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td>
+              <td class="headerright">&nbsp;</td>
+              <td><img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td>
               <td><div id="output"></div></td>
            </tr>
           </table>
