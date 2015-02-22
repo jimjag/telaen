@@ -37,8 +37,8 @@
             <tr>
              <td width="50%" class="default">&nbsp;{$smAttachList[i].name}</td>
              <td width="10%" class="right">{$smAttachList[i].size} &nbsp;</td>
-             <td width="30%" class="default">&nbsp;{$smAttachList[i].type|truncate:23:"...":true}</td>
-             <td width="10%" class="default">&nbsp;<a href="{$smAttachList[i].link}">OK</a></td>
+             <td width="30%" class="default" align='center'>&nbsp;{$smAttachList[i].type|truncate:23:"...":true}</td>
+             <td width="10%" class="default" align='center'>&nbsp;<a href="{$smAttachList[i].link}">OK</a></td>
              </tr>
             {/section}
            </table>
@@ -49,7 +49,7 @@
          {$smForms}
           <tr>
             <td  class="headerright">{$smLabel.priority_text} &nbsp;</td>
-            <td class="default" align='center'><select name="priority">
+            <td class="default" align='right'><select name="priority">
                 <option value="1"{if $smPriority eq 1} selected{/if}>{$smLabel.priority_high}
                 <option value="3"{if $smPriority eq 3} selected{/if}>{$smLabel.priority_normal}
                 <option value="5"{if $smPriority eq 5} selected{/if}>{$smLabel.priority_low}
