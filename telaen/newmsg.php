@@ -273,7 +273,7 @@ for ($i = 0; $i < $num; $i++) {
     $attachlist[$i]['name'] = urlencode($attachs[$i]['name']);
     $attachlist[$i]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
     $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
-    $attachlist[$i]['link'] = "javascript:delatt(".urlencode($attachs[$i]['name']).")";
+    $attachlist[$i]['link'] = "javascript:delatt('".urlencode($attachs[$i]['name'])."')";
     /* Now prep all attachments as to-include attachments */
     $attachs[$i]['uidl'] = 'tmp';
     $attachs[$i]['folder'] = 'tmp';

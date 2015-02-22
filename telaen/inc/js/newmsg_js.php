@@ -169,7 +169,7 @@ $(document).ready(function() {
     {
         $('#submit_att').show();
         $('#loading-img').hide();
-        $('#progressbox').delay( 1000 ).fadeOut();
+        $('#progressbox').delay( 250 ).fadeOut();
         $('#nm_attachs').html(data);
     }
 
