@@ -264,6 +264,9 @@ $strbcc = "<input class='textbox' style='width : 200px;' type='text' size='20' n
 $strsubject = "<input class='textbox' style='width : 200px;' type='text' size='20' name='subject' value='".htmlspecialchars(stripslashes($subject))."' />";
 
 $attachlist = [];
+/* We use the special tmp/tmp attachments for to-include attachments; clear it */
+$TLN->tdb->delAttachments(['uidl' => 'tmp', 'folder' => 'tmp']);
+/* Now get list of all attachments from this reply-to message */
 $attachs = $TLN->tdb->getAttachments($msg);
 $num = count($attachs);
 for ($i = 0; $i < $num; $i++) {
@@ -271,9 +274,10 @@ for ($i = 0; $i < $num; $i++) {
     $attachlist[$i]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
     $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
     $attachlist[$i]['link'] = "javascript:upwin($i)";
-    $from = $TLN->getPathName($attachs[$i], '_attachments')[0];
-    $to = $TLN->userfolder.'_tmp/u_'.$attachs[$i]['localname'];
-    symlink($from, $to);
+    /* Now prep all attachments as to-include attachments */
+    $attachs[$i]['uidl'] = 'tmp';
+    $attachs[$i]['folder'] = 'tmp';
+    $this->tdb->addAttachment($attachs[$i]);
 }
 
 if (!$show_advanced) {

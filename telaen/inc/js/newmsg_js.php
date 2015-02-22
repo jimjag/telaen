@@ -164,91 +164,84 @@ $(document).ready(function() {
             return false;
         });
 
-
-//function after succesful file upload (when server response)
-function afterSuccess()
-{
-    $('#submit_att').show();
-    $('#loading-img').hide();
-    $('#progressbox').delay( 1000 ).fadeOut();
-
-}
-
-//function to check file size before uploading.
-function beforeSubmit(){
-    //check whether browser fully supports all File API
-   if (window.File && window.FileReader && window.FileList && window.Blob)
+    //function after succesful file upload (when server response)
+    function afterSuccess()
     {
+        $('#submit_att').show();
+        $('#loading-img').hide();
+        $('#progressbox').delay( 1000 ).fadeOut();
+    }
 
-        if( !$('#userfile').val()) //check empty input filed
+    //function to check file size before uploading.
+    function beforeSubmit(){
+        //check whether browser fully supports all File API
+       if (window.File && window.FileReader && window.FileList && window.Blob)
         {
-            $('#output').html('Are you kidding me?');
-            return false
-        }
-
-        var fsize = $('#userfile')[0].files[0].size; //get file size
-        var ftype = $('#userfile')[0].files[0].type; // get file type
-
-
-        //allow file types
-        switch(ftype)
-        {
-            case 'image/png':
-            case 'image/gif':
-            case 'image/jpeg':
-            case 'image/pjpeg':
-            case 'text/plain':
-            case 'text/html':
-            case 'application/x-zip-compressed':
-            case 'application/pdf':
-            case 'application/msword':
-            case 'application/vnd.ms-excel':
-            case 'video/mp4':
-                break;
-            default:
-                $('#output').html('<b>'+ftype+'</b> Unsupported file type!');
+            if( !$('#userfile').val()) //check empty input filed
+            {
+                $('#output').html('Are you kidding me?');
                 return false
-        }
+            }
 
-        //Allowed file size is less than 5 MB (1048576)
-        if(fsize>5242880)
+            var fsize = $('#userfile')[0].files[0].size; //get file size
+            var ftype = $('#userfile')[0].files[0].type; // get file type
+            //allow file types
+            switch(ftype)
+            {
+                case 'image/png':
+                case 'image/gif':
+                case 'image/jpeg':
+                case 'image/pjpeg':
+                case 'text/plain':
+                case 'text/html':
+                case 'application/x-zip-compressed':
+                case 'application/pdf':
+                case 'application/msword':
+                case 'application/vnd.ms-excel':
+                case 'video/mp4':
+                    break;
+                default:
+                    $('#output').html('<b>'+ftype+'</b> Unsupported file type!');
+                    return false
+            }
+            //Allowed file size is less than 5 MB (1048576)
+            if(fsize>5242880)
+            {
+                $('#output').html('<b>'+bytes2bkmg(fsize) +'</b> File is too big, it should be less than 5M.');
+                return false
+            }
+            $('#submit_att').hide();
+            $('#loading-img').show();
+            $('#output').html('');
+        }
+        else
         {
-            $('#output').html('<b>'+bytes2bkmg(fsize) +'</b> File is too big, it should be less than 5 MB.');
-            return false
+            //Output error to older unsupported browsers that doesn't support HTML5 File API
+            //$('#output').html('Please upgrade your browser, because your current browser lacks some new features we need!');
+            return false;
         }
-
-        $('#submit_att').hide();
-        $('#loading-img').show();
-        $('#output').html('');
     }
-    else
+
+    //progress bar function
+    function OnProgress(event, position, total, percentComplete)
     {
-        //Output error to older unsupported browsers that doesn't support HTML5 File API
-        //$('#output').html('Please upgrade your browser, because your current browser lacks some new features we need!');
-        return false;
+        //Progress bar
+        $('#progressbox').show();
+        $('#progressbar').width(percentComplete + '%');
+        $('#statustxt').html(percentComplete + '%');
+        if(percentComplete>50)
+            {
+                $('#statustxt').css('color','#000');
+            }
     }
-}
 
-//progress bar function
-function OnProgress(event, position, total, percentComplete)
-{
-    //Progress bar
-    $('#progressbox').show();
-    $('#progressbar').width(percentComplete + '%');
-    $('#statustxt').html(percentComplete + '%');
-    if(percentComplete>50)
-        {
-            $('#statustxt').css('color','#000');
-        }
-}
-
-//function to format bytes bit.ly/19yoIPO
-function bytes2bkmg(bytes) {
-   var sizes = ['b', 'k', 'M', 'G', 'T'];
-   if (bytes == 0) return '0b';
-   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-}
+    //function to format bytes bit.ly/19yoIPO
+    function bytes2bkmg(bytes) {
+       var sizes = ['b', 'k', 'M', 'G', 'T'];
+       if (bytes == 0) return '0b';
+       var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+       return Math.round(bytes / Math.pow(1024, i), 2) + sizes[i];
+    }
 
 });
 

@@ -56,7 +56,7 @@ class LocalMbox extends SQLite3
         'disposition' => 'TEXT DEFAULT ""',
         'uidl' => 'TEXT NOT NULL',
         'localname' => 'TEXT DEFAULT ""',
-        'name' => 'TEXT DEFAULT ""',
+        'name' => 'TEXT NOT NULL',
         'type' => 'TEXT DEFAULT ""',
         'subtype' => 'TEXT DEFAULT ""',
     );
@@ -935,9 +935,33 @@ class LocalMbox extends SQLite3
 
     }
 
-    public function delAttachment($folder, $msg)
+    public function delAttachments($msg, $folder = null)
     {
+        if ($folder !== null) {
+            $msg['folder'] = $folder;
+        }
+        $query = sprintf("DELETE FROM attachs WHERE folder='%s' AND uidl='%s';",
+            $msg['folder'], $msg['uidl']);
+        $this->query($query);
+        return $this->getAttachments($msg);
 
+    }
+
+    public function delAttachment($name, $msg, $folder = null)
+    {
+        if ($folder !== null) {
+            $msg['folder'] = $folder;
+        }
+        $query = 'DELETE FROM attachs WHERE folder=:folder AND uidl=:uidl AND name=:name;';
+        $stmt = $this->prepare($query);
+        $stmt->bindValue(':uidl', $msg['uidl']);
+        $stmt->bindValue(':uidl', $msg['folder']);
+        $stmt->bindValue(':name', $name);
+        if (!$stmt->execute()) {
+            $this->_ok = false;
+            $this->_log[] = "exec failed: $query";
+        }
+        return $this->getAttachments($msg);
     }
 
 }
