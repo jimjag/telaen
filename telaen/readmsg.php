@@ -175,15 +175,14 @@ $anexos = $TLN->tdb->getAttachments($msg);
 $haveattachs = count($anexos);
 
 if ($haveattachs) {
-
-    $attachAr = array();
+    $attachAr = [];
     for ($i = 0; $i < $haveattachs; $i++) {
-        $link1 = "download.php?folder=".urlencode($folder)."&uidl={$msg['uidl']}&name=".urlencode($anexos['name'])."";
+        $link1 = "download.php?folder=".urlencode($folder)."&uidl={$msg['uidl']}&name=".urlencode($anexos[$i]['name'])."";
         $link2 = "$link1&down=1";
 
         if ($anexos[$i]['disposition'] != 'inline') {
             if ($attachAr[$i]['content-type'] == 'message/rfc822') {
-                $attachAr[$i]['normlink'] = "<a href='javascript:openmessage('".urlencode($anexos['name'])."')'>";
+                $attachAr[$i]['normlink'] = "<a href='javascript:openmessage('".urlencode($anexos[$i]['name'])."')'>";
             } else {
                 $attachAr[$i]['normlink'] = "<a href='$link1' target='_new'>";
             }
@@ -198,7 +197,7 @@ if ($haveattachs) {
 }
 
 //$AuthSession->Save($auth);
-$TLN->tdb->syncMessages();
+//$TLN->tdb->syncMessages();
 
 $avalfolders = array();
 foreach ($folders as $entry => $f) {
