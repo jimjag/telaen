@@ -44,6 +44,13 @@ submit();
 }
 }
 
+function delatt(rem) {
+$.post('upload.php', {rem: rem}, function(data) {
+$('#nm_attachs').html(data);
+});
+return false;
+}
+
 function enviar() {
 error_msg = new Array();
 frm = document.composeForm;
@@ -236,14 +243,6 @@ $(document).ready(function() {
        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
        return Math.round(bytes / Math.pow(1024, i), 2) + sizes[i];
     }
-
-    function delatt(rem) {
-        $.post('upload.php', {rem: rem}, function(data) {
-            $('#nm_attachs').html(data);
-        });
-        return false;
-    }
-
 
 });
 
