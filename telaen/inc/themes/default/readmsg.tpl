@@ -53,19 +53,17 @@
             <td class="headers" width="60%">&nbsp;<b>{$smLabel.attch_name_hea}</b> ({$smLabel.attch_force_hea})</td>
             <td class="headers">&nbsp;<b>{$smLabel.attch_size_hea}</b></td>
             <td class="headers">&nbsp;<b>{$smLabel.attch_type_hea}</b></td>
+          </tr>
             {section name=i loop=$smAttachList}
           <tr bgcolor=white>
             <td class="default">&nbsp;{$smAttachList[i].normlink}{$smAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> &nbsp;&nbsp;&nbsp;&nbsp;{$smAttachList[i].downlink}<img src="inc/themes/default/images/download.gif" width="12" height="12" border="0" alt=""></a></td>
             <td class="right">{$smAttachList[i].size} &nbsp;</td>
             <td class="default">&nbsp;{$smAttachList[i].type}</td>
+          </tr>
             {/section}
-            </td>
-
         </table>
         </td>
-
         </tr>
-
       {/if}
       <tr>
         <td colspan=2 class="default"><table width="100%" border=0 cellspacing=1 cellpadding=0>
