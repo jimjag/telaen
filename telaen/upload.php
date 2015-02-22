@@ -53,6 +53,7 @@ if (isset($rem) && $rem != "") {
 }
 
 $attch = $TLN->tdb->getAttachments(['uidl' => 'tmp', 'folder' => 'tmp']);
+echo '<table width="100%" border=0 cellspacing=1 cellpadding=0>'."\n";
 foreach ($attch as $a) {
     echo "
     <tr>
@@ -63,3 +64,4 @@ foreach ($attch as $a) {
      </tr>
 ";
 }
+echo '</table>'."\n";
