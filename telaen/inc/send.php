@@ -138,7 +138,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
     for ($i = 0;$i<count($attachs);$i++) {
         $path = $TLN->getPath($attachs[$i])[0];
         if (file_exists($path)) {
-            $mail->AddAttachment($path, $attachs[$i]['name'], 'base64', $attachs[$i]['type']);
+            $mail->AddAttachment($path, $attachs[$i]['name'], 'base64', "{$attachs[$i]['type']}/{$attachs[$i]['subtype']}");
         }
     }
 
@@ -153,10 +153,7 @@ if ((count($ARTo)+count($ARCc)+count($ARBcc)) > 0) {
         $smarty->assign('smMailSent', true);
 
         if ($TLN->prefs['save_to_sent']) {
-            if (!$TLN->mailConnect()) $TLN->redirectAndExit('index.php?err=1', true);
-            if (!$TLN->mailAuth(false)) $TLN->redirectAndExit('index.php?err=0');
             $TLN->mailSaveMessage('sent', $mail->getSentMIMEMessage());
-            $TLN->mailDisconnect();
         }
     }
 } else {
