@@ -47,9 +47,9 @@ if (isset($rem) && $rem != "") {
     $upload['uidl'] = 'tmp';
     $upload['folder'] = 'tmp';
     $filename = $TLN->userfolder.'_tmp/'.$upload['localname'];
-    $this->debugMsg("Adding upload attachment: {$userfile['tmp_name']} -> {$filename}");
+    $TLN->debugMsg("Adding upload attachment: {$userfile['tmp_name']} -> {$filename}");
     move_uploaded_file($userfile['tmp_name'], $filename);
-    $this->tdb->addAttachment($upload);
+    $TLN->tdb->addAttachment($upload);
 }
 
 $attch = $TLN->tdb->getAttachments(['uidl' => 'tmp', 'folder' => 'tmp']);

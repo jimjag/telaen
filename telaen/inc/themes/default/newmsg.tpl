@@ -16,7 +16,7 @@
             </tr>
             <tr>
               <td class="headerright">&nbsp;</td>
-              <td><img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td>
+              <td><img src="inc/themes/default/images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td>
               <td><div id="output"></div></td>
            </tr>
           </table>
