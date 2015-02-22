@@ -144,7 +144,7 @@ $.ajax({
 <script type='text/javascript'>
 $(document).ready(function() {
     var options = {
-            target: 'nm_attachs',   // target element(s) to be updated with server response
+            target: $('#output', '#nm_attachs'),   // target element(s) to be updated with server response
             beforeSubmit: beforeSubmit,  // pre-submit callback
             success: afterSuccess,  // post-submit callback
             uploadProgress: OnProgress, //upload progress callback

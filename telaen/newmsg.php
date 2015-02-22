@@ -277,7 +277,7 @@ for ($i = 0; $i < $num; $i++) {
     /* Now prep all attachments as to-include attachments */
     $attachs[$i]['uidl'] = 'tmp';
     $attachs[$i]['folder'] = 'tmp';
-    $this->tdb->addAttachment($attachs[$i]);
+    $TLN->tdb->addAttachment($attachs[$i]);
 }
 
 if (!$show_advanced) {
