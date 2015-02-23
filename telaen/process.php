@@ -40,8 +40,12 @@ if (!$messagecount
     if (isset($start_pos) && isset($end_pos)) { // eg: messages.php or readmsg.php
         foreach (keys($_POST) as $key) {
             $matches = array();
-            if (preg_match('|msg_(\d+)|', $key, $matches)) {
-                $i = intval($matches[1]);
+            if (preg_match('|msg_([0-9a-fA-F+)|', $key, $matches)) {
+                $msg = $TLN->tdb->getMessage($matches[1], $folder);
+                if (empty($msg)) {
+                    continue;
+                    /* TODO: Should we log this?? */
+                }
                 if ($decision == 'delete') {
                     $TLN->mailDeleteMsg($headers[$i], $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
                     $expunge = true;
