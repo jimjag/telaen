@@ -1454,7 +1454,9 @@ class Telaen extends Telaen_core
             }
         }
         $email = $this->fetchStructure($message);
+        $email['header'] = trim($email['header']);
         $msg = $this->parseHeaders($email['header']);
+        $msg['header'] = $email['header'];
         $msg['folder'] = $boxname;
         $msg['flat'] = false;
         $msg['islocal'] = true;
@@ -1465,9 +1467,9 @@ class Telaen extends Telaen_core
         list($filename, $dir) = $this->getPath($msg);
         $this->_mkdir($dir);
         if (!empty($flags)) {
-            $content = trim($email['header'])."\r\nX-UM-Flags: $flags\r\n\r\n".$this->blob($email['body'], false);
+            $content = $email['header']."\r\nX-UM-Flags: $flags\r\n\r\n".$this->blob($email['body'], false);
         } else {
-            $content = trim($email['header'])."\r\n\r\n".$this->blob($email['body'], false);
+            $content = $email['header']."\r\n\r\n".$this->blob($email['body'], false);
         }
         $msg['size'] = strlen($content);
         unset($email);
