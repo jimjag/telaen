@@ -542,6 +542,16 @@ if (function_exists('hash') && ($foo = hash('md5', "test"))) {
     $error = true;
 }
 
+echo('<hr><h4>Testing for file upload support</h4>');
+
+if (ini_get('file_uploads')) {
+    echo('<span class="pass">PASSED</span>');
+} else {
+    echo('<span class="fail">!! FAILED !!</span>');
+	echo("<br/>file uploads not available. Will not be able to send Email attachments.");
+    $error = true;
+}
+
 echo('<br/><hr><hr><hr><br/>');
 if ($error) {
 ?>

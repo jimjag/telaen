@@ -334,7 +334,7 @@ $config['default_preferences'] = array(
     'display_images_default' => true,   // automatically show attached images in the body of message
     'editor_mode_default' => 'text',    // use 'html' or 'text' to set default editor.
     'refresh_time_default' => 10,       // after this time, the message list will be refreshed, in minutes
-    'keep_on_server_default' => false,  // Keep Email on server after reading/downloading
+    'keep_on_server_default' => true,  // Keep Email on server after reading/downloading
                                         // For IMAP, this should be true usually, since people
                                         // don't download their email locally; for POP, this
                                         // this should be false, UNLESS Telaen is NOT their

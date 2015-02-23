@@ -47,15 +47,15 @@ if (!$messagecount
                     /* TODO: Should we log this?? */
                 }
                 if ($decision == 'delete') {
-                    $TLN->mailDeleteMsg($headers[$i], $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
+                    $TLN->mailDeleteMsg($msg, $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
                     $expunge = true;
                 } elseif ($decision == 'move') {
-                    $TLN->mailMoveMsg($headers[$i], $aval_folders);
+                    $TLN->mailMoveMsg($msg, $aval_folders);
                     $expunge = true;
                 } elseif ($decision == 'mark') {
-                    $TLN->mailSetFlag($headers[$i], $TLN->flags['seen'], '+');
+                    $TLN->mailSetFlag($msg, $TLN->flags['seen'], '+');
                 } elseif ($decision == 'unmark') {
-                    $TLN->mailSetFlag($headers[$i], $TLN->flags['seen'], '-');
+                    $TLN->mailSetFlag($msg, $TLN->flags['seen'], '-');
                 }
             }
         }
