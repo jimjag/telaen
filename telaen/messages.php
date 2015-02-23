@@ -281,16 +281,11 @@ if ($nummsg > 0) {
 
 $smarty->assign('smNavBar', $navigation);
 
-$avalfolders = array();
-foreach (scandir($TLN->userfolder) as $entry) {
-    if (is_dir($TLN->userfolder.$entry)
-        && $entry != '..'
-        && $entry != '.'
-        && substr($entry, 0, 1) != '_'
-        && $entry != $folder
-        && ($TLN->mail_protocol == IMAP || ($entry != 'inbox'))
-    ) {
-        $entry = $TLN->fixPrefix($entry, 0);
+$avalfolders = [];
+reset($folders);
+foreach ($folders as $a) {
+    if ($a['name'] != $folder && ($TLN->mail_protocol == IMAP || ($a['name'] != 'inbox'))) {
+        $entry = $TLN->fixPrefix($a['name'], 0);
         $display = extended_name($entry);
         $avalfolders[] = array('path' => $entry, 'display' => $display);
     }
