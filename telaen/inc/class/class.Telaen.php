@@ -820,7 +820,12 @@ class Telaen extends Telaen_core
                 list($npath, $dir) = $this->getPath($msg, $tofolder);
                 $this->_mkdir($dir); // Just in case
                 copy($opath, $npath);
-                unlink($opath);
+                if (file_exists($npath)) {
+                    unlink($opath);
+                } else {
+                    $this->triggerError("Could not copy file! $opath -> $npath",
+                        __FUNCTION__, __LINE__);
+                }
             }
             $this->mailSetFlag($msg, $this->flags['deleted'], '+');
         }
@@ -851,6 +856,7 @@ class Telaen extends Telaen_core
             $opath = $this->getPath($msg)[0];
             if (file_exists($opath)) {
                 list($npath, $dir) = $this->getPath($msg, $tofolder);
+                $this->_mkdir($dir);
                 copy($opath, $npath);
                 // ensure that the copy exist
                 if (file_exists($npath)) {
@@ -863,6 +869,8 @@ class Telaen extends Telaen_core
                         }
                     }
                 } else {
+                    $this->triggerError("Could not copy file! $opath -> $npath",
+                         __FUNCTION__, __LINE__);
                     return false;
                 }
             } else {
