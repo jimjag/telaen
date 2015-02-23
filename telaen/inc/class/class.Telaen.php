@@ -1393,10 +1393,15 @@ class Telaen extends Telaen_core
     public function mailDeleteBox($boxname)
     {
         if ($this->mail_protocol == IMAP) {
-            return $this->_mailDeleteBoxImap($boxname);
+            $ret = $this->_mailDeleteBoxImap($boxname);
         } else {
-            return $this->_mailDeleteBoxPop($boxname);
+            $ret = $this->_mailDeleteBoxPop($boxname);
         }
+        if ($ret == false) {
+            $this->triggerError("Cannot delete $boxname", __FUNCTION__, __LINE__);
+            return false;
+        }
+        return $this->tdb->delFolder($boxname);
     }
 
     private function _mailSaveMessageImap($boxname, $message, $flags = '')
