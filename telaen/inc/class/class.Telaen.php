@@ -219,7 +219,7 @@ class Telaen extends Telaen_core
     {
         if ($string == null) $string = $this->mailReadResponse();
         $resp = $this->_mailParseResp($string);
-        return ($resp != self::RESP_OK);
+        return ($resp < self::RESP_OK);
     }
 
     /*
@@ -700,11 +700,10 @@ class Telaen extends Telaen_core
             $boxinfo = $this->mailSelectBox($msg['folder']);
         }
 
-        $this->mailSendCommand("UID FETCH {$msg['uid']} BODY.PEEK[HEADER.FIELDS (Message-Id)]");
-        $buffer = chop($this->mailReadResponse());
-
         /* if any problem with the server, stop the function */
-        if ($this->mailNokResp($buffer)) {
+        if (!$this->mailOnServer($msg)) {
+            $this->triggerError("message not on server! [{$msg['uidl']}]",
+                __FUNCTION__, __LINE__);
             return false;
         }
 
@@ -742,12 +741,9 @@ class Telaen extends Telaen_core
         $opath = $this->getPath($msg)[0];
         if ($msg['folder'] == 'inbox' && !$msg['islocal']) {
             /* compare the old and the new message uidl, if different, stop*/
-            $muidl = $this->_mailGetUidl($msg);
-            if ($msg['uidl'] != $muidl) {
-                $this->triggerError(sprintf("UIDL's differ: [%s/%s]",
-                    $msg['uidl'],
-                    $muidl), __FUNCTION__, __LINE__);
-
+            if (!$this->mailOnServer($msg)) {
+                $this->triggerError("message not on server! [{$msg['uidl']}]",
+                    __FUNCTION__, __LINE__);
                 return false;
             }
 
@@ -806,11 +802,9 @@ class Telaen extends Telaen_core
                 $boxinfo = $this->mailSelectBox($msg['folder']);
             }
 
-            $this->mailSendCommand("UID FETCH {$msg['uid']} BODY.PEEK[HEADER.FIELDS (Message-Id)]");
-            $buffer = chop($this->mailReadResponse());
-
-            /* if any problem with the server, stop the function */
-            if ($this->mailNokResp($buffer)) {
+            if (!$this->mailOnServer($msg)) {
+                $this->triggerError("message not on server! [{$msg['uidl']}]",
+                    __FUNCTION__, __LINE__);
                 return false;
             }
 
@@ -836,17 +830,13 @@ class Telaen extends Telaen_core
 
     protected function _mailMoveMsgPop($msg, $tofolder)
     {
-        if (($tofolder != 'inbox') && $tofolder != $msg['folder']) {
+        if ($tofolder != 'inbox') {
             /* now we are working with POP3 */
             /* check the message id to make sure that the messages still in the server */
-            if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
-                /* compare the old and the new message id, if different, stop*/
-                $muidl = $this->_mailGetUidl($msg);
-                if ($msg['uidl'] != $muidl) {
-                    $this->triggerError(sprintf("UIDL's differ: [%s/%s]",
-                        $msg['uidl'],
-                        $muidl), __FUNCTION__, __LINE__);
-
+            if ($msg['folder'] == 'inbox') {
+                if (!$this->mailOnServer($msg)) {
+                    $this->triggerError("message not on server! [{$msg['uidl']}]",
+                        __FUNCTION__, __LINE__);
                     return false;
                 }
 
@@ -887,7 +877,7 @@ class Telaen extends Telaen_core
 
     /**
      * Move specific email message
-     * @param  string  $msg      The message to move
+     * @param  array  $msg      The message to move
      * @param  string  $tofolder
      * @return boolean
      */
@@ -1266,6 +1256,78 @@ class Telaen extends Telaen_core
             return $this->_mailListBoxesImap($boxname);
         } else {
             return $this->_mailListBoxesPop($boxname);
+        }
+    }
+
+    protected function _mailOnServerImap($msg)
+    {
+        /* select the mail box and make sure that it exists */
+        $boxname = $msg['folder'];
+        $boxinfo = $this->mailSelectBox($boxname);
+        $ret = false;
+        if (is_array($boxinfo) && $boxinfo['exists']) {
+            $this->mailSendCommand("UID FETCH {$msg['uid']} BODY.PEEK[HEADER.FIELDS (Message-Id)]");
+            $buffer = $this->mailReadResponse();
+
+            if ($this->mailNokResp($buffer)) {
+                return false;
+            }
+            /* the end mark is <sid> OK FETCH, we are waiting for it*/
+            while (!$this->mailOkResp($buffer)) {
+                $buffer = trim($buffer);
+                if (preg_match('|Message-ID:\s+<?([^>]+)>?|i', $buffer, $m)) {
+                    if (strcasecmp($m[1], $msg['message-id']) == 0) {
+                        $ret = true;
+                    }
+                }
+                $buffer = $this->mailReadResponse();
+            }
+        }
+        return $ret;
+    }
+
+    protected function _mailOnServerPop($msg)
+    {
+        if ($msg['folder'] != 'inbox') {
+            return false;
+        }
+        $id = $msg['mnum'];
+        if (!empty($this->capabilities['UIDL'])) {
+            $this->mailSendCommand("UIDL $id");
+            $buffer = $this->mailReadResponse();
+            list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
+            if ($resp == '+OK') {
+                if (strcasecmp($msg['uidl'], self::md5($uidl)) == 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        $ouidl = $msg['uidl'];
+        $msg['uidl'] = '';  // So we need to calculate it
+        $this->_mailGetUidl($msg, false);
+        if (strcasecmp($msg['uidl'], $ouidl) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Check to see if a message is still on the server.
+     * @param array $msg
+     * @return boolean
+     */
+    public function mailOnServer($msg)
+    {
+        if ($msg['islocal']) {
+            return false;
+        }
+        if ($this->mail_protocol == IMAP) {
+            return $this->_mailOnServerImap($msg);
+        } else {
+            return $this->_mailOnServerPop($msg);
         }
     }
 
@@ -1733,9 +1795,10 @@ class Telaen extends Telaen_core
      * headers and using the Message-ID, Date and Subject
      * headers to craft one.
      * @param  array  $msg
+     * @param boolean $update True if we want to update the db
      * @return string
      */
-    protected function _mailGetUidl(&$msg)
+    protected function _mailGetUidl(&$msg, $update = true)
     {
         if (!empty($msg['uidl'])) {
             return $msg['uidl'];
@@ -1746,7 +1809,7 @@ class Telaen extends Telaen_core
             $buffer = $this->mailReadResponse();
             list($resp, $num, $uidl) = preg_split("|\s+|", $buffer);
             if ($resp == '+OK') {
-                $msg['uidl'] = $uidl;
+                $msg['uidl'] = self::md5($uidl);
             }
             // If we DON'T get the OK response, we drop through
         }
@@ -1774,7 +1837,9 @@ class Telaen extends Telaen_core
             }
             $mail_info = $this->parseHeaders($header);
             self::add2me($msg, $mail_info);
-            $this->tdb->doMessage($msg);
+            if ($update) {
+                $this->tdb->doMessage($msg);
+            }
             if (!empty($mail_info['uidl'])) {
                 return $mail_info['uidl'];
             }
