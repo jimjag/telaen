@@ -42,6 +42,7 @@ umask($TLN->config['default_umask']);
 
 require_once './inc/errorhandler.php';
 
+define('SMARTY_RESOURCE_CHAR_SET', 'UTF-8');
 require_once $TLN->config['SMARTY_DIR'].'Smarty.class.php';
 $smarty = new Smarty();
 $smarty_compile_dir  = $TLN->config['temporary_directory'].'/smarty_ct/';
