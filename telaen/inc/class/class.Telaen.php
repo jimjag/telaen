@@ -1097,6 +1097,9 @@ class Telaen extends Telaen_core
                 $this->tdb->doMessage($msg);
                 $i++;
             }
+            if (is_dir($fullpath)) {
+                $this->_scanFolder($boxname, $fullpath, $i, false);
+            }
         }
     }
 
