@@ -1203,6 +1203,11 @@ class Telaen_core
              */
             $data = file_get_contents($a['DataFile']);
             unlink($a['DataFile']);
+            foreach ($a['Alternative'] as $x) {
+                if (is_file($x['DataFile'])) {
+                    unlink($x['DataFile']);
+                }
+            }
             if (isset($a['Encoding']) && strcasecmp($a['Encoding'], $this->charset)) {
                 $data = self::convertCharset($data, $this->charset, $a['Encoding']);
             }
