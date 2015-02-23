@@ -17,8 +17,6 @@ require './inc/init.php';
 
 // cheking for main param
 if (isset($_POST['action'])) {
-    $TLN->prefs = load_prefs();
-
     $action = $_POST['action'];
     switch ($action) {
 
