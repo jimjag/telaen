@@ -34,7 +34,7 @@ if (isset($_POST['action'])) {
             $mail = new PHPMailer();
             $mail->SetLanguage('en', 'langs/');
             $mail->CharSet = $TLN->ucharset;
-            $mail->Hostname = getenv('SERVER_NAME');
+            $mail->Hostname = $TLN->getServerName();;
             $mail->Host = $TLN->config['smtp_server'];
             $mail->WordWrap = 76;
             $mail->Priority = 3;
@@ -67,7 +67,6 @@ if (isset($_POST['action'])) {
             } else {
                 echo 'error: '.$mail->ErrorInfo;
             }
-
             break;
 
         // just refresh the session timeout
