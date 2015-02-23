@@ -981,6 +981,7 @@ class Telaen_core
     public function parseHeaders($header)
     {
         $myarray = [];
+        $myarray['header'] = $header;
         $headers = $this->_parseHeaders($header);
 
         /*

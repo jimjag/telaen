@@ -1091,7 +1091,6 @@ class Telaen extends Telaen_core
                 $msg['islocal'] = true;
                 $msg['iscached'] = true;
                 $msg['flat'] = $flat;
-                $msg['header'] = $thisheader;
                 $mail_info = $this->parseHeaders($thisheader);
                 self::add2me($msg, $mail_info);
                 $msg['uidl'] = $this->_mailGetUidl($msg);
@@ -1456,7 +1455,6 @@ class Telaen extends Telaen_core
         $email = $this->fetchStructure($message);
         $email['header'] = trim($email['header']);
         $msg = $this->parseHeaders($email['header']);
-        $msg['header'] = $email['header'];
         $msg['folder'] = $boxname;
         $msg['flat'] = false;
         $msg['islocal'] = true;
@@ -1780,7 +1778,6 @@ class Telaen extends Telaen_core
             }
             $mail_info = $this->parseHeaders($header);
             self::add2me($msg, $mail_info);
-            $msg['header'] = $header;
             $this->tdb->doMessage($msg);
             if (!empty($mail_info['uidl'])) {
                 return $mail_info['uidl'];
