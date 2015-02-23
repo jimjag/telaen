@@ -13,8 +13,11 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-extract(Telaen::pullFromArray($_GET, ['empty', 'goback', 'nameto', 'mailto'], 's'));
-extract(Telaen::pullFromArray($_POST, ['newfolder', 'delfolder'], 's'));
+extract(Telaen::pullFromArray($_GET, ['empty', 'goback', 'nameto', 'mailto', 'delfolder'], 's'));
+extract(Telaen::pullFromArray($_POST, ['newfolder'], 's'));
+if (isset($delfolder)) {
+    $delfolder = urldecode($delfolder);
+}
 
 if ($TLN->isValidFname($newfolder)) {
     $TLN->mailCreateBox($newfolder);

@@ -35,12 +35,13 @@
         </tr>
         {/if}
         <tr>
-          <form name="form1" action="folders.php" method="post" onsubmit="return create();">
-            <td class="default" colspan="5"><br>
+          <td class="default" colspan="5">
+            <form name="form1" action="folders.php" method="post" onsubmit="return create();">
               <input type=Text name=newfolder value="" class="textbox">
               &nbsp;
-              <input type=button value="{$smLabel.fld_make_new}" class=button onClick="create()"></td>
-          </form>
+              <input type=button value="{$smLabel.fld_make_new}" class=button onClick="create()">
+            </form>
+          </td>
         </tr>
       </table></td>
   </tr>
