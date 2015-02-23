@@ -1253,7 +1253,7 @@ class Telaen_core
             rewind($body);
             return ['header' => $header, 'body' => $body];
         }
-        $separator = "\r\n\r\n";
+        $separator = "\n\r\n";
         $delim = strpos($email, $separator);
         $header = trim(substr($email, 0, $delim));
         $bodypos = $delim + strlen($separator);
