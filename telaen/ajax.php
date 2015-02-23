@@ -78,9 +78,6 @@ if (isset($_POST['action'])) {
                 $auth['start'] = time();
                 // save
                 $AuthSession->Save($auth);
-
-                echo 'success: session refreshed';
-
             break;
 
         // Regen the calendar
