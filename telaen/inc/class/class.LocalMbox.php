@@ -117,7 +117,7 @@ class LocalMbox extends SQLite3
     /**
      * @var array List of all folders/directories we need
      */
-    private $_system_folders = ['inbox', 'spam', 'trash', 'draft', 'sent'];
+    private $_system_folders = ['inbox', 'spam', 'trash', 'drafts', 'sent'];
     /**
      * @var array List of folders/directors hidden from the user
      */
