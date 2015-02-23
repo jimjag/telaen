@@ -1,7 +1,7 @@
 function replaceCal(month, year) {
     $.post('ajax.php', {action: "replaceCal", cal_month: month, cal_year: year },
     function(data) {
-        $("calendar").html(data);
+        $("#calendar").html(data);
         doDays();
     });
     return false;
