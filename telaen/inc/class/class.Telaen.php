@@ -996,7 +996,7 @@ class Telaen extends Telaen_core
                         if(trim($buffer) == ".") {
                             break;
                         }
-                        list ($num,$uidl) = explode(" ",$buffer);
+                        list ($num,$uidl) = preg_split("|\s+|", $buffer);
                         if (!empty($uidl)) {
                             $uids[intval($num)] = self::md5($uidl);
                         }
@@ -1016,7 +1016,7 @@ class Telaen extends Telaen_core
                 if ($buffer == '.') {
                     break;
                 }
-                $msgs = explode(' ', $buffer);
+                $msgs = preg_split("|\s+|", $buffer);
                 if (is_numeric($msgs[0])) {
                     $mnum = intval($msgs[0]);
                     $msg['id'] = $counter + 1; //$msgs[0];
@@ -1606,7 +1606,7 @@ class Telaen extends Telaen_core
 
             $flags = [];
             if (!empty($strFlags)) {
-                $flags = explode(' ', $strFlags);
+                $flags = preg_split('|\s+|', $strFlags);
             }
 
             if ($flagtype == '+') {
