@@ -117,11 +117,15 @@ class LocalMbox extends SQLite3
     /**
      * @var array List of all folders/directories we need
      */
-    private $_system_folders = ['inbox', 'spam', 'trash', 'draft', 'sent', '_attachments', '_infos', '_tmp', '_upload'];
+    private $_system_folders = ['inbox', 'spam', 'trash', 'draft', 'sent'];
     /**
      * @var array List of folders/directors hidden from the user
      */
-    private $_invisible = ['_attachments', '_infos', '_tmp', '_upload'];
+    private $_data_folders = ['_attachments', '_infos', '_tmp', '_upload'];
+    /**
+     * $var array List of all folders/dir we need to worry about
+     */
+    private $_folders = [];
     /**
      * @var array Hash: key = uidl; value = is it in the DB?
      */
@@ -157,6 +161,7 @@ class LocalMbox extends SQLite3
         $this->_allok();
         $this->userfolder = $userfolder;
         $this->force_new = $force_new;
+        $this->_folders = array_merge($this->_system_folders, $this->_data_folders);
         $this->db = $userfolder.$this->udatafolder.'/mboxes.db';
         $exists = is_writable($this->db);
         parent::__construct($this->db, SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
@@ -195,7 +200,7 @@ class LocalMbox extends SQLite3
             $this->_log = "bad exec: $table";
         }
         $ok = $this->_ok;
-        foreach($this->_system_folders as $foo) {
+        foreach($this->_folders as $foo) {
             $this->newFolder(['name' => $foo, 'dirname' => $foo]);
         }
         /*
@@ -218,7 +223,7 @@ class LocalMbox extends SQLite3
      * @return array
      */
     public function requiredDirs() {
-        return $this->_system_folders;
+        return $this->_folders;
     }
 
     private function calcFolderSize($path)
@@ -421,7 +426,7 @@ class LocalMbox extends SQLite3
         if ($result) {
             while ($foo = $result->fetchArray(SQLITE3_ASSOC)) {
                 $this->allfolders[$foo['name']] = $foo;
-                if (!in_array($foo['name'], $this->_invisible)) {
+                if (!in_array($foo['name'], $this->_data_folders)) {
                     $this->folders[$foo['name']] = $foo;
                 }
             }
@@ -450,7 +455,7 @@ class LocalMbox extends SQLite3
      */
     public function newFolder($folder, $calc_size = false)
     {
-        $folder['system'] = in_array($folder['name'], $this->_system_folders);
+        $folder['system'] = in_array($folder['name'], $this->_folders);
         /*
          * Since user folder names can be weird, on the file system,
          * make the dirname for the folder something safe (ie: a md5 hash
