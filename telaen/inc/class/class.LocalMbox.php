@@ -398,9 +398,24 @@ class LocalMbox extends SQLite3
         return hash('md5', $folder);
     }
 
-    static private function _get_folder_name($folder)
+    static private function _get_table_name($folder)
     {
         return sprintf('folder_%s', self::getKey($folder));
+    }
+
+    /**
+     * Return a file-system safe filename
+     * @param string $str
+     * @param boolean $delete
+     * @return string
+     */
+    static public function fsSafeFile($str, $delete = false)
+    {
+        $str = htmlentities($str, ENT_QUOTES, 'UTF-8');
+        $str = preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', $str);
+        $str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
+        $str = preg_replace('|[.]{2,}|', ".", $str); // no dir
+        return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $str);
     }
 
     private function _allok()
@@ -463,12 +478,12 @@ class LocalMbox extends SQLite3
          * create the local directory, we use the same name. :/
          */
         if (empty($folder['dirname'])) {
-            $folder['dirname'] = self::getKey($folder['name']);
+            $folder['dirname'] = self::fsSafeFile($folder['name']);
         }
         if ($calc_size && is_dir($this->userfolder.$folder['dirname'])) {
             $folder['size'] = $this->calcFolderSize($this->userfolder.$folder['dirname']);
         }
-        $table = self::_get_folder_name($folder['name']);
+        $table = self::_get_table_name($folder['name']);
         $folder['table_name'] = $table;
         foreach (['size', 'count', 'unread'] as $f) {
             if (!isset($folder[$f])) {
@@ -503,7 +518,7 @@ class LocalMbox extends SQLite3
      */
     public function delFolder($folder)
     {
-        $query = 'DROP TABLE '.self::_get_folder_name($folder).' ;';
+        $query = 'DROP TABLE '.self::_get_table_name($folder).' ;';
         if ($this->exec($query)) {
             $stmt = $this->prepare("DELETE FROM folders WHERE name=:name ;");
             $stmt->bindValue(':name', $folder);
@@ -610,7 +625,7 @@ class LocalMbox extends SQLite3
                 $ssortorder = $sortorder;
             }
             $this->syncMessages();
-            $query = sprintf('SELECT * FROM %s ', self::_get_folder_name($folder));
+            $query = sprintf('SELECT * FROM %s ', self::_get_table_name($folder));
             if ($sortby && isset($this->mschema[$sortby])) {
                 $query .= "ORDER BY '$sortby' ";
                 if ($sortorder == 'ASC' || $sortorder == 'DESC') {
@@ -653,7 +668,7 @@ class LocalMbox extends SQLite3
     public function countMessages($folder, $force = false)
     {
         if ($folder != $this->current_folder || $force) {
-            $query = sprintf('SELECT COUNT(*) FROM %s;', self::_get_folder_name($folder));
+            $query = sprintf('SELECT COUNT(*) FROM %s;', self::_get_table_name($folder));
             $result = $this->query($query);
             if ($result) {
                 $count = $result->fetchArray(SQLITE3_NUM);
@@ -687,7 +702,7 @@ class LocalMbox extends SQLite3
             }
             $this->_folder_need_sync[$msg['folder']] = true;
         }
-        return $this->_doInsert(self::_get_folder_name($msg['folder']), $msg, $thelist);
+        return $this->_doInsert(self::_get_table_name($msg['folder']), $msg, $thelist);
     }
 
     /**
@@ -709,7 +724,7 @@ class LocalMbox extends SQLite3
             return false;
         }
         $this->_folder_need_sync[$msg['folder']] = true;
-        return $this->_doUpdate(self::_get_folder_name($msg['folder']), $msg, $thelist, ['uidl'=>$msg['uidl']]);
+        return $this->_doUpdate(self::_get_table_name($msg['folder']), $msg, $thelist, ['uidl'=>$msg['uidl']]);
     }
 
     /**
@@ -868,7 +883,7 @@ class LocalMbox extends SQLite3
             $msgs = (array)$msgs;
         }
         $this->_ok = true;
-        $query = sprintf("DELETE FROM %s WHERE uidl=:uidl ;", self::_get_folder_name($msgs[0]['folder']));
+        $query = sprintf("DELETE FROM %s WHERE uidl=:uidl ;", self::_get_table_name($msgs[0]['folder']));
         $isactive = ($msgs[0]['folder'] == $this->current_folder ? true : false);
         $stmt = $this->prepare($query);
         $idxs = [];
