@@ -851,7 +851,7 @@ class Telaen extends Telaen_core
             /* check the message id to make sure that the messages still in the server */
             if ($msg['folder'] == 'inbox' || $msg['folder'] == 'spam') {
                 /* compare the old and the new message id, if different, stop*/
-                $muidl = $this->_mailGetUidl($msg['mnum']);
+                $muidl = $this->_mailGetUidl($msg);
                 if ($msg['uidl'] != $muidl) {
                     $this->triggerError(sprintf("UIDL's differ: [%s/%s]",
                         $msg['uidl'],
@@ -1457,6 +1457,10 @@ class Telaen extends Telaen_core
         $msg['iscached'] = true;
         $msg['flags'] = $flags;
         $this->_mailGetUidl($msg);
+        if (stripos($msg['header'], 'X-TLN-UIDL') === false) {
+            $msg['header'] .= "X-TLN-UIDL: {$msg['uidl']}";
+            $msg['headers']['x-tln-uidl'] = $msg['uidl'];
+        }
         $msg['localname'] = $this->_createLocalFname($msg);
         list($filename, $dir) = $this->getPath($msg);
         $this->_mkdir($dir);
