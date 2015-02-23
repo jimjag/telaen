@@ -159,16 +159,6 @@ class Telaen extends Telaen_core
     }
 
     /**
-     * Check if supplied folder name is a system folder.
-     * @param  string  $name The folder name to check
-     * @return boolean
-     */
-    public function isSystemFolder($name)
-    {
-        return $this->tdb->folders[strtolower($name)]['system'];
-    }
-
-    /**
      *
      * @param  string $string Response string to parse
      * @return int

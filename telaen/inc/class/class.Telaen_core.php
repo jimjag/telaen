@@ -238,6 +238,8 @@ class Telaen_core
     /**
      * Print out debugging info as HTML comments
      * @param  string $str
+     * @param string $caller
+     * @param int $line
      * @return void
      */
     public function debugMsg($str, $caller = "", $line = 0)
@@ -256,6 +258,8 @@ class Telaen_core
     /**
      * Print out debugging info as HTML comments
      * @param  string $str
+     * @param string $caller
+     * @param int $line
      * @return void
      */
     public function triggerError($str, $caller = "", $line = 0)
@@ -274,6 +278,16 @@ class Telaen_core
     static public function stripNonHex($str)
     {
         return preg_replace('|[^A-Fa-f0-9]+|', '', $str);
+    }
+
+    /**
+     * Check if supplied folder name is a system folder.
+     * @param  string  $name The folder name to check
+     * @return boolean
+     */
+    public function isSystemFolder($name)
+    {
+        return $this->tdb->folders[strtolower($name)]['system'];
     }
 
     /**
