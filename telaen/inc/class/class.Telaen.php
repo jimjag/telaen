@@ -1355,7 +1355,7 @@ class Telaen extends Telaen_core
         } else {
             /* if POP3, only make a new folder */
             if (@mkdir($this->userfolder.$box['dirname'], $this->dirperm)) {
-                return $this->tdb->newFolder($box['dirname']);
+                return $this->tdb->newFolder($box);
             } else {
                 return false;
             }
