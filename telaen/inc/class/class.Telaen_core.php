@@ -657,11 +657,12 @@ class Telaen_core
         for ($i = 0;$i<count($headers);$i++) {
             // If current header starts with a TAB or is not very standard,
             // attach it at the prev header
-            if (empty($headers[$i])) {
+            $h = trim($headers[$i]);
+            if (empty($h)) {
                 continue;
-            } elseif (($headers[$i][0] == "\t") || !preg_match('|^[A-Z0-9a-z_-]+:|', trim($headers[$i]))) {
+            } elseif (($headers[$i][0] == "\t") || !preg_match('|^[A-Z0-9a-z_-]+:|', $h)) {
                 if (!empty($lasthead)) {
-                    $decodedheaders[$lasthead] .= ' ' . trim($headers[$i]);
+                    $decodedheaders[$lasthead] .= ' ' . $h;
                 }
             } else { // otherwise extract the header
                 $thisheader = trim($headers[$i]);
