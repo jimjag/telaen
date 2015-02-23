@@ -1127,7 +1127,7 @@ class Telaen extends Telaen_core
              * (but no messages exist, so it's moot)
              */
             $this->tdb->upgradeVersion($boxname, $this->_version);
-            $datapath = $this->userfolder.$boxname;
+            $datapath = $this->userfolder.$this->getBoxDir($boxname);
             $i = 0;
             $this->_scanFolder($boxname, $datapath, $i, true);
         }
@@ -1387,7 +1387,7 @@ class Telaen extends Telaen_core
 
     private function _mailDeleteBoxPop($boxname)
     {
-        if (is_dir($this->userfolder.$boxname)) {
+        if (is_dir($this->userfolder.$this->getBoxDir($boxname))) {
             $this->_rmDirR($this->userfolder.$this->getBoxDir($boxname));
             return true;
         } else {
@@ -1812,7 +1812,7 @@ class Telaen extends Telaen_core
                  */
                 foreach ($this->tdb->folders as $folder) {
                     if ($folder != $this->tdb->udatafolder) {
-                        $cleanme = $userfolder.$folder.'/';
+                        $cleanme = $userfolder.$folder['dirname'].'/';
                         self::cleanupDir($cleanme);
                     }
                 }
