@@ -277,8 +277,13 @@ for ($i = 0; $i < $num; $i++) {
     $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
     $attachlist[$i]['link'] = "javascript:delatt('".urlencode($attachs[$i]['name'])."')";
     /* Now prep all attachments as to-include attachments */
+    $from = $TLN->getPath($attachs[$i])[0];
     $attachs[$i]['uidl'] = '_upload';
     $attachs[$i]['folder'] = '_upload';
+    $attachs[$i]['flat'] = true;
+    $attachs[$i]['localname'] = 'u__'.$attachs[$i]['localname'];
+    $to = $TLN->getPath($attachs[$i])[0];
+    symlink($from, $to);
     $TLN->tdb->addAttachment($attachs[$i]);
 }
 
