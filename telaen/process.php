@@ -13,11 +13,11 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-extract(Telaen::pullFromArray($_GET, array('decision'), 'str'));
-extract(Telaen::pullFromArray($_GET, array('refr', 'mlist'), true));
-extract(Telaen::pullFromArray($_POST, array('decision', 'aval_folders'), 'str'));
-extract(Telaen::pullFromArray($_POST, array('start_pos', 'end_pos'), 1));
-extract(Telaen::pullFromArray($_POST, array('back'), true));
+extract(Telaen::pullFromArray($_GET, ['decision'], 'str'));
+extract(Telaen::pullFromArray($_GET, ['refr', 'mlist'], true));
+extract(Telaen::pullFromArray($_POST, ['decision', 'aval_folders'], 'str'));
+extract(Telaen::pullFromArray($_POST, ['start_pos', 'end_pos'], 1));
+extract(Telaen::pullFromArray($_POST, ['back'], true));
 
 $headers = $tdb->getMessages($folder);
 $messagecount = count($headers);

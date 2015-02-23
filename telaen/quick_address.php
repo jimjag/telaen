@@ -11,8 +11,8 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-extract(Telaen::pullFromArray($_GET, array('where'), 'str'));
-extract(Telaen::pullFromArray($_POST, array('contacts'), 'str'));
+extract(Telaen::pullFromArray($_GET, ['where'], 'str'));
+extract(Telaen::pullFromArray($_POST, ['contacts'], 'str'));
 
 $filename = $TLN->userdatafolder.'/addressbook.ucf';
 $myfile = $TLN->blob($TLN->readFile($filename, false), false);

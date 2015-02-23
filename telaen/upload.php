@@ -13,7 +13,7 @@ require './inc/init.php';
 
 $smarty->assign('pageMetas', $pmetas);
 
-extract(Telaen::pullFromArray($_POST, array('rem'), 'str'));
+extract(Telaen::pullFromArray($_POST, ['rem'], 'str'));
 $userfile = $_FILES['userfile'];
 
 if (isset($rem) && $rem != "") {

@@ -11,7 +11,7 @@ define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 require './inc/init.php';
 /* @var $TLN Telaen */
 
-extract(Telaen::pullFromArray($_POST, array('srcFrom', 'srcSubject', 'srcBody'), 'str'));
+extract(Telaen::pullFromArray($_POST, ['srcFrom', 'srcSubject', 'srcBody'], 'str'));
 
 $smarty->assign('pageMetas', $pmetas);
 

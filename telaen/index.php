@@ -13,7 +13,7 @@ $TLN = new Telaen();
 $TLN->loadConfig();
 require_once './inc/errorhandler.php';
 
-extract(Telaen::pullFromArray($_GET, array('f_email', 'f_user', 'lng', 'tem', 'six'), 's'));
+extract(Telaen::pullFromArray($_GET, ['f_email', 'f_user', 'lng', 'tem', 'six'], 's'));
 require_once './inc/user_tl.php';
 
 require_once $TLN->config['SMARTY_DIR'].'Smarty.class.php';

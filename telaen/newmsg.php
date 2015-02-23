@@ -14,15 +14,15 @@ require './inc/init.php';
 // assign metas
 $smarty->assign('pageMetas', $pmetas);
 
-extract(Telaen::pullFromArray($_GET, array('nameto', 'mailto'), 'str'));
+extract(Telaen::pullFromArray($_GET, ['nameto', 'mailto'], 'str'));
 if (isset($nameto)) {
     $nameto = urldecode($nameto);
 }
 if (isset($mailto)) {
     $mailto = urldecode($mailto);
 }
-extract(Telaen::pullFromArray($_POST, array('to', 'cc', 'bcc', 'subject', 'requireReceipt',
-        'priority', 'body', 'is_html', 'textmode', 'sig', 'todo', 'rtype', 'uidl', ), 'str'));
+extract(Telaen::pullFromArray($_POST, ['to', 'cc', 'bcc', 'subject', 'requireReceipt',
+        'priority', 'body', 'is_html', 'textmode', 'sig', 'todo', 'rtype', 'uidl', ], 'str'));
 
 if ($todo == 'send') {
     require './inc/send.php';

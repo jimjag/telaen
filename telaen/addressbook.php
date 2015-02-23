@@ -60,9 +60,9 @@ function refreshlist() { location = 'addressbook.php' }
 $smarty->assign('smJS', $jssource);
 $smarty->assign('smGoBack', 'addressbook.php');
 
-extract(Telaen::pullFromArray($_GET, array('opt', 'id'), 'str'));
-extract(Telaen::pullFromArray($_POST, array('name', 'email', 'street', 'city', 'state', 'country', 'work', 'phone',
-    'cell', 'note', 'fax', 'opt', 'id'), 'str'));
+extract(Telaen::pullFromArray($_GET, ['opt', 'id'], 'str'));
+extract(Telaen::pullFromArray($_POST, ['name', 'email', 'street', 'city', 'state', 'country', 'work', 'phone',
+    'cell', 'note', 'fax', 'opt', 'id'], 'str'));
 
 $id = urldecode($id);
 switch ($opt) {
