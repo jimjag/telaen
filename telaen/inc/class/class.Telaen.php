@@ -1099,14 +1099,7 @@ class Telaen extends Telaen_core
             }
         }
     }
-    /*
-     * The below returns an 3 element array:
-     *	 $myreturnarray[0] == The message list
-     *	 $myreturnarray[1] == the auto-spam populated list
-     *	 $myreturnarray[2] == return status where:
-     *	   -1 = Error; 0 = OK, No Changes; 1 = OK, Had Changes
-     * NOTE: $myreturnarray[0] is ALWAYS the $boxname list !
-     */
+
     /**
      * List all messages in emailbox
      * @param  string  $boxname       The name of emailbox
