@@ -1884,7 +1884,7 @@ class Telaen extends Telaen_core
      */
     public function iamStale($folder)
     {
-        return ($this->tdb->folders[$folder]['refreshed'] < ($this->_now - $this->prefs['refresh_time']));
+        return ($this->tdb->folders[$folder]['refreshed'] < ($this->_now - ($this->prefs['refresh_time'] * 60)));
     }
 
     /**
