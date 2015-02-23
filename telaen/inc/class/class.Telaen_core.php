@@ -183,6 +183,10 @@ class Telaen_core
      * @var string Email suffix
      */
     protected $suffix = '.eml';
+    /**
+     * @var string Parsed Email suffix
+     */
+    protected $psuffix = '.msg';
 
     /*******************/
 
@@ -1151,7 +1155,7 @@ class Telaen_core
             }
             $a = [];
             $parser->Analyze($decoded[0], $a);
-            $path .= '.msg';
+            $path .= $this->psuffix;
             /*
              * Uggg. when we are treating w/ the actual email
              * message itself (txt or html) we need to do so

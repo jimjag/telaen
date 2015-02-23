@@ -617,7 +617,7 @@ class Telaen extends Telaen_core
      */
     public function mailRetrPbody($msg)
     {
-        $path = $this->getPath($msg)[0].'.msg';
+        $path = $this->getPath($msg)[0].$this->psuffix;
         $handle = @fopen($path, 'r');
         if ($handle !== null) {
             return $handle;
@@ -1094,6 +1094,7 @@ class Telaen extends Telaen_core
                 $mail_info = $this->parseHeaders($thisheader);
                 self::add2me($msg, $mail_info);
                 $msg['uidl'] = $this->_mailGetUidl($msg);
+                $msg['bparsed'] = is_file($fullpath.$this->psuffix);
                 $this->tdb->doMessage($msg);
                 $i++;
             }
