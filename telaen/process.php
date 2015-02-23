@@ -40,7 +40,7 @@ if (!$messagecount
     if (isset($start_pos) && isset($end_pos)) { // eg: messages.php or readmsg.php
         foreach (array_keys($_POST) as $key) {
             $matches = [];
-            if (preg_match('|msg_([0-9a-fA-F+)|', $key, $matches)) {
+            if (preg_match('|msg_([0-9a-fA-F]+)|', $key, $matches)) {
                 $msg = $TLN->tdb->getMessage($matches[1], $folder);
                 if (empty($msg)) {
                     continue;
