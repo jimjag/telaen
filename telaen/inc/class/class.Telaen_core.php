@@ -292,6 +292,22 @@ class Telaen_core
     }
 
     /**
+     * Return the directory name mapping for a specific Emailbox
+     * Recall that Folder names can be UTF-8 but we need to keep
+     * the directory name something safe
+     * @param string $boxname Email box name
+     * @return string
+     */
+    public function getBoxDir($boxname)
+    {
+        if (empty($this->tdb->folders[$boxname]['dirname'])) {
+            $this->tdb->folders[$boxname]['dirname'] = self::fsSafeFolder($boxname);
+            $this->tdb->updateFolderField($boxname, 'dirname');
+        }
+        return $this->tdb->folders[$boxname]['dirname'];
+    }
+
+    /**
      * Return a file-system safe folder name
      * @param string $str
      * @return string
@@ -425,9 +441,9 @@ class Telaen_core
             $boxname = $msg['folder'];
         }
         if (!$msg['flat']) {
-            $dirpath = trim($this->userfolder.$boxname.'/'.$msg['localname'][0]);
+            $dirpath = trim($this->userfolder.$this->getBoxDir($boxname).'/'.$msg['localname'][0]);
         } else {
-            $dirpath = trim($this->userfolder.$boxname);
+            $dirpath = trim($this->userfolder.$this->getBoxDir($boxname));
         }
         return [$dirpath.'/'.$msg['localname'], $dirpath];
     }

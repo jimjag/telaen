@@ -1351,19 +1351,21 @@ class Telaen extends Telaen_core
      */
     public function mailCreateBox($boxname)
     {
+        $box['name'] = $boxname;
+        $box['dirname'] = $this->getBoxDir($boxname);
         if ($this->mail_protocol == IMAP) {
             $boxname = $this->fixPrefix(preg_replace('|"(.*)"|', "$1", $boxname), 1);
             $this->mailSendCommand("CREATE \"$boxname\"");
             if ($this->mailOkResp()) {
-                if (@mkdir($this->userfolder.$this->fixPrefix($boxname, 0), $this->dirperm)) {
+                if (@mkdir($this->userfolder.$this->fixPrefix($box['dirname'], 0), $this->dirperm)) {
                     return true;
                 }
             }
             return false;
         } else {
             /* if POP3, only make a new folder */
-            if (@mkdir($this->userfolder.$boxname, $this->dirperm)) {
-                return $this->tdb->newFolder($boxname);
+            if (@mkdir($this->userfolder.$box['dirname'], $this->dirperm)) {
+                return $this->tdb->newFolder($box['dirname']);
             } else {
                 return false;
             }
@@ -1376,7 +1378,7 @@ class Telaen extends Telaen_core
         $this->mailSendCommand("DELETE \"$boxname\"");
 
         if ($this->mailOkResp()) {
-            $this->_rmDirR($this->userfolder.$boxname);
+            $this->_rmDirR($this->userfolder.$this->getBoxDir($boxname));
             return true;
         } else {
             return false;
@@ -1386,7 +1388,7 @@ class Telaen extends Telaen_core
     private function _mailDeleteBoxPop($boxname)
     {
         if (is_dir($this->userfolder.$boxname)) {
-            $this->_rmDirR($this->userfolder.$boxname);
+            $this->_rmDirR($this->userfolder.$this->getBoxDir($boxname));
             return true;
         } else {
             return false;
