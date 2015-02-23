@@ -415,7 +415,14 @@ class LocalMbox extends SQLite3
         $str = preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', $str);
         $str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
         $str = preg_replace('|[.]{2,}|', ".", $str); // no dir
-        return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $str);
+        if ($delete) {
+            return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $str);
+        }
+        return preg_replace_callback(
+            '|[^A-Za-z0-9_.-]+|',
+            function ($match) { return '_x'.dechex(ord($match[1])); },
+            $str
+        );
     }
 
     private function _allok()
