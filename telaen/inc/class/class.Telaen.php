@@ -1180,8 +1180,6 @@ class Telaen extends Telaen_core
                 $messages[$i]['header'] = $this->mailRetrHeader($messages[$i]);
                 $mail_info = $this->parseHeaders($messages[$i]['header']);
                 self::add2me($messages[$i], $mail_info);
-                $messages[$i]['attach'] = (preg_match('#(multipart/mixed|multipart/related|application)#i',
-                    $mail_info['headers']['content-type'])) ? 1 : 0;
 
                 if ($messages[$i]['localname'] == '') {
                     $messages[$i]['localname'] = $this->_createLocalFname($messages[$i]);

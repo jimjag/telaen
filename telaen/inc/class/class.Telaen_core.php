@@ -1059,6 +1059,8 @@ class Telaen_core
         if (!empty($headers['content-transfer-encoding'])) {
             $headers['content-transfer-encoding'] = str_replace('GM', '-', $headers['content-transfer-encoding']);
         }
+        $myarray['attach'] = preg_match('#(multipart/mixed|multipart/related|application)#i',
+                            $headers['content-type']);
 
         /*
          * Date and Subject are top level, as well as in the headers[]
@@ -1189,6 +1191,9 @@ class Telaen_core
              */
             $attachments = [];
             $i = 0;
+            /*
+             * TODO: Should we worry about $msg['attach'] ?
+             */
             foreach ($a['Attachments'] as $b) {
                 $filename = trim(basename($b['FileName']));
                 $safefilename = self::fsSafeFile($filename);
