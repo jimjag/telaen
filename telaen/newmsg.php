@@ -277,7 +277,7 @@ for ($i = 0; $i < $num; $i++) {
     $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
     $attachlist[$i]['link'] = "javascript:delatt('".urlencode($attachs[$i]['name'])."')";
     /* Now prep all attachments as to-include attachments */
-    $from = $TLN->getPath($attachs[$i])[0];
+    $from = $TLN->getPath($attachs[$i], '_attachments')[0];
     $attachs[$i]['uidl'] = '_upload';
     $attachs[$i]['folder'] = '_upload';
     $attachs[$i]['flat'] = true;
