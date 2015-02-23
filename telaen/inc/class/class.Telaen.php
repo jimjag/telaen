@@ -1079,7 +1079,7 @@ class Telaen extends Telaen_core
                 continue;
             }
             $fullpath = $folder.'/'.$entry;
-            if (is_file($fullpath)) {
+            if (is_file($fullpath) && substr($fullpath, -(strlen($this->suffix))) == $this->suffix) {
                 unset($msg);
                 $msg = [];
                 $thisheader = $this->_getHeadersFromCache($fullpath);

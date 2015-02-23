@@ -179,6 +179,10 @@ class Telaen_core
      * @var string Our default, internal charset
      */
     protected $charset = 'UTF-8';
+    /**
+     * @var string Email suffix
+     */
+    protected $suffix = '.eml';
 
     /*******************/
 
@@ -402,7 +406,7 @@ class Telaen_core
         if (!self::isMD5($fname)) {
             $fname = self::md5($fname);
         }
-        return $fname.'.eml';
+        return $fname.$this->suffix;
     }
 
     /**
