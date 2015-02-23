@@ -80,7 +80,7 @@ if (isset($_POST['action'])) {
 
         // Regen the calendar
         case 'replaceCal':
-            $newcal = new MyMonth($TLN->userdatafolder, ['cal_year'], $_POST['cal_month']);
+            $newcal = new MyMonth($TLN->userdatafolder, intval($_POST['cal_year']), intval($_POST['cal_month']));
             $newcal->showMonthAsTable();
             break;
         default:
