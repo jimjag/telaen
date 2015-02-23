@@ -651,7 +651,7 @@ class Telaen_core
      */
     protected function _parseHeaders($header)
     {
-        $headers = explode("\n", $header);
+        $headers = preg_split("|[\n\r]+|", $header);
         $decodedheaders = [];
         $lasthead = "";
         for ($i = 0;$i<count($headers);$i++) {
