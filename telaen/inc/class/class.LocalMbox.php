@@ -916,13 +916,14 @@ class LocalMbox extends SQLite3
      * Move message from one folder to another and update attachments as required
      * @param array $msg Message to move
      * @param string $to Folder to move to
+     * @param boolean $adj Adjust folder settings?
      * @return bool
      */
-    public function moveMessage(&$msg, $to) {
+    public function moveMessage(&$msg, $to, $adj = true) {
         $oldmsg = $msg;
         $this->delMessage($oldmsg);
         $msg['folder'] = $to;
-        $this->newMessage($msg, true);
+        $this->newMessage($msg, $adj);
         if ($this->countAttachments($oldmsg) > 0) {
             $stmt = $this->prepare('UPDATE attachs SET folder=:nfolder WHERE uidl=:uidl AND folder=:folder ;');
             $stmt->bindValue(':folder', $oldmsg['folder']);

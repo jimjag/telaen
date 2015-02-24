@@ -897,7 +897,7 @@ class Telaen extends Telaen_core
                     $this->tdb->moveMessage($msg, $tofolder);
                     /* No matter what, the message is now local */
                     $msg['islocal'] = true;
-                    $this->tdb->doMessage($msg, ['islocal']);
+                    $this->tdb->updateMessage($msg, ['islocal']);
                     // delete from server if we are working on inbox
                     if ($wasinbox) {
                         $this->mailSendCommand('DELE '.$msg['mnum']);
