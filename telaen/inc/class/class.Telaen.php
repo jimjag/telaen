@@ -478,6 +478,7 @@ class Telaen extends Telaen_core
     /**
      * Grab Email message content (body)
      * @param array $msg Message to grab (REF)
+     * @param boolean $with_headers Return body and headers
      * @return string
      */
     protected function _mailRetrMsgImap(&$msg, $with_headers = true)
@@ -517,8 +518,15 @@ class Telaen extends Telaen_core
         $this->saveFile($path, $pts);
         rewind($pts);
         rewind($msgbody);
-        $msg['iscached'] = true;
-        $this->tdb->doMessage($msg, ['iscached']);
+        if ($this->prefs['keep_on_server']) {
+            $msg['iscached'] = true;
+            $this->tdb->doMessage($msg, ['iscached']);
+        } else {
+            $this->mailDeleteMsg($msg);
+            $msg['iscached'] = true;
+            $msg['islocal'] = true;
+            $this->tdb->doMessage($msg, ['iscached', 'islocal']);
+        }
         if ($with_headers) {
             return $pts;
         } else {
@@ -530,6 +538,7 @@ class Telaen extends Telaen_core
     /**
      * Grab Email message content (body)
      * @param array $msg Message to grab (REF)
+     * @param boolean $with_headers Return body and headers
      * @return string
      */
     protected function _mailRetrMsgPop(&$msg, $with_headers = true)
@@ -577,8 +586,15 @@ class Telaen extends Telaen_core
         $this->saveFile($path, $pts);
         rewind($pts);
         rewind($body);
-        $msg['iscached'] = true;
-        $this->tdb->doMessage($msg, ['iscached']);
+        if ($this->prefs['keep_on_server']) {
+            $msg['iscached'] = true;
+            $this->tdb->doMessage($msg, ['iscached']);
+        } else {
+            $this->mailDeleteMsg($msg);
+            $msg['iscached'] = true;
+            $msg['islocal'] = true;
+            $this->tdb->doMessage($msg, ['iscached', 'islocal']);
+        }
         if ($with_headers) {
             return $pts;
         } else {
@@ -691,7 +707,7 @@ class Telaen extends Telaen_core
         }
     }
 
-    protected function _mailDeleteMsgImap($msg, $send_to_trash = true, $save_only_read = false)
+    protected function _mailDeleteMsgImap(&$msg, $send_to_trash = true, $save_only_read = false)
     {
         $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
 
@@ -732,7 +748,7 @@ class Telaen extends Telaen_core
         return $this->tdb->delMessages($msg);
     }
 
-    protected function _mailDeleteMsgPop($msg, $send_to_trash = true, $save_only_read = false)
+    protected function _mailDeleteMsgPop(&$msg, $send_to_trash = true, $save_only_read = false)
     {
         $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
 
@@ -785,8 +801,14 @@ class Telaen extends Telaen_core
      * @param  boolean $save_only_read
      * @return boolean
      */
-    public function mailDeleteMsg($msg, $send_to_trash = true, $save_only_read = false)
+    public function mailDeleteMsg(&$msg, $send_to_trash = null, $save_only_read = null)
     {
+        if ($send_to_trash === null) {
+            $send_to_trash = $this->prefs['send_to_trash'];
+        }
+        if ($save_only_read === null) {
+            $save_only_read = $this->prefs['st_only_read'];
+        }
         if ($this->mail_protocol == IMAP) {
             return $this->_mailDeleteMsgImap($msg, $send_to_trash, $save_only_read);
         } else {
@@ -794,7 +816,7 @@ class Telaen extends Telaen_core
         }
     }
 
-    protected function _mailMoveMsgImap($msg, $tofolder)
+    protected function _mailMoveMsgImap(&$msg, $tofolder)
     {
         if ($tofolder != $msg['folder']) {
             /* check the message id to make sure that the message is still on the server */
@@ -833,7 +855,7 @@ class Telaen extends Telaen_core
         return true;
     }
 
-    protected function _mailMoveMsgPop($msg, $tofolder)
+    protected function _mailMoveMsgPop(&$msg, $tofolder)
     {
         if ($tofolder != 'inbox') {
             /* now we are working with POP3 */
@@ -889,7 +911,7 @@ class Telaen extends Telaen_core
      * @param  string  $tofolder
      * @return boolean
      */
-    public function mailMoveMsg($msg, $tofolder)
+    public function mailMoveMsg(&$msg, $tofolder)
     {
         if ($this->mail_protocol == IMAP) {
             return $this->_mailMoveMsgImap($msg, $tofolder);
