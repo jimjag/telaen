@@ -670,7 +670,7 @@ class LocalMbox extends SQLite3
      * $this->headers is NOT changed!
      * @param string $folder
      * @param boolean $force TRUE to force a resync
-     * @return array
+     * @return integer
      */
     public function countMessages($folder, $force = false)
     {
@@ -924,6 +924,34 @@ class LocalMbox extends SQLite3
         return $this->_ok;
     }
 
+    /**
+     * Move message from one folder to another and update attachments as required
+     * @param array $msg Message to move
+     * @param string $to Folder to move to
+     * @return bool
+     */
+    public function moveMessage(&$msg, $to) {
+        $oldmsg = $msg;
+        $this->delMessages($oldmsg);
+        $msg['folder'] = $to;
+        $this->newMessage($msg);
+        if ($this->countAttachments($oldmsg) > 0) {
+            $stmt = $this->prepare('UPDATE attachs SET folder=:nfolder WHERE uidl=:uidl AND folder=:folder ;');
+            $stmt->bindValue(':folder', $oldmsg['folder']);
+            $stmt->bindValue(':uidl', $oldmsg['uidl']);
+            $stmt->bindValue(':nfolder', $msg['folder']);
+            if ($stmt->execute()) {
+                $stmt->close();
+                return true;
+            } else {
+                $this->_ok = false;
+                $this->_log[] = "execute failed: ";
+                return false;
+            }
+        }
+        return true;
+    }
+
     /*********** Attachments methods ***********/
 
     /**
@@ -967,9 +995,14 @@ class LocalMbox extends SQLite3
         if ($folder !== null) {
             $msg['folder'] = $folder;
         }
-        $query = sprintf("DELETE FROM attachs WHERE folder='%s' AND uidl='%s';",
-            $msg['folder'], $msg['uidl']);
-        $this->query($query);
+        $query = 'DELETE FROM attachs WHERE folder=:folder AND uidl=:uidl ;';
+        $stmt = $this->prepare($query);
+        $stmt->bindValue(':uidl', $msg['uidl']);
+        $stmt->bindValue(':folder', $msg['folder']);
+        if (!$stmt->execute()) {
+            $this->_ok = false;
+            $this->_log[] = "exec failed: $query";
+        }
         return $this->getAttachments($msg);
 
     }
@@ -991,4 +1024,25 @@ class LocalMbox extends SQLite3
         return $this->getAttachments($msg);
     }
 
+    /**
+     * Get count of all email message Attachments in folder/emailbox
+     * @param array $msg
+     * @return integer
+     */
+    public function countAttachments($msg)
+    {
+        $query = 'SELECT COUNT(*) FROM attach WHERE folder=:folder AND uidl=:uidl ;';
+        $stmt = $this->prepare($query);
+        $stmt->bindValue(':uidl', $msg['uidl']);
+        $stmt->bindValue(':folder', $msg['folder']);
+        $result = $stmt->execute();
+        if ($result) {
+            $count = $result->fetchArray(SQLITE3_NUM);
+            return $count[0];
+        } else {
+            $this->_ok = false;
+            $this->_log[] = "query failed: $query";
+            return null;
+        }
+    }
 }

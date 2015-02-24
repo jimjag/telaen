@@ -844,6 +844,7 @@ class Telaen extends Telaen_core
                 copy($opath, $npath);
                 if (file_exists($npath)) {
                     unlink($opath);
+                    $this->tdb->moveMessage($msg, $tofolder);
                 } else {
                     $this->triggerError("Could not copy file! $opath -> $npath",
                         __FUNCTION__, __LINE__);
