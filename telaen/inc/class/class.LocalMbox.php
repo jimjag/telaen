@@ -886,7 +886,7 @@ class LocalMbox extends SQLite3
      */
     public function delMessages($msgs)
     {
-        if (!is_array($msgs)) {
+        if (empty($msgs[0]['uidl'])) {
             $msgs = (array)$msgs;
         }
         $this->_ok = true;
