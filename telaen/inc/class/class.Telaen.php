@@ -843,6 +843,10 @@ class Telaen extends Telaen_core
                 $this->_mkdir($dir); // Just in case
                 copy($opath, $npath);
                 if (file_exists($npath)) {
+                    if (file_exists($opath.$this->psuffix)) {
+                        copy($opath.$this->psuffix, $npath.$this->psuffix);
+                        unlink($opath.$this->psuffix);
+                    }
                     unlink($opath);
                     $this->tdb->moveMessage($msg, $tofolder);
                 } else {
@@ -885,6 +889,10 @@ class Telaen extends Telaen_core
                 copy($opath, $npath);
                 // ensure that the copy exist
                 if (file_exists($npath)) {
+                    if (file_exists($opath.$this->psuffix)) {
+                        copy($opath.$this->psuffix, $npath.$this->psuffix);
+                        unlink($opath.$this->psuffix);
+                    }
                     unlink($opath);
                     $this->tdb->moveMessage($msg, $tofolder);
                     /* No matter what, the message is now local */
