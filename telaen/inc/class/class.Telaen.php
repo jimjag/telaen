@@ -745,7 +745,7 @@ class Telaen extends Telaen_core
         }
         $this->mailSetFlag($msg, $this->flags['deleted'], '+');
 
-        return $this->tdb->delMessages($msg);
+        return $this->tdb->delMessage($msg);
     }
 
     protected function _mailDeleteMsgPop(&$msg, $send_to_trash = true, $save_only_read = false)
@@ -791,7 +791,7 @@ class Telaen extends Telaen_core
             }
         }
 
-        return $this->tdb->delMessages($msg);
+        return $this->tdb->delMessage($msg);
     }
 
     /**

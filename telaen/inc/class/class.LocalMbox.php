@@ -884,7 +884,7 @@ class LocalMbox extends SQLite3
      * @param array $msg
      * @return bool
      */
-    public function delMessages($msg)
+    public function delMessage($msg)
     {
         $this->_ok = true;
         $idx = $msg['idx'];
@@ -920,7 +920,7 @@ class LocalMbox extends SQLite3
      */
     public function moveMessage(&$msg, $to) {
         $oldmsg = $msg;
-        $this->delMessages($oldmsg);
+        $this->delMessage($oldmsg);
         $msg['folder'] = $to;
         $this->newMessage($msg, true);
         if ($this->countAttachments($oldmsg) > 0) {
