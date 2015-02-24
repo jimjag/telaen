@@ -335,7 +335,7 @@ class LocalMbox extends SQLite3
             $temp[] = "\"$key\"=?";
         }
         $query = $query.implode(' AND ', $temp).' ;';
-        $stmt = @$this->prepare($query);
+        $stmt = $this->prepare($query);
         if (!$stmt) {
             $this->_ok = false;
             $this->_log[] = "prepare failed: $query";
@@ -377,7 +377,7 @@ class LocalMbox extends SQLite3
         reset($list);
         $query .= str_repeat(',?', count($list) - 1);
         $query .= ');';
-        $stmt = @$this->prepare($query);
+        $stmt = $this->prepare($query);
         if (!$stmt) {
             $this->_ok = false;
             $this->_log[] = "prepare failed: $query";
@@ -537,7 +537,7 @@ class LocalMbox extends SQLite3
     {
         $query = 'DROP TABLE '.self::_get_table_name($folder).' ;';
         if ($this->exec($query)) {
-            $stmt = @$this->prepare("DELETE FROM folders WHERE name=:name ;");
+            $stmt = $this->prepare("DELETE FROM folders WHERE name=:name ;");
             if (!$stmt) {
                 $this->_ok = false;
                 $this->_log[] = "prepare failed: $query";
@@ -579,7 +579,7 @@ class LocalMbox extends SQLite3
             $this->folders[$folder][$field] = $val;
         }
         $query = "UPDATE folders SET \"$field\"=:val WHERE name=:name ;";
-        $stmt = @$this->prepare($query);
+        $stmt = $this->prepare($query);
         if (!$stmt) {
             $this->_ok = false;
             $this->_log[] = "prepare failed: $query";
@@ -615,7 +615,7 @@ class LocalMbox extends SQLite3
      */
     public function upgradeVersion($folder, $version)
     {
-        $stmt = @$this->prepare("UPDATE folders SET version=:version WHERE name=:name ;");
+        $stmt = $this->prepare("UPDATE folders SET version=:version WHERE name=:name ;");
         if (!$stmt) {
             $this->_ok = false;
             $this->_log[] = "prepare failed: UPDATE folders SET version=:version WHERE name=:name ;";
@@ -916,7 +916,7 @@ class LocalMbox extends SQLite3
         $idx = $msg['idx'];
         $query = sprintf("DELETE FROM %s WHERE uidl=:uidl ;", self::_get_table_name($msg['folder']));
         $isactive = ($msg['folder'] == $this->current_folder ? true : false);
-        $stmt = @$this->prepare($query);
+        $stmt = $this->prepare($query);
         if (!$stmt) {
             $this->_ok = false;
             $this->_log[] = "prepare failed: $query";
@@ -956,7 +956,7 @@ class LocalMbox extends SQLite3
         $msg['folder'] = $to;
         $this->newMessage($msg, $adj);
         if ($this->countAttachments($oldmsg) > 0) {
-            $stmt = @$this->prepare('UPDATE attachs SET folder=:nfolder WHERE uidl=:uidl AND folder=:folder ;');
+            $stmt = $this->prepare('UPDATE attachs SET folder=:nfolder WHERE uidl=:uidl AND folder=:folder ;');
             if (!$stmt) {
                 $this->_ok = false;
                 $this->_log[] = "prepare failed: UPDATE attachs";
@@ -1021,7 +1021,7 @@ class LocalMbox extends SQLite3
             $msg['folder'] = $folder;
         }
         $query = 'DELETE FROM attachs WHERE folder=:folder AND uidl=:uidl ;';
-        $stmt = @$this->prepare($query);
+        $stmt = $this->prepare($query);
         if (!$stmt) {
             $this->_ok = false;
             $this->_log[] = "prepare failed: $query";
@@ -1043,7 +1043,7 @@ class LocalMbox extends SQLite3
             $msg['folder'] = $folder;
         }
         $query = 'DELETE FROM attachs WHERE folder=:folder AND uidl=:uidl AND name=:name;';
-        $stmt = @$this->prepare($query);
+        $stmt = $this->prepare($query);
         if (!$stmt) {
             $this->_ok = false;
             $this->_log[] = "prepare failed: $query";
@@ -1067,7 +1067,7 @@ class LocalMbox extends SQLite3
     public function countAttachments($msg)
     {
         $query = 'SELECT COUNT(*) FROM attachs WHERE folder=:folder AND uidl=:uidl ;';
-        $stmt = @$this->prepare($query);
+        $stmt = $this->prepare($query);
         if (!$stmt) {
             $this->_ok = false;
             $this->_log[] = "prepare failed: $query";
