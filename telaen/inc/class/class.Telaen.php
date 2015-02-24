@@ -864,7 +864,7 @@ class Telaen extends Telaen_core
     {
         $wasinbox = false;
         if ($tofolder != 'inbox') {
-            /* now we are working with POP3 */
+            $opath = $this->getPath($msg)[0];
             /* check the message id to make sure that the messages still in the server */
             if ($msg['folder'] == 'inbox') {
                 $wasinbox = true;
@@ -874,7 +874,7 @@ class Telaen extends Telaen_core
                     return false;
                 }
 
-                if (!file_exists($msg['localname'])) {
+                if (!file_exists($opath)) {
                     if (!$this->mailRetrMsg($msg)) {
                         return false;
                     }
@@ -882,7 +882,6 @@ class Telaen extends Telaen_core
                 }
             }
             // ensure that the original file exists
-            $opath = $this->getPath($msg)[0];
             if (file_exists($opath)) {
                 list($npath, $dir) = $this->getPath($msg, $tofolder);
                 $this->_mkdir($dir);
