@@ -934,7 +934,7 @@ class LocalMbox extends SQLite3
         $oldmsg = $msg;
         $this->delMessages($oldmsg);
         $msg['folder'] = $to;
-        $this->newMessage($msg);
+        $this->newMessage($msg, true);
         if ($this->countAttachments($oldmsg) > 0) {
             $stmt = $this->prepare('UPDATE attachs SET folder=:nfolder WHERE uidl=:uidl AND folder=:folder ;');
             $stmt->bindValue(':folder', $oldmsg['folder']);

@@ -884,6 +884,7 @@ class Telaen extends Telaen_core
                 // ensure that the copy exist
                 if (file_exists($npath)) {
                     unlink($opath);
+                    $this->tdb->moveMessage($msg, $tofolder);
                     // delete from server if we are working on inbox or spam
                     if ($msg['folder'] == 'inbox') {
                         $this->mailSendCommand('DELE '.$msg['mnum']);
