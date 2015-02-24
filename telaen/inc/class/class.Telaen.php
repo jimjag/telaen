@@ -858,10 +858,12 @@ class Telaen extends Telaen_core
 
     protected function _mailMoveMsgPop(&$msg, $tofolder)
     {
+        $wasinbox = false;
         if ($tofolder != 'inbox') {
             /* now we are working with POP3 */
             /* check the message id to make sure that the messages still in the server */
             if ($msg['folder'] == 'inbox') {
+                $wasinbox = true;
                 if (!$this->mailOnServer($msg)) {
                     $this->triggerError("message not on server! [{$msg['uidl']}]",
                         __FUNCTION__, __LINE__);
@@ -885,8 +887,11 @@ class Telaen extends Telaen_core
                 if (file_exists($npath)) {
                     unlink($opath);
                     $this->tdb->moveMessage($msg, $tofolder);
-                    // delete from server if we are working on inbox or spam
-                    if ($msg['folder'] == 'inbox') {
+                    /* No matter what, the message is now local */
+                    $msg['islocal'] = true;
+                    $this->tdb->doMessage($msg, ['islocal']);
+                    // delete from server if we are working on inbox
+                    if ($wasinbox) {
                         $this->mailSendCommand('DELE '.$msg['mnum']);
                         if ($this->mailNokResp()) {
                             return false;
@@ -901,6 +906,7 @@ class Telaen extends Telaen_core
                 return false;
             }
         } else {
+            /* We cannot move to Inbox */
             return false;
         }
 
