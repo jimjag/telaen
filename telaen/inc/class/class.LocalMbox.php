@@ -880,47 +880,35 @@ class LocalMbox extends SQLite3
     }
 
     /**
-     * Delete email message(s) from DB (must all be in same folder)
-     * @param array $msgs
+     * Delete email message from DB
+     * @param array $msg
      * @return bool
      */
-    public function delMessages($msgs)
+    public function delMessages($msg)
     {
-        if (empty($msgs[0]['uidl'])) {
-            $msgs = (array)$msgs;
-        }
         $this->_ok = true;
-        $query = sprintf("DELETE FROM %s WHERE uidl=:uidl ;", self::_get_table_name($msgs[0]['folder']));
-        $isactive = ($msgs[0]['folder'] == $this->current_folder ? true : false);
+        $idx = $msg['idx'];
+        $query = sprintf("DELETE FROM %s WHERE uidl=:uidl ;", self::_get_table_name($msg['folder']));
+        $isactive = ($msg['folder'] == $this->current_folder ? true : false);
         $stmt = $this->prepare($query);
-        $idxs = [];
-        foreach ($msgs as $msg) {
-            $idx = $msg['idx'];
-            if (!isset($idxs[$idx])) {
-                $idxs[$idx] = $idx;
-                $stmt->bindValue(':uidl', $msg['uidl']);
-                if (!$stmt->execute()) {
-                    $this->_ok = false;
-                    $this->_log[] = "exec failed: $query";
-                } else {
-                    $idxs[$idx] = $idx;
-                }
-                $this->folders[$msg['folder']]['size'] -= $msg['size'];
-                $this->folders[$msg['folder']]['count'] -= 1;
-                if ($msg['unread']) {
-                    $this->folders[$msg['folder']]['unread'] -= 1;
-                }
-            }
+        $stmt->bindValue(':uidl', $msg['uidl']);
+        if (!$stmt->execute()) {
+            $this->_ok = false;
+            $this->_log[] = "exec failed: $query";
+            return false;
+        }
+        $this->folders[$msg['folder']]['size'] -= $msg['size'];
+        $this->folders[$msg['folder']]['count'] -= 1;
+        if ($msg['unread']) {
+            $this->folders[$msg['folder']]['unread'] -= 1;
         }
         /* If we deleted from the active folder, then update our array */
         if ($isactive) {
-            foreach ($idxs as $idx) {
                 unset($this->m_idx[$this->messages[$idx]['uidl']]);
                 unset($this->messages[$idx]);
-            }
         }
         $stmt->close();
-        $this->_folder_need_sync[$msgs[0]['folder']] = true;
+        $this->_folder_need_sync[$msg['folder']] = true;
         return $this->_ok;
     }
 
