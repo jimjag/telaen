@@ -1019,7 +1019,7 @@ class LocalMbox extends SQLite3
      */
     public function countAttachments($msg)
     {
-        $query = 'SELECT COUNT(*) FROM attach WHERE folder=:folder AND uidl=:uidl ;';
+        $query = 'SELECT COUNT(*) FROM attachs WHERE folder=:folder AND uidl=:uidl ;';
         $stmt = $this->prepare($query);
         $stmt->bindValue(':uidl', $msg['uidl']);
         $stmt->bindValue(':folder', $msg['folder']);
