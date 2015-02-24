@@ -335,7 +335,12 @@ class LocalMbox extends SQLite3
             $temp[] = "\"$key\"=?";
         }
         $query = $query.implode(' AND ', $temp).' ;';
-        $stmt = $this->prepare($query);
+        $stmt = @$this->prepare($query);
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: $query";
+            return false;
+        }
         reset($list);
         $i = 1;
         foreach ($list as $key) {
@@ -372,7 +377,12 @@ class LocalMbox extends SQLite3
         reset($list);
         $query .= str_repeat(',?', count($list) - 1);
         $query .= ');';
-        $stmt = $this->prepare($query);
+        $stmt = @$this->prepare($query);
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: $query";
+            return false;
+        }
         reset($list);
         $i = 1;
         foreach ($list as $key) {
@@ -527,7 +537,12 @@ class LocalMbox extends SQLite3
     {
         $query = 'DROP TABLE '.self::_get_table_name($folder).' ;';
         if ($this->exec($query)) {
-            $stmt = $this->prepare("DELETE FROM folders WHERE name=:name ;");
+            $stmt = @$this->prepare("DELETE FROM folders WHERE name=:name ;");
+            if (!$stmt) {
+                $this->_ok = false;
+                $this->_log[] = "prepare failed: $query";
+                return false;
+            }
             $stmt->bindValue(':name', $folder);
             if ($stmt->execute()) {
                 unset($this->folders[$folder]);
@@ -563,7 +578,13 @@ class LocalMbox extends SQLite3
         if ($val !== null) {
             $this->folders[$folder][$field] = $val;
         }
-        $stmt = $this->prepare("UPDATE folders SET \"$field\"=:val WHERE name=:name ;");
+        $query = "UPDATE folders SET \"$field\"=:val WHERE name=:name ;";
+        $stmt = @$this->prepare($query);
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: $query";
+            return false;
+        }
         $stmt->bindValue(':name', $folder);
         $stmt->bindValue(":val", $this->folders[$folder][$field]);
         if ($stmt->execute()) {
@@ -594,7 +615,12 @@ class LocalMbox extends SQLite3
      */
     public function upgradeVersion($folder, $version)
     {
-        $stmt = $this->prepare("UPDATE folders SET version=:version WHERE name=:name ;");
+        $stmt = @$this->prepare("UPDATE folders SET version=:version WHERE name=:name ;");
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: UPDATE folders SET version=:version WHERE name=:name ;";
+            return false;
+        }
         $stmt->bindValue(':name', $folder);
         $this->folders[$folder]['version'] = $version;
         $stmt->bindValue(':version', $this->folders[$folder]['version']);
@@ -890,7 +916,12 @@ class LocalMbox extends SQLite3
         $idx = $msg['idx'];
         $query = sprintf("DELETE FROM %s WHERE uidl=:uidl ;", self::_get_table_name($msg['folder']));
         $isactive = ($msg['folder'] == $this->current_folder ? true : false);
-        $stmt = $this->prepare($query);
+        $stmt = @$this->prepare($query);
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: $query";
+            return false;
+        }
         $stmt->bindValue(':uidl', $msg['uidl']);
         if (!$stmt->execute()) {
             $this->_ok = false;
@@ -925,7 +956,12 @@ class LocalMbox extends SQLite3
         $msg['folder'] = $to;
         $this->newMessage($msg, $adj);
         if ($this->countAttachments($oldmsg) > 0) {
-            $stmt = $this->prepare('UPDATE attachs SET folder=:nfolder WHERE uidl=:uidl AND folder=:folder ;');
+            $stmt = @$this->prepare('UPDATE attachs SET folder=:nfolder WHERE uidl=:uidl AND folder=:folder ;');
+            if (!$stmt) {
+                $this->_ok = false;
+                $this->_log[] = "prepare failed: UPDATE attachs";
+                return false;
+            }
             $stmt->bindValue(':folder', $oldmsg['folder']);
             $stmt->bindValue(':uidl', $oldmsg['uidl']);
             $stmt->bindValue(':nfolder', $msg['folder']);
@@ -985,7 +1021,12 @@ class LocalMbox extends SQLite3
             $msg['folder'] = $folder;
         }
         $query = 'DELETE FROM attachs WHERE folder=:folder AND uidl=:uidl ;';
-        $stmt = $this->prepare($query);
+        $stmt = @$this->prepare($query);
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: $query";
+            return false;
+        }
         $stmt->bindValue(':uidl', $msg['uidl']);
         $stmt->bindValue(':folder', $msg['folder']);
         if (!$stmt->execute()) {
@@ -1002,7 +1043,12 @@ class LocalMbox extends SQLite3
             $msg['folder'] = $folder;
         }
         $query = 'DELETE FROM attachs WHERE folder=:folder AND uidl=:uidl AND name=:name;';
-        $stmt = $this->prepare($query);
+        $stmt = @$this->prepare($query);
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: $query";
+            return false;
+        }
         $stmt->bindValue(':uidl', $msg['uidl']);
         $stmt->bindValue(':folder', $msg['folder']);
         $stmt->bindValue(':name', $name);
@@ -1021,7 +1067,12 @@ class LocalMbox extends SQLite3
     public function countAttachments($msg)
     {
         $query = 'SELECT COUNT(*) FROM attachs WHERE folder=:folder AND uidl=:uidl ;';
-        $stmt = $this->prepare($query);
+        $stmt = @$this->prepare($query);
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: $query";
+            return false;
+        }
         $stmt->bindValue(':uidl', $msg['uidl']);
         $stmt->bindValue(':folder', $msg['folder']);
         $result = $stmt->execute();
