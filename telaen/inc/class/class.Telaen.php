@@ -183,7 +183,7 @@ class Telaen extends Telaen_core
                 }
             }
         } else {
-            if (preg_match('|^(\\+OK)(.*)$|i', trim($string), $match)) {
+            if (preg_match('|^(...)(.*)$|i', trim($string), $match)) {
                 if (strtoupper($match[1]) == '+OK') {
                     $resp = self::RESP_OK;
                 } else {
@@ -901,7 +901,7 @@ class Telaen extends Telaen_core
                     // delete from server if we are working on inbox
                     if ($wasinbox) {
                         $this->mailSendCommand('DELE '.$msg['mnum']);
-                        if ($this->mailNokResp()) {
+                        if (!$this->mailOkResp()) {
                             return false;
                         }
                         $this->tdb->shiftMessages($msg['mnum'], 'inbox');
@@ -1037,7 +1037,7 @@ class Telaen extends Telaen_core
             if (!empty($this->capabilities['UIDL'])) {
                 $this->mailSendCommand("UIDL");
                 $buffer = $this->mailReadResponse();
-                if (substr($buffer, 0, 3) == "+OK") {
+                if ($this->mailOkResp($buffer)) {
                     while (!self::_feof($this->_mail_connection)) {
                         $buffer = $this->mailReadResponse();
                         if(trim($buffer) == ".") {
