@@ -878,7 +878,7 @@ class Telaen extends Telaen_core
                     if (!$this->mailRetrMsg($msg)) {
                         return false;
                     }
-                    $this->mailSetFlag($msg, $this->flags['seen'], '-');
+                    //$this->mailSetFlag($msg, $this->flags['seen'], '-');
                 }
             }
             // ensure that the original file exists
@@ -904,6 +904,7 @@ class Telaen extends Telaen_core
                         if ($this->mailNokResp()) {
                             return false;
                         }
+                        $this->tdb->shiftMessages($msg['mnum'], 'inbox');
                     }
                 } else {
                     $this->triggerError("Could not copy file! $opath -> $npath",

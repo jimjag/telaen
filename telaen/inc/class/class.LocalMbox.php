@@ -65,8 +65,8 @@ class LocalMbox extends SQLite3
      */
     private $mschema = array(
         'date' => 'INT DEFAULT 0',
-        'id' => 'INT DEFAULT 0',
-        'mnum' => 'INT DEFAULT 0', // message number
+        'id' => 'INT DEFAULT 0', // Index in messages[]
+        'mnum' => 'INT DEFAULT 0', // message number (POP3)
         'size' => 'INT DEFAULT 0',
         'attach' => 'INT DEFAULT 0', // Does it have attachments?
         'islocal' => 'INT DEFAULT 0', // Does it live on web server?
@@ -950,7 +950,8 @@ class LocalMbox extends SQLite3
      * @param boolean $adj Adjust folder settings?
      * @return bool
      */
-    public function moveMessage(&$msg, $to, $adj = true) {
+    public function moveMessage(&$msg, $to, $adj = true)
+    {
         $oldmsg = $msg;
         $this->delMessage($oldmsg);
         $msg['folder'] = $to;
@@ -972,6 +973,46 @@ class LocalMbox extends SQLite3
                 $this->_ok = false;
                 $this->_log[] = "execute failed: ";
                 return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Shift the mnum indexes either up or down by 1 for messages in a
+     * specific folder
+     * @param int $mnum mnum
+     * @param string $folder Folder to update
+     * @param bool $up Shift up (-1) or down (+1)
+     * @return bool
+     */
+    public function shiftMessages($mnum, $folder = 'inbox', $up = true)
+    {
+        $folder = self::_get_table_name($folder);
+        if ($up) {
+            $query = "UPDATE ${folder} SET mnum = mnum - 1 WHERE mnum > :mnum ;";
+        } else {
+            $query = "UPDATE ${folder} SET mnum = mnum + 1 WHERE mnum > :mnum ;";
+        }
+        $stmt = $this->prepare($query);
+        if (!$stmt) {
+            $this->_ok = false;
+            $this->_log[] = "prepare failed: UPDATE attachs";
+            return false;
+        }
+        $stmt->bindValue(':mnum', $mnum);
+        if (!$stmt->execute()) {
+            $this->_ok = false;
+            $this->_log[] = "execute failed: ";
+            return false;
+        }
+        if ($folder == $this->$current_folder) {
+            $diff = $up ? -1 : 1;
+            $count = count($this->messages);
+            for ($i = 0; $i < $count; $i++) {
+                if ($this->messages[$i]['mnum'] > $mnum) {
+                    $this->messages[$i]['mnum'] += $diff;
+                }
             }
         }
         return true;
