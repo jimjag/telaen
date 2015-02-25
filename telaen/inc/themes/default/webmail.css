@@ -369,7 +369,7 @@ td.headerright {
 	color: #FFFFFF;
 }
 
-#ptext {
+.ptext {
 	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 	color : #000;
     display: block;
