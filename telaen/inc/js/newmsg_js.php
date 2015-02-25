@@ -139,12 +139,7 @@ error_msg[error_msg.length] = strEmail;
 <script type='text/javascript'>
 //<![CDATA[
 window.setInterval(function() {
-$.ajax({
-    url: 'ajax.php',
-	type: 'POST',
-	data: {action: 'pingSession'}
-});
-}, 60000);
+$.post('ajax.php', {action: 'pingSession'}); }, 60000);
 //]]>
 </script>
 
