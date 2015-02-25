@@ -930,7 +930,7 @@ class Telaen_core
      */
     public function returnTextBody($body)
     {
-        return preg_replace('/(\r\n|\n|\r|\n\r)/', "<br>$1", $this->_makeLinkClickable(htmlspecialchars($body)));
+        return preg_replace('/(\r\n|\n|\r|\n\r)/', "<br>$1", $this->_makeLinkClickable(htmlspecialchars($this->blob($body))));
     }
 
     /**
