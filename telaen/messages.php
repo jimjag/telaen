@@ -176,9 +176,9 @@ if ($nummsg > 0) {
 
         if ($headers[$i]['unread']) {
             $msg_img = './images/msg_unread.gif';
-        } elseif (stristr($headers[$i]['flags'], $TLN->flags['answered'])) {
+        } elseif ($TLN->isFlagSet($headers[$i], 'answered')) {
             $msg_img = './images/msg_answered.gif';
-        } elseif (stristr($headers[$i]['flags'], $TLN->flags['forwarded'])) {
+        } elseif ($TLN->isFlagSet($headers[$i], 'forwarded')) {
             $msg_img = './images/msg_forwarded.gif';
         } else {
             $msg_img = './images/msg_read.gif';

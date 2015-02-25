@@ -83,8 +83,8 @@ if ($folder == 'inbox') {
                         break;
                     case FL_TYPE_MARK_READ:
 
-                        if (!preg_match('|SEEN|i', $message['flags'])) {
-                            $TLN->mailSetFlag($message, 'SEEN', '+');
+                        if (!$TLN->isFlagSet($message, 'seen') {
+                            $TLN->mailSetFlag($message, 'seen', '+');
                             $mbox['headers'][$folder][$index] = $message;
                         }
 

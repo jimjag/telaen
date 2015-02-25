@@ -138,7 +138,7 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
     $messagelist = array();
 
     for ($i = 0;$i<count($headers);$i++) {
-        $read = (stristr($headers[$i]['flags'], $TLN->flags['seen'])) ? 'true' : 'false';
+        $read = ($TLN->isFlagSet($headers[$i], 'seen')) ? 'true' : 'false';
 
         $readlink = "javascript:readmsg(".$headers[$i]['ix'].",$read,'".urlencode($headers[$i]['folder'])."')";
         $composelink = "newmsg.php?folder=$folder&nameto=".htmlspecialchars($headers[$i]['from'][0]['name']).'&mailto='.htmlspecialchars($headers[$i]['from'][0]['mail'])."";
@@ -148,9 +148,9 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         $from = $headers[$i]['from'][0]['name'];
         $to = $headers[$i]['to'][0]['name'];
         $subject = $headers[$i]['subject'];
-        if (!stristr($headers[$i]['flags'], $TLN->flags['seen'])) {
+        if (!$TLN->isFlagSet($headers[$i], 'seen')) {
             $msg_img = './images/msg_unread.gif';
-        } elseif (stristr($headers[$i]['flags'], $TLN->flags['answered'])) {
+        } elseif ($TLN->isFlagSet($headers[$i], 'answered')) {
             $msg_img = './images/msg_answered.gif';
         } else {
             $msg_img = './images/msg_read.gif';

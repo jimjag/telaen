@@ -712,7 +712,7 @@ class Telaen extends Telaen_core
 
     protected function _mailDeleteMsgImap(&$msg, $update = true)
     {
-        $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
+        $read = $this->isFlagSet($msg, 'seen');
         $send_to_trash = $this->prefs['send_to_trash'];
         $save_only_read = $this->prefs['st_only_read'];
 
@@ -755,7 +755,7 @@ class Telaen extends Telaen_core
 
     protected function _mailDeleteMsgPop(&$msg, $update = true)
     {
-        $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
+        $read = $this->isFlagSet($msg, 'seen');
         $send_to_trash = $this->prefs['send_to_trash'];
         $save_only_read = $this->prefs['st_only_read'];
 
@@ -994,7 +994,7 @@ class Telaen extends Telaen_core
                         $msg['mnum'] = intval($curmsg);
                         $msg['size'] = intval($size);
                         $msg['flags'] = strtoupper($flags);
-                        if (!stristr($this->flags['seen'], $msg['flags'])) {
+                        if (!$this->isFlagSet($msg, 'seen')) {
                             $msg['unread'] = true;
                         }
                         $msg['folder'] = $boxname;
