@@ -839,12 +839,14 @@ class Telaen extends Telaen_core
                 return false;
             }
             $opath = $this->getPath($msg)[0];
-            if (file_exists($opath)) {
+            if ($msg['iscached'] || file_exists($opath)) {
                 list($npath, $dir) = $this->getPath($msg, $tofolder);
                 $this->_mkdir($dir); // Just in case
+                $this->debugMsg("copying $opath -> $npath");
                 copy($opath, $npath);
                 if (file_exists($npath)) {
-                    if (file_exists($opath.$this->psuffix)) {
+                    if ($msg['bparsed'] || file_exists($opath.$this->psuffix)) {
+                        $this->debugMsg("copying {$opath}{$this->psuffix} -> {$npath}{$this->psuffix}");
                         copy($opath.$this->psuffix, $npath.$this->psuffix);
                         unlink($opath.$this->psuffix);
                     }
@@ -888,11 +890,13 @@ class Telaen extends Telaen_core
             if ($msg['iscached'] || file_exists($opath)) {
                 list($npath, $dir) = $this->getPath($msg, $tofolder);
                 $this->_mkdir($dir);
+                $this->debugMsg("copying $opath -> $npath");
                 copy($opath, $npath);
                 // ensure that the copy exist
                 if (file_exists($npath)) {
                     if ($msg['bparsed'] || file_exists($opath.$this->psuffix)) {
                         copy($opath.$this->psuffix, $npath.$this->psuffix);
+                        $this->debugMsg("copying {$opath}{$this->psuffix} -> {$npath}{$this->psuffix}");
                         unlink($opath.$this->psuffix);
                     }
                     unlink($opath);
@@ -906,6 +910,7 @@ class Telaen extends Telaen_core
                         if (!$this->mailOkResp()) {
                             return false;
                         }
+                        $this->debugMsg("Shifting {$msg['mnum']}");
                         $this->tdb->shiftMessages($msg['mnum'], 'inbox');
                     }
                 } else {
