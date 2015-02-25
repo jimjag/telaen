@@ -1630,9 +1630,10 @@ class Telaen extends Telaen_core
      * @param  string  $msg      Email message to set flag for
      * @param  string  $flagname Flag to set
      * @param  string  $flagtype Set + or Unset -
+     * @param  boolean $sync_unread Sync the folders db
      * @return boolean
      */
-    public function mailSetFlag(&$msg, $flagname, $flagtype = '+')
+    public function mailSetFlag(&$msg, $flagname, $flagtype = '+', $sync_unread = true)
     {
         $lflagname = strtolower($flagname);
         if (!isset($this->flags[$lflagname])) {
@@ -1676,8 +1677,23 @@ class Telaen extends Telaen_core
         }
 
         $flags = join(' ', $flags);
-        $msg['flags'] = $flags;
-        $this->tdb->doMessage($msg, ['flags']);
+        if ($lflagname != 'seen') {
+            $msg['flags'] = $flags;
+            $this->tdb->doMessage($msg, ['flags']);
+        } else {
+            /* We need to update the unread fields */
+            if ($flagtype == '+') {
+                $msg['unread'] = false;
+                $n = $this->tdb->folders[$msg['folders']]['unread'] - 1;
+            } else {
+                $msg['unread'] = true;
+                $n = $this->tdb->folders[$msg['folders']]['unread'] + 1;
+            }
+            $this->tdb->doMessage($msg, ['flags', 'unread']);
+            if ($sync_unread) {
+                $this->tdb->updateFolderField($msg['folder]'], 'unread', $n);
+            }
+        }
 
         return true;
     }
