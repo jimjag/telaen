@@ -1106,7 +1106,9 @@ class Telaen_core
         }
         $myarray['attach'] = preg_match('#(multipart/mixed|multipart/related|application)#i',
                             $headers['content-type']);
-
+        $ct = preg_match('|\s*([^/]+)/([^ ;]+)|', $headers['content-type'], $m);
+        $myarray['type'] = ($ct ? $m[1] : 'text');
+        $myarray['subtype']= ($ct ? $m[2] : 'plain');
         /*
          * Date and Subject are top level, as well as in the headers[]
          */
@@ -1275,7 +1277,9 @@ class Telaen_core
             }
             $this->saveFile($path, $data);
             $msg['bparsed'] = true;
-            $this->tdb->doMessage($msg, ['bparsed']);
+            $msg['type'] = $a['Type'];
+            $msg['subtype'] = $a['SubType'];
+            $this->tdb->doMessage($msg, ['bparsed', 'type', 'subtype']);
         }
         return true;
     }
