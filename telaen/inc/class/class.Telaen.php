@@ -767,13 +767,14 @@ class Telaen extends Telaen_core
                 if (!$this->mailRetrMsg($msg)) {
                     return false;
                 }
-                $this->mailSetFlag($msg, $this->flags['seen'], '-');
+                //$this->mailSetFlag($msg, $this->flags['seen'], '-');
             }
 
             $this->mailSendCommand('DELE '.$msg['mnum']);
             if ($this->mailNokResp()) {
                 return false;
             }
+            $this->tdb->shiftMessages($msg['mnum'], 'inbox');
         }
 
         if ($send_to_trash
@@ -866,7 +867,7 @@ class Telaen extends Telaen_core
         if ($tofolder != 'inbox') {
             $opath = $this->getPath($msg)[0];
             /* check the message id to make sure that the messages still in the server */
-            if ($msg['folder'] == 'inbox') {
+            if ($msg['folder'] == 'inbox' && !$msg['local']) {
                 $wasinbox = true;
                 if (!$this->mailOnServer($msg)) {
                     $this->triggerError("message not on server! [{$msg['uidl']}]",
