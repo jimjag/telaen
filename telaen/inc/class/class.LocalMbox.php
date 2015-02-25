@@ -81,7 +81,7 @@ class LocalMbox extends SQLite3
         'flags' => 'TEXT DEFAULT ""',
         'localname' => 'TEXT DEFAULT ""',
         'type' => 'TEXT DEFAULT "text"',
-        'subtype' => 'TEXT DEFAULT "plain',
+        'subtype' => 'TEXT DEFAULT "plain"',
         'uidl' => 'TEXT NOT NULL PRIMARY KEY', // Our unique key (md5)
         'ouidl' => 'TEXT DEFAULT ""', // Old uidl from Telaen 1.x
         'header' => 'TEXT DEFAULT ""', // Raw header for Email
