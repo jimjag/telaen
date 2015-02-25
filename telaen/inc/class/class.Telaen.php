@@ -867,7 +867,7 @@ class Telaen extends Telaen_core
         if ($tofolder != 'inbox') {
             $opath = $this->getPath($msg)[0];
             /* check the message id to make sure that the messages still in the server */
-            if ($msg['folder'] == 'inbox' && !$msg['local']) {
+            if ($msg['folder'] == 'inbox' && !$msg['islocal']) {
                 $wasinbox = true;
                 if (!$this->mailOnServer($msg)) {
                     $this->triggerError("message not on server! [{$msg['uidl']}]",
@@ -882,8 +882,10 @@ class Telaen extends Telaen_core
                     //$this->mailSetFlag($msg, $this->flags['seen'], '-');
                 }
             }
-            // ensure that the original file exists
-            if (file_exists($opath)) {
+            /*
+             * ensure that the original file exists
+             */
+            if ($msg['iscached'] || file_exists($opath)) {
                 list($npath, $dir) = $this->getPath($msg, $tofolder);
                 $this->_mkdir($dir);
                 copy($opath, $npath);
@@ -1115,7 +1117,7 @@ class Telaen extends Telaen_core
                 $msg['size'] = filesize($fullpath);
                 $msg['localname'] = $entry;
                 $msg['folder'] = $boxname;
-                $msg['islocal'] = true;
+                // $msg['islocal'] = true;
                 $msg['iscached'] = true;
                 $msg['flat'] = $flat;
                 $mail_info = $this->parseHeaders($thisheader);
