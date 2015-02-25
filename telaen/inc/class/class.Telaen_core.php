@@ -1219,13 +1219,14 @@ class Telaen_core
              */
             $cids = [];
             $i = 0;
+            $tag = substr($this->uniqID(), 3, 6);
             foreach ($a['Related'] as $b) {
                 $filename = trim(basename($b['FileName']));
                 $safefilename = self::fsSafeFile($filename);
                 $cids[$i]['name'] = $filename;
                 $cids[$i]['size'] = intval($b['DataLength']);
                 $cids[$i]['cid'] = $b['ContentID'];
-                $cids[$i]['localname'] = $msg['uidl'].'_'.$msg['folder'].'_'.$safefilename;
+                $cids[$i]['localname'] = $msg['uidl'].'_'.$tag.'_'.$safefilename;
                 $cids[$i]['type'] = $b['Type'];
                 $cids[$i]['subtype'] = $b['SubType'];
                 $cids[$i]['disposition'] = 'inline';
@@ -1252,7 +1253,7 @@ class Telaen_core
                 $safefilename = self::fsSafeFile($filename);
                 $attachments[$i]['name'] = $filename;
                 $attachments[$i]['size'] = intval($b['DataLength']);
-                $attachments[$i]['localname'] = $msg['uidl'].'_'.$msg['folder'].'_'.$safefilename;
+                $attachments[$i]['localname'] = $msg['uidl'].'_'.$tag.'_'.$safefilename;
                 $attachments[$i]['type'] = $b['Type'];
                 $attachments[$i]['subtype'] = $b['SubType'];
                 $attachments[$i]['disposition'] = 'attachment';
