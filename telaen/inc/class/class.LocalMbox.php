@@ -1006,7 +1006,7 @@ class LocalMbox extends SQLite3
             $this->_log[] = "execute failed: ";
             return false;
         }
-        if ($folder == $this->$current_folder) {
+        if ($folder == $this->current_folder) {
             $diff = $up ? -1 : 1;
             $count = count($this->messages);
             for ($i = 0; $i < $count; $i++) {

@@ -605,6 +605,7 @@ class Telaen extends Telaen_core
     /**
      * Retrieve and return specific email message
      * @param  array  $msg   The message to obtain
+     * @param bool $with_headers return message w/ headers
      * @return mixed
      */
     public function mailRetrMsg(&$msg, $with_headers = true)
