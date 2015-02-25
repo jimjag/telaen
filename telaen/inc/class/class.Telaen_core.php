@@ -925,12 +925,12 @@ class Telaen_core
 
     /**
      * Format a plain text string into a HTML formated string
+     * @param string $body
+     * @return string
      */
-    protected function _returnTextBody($body)
+    public function returnTextBody($body)
     {
-        $body = preg_replace('/(\r\n|\n|\r|\n\r)/', "<br>$1", $this->_makeLinkClickable(htmlspecialchars($body)));
-
-        return "<font face=\"Courier New\" size=\"2\">$body</font>";
+        return preg_replace('/(\r\n|\n|\r|\n\r)/', "<br>$1", $this->_makeLinkClickable(htmlspecialchars($body)));
     }
 
     /**

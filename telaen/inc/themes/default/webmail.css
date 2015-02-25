@@ -368,3 +368,10 @@ td.headerright {
 	display:inline-block;
 	color: #FFFFFF;
 }
+
+#ptext {
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+	color : #000;
+    display: block;
+    white-space: pre;
+}

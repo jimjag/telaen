@@ -64,7 +64,7 @@ $smarty->assign('pageMetas', $pmetas);
 $smarty->assign('downloadLink', 'download.php?folder='.urlencode($folder).'&uidl='.$uidl);
 $redir_path = 'redir.php';    // why not just relative?? Now is relative (due to problems on https servers)!
 
-$body = "<iframe src='show_body.php?folder=".urlencode($folder)."&uidl=$uidl' width='100%' height='400' frameborder='0'></iframe>";
+$body = "<iframe src='show_body.php?folder=".urlencode($folder)."&uidl=$uidl' width='100%' height='600' frameborder='0'></iframe>";
 $smarty->assign('smMessageBody', $body);
 
 // look if the msg needs a receipt

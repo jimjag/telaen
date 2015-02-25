@@ -30,4 +30,10 @@ if (!$TLN->config['allow_html']) {
 //$meta_charset = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$lang['default_char_set']."\">";
 echo($pmetas);
 //echo($meta_charset);
-$TLN->myEcho($body);
+if ($msg['type'] == 'text' && $msg['subtype'] == 'plain') {
+    $TLN->myEcho("<div class='ptext'>");
+    $TLN->myEcho($TLN->returnTextBody($body));
+    $TLN->myEcho("</div>");
+} else {
+    $TLN->myEcho($body);
+}
