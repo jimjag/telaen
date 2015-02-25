@@ -194,14 +194,14 @@ if ($haveattachs) {
     $smarty->assign('smAttachList', $attachAr);
 }
 
-//$AuthSession->Save($auth);
-//$TLN->tdb->syncMessages();
-
-$avalfolders = array();
-foreach ($folders as $entry => $f) {
-    $entry = $TLN->fixPrefix($entry, 0);
-    $display = extended_name($entry);
-    $avalfolders[] = array('path' => $entry, 'display' => $display);
+$avalfolders = [];
+reset($folders);
+foreach ($folders as $a) {
+    if ($a['name'] != $folder && ($TLN->mail_protocol == IMAP || ($a['name'] != 'inbox'))) {
+        $entry = $TLN->fixPrefix($a['name'], 0);
+        $display = extended_name($entry);
+        $avalfolders[] = array('path' => $entry, 'display' => $display);
+    }
 }
 $smarty->assign('smAvalFolders', $avalfolders);
 unset($TLN);
