@@ -85,7 +85,6 @@ $smarty->assign('smFromList', $ARFrom);
 
 // To
 $ARTo = $TLN->getNames($msg['headers']['to']);
-
 for ($i = 0;$i<count($ARTo);$i++) {
     $name = $ARTo[$i]['name'];
     $thismail = $ARTo[$i]['mail'];
@@ -96,7 +95,7 @@ for ($i = 0;$i<count($ARTo);$i++) {
 }
 
 // CC
-$ARCC = $msg['headers']['cc'];
+$ARCC = $TLN->getNames($msg['headers']['cc']);
 if (count($ARCC) > 0) {
     $smarty->assign('smHaveCC', 1);
     for ($i = 0;$i<count($ARCC);$i++) {
