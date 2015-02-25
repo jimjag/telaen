@@ -518,8 +518,16 @@ class Telaen extends Telaen_core
         $this->saveFile($path, $pts);
         rewind($pts);
         rewind($msgbody);
-        $msg['iscached'] = true;
-        $this->tdb->doMessage($msg, ['iscached']);
+        if ($this->prefs['keep_on_server']) {
+            $msg['iscached'] = true;
+            $this->tdb->doMessage($msg, ['iscached']);
+        } else {
+            $msg['iscached'] = false; // Magic. Don't touch anything local
+            $this->mailDeleteMsg($msg, false); // For the delete
+            $msg['iscached'] = true;
+            $msg['islocal'] = true;
+            $this->tdb->doMessage($msg, ['iscached', 'islocal']);
+        }
          if ($with_headers) {
             return $pts;
         } else {
@@ -579,8 +587,16 @@ class Telaen extends Telaen_core
         $this->saveFile($path, $pts);
         rewind($pts);
         rewind($body);
-        $msg['iscached'] = true;
-        $this->tdb->doMessage($msg, ['iscached']);
+        if ($this->prefs['keep_on_server']) {
+            $msg['iscached'] = true;
+            $this->tdb->doMessage($msg, ['iscached']);
+        } else {
+            $msg['iscached'] = false;
+            $this->mailDeleteMsg($msg, false);
+            $msg['iscached'] = true;
+            $msg['islocal'] = true;
+            $this->tdb->doMessage($msg, ['iscached', 'islocal']);
+        }
         if ($with_headers) {
             return $pts;
         } else {
@@ -694,7 +710,7 @@ class Telaen extends Telaen_core
         }
     }
 
-    protected function _mailDeleteMsgImap(&$msg)
+    protected function _mailDeleteMsgImap(&$msg, $update = true)
     {
         $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
         $send_to_trash = $this->prefs['send_to_trash'];
@@ -717,7 +733,7 @@ class Telaen extends Telaen_core
             && (!$save_only_read || ($save_only_read && $read))) {
             $trash_folder = $this->fixPrefix('trash', 1);
 
-            $this->mailSendCommand('COPY '.$msg['mnum'].':'.$msg['mnum']." \"$trash_folder\"");
+            $this->mailSendCommand("UID COPY {$msg['uid']} \"$trash_folder\"");
             $buffer = $this->mailReadResponse();
 
             /* if any problem with the server, stop the function */
@@ -725,7 +741,7 @@ class Telaen extends Telaen_core
                 return false;
             }
             $opath = $this->getPath($msg)[0];
-            if (file_exists($opath)) {
+            if ($msg['iscached'] && file_exists($opath)) {
                 list($npath, $dir) = $this->getPath($msg, 'trash');
                 $this->_mkdir($dir); // Just in case
                 copy($opath, $npath);
@@ -734,10 +750,10 @@ class Telaen extends Telaen_core
         }
         $this->mailSetFlag($msg, $this->flags['deleted'], '+');
 
-        return $this->tdb->delMessage($msg);
+        return ($update ? $this->tdb->delMessage($msg) : true);
     }
 
-    protected function _mailDeleteMsgPop(&$msg)
+    protected function _mailDeleteMsgPop(&$msg, $update = true)
     {
         $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
         $send_to_trash = $this->prefs['send_to_trash'];
@@ -770,32 +786,36 @@ class Telaen extends Telaen_core
         if ($send_to_trash
             && $msg['folder'] != 'trash'
             && (!$save_only_read || ($save_only_read && $read))) {
-            if (file_exists($opath)) {
+            if ($msg['iscached'] && file_exists($opath)) {
                 list($npath, $dir) = $this->getPath($msg, 'trash');
                 $this->_mkdir($dir); // Just in case
                 copy($opath, $npath);
                 unlink($opath);
             }
         } else {
-            if (file_exists($opath)) {
+            if ($msg['iscached'] && file_exists($opath)) {
                 unlink($opath);
             }
         }
 
-        return $this->tdb->delMessage($msg);
+        return ($update ? $this->tdb->delMessage($msg) : true);
     }
 
     /**
      * Delete specific email message
-     * @param  string  $msg            The message to delete
+     * NOTE: if $msg['iscached'] is false, then we just work on
+     *       the server-side. That way we can delete a message
+     *       on the server w/o touching our local copy
+     * @param  array  $msg The message to delete
+     * @param boolean $update true if we want to update the
      * @return boolean
      */
-    public function mailDeleteMsg(&$msg)
+    public function mailDeleteMsg(&$msg, $update = true)
     {
         if ($this->mail_protocol == IMAP) {
-            return $this->_mailDeleteMsgImap($msg);
+            return $this->_mailDeleteMsgImap($msg, $update);
         } else {
-            return $this->_mailDeleteMsgPop($msg);
+            return $this->_mailDeleteMsgPop($msg, $update);
         }
     }
 
@@ -1924,7 +1944,7 @@ class Telaen extends Telaen_core
                 $trash = $this->tdb->getMessages('trash');
                 if (count($trash) > 0) {
                     foreach ($trash as $msg) {
-                        $this->mailDeleteMsg($msg, false);
+                        $this->mailDeleteMsg($msg);
                     }
                     $this->mailExpunge();
                 }
@@ -1936,7 +1956,7 @@ class Telaen extends Telaen_core
                 $trash = $this->tdb->getMessages('spam');
                 if (count($trash) > 0) {
                     foreach ($trash as $msg) {
-                        $this->mailDeleteMsg($msg, false);
+                        $this->mailDeleteMsg($msg);
                     }
                     $this->mailExpunge();
                 }
