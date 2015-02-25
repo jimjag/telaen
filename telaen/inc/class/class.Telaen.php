@@ -891,7 +891,7 @@ class Telaen extends Telaen_core
                 copy($opath, $npath);
                 // ensure that the copy exist
                 if (file_exists($npath)) {
-                    if (file_exists($opath.$this->psuffix)) {
+                    if ($msg['bparsed'] || file_exists($opath.$this->psuffix)) {
                         copy($opath.$this->psuffix, $npath.$this->psuffix);
                         unlink($opath.$this->psuffix);
                     }
