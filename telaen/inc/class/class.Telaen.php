@@ -1639,7 +1639,7 @@ class Telaen extends Telaen_core
             $this->triggerError("unknown flag: $flagname", __FUNCTION__, __LINE__);
             return false;
         }
-        $flagname = $this->flags[$lflagname];
+        $flagname = strtoupper($this->flags[$lflagname]);
         if ($flagtype == '+' && $this->isFlagSet($msg, $lflagname)) {
             return true;
         }
@@ -1658,19 +1658,19 @@ class Telaen extends Telaen_core
         if (!empty($strFlags)) {
             $flags = array_unique(preg_split('|\s+|', $strFlags));
         }
-
         if ($flagtype == '+') {
             if (!in_array($flagname, $flags)) {
                 $flags[] = $flagname;
             }
         } else {
-            while (list($key, $value) = each($flags)) {
+            $pos = false;
+            foreach ($flags as $key => $value) {
                 if (strtoupper($value) == $flagname) {
                     $pos = $key;
                     break;
                 }
             }
-            if (!empty($pos)) {
+            if ($pos !== false) {
                 unset($flags[$pos]);
             }
         }
