@@ -64,6 +64,9 @@ if (!$messagecount
         }
         if ($i != 0) {
             $folders[$folder]['unread'] += $i;
+            if ($folders[$folder]['unread'] < 0) {
+                $folders[$folder]['unread'] = 0;
+            }
             $TLN->tdb->updateFolderField($folder, 'unread', $folders[$folder]['unread']);
         }
         if ($expunge) {

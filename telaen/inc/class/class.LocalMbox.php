@@ -934,6 +934,9 @@ class LocalMbox extends SQLite3
         $this->folders[$msg['folder']]['count'] -= 1;
         if ($msg['unread']) {
             $this->folders[$msg['folder']]['unread'] -= 1;
+            if ($this->folders[$msg['folder']]['unread'] < 0) {
+                $this->folders[$msg['folder']]['unread'] = 0;
+            }
         }
         /* If we deleted from the active folder, then update our array */
         if ($isactive) {

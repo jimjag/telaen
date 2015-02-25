@@ -1685,6 +1685,9 @@ class Telaen extends Telaen_core
             if ($flagtype == '+') {
                 $msg['unread'] = false;
                 $n = $this->tdb->folders[$msg['folders']]['unread'] - 1;
+                if ($n < 0) {
+                    $n = 0;
+                }
             } else {
                 $msg['unread'] = true;
                 $n = $this->tdb->folders[$msg['folders']]['unread'] + 1;
