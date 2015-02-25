@@ -748,7 +748,7 @@ class Telaen extends Telaen_core
                 unlink($opath);
             }
         }
-        $this->mailSetFlag($msg, $this->flags['deleted'], '+');
+        $this->mailSetFlag($msg, 'deleted', '+');
 
         return ($update ? $this->tdb->delMessage($msg) : true);
     }
@@ -859,7 +859,7 @@ class Telaen extends Telaen_core
                         __FUNCTION__, __LINE__);
                 }
             }
-            $this->mailSetFlag($msg, $this->flags['deleted'], '+');
+            $this->mailSetFlag($msg, 'deleted', '+');
         }
 
         return true;
@@ -994,7 +994,7 @@ class Telaen extends Telaen_core
                         $msg['mnum'] = intval($curmsg);
                         $msg['size'] = intval($size);
                         $msg['flags'] = strtoupper($flags);
-                        if (!preg_match('|'.$this->flags['seen'].'|', $msg['flags'])) {
+                        if (!stristr($this->flags['seen'], $msg['flags'])) {
                             $msg['unread'] = true;
                         }
                         $msg['folder'] = $boxname;
@@ -1578,11 +1578,7 @@ class Telaen extends Telaen_core
         $msg['localname'] = $this->_createLocalFname($msg);
         list($filename, $dir) = $this->getPath($msg);
         $this->_mkdir($dir);
-        if (!empty($flags)) {
-            $content = $email['header']."\r\nX-UM-Flags: $flags\r\n\r\n".$this->blob($email['body'], false);
-        } else {
-            $content = $email['header']."\r\n\r\n".$this->blob($email['body'], false);
-        }
+        $content = $email['header']."\r\n\r\n".$this->blob($email['body'], false);
         $msg['size'] = strlen($content);
         unset($email);
         $this->saveFile($filename, $content);
@@ -1598,11 +1594,18 @@ class Telaen extends Telaen_core
      * @return boolean
      */
     public function isFlagSet($msg, $flag) {
-        return stristr($msg['flags'], $flag);
+        return stristr($msg['flags'], $this->flags[$flag]);
     }
 
     private function _mailSetFlagImap(&$msg, $flagname, $flagtype = '+')
     {
+        $lflagname = strtolower($flagname);
+        if (!isset($this->flags[$lflagname])) {
+            $this->triggerError("unknown flag: $flagname", __FUNCTION__, __LINE__);
+            return false;
+        }
+        $flagname = $this->flags[$flagname];
+
         if ($this->_current_folder != $msg['folder']) {
             $this->mailSelectBox($msg['folder']);
         }
@@ -1631,74 +1634,50 @@ class Telaen extends Telaen_core
      */
     public function mailSetFlag(&$msg, $flagname, $flagtype = '+')
     {
-        $flagname = strtoupper($flagname);
-        $path = $this->getPath($msg)[0];
-        if (!in_array($flagname, $this->flags)) {
+        $lflagname = strtolower($flagname);
+        if (!isset($this->flags[$lflagname])) {
             $this->triggerError("unknown flag: $flagname", __FUNCTION__, __LINE__);
             return false;
         }
-        if ($flagtype == '+' && $this->isFlagSet($msg, $flagname)) {
+        $flagname = $this->flags[$lflagname];
+        if ($flagtype == '+' && $this->isFlagSet($msg, $lflagname)) {
             return true;
         }
-        if ($flagtype == '-' && !$this->isFlagSet($msg, $flagname)) {
+        if ($flagtype == '-' && !$this->isFlagSet($msg, $lflagname)) {
             return true;
         }
 
-        if ($this->mail_protocol == IMAP && in_array($flagname, $this->flags)) {
-            if (!$this->_mailSetFlagImap($msg, $flagname, $flagtype)) {
+        if ($this->mail_protocol == IMAP) {
+            if (!$this->_mailSetFlagImap($msg, $lflagname, $flagtype)) {
                 return false;
             }
-        } elseif (!file_exists($path)) {
-            $this->mailRetrMsg($msg);
+        }
+        $strFlags = trim(strtoupper($msg['flags']));
+
+        $flags = [];
+        if (!empty($strFlags)) {
+            $flags = array_unique(preg_split('|\s+|', $strFlags));
         }
 
-        if (file_exists($path)) {
-            $email = $this->readFile($path);
-            $email = $this->fetchStructure($email);
-            $header = $email['header'];
-            $body = $email['body'];
-
-            $strFlags = trim(strtoupper($msg['flags']));
-
-            $flags = [];
-            if (!empty($strFlags)) {
-                $flags = preg_split('|\s+|', $strFlags);
+        if ($flagtype == '+') {
+            if (!in_array($flagname, $flags)) {
+                $flags[] = $flagname;
             }
-
-            if ($flagtype == '+') {
-                if (!in_array($flagname, $flags)) {
-                    $flags[] = $flagname;
-                }
-            } else {
-                while (list($key, $value) = each($flags)) {
-                    if (strtoupper($value) == $flagname) {
-                        $pos = $key;
-                    }
-                }
-                if (!empty($pos)) {
-                    unset($flags[$pos]);
+        } else {
+            while (list($key, $value) = each($flags)) {
+                if (strtoupper($value) == $flagname) {
+                    $pos = $key;
+                    break;
                 }
             }
-
-            $flags = join(' ', $flags);
-            if (!preg_match('|X-UM-Flags|i', $header)) {
-                $header .= "\r\nX-UM-Flags: $flags";
-            } else {
-                $header = preg_replace('/'.quotemeta('X-UM-Flags:')."(.*)/i", "X-UM-Flags: $flags", $header);
+            if (!empty($pos)) {
+                unset($flags[$pos]);
             }
-
-            $msg['header'] = $header;
-            $msg['flags'] = $flags;
-            $this->tdb->doMessage($msg, ['header', 'flags']);
-
-            $pts = $this->tstream();
-            rewind($body);
-            fwrite($pts, "$header\r\n\r\n");
-            $this->_sXfer($body, $pts);
-
-            $this->saveFile($path, $pts);
-            fclose($pts);
         }
+
+        $flags = join(' ', $flags);
+        $msg['flags'] = $flags;
+        $this->tdb->doMessage($msg, ['flags']);
 
         return true;
     }

@@ -41,7 +41,7 @@
               {$smLabel.prf_save_to_trash} "<b>{$smLabel.trash_extended}</b>" </td>
           </tr>
           <tr>
-            <td class="default" colspan="2"><input type="checkbox" name="st_only_read" onclick="return checkDis()" value="1"{if $saveTrashOnlyRead eq true} checked="checked"{/if}>
+            <td class="default" colspan="2"><input type="checkbox" name="st_only_read" onclick="dis()" value="1"{if $saveTrashOnlyRead eq true} checked="checked"{/if}>
               {$smLabel.prf_save_only_read} "<b>{$smLabel.trash_extended}</b>" </td>
           </tr>
           <tr>

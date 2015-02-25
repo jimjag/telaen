@@ -83,11 +83,11 @@ if (isset($rtype)) {
 
     switch ($rtype) {
         case 'forward':
-            $TLN->mailSetFlag($msg, $TLN->flags['forwarded'], '+');
+            $TLN->mailSetFlag($msg, 'forwarded', '+');
             break;
         case 'reply':
         case 'replyall':
-            $TLN->mailSetFlag($msg, $TLN->flags['answered'], '+');
+            $TLN->mailSetFlag($msg, 'answered', '+');
             break;
         default:
             $TLN->redirectAndExit('messages.php?err=2&folder='.urlencode($folder)."&pag={$pag}&refr=true");

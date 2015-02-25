@@ -29,7 +29,7 @@ if (!($TLN->mailRetrMsg($msg, false))) {
 }
 
 if ($msg['unread']) {
-    if (!$TLN->mailSetFlag($msg, $TLN->flags['seen'], '+')) {
+    if (!$TLN->mailSetFlag($msg, 'seen', '+')) {
         $TLN->triggerError('Could not set SEEN flag', I_AM_TELAEN, __LINE__);
     }
     $msg['unread'] = false;
