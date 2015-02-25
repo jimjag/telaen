@@ -1104,11 +1104,12 @@ class Telaen_core
         if (!empty($headers['content-transfer-encoding'])) {
             $headers['content-transfer-encoding'] = str_replace('GM', '-', $headers['content-transfer-encoding']);
         }
-        $myarray['attach'] = preg_match('#(multipart/mixed|multipart/related|application)#i',
-                            $headers['content-type']);
+        /* for now, until we actually parse the body */
         $ct = preg_match('|\s*([^/]+)/([^ ;]+)|', $headers['content-type'], $m);
         $myarray['type'] = ($ct ? $m[1] : 'text');
-        $myarray['subtype']= ($ct ? $m[2] : 'plain');
+        $myarray['subtype'] = ($ct ? $m[2] : 'plain');
+        $myarray['attach'] = ((strcasecmp($m[1], 'application')) ||
+            ((strcasecmp($m[1], 'multipart') && (strcasecmp($m[2], 'mixed') || strcasecmp($m[1], 'related')))));
         /*
          * Date and Subject are top level, as well as in the headers[]
          */
