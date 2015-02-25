@@ -138,11 +138,8 @@ function openwin(targetUrl) { window.open(targetUrl); }
 <script type='text/javascript'>
 //<![CDATA[
 function sendReceipt(subj, msg) {
-	$.ajax({
-	    url: 'ajax.php',
-		method: 'POST',
-		data: {action: 'sendReceipt', recipient: '".$msg['headers']['x-receipt-to']."', receipt_subj: subj, receipt_msg: msg}
-	});
+    $.post('ajax.php', {action: 'sendReceipt', recipient: '".$msg['headers']['x-receipt-to']."', receipt_subj: subj, receipt_msg: msg});
+    return false;
 }
 //]]>
 </script>
@@ -153,7 +150,7 @@ $smDeleteForm = "<input type='hidden' name='decision' value='move' />
 <input type='hidden' name='pag' value='$pag' />
 <input type='hidden' name='start_pos' value='$ix' />
 <input type='hidden' name='end_pos' value='".($ix+1)."' />
-<input type='hidden' name='msg_$ix' value='X' />
+<input type='hidden' name='msg_{$msg['uidl']}' value='X' />
 <input type='hidden' name='back' value='true' />";
 
 $smReplyForm = "<form name='msg' action='newmsg.php' method='post'>
@@ -204,7 +201,6 @@ foreach ($folders as $a) {
     }
 }
 $smarty->assign('smAvalFolders', $avalfolders);
-unset($TLN);
 
 if ($is_attached) {
     $smarty->display("$themez/readmsg_popup.tpl");
