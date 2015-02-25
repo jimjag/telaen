@@ -47,7 +47,7 @@ if (!$messagecount
                     /* TODO: Should we log this?? */
                 }
                 if ($decision == 'delete') {
-                    $TLN->mailDeleteMsg($msg, $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
+                    $TLN->mailDeleteMsg($msg);
                     $expunge = true;
                 } elseif ($decision == 'move') {
                     $TLN->mailMoveMsg($msg, $aval_folders);

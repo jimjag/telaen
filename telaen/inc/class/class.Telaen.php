@@ -518,16 +518,9 @@ class Telaen extends Telaen_core
         $this->saveFile($path, $pts);
         rewind($pts);
         rewind($msgbody);
-        if ($this->prefs['keep_on_server']) {
-            $msg['iscached'] = true;
-            $this->tdb->doMessage($msg, ['iscached']);
-        } else {
-            $this->mailDeleteMsg($msg);
-            $msg['iscached'] = true;
-            $msg['islocal'] = true;
-            $this->tdb->doMessage($msg, ['iscached', 'islocal']);
-        }
-        if ($with_headers) {
+        $msg['iscached'] = true;
+        $this->tdb->doMessage($msg, ['iscached']);
+         if ($with_headers) {
             return $pts;
         } else {
             fclose($pts);
@@ -586,15 +579,8 @@ class Telaen extends Telaen_core
         $this->saveFile($path, $pts);
         rewind($pts);
         rewind($body);
-        if ($this->prefs['keep_on_server']) {
-            $msg['iscached'] = true;
-            $this->tdb->doMessage($msg, ['iscached']);
-        } else {
-            $this->mailDeleteMsg($msg);
-            $msg['iscached'] = true;
-            $msg['islocal'] = true;
-            $this->tdb->doMessage($msg, ['iscached', 'islocal']);
-        }
+        $msg['iscached'] = true;
+        $this->tdb->doMessage($msg, ['iscached']);
         if ($with_headers) {
             return $pts;
         } else {
@@ -708,9 +694,11 @@ class Telaen extends Telaen_core
         }
     }
 
-    protected function _mailDeleteMsgImap(&$msg, $send_to_trash = true, $save_only_read = false)
+    protected function _mailDeleteMsgImap(&$msg)
     {
         $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
+        $send_to_trash = $this->prefs['send_to_trash'];
+        $save_only_read = $this->prefs['st_only_read'];
 
         /* check the message id to make sure that the messages still in the server */
         if ($this->_current_folder != $msg['folder']) {
@@ -749,9 +737,11 @@ class Telaen extends Telaen_core
         return $this->tdb->delMessage($msg);
     }
 
-    protected function _mailDeleteMsgPop(&$msg, $send_to_trash = true, $save_only_read = false)
+    protected function _mailDeleteMsgPop(&$msg)
     {
         $read = (preg_match("|{$this->flags['seen']}|", $msg['flags'])) ? 1 : 0;
+        $send_to_trash = $this->prefs['send_to_trash'];
+        $save_only_read = $this->prefs['st_only_read'];
 
         /* now we are working with POP3 */
         /* check the message id to make sure that the messages still in the server */
@@ -770,7 +760,6 @@ class Telaen extends Telaen_core
                 }
                 //$this->mailSetFlag($msg, $this->flags['seen'], '-');
             }
-
             $this->mailSendCommand('DELE '.$msg['mnum']);
             if ($this->mailNokResp()) {
                 return false;
@@ -799,22 +788,14 @@ class Telaen extends Telaen_core
     /**
      * Delete specific email message
      * @param  string  $msg            The message to delete
-     * @param  boolean $send_to_trash
-     * @param  boolean $save_only_read
      * @return boolean
      */
-    public function mailDeleteMsg(&$msg, $send_to_trash = null, $save_only_read = null)
+    public function mailDeleteMsg(&$msg)
     {
-        if ($send_to_trash === null) {
-            $send_to_trash = $this->prefs['send_to_trash'];
-        }
-        if ($save_only_read === null) {
-            $save_only_read = $this->prefs['st_only_read'];
-        }
         if ($this->mail_protocol == IMAP) {
-            return $this->_mailDeleteMsgImap($msg, $send_to_trash, $save_only_read);
+            return $this->_mailDeleteMsgImap($msg);
         } else {
-            return $this->_mailDeleteMsgPop($msg, $send_to_trash, $save_only_read);
+            return $this->_mailDeleteMsgPop($msg);
         }
     }
 

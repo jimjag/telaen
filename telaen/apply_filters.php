@@ -74,7 +74,7 @@ if ($folder == 'inbox') {
                         break;
                     case FL_TYPE_DELETE:
 
-                        $TLN->mailDeleteMsg($message, $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
+                        $TLN->mailDeleteMsg($message);
                         unset($mbox['headers'][$folder]);
                         unset($mbox['headers']['trash']);
 

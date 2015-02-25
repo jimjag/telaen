@@ -33,7 +33,7 @@ if ($TLN->isValidFname($delfolder)) {
 if (isset($empty)) {
     $headers = $mbox['headers'][$empty];
     for ($i = 0;$i<count($headers);$i++) {
-        $TLN->mailDeleteMsg($headers[$i], $TLN->prefs['send_to_trash'], $TLN->prefs['st_only_read']);
+        $TLN->mailDeleteMsg($headers[$i]);
         $expunge = true;
     }
     if ($expunge) {
