@@ -38,7 +38,6 @@ if (!$messagecount
     }
 
     if (isset($start_pos) && isset($end_pos)) { // eg: messages.php or readmsg.php
-        $i = 0;
         foreach (array_keys($_POST) as $key) {
             $matches = [];
             if (preg_match('|msg_([0-9a-fA-F]+)|', $key, $matches)) {
@@ -54,20 +53,13 @@ if (!$messagecount
                     $TLN->mailMoveMsg($msg, $aval_folders);
                     $expunge = true;
                 } elseif ($decision == 'mark') {
-                    $TLN->mailSetFlag($msg, 'seen', '+', false);
+                    $TLN->mailSetFlag($msg, 'seen', '+');
                     $i--;
                 } elseif ($decision == 'unmark') {
-                    $TLN->mailSetFlag($msg, 'seen', '-', false);
+                    $TLN->mailSetFlag($msg, 'seen', '-');
                     $i++;
                 }
             }
-        }
-        if ($i != 0) {
-            $folders[$folder]['unread'] += $i;
-            if ($folders[$folder]['unread'] < 0) {
-                $folders[$folder]['unread'] = 0;
-            }
-            $TLN->tdb->updateFolderField($folder, 'unread', $folders[$folder]['unread']);
         }
         if ($expunge) {
             $TLN->mailExpunge();
