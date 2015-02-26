@@ -1676,7 +1676,7 @@ ENDOFREDIRECT;
         $result = "";
         $f = fopen($strfile, 'rb');
         while (!self::_feof($f)) {
-            $result .= preg_replace('|\n|', "", fread($f, 100));
+            $result .= preg_replace('|\n|', "", fread($f, 1024));
             $pos = strpos($result, '\r\r');
             if (!($pos === false)) {
                 $result = substr($result, 0, $pos);
