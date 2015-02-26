@@ -1671,7 +1671,7 @@ ENDOFREDIRECT;
     static public function getHeadersFromCache($strfile)
     {
         if (!file_exists($strfile)) {
-            return;
+            return '';
         }
         $result = "";
         $f = fopen($strfile, 'rb');
