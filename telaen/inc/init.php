@@ -221,6 +221,7 @@ $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts'
 /*
  * Special case: Always start w/ fresh inbox cache for POP3 if we aren't
  * their exclusive email client
+ * TODO: Does this *really* make sense??
  */
 if (($TLN->mail_protocol == POP3) && $TLN->prefs['keep_on_server'] && $initial_login) {
     $tdb->delFolder('inbox');

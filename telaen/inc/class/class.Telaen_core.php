@@ -1040,8 +1040,13 @@ class Telaen_core
         } elseif (!empty($myarray['ouidl'])) {
             $myarray['uidl'] = $myarray['ouidl'];
         }
-        $myarray['flags'] = $headers['x-um-flags'];
-        $myarray['unread'] = (!stristr($this->flags['seen'], $myarray['flags']) ? true : false);
+        if (!empty($headers['x-um-flags'])) {
+            /* only do all this if we need to */
+            $myarray['flags'] = join(' ', array_unique(preg_split('|\s+|', strtoupper($headers['x-um-flags']))));
+        } else {
+            $myarray['flags'] = '';
+        }
+        $myarray['unread'] = (!stristr($myarray['flags'], $this->flags['seen']) ? true : false);
 
         /*
          * Now, create canon Date
