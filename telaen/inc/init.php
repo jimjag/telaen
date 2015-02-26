@@ -168,15 +168,15 @@ if (!empty($f_pass)) {
 
     $refr = 1;
 
+    $quota_limit = Telaen::bkmg2bytes($TLN->config['quota_limit']); // ensure bytes
     if (is_array($TLN->config['quota_limits'])) {
         foreach ($TLN->config['quota_limits'] as $quota) {
             if (preg_match($quota[0], $TLN->mail_user)) {
-                $quota_limit = $quota[1];
+                $quota_limit = Telaen::bkmg2bytes($quota[1]);
                 break;
             }
         }
     }
-    $quota_limit = Telaen::bkmg2bytes($quota_limit); // ensure bytes
     $auth['quota_limit'] = $quota_limit;
 } elseif ($auth['auth'] && (($TLN->now() - $start) < ($TLN->config['idle_timeout'] * 60))) {
     $TLN->mail_user = $f_user = $auth['user'];
