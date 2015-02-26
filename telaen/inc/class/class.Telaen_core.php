@@ -1041,7 +1041,7 @@ class Telaen_core
             $myarray['uidl'] = $myarray['ouidl'];
         }
         $myarray['flags'] = $headers['x-um-flags'];
-        $myarray['unread'] = (!preg_match("|{$this->flags['seen']}|i", $headers['x-um-status']) ? 1 : 0);
+        $myarray['unread'] = (!stristr($this->flags['seen'], $myarray['flags']) ? true : false);
 
         /*
          * Now, create canon Date
