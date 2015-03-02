@@ -53,3 +53,13 @@ if ($TLN->config['display_all_errors']) {
     ini_set('error_log', $elog);
     $oeh = set_error_handler('errorHandler');
 }
+
+register_shutdown_function(function() use ($elog) {
+    $fatalErrors = E_ERROR | E_USER_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_PARSE;
+    $e = error_get_last();
+    if ($e && $e['type'] & $fatalErrors) {
+        echo('<h1>There was an error!</h1>');
+        $err = "err: {$e['type']} ({$e['file']}:{$e['line']}: {$e['message']}\n";
+        error_log($err, 3, $elog);
+    }
+});
