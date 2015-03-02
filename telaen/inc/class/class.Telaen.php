@@ -1684,17 +1684,17 @@ class Telaen extends Telaen_core
             /* We need to update the unread fields */
             if ($flagtype == '+') {
                 $msg['unread'] = false;
-                $n = $this->tdb->folders[$msg['folders']]['unread'] - 1;
+                $n = $this->tdb->folders[$msg['folder']]['unread'] - 1;
                 if ($n < 0) {
                     $n = 0;
                 }
             } else {
                 $msg['unread'] = true;
-                $n = $this->tdb->folders[$msg['folders']]['unread'] + 1;
+                $n = $this->tdb->folders[$msg['folder']]['unread'] + 1;
             }
             $this->tdb->doMessage($msg, ['flags', 'unread']);
             if ($sync_unread) {
-                $this->tdb->updateFolderField($msg['folder]'], 'unread', $n);
+                $this->tdb->updateFolderField($msg['folder'], 'unread', $n);
             }
         }
 
