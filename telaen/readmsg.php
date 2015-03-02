@@ -32,9 +32,9 @@ if ($msg['unread']) {
     if (!$TLN->mailSetFlag($msg, 'seen', '+')) {
         $TLN->triggerError('Could not set SEEN flag', I_AM_TELAEN, __LINE__);
     }
-    $msg['unread'] = false;
-    $TLN->tdb->updateFolderField($folder, 'unread', $folders[$folder]['unread'] - 1);
-    $TLN->tdb->doMessage($msg, ['unread']);
+    //$msg['unread'] = false;
+    //$TLN->tdb->updateFolderField($folder, 'unread', $folders[$folder]['unread'] - 1);
+    //$TLN->tdb->doMessage($msg, ['unread']);
 }
 
 $TLN->parseBody($msg);

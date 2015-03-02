@@ -54,10 +54,8 @@ if (!$messagecount
                     $expunge = true;
                 } elseif ($decision == 'mark') {
                     $TLN->mailSetFlag($msg, 'seen', '+');
-                    $i--;
                 } elseif ($decision == 'unmark') {
                     $TLN->mailSetFlag($msg, 'seen', '-');
-                    $i++;
                 }
             }
         }

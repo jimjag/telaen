@@ -1677,8 +1677,8 @@ class Telaen extends Telaen_core
         }
 
         $flags = join(' ', $flags);
+        $msg['flags'] = $flags;
         if ($lflagname != 'seen') {
-            $msg['flags'] = $flags;
             $this->tdb->doMessage($msg, ['flags']);
         } else {
             /* We need to update the unread fields */
