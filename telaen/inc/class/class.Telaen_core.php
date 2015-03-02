@@ -149,7 +149,7 @@ class Telaen_core
      * @var array Hash of IMAP/POP3 message flags
      */
     public $flags = [
-        'seen' =>' \\SEEN',
+        'seen' => '\\SEEN',
         'deleted' => '\\DELETED',
         'answered' => '\\ANSWERED',
         'draft' => '\\DRAFT',
@@ -1046,7 +1046,7 @@ class Telaen_core
         } else {
             $myarray['flags'] = '';
         }
-        $myarray['unread'] = (!stristr($myarray['flags'], $this->flags['seen']) ? true : false);
+        $myarray['unread'] = (stristr($myarray['flags'], $this->flags['seen']) === false ? true : false);
 
         /*
          * Now, create canon Date

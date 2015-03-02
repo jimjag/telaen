@@ -1594,7 +1594,7 @@ class Telaen extends Telaen_core
      * @return boolean
      */
     public function isFlagSet($msg, $flag) {
-        return stristr($msg['flags'], $this->flags[$flag]);
+        return stristr($msg['flags'], $this->flags[$flag]) !== false;
     }
 
     private function _mailSetFlagImap(&$msg, $flagname, $flagtype = '+')
