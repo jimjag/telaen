@@ -15,38 +15,49 @@ require './inc/init.php';
 
 // meta assigned to smarty
 $smarty->assign('pageMetas', $pmetas);
-
-$filename = $TLN->userdatafolder.'/addressbook.ucf';
+$filename = $TLN->userdatafolder.'/'.$addressBook;
 $myfile = $TLN->blob($TLN->readFile($filename, false), false);
-
 if ($myfile != "") {
-    $addressbook = unserialize(base64_decode($myfile));
+    $mab = unserialize(base64_decode($myfile));
+} else {
+    $msb = [];
 }
-if (isset($addressbook[0]['name'])) {
-    // Old format of addressbook. xfer to vCard format
-    foreach ($addressbook as $a) {
-        $v = new vCard();
-        $v->fn($a['name']);
-        $v->email($a['email'], 'internet', 'pref');
-        $v->tel($a['phone'], 'pref', 'voice');
-        $v->tel($a['cell'], 'cell', 'voice');
-        $v->x_work($a['work']);
-        $v->note($a['note']);
-        $v->adr("", 'pref', 'home');
-        $v->adr($a['pobox'], 'pobox');
-        $v->adr($a['extended'], 'extendedaddress');
-        $v->adr($a['street'], 'streetaddress');
-        $v->adr($a['city'], 'locality');
-        $v->adr($a['state'], 'region');
-        $v->adr($a['pcode'], 'postalcode');
-        $v->adr($a['country'], 'country');
-        $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
-        $newbook[$a['name']] = strval($v);
-        unset($v);
+
+/* One time: Check for old format addressbook, convert, delete */
+$ofilename = $TLN->userdatafolder.'/addressbook.ucf';
+if (file_exists($ofilename)) {
+    $myfile = $TLN->blob($TLN->readFile($filename, false), false);
+    if ($myfile != "") {
+        $obook = unserialize(base64_decode($myfile));
+        if (is_array($obook)) {
+            $newbook = [];
+            // Old format of addressbook. xfer to vCard format
+            foreach ($obook as $a) {
+                $v = new vCard();
+                $v->fn($a['name']);
+                $v->email($a['email'], 'internet', 'pref');
+                $v->tel($a['phone'], 'pref', 'voice');
+                $v->tel($a['cell'], 'cell', 'voice');
+                $v->x_work($a['work']);
+                $v->note($a['note']);
+                $v->adr("", 'pref', 'home');
+                $v->adr($a['pobox'], 'pobox');
+                $v->adr($a['extended'], 'extendedaddress');
+                $v->adr($a['street'], 'streetaddress');
+                $v->adr($a['city'], 'locality');
+                $v->adr($a['state'], 'region');
+                $v->adr($a['pcode'], 'postalcode');
+                $v->adr($a['country'], 'country');
+                $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
+                $newbook[$a['name']] = strval($v);
+                unset($v);
+            }
+            $Telaen::add2me($mab, $newbook);
+        }
     }
-    $addressbook = $newbook;
+    unlink($ofilename);
 }
-ksort($addressbook);
+ksort($mab);
 
 eval('$jssource = "' . $commonJS . '";');
 $jssource .= "
@@ -69,7 +80,7 @@ switch ($opt) {
     // save an edited contact
 
     case 'save':
-        $v = new vCard(false, $addressbook[$id]);
+        $v = new vCard(false, $mab[$id]);
         $v->fn($name);
         $v->email($email, 'internet', 'pref');
         $v->adr('adr', 'pref', 'home');
@@ -86,8 +97,8 @@ switch ($opt) {
         $v->note($note);
         $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
 
-        $addressbook[$id] = strval($v);
-        $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
+        $mab[$id] = strval($name);
+        $TLN->saveFile($filename, base64_encode(serialize($mab)));
 
         $smarty->assign('smOpt', 1);
         $templatename = 'address-results.tpl';
@@ -113,8 +124,8 @@ switch ($opt) {
         $v->note($note);
         $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
 
-        $addressbook[$name] = strval($v);
-        $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
+        $mab[$name] = strval($name);
+        $TLN->saveFile($filename, base64_encode(serialize($mab)));
 
         $smarty->assign('smOpt', 2);
         $templatename = 'address-results.tpl';
@@ -123,8 +134,8 @@ switch ($opt) {
 
     //delete an existing contact
     case 'dele':
-        unset($addressbook[$id]);
-        $TLN->saveFile($filename, base64_encode(serialize($addressbook)));
+        unset($mab[$id]);
+        $TLN->saveFile($filename, base64_encode(serialize($mab)));
 
         $smarty->assign('smOpt', 3);
         $templatename = 'address-results.tpl';
@@ -133,7 +144,7 @@ switch ($opt) {
 
     // show the form to edit
     case 'edit':
-        $v = new vCard(false, $addressbook[$id]);
+        $v = new vCard(false, $mab[$id]);
         foreach ($v->tel as $p) {
             if (in_array('cell', $p['type'])) {
                 $cell = $p['value'];
@@ -164,7 +175,7 @@ switch ($opt) {
 
     // display the details for an especified contact
     case 'display':
-        $v = new vCard(false, $addressbook[$id]);
+        $v = new vCard(false, $mab[$id]);
         foreach ($v->tel as $p) {
             if (in_array('cell', $p['type'])) {
                 $cell = $p['value'];
@@ -206,7 +217,7 @@ switch ($opt) {
 
     case 'expo':
         require './inc/lib.export.php';
-        export2ou($addressbook[$id]);
+        export2ou($mab[$id]);
         break;
 
     // default is list
@@ -215,7 +226,7 @@ switch ($opt) {
 
         $smarty->assign('smNew', 'addressbook.php?opt=new');
 
-        $nummsg = count($addressbook);
+        $nummsg = count($mab);
         $reg_pp = $TLN->prefs['rpp'];
         $start_pos = ($pag-1)*$reg_pp;
         $end_pos = (($start_pos+$reg_pp) > $nummsg) ? $nummsg : $start_pos+$reg_pp;
@@ -250,7 +261,7 @@ switch ($opt) {
 
         $addresslist = [];
         $i = 0;
-        foreach ($addressbook as $k => $a) {
+        foreach ($mab as $k => $a) {
             $k = urlencode($k);
             $v = new vCard(false, $a);
             $addresslist[$i]['viewlink'] = "addressbook.php?opt=display&id=$k";
@@ -258,7 +269,7 @@ switch ($opt) {
             $addresslist[$i]['editlink'] = "addressbook.php?opt=edit&id=$k";
             $addresslist[$i]['dellink'] = "addressbook.php?opt=dele&id=$k";
 
-            $addresslist[$i]['name'] = $v->fn;
+            $addresslist[$i]['name'] = $v->fn[0];
             $addresslist[$i]['email'] = $v->email[0]['value'];
             $i++;
         }

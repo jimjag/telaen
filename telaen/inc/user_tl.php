@@ -38,6 +38,7 @@ if (isset($auth) && is_array($auth)) {
     $auth['lid'] = $lid;
 }
 
+$addressBook = 'addressbook.vcd';
 
 /********************************************************
 Templates
