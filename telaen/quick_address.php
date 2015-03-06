@@ -9,6 +9,8 @@ Telaen is a GPL'ed software developed by
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
 
 require './inc/init.php';
+require './inc/vendor/vCard.php';
+
 /* @var $TLN Telaen */
 
 extract(Telaen::pullFromArray($_GET, ['where'], 'str'));

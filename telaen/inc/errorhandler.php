@@ -54,6 +54,7 @@ if ($TLN->config['display_all_errors']) {
     $oeh = set_error_handler('errorHandler');
 }
 
+/* Keep below just for devel */
 register_shutdown_function(function() use ($elog) {
     $fatalErrors = E_ERROR | E_USER_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_PARSE;
     $e = error_get_last();
