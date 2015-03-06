@@ -14,12 +14,12 @@ require './inc/init.php';
 extract(Telaen::pullFromArray($_GET, ['where'], 'str'));
 extract(Telaen::pullFromArray($_POST, ['contacts'], 'str'));
 
-$filename = $TLN->userdatafolder.'/addressbook.ucf';
+$filename = $TLN->userdatafolder.'/'.$addressBook;
 $myfile = $TLN->blob($TLN->readFile($filename, false), false);
 if ($myfile != "") {
-    $addressbook = unserialize(base64_decode($myfile));
+    $mab = unserialize(base64_decode($myfile));
 }
-$TLN->arrayQsort2ic($addressbook, 'name');
+ksort($mab);
 
 switch ($where) {
 case 'cc':
@@ -33,10 +33,10 @@ default:
     break;
 }
 
-for ($i = 0;$i<count($addressbook);$i++) {
-    $line = $addressbook[$i];
-    $name = htmlspecialchars(trim($line['name']));
-    $email = htmlspecialchars(trim($line['email']));
+foreach ($mab as $k => $a) {
+    $v = new vCard(false, $a);
+    $name = htmlspecialchars(trim($v->fn[0]));
+    $email = htmlspecialchars(trim($v->email[0]['value']));
     $listbox .= "<option value=\"&quot;$name&quot; &lt;$email&gt;\"> &quot;$name&quot; &lt;$email&gt; </option>";
 }
 $listbox .= '</select>';
