@@ -99,7 +99,7 @@ switch ($opt) {
         $v->note($note);
         $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
 
-        $mab[$id] = strval($name);
+        $mab[$id] = strval($v);
         $TLN->saveFile($filename, base64_encode(serialize($mab)));
 
         $smarty->assign('smOpt', 1);
@@ -126,7 +126,7 @@ switch ($opt) {
         $v->note($note);
         $v->rev(date("Ymd") . 'T' . date("His") . 'Z');
 
-        $mab[$name] = strval($name);
+        $mab[$name] = strval($v);
         $TLN->saveFile($filename, base64_encode(serialize($mab)));
 
         $smarty->assign('smOpt', 2);
