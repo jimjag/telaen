@@ -55,6 +55,7 @@ if (file_exists($ofilename)) {
             $Telaen::add2me($mab, $newbook);
         }
     }
+    $TLN->saveFile($filename, base64_encode(serialize($mab)));
     unlink($ofilename);
 }
 ksort($mab);
