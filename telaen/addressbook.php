@@ -82,7 +82,14 @@ switch ($opt) {
     // save an edited contact
 
     case 'save':
-        $v = new vCard(false, $mab[$id]);
+        try {
+            $v = new vCard(false, $mab[$id]);
+        }
+        catch (Exception $e) {
+            $smarty->assign('smOpt', -1);
+            $templatename = 'address-results.tpl';
+            break;
+        }
         $v->fn($name);
         $v->email($email, 'internet', 'pref');
         $v->adr('adr', 'pref', 'home');
@@ -146,7 +153,15 @@ switch ($opt) {
 
     // show the form to edit
     case 'edit':
-        $v = new vCard(false, $mab[$id]);
+        $templatename = 'address-form.tpl';
+        try {
+            $v = new vCard(false, $mab[$id]);
+        }
+        catch (Exception $e) {
+            $smarty->assign('smOpt', -1);
+            $templatename = 'address-results.tpl';
+            break;
+        }
         foreach ($v->tel as $p) {
             if (in_array('cell', $p['type'])) {
                 $cell = $p['value'];
@@ -171,13 +186,20 @@ switch ($opt) {
 
         $smarty->assign('smOpt', 'save');
         $smarty->assign('smAddrID', $id);
-        $templatename = 'address-form.tpl';
 
         break;
 
     // display the details for an especified contact
     case 'display':
-        $v = new vCard(false, $mab[$id]);
+        $templatename = 'address-display.tpl';
+        try {
+            $v = new vCard(false, $mab[$id]);
+        }
+        catch (Exception $e) {
+            $smarty->assign('smOpt', -1);
+            $templatename = 'address-results.tpl';
+            break;
+        }
         foreach ($v->tel as $p) {
             if (in_array('cell', $p['type'])) {
                 $cell = $p['value'];
@@ -201,7 +223,6 @@ switch ($opt) {
         $smarty->assign('smAddrNote', $v->note[0]);
 
         $smarty->assign('smAddrID', $id);
-        $templatename = 'address-display.tpl';
 
         break;
 
@@ -265,7 +286,13 @@ switch ($opt) {
         $i = 0;
         foreach ($mab as $k => $a) {
             $k = urlencode($k);
-            $v = new vCard(false, $a);
+            try {
+                $v = new vCard(false, $a);
+            }
+            catch (Exception $e) {
+                continue;
+            }
+
             $addresslist[$i]['viewlink'] = "addressbook.php?opt=display&id=$k";
             $addresslist[$i]['composelink'] = "newmsg.php?nameto=".urlencode($v->fn)."&mailto=".urlencode($v->email[0]['value'])."";
             $addresslist[$i]['editlink'] = "addressbook.php?opt=edit&id=$k";
