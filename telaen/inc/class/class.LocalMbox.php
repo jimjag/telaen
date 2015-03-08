@@ -431,7 +431,7 @@ class LocalMbox extends SQLite3
             return preg_replace('|[^A-Za-z0-9_.-]+|', ($delete ? '' : '_'), $str);
         }
         return preg_replace_callback(
-            '|[^A-Za-z0-9_.-]+|',
+            '|([^A-Za-z0-9_.-])|',
             function ($match) { return '_x'.dechex(ord($match[1])); },
             $str
         );
