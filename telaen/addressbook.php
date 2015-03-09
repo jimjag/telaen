@@ -21,7 +21,7 @@ $myfile = $TLN->blob($TLN->readFile($filename, false), false);
 if ($myfile != "") {
     $mab = unserialize(base64_decode($myfile));
 } else {
-    $msb = [];
+    $mab = [];
 }
 
 /* One time: Check for old format addressbook, convert, delete */
@@ -53,7 +53,7 @@ if (file_exists($ofilename)) {
                 $newbook[$a['name']] = strval($v);
                 unset($v);
             }
-            $Telaen::add2me($mab, $newbook);
+            Telaen::add2me($mab, $newbook);
         }
     }
     $TLN->saveFile($filename, base64_encode(serialize($mab)));
