@@ -229,7 +229,7 @@ if (($TLN->mail_protocol == POP3) && $TLN->prefs['keep_on_server'] && $initial_l
 }
 $AuthSession->Save($auth);
 
-$mymo = new MyMonth($TLN->userdatafolder);
+$mymo = new MyMonth($TLN->userdatafolder, $TLN->dirperm);
 $mycal = $mymo->monthAsDiv();
 $smarty->assign('smCalendar', $mycal);
 $smarty->assign('smSystemNews', $TLN->config['systemNews']);

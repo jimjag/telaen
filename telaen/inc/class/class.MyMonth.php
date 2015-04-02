@@ -29,6 +29,7 @@ class MyMonth
     private $_nyear;
     private $_edir;
     private $_vcal;
+    private $_perm = 0750;
 
 /**
  * Initialize
@@ -37,8 +38,9 @@ class MyMonth
  * @param integer $month month
  * @return void
  */
-    public function __construct($udatafolder, $year = 0, $month = 0)
+    public function __construct($udatafolder, $perm = 0750, $year = 0, $month = 0)
     {
+        $this->_perm = $perm;
         if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050) {
             $this->_mymonth = getdate();
             $month = $this->_mymonth['mon'];
@@ -177,7 +179,7 @@ EOT;
      */
     public function saveEvents()
     {
-        @mkdir($this->_edir, 0750, true);
+        @mkdir($this->_edir, $this->_perm, true);
         $this->_vcal->saveCalendar();
     }
 
