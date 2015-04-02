@@ -109,7 +109,7 @@ function readmsg(ix,uidl) {
 		location = 'readmsg.php?folder=".urlencode($folder)."&ix='+ix+'&uidl='+uidl+'';
 }
 function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag' }
-function delemsg() { document.form1.submit() }
+function delemsg() { document.form1.submit(); }
 function movemsg() {
 	if(no_quota)
 		alert(quota_msg);
@@ -119,15 +119,15 @@ function movemsg() {
 }
 function markmsg() {
 	  document.form1.decision.value = 'mark'; submit();
-};
+}
 function unmarkmsg() {
 	  document.form1.decision.value = 'unmark'; submit();
-};
+}
 function sel() {
     for(i=0;i<document.form1.elements.length;i++) {
         thiselm = document.form1.elements[i];
         if(thiselm.name.substring(0,3) == 'msg')
-            thiselm.checked = !thiselm.checked
+            thiselm.checked = !thiselm.checked;
     }
 }
 sort_colum = '$sortby';
