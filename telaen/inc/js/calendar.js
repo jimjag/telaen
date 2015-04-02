@@ -3,7 +3,7 @@ function doDays() {
 	var tds = document.getElementById("calendar").getElementsByTagName("td");
 	for (var i=0; i<tds.length; i++) {
 		if (tds[i].className=="regday" || tds[i].className=="today" || tds[i].className=="evt" || tds[i].className=="tevt") {
-			tds[i].onclick = epop();
+			tds[i].onclick = epop(tds[i].id);
 		}
 		if (tds[i].className=="evt" || tds[i].className=="tevt") {
 			var einfo = document.getElementById("e" + tds[i].id.substring(1));
@@ -25,8 +25,8 @@ function doDays() {
 	}
 }
 
-function epop() {
-	var url = "./event.php?edate=" + this.id;
+function epop(id) {
+	var url = "./event.php?edate=" + id;
 	window.open(url, "Event", "width=500, height=550, scrollbars=1, resizable=1");
 	return false;
 }
