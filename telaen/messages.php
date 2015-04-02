@@ -108,7 +108,7 @@ function readmsg(ix,uidl) {
 	else
 		location = 'readmsg.php?folder=".urlencode($folder)."&ix='+ix+'&uidl='+uidl+'';
 }
-function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag' }
+function refreshlist() { location = 'process.php?refr=true&folder=".urlencode($folder)."&pag=$pag'; }
 function delemsg() { document.form1.submit(); }
 function movemsg() {
 	if(no_quota)
