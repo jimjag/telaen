@@ -10,16 +10,16 @@ function doDays() {
 			if (grrr && einfo!=null) {
 				tds[i].onmouseover = function() {
 					document.getElementById("e" + this.id.substring(1)).style.display = "block";
-				}
+				};
 				tds[i].onmouseout = function() {
 					document.getElementById("e" + this.id.substring(1)).style.display = "none";
-				}
+				};
 				einfo.onmouseover = function() {
 					document.getElementById(this.id).style.display = "block";
-				}
+				};
 				einfo.onmouseout = function() {
 					document.getElementById(this.id).style.display = "none";
-				}
+				};
 			}
 		}
 	}
