@@ -114,23 +114,21 @@ function movemsg() {
 	if(no_quota)
 		alert(quota_msg);
 	else {
-		with(document.form1) { decision.value = 'move'; submit(); }
+		document.form1.decision.value = 'move'; submit();
 	}
 }
 function markmsg() {
-	  with(document.form1) { decision.value = 'mark'; submit(); }
+	  document.form1.decision.value = 'mark'; submit();
 };
 function unmarkmsg() {
-	  with(document.form1) { decision.value = 'unmark'; submit(); }
+	  document.form1.decision.value = 'unmark'; submit();
 };
 function sel() {
-	with(document.form1) {
-		for(i=0;i<elements.length;i++) {
-			thiselm = elements[i];
-			if(thiselm.name.substring(0,3) == 'msg')
-				thiselm.checked = !thiselm.checked
-		}
-	}
+    for(i=0;i<document.form1.elements.length;i++) {
+        thiselm = document.form1.elements[i];
+        if(thiselm.name.substring(0,3) == 'msg')
+            thiselm.checked = !thiselm.checked
+    }
 }
 sort_colum = '$sortby';
 sort_order = '$sortorder';
