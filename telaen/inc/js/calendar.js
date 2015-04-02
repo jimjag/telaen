@@ -1,13 +1,3 @@
-function replaceCal(month, year) {
-    $.post('ajax.php', {action: "replaceCal", cal_month: month, cal_year: year },
-    function(data) {
-        $("#calendar").html(data);
-        doDays();
-    });
-    return false;
-}
-
-
 function doDays() {
 	var grrr = navigator.userAgent.indexOf("MSIE")>-1;
 	var tds = document.getElementById("calendar").getElementsByTagName("td");
@@ -37,6 +27,15 @@ function doDays() {
 			}
 		}
 	}
+}
+
+function replaceCal(month, year) {
+    $.post('ajax.php', {action: "replaceCal", cal_month: month, cal_year: year },
+    function(data) {
+        $("#calendar").html(data);
+        //doDays();
+    });
+    return false;
 }
 
 function refreshParent() {
