@@ -40,13 +40,6 @@ function textmode() {
     document.composeForm.submit();
 }
 
-function delatt(rem) {
-    $.post('upload.php', {rem: rem}, function(data) {
-        $('#nm_attachs').html(data);
-    });
-    return false;
-}
-
 function enviar() {
     error_msg = new Array();
     frm = document.composeForm;
@@ -134,13 +127,16 @@ function check_mail(strmail) {
             error_msg[error_msg.length] = strEmail;
     }
 }
-//]]>
-</script>
 
-<script type='text/javascript'>
-//<![CDATA[
 window.setInterval(function() {
-$.post('ajax.php', {action: 'pingSession'}); }, 60000);
+    $.post('ajax.php', {action: 'pingSession'}); }, 120000);
+
+function delatt(rem) {
+    $.post('upload.php', {rem: rem}, function(data) {
+        $('#nm_attachs').html(data);
+    });
+    return false;
+}
 //]]>
 </script>
 
