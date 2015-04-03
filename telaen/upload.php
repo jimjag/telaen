@@ -58,8 +58,7 @@ foreach ($attch as $a) {
     echo "
 <script language='javascript' type='text/javascript'>
 //<![CDATA[
-
-function ndelatt(rem) {
+function delatt(rem) {
     $.post('upload.php', {rem: rem}, function(data) {
         $('#nm_attachs').html(data);
     });
@@ -72,7 +71,7 @@ function ndelatt(rem) {
      <td width=\"50%\" class=\"default\">".urlencode($a['name'])."</td>
      <td width=\"10%\" class=\"right\">".Telaen::bytes2bkmg($a['size'])."</td>
      <td width=\"30%\" class=\"default\" align='center'>".$a['type'].'/'.$a['subtype']."</td>
-     <td width=\"10%\" class=\"default\" align='center'><a href=\"javascript:void(0)\" onclick=\"ndelatt('".urlencode($a['name'])."')\">OK</a></td>
+     <td width=\"10%\" class=\"default\" align='center'><a href=\"javascript:void(0)\" onclick=\"delatt('".urlencode($a['name'])."')\">OK</a></td>
      </tr>
 ";
 }

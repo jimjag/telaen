@@ -131,12 +131,6 @@ function check_mail(strmail) {
 window.setInterval(function() {
     $.post('ajax.php', {action: 'pingSession'}); }, 120000);
 
-function delatt(rem) {
-    $.post('upload.php', {rem: rem}, function(data) {
-        $('#nm_attachs').html(data);
-    });
-    return false;
-}
 //]]>
 </script>
 
