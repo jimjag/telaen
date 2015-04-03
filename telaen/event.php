@@ -22,8 +22,7 @@ $month = intval(substr($foo, 4, 2));
 $day = intval(substr($foo, 6, 2));
 $ymd = sprintf('%4s%02s%02s', $year, $month, $day);
 $eventuid = $ymd.'_'.$dayuid;
-$midnight = $ymd.'T000000';
-$newevent = array($ymd.'_0', $midnight, $midnight, '-- new event --', '00', '00', '00', '00');
+$newevent = array($ymd.'_0', $ymd.'T090000', $ymd.'T100000', '-- new event --', '09', '00', '10', '00');
 $event = array();
 $actionDone = false;
 // Minor error-check

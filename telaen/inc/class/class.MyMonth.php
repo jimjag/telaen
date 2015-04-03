@@ -41,6 +41,8 @@ class MyMonth
     public function __construct($udatafolder, $perm = 0750, $year = 0, $month = 0)
     {
         $this->_perm = $perm;
+        $month = intval($month);
+        $year = intval($year);
         if (($month <= 0) || ($month >= 13) || ($year <= 2009) || $year >= 2050) {
             $this->_mymonth = getdate();
             $month = $this->_mymonth['mon'];
@@ -53,8 +55,8 @@ class MyMonth
         $this->_firstday = $wd[3];
         $this->_lastday = gmdate('t', $fom);
         $this->_today = getdate();
-        $this->_month = intval($month);
-        $this->_year = intval($year);
+        $this->_month = $month;
+        $this->_year = $year;
         $this->_pyear = $this->_nyear = $this->_year;
         $this->_pmonth = $this->_month - 1;
         if ($this->_pmonth <= 0) {
