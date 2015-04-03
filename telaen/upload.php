@@ -60,7 +60,7 @@ foreach ($attch as $a) {
      <td width=\"50%\" class=\"default\">".urlencode($a['name'])."</td>
      <td width=\"10%\" class=\"right\">".Telaen::bytes2bkmg($a['size'])."</td>
      <td width=\"30%\" class=\"default\" align='center'>".$a['type'].'/'.$a['subtype']."</td>
-     <td width=\"10%\" class=\"default\" align='center'><a href=\"javascript:delatt('".urlencode($a['name'])."')\">OK</a></td>
+     <td width=\"10%\" class=\"default\" align='center'><a href=\"javascript:void(0)\" onclick=\"delatt('".urlencode($a['name'])."')\">OK</a></td>
      </tr>
 ";
 }
