@@ -275,7 +275,7 @@ for ($i = 0; $i < $num; $i++) {
     $attachlist[$i]['name'] = urlencode($attachs[$i]['name']);
     $attachlist[$i]['size'] = Telaen::bytes2bkmg($attachs[$i]['size']);
     $attachlist[$i]['type'] = $attachs[$i]['type'].'/'.$attachs[$i]['subtype'];
-    $attachlist[$i]['link'] = "'javascript:void(0)' onclick='delatt(\"".urlencode($attachs[$i]['name'])."\")'";
+    $attachlist[$i]['link'] = '"javascript:void(0)" onclick="delatt(\''.urlencode($attachs[$i]['name']).'\')"';
     /* Now prep all attachments as to-include attachments */
     $from = $TLN->getPath($attachs[$i], '_attachments')[0];
     $attachs[$i]['uidl'] = '_upload';

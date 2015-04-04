@@ -14,7 +14,7 @@
                <td width="50%" class="default">&nbsp;{$smAttachList[i].name}</td>
                <td width="10%" class="right">{$smAttachList[i].size} &nbsp;</td>
                <td width="30%" class="default" align='center'>&nbsp;{$smAttachList[i].type|truncate:23:"...":true}</td>
-               <td width="10%" class="default" align='center'>&nbsp;<a href="{$smAttachList[i].link}">OK</a></td>
+               <td width="10%" class="default" align='center'>&nbsp;<a href={$smAttachList[i].link}>OK</a></td>
                </tr>
               {/section}
              </table>
