@@ -7,6 +7,17 @@
       <td bgcolor="white" valign="top">
         <form enctype="multipart/form-data" action="upload.php" method="post" id="addatt">
           {$smForms}
+            <table width="100%" border=0 cellspacing=1 cellpadding=0>
+            <tr>
+             <td class="headers" colspan="4">{$smLabel.attach_hea}</td>
+            </tr>
+            <tr>
+             <td width="50%" class="headers">{$smLabel.attch_name_hea}</td>
+             <td width="10%" class="headerright">{$smLabel.attch_size} &nbsp;</td>
+             <td width="30%" class="headers">{$smLabel.attch_type_hea}</td>
+             <td width="10%" class="headers">{$smLabel.attch_dele_hea}</td>
+            </tr>
+           </table>
             <div id="nm_attachs">
              <table width="100%" border=0 cellspacing=1 cellpadding=0>
               {section name=i loop=$smAttachList}
@@ -30,17 +41,6 @@
               <td class="headerright">&nbsp;</td>
               <td><img src="inc/themes/default/images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/><div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div></td>
               <td><div id="output"></div></td>
-           </tr>
-          </table>
-          <table width="100%" border=0 cellspacing=1 cellpadding=0>
-           <tr>
-            <td class="headers" colspan="4">{$smLabel.attach_hea}</td>
-           </tr>
-           <tr>
-            <td width="45%" class="headers">{$smLabel.attch_name_hea}</td>
-            <td width="15%" class="headerright">{$smLabel.attch_size} &nbsp;</td>
-            <td width="30%" class="headers">{$smLabel.attch_type_hea}</td>
-            <td width="10%" class="headers">{$smLabel.attch_dele_hea}</td>
            </tr>
           </table>
         </form>

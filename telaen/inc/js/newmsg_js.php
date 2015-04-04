@@ -128,6 +128,13 @@ function check_mail(strmail) {
     }
 }
 
+function delatt(rem) {
+    $.post('upload.php', {rem: rem}, function(data) {
+        $('#nm_attachs').html(data);
+    });
+    return false;
+}
+
 window.setInterval(function() {
     $.post('ajax.php', {action: 'pingSession'}); }, 120000);
 
