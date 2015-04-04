@@ -56,22 +56,12 @@ $attch = $TLN->tdb->getAttachments(['uidl' => '_upload', 'folder' => '_upload'])
 echo '<table width="100%" border=0 cellspacing=1 cellpadding=0>'."\n";
 foreach ($attch as $a) {
     echo "
-<script language='javascript' type='text/javascript'>
-//<![CDATA[
-function delatt(rem) {
-    $.post('upload.php', {rem: rem}, function(data) {
-        $('#nm_attachs').html(data);
-    });
-    return false;
-}
-//]]>
-</script>
-
+    <script language='javascript' type='text/javascript' src='./inc/js/upload.js'></script>
     <tr>
-     <td width=\"50%\" class=\"default\">".urlencode($a['name'])."</td>
-     <td width=\"10%\" class=\"right\">".Telaen::bytes2bkmg($a['size'])."</td>
-     <td width=\"30%\" class=\"default\" align='center'>".$a['type'].'/'.$a['subtype']."</td>
-     <td width=\"10%\" class=\"default\" align='center'><a href=\"javascript:void(0)\" onclick=\"delatt('".urlencode($a['name'])."')\">OK</a></td>
+     <td width='50%' class='default'>".urlencode($a['name'])."</td>
+     <td width='10%' class='right'>".Telaen::bytes2bkmg($a['size'])."</td>
+     <td width='30%' class='default' align='center'>".$a['type'].'/'.$a['subtype']."</td>
+     <td width='10%' class='default' align='center'><a href='javascript:void(0)' onclick='delatt('".urlencode($a['name'])."')'>OK</a></td>
      </tr>
 ";
 }
