@@ -1,6 +1,6 @@
 <?php
 define('I_AM_TELAEN', basename($_SERVER['SCRIPT_NAME']));
-
+exit;
 require './inc/class/class.Telaen_core.php';
 
 // very bad method to get params... the url is passed without the param name...
