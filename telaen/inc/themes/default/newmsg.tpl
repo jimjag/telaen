@@ -7,7 +7,7 @@
       <td bgcolor="white" valign="top">
         <form enctype="multipart/form-data" action="upload.php" method="post" id="addatt">
           {$smForms}
-            <table width="100%" border=0 cellspacing=1 cellpadding=0>
+          <table width="100%" border=0 cellspacing=1 cellpadding=0>
             <tr>
              <td class="headers" colspan="4">{$smLabel.attach_hea}</td>
             </tr>
@@ -17,9 +17,9 @@
              <td width="30%" class="headers">{$smLabel.attch_type_hea}</td>
              <td width="10%" class="headers">{$smLabel.attch_dele_hea}</td>
             </tr>
-           </table>
-            <div id="nm_attachs">
-             <table width="100%" border=0 cellspacing=1 cellpadding=0>
+          </table>
+          <div id="nm_attachs">
+            <table width="100%" border=0 cellspacing=1 cellpadding=0>
               {section name=i loop=$smAttachList}
               <tr>
                <td width="50%" class="default">&nbsp;{$smAttachList[i].name}</td>
@@ -28,8 +28,8 @@
                <td width="10%" class="default" align='center'>&nbsp;<a href={$smAttachList[i].link}>OK</a></td>
                </tr>
               {/section}
-             </table>
-           </div>
+            </table>
+          </div>
           <table width="100%" border="0" cellspacing="0" cellpadding="2" align="center">
             <tr><td colspan=3 class="headers">{$smLabel.attch_add_new}</td></tr>
             <tr>
