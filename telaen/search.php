@@ -157,11 +157,11 @@ if ($srcFrom != "" || $srcSubject != "" || $srcBody != "") {
         }
         $prior = $headers[$i]['priority'];
         if ($prior == 1 || $prior == 2) {
-            $img_prior = "&nbsp;<img src=\"./images/prior_high.gif\" width=5 height=11 border=0 alt=\"\">";
+            $img_prior = '&nbsp;<img src="./images/prior_high.gif" width=5 height=11 border=0 alt="">';
         } elseif ($prior == 4 || $prior == 5) {
-            $img_prior = "&nbsp;<img src=\"./images/prior_low.gif\" width=5 height=11 border=0 alt=\"\">";
+            $img_prior = '&nbsp;<img src="./images/prior_low.gif" width=5 height=11 border=0 alt="">';
         } else {
-            $img_prior = "";
+            $img_prior = '';
         }
         $msg_img = "&nbsp;<img src=\"$msg_img\" width=14 height=14 border=0 alt=\"\">";
         $checkbox = "<input type=\"checkbox\" name=\"msg_$i\" value=1>";
