@@ -87,7 +87,7 @@ possible. The below external dependencies are bundled for convenience:
 - Smarty
 - TinyMCE
 - PHPMailer
-- iCalCreator
+- iCalCreator (https://github.com/jimjag/iCalcreator.git fork)
 - vCard-parser (https://github.com/jimjag/vCard-parser fork)
 - Html2Text.php
 
