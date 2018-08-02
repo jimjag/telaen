@@ -605,7 +605,7 @@ class Telaen_core
     static public function sanitizeHTML($html, $use_htmLawed = true, $rep_image = 'images/trans.gif', $block = true)
     {
         if ($use_htmLawed) {
-            require_once './inc/htmLawed.php';
+            require_once './inc/vendor/htmLawed.php';
             $config = array(
                 'safe' => 1,
                 'comment' => 1,
