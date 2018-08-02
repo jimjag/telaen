@@ -8,7 +8,6 @@ Telaen is a GPL'ed software developed by
 
 *************************************************************************/
 
-require_once './inc/class/class.PHPMailer_extra.php';
 require_once './inc/class/class.LocalMbox.php';
 require_once './inc/class/class.Mparser.php';
 
