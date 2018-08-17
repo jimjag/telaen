@@ -8,7 +8,7 @@ if ($folder == 'inbox') {
 
     $filename = $TLN->userdatafolder.'/filters.ucf';
     $myfile = $TLN->blob($TLN->readFile($filename, false), false);
-    $filters = array();
+    $filters = [];
 
     if ($myfile != "") {
         $filters = unserialize(base64_decode($myfile));
@@ -83,7 +83,7 @@ if ($folder == 'inbox') {
                         break;
                     case FL_TYPE_MARK_READ:
 
-                        if (!$TLN->isFlagSet($message, 'seen') {
+                        if (!$TLN->isFlagSet($message, 'seen')) {
                             $TLN->mailSetFlag($message, 'seen', '+');
                             $mbox['headers'][$folder][$index] = $message;
                         }

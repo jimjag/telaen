@@ -37,7 +37,7 @@ class Session
     {
         $this->id = $id;
         if (!is_array($this->ss[$this->id])) {
-            $this->ss[$this->id] = array();
+            $this->ss[$this->id] = [];
         }
         return $this->ss[$this->id];
     }
@@ -56,6 +56,6 @@ class Session
         unset($this->sid);
         unset($this->ss[$this->id]);
         @session_destroy();
-        $_SESSION = array();
+        $_SESSION = [];
     }
 }

@@ -186,14 +186,14 @@ EOT;
     }
 
     /**
-     * returns Array(eventuid, dtstart, dtend, desc, starthour, startmin, stophour, stopmin)
+     * returns [eventuid, dtstart, dtend, desc, starthour, startmin, stophour, stopmin]
      *    The eventuid always contains the date... eg: 20100311_76987 (date + the day uid)
      * @param  string $day Day
      * @return array
      */
     public function getEvent($day)
     {
-        $reta = array();
+        $reta = [];
         //$this->_vcal->parse();
         $this->_vcal->sort();
         $events_arr = $this->_vcal->selectComponents($this->_year, $this->_month, $day);
@@ -206,10 +206,12 @@ EOT;
                     foreach ($day_arr as $event) {
                         $dtstart = $this->_xdtime($event->getProperty('dtstart'));
                         $dtend = $this->_xdtime($event->getProperty('dtend'));
-                        $reta[] = array($event->getProperty('uid'), $dtstart, $dtend,
-                                        base64_decode($event->getProperty('description')),
-                                        substr($dtstart, 9, 2), substr($dtstart, 11, 2),
-                                        substr($dtend, 9, 2), substr($dtend, 11, 2), );
+                        $reta[] = [
+                            $event->getProperty('uid'), $dtstart, $dtend,
+                            base64_decode($event->getProperty('description')),
+                            substr($dtstart, 9, 2), substr($dtstart, 11, 2),
+                            substr($dtend, 9, 2), substr($dtend, 11, 2),
+                        ];
                     }
                 }
             }

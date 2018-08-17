@@ -606,7 +606,7 @@ class Telaen_core
     {
         if ($use_htmLawed) {
             require_once './inc/vendor/htmLawed.php';
-            $config = array(
+            $config = [
                 'safe' => 1,
                 'comment' => 1,
                 'cdata' => 1,
@@ -619,7 +619,7 @@ class Telaen_core
                 'valid_xhtml' => 0,
                 'direct_list_nest' => 1,
                 'balance' => 1
-            );
+            ];
             return htmLawed($html, $config);
         } else {
             require_once './inc/htmlfilter.php';

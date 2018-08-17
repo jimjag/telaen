@@ -42,19 +42,19 @@ class Mparser
     public $decode_bodies = 1;
     public $message_buffer_length = 2097152;
     public $ignore_syntax_errors = 1;
-    public $warnings = array();
+    public $warnings = [];
     public $track_lines = 0;
     public $use_part_file_names = 0;
-    public $custom_mime_types = array();
+    public $custom_mime_types = [];
 
     /* Private variables */
     private $state = MIME_PARSER_START;
     private $buffer = '';
     private $buffer_position = 0;
     private $offset = 0;
-    private $parts = array();
+    private $parts = [];
     private $part_position = 0;
-    private $headers = array();
+    private $headers = [];
     private $body_parser;
     private $body_parser_state = MIME_PARSER_BODY_DONE;
     private $body_buffer = '';
@@ -66,7 +66,7 @@ class Mparser
     private $position = 0;
     private $body_part_number = 1;
     private $next_token = '';
-    private $lines = array();
+    private $lines = [];
     private $line_offset = 0;
     private $last_line = 1;
     private $last_carriage_return = 0;
@@ -114,9 +114,9 @@ class Mparser
         $this->buffer = '';
         $this->buffer_position = 0;
         $this->offset = 0;
-        $this->parts = array();
+        $this->parts = [];
         $this->part_position = 0;
-        $this->headers = array();
+        $this->headers = [];
         $this->body_parser_state = MIME_PARSER_BODY_DONE;
         $this->body_buffer = '';
         $this->body_buffer_position = 0;
@@ -125,7 +125,7 @@ class Mparser
         $this->position = 0;
         $this->body_part_number = 1;
         $this->next_token = '';
-        $this->lines = ($this->track_lines ? array(0 => 0) : array());
+        $this->lines = ($this->track_lines ? [0 => 0] : []);
         $this->line_offset = 0;
         $this->last_line = 0;
         $this->last_carriage_return = 0;
@@ -155,7 +155,7 @@ class Mparser
     {
         $type = strtolower(trim($this->Tokenize($value, ';')));
         $p = trim($this->Tokenize(''));
-        $parameters = $character_sets = $languages = array();
+        $parameters = $character_sets = $languages = [];
         while (strlen($p)) {
             $parameter = trim(strtolower($this->Tokenize($p, '=')));
             $remaining = trim($this->Tokenize(''));
@@ -244,7 +244,7 @@ class Mparser
     private function ParseHeaderString($body, &$position, &$headers)
     {
         $l = strlen($body);
-        $headers = array();
+        $headers = [];
         for (; $position < $l;) {
             if ($this->FindStringLineBreak($body, $position, $break, $line_break)) {
                 $line = substr($body, $position, $line_break - $position);
@@ -267,10 +267,10 @@ class Mparser
         $need_more_data = 0;
         switch ($this->state) {
             case MIME_PARSER_START:
-                $part = array(
+                $part = [
                     'Type' => 'MessageStart',
                     'Position' => $this->offset + $this->buffer_position,
-                );
+                ];
                 $this->state = MIME_PARSER_HEADER;
                 break;
             case MIME_PARSER_HEADER:
@@ -281,10 +281,10 @@ class Mparser
                         break;
                     }
                     if ($line_break == $this->buffer_position) {
-                        $part = array(
+                        $part = [
                             'Type' => 'BodyStart',
                             'Position' => $this->offset + $this->buffer_position,
-                        );
+                        ];
                         $this->buffer_position = $next;
                         $this->state = MIME_PARSER_BODY;
                         break;
@@ -305,30 +305,30 @@ class Mparser
                                 return false;
                             }
 
-                            $part = array(
+                            $part = [
                                 'Type' => 'BodyStart',
                                 'Position' => $this->offset + $this->buffer_position,
-                            );
+                            ];
                             $this->state = MIME_PARSER_BODY;
                             break 2;
                     }
                 } else {
                     $need_more_data = !$end;
                     if ($end) {
-                        $part = array(
+                        $part = [
                             'Type' => 'BodyStart',
                             'Position' => $this->offset + $this->buffer_position,
-                        );
+                        ];
                         $this->state = MIME_PARSER_BODY;
                     }
                     break;
                 }
 
-                $part = array(
+                $part = [
                     'Type' => 'HeaderName',
                     'Name' => substr($this->buffer, $this->buffer_position, $next - $this->buffer_position),
                     'Position' => $this->offset + $this->buffer_position,
-                );
+                ];
                 $this->buffer_position = $next;
                 $this->state = MIME_PARSER_HEADER_VALUE;
                 break;
@@ -345,11 +345,11 @@ class Mparser
                                 break 2;
                             }
                             $value .= $line;
-                            $part = array(
+                            $part = [
                                 'Type' => 'HeaderValue',
                                 'Value' => $value,
                                 'Position' => $this->offset + $this->buffer_position,
-                            );
+                            ];
                             $this->buffer_position = $next;
                             $this->state = MIME_PARSER_END;
                             break;
@@ -360,11 +360,11 @@ class Mparser
                                 $position = $next;
                             } else {
                                 $value .= $line;
-                                $part = array(
+                                $part = [
                                     'Type' => 'HeaderValue',
                                     'Value' => $value,
                                     'Position' => $this->offset + $this->buffer_position,
-                                );
+                                ];
                                 $this->buffer_position = $next;
                                 $this->state = MIME_PARSER_HEADER;
                                 break 2;
@@ -376,11 +376,11 @@ class Mparser
                             break;
                         } else {
                             $value .= substr($this->buffer, $position);
-                            $part = array(
+                            $part = [
                                 'Type' => 'HeaderValue',
                                 'Value' => $value,
                                 'Position' => $this->offset + $this->buffer_position,
-                            );
+                            ];
                             $this->buffer_position = strlen($this->buffer);
                             $this->state = MIME_PARSER_END;
                             break;
@@ -404,10 +404,10 @@ class Mparser
                         $start = substr($this->buffer, $next, strlen($break . 'From '));
                         if (!strcmp($break . 'From ', $start)) {
                             if ($line_break == $this->buffer_position) {
-                                $part = array(
+                                $part = [
                                     'Type' => 'MessageEnd',
                                     'Position' => $this->offset + $this->buffer_position,
-                                );
+                                ];
                                 $this->buffer_position = $following;
                                 $this->state = MIME_PARSER_START;
                                 break;
@@ -419,11 +419,11 @@ class Mparser
                         } elseif (($indent = strspn($this->buffer, '>', $next)) > 0) {
                             $start = substr($this->buffer, $next + $indent, strlen('From '));
                             if (!strcmp('From ', $start)) {
-                                $part = array(
+                                $part = [
                                     'Type' => 'BodyData',
                                     'Data' => substr($this->buffer, $this->buffer_position, $next - $this->buffer_position),
                                     'Position' => $this->offset + $this->buffer_position,
-                                );
+                                ];
                                 $this->buffer_position = $next + 1;
                                 break;
                             }
@@ -437,16 +437,16 @@ class Mparser
                         $append = "\r\n";
                     }
                     if ($next > $this->buffer_position) {
-                        $part = array(
+                        $part = [
                             'Type' => 'BodyData',
                             'Data' => substr($this->buffer, $this->buffer_position, $next + $add - $this->buffer_position) . $append,
                             'Position' => $this->offset + $this->buffer_position,
-                        );
+                        ];
                     } elseif ($end) {
-                        $part = array(
+                        $part = [
                             'Type' => 'MessageEnd',
                             'Position' => $this->offset + $this->buffer_position,
-                        );
+                        ];
                         $this->state = MIME_PARSER_END;
                     }
                     $this->buffer_position = $next;
@@ -468,17 +468,17 @@ class Mparser
                                 $data = substr($data, 0, $line_break);
                             }
                         }
-                        $part = array(
+                        $part = [
                             'Type' => 'BodyData',
                             'Data' => $data,
                             'Position' => $offset,
-                        );
+                        ];
                     } else {
                         if ($end) {
-                            $part = array(
+                            $part = [
                                 'Type' => 'MessageEnd',
                                 'Position' => $this->offset + $this->buffer_position,
-                            );
+                            ];
                             $this->state = MIME_PARSER_END;
                         } else {
                             $need_more_data = 1;
@@ -515,7 +515,7 @@ class Mparser
     {
         $first = strtolower(trim(strtok($value, ';')));
         $values = trim(strtok(''));
-        $parameters = array();
+        $parameters = [];
         $return_value = '';
         while (strlen($values)) {
             $parameter = trim(strtolower(strtok($values, '=')));
@@ -557,7 +557,7 @@ class Mparser
     {
         switch ($part['Type']) {
             case 'MessageStart':
-                $this->headers = array();
+                $this->headers = [];
                 break;
             case 'HeaderName':
                 if ($this->decode_bodies) {
@@ -645,11 +645,11 @@ class Mparser
 
                                     $next = $line_break + strlen($break);
                                     if (!strcmp(rtrim(substr($this->body_buffer, $position, $line_break - $position)), $boundary)) {
-                                        $part = array(
+                                        $part = [
                                             'Type' => 'StartPart',
                                             'Part' => $this->headers['Boundary'],
                                             'Position' => $this->body_offset + $next,
-                                        );
+                                        ];
                                         $this->parts[] = $part;
                                         UnSet($this->body_parser);
                                         $this->body_parser = new Mparser();
@@ -692,11 +692,11 @@ class Mparser
                                             return false;
                                         }
 
-                                        $part = array(
+                                        $part = [
                                             'Type' => 'EndPart',
                                             'Part' => $this->headers['Boundary'],
                                             'Position' => $this->body_offset + $position,
-                                        );
+                                        ];
                                         $this->body_buffer = substr($this->body_buffer, $next);
                                         $this->body_buffer_position = 0;
                                         $this->body_offset += $next;
@@ -711,17 +711,17 @@ class Mparser
                                             return false;
                                         }
 
-                                        $part = array(
+                                        $part = [
                                             'Type' => 'EndPart',
                                             'Part' => $this->headers['Boundary'],
                                             'Position' => $this->body_offset + $position,
-                                        );
+                                        ];
                                         $this->parts[] = $part;
-                                        $part = array(
+                                        $part = [
                                             'Type' => 'StartPart',
                                             'Part' => $this->headers['Boundary'],
                                             'Position' => $this->body_offset + $next,
-                                        );
+                                        ];
                                         $this->parts[] = $part;
                                         UnSet($this->body_parser);
                                         $this->body_parser = new Mparser();
@@ -852,11 +852,11 @@ class Mparser
                 case MIME_MESSAGE_START:
                     switch ($type) {
                         case 'MessageStart':
-                            $decoded = array(
-                                'Headers' => array(),
-                                'Parts' => array(),
+                            $decoded = [
+                                'Headers' => [],
+                                'Parts' => [],
                                 'Position' => $this->message_position,
-                            );
+                            ];
                             $end_of_message = 0;
                             $state = MIME_MESSAGE_GET_HEADER_NAME;
                             continue 3;
@@ -887,7 +887,7 @@ class Mparser
                                 $decoded['Headers'][$header] = $value;
                             } elseif (is_string($decoded['Headers'][$header])) {
                                 $h = 1;
-                                $decoded['Headers'][$header] = array($decoded['Headers'][$header], $value);
+                                $decoded['Headers'][$header] = [$decoded['Headers'][$header], $value];
                             } else {
                                 $h = count($decoded['Headers'][$header]);
                                 $decoded['Headers'][$header][] = $value;
@@ -1149,7 +1149,7 @@ class Mparser
         if ($end) {
             if ($this->part_position) {
                 $this->part_position = 0;
-                $this->parts = array();
+                $this->parts = [];
             }
         } else {
             $part = $this->parts[$this->part_position];
@@ -1170,7 +1170,7 @@ class Mparser
             return ($this->SetError('it was not specified a valid message to decode'));
         }
 
-        $this->warnings = $decoded = array();
+        $this->warnings = $decoded = [];
         $this->ResetParserState();
         for ($message = 0; ($success = $this->DecodeStream($parameters, 0, $end_of_message, $decoded_message)) && !$end_of_message; $message++) {
             $decoded[$message] = $decoded_message;
@@ -1211,7 +1211,7 @@ class Mparser
 
     public function Analyze($message, &$results)
     {
-        $results = array();
+        $results = [];
         if (!IsSet($message['Headers']['content-type:'])) {
             $content_type = 'text/plain';
         } elseif (count($message['Headers']['content-type:']) == 1) {
@@ -1237,7 +1237,7 @@ class Mparser
                     return ($this->SetError($this->decode_bodies ? 'No parts were found in the ' . $content_type . ' part message' : 'It is not possible to analyze multipart messages without parsing the contained message parts. Please set the decode_bodies variable to 1 before parsing the message'));
                 }
 
-                $parts = array();
+                $parts = [];
                 for ($p = 0; $p < $lp; ++$p) {
                     if (!$this->Analyze($message['Parts'][$p], $parts[$p])) {
                         return false;
@@ -1329,7 +1329,7 @@ class Mparser
 
                     case 'form-data':
                         $results['Type'] = 'form-data';
-                        $results['FormData'] = array();
+                        $results['FormData'] = [];
                         for ($p = 0; $p < $lp; ++$p) {
                             if (!IsSet($message['Parts'][$p]['Headers']['content-disposition:'])) {
                                 return ($this->SetError('the form data part ' . $p . ' is missing the content-disposition header'));
@@ -1469,7 +1469,7 @@ class Mparser
                         if (($l = strlen($body))) {
                             $position = 0;
                             $this->ParseHeaderString($body, $position, $headers);
-                            $recipients = array();
+                            $recipients = [];
                             for (; $position < $l;) {
                                 $this->ParseHeaderString($body, $position, $headers);
                                 if (count($headers)) {

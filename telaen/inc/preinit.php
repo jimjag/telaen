@@ -21,8 +21,8 @@ require_once './inc/class/class.Telaen.php';
 require_once './inc/class/class.MyMonth.php';
 require_once './inc/class/class.Session.php';
 
-if (version_compare(PHP_VERSION, "7.0.0", "<")) {
-    die('PHP version 7.0 and and greater are required');
+if (version_compare(PHP_VERSION, "5.4.0", "<")) {
+    die('PHP version 5.4 and and greater are required');
 }
 /*
  * "emulate" register_globals ON: These are semi-global

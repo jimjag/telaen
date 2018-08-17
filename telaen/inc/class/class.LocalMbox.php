@@ -33,7 +33,7 @@ class LocalMbox extends SQLite3
     /**
      * @var array Schema of 'folders' table
      */
-    private $fschema = array(
+    private $fschema = [
         'name' => 'TEXT NOT NULL',
         'system' => 'INT NOT NULL', // Is it a system folder?
         'size' => 'INT DEFAULT 0',
@@ -44,11 +44,11 @@ class LocalMbox extends SQLite3
         'prefix' => 'TEXT DEFAULT ""',
         'table_name' => 'TEXT DEFAULT ""',
         'dirname' => 'TEXT NOT NULL',
-    );
+    ];
     /**
      * @var array Schema of 'attachs' table
      */
-    private $aschema = array(
+    private $aschema = [
         'size' => 'INT DEFAULT 0',
         'flat' => 'INT DEFAULT 0',
         'cid' => 'TEXT DEFAULT ""',
@@ -59,11 +59,11 @@ class LocalMbox extends SQLite3
         'name' => 'TEXT NOT NULL',
         'type' => 'TEXT DEFAULT ""',
         'subtype' => 'TEXT DEFAULT ""',
-    );
+    ];
     /**
      * @var array Schema of message data for each folder
      */
-    private $mschema = array(
+    private $mschema = [
         'date' => 'INT DEFAULT 0',
         'id' => 'INT DEFAULT 0', // Index in messages[]
         'mnum' => 'INT DEFAULT 0', // message number (POP3)
@@ -86,7 +86,7 @@ class LocalMbox extends SQLite3
         'ouidl' => 'TEXT DEFAULT ""', // Old uidl from Telaen 1.x
         'header' => 'TEXT DEFAULT ""', // Raw header for Email
         'headers' => 'TEXT DEFAULT "a:0:{}"', // NOTE: array of headers
-    );
+    ];
 
     /**
      * @var array Hash: All Email boxes/folders; key = name
@@ -137,11 +137,11 @@ class LocalMbox extends SQLite3
      */
     private $_folder_need_sync = [];
     /**
-     * @var bool Status
+     * @var bool method return status
      */
     private $_ok = true;
     /**
-     * @var array Log entries
+     * @var array Log method return log entry
      */
     private $_log = [];
     /**
@@ -322,7 +322,7 @@ class LocalMbox extends SQLite3
      * @param array $data Hash of data to update keyed by list
      * @param array $list List of elements to update
      * @param array $where the WHERE statement field and values (assume =)
-     * @return SQLite3Result
+     * @return boolean
      */
     private function _doUpdate($table, $data, $list, $where)
     {
@@ -358,8 +358,9 @@ class LocalMbox extends SQLite3
         if (!$result) {
             $this->_ok = false;
             $this->_log[] = "execute failed: $query";
+            return false;
         }
-        return $result;
+        return true;
     }
 
     /**
@@ -369,7 +370,7 @@ class LocalMbox extends SQLite3
      * @param string $table Table to update
      * @param array $data Hash of data to update keyed by list
      * @param array $list List of elements to insert
-     * @return SQLite3Result
+     * @return boolean
      */
     private function _doInsert($table, $data, $list)
     {
@@ -1108,7 +1109,7 @@ class LocalMbox extends SQLite3
     /**
      * Get count of all email message Attachments in folder/emailbox
      * @param array $msg
-     * @return integer
+     * @return mixed
      */
     public function countAttachments($msg)
     {
