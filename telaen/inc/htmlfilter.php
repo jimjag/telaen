@@ -170,7 +170,7 @@ function tln_getnxtag($body, $offset)
      */
     $pos = tln_skipspace($body, $lt + 1);
     if ($pos >= strlen($body)) {
-        return array(false, false, false, $lt, strlen($body));
+        return [false, false, false, $lt, strlen($body)];
     }
     /**
      * There are 3 kinds of tags:
@@ -217,7 +217,7 @@ function tln_getnxtag($body, $offset)
      */
     $regary = tln_findnxreg($body, $pos, '[^\w\-_]');
     if ($regary == false) {
-        return array(false, false, false, $lt, strlen($body));
+        return [false, false, false, $lt, strlen($body)];
     }
     list($pos, $tagname, $match) = $regary;
     $tagname = strtolower($tagname);
@@ -319,7 +319,7 @@ function tln_getnxtag($body, $offset)
             /**
              * Looks like body ended before the end of tag.
              */
-            return array(false, false, false, $lt, strlen($body));
+            return [false, false, false, $lt, strlen($body)];
         }
         list($pos, $attname, $match) = $regary;
         $attname = strtolower($attname);
@@ -378,7 +378,7 @@ function tln_getnxtag($body, $offset)
                 if ($quot == '\'') {
                         $regary = tln_findnxreg($body, $pos + 1, '\'');
                     if ($regary == false) {
-                        return array(false, false, false, $lt, strlen($body));
+                        return [false, false, false, $lt, strlen($body)];
                     }
                     list($pos, $attval, $match) = $regary;
                     $pos++;
@@ -386,7 +386,7 @@ function tln_getnxtag($body, $offset)
                 } elseif ($quot == '"') {
                     $regary = tln_findnxreg($body, $pos + 1, '\"');
                     if ($regary == false) {
-                        return array(false, false, false, $lt, strlen($body));
+                        return [false, false, false, $lt, strlen($body)];
                     }
                     list($pos, $attval, $match) = $regary;
                     $pos++;
@@ -397,7 +397,7 @@ function tln_getnxtag($body, $offset)
                      */
                     $regary = tln_findnxreg($body, $pos, '[\s>]');
                     if ($regary == false) {
-                        return array(false, false, false, $lt, strlen($body));
+                        return [false, false, false, $lt, strlen($body)];
                     }
                     list($pos, $attval, $match) = $regary;
                     /**
@@ -494,8 +494,8 @@ function tln_unspace(&$attvalue)
 {
     if (strcspn($attvalue, "\t\r\n\0 ") != strlen($attvalue)) {
         $attvalue = str_replace(
-            array("\t", "\r", "\n", "\0", " "),
-            array('', '', '', '', ''),
+            ["\t", "\r", "\n", "\0", " "],
+            ['', '', '', '', ''],
             $attvalue
         );
     }
@@ -740,7 +740,7 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
      */
     $content = preg_replace("|body(\s*\{.*?\})|si", ".bodyclass\\1", $content);
 
-    $trans_image_path = $trans_image_path;
+    // $trans_image_path = $trans_image_path;
 
     /**
     * Fix url('blah') declarations.

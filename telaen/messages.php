@@ -160,7 +160,7 @@ $smarty->assign('smForms', $forms);
 $smarty->assign('smUserEmail', $auth['email']);
 $smarty->assign('smFolder', $folder);
 
-$messagelist = array();
+$messagelist = [];
 $index = 0;
 printf($textout);
 
@@ -288,7 +288,7 @@ foreach ($folders as $a) {
     if ($a['name'] != $folder && ($TLN->mail_protocol == IMAP || ($a['name'] != 'inbox'))) {
         $entry = $TLN->fixPrefix($a['name'], 0);
         $display = extended_name($entry);
-        $avalfolders[] = array('path' => $entry, 'display' => $display);
+        $avalfolders[] = ['path' => $entry, 'display' => $display];
     }
 }
 
