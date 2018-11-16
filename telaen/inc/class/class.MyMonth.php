@@ -69,7 +69,7 @@ class MyMonth
             $this->_nyear++;
         }
         $this->_edir = $udatafolder."/calendar/{$this->_year}/{$this->_month}";
-        $this->_vcal = new vcalendar(array( 'unique_id' => 'Telaen'));
+        $this->_vcal = new vcalendar([ 'unique_id' => 'Telaen' ]);
         $this->_vcal->setConfig('directory', $this->_edir);
         $this->_vcal->setConfig('filename',  'events.ics');
         $this->_vcal->parse();
