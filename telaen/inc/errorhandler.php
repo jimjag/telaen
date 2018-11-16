@@ -20,7 +20,7 @@ function errorHandler($errno, $errmsg, $filename, $linenum, $vars)
     global $elog;
     $dt = date('Ymd H:i:s T');
 
-    $etype = array(
+    $etype = [
         E_ERROR => 'Error',
         E_WARNING => 'Warning',
         E_PARSE => 'Parsing Error',
@@ -34,7 +34,7 @@ function errorHandler($errno, $errmsg, $filename, $linenum, $vars)
         E_USER_NOTICE => 'User Notice',
         E_STRICT => 'Runtime Notice',
         E_RECOVERABLE_ERROR => 'Catchable Fatal Error',
-    );
+    ];
     $errmsg = preg_replace_callback(
             '|([^[:print:]])|',
             function ($match) { return '\x{'.dechex(ord($match[1])).'}'; },

@@ -14,6 +14,7 @@
  *   License: BSD 2-Clause: http://opensource.org/licenses/BSD-2-Clause
  *
  */
+namespace Telaen\Mparser;
 
 define('MIME_PARSER_START', 1);
 define('MIME_PARSER_HEADER', 2);

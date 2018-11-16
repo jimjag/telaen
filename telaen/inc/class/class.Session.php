@@ -12,6 +12,8 @@ Telaen is a GPL'ed software developed by
  * @package Telaen
  * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
  */
+namespace Telaen\Session;
+
 class Session
 {
     private $ss = null;
@@ -31,7 +33,7 @@ class Session
     /**
      * Load PHP Session data
      * @param  string $id key of Session superglobal
-     * @return string
+     * @return array
      */
     public function &Load($id = 'default')
     {

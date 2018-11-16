@@ -12,6 +12,10 @@ Telaen is a GPL'ed software developed by
  */
 defined('I_AM_TELAEN') or die('Direct access not permitted');
 
+use Telaen\Telaen\Telaen;
+use Telaen\Session\Session;
+use Telaen\MyMonth\MyMonth;
+
 @date_default_timezone_set(@date_default_timezone_get());
 
 @set_time_limit(0);
@@ -225,7 +229,7 @@ $TLN->sanitize = ($TLN->config['sanitize_html'] || !$TLN->config['allow_scripts'
  */
 if (($TLN->mail_protocol == POP3) && $TLN->prefs['keep_on_server'] && $initial_login) {
     $tdb->delFolder('inbox');
-    $tdb->newFolder('inbox');
+    $tdb->newFolder(['name' => 'inbox', 'dirname' => 'inbox']);
 }
 $AuthSession->Save($auth);
 
@@ -240,8 +244,8 @@ $TLN->ucharset = $lang['default_char_set'];
 Don't remove the following lines, or you will have problems with browser's cache
 */
 //@Header('Expires: Wed, 11 Nov 1998 11:11:11 GMT');
-@Header('Cache-Control: private, no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
-@Header('Pragma: no-cache');
+@header('Cache-Control: private, no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+@header('Pragma: no-cache');
 
 // No cache metas
 $pmetas = "

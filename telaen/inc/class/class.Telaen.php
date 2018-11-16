@@ -1,7 +1,12 @@
 <?php
-// namespace Telaen;
+
+namespace Telaen\Telaen;
+
+use Telaen\Telaen_core\Telaen_core;
+use Telaen\TNEF\TNEF;
+
 require_once './inc/class/class.Telaen_core.php';
-require_once './inc/vendor/class.tnef.php';
+require_once './inc/vendor/class.TNEF.php';
 
 /**
  * Telaen - Main Telaen Class implementing webmail functionality.
@@ -1289,7 +1294,7 @@ class Telaen extends Telaen_core
                 $tmp['name'] = self::utf7_8($this->fixPrefix(trim(preg_replace('|"(.*)"|', "$1",
                     substr($rest, $pos + 1))), 0));
                 $buffer = $this->mailReadResponse();
-                if (empty($this->$tdb->folders[$tmp['name']])) {
+                if (empty($this->tdb->folders[$tmp['name']])) {
                     $this->tdb->newFolder($tmp);
                 }
             }

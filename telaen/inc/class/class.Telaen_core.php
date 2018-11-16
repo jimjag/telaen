@@ -7,6 +7,10 @@ Telaen is a GPL'ed software developed by
  - http://jimjag.github.io/telaen/
 
 *************************************************************************/
+namespace Telaen\Telaen_core;
+
+use Telaen\LocalMbox\LocalMbox;
+use Telaen\Mparser\Mparser;
 
 require_once './inc/class/class.LocalMbox.php';
 require_once './inc/class/class.Mparser.php';
@@ -1634,7 +1638,7 @@ ENDOFREDIRECT;
 
     /**
      * Save prefs
-     * @param string $prefarray Hash of user prefs
+     * @param array $prefarray Hash of user prefs
      * @param string $file Prefs filename
      * @return void
      */
