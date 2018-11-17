@@ -5,7 +5,7 @@
  * @link https://github.com/nuovo/vCard-parser
  * @author Martins Pilsetnieks, Roberts Bruveris
  * @see RFC 2426, RFC 2425
- * @version 0.4.8
+ * @version 1.0.0
 */
 	class vCard implements Countable, Iterator
 	{
@@ -120,6 +120,8 @@
 			$this -> Mode = $vCardBeginCount == 1 ? vCard::MODE_SINGLE : vCard::MODE_MULTIPLE;
 
 			// Removing/changing inappropriate newlines, i.e., all CRs or multiple newlines are changed to a single newline
+			// jimjag: I am ignoring https://github.com/nuovo/vCard-parser/commit/e724a6fd7e2f8099681382d9959d12a7ad2832c3
+			//         Forcing the EOL to CRLF breaks a lot of vcards, which just use \n
 			$this -> RawData = str_replace("\r", "\n", $this -> RawData);
 			$this -> RawData = preg_replace('{(\n+)}', "\n", $this -> RawData);
 
@@ -127,7 +129,8 @@
 			//	fragment is parsed in a separate vCard object.
 			if ($this -> Mode == self::MODE_MULTIPLE)
 			{
-				$this -> RawData = explode('BEGIN:VCARD', $this -> RawData);
+				// Cannot use "explode", because we need to ignore, for example, 'AGENT:BEGIN:VCARD'
+				$this -> RawData = preg_split('{^BEGIN\:VCARD}miS', $this -> RawData);
 				$this -> RawData = array_filter($this -> RawData);
 
 				foreach ($this -> RawData as $SinglevCardRawData)
@@ -296,6 +299,22 @@
 		}
 
 		/**
+		 * method to get key list of the current vcard
+		 *
+		 * @return array list of key
+		 */
+		public function getKeyList()
+		{
+			$keylist=array();
+			if (isset($this -> Data))
+			{
+			  foreach($this -> Data as $key => $val)
+			    $keylist[]=$key;
+			}
+			return $keylist;
+		}
+
+		/**
 		 * Magic method to get the various vCard values as object members, e.g.
 		 *	a call to $vCard -> N gets the "N" value
 		 *
@@ -317,7 +336,7 @@
 					$Value = $this -> Data[$Key];
 					foreach ($Value as $K => $V)
 					{
-						if (stripos($V['value'], 'uri:') === 0)
+						if (isset($V['Value']) && stripos($V['Value'], 'uri:') === 0)
 						{
 							$Value[$K]['value'] = substr($V, 4);
 							$Value[$K]['encoding'] = 'uri';
@@ -337,6 +356,20 @@
 				return $this -> Mode;
 			}
 			return array();
+		}
+
+		/**
+		 * Magic method to check isset for the various vCard values as object members, e.g.
+		 *	a call to isset( $vCard -> fn ) checks existence of a value.
+		 *
+		 * @param string Key
+		 *
+		 * @return bool isset
+		 */
+		public function __isset($Key) {
+			$Key = strtolower($Key);
+			$val = $this->$Key;
+			return isset($val);
 		}
 
 		/**
@@ -392,6 +425,23 @@
 		 */
 		public function __call($Key, $Arguments)
 		{
+			$args = array_merge(array($Key), $Arguments);
+			return call_user_func_array(array($this, 'setAttr'), $args);
+		}
+
+		/**
+		 * Method for adding data to the vCard, made generic for wierd tags like X-*
+		 *
+		 * @param string Key
+		 * @param string Method call arguments. First element is value.
+		 *
+		 * @return vCard Current object for method chaining
+		 */
+		public function setAttr()
+		{
+			$Arguments = func_get_args();
+			$Key = array_shift($Arguments);
+
 			$Key = strtolower($Key);
 
 			if (!isset($this -> Data[$Key]))
@@ -573,7 +623,8 @@
 			$Parameters = array();
 			foreach ($RawParams as $Item)
 			{
-				$Parameters[] = explode('=', strtolower($Item));
+				// try to correct issue https://github.com/nuovo/vCard-parser/issues/20
+				$Parameters[] = explode('=', strtolower($Item), 2);
 			}
 
 			$Type = array();
