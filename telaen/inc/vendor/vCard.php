@@ -2,8 +2,8 @@
 /**
  * vCard class for parsing a vCard and/or creating one
  *
- * @link https://github.com/nuovo/vCard-parser
- * @author Martins Pilsetnieks, Roberts Bruveris
+ * @link https://github.com/jimjag/vCard-parser
+ * @author Martins Pilsetnieks, Roberts Bruveris, Jim Jagielski
  * @see RFC 2426, RFC 2425
  * @version 1.0.0
 */
