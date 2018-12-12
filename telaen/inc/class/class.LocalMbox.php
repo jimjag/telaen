@@ -13,6 +13,7 @@ Telaen is a GPL'ed software developed by
  * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
  */
 namespace Telaen\LocalMbox;
+use SQLite3;
 
 class LocalMbox extends SQLite3
 {
