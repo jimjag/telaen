@@ -21,6 +21,8 @@ require_once './inc/class/class.Telaen.php';
 require_once './inc/class/class.MyMonth.php';
 require_once './inc/class/class.Session.php';
 
+use Telaen\Telaen\Telaen;
+
 if (version_compare(PHP_VERSION, "5.4.0", "<")) {
     die('PHP version 5.4 and and greater are required');
 }

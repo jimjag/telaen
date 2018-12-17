@@ -6,7 +6,7 @@ use Telaen\Telaen_core\Telaen_core;
 use Telaen\TNEF\TNEF;
 
 require_once './inc/class/class.Telaen_core.php';
-require_once './inc/vendor/class.TNEF.php';
+require_once './inc/class/class.TNEF.php';
 
 /**
  * Telaen - Main Telaen Class implementing webmail functionality.
