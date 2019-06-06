@@ -46,7 +46,7 @@ function tln_tagprint($tagname, $attary, $tagtype)
         $fulltag = '<' . $tagname;
         if (is_array($attary) && sizeof($attary)) {
             $atts = [];
-            while (list($attname, $attvalue) = each($attary)) {
+            foreach ($attary as $attname => $attvalue) {
                 array_push($atts, "$attname=$attvalue");
             }
             $fulltag .= ' ' . join(' ', $atts);
@@ -522,7 +522,7 @@ function tln_fixatts(
     $trans_image_path,
     $block_external_images
 ) {
-    while (list($attname, $attvalue) = each($attary)) {
+    foreach ($attary as $attname => $attvalue) {
         /**
          * See if this attribute should be removed.
          */
@@ -726,8 +726,8 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                 break;
         }
     }
-    if ($bSucces == FALSE){
-        return array(FALSE, strlen($body));
+    if ($bSucces == FALSE) {
+        return [FALSE, strlen($body)];
     }
 
 
@@ -902,7 +902,7 @@ function tln_sanitize(
                 }
                 $trusted .= tln_tagprint($tagname, $attary, $tagtype);
                 $trusted .= $free_content;
-                $trusted .= tln_tagprint($tagname, false, 2);
+                $trusted .= tln_tagprint($tagname, [ ], 2);
             }
             continue;
         }

@@ -452,9 +452,10 @@ class Telaen extends Telaen_core
                 $current_folder = $boxes[$i]['name'];
 
                 if ($this->isSystemFolder($current_folder)) {
+                    // TODO
                 }
 
-                while (list($index, $value) = each($tmp)) {
+                foreach ($tmp as $index => $value) {
                     if ($current_folder == $value) {
                         unset($tmp[$index]);
                     }
@@ -462,7 +463,7 @@ class Telaen extends Telaen_core
                 reset($tmp);
             }
 
-            while (list($index, $value) = each($tmp)) {
+            foreach ($tmp as $index => $value) {
                 $this->mailCreateBox($this->fixPrefix($value, 1));
             }
 
